@@ -17,6 +17,11 @@ jobs:
     - name: Check out repo
       uses: actions/checkout@v2
 
+    - name: Clone dependency packages
+      run: |
+        mkdir dependency_ws
+        vcs import dependency_ws < build_depends.repos
+
     - name: Install missing dependencies
       run: |
         sudo apt update

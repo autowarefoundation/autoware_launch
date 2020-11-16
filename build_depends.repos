@@ -1,0 +1,9 @@
+repositories:
+  description/sensor/velodyne_simulator:
+    type: git
+    url: https://github.com/tier4/velodyne_simulator.git
+    version: ros2
+  description/sensor/sensor_description:
+    type: git
+    url: https://github.com/tier4/sensor_description.iv.universe.git
+    version: ros2
