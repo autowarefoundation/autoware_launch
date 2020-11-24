@@ -36,11 +36,36 @@ jobs:
     - name: Build
       run: |
         . /opt/ros/foxy/setup.sh
-        colcon build --event-handlers console_cohesion+
+        colcon build \
+          --event-handlers console_cohesion+ \
+          --packages-ignore \
+            autoware_launch \
+            integration_launch \
+            localization_launch \
+            perception_launch \
+            planning_launch \
+            sensing_launch \
+            system_launch \
+          --packages-up-to \
+            control_launch \
+            map_launch \
+            vehicle_launch
 
     - name: Run tests
       run: |
         . /opt/ros/foxy/setup.sh
         colcon test \
+          --return-code-on-test-failure \
           --event-handlers console_cohesion+ \
-          --return-code-on-test-failure
+          --packages-ignore \
+            autoware_launch \
+            integration_launch \
+            localization_launch \
+            perception_launch \
+            planning_launch \
+            sensing_launch \
+            system_launch \
+          --packages-up-to \
+            control_launch \
+            map_launch \
+            vehicle_launch
