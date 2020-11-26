@@ -41,7 +41,6 @@ jobs:
           --packages-ignore \
             autoware_launch \
             integration_launch \
-            localization_launch \
             perception_launch \
             planning_launch \
             sensing_launch \
@@ -49,7 +48,8 @@ jobs:
             control_launch \
             map_launch \
             system_launch \
-            vehicle_launch
+            vehicle_launch \
+            localization_launch
 
     - name: Run tests
       run: |
@@ -60,7 +60,6 @@ jobs:
           --packages-ignore \
             autoware_launch \
             integration_launch \
-            localization_launch \
             perception_launch \
             planning_launch \
             sensing_launch \
@@ -68,4 +67,5 @@ jobs:
             control_launch \
             map_launch \
             system_launch \
-            vehicle_launch
+            vehicle_launch \
+            localization_launch
