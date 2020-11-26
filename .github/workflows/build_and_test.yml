@@ -45,10 +45,10 @@ jobs:
             perception_launch \
             planning_launch \
             sensing_launch \
-            system_launch \
           --packages-up-to \
             control_launch \
             map_launch \
+            system_launch \
             vehicle_launch
 
     - name: Run tests
@@ -64,8 +64,8 @@ jobs:
             perception_launch \
             planning_launch \
             sensing_launch \
-            system_launch \
           --packages-up-to \
             control_launch \
             map_launch \
+            system_launch \
             vehicle_launch
