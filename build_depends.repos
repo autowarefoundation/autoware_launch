@@ -31,3 +31,7 @@ repositories:
     type: git
     url: https://github.com/tier4/Pilot.Auto.git
     version: ros2
+  vendor/usb_cam:
+    type: git
+    url: https://github.com/flynneva/usb_cam.git
+    version: foxy
