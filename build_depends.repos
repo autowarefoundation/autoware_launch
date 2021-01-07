@@ -39,3 +39,11 @@ repositories:
     type: git
     url: https://github.com/flynneva/usb_cam.git
     version: foxy
+  vendor/rosbridge_suite:
+    type: git
+    url: https://github.com/RobotWebTools/rosbridge_suite.git
+    version: ros2
+  vendor/rosauth:
+    type: git
+    url: https://github.com/GT-RAIL/rosauth.git
+    version: ros2
