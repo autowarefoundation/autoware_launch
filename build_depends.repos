@@ -2,7 +2,7 @@ repositories:
   dependencies/Pilot.Auto:
     type: git
     url: https://github.com/tier4/Pilot.Auto.git
-    version: ros2
+    version: ros2-v0.8.0-beta
   description/sensor/velodyne_simulator:
     type: git
     url: https://github.com/tier4/velodyne_simulator.git
