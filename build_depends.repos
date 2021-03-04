@@ -1,8 +1,8 @@
 repositories:
-  dependencies/Pilot.Auto:
+  dependencies/AutowareArchitectureProposal.iv:
     type: git
-    url: https://github.com/tier4/Pilot.Auto.git
-    version: ros2-v0.8.0-beta
+    url: https://github.com/tier4/AutowareArchitectureProposal.iv.git
+    version: ros2
   description/sensor/velodyne_simulator:
     type: git
     url: https://github.com/tier4/velodyne_simulator.git
@@ -47,3 +47,7 @@ repositories:
     type: git
     url: https://github.com/GT-RAIL/rosauth.git
     version: ros2
+  vendor/clock_publisher:
+    type: git
+    url: https://github.com/mitsudome-r/clock_publisher.git
+    version: master
