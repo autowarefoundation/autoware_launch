@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
-project(sensing_launch)
+project(individual_params)
+
+add_compile_options(-std=c++14)
 
 find_package(ament_cmake_auto REQUIRED)
+
 ament_auto_find_build_dependencies()
 
 if(BUILD_TESTING)
@@ -10,6 +13,5 @@ if(BUILD_TESTING)
 endif()
 
 ament_auto_package(INSTALL_TO_SHARE
-  launch
-  data
+    config
 )
