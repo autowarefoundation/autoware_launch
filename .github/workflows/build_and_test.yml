@@ -40,6 +40,10 @@ jobs:
         run: |
           echo "Target packages: ${{ steps.list_packages.outputs.package_list }}"
 
+      - name: Remove exec_depend to avoid unnecessary build
+        run: |
+          find . -name package.xml | xargs -I {} sed -i -rz "s|<exec_depend>\s*[a-zA-Z_0-9]+\s*</exec_depend>\n||g" {}
+
       - name: Install yq
         run: |
           apt-get -y update
@@ -50,9 +54,9 @@ jobs:
       - name: Create build_depends.repos
         run: |
           curl -sSL -H "Authorization: token ${{ secrets.REPO_TOKEN }}" ${{ env.BUILD_DEPEND_FILE }} | sed -e "s|git@github.com:|https://github.com/|g" > build_depends.repos
-          repo_key=$(grep ${{ env.SELF_REPO }} build_depends.repos -B2 | grep ":\$" | sed -r 's|\s+([a-zA-Z/]+):|\1|g')
+          repo_key=$(grep ${{ env.SELF_REPO }} build_depends.repos -B2 | grep ":\$" | sed -r 's|\s+([a-zA-Z/\.]+):|\1|g')
           echo "Remove $repo_key from build_depends.repos"
-          yq eval --inplace "del(.repositories.${repo_key})" build_depends.repos
+          yq eval --inplace "del(.repositories.\"${repo_key}\")" build_depends.repos
 
       - name: Set git config for private repositories
         run: |
