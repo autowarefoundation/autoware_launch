@@ -30,14 +30,6 @@ jobs:
           apt-get -y update
           apt-get -y install python3-pip
 
-      - name: Install kvaser library
-        run: |
-          apt-get -y update
-          apt-get -y install software-properties-common
-          add-apt-repository ppa:astuff/kvaser-linux
-          apt-get -y update
-          apt-get -y install kvaser-canlib-dev kvaser-drivers-dkms
-
       - name: Search modified package
         id: list_packages
         run: |
@@ -51,22 +43,6 @@ jobs:
         if: ${{ steps.list_packages.outputs.package_list != '' }}
         run: |
           find . -name package.xml | xargs -I {} sed -i -rz "s|<exec_depend>\s*[a-zA-Z_0-9]+\s*</exec_depend>\n||g" {}
-
-      - name: Install yq
-        if: ${{ steps.list_packages.outputs.package_list != '' }}
-        run: |
-          apt-get -y update
-          apt-get -y install wget
-          wget -O /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.9.1/yq_linux_amd64
-          chmod +x /usr/local/bin/yq
-
-      - name: Create build_depends.repos
-        if: ${{ steps.list_packages.outputs.package_list != '' }}
-        run: |
-          curl -sSL -H "Authorization: token ${{ secrets.REPO_TOKEN }}" ${{ env.BUILD_DEPEND_FILE }} | sed -e "s|git@github.com:|https://github.com/|g" > build_depends.repos
-          repo_key=$(grep ${{ env.SELF_REPO }} build_depends.repos -B2 | grep ":\$" | sed -r 's|\s+([a-zA-Z/\.]+):|\1|g')
-          echo "Remove $repo_key from build_depends.repos"
-          yq eval --inplace "del(.repositories.\"${repo_key}\")" build_depends.repos
 
       - name: Set git config for private repositories
         if: ${{ steps.list_packages.outputs.package_list != '' }}
