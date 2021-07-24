@@ -4,10 +4,6 @@ on:
   pull_request:
   workflow_dispatch:
 
-env:
-  BUILD_DEPEND_FILE: https://raw.githubusercontent.com/tier4/autoware.proj/main/autoware.proj.repos
-  SELF_REPO: tier4/autoware_launcher
-
 jobs:
   build-and-test-pr:
     runs-on: ubuntu-latest
