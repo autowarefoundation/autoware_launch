@@ -7,7 +7,7 @@ on:
 jobs:
   build-and-test-pr:
     runs-on: ubuntu-latest
-    container: osrf/ros:galactic-desktop
+    container: rostooling/setup-ros-docker:ubuntu-focal-ros-galactic-ros-base-latest
 
     steps:
       - name: Cancel previous runs
