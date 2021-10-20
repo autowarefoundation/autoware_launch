@@ -49,6 +49,8 @@ jobs:
           function is_main_base() {
             target_branch="$1"
 
+            git rev-parse --quiet --verify origin/develop || return 0
+
             main_base=$(git merge-base "${target_branch}" origin/main)
             develop_base=$(git merge-base "${target_branch}" origin/develop)
 
