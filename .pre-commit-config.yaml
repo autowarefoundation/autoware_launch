@@ -43,7 +43,6 @@ repos:
     rev: v2.4.1
     hooks:
       - id: prettier
-        exclude: "(.rviz|.param.yaml|traffic_light_camera.yaml)"
 
   - repo: https://github.com/tier4/pre-commit-hooks-ros
     rev: v0.3.0
