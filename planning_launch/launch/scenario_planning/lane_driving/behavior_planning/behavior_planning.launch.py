@@ -356,7 +356,7 @@ def generate_launch_description():
                     "pub",
                     "/planning/scenario_planning/lane_driving/behavior_planning/"
                     "behavior_path_planner/path_change_approval",
-                    "autoware_planning_msgs/msg/Approval",
+                    "tier4_planning_msgs/msg/Approval",
                     "{approval: true}",
                     "-r",
                     "10",
