@@ -19,7 +19,7 @@
   <arg name="vehicle_simulation" default="true" description="use vehicle simulation"/>
 
   <!-- Global parameters -->
-  <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
+  <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
     <arg name="vehicle_model" value="$(var vehicle_model)"/>
   </include>
 
@@ -62,7 +62,7 @@
   <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png" if="$(var rviz)"/>
 
   <!-- Web Controller -->
-  <include file="$(find-pkg-share autoware_web_controller)/launch/autoware_web_controller.launch.xml" unless="$(var scenario_simulation)"/>
+  <include file="$(find-pkg-share web_controller)/launch/web_controller.launch.xml" unless="$(var scenario_simulation)"/>
 
   <!-- Simulator -->
   <include file="$(find-pkg-share simulator_launch)/launch/simulator.launch.xml">
