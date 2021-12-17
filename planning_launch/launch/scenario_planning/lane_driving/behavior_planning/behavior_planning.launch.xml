@@ -3,7 +3,7 @@
   <arg name="map_topic_name" default="/map/vector_map" />
 
   <executable cmd="ros2 topic pub /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/path_change_approval
-                   autoware_planning_msgs/msg/Approval 'approval: true' -r 10"/>
+                   tier4_planning_msgs/msg/Approval 'approval: true' -r 10"/>
 
   <node pkg="behavior_path_planner" exec="behavior_path_planner" name="behavior_path_planner" output="screen">
     <remap from="~/input/route" to="$(var input_route_topic_name)" />
