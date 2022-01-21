@@ -1421,7 +1421,7 @@ Visualization Manager:
             Durability Policy: Volatile
             History Policy: Keep Last
             Reliability Policy: Reliable
-            Value: /control/trajectory_follower/pure_pursuit/debug/markers
+            Value: /control/trajectory_follower/pure_pursuit_node_exe/debug/markers
           Value: false
       Enabled: true
       Name: Control
