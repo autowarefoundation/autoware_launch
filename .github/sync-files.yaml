@@ -19,3 +19,14 @@
     - source: .github/workflows/build-and-test.yaml
     - source: .github/workflows/build-and-test-pr.yaml
     - source: .github/workflows/pre-commit.yaml
+
+- repository: autowarefoundation/autoware.universe
+  files:
+    - source: system/ad_service_state_monitor/config/ad_service_state_monitor.param.yaml
+      dest: system_launch/config/ad_service_state_monitor.param.yaml
+    - source: system/ad_service_state_monitor/config/ad_service_state_monitor.planning_simulation.param.yaml
+      dest: system_launch/config/ad_service_state_monitor.planning_simulation.param.yaml
+    - source: system/system_error_monitor/config/system_error_monitor.param.yaml
+      dest: system_launch/config/system_error_monitor.param.yaml
+    - source: system/system_error_monitor/config/system_error_monitor.planning_simulation.param.yaml
+      dest: system_launch/config/system_error_monitor.planning_simulation.param.yaml
