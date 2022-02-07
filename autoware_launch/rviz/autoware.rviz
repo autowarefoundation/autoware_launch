@@ -1141,6 +1141,8 @@ Visualization Manager:
                         obstacle: false
                         sidewalk: false
                         slow factor_text: true
+                        path_raw: false
+                        path_interp: false
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
