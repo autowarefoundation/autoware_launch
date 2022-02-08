@@ -50,6 +50,7 @@
   <include file="$(find-pkg-share control_launch)/launch/control.launch.py">
     <!-- options for lateral_controller_mode: mpc_follower, pure_pursuit -->
     <arg name="lateral_controller_mode" value="mpc_follower" />
+    <arg name="lat_controller_param_path" value="$(find-pkg-share control_launch)/config/trajectory_follower/$(var lateral_controller_mode).param.yaml"/>>
   </include>
 
   <!-- Autoware API -->

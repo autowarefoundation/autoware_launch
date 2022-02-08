@@ -32,21 +32,9 @@ import yaml
 
 
 def launch_setup(context, *args, **kwargs):
-    lateral_controller_mode = LaunchConfiguration("lateral_controller_mode").perform(context)
-    if lateral_controller_mode == "mpc_follower":
-        lat_controller_param_path = (
-            FindPackageShare("control_launch").perform(context)
-            + "/config/trajectory_follower/lateral_controller.param.yaml"
-        )
-        with open(lat_controller_param_path, "r") as f:
-            lat_controller_param = yaml.safe_load(f)["/**"]["ros__parameters"]
-    elif lateral_controller_mode == "pure_pursuit":
-        lat_controller_param_path = (
-            FindPackageShare("control_launch").perform(context)
-            + "/config/pure_pursuit/pure_pursuit.param.yaml"
-        )
-        with open(lat_controller_param_path, "r") as f:
-            lat_controller_param = yaml.safe_load(f)["/**"]["ros__parameters"]
+    lat_controller_param_path = LaunchConfiguration("lat_controller_param_path").perform(context)
+    with open(lat_controller_param_path, "r") as f:
+        lat_controller_param = yaml.safe_load(f)["/**"]["ros__parameters"]
     lon_controller_param_path = LaunchConfiguration("lon_controller_param_path").perform(context)
     with open(lon_controller_param_path, "r") as f:
         lon_controller_param = yaml.safe_load(f)["/**"]["ros__parameters"]
@@ -316,6 +304,14 @@ def generate_launch_description():
     )
 
     # parameter file path
+    add_launch_arg(
+        "lat_controller_param_path",
+        [
+            FindPackageShare("control_launch"),
+            "/config/trajectory_follower/mpc_follower.param.yaml",
+        ],
+        "path to the parameter file of lateral controller. default is `mpc_follower`",
+    )
     add_launch_arg(
         "lon_controller_param_path",
         [
