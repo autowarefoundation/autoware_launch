@@ -4,10 +4,10 @@
   <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
   <arg name="vehicle_model" description="vehicle model name"/>
   <arg name="sensor_model" description="sensor model name"/>
-  <arg name="use_pointcloud_container" default="true" description="launch pointcloud container"/>
-  <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <!-- Optional parameters -->
   <arg name="rviz" default="true" description="launch rviz"/>
+  <arg name="use_pointcloud_container" default="true" description="launch pointcloud container"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
 
