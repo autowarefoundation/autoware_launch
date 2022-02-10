@@ -103,12 +103,6 @@ def launch_setup(context, *args, **kwargs):
         ],
         parameters=[
             lon_controller_param,
-            {
-                "control_rate": LaunchConfiguration("control_rate"),
-                "show_debug_info": LaunchConfiguration("show_debug_info"),
-                "enable_smooth_stop": LaunchConfiguration("enable_smooth_stop"),
-                "enable_pub_debug": LaunchConfiguration("enable_pub_debug"),
-            },
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
@@ -340,14 +334,6 @@ def generate_launch_description():
         "lane_departure_checker_param_path",
         [FindPackageShare("lane_departure_checker"), "/config/lane_departure_checker.param.yaml"],
     )
-
-    # velocity controller
-    add_launch_arg("control_rate", "30.0", "control rate")
-    add_launch_arg("show_debug_info", "false", "show debug information")
-    add_launch_arg(
-        "enable_smooth_stop", "true", "enable smooth stop (in velocity controller state)"
-    )
-    add_launch_arg("enable_pub_debug", "true", "enable to publish debug information")
 
     # vehicle cmd gate
     add_launch_arg("use_emergency_handling", "false", "use emergency handling")
