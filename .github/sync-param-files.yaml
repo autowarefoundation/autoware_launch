@@ -1,0 +1,30 @@
+- repository: tier4/autoware.universe
+  files:
+    # system
+    ## ad_service_state_monitor
+    - source: system/ad_service_state_monitor/config/ad_service_state_monitor.param.yaml
+      dest: system_launch/config/ad_service_state_monitor.param.yaml
+    - source: system/ad_service_state_monitor/config/ad_service_state_monitor.planning_simulation.param.yaml
+      dest: system_launch/config/ad_service_state_monitor.planning_simulation.param.yaml
+
+    ## system_error_monitor
+    - source: system/system_error_monitor/config/system_error_monitor.param.yaml
+      dest: system_launch/config/system_error_monitor.param.yaml
+    - source: system/system_error_monitor/config/system_error_monitor.planning_simulation.param.yaml
+      dest: system_launch/config/system_error_monitor.planning_simulation.param.yaml
+
+    ## system_monitor
+    - source: system/system_monitor/config/cpu_monitor.param.yaml
+      dest: system_launch/config/system_monitor/cpu_monitor.param.yaml
+    - source: system/system_monitor/config/gpu_monitor.param.yaml
+      dest: system_launch/config/system_monitor/gpu_monitor.param.yaml
+    - source: system/system_monitor/config/hdd_monitor.param.yaml
+      dest: system_launch/config/system_monitor/hdd_monitor.param.yaml
+    - source: system/system_monitor/config/mem_monitor.param.yaml
+      dest: system_launch/config/system_monitor/mem_monitor.param.yaml
+    - source: system/system_monitor/config/net_monitor.param.yaml
+      dest: system_launch/config/system_monitor/net_monitor.param.yaml
+    - source: system/system_monitor/config/ntp_monitor.param.yaml
+      dest: system_launch/config/system_monitor/ntp_monitor.param.yaml
+    - source: system/system_monitor/config/process_monitor.param.yaml
+      dest: system_launch/config/system_monitor/process_monitor.param.yaml
