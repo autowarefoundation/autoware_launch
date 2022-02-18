@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(tier4_autoware_launch)
+project(autoware_launch)
 
 find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
