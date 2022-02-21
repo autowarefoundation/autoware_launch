@@ -38,7 +38,7 @@
 
   <!-- Map -->
   <include file="$(find-pkg-share tier4_map_launch)/launch/map.launch.py">
-    <arg name="lanelet2_map_path" value="$(var map_path)/$(var lanelet2_map_file)" />
+    <arg name="lanelet2_map_path" value="$(var map_path)/$(var lanelet2_map_file)"/>
     <arg name="pointcloud_map_path" value="$(var map_path)/$(var pointcloud_map_file)"/>
   </include>
 
@@ -50,7 +50,7 @@
   <!-- Control -->
   <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
     <!-- options for lateral_controller_mode: mpc_follower, pure_pursuit -->
-    <arg name="lateral_controller_mode" value="mpc_follower" />
+    <arg name="lateral_controller_mode" value="mpc_follower"/>
     <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
   </include>
 
