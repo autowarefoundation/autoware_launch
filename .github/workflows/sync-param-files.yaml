@@ -21,3 +21,6 @@ jobs:
         with:
           token: ${{ steps.generate-token.outputs.token }}
           config: .github/sync-param-files.yaml
+          pr-branch: sync-param-files
+          pr-title: "chore: sync param files"
+          pr-commit-message: "chore: sync param files"
