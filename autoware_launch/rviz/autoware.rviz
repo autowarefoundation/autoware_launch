@@ -1077,6 +1077,20 @@ Visualization Manager:
                       Value: true
                     - Class: rviz_default_plugins/MarkerArray
                       Enabled: true
+                      Name: MergeFromPrivate
+                      Namespaces:
+                        factor_text: true
+                        stop_point_pose_line: false
+                        stop_virtual_wall: true
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/merge_from_private
+                      Value: true
+                    - Class: rviz_default_plugins/MarkerArray
+                      Enabled: true
                       Name: Blind Spot
                       Namespaces:
                         conflict_area_for_blind_spot: false
