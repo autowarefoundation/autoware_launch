@@ -15,7 +15,6 @@
 import os
 
 from ament_index_python.packages import get_package_share_directory
-import launch
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import SetLaunchConfiguration
@@ -38,6 +37,7 @@ def generate_launch_description():
 
     ssd_fine_detector_share_dir = get_package_share_directory("traffic_light_ssd_fine_detector")
     classifier_share_dir = get_package_share_directory("traffic_light_classifier")
+    add_launch_arg("enable_image_decompressor", "True")
     add_launch_arg("enable_fine_detection", "True")
     add_launch_arg("input/image", "/sensing/camera/traffic_light/image_raw")
 
@@ -82,22 +82,6 @@ def generate_launch_description():
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[
-            ComposableNode(
-                package="image_transport_decompressor",
-                plugin="image_preprocessor::ImageTransportDecompressor",
-                name="traffic_light_image_decompressor",
-                parameters=[{"encoding": "rgb8"}],
-                remappings=[
-                    (
-                        "~/input/compressed_image",
-                        [LaunchConfiguration("input/image"), "/compressed"],
-                    ),
-                    ("~/output/raw_image", LaunchConfiguration("input/image")),
-                ],
-                extra_arguments=[
-                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-                ],
-            ),
             ComposableNode(
                 package="traffic_light_classifier",
                 plugin="traffic_light::TrafficLightClassifierNodelet",
@@ -146,6 +130,29 @@ def generate_launch_description():
         output="both",
     )
 
+    decompressor_loader = LoadComposableNodes(
+        composable_node_descriptions=[
+            ComposableNode(
+                package="image_transport_decompressor",
+                plugin="image_preprocessor::ImageTransportDecompressor",
+                name="traffic_light_image_decompressor",
+                parameters=[{"encoding": "rgb8"}],
+                remappings=[
+                    (
+                        "~/input/compressed_image",
+                        [LaunchConfiguration("input/image"), "/compressed"],
+                    ),
+                    ("~/output/raw_image", LaunchConfiguration("input/image")),
+                ],
+                extra_arguments=[
+                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+                ],
+            ),
+        ],
+        target_container=container,
+        condition=IfCondition(LaunchConfiguration("enable_image_decompressor")),
+    )
+
     ssd_fine_detector_param = create_parameter_dict(
         "onnx_file",
         "label_file",
@@ -157,7 +164,7 @@ def generate_launch_description():
     )
     ssd_fine_detector_param["mode"] = LaunchConfiguration("fine_detector_precision")
 
-    loader = LoadComposableNodes(
+    fine_detector_loader = LoadComposableNodes(
         composable_node_descriptions=[
             ComposableNode(
                 package="traffic_light_ssd_fine_detector",
@@ -175,7 +182,7 @@ def generate_launch_description():
             ),
         ],
         target_container=container,
-        condition=launch.conditions.IfCondition(LaunchConfiguration("enable_fine_detection")),
+        condition=IfCondition(LaunchConfiguration("enable_fine_detection")),
     )
 
     set_container_executable = SetLaunchConfiguration(
@@ -196,6 +203,7 @@ def generate_launch_description():
             set_container_executable,
             set_container_mt_executable,
             container,
-            loader,
+            decompressor_loader,
+            fine_detector_loader,
         ]
     )

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
 <launch>
+  <arg name="enable_image_decompressor" default="true" description="enable image decompressor"/>
   <arg name="enable_fine_detection" default="true" description="enable fine position adjustment of traffic light"/>
   <arg name="input/image" default="/sensing/camera/traffic_light/image_raw" description="image raw topic name for traffic light"/>
   <arg name="input/camera_info" default="/sensing/camera/traffic_light/camera_info" description="camera info topic name for traffic light"/>
@@ -22,6 +23,7 @@
   <!-- classification -->
   <include file="$(find-pkg-share perception_launch)/launch/traffic_light_recognition/traffic_light_node_container.launch.py">
     <arg name="input/image" value="$(var input/image)"/>
+    <arg name="enable_image_decompressor" value="$(var enable_image_decompressor)"/>
     <arg name="enable_fine_detection" value="$(var enable_fine_detection)"/>
     <arg name="use_intra_process" value="true"/>
     <arg name="use_multithread" value="false"/>
