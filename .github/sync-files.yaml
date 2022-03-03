@@ -22,3 +22,4 @@
     - source: .github/workflows/build-and-test.yaml
     - source: .github/workflows/build-and-test-differential.yaml
     - source: .github/workflows/check-build-depends.yaml
+    - source: .github/workflows/sync-files.yaml
