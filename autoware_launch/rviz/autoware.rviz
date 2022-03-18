@@ -1324,6 +1324,19 @@ Visualization Manager:
                         Reliability Policy: Reliable
                         Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_avoidance_planner/debug/marker
                       Value: true
+                    - Class: rviz_default_plugins/MarkerArray
+                      Enabled: true
+                      Name: ObstacleAvoidanceWall
+                      Namespaces:
+                        virtual_wall: true
+                        virtual_wall_text: true
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_avoidance_planner/debug/wall_marker
+                      Value: true
                   Enabled: true
                   Name: MotionPlanning
               Enabled: true
