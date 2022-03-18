@@ -35,6 +35,7 @@
     <include file="$(find-pkg-share system_error_monitor)/launch/system_error_monitor.launch.xml">
       <arg name="config_file" value="$(var config_file)" />
       <arg name="extra_agg_config_file_sensing" value="$(var sensor_launch_pkg)/config/diagnostic_aggregator/sensor_kit.param.yaml" />
+      <arg name="extra_agg_config_file_system" value="$(find-pkg-share system_launch)/config/diagnostic_aggregator/system.param.yaml" />
       <arg name="extra_agg_config_file_vehicle" value="$(find-pkg-share system_launch)/config/diagnostic_aggregator/vehicle.param.yaml" />
       <arg name="use_emergency_hold" value="false" />
     </include>
