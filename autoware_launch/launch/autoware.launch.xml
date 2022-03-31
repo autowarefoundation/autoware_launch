@@ -50,7 +50,8 @@
   </include>
 
   <!-- Localization -->
-  <include file="$(find-pkg-share localization_launch)/launch/localization.launch.xml" />
+  <include file="$(find-pkg-share localization_launch)/launch/localization.launch.xml">
+  </include>
 
   <!-- Perception -->
   <include file="$(find-pkg-share perception_launch)/launch/perception.launch.xml">

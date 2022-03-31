@@ -34,7 +34,7 @@ def launch_setup(context, *args, **kwargs):
         plugin="pointcloud_preprocessor::CropBoxFilterComponent",
         name="crop_box_filter_measurement_range",
         remappings=[
-            ("input", LaunchConfiguration("input/pointcloud")),
+            ("input", LaunchConfiguration("input_sensor_points_topic")),
             ("output", LaunchConfiguration("output_measurement_range_sensor_points_topic")),
         ],
         parameters=[
@@ -110,6 +110,11 @@ def generate_launch_description():
         "container",
         "/sensing/lidar/top/pointcloud_preprocessor/velodyne_node_container",
         "container name",
+    )
+    add_launch_arg(
+        "input_sensor_points_topic",
+        "/sensing/lidar/top/rectified/pointcloud",
+        "input topic name for raw pointcloud",
     )
     add_launch_arg(
         "output_measurement_range_sensor_points_topic",

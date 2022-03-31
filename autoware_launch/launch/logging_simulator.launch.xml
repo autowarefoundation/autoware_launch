@@ -76,7 +76,8 @@
 
   <!-- Localization -->
   <group>
-    <include file="$(find-pkg-share localization_launch)/launch/localization.launch.xml" if="$(var localization)" />
+    <include file="$(find-pkg-share localization_launch)/launch/localization.launch.xml" if="$(var localization)">
+    </include>
   </group>
 
   <!-- Perception -->
