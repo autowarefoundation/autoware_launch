@@ -3,6 +3,7 @@
 <launch>
   <!-- common parameters -->
   <arg name="mode" default="camera_lidar_fusion" description="options: `camera_lidar_fusion`, `lidar` or `camera`"/>
+  <arg name="input/pointcloud" default="/sensing/lidar/pointcloud" description="The topic will be used in the detection module" />
   <arg name="image_raw0" default="/sensing/camera/camera0/image_rect_color" description="image raw topic name"/>
   <arg name="camera_info0" default="/sensing/camera/camera0/camera_info" description="camera info topic name"/>
   <arg name="image_raw1" default="/sensing/camera/camera1/image_rect_color"/>
@@ -64,6 +65,7 @@
         <push-ros-namespace namespace="detection"/>
         <include file="$(find-pkg-share perception_launch)/launch/object_recognition/detection/detection.launch.xml">
           <arg name="mode" value="$(var mode)"/>
+          <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
           <arg name="image_raw0" value="$(var image_raw0)"/>
           <arg name="camera_info0" value="$(var camera_info0)"/>
           <arg name="image_raw1" value="$(var image_raw1)"/>
