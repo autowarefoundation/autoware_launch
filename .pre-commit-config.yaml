@@ -80,17 +80,4 @@ repos:
             flake8-quotes,
           ]
 
-  - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: v13.0.1
-    hooks:
-      - id: clang-format
-        types_or: [c++, c, cuda]
-
-  - repo: https://github.com/cpplint/cpplint
-    rev: 1.5.5
-    hooks:
-      - id: cpplint
-        args: [--quiet]
-        exclude: .cu
-
 exclude: .svg
