@@ -20,6 +20,7 @@
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
   <arg name="use_pointcloud_container" default="true" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="launch_vehicle_interface" value="false"/>
   <!-- Optional parameters for scenario simulation -->
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
 
@@ -44,7 +45,7 @@
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
       <arg name="sensor_model" value="$(var sensor_model)"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
-      <arg name="launch_vehicle_interface" value="false"/>
+      <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
     </include>
   </group>
 
