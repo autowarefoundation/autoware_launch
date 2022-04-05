@@ -79,7 +79,7 @@
 
   <!-- Localization -->
   <group>
-    <include file="$(find-pkg-share localization_launch)/launch/localization.launch.xml"/>
+    <include file="$(find-pkg-share localization_launch)/launch/localization.launch.xml" if="$(var localization)"/>
   </group>
 
   <!-- Perception -->
@@ -94,7 +94,7 @@
 
   <!-- Planning -->
   <group>
-    <include file="$(find-pkg-share planning_launch)/launch/planning.launch.xml"/>
+    <include file="$(find-pkg-share planning_launch)/launch/planning.launch.xml" if="$(var planning)"/>
   </group>
 
   <!-- Control -->
