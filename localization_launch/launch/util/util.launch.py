@@ -106,16 +106,7 @@ def generate_launch_description():
         "path to the parameter file of random_downsample_filter",
     )
     add_launch_arg("use_intra_process", "true", "use ROS2 component container communication")
-    add_launch_arg(
-        "container",
-        "/sensing/lidar/top/pointcloud_preprocessor/velodyne_node_container",
-        "container name",
-    )
-    add_launch_arg(
-        "input/pointcloud",
-        "/sensing/lidar/top/rectified/pointcloud",
-        "input topic name for raw pointcloud",
-    )
+
     add_launch_arg(
         "output/pointcloud",
         "downsample/pointcloud",
