@@ -5,6 +5,7 @@
     - source: .github/workflows/pre-commit-optional.yaml
     - source: .github/workflows/semantic-pull-request.yaml
     - source: .github/workflows/spell-check-differential.yaml
+    - source: .github/workflows/sync-files.yaml
     - source: .markdown-link-check.json
     - source: .markdownlint.yaml
     - source: .pre-commit-config-optional.yaml
@@ -17,4 +18,3 @@
   files:
     - source: .github/workflows/build-and-test.yaml
     - source: .github/workflows/build-and-test-differential.yaml
-    - source: .github/workflows/sync-files.yaml
