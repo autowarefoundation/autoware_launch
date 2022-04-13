@@ -1235,6 +1235,18 @@ Visualization Manager:
                         Constant Color: false
                         Scale: 0.30000001192092896
                         Value: false
+                    - Class: rviz_default_plugins/MarkerArray
+                      Enabled: false
+                      Name: DrivableAreaBoundary
+                      Namespaces:
+                        {}
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/drivable_area_boundary
+                      Value: true
                   Enabled: true
                   Name: BehaviorPlanning
                 - Class: rviz_common/Group
