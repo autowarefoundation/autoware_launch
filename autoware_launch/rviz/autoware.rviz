@@ -1417,6 +1417,22 @@ Visualization Manager:
                   Value: true
               Enabled: true
               Name: Parking
+            - Class: rviz_common/Group
+              Displays:
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: TrajectoryErrorMarker
+                  Namespaces:
+                    trajectory_relative_angle: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/planning_diagnostics/planning_error_monitor/debug/marker
+                  Value: true
+              Enabled: true
+              Name: PlanningDiagnostics
           Enabled: true
           Name: ScenarioPlanning
       Enabled: true
