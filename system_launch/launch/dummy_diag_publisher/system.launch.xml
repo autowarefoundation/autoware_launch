@@ -1,0 +1,91 @@
+<launch>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="bagpacker"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="NTP Offset"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="CPU Temperature"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="CPU Usage"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="CPU Thermal Throttling"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="CPU Frequency"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="CPU Load Average"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="GPU Temperature"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="GPU Usage"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="GPU Memory Usage"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="GPU Thermal Throttling"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="Memory Usage"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="Network Usage"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="Network Traffic"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="HDD Temperature"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="Network Traffic"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="HDD Usage"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="HDD PowerOnHours"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="HDD TotalDataWritten"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="High-load"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="High-mem"/>
+  </include>
+
+  <include file="$(find-pkg-share dummy_diag_publisher)/launch/dummy_diag_publisher_node.launch.xml">
+    <arg name="diag_name" value="Tasks Summary"/>
+  </include>
+
+</launch>
