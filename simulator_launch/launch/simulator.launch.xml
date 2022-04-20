@@ -13,7 +13,9 @@
   <let name="vehicle_model_pkg" value="$(find-pkg-share $(var vehicle_model)_description)"/>
 
   <group if="$(var scenario_simulation)">
-    <include file="$(find-pkg-share fault_injection)/launch/fault_injection.launch.xml"/>
+    <include file="$(find-pkg-share fault_injection)/launch/fault_injection.launch.xml">
+      <arg name="config_file" value="$(find-pkg-share simulator_launch)/config/fault_injection.param.yaml"/>
+    </include>
   </group>
 
   <!-- Dummy Perception -->
