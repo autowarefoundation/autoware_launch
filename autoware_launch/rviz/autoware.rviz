@@ -1185,7 +1185,7 @@ Visualization Manager:
                         detection_area: false
                         slow factor_text: true
                         path_raw: false
-                        path_interp: false
+                        path_interpolated: false
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
