@@ -147,15 +147,20 @@
   </group>
 
   <!-- Merger -->
-  <include file="$(find-pkg-share object_merger)/launch/object_association_merger.launch.xml">
-    <arg name="input/object0" value="$(var lidar_detection_model)/validation/objects"/>
-    <arg name="input/object1" value="clustering/camera_lidar_fusion/short_range_objects"/>
-    <arg name="output/object" value="camera_lidar_fusion/objects"/>
-  </include>
-  <include file="$(find-pkg-share object_merger)/launch/object_association_merger.launch.xml">
-    <arg name="input/object0" value="detection_by_tracker/objects"/>
-    <arg name="input/object1" value="camera_lidar_fusion/objects"/>
-    <arg name="output/object" value="objects"/>
-  </include>
+  <group>
+    <include file="$(find-pkg-share object_merger)/launch/object_association_merger.launch.xml">
+      <arg name="input/object0" value="$(var lidar_detection_model)/validation/objects"/>
+      <arg name="input/object1" value="clustering/camera_lidar_fusion/short_range_objects"/>
+      <arg name="output/object" value="camera_lidar_fusion/objects"/>
+    </include>
+  </group>
+
+  <group>
+    <include file="$(find-pkg-share object_merger)/launch/object_association_merger.launch.xml">
+      <arg name="input/object0" value="detection_by_tracker/objects"/>
+      <arg name="input/object1" value="camera_lidar_fusion/objects"/>
+      <arg name="output/object" value="objects"/>
+    </include>
+  </group>
 
 </launch>
