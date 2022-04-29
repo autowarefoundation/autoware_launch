@@ -69,9 +69,12 @@
       <!-- control parameters -->
       <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
       <!-- control yaml paths -->
-      <arg name="lat_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower_nodes/lateral_controller.param.yaml"/>
-      <arg name="pure_pursit_param_path" value="$(find-pkg-share autoware_launch)/config/control/pure_pursit/pure_pursit.param.yaml"/>
-      <arg name="lon_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower_nodes/longitudinal_controller.param.yaml"/>
+      <arg name="lat_controller_common_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower_nodes/lateral_controller_common.param.yaml"/>
+      <arg name="lat_controller_individual_param_path" value="$(find-pkg-share individual_params)/config/control/trajectory_follower_nodes/lateral_controller_individual.param.yaml"/>
+      <arg name="lon_controller_common_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower_nodes/longitudinal_controller_common.param.yaml"/>
+      <arg name="lon_controller_individual_param_path" value="$(find-pkg-share individual_params)/config/control/trajectory_follower_nodes/longitudinal_controller_individual.param.yaml"/>
+      <arg name="pure_pursuit_common_param_path" value="$(find-pkg-share autoware_launch)/config/control/pure_pursuit/pure_pursuit_common.param.yaml"/>
+      <arg name="pure_pursuit_individual_param_path" value="$(find-pkg-share individual_params)/config/control/pure_pursuit/pure_pursuit_individual.param.yaml"/>
       <arg name="latlon_muxer_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower_nodes/latlon_muxer.param.yaml"/>
       <arg name="vehicle_cmd_gate_param_path" value="$(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
       <arg name="lane_departure_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/lane_departure_checker/lane_departure_checker.param.yaml"/>
