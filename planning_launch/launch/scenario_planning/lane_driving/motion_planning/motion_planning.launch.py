@@ -83,39 +83,26 @@ def generate_launch_description():
         surround_obstacle_checker_param = yaml.safe_load(f)["/**"]["ros__parameters"]
     surround_obstacle_checker_component = ComposableNode(
         package="surround_obstacle_checker",
-        plugin="SurroundObstacleCheckerNode",
+        plugin="surround_obstacle_checker::SurroundObstacleCheckerNode",
         name="surround_obstacle_checker",
         namespace="",
         remappings=[
             ("~/output/no_start_reason", "/planning/scenario_planning/status/no_start_reason"),
             ("~/output/stop_reasons", "/planning/scenario_planning/status/stop_reasons"),
-            ("~/output/trajectory", "surround_obstacle_checker/trajectory"),
+            ("~/output/max_velocity", "/planning/scenario_planning/max_velocity_candidates"),
+            (
+                "~/output/velocity_limit_clear_command",
+                "/planning/scenario_planning/clear_velocity_limit",
+            ),
             (
                 "~/input/pointcloud",
                 "/perception/obstacle_segmentation/pointcloud",
             ),
             ("~/input/objects", "/perception/object_recognition/objects"),
             ("~/input/odometry", "/localization/kinematic_state"),
-            ("~/input/trajectory", "obstacle_avoidance_planner/trajectory"),
         ],
         parameters=[
             surround_obstacle_checker_param,
-        ],
-        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
-    )
-
-    # relay
-    relay_component = ComposableNode(
-        package="topic_tools",
-        plugin="topic_tools::RelayNode",
-        name="skip_surround_obstacle_check_relay",
-        namespace="",
-        parameters=[
-            {
-                "input_topic": "obstacle_avoidance_planner/trajectory",
-                "output_topic": "surround_obstacle_checker/trajectory",
-                "type": "autoware_auto_planning_msgs/msg/Trajectory",
-            }
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
@@ -163,7 +150,7 @@ def generate_launch_description():
             ),
             ("~/input/objects", "/perception/object_recognition/objects"),
             ("~/input/odometry", "/localization/kinematic_state"),
-            ("~/input/trajectory", "surround_obstacle_checker/trajectory"),
+            ("~/input/trajectory", "obstacle_avoidance_planner/trajectory"),
         ],
         parameters=[
             common_param,
@@ -191,12 +178,6 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration("use_surround_obstacle_check")),
     )
 
-    relay_loader = LoadComposableNodes(
-        composable_node_descriptions=[relay_component],
-        target_container=container,
-        condition=UnlessCondition(LaunchConfiguration("use_surround_obstacle_check")),
-    )
-
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
         "component_container",
@@ -221,6 +202,5 @@ def generate_launch_description():
             set_container_mt_executable,
             container,
             surround_obstacle_checker_loader,
-            relay_loader,
         ]
     )
