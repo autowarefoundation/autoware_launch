@@ -13,7 +13,6 @@
   <exec_depend>control_launch</exec_depend>
   <exec_depend>global_parameter_loader</exec_depend>
   <exec_depend>localization_launch</exec_depend>
-  <exec_depend>map_launch</exec_depend>
   <exec_depend>perception_launch</exec_depend>
   <exec_depend>planning_launch</exec_depend>
   <exec_depend>python3-bson</exec_depend>
@@ -22,6 +21,7 @@
   <exec_depend>sensing_launch</exec_depend>
   <exec_depend>simulator_launch</exec_depend>
   <exec_depend>system_launch</exec_depend>
+  <exec_depend>tier4_map_launch</exec_depend>
   <exec_depend>vehicle_launch</exec_depend>
   <exec_depend>web_controller</exec_depend>
 
