@@ -21,7 +21,7 @@
     resolution: 2.0
 
     # The number of iterations required to calculate alignment
-    max_iterations: 30
+    max_iterations: 3 #30S
 
     # Converged param type
     # 0=TRANSFORM_PROBABILITY, 1=NEAREST_VOXEL_TRANSFORMATION_LIKELIHOOD
