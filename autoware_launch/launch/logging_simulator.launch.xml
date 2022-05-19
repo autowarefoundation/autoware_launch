@@ -88,7 +88,6 @@
     </include>
   </group>
 
-
   <!-- Perception -->
   <group>
     <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml" if="$(var perception)">
