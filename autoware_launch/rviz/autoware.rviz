@@ -67,12 +67,9 @@ Visualization Manager:
           Displays:
             - Class: rviz_plugins/SteeringAngle
               Enabled: true
-              Left: 128
-              Length: 256
               Name: SteeringAngle
               Scale: 17
               Text Color: 25; 255; 240
-              Top: 128
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
@@ -83,12 +80,9 @@ Visualization Manager:
               Value height offset: 0
             - Class: rviz_plugins/ConsoleMeter
               Enabled: true
-              Left: 512
-              Length: 256
               Name: ConsoleMeter
               Scale: 3
               Text Color: 25; 255; 240
-              Top: 128
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
@@ -302,11 +296,8 @@ Visualization Manager:
               Wave Velocity: 40
             - Class: rviz_plugins/MaxVelocity
               Enabled: true
-              Left: 595
-              Length: 96
               Name: MaxVelocity
               Text Color: 255; 255; 255
-              Top: 280
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
@@ -316,10 +307,7 @@ Visualization Manager:
               Value: true
             - Class: rviz_plugins/TurnSignal
               Enabled: true
-              Height: 256
-              Left: 196
               Name: TurnSignal
-              Top: 350
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
@@ -327,7 +315,6 @@ Visualization Manager:
                 Reliability Policy: Reliable
                 Value: /vehicle/status/turn_indicators_status
               Value: true
-              Width: 512
           Enabled: true
           Name: Vehicle
       Enabled: true
