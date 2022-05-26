@@ -52,7 +52,7 @@ class GroundSegmentationPipeline:
         # https://github.com/ros2/launch_ros/blob/master/launch_ros/launch_ros/substitutions/parameter.py
         gp = self.context.launch_configurations.get("ros_params", {})
         if not gp:
-            gp = self.context.launch_configurations.get("global_params", {})
+            gp = dict(self.context.launch_configurations.get("global_params", {}))
         p = {}
         p["vehicle_length"] = gp["front_overhang"] + gp["wheel_base"] + gp["rear_overhang"]
         p["vehicle_width"] = gp["wheel_tread"] + gp["left_overhang"] + gp["right_overhang"]
