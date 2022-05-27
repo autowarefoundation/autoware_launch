@@ -1,5 +1,7 @@
 # autoware_launch
 
-This is one of the prototype repositories for Autoware Core/Universe that AWF agreed to create in the [TSC meeting on 2021/11/17](https://discourse.ros.org/t/technical-steering-committee-tsc-meeting-36-2021-11-17-minutes/23168).
+Launch configuration repository containing node configurations and their parameters.
 
-Please see [autowarefoundation/autoware](https://github.com/autowarefoundation/autoware) for more details.
+This meta-repository that constructs an Autoware workspace is [autowarefoundation/autoware](https://github.com/autowarefoundation/autoware).
+
+For Autoware's general documentation, see [Autoware Documentation](https://autowarefoundation.github.io/autoware-documentation/).
