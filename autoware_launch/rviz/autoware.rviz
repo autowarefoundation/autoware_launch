@@ -359,7 +359,9 @@ Visualization Manager:
           Name: Lanelet2VectorMap
           Namespaces:
             center_lane_line: false
+            center_line_arrows: false
             crosswalk_lanelets: true
+            lane_start_bound: false
             lanelet direction: true
             lanelet_id: false
             left_lane_bound: true
