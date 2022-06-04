@@ -888,6 +888,7 @@ Visualization Manager:
               Name: RouteArea
               Namespaces:
                 goal_lanelets: true
+                lane_start_bound: false
                 left_lane_bound: false
                 right_lane_bound: false
                 route_lanelets: true
