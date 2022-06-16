@@ -846,6 +846,18 @@ Visualization Manager:
                 Alpha: 0.999
                 Color: 255; 255; 255
               Value: true
+            - Class: rviz_default_plugins/MarkerArray
+              Enabled: false
+              Name: Maneuver
+              Namespaces:
+                maneuver: true
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /perception/object_recognition/prediction/maneuver
+              Value: true
           Enabled: true
           Name: Prediction
         - Class: rviz_common/Group
