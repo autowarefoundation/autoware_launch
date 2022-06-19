@@ -18,11 +18,8 @@ Panels:
     Splitter Ratio: 0.5
   - Class: tier4_localization_rviz_plugin/InitialPoseButtonPanel
     Name: InitialPoseButtonPanel
-  - Class: rviz_common/Time
-    Experimental: false
-    Name: Time
-    SyncMode: 0
-    SyncSource: ""
+  - Class: AutowareDateTimePanel
+    Name: AutowareDateTimePanel
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
