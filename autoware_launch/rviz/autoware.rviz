@@ -846,7 +846,7 @@ Visualization Manager:
                     Color: 255; 255; 255
                   Value: true
                 - Class: rviz_default_plugins/MarkerArray
-                  Enabled: true
+                  Enabled: false
                   Name: Maneuver
                   Namespaces: {}
                   Topic:
