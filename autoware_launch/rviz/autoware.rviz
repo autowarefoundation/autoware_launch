@@ -745,7 +745,7 @@ Visualization Manager:
                     Depth: 5
                     Durability Policy: Volatile
                     History Policy: Keep Last
-                    Reliability Policy: BestEffort
+                    Reliability Policy: Best Effort
                     Value: /perception/object_recognition/detection/objects
                   UNKNOWN:
                     Alpha: 0.999
@@ -792,7 +792,7 @@ Visualization Manager:
                     Depth: 5
                     Durability Policy: Volatile
                     History Policy: Keep Last
-                    Reliability Policy: BestEffort
+                    Reliability Policy: Best Effort
                     Value: /perception/object_recognition/tracking/objects
                   UNKNOWN:
                     Alpha: 0.999
@@ -839,7 +839,7 @@ Visualization Manager:
                     Depth: 5
                     Durability Policy: Volatile
                     History Policy: Keep Last
-                    Reliability Policy: BestEffort
+                    Reliability Policy: Best Effort
                     Value: /perception/object_recognition/objects
                   UNKNOWN:
                     Alpha: 0.999
@@ -862,7 +862,7 @@ Visualization Manager:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
-                Reliability Policy: BestEffort
+                Reliability Policy: Best Effort
                 Value: /perception/traffic_light_recognition/debug/rois
               Value: true
             - Class: rviz_default_plugins/MarkerArray
@@ -873,7 +873,7 @@ Visualization Manager:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
-                Reliability Policy: BestEffort
+                Reliability Policy: Best Effort
                 Value: /perception/traffic_light_recognition/traffic_light_map_based_detector/debug/markers
               Value: true
           Enabled: true
@@ -891,13 +891,13 @@ Visualization Manager:
                 Durability Policy: Volatile
                 Filter size: 10
                 History Policy: Keep Last
-                Reliability Policy: BestEffort
+                Reliability Policy: Best Effort
                 Value: /perception/occupancy_grid_map/map
               Update Topic:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
-                Reliability Policy: BestEffort
+                Reliability Policy: Best Effort
                 Value: /perception/occupancy_grid_map/map_updates
               Use Timestamp: false
               Value: true
