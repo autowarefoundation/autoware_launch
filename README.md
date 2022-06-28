@@ -1,6 +1,6 @@
 # autoware_launcher
 
-## Getting Started
+## Getting started
 
 ### Using real vehicle
 
@@ -14,7 +14,7 @@ ros2 launch autoware_launch autoware.launch.xml map_path:=/path/to/map_folder ve
 ros2 launch autoware_launch planning_simulator.launch.xml map_path:=/path/to/map_folder vehicle_model:=[vehicle_name] sensor_model:=[sensor_name]
 ```
 
-## Directory Structure
+## Directory structure
 
 - [autoware_launch](./autoware_launch)
 - [control_launch](./control_launch)
