@@ -67,6 +67,7 @@ def generate_launch_description():
     add_launch_arg("input_h", "224")
     add_launch_arg("input_w", "224")
 
+    add_launch_arg("use_crosswalk_traffic_light_estimator", "True")
     add_launch_arg("use_intra_process", "False")
     add_launch_arg("use_multithread", "False")
 
@@ -101,7 +102,7 @@ def generate_launch_description():
                 remappings=[
                     ("~/input/image", LaunchConfiguration("input/image")),
                     ("~/input/rois", "rois"),
-                    ("~/output/traffic_signals", "traffic_signals"),
+                    ("~/output/traffic_signals", "classified/traffic_signals"),
                 ],
                 extra_arguments=[
                     {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
@@ -128,6 +129,46 @@ def generate_launch_description():
             ),
         ],
         output="both",
+    )
+
+    estimator_loader = LoadComposableNodes(
+        composable_node_descriptions=[
+            ComposableNode(
+                package="crosswalk_traffic_light_estimator",
+                plugin="traffic_light::CrosswalkTrafficLightEstimatorNode",
+                name="crosswalk_traffic_light_estimator",
+                remappings=[
+                    ("~/input/vector_map", "/map/vector_map"),
+                    ("~/input/route", "/planning/mission_planning/route"),
+                    ("~/input/classified/traffic_signals", "classified/traffic_signals"),
+                    ("~/output/traffic_signals", "traffic_signals"),
+                ],
+                extra_arguments=[{"use_intra_process_comms": False}],
+            ),
+        ],
+        target_container=container,
+        condition=IfCondition(LaunchConfiguration("use_crosswalk_traffic_light_estimator")),
+    )
+
+    relay_loader = LoadComposableNodes(
+        composable_node_descriptions=[
+            ComposableNode(
+                package="topic_tools",
+                plugin="topic_tools::RelayNode",
+                name="classified_signals_relay",
+                namespace="",
+                parameters=[
+                    {"input_topic": "classified/traffic_signals"},
+                    {"output_topic": "traffic_signals"},
+                    {"type": "autoware_auto_perception_msgs/msg/TrafficSignalArray"},
+                ],
+                extra_arguments=[
+                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+                ],
+            )
+        ],
+        target_container=container,
+        condition=UnlessCondition(LaunchConfiguration("use_crosswalk_traffic_light_estimator")),
     )
 
     decompressor_loader = LoadComposableNodes(
@@ -205,5 +246,7 @@ def generate_launch_description():
             container,
             decompressor_loader,
             fine_detector_loader,
+            estimator_loader,
+            relay_loader,
         ]
     )
