@@ -3,7 +3,7 @@
     common:
       planning_algorithm: "pid_base" # currently supported algorithm is "pid_base"
 
-      is_showing_debug_info: true
+      is_showing_debug_info: false
 
       # longitudinal info
       idling_time: 1.5 # idling time to detect front vehicle starting deceleration [s]
@@ -54,7 +54,7 @@
       max_prediction_time_for_collision_check : 20.0 # prediction time to check collision between obstacle and ego
 
       ignored_outside_obstacle_type:
-        unknown: false
+        unknown: true
         car: false
         truck: false
         bus: false
