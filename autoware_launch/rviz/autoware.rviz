@@ -726,6 +726,7 @@ Visualization Manager:
                   Display Twist: true
                   Display UUID: true
                   Display Velocity: true
+                  Line Width: 0.03
                   Enabled: true
                   MOTORCYCLE:
                     Alpha: 0.999
@@ -773,6 +774,7 @@ Visualization Manager:
                   Display Twist: true
                   Display UUID: true
                   Display Velocity: true
+                  Line Width: 0.03
                   Enabled: true
                   MOTORCYCLE:
                     Alpha: 0.999
@@ -820,6 +822,7 @@ Visualization Manager:
                   Display Twist: true
                   Display UUID: true
                   Display Velocity: true
+                  Line Width: 0.03
                   Enabled: true
                   MOTORCYCLE:
                     Alpha: 0.999
