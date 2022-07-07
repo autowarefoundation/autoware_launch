@@ -11,6 +11,7 @@
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
   <exec_depend>compare_map_segmentation</exec_depend>
+  <exec_depend>crosswalk_traffic_light_estimator</exec_depend>
   <exec_depend>euclidean_cluster</exec_depend>
   <exec_depend>ground_segmentation</exec_depend>
   <exec_depend>image_projection_based_fusion</exec_depend>
