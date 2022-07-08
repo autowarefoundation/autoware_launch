@@ -4,6 +4,8 @@
   <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
   <arg name="vehicle_model" description="vehicle model name"/>
   <arg name="sensor_model" description="sensor model name"/>
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
+
   <!-- Optional parameters -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
@@ -17,6 +19,9 @@
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
   <!-- Optional parameters for vcu emulation -->
   <arg name="vehicle_simulation" default="true" description="use vehicle simulation"/>
+
+  <!-- control parameters -->
+  <arg name="lateral_controller_mode" default="mpc_follower" description="lateral controller mode: `mpc_follower` or `pure_pursuit`"/>
 
   <!-- Global parameters -->
   <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
@@ -61,9 +66,23 @@
   <!-- Control -->
   <group>
     <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
-      <!-- options for lateral_controller_mode: mpc_follower, pure_pursuit -->
-      <arg name="lateral_controller_mode" value="mpc_follower"/>
+      <!-- vehicle info -->
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+      <!-- control parameters -->
+      <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
+      <!-- control yaml paths -->
+      <arg name="lat_controller_common_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower_nodes/lateral_controller_common.param.yaml"/>
+      <arg name="lat_controller_individual_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/control/trajectory_follower_nodes/lateral_controller_individual.param.yaml"/>
+      <arg name="lon_controller_common_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower_nodes/longitudinal_controller_common.param.yaml"/>
+      <arg
+        name="lon_controller_individual_param_path"
+        value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/control/trajectory_follower_nodes/longitudinal_controller_individual.param.yaml"
+      />
+      <arg name="pure_pursuit_common_param_path" value="$(find-pkg-share autoware_launch)/config/control/pure_pursuit/pure_pursuit_common.param.yaml"/>
+      <arg name="pure_pursuit_individual_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/control/pure_pursuit/pure_pursuit_individual.param.yaml"/>
+      <arg name="latlon_muxer_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower_nodes/latlon_muxer.param.yaml"/>
+      <arg name="vehicle_cmd_gate_param_path" value="$(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
+      <arg name="lane_departure_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/lane_departure_checker/lane_departure_checker.param.yaml"/>
     </include>
   </group>
 
