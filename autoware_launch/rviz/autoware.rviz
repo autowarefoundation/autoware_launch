@@ -1305,6 +1305,43 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/run_out
                           Value: false
+                        - Class: rviz_common/Group
+                          Displays:
+                            - Class: rviz_default_plugins/MarkerArray
+                              Enabled: true
+                              Name: GoalSearchArea
+                              Namespaces:
+                                collision_polygons: true
+                              Topic:
+                                Depth: 5
+                                Durability Policy: Volatile
+                                History Policy: Keep Last
+                                Reliability Policy: Reliable
+                                Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/pull_over/debug/parking_area
+                              Value: false
+                            - Alpha: 0.9990000128746033
+                              Arrow Length: 0.30000001192092896
+                              Axes Length: 0.30000001192092896
+                              Axes Radius: 0.009999999776482582
+                              Class: rviz_default_plugins/PoseArray
+                              Color: 255; 25; 0
+                              Enabled: false
+                              Head Length: 0.10000000149011612
+                              Head Radius: 0.20000000298023224
+                              Name: PullOverPathPoseArray
+                              Shaft Length: 0.20000000298023224
+                              Shaft Radius: 0.05000000074505806
+                              Shape: Arrow (3D)
+                              Topic:
+                                Depth: 5
+                                Durability Policy: Volatile
+                                Filter size: 10
+                                History Policy: Keep Last
+                                Reliability Policy: Reliable
+                                Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/pull_over/debug/path_pose_array
+                              Value: false
+                          Enabled: false
+                          Name: PullOver
                       Enabled: false
                       Name: DebugMarker
                   Enabled: true
@@ -1522,6 +1559,26 @@ Visualization Manager:
                   Value: true
               Enabled: true
               Name: Parking
+            - Alpha: 1
+              Axes Length: 1
+              Axes Radius: 0.30000001192092896
+              Class: rviz_default_plugins/Pose
+              Color: 255; 25; 0
+              Enabled: true
+              Head Length: 0.30000001192092896
+              Head Radius: 0.10000000149011612
+              Name: ModifiedGoal
+              Shaft Length: 1
+              Shaft Radius: 0.05000000074505806
+              Shape: Axes
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                Filter size: 10
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/scenario_planning/modified_goal
+              Value: true
           Enabled: true
           Name: ScenarioPlanning
       Enabled: true
