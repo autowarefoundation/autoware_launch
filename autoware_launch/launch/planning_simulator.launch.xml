@@ -18,52 +18,34 @@
   <!-- Optional parameters for vcu emulation -->
   <arg name="vehicle_simulation" default="true" description="use vehicle simulation"/>
 
-  <!-- Global parameters -->
-  <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
-    <arg name="vehicle_model" value="$(var vehicle_model)"/>
-  </include>
-
-  <!-- Vehicle -->
   <group>
+    <!-- Vehicle -->
     <let name="launch_vehicle_interface" value="false" if="$(var vehicle_simulation)"/>
     <let name="launch_vehicle_interface" value="true" unless="$(var vehicle_simulation)"/>
+    <!-- Tools -->
+    <let name="launch_web_controller" value="false" if="$(var scenario_simulation)"/>
+    <let name="launch_web_controller" value="true" unless="$(var scenario_simulation)"/>
 
-    <include file="$(find-pkg-share tier4_vehicle_launch)/launch/vehicle.launch.xml">
-      <arg name="vehicle_model" value="$(var vehicle_model)"/>
-      <arg name="sensor_model" value="$(var sensor_model)"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/autoware_launch.launch.xml">
+      <!-- Pointcloud container -->
+      <arg name="use_pointcloud_container" value="false"/>
+      <!-- Vehicle -->
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
-    </include>
-  </group>
-
-  <!-- System -->
-  <group>
-    <include file="$(find-pkg-share tier4_system_launch)/launch/system.launch.xml">
-      <arg name="run_mode" value="planning_simulation"/>
-      <arg name="sensor_model" value="$(var sensor_model)"/>
-    </include>
-  </group>
-
-  <!-- Map -->
-  <group>
-    <include file="$(find-pkg-share tier4_map_launch)/launch/map.launch.py">
-      <arg name="lanelet2_map_path" value="$(var map_path)/$(var lanelet2_map_file)"/>
-      <arg name="pointcloud_map_path" value="$(var map_path)/$(var pointcloud_map_file)"/>
-    </include>
-  </group>
-
-  <!-- Planning -->
-  <group>
-    <include file="$(find-pkg-share tier4_planning_launch)/launch/planning.launch.xml">
-      <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-    </include>
-  </group>
-
-  <!-- Control -->
-  <group>
-    <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
-      <!-- options for lateral_controller_mode: mpc_follower, pure_pursuit -->
-      <arg name="lateral_controller_mode" value="mpc_follower"/>
-      <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+      <!-- System -->
+      <arg name="system_run_mode" value="planning_simulation"/>
+      <!-- Sensing -->
+      <arg name="launch_sensing" value="false"/>
+      <!-- Localization -->
+      <arg name="launch_localization" value="false"/>
+      <!-- Perception -->
+      <arg name="launch_perception" value="false"/>
+      <!-- API -->
+      <arg name="init_simulator_pose" value="true"/>
+      <arg name="init_localization_pose" value="false"/>
+      <!-- Tools -->
+      <arg name="rviz" value="$(var rviz)"/>
+      <arg name="rviz_config" value="$(var rviz_config)"/>
+      <arg name="launch_web_controller" value="$(var launch_web_controller)"/>
     </include>
   </group>
 
@@ -75,20 +57,6 @@
       <param name="type" value="geometry_msgs/msg/PoseWithCovarianceStamped"/>
     </node>
   </group>
-
-  <!-- Rviz -->
-  <group>
-    <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png" if="$(var rviz)"/>
-
-    <!-- Web Controller -->
-    <include file="$(find-pkg-share web_controller)/launch/web_controller.launch.xml" unless="$(var scenario_simulation)"/>
-  </group>
-
-  <!-- API -->
-  <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml">
-    <arg name="init_simulator_pose" value="true"/>
-    <arg name="init_localization_pose" value="false"/>
-  </include>
 
   <!-- Simulator -->
   <group>
