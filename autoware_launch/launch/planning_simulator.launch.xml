@@ -26,13 +26,20 @@
     <let name="launch_web_controller" value="false" if="$(var scenario_simulation)"/>
     <let name="launch_web_controller" value="true" unless="$(var scenario_simulation)"/>
 
-    <include file="$(find-pkg-share autoware_launch)/launch/autoware_launch.launch.xml">
+    <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
+      <!-- Common -->
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="sensor_model" value="$(var sensor_model)"/>
       <!-- Pointcloud container -->
       <arg name="use_pointcloud_container" value="false"/>
       <!-- Vehicle -->
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
       <!-- System -->
       <arg name="system_run_mode" value="planning_simulation"/>
+      <!-- Map -->
+      <arg name="map_path" value="$(var map_path)"/>
+      <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
+      <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
       <!-- Sensing -->
       <arg name="launch_sensing" value="false"/>
       <!-- Localization -->

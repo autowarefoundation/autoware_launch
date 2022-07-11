@@ -7,22 +7,32 @@
   <arg name="use_pointcloud_container" default="true" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <!-- Optional parameters -->
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
   <arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"/>
   <arg name="system_run_mode" default="online" description="run mode in system"/>
   <arg name="launch_sensing" default="true" description="launch sensing"/>
+  <arg name="launch_system" default="true" description="launch system"/>
   <arg name="launch_localization" default="true" description="launch localization"/>
   <arg name="launch_perception" default="true" description="launch perception"/>
-  <arg name="init_simulator_pose" defualt="false" description="initialize simulator pose"/>
+  <arg name="init_simulator_pose" default="false" description="initialize simulator pose"/>
   <arg name="init_localization_pose" default="true" description="initialize localization pose"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
   <arg name="launch_web_controller" default="true" description="launch web controller"/>
+  <arg name="use_sim_time" default="false" description="use_sim_time"/>
+  <!--TODO check -->
+  <arg name="launch_vehicle" default="true" description="launch vehicle"/>
+  <arg name="launch_map" default="true" description="launch map"/>
+  <arg name="launch_planning" default="true" description="launch planning"/>
+  <arg name="launch_control" default="true" description="launch control"/>
+  <arg name="launch_sensing_driver" default="true" description="launch sensing driver"/>
 
   <!-- Global parameters -->
   <!-- Do not add "group" in order to propagate global parameters -->
   <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
+    <arg name="use_sim_time" value="$(var use_sim_time)"/>
     <arg name="vehicle_model" value="$(var vehicle_model)"/>
   </include>
 
@@ -36,16 +46,17 @@
 
   <!-- Vehicle -->
   <group>
-    <include file="$(find-pkg-share tier4_vehicle_launch)/launch/vehicle.launch.xml">
+    <include file="$(find-pkg-share tier4_vehicle_launch)/launch/vehicle.launch.xml" if="$(var launch_vehicle)">
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
       <arg name="sensor_model" value="$(var sensor_model)"/>
+      <arg name="vehicle_id" value="$(var vehicle_id)"/>
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
     </include>
   </group>
 
   <!-- System -->
   <group>
-    <include file="$(find-pkg-share tier4_system_launch)/launch/system.launch.xml">
+    <include file="$(find-pkg-share tier4_system_launch)/launch/system.launch.xml" if="$(var launch_system)">
       <arg name="run_mode" value="$(var system_run_mode)"/>
       <arg name="sensor_model" value="$(var sensor_model)"/>
     </include>
@@ -53,7 +64,7 @@
 
   <!-- Map -->
   <group>
-    <include file="$(find-pkg-share tier4_map_launch)/launch/map.launch.py">
+    <include file="$(find-pkg-share tier4_map_launch)/launch/map.launch.py" if="$(var launch_map)">
       <arg name="lanelet2_map_path" value="$(var map_path)/$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_path" value="$(var map_path)/$(var pointcloud_map_file)"/>
     </include>
@@ -62,7 +73,7 @@
   <!-- Sensing -->
   <group>
     <include file="$(find-pkg-share tier4_sensing_launch)/launch/sensing.launch.xml" if="$(var launch_sensing)">
-      <arg name="launch_driver" value="true"/>
+      <arg name="launch_driver" value="$(var launch_sensing_driver)"/>
       <arg name="sensor_model" value="$(var sensor_model)"/>
       <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="vehicle_mirror_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/mirror.param.yaml"/>
@@ -88,7 +99,7 @@
 
   <!-- Planning -->
   <group>
-    <include file="$(find-pkg-share tier4_planning_launch)/launch/planning.launch.xml">
+    <include file="$(find-pkg-share tier4_planning_launch)/launch/planning.launch.xml" if="$(var launch_planning)">
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
@@ -97,7 +108,7 @@
 
   <!-- Control -->
   <group>
-    <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
+    <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py" if="$(var launch_control)">
       <arg name="lateral_controller_mode" value="mpc_follower"/>
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     </include>
