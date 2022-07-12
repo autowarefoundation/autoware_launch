@@ -59,7 +59,6 @@
       <arg name="launch_control" value="$(var control)"/>
       <!-- API -->
       <arg name="init_simulator_pose" value="false"/>
-      <arg name="init_localization_pose" value="true"/>
     </include>
   </group>
 </launch>

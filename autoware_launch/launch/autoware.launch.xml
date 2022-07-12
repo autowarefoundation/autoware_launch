@@ -24,7 +24,6 @@
   <arg name="launch_planning" default="true" description="launch planning"/>
   <arg name="launch_control" default="true" description="launch control"/>
   <arg name="init_simulator_pose" default="false" description="initialize simulator pose"/>
-  <arg name="init_localization_pose" default="true" description="initialize localization pose"/>
   <arg name="launch_web_controller" default="true" description="launch web controller"/>
   <arg name="use_sim_time" default="false" description="use_sim_time"/>
 
@@ -116,7 +115,7 @@
   <!-- API -->
   <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml">
     <arg name="init_simulator_pose" value="$(var init_simulator_pose)"/>
-    <arg name="init_localization_pose" value="$(var init_localization_pose)"/>
+    <arg name="init_localization_pose" value="$(var launch_localization)"/>
   </include>
 
   <!-- Tools -->
