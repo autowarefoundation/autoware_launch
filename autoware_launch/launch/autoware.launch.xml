@@ -35,16 +35,16 @@
   </include>
 
   <!-- Pointcloud container -->
-  <group>
-    <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py" if="$(var use_pointcloud_container)">
+  <group if="$(var use_pointcloud_container)">
+    <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
       <arg name="use_multithread" value="true"/>
       <arg name="container_name" value="$(var pointcloud_container_name)"/>
     </include>
   </group>
 
   <!-- Vehicle -->
-  <group>
-    <include file="$(find-pkg-share tier4_vehicle_launch)/launch/vehicle.launch.xml" if="$(var launch_vehicle)">
+  <group if="$(var launch_vehicle)">
+    <include file="$(find-pkg-share tier4_vehicle_launch)/launch/vehicle.launch.xml">
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
       <arg name="sensor_model" value="$(var sensor_model)"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
@@ -53,24 +53,24 @@
   </group>
 
   <!-- System -->
-  <group>
-    <include file="$(find-pkg-share tier4_system_launch)/launch/system.launch.xml" if="$(var launch_system)">
+  <group if="$(var launch_system)">
+    <include file="$(find-pkg-share tier4_system_launch)/launch/system.launch.xml">
       <arg name="run_mode" value="$(var system_run_mode)"/>
       <arg name="sensor_model" value="$(var sensor_model)"/>
     </include>
   </group>
 
   <!-- Map -->
-  <group>
-    <include file="$(find-pkg-share tier4_map_launch)/launch/map.launch.py" if="$(var launch_map)">
+  <group if="$(var launch_map)">
+    <include file="$(find-pkg-share tier4_map_launch)/launch/map.launch.py">
       <arg name="lanelet2_map_path" value="$(var map_path)/$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_path" value="$(var map_path)/$(var pointcloud_map_file)"/>
     </include>
   </group>
 
   <!-- Sensing -->
-  <group>
-    <include file="$(find-pkg-share tier4_sensing_launch)/launch/sensing.launch.xml" if="$(var launch_sensing)">
+  <group if="$(var launch_sensing)">
+    <include file="$(find-pkg-share tier4_sensing_launch)/launch/sensing.launch.xml">
       <arg name="launch_driver" value="$(var launch_sensing_driver)"/>
       <arg name="sensor_model" value="$(var sensor_model)"/>
       <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
@@ -81,13 +81,13 @@
   </group>
 
   <!-- Localization -->
-  <group>
-    <include file="$(find-pkg-share tier4_localization_launch)/launch/localization.launch.xml" if="$(var launch_localization)"/>
+  <group if="$(var launch_localization)">
+    <include file="$(find-pkg-share tier4_localization_launch)/launch/localization.launch.xml"/>
   </group>
 
   <!-- Perception -->
-  <group>
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml" if="$(var launch_perception)">
+  <group if="$(var launch_perception)">
+    <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
       <arg name="mode" value="lidar"/>
       <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
@@ -96,8 +96,8 @@
   </group>
 
   <!-- Planning -->
-  <group>
-    <include file="$(find-pkg-share tier4_planning_launch)/launch/planning.launch.xml" if="$(var launch_planning)">
+  <group if="$(var launch_planning)">
+    <include file="$(find-pkg-share tier4_planning_launch)/launch/planning.launch.xml">
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
@@ -105,8 +105,8 @@
   </group>
 
   <!-- Control -->
-  <group>
-    <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py" if="$(var launch_control)">
+  <group if="$(var launch_control)">
+    <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
       <arg name="lateral_controller_mode" value="mpc_follower"/>
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     </include>
