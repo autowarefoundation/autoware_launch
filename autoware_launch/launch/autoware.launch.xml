@@ -22,7 +22,6 @@
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
   <arg name="launch_web_controller" default="true" description="launch web controller"/>
   <arg name="use_sim_time" default="false" description="use_sim_time"/>
-  <!--TODO check -->
   <arg name="launch_vehicle" default="true" description="launch vehicle"/>
   <arg name="launch_map" default="true" description="launch map"/>
   <arg name="launch_planning" default="true" description="launch planning"/>
