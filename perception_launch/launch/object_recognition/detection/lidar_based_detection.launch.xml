@@ -9,7 +9,6 @@
   <arg name="container_name" default=""/>
   <arg name="use_validator" default="true" description="use obstacle_pointcloud based validator"/>
 
-
   <!-- Pointcloud map filter -->
   <group>
     <include file="$(find-pkg-share perception_launch)/launch/object_recognition/detection/pointcloud_map_filter.launch.py" if="$(var use_pointcloud_map)">
@@ -97,13 +96,13 @@
       <arg name="input/object0" value="$(var merger/input/objects)"/>
       <arg name="input/object1" value="clustering/objects"/>
       <arg name="output/object" value="temporary_merged_objects"/>
-      <arg name="node_name" value="object_association_merger_unknown_clustering" />
+      <arg name="node_name" value="object_association_merger_unknown_clustering"/>
     </include>
     <include file="$(find-pkg-share object_merger)/launch/object_association_merger.launch.xml">
       <arg name="input/object0" value="temporary_merged_objects"/>
       <arg name="input/object1" value="detection_by_tracker/objects"/>
       <arg name="output/object" value="objects_before_filter"/>
-      <arg name="node_name" value="object_association_merger_detection_by_tracker" />
+      <arg name="node_name" value="object_association_merger_detection_by_tracker"/>
     </include>
   </group>
 
@@ -115,5 +114,4 @@
       <arg name="filtering_range_param" value="$(find-pkg-share perception_launch)/config/object_recognition/detection/object_lanelet_filter.param.yaml" />
     </include>
   </group>
-
 </launch>
