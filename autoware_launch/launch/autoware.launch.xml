@@ -9,24 +9,24 @@
   <!-- Optional parameters -->
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
   <arg name="rviz" default="true" description="launch rviz"/>
+  <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <arg name="launch_vehicle" default="true" description="launch vehicle"/>
   <arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"/>
-  <arg name="system_run_mode" default="online" description="run mode in system"/>
-  <arg name="launch_sensing" default="true" description="launch sensing"/>
   <arg name="launch_system" default="true" description="launch system"/>
+  <arg name="system_run_mode" default="online" description="run mode in system"/>
+  <arg name="launch_map" default="true" description="launch map"/>
+  <arg name="launch_sensing" default="true" description="launch sensing"/>
+  <arg name="launch_sensing_driver" default="true" description="launch sensing driver"/>
   <arg name="launch_localization" default="true" description="launch localization"/>
   <arg name="launch_perception" default="true" description="launch perception"/>
-  <arg name="init_simulator_pose" default="false" description="initialize simulator pose"/>
-  <arg name="init_localization_pose" default="true" description="initialize localization pose"/>
-  <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
-  <arg name="launch_web_controller" default="true" description="launch web controller"/>
-  <arg name="use_sim_time" default="false" description="use_sim_time"/>
-  <arg name="launch_vehicle" default="true" description="launch vehicle"/>
-  <arg name="launch_map" default="true" description="launch map"/>
   <arg name="launch_planning" default="true" description="launch planning"/>
   <arg name="launch_control" default="true" description="launch control"/>
-  <arg name="launch_sensing_driver" default="true" description="launch sensing driver"/>
+  <arg name="init_simulator_pose" default="false" description="initialize simulator pose"/>
+  <arg name="init_localization_pose" default="true" description="initialize localization pose"/>
+  <arg name="launch_web_controller" default="true" description="launch web controller"/>
+  <arg name="use_sim_time" default="false" description="use_sim_time"/>
 
   <!-- Global parameters -->
   <!-- Do not add "group" in order to propagate global parameters -->
