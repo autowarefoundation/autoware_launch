@@ -34,20 +34,24 @@
   </group>
 
   <!-- classification -->
-  <include file="$(find-pkg-share perception_launch)/launch/traffic_light_recognition/traffic_light_node_container.launch.py">
-    <arg name="input/image" value="$(var input/image)"/>
-    <arg name="enable_image_decompressor" value="$(var enable_image_decompressor)"/>
-    <arg name="enable_fine_detection" value="$(var enable_fine_detection)"/>
-    <arg name="use_crosswalk_traffic_light_estimator" value="$(var use_crosswalk_traffic_light_estimator)"/>
-    <arg name="use_intra_process" value="true"/>
-    <arg name="use_multithread" value="true"/>
-    <arg name="label_file" value="$(var fine_detector_label_path)"/>
-    <arg name="onnx_file" value="$(var fine_detector_model_path)"/>
-    <arg name="label_file_path" value="$(var classifier_label_path)"/>
-    <arg name="model_file_path" value="$(var classifier_model_path)"/>
-  </include>
+  <group>
+    <include file="$(find-pkg-share perception_launch)/launch/traffic_light_recognition/traffic_light_node_container.launch.py">
+      <arg name="input/image" value="$(var input/image)"/>
+      <arg name="enable_image_decompressor" value="$(var enable_image_decompressor)"/>
+      <arg name="enable_fine_detection" value="$(var enable_fine_detection)"/>
+      <arg name="use_crosswalk_traffic_light_estimator" value="$(var use_crosswalk_traffic_light_estimator)"/>
+      <arg name="use_intra_process" value="true"/>
+      <arg name="use_multithread" value="true"/>
+      <arg name="label_file" value="$(var fine_detector_label_path)"/>
+      <arg name="onnx_file" value="$(var fine_detector_model_path)"/>
+      <arg name="label_file_path" value="$(var classifier_label_path)"/>
+      <arg name="model_file_path" value="$(var classifier_model_path)"/>
+    </include>
+  </group>
 
   <!-- visualizer -->
-  <include file="$(find-pkg-share traffic_light_visualization)/launch/traffic_light_map_visualizer.launch.xml">
-  </include>
+  <group>
+    <include file="$(find-pkg-share traffic_light_visualization)/launch/traffic_light_map_visualizer.launch.xml">
+    </include>
+  </group>
 </launch>
