@@ -1,4 +1,4 @@
-name: sync-universe-param-files
+name: sync-param-files
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  sync-universe-param-files:
+  sync-param-files:
     runs-on: ubuntu-latest
     steps:
       - name: Generate token
@@ -20,7 +20,7 @@ jobs:
         uses: autowarefoundation/autoware-github-actions/sync-files@v1
         with:
           token: ${{ steps.generate-token.outputs.token }}
-          config: .github/sync-universe-param-files.yaml
-          pr-branch: sync-universe-param-files
-          pr-title: "chore: sync universe param files"
-          pr-commit-message: "chore: sync universe param files"
+          config: .github/sync-param-files.yaml
+          pr-branch: sync-param-files
+          pr-title: "chore: sync param files"
+          pr-commit-message: "chore: sync param files"

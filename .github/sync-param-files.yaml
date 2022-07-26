@@ -1,5 +1,6 @@
 - repository: autowarefoundation/autoware.universe
   files:
+    # Perception
     - source: launch/tier4_perception_launch/config/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml
       dest: autoware_launch/config/tier4_perception_launch/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml
     - source: launch/tier4_perception_launch/config/object_recognition/detection/pointcloud_map_filter.param.yaml
@@ -12,6 +13,7 @@
       dest: autoware_launch/config/tier4_perception_launch/obstacle_segmentation/ground_segmentation/ground_segmentation.param.yaml
     - source: launch/tier4_perception_launch/config/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml
       dest: autoware_launch/config/tier4_perception_launch/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml
+    # Localization
     - source: launch/tier4_localization_launch/config/localization_error_monitor.param.yaml
       dest: autoware_launch/config/tier4_localization_launch/localization_error_monitor.param.yaml
     - source: launch/tier4_localization_launch/config/ndt_scan_matcher.param.yaml
@@ -22,6 +24,7 @@
       dest: autoware_launch/config/tier4_localization_launch/random_downsample_filter.param.yaml
     - source: launch/tier4_localization_launch/config/crop_box_filter_measurement_range.param.yaml
       dest: autoware_launch/config/tier4_localization_launch/crop_box_filter_measurement_range.param.yaml
+    # System
     - source: launch/tier4_system_launch/config/system_monitor/cpu_monitor.param.yaml
       dest: autoware_launch/config/tier4_system_launch/system_monitor/cpu_monitor.param.yaml
     - source: launch/tier4_system_launch/config/system_monitor/hdd_monitor.param.yaml
@@ -38,6 +41,7 @@
       dest: autoware_launch/config/tier4_system_launch/system_monitor/gpu_monitor.param.yaml
     - source: launch/tier4_system_launch/config/diagnostic_aggregator/vehicle.param.yaml
       dest: autoware_launch/config/tier4_system_launch/diagnostic_aggregator/vehicle.param.yaml
+    # Planning
     - source: launch/tier4_planning_launch/config/scenario_planning/common/common.param.yaml
       dest: autoware_launch/config/tier4_planning_launch/scenario_planning/common/common.param.yaml
     - source: launch/tier4_planning_launch/config/scenario_planning/common/motion_velocity_smoother/L2.param.yaml
@@ -102,6 +106,7 @@
       dest: autoware_launch/config/tier4_planning_launch/scenario_planning/lane_driving/behavior_planning/rtc_auto_approver/rtc_auto_approver.param.yaml
     - source: launch/tier4_planning_launch/config/scenario_planning/parking/freespace_planner/freespace_planner.param.yaml
       dest: autoware_launch/config/tier4_planning_launch/scenario_planning/parking/freespace_planner/freespace_planner.param.yaml
+    # Control
     - source: launch/tier4_control_launch/config/trajectory_follower/longitudinal_controller.param.yaml
       dest: autoware_launch/config/tier4_control_launch/trajectory_follower/longitudinal_controller.param.yaml
     - source: launch/tier4_control_launch/config/trajectory_follower/lateral_controller.param.yaml
