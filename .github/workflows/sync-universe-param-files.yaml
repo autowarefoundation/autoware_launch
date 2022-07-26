@@ -1,4 +1,4 @@
-name: sync-param-files
+name: sync-universe-param-files
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  sync-param-files:
+  sync-universe-param-files:
     runs-on: ubuntu-latest
     steps:
       - name: Generate token
