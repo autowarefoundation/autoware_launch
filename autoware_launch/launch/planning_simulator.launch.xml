@@ -7,7 +7,7 @@
 
   <!-- Optional parameters -->
   <arg name="use_sim_time" default="false" description="use_sim_time"/>
-  <arg name="is_simulation" default="true" description="if this is simulation or not" />
+  <arg name="is_simulation" default="true" description="if this is simulation or not"/>
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
