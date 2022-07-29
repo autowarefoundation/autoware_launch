@@ -7,6 +7,7 @@
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
 
   <!-- Optional parameters -->
+  <arg name="use_sim_time" default="false" description="use_sim_time"/>
   <!-- Modules to be launched -->
   <arg name="vehicle" default="true" description="launch vehicle"/>
   <arg name="system" default="true" description="launch system"/>
@@ -29,14 +30,9 @@
   <!-- Scenario simulation -->
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
 
-  <!-- Add this to enable use_sim_time option -->
-  <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
-    <arg name="use_sim_time" value="$(var use_sim_time)"/>
-    <arg name="vehicle_model" value="$(var vehicle_model)"/>
-  </include>
-
   <group>
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
+     <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <!-- Common -->
       <arg name="map_path" value="$(var map_path)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
