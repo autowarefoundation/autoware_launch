@@ -22,47 +22,39 @@
   <!-- Vcu emulation -->
   <arg name="vehicle_simulation" default="true" description="use vehicle simulation"/>
 
-  <!-- Add this to enable use_sim_time option -->
-  <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
+  <!-- Vehicle -->
+  <let name="launch_vehicle_interface" value="false" if="$(var vehicle_simulation)"/>
+  <let name="launch_vehicle_interface" value="true" unless="$(var vehicle_simulation)"/>
+  <!-- Tools -->
+  <let name="launch_web_controller" value="false" if="$(var scenario_simulation)"/>
+  <let name="launch_web_controller" value="true" unless="$(var scenario_simulation)"/>
+
+  <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
     <arg name="use_sim_time" value="$(var use_sim_time)"/>
+    <!-- Common -->
+    <arg name="map_path" value="$(var map_path)"/>
     <arg name="vehicle_model" value="$(var vehicle_model)"/>
-  </include>
-
-  <group>
+    <arg name="sensor_model" value="$(var sensor_model)"/>
+    <!-- Modules to be launched -->
+    <arg name="launch_sensing" value="false"/>
+    <arg name="launch_localization" value="false"/>
+    <arg name="launch_perception" value="false"/>
+    <!-- Pointcloud container -->
+    <arg name="use_pointcloud_container" value="false"/>
     <!-- Vehicle -->
-    <let name="launch_vehicle_interface" value="false" if="$(var vehicle_simulation)"/>
-    <let name="launch_vehicle_interface" value="true" unless="$(var vehicle_simulation)"/>
+    <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
+    <!-- System -->
+    <arg name="system_run_mode" value="planning_simulation"/>
+    <!-- Map -->
+    <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
+    <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
+    <!-- API -->
+    <arg name="init_simulator_pose" value="true"/>
     <!-- Tools -->
-    <let name="launch_web_controller" value="false" if="$(var scenario_simulation)"/>
-    <let name="launch_web_controller" value="true" unless="$(var scenario_simulation)"/>
-
-    <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
-      <arg name="use_sim_time" value="$(var use_sim_time)"/>
-      <!-- Common -->
-      <arg name="map_path" value="$(var map_path)"/>
-      <arg name="vehicle_model" value="$(var vehicle_model)"/>
-      <arg name="sensor_model" value="$(var sensor_model)"/>
-      <!-- Modules to be launched -->
-      <arg name="launch_sensing" value="false"/>
-      <arg name="launch_localization" value="false"/>
-      <arg name="launch_perception" value="false"/>
-      <!-- Pointcloud container -->
-      <arg name="use_pointcloud_container" value="false"/>
-      <!-- Vehicle -->
-      <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
-      <!-- System -->
-      <arg name="system_run_mode" value="planning_simulation"/>
-      <!-- Map -->
-      <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
-      <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
-      <!-- API -->
-      <arg name="init_simulator_pose" value="true"/>
-      <!-- Tools -->
-      <arg name="rviz" value="$(var rviz)"/>
-      <arg name="rviz_config" value="$(var rviz_config)"/>
-      <arg name="launch_web_controller" value="$(var launch_web_controller)"/>
-    </include>
-  </group>
+    <arg name="rviz" value="$(var rviz)"/>
+    <arg name="rviz_config" value="$(var rviz_config)"/>
+    <arg name="launch_web_controller" value="$(var launch_web_controller)"/>
+  </include>
 
   <!-- Initial Pose Relay -->
   <group>
