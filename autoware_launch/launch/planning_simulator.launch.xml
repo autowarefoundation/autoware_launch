@@ -22,7 +22,6 @@
   <!-- Vcu emulation -->
   <arg name="vehicle_simulation" default="true" description="use vehicle simulation"/>
 
-
   <!-- Add this to enable use_sim_time option -->
   <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
     <arg name="use_sim_time" value="$(var use_sim_time)"/>
