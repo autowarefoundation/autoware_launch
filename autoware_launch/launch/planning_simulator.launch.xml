@@ -7,7 +7,6 @@
 
   <!-- Optional parameters -->
   <arg name="use_sim_time" default="false" description="use_sim_time"/>
-  <arg name="is_simulation" default="true" description="if this is simulation or not" />
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
@@ -23,11 +22,6 @@
   <!-- Vcu emulation -->
   <arg name="vehicle_simulation" default="true" description="use vehicle simulation"/>
 
-  <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
-    <arg name="use_sim_time" value="$(var use_sim_time)"/>
-    <arg name="vehicle_model" value="$(var vehicle_model)"/>
-  </include>
-
   <group>
     <!-- Vehicle -->
     <let name="launch_vehicle_interface" value="false" if="$(var vehicle_simulation)"/>
@@ -38,7 +32,6 @@
 
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
-      <arg name="is_simulation" value="$(var is_simulation)"/>
       <!-- Common -->
       <arg name="map_path" value="$(var map_path)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
