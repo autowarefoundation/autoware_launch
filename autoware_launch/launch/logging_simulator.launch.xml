@@ -29,7 +29,7 @@
   <!-- Scenario simulation -->
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
 
-  <group>
+  <group scoped="false">
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
       <!-- Common -->
       <arg name="map_path" value="$(var map_path)"/>
