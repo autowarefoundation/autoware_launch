@@ -91,6 +91,7 @@
   <!-- Localization -->
   <group if="$(var launch_localization)">
     <include file="$(find-pkg-share tier4_localization_launch)/launch/localization.launch.xml"/>
+    <include file="$(find-pkg-share default_ad_api_helpers)/launch/auto_pose_init.launch.xml"/>
   </group>
 
   <!-- Perception -->
