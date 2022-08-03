@@ -6,6 +6,7 @@
       step_length: 1.0 # step length for pointcloud search range [m]
       extend_distance: 0.0 # extend trajectory to consider after goal obstacle in the extend_distance
       expand_stop_range: 0.0 # margin of vehicle footprint [m]
+      hold_stop_margin_distance: 0.0 # the ego keeps stopping if the ego is in this margin [m]
 
     slow_down_planner:
       # slow down planner parameters
