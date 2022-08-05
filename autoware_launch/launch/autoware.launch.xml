@@ -118,6 +118,7 @@
     <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
       <arg name="lateral_controller_mode" value="mpc_follower"/>
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+      <arg name="vehicle_id" value="$(var vehicle_id)"/>
     </include>
   </group>
 
