@@ -17,7 +17,6 @@ import os
 from ament_index_python.packages import get_package_share_directory
 import launch
 from launch.actions import DeclareLaunchArgument
-from launch.actions import ExecuteProcess
 from launch.actions import IncludeLaunchDescription
 from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
@@ -134,32 +133,7 @@ def generate_launch_description():
             ("~/input/perception", "/perception/object_recognition/objects"),
             ("~/input/odometry", "/localization/kinematic_state"),
             ("~/input/scenario", "/planning/scenario_planning/scenario"),
-            (
-                "~/input/external_approval",
-                "/planning/scenario_planning/lane_driving/behavior_planning/"
-                "behavior_path_planner/path_change_approval",
-            ),
-            (
-                "~/input/force_approval",
-                "/planning/scenario_planning/lane_driving/behavior_planning/"
-                "behavior_path_planner/path_change_force",
-            ),
             ("~/output/path", "path_with_lane_id"),
-            (
-                "~/output/ready",
-                "/planning/scenario_planning/lane_driving/behavior_planning/"
-                "behavior_path_planner/ready_module",
-            ),
-            (
-                "~/output/running",
-                "/planning/scenario_planning/lane_driving/behavior_planning/"
-                "behavior_path_planner/running_modules",
-            ),
-            (
-                "~/output/force_available",
-                "/planning/scenario_planning/lane_driving/behavior_planning/"
-                "behavior_path_planner/force_available",
-            ),
             ("~/output/turn_indicators_cmd", "/planning/turn_indicators_cmd"),
             ("~/output/hazard_lights_cmd", "/planning/hazard_lights_cmd"),
         ],
@@ -474,18 +448,5 @@ def generate_launch_description():
             set_container_mt_executable,
             container,
             load_compare_map,
-            ExecuteProcess(
-                cmd=[
-                    "ros2",
-                    "topic",
-                    "pub",
-                    "/planning/scenario_planning/lane_driving/behavior_planning/"
-                    "behavior_path_planner/path_change_approval",
-                    "tier4_planning_msgs/msg/Approval",
-                    "{approval: true}",
-                    "-r",
-                    "10",
-                ]
-            ),
         ]
     )
