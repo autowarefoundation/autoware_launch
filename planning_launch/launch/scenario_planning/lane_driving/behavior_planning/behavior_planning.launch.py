@@ -31,6 +31,16 @@ import yaml
 
 
 def generate_launch_description():
+    nearest_search_param_path = os.path.join(
+        get_package_share_directory("planning_launch"),
+        "config",
+        "scenario_planning",
+        "common",
+        "nearest_search.param.yaml",
+    )
+    with open(nearest_search_param_path, "r") as f:
+        nearest_search_param = yaml.safe_load(f)["/**"]["ros__parameters"]
+
     # behavior path planner
     side_shift_param_path = os.path.join(
         get_package_share_directory("planning_launch"),
@@ -138,6 +148,7 @@ def generate_launch_description():
             ("~/output/hazard_lights_cmd", "/planning/hazard_lights_cmd"),
         ],
         parameters=[
+            nearest_search_param,
             side_shift_param,
             avoidance_param,
             lane_change_param,
@@ -368,6 +379,7 @@ def generate_launch_description():
         parameters=[
             behavior_velocity_planner_param,
             common_param,
+            nearest_search_param,
             motion_velocity_smoother_param,
             smoother_type_param,
             blind_spot_param,

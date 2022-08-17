@@ -40,6 +40,16 @@ def generate_launch_description():
     with open(common_param_path, "r") as f:
         common_param = yaml.safe_load(f)["/**"]["ros__parameters"]
 
+    nearest_search_param_path = os.path.join(
+        get_package_share_directory("planning_launch"),
+        "config",
+        "scenario_planning",
+        "common",
+        "nearest_search.param.yaml",
+    )
+    with open(nearest_search_param_path, "r") as f:
+        nearest_search_param = yaml.safe_load(f)["/**"]["ros__parameters"]
+
     # obstacle avoidance planner
     obstacle_avoidance_planner_param_path = os.path.join(
         get_package_share_directory("planning_launch"),
@@ -63,6 +73,7 @@ def generate_launch_description():
             ("~/output/path", "obstacle_avoidance_planner/trajectory"),
         ],
         parameters=[
+            nearest_search_param,
             obstacle_avoidance_planner_param,
             {"is_showing_debug_info": False},
             {"is_stopping_if_outside_drivable_area": True},
@@ -103,6 +114,7 @@ def generate_launch_description():
             ("~/input/odometry", "/localization/kinematic_state"),
         ],
         parameters=[
+            nearest_search_param,
             surround_obstacle_checker_param,
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -136,6 +148,7 @@ def generate_launch_description():
         ],
         parameters=[
             common_param,
+            nearest_search_param,
             obstacle_cruise_planner_param,
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
@@ -188,6 +201,7 @@ def generate_launch_description():
         ],
         parameters=[
             common_param,
+            nearest_search_param,
             obstacle_stop_planner_param,
             obstacle_stop_planner_acc_param,
             {"enable_slow_down": False},
