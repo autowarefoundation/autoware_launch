@@ -21,7 +21,7 @@ jobs:
       - name: Generate sync-param-files.yaml
         run: |
           git clone https://github.com/autowarefoundation/autoware.universe.git -b main /tmp/autoware.universe
-          python3 .github/workflows/generate-sync-param-files.py .github/sync-param-files.yaml
+          python3 .github/workflows/update-sync-param-files.py .github/sync-param-files.yaml
 
       - name: Create PR
         id: create-pr
