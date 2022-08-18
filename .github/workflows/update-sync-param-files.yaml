@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  sync-param-files:
+  update-sync-param-files:
     runs-on: ubuntu-latest
     steps:
       - name: Generate token
@@ -16,12 +16,13 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.PRIVATE_KEY }}
 
-      - uses: actions/checkout@v1
+      - name: Check out repository
+        uses: actions/checkout@v1
 
       - name: Generate sync-param-files.yaml
         run: |
-          git clone https://github.com/autowarefoundation/autoware.universe.git -b main /tmp/autoware.universe
-          python3 .github/workflows/update-sync-param-files.py .github/sync-param-files.yaml
+          git clone https://github.com/autowarefoundation/autoware.universe.git /tmp/autoware.universe
+          python3 .github/update-sync-param-files.py .github/sync-param-files.yaml
 
       - name: Create PR
         id: create-pr
@@ -33,3 +34,17 @@ jobs:
           title: "chore: update sync-param-files.yaml"
           commit-message: "chore: update sync-param-files.yaml"
           body: ${{ steps.create-pr-body.outputs.body }}
+
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.create-pr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.create-pr.outputs.pull-request-url }}"
+        shell: bash
+
+      - name: Enable auto-merge
+        if: ${{ steps.create-pr.outputs.pull-request-operation == 'created' }}
+        uses: peter-evans/enable-pull-request-automerge@v2
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          pull-request-number: ${{ steps.create-pr.outputs.pull-request-number }}
+          merge-method: squash
