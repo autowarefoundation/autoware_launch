@@ -17,8 +17,8 @@ def main():
     # iterate over the param files to create sync-param-files.yaml
     src2dst = []
     for file in files:
-        src = file.replace(autoware_universe_path, '')
-        dst = 'autoware_launch/config/' + src.replace('/config', '')
+        src = file.replace(autoware_universe_path, "")
+        dst = "autoware_launch/config/" + src.replace("/config", "")
         src2dst.append({"source": src, "dest": dst})
     sync_param_file = [{"repository": "autowarefoundation/autoware.universe", "files": src2dst}]
 
