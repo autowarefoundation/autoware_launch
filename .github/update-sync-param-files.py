@@ -11,13 +11,13 @@ def main():
     args = parser.parse_args()
 
     # create a list of .param.yaml files within autoware.universe/launch directory
-    tier4_launch_path = "/tmp/autoware.universe/"
-    files = glob.glob(tier4_launch_path + "launch/" + "**/*.param.yaml", recursive=True)
+    autoware_universe_path = "/tmp/autoware.universe/"
+    files = glob.glob(autoware_universe_path + "launch/" + "**/*.param.yaml", recursive=True)
 
     # iterate over the param files to create sync-param-files.yaml
     src2dst = []
     for file in files:
-        src = file.replace(tier4_launch_path, '')
+        src = file.replace(autoware_universe_path, '')
         dst = 'autoware_launch/config/' + src.replace('/config', '')
         src2dst.append({"source": src, "dest": dst})
     sync_param_file = [{"repository": "autowarefoundation/autoware.universe", "files": src2dst}]
