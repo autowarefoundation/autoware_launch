@@ -34,7 +34,7 @@ def main():
             for dst in src2dst_curr[src]:
                 src_and_dst_list.append({"source": src, "dest": dst})
 
-        # do update if the key exists
+        # do update if the key does not exist
         else:
             dst = "autoware_launch/config/" + src.replace("/config", "")
             src_and_dst_list.append({"source": src, "dest": dst})
