@@ -1,6 +1,5 @@
 import argparse
 import glob
-from re import A
 
 import yaml
 
