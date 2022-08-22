@@ -15,7 +15,7 @@ def main():
     src2dst_curr = {}
     for src_and_dst in sync_param_file_curr[0]["files"]:
         src, dst = src_and_dst["source"], src_and_dst["dest"]
-        if not src in src2dst_curr.keys():
+        if src not in src2dst_curr.keys():
             src2dst_curr[src] = []
         src2dst_curr[src].append(dst)
 
