@@ -1,38 +1,80 @@
 import argparse
+import dataclasses
 from pathlib import Path
+from typing import List
+from typing import Optional
 
-import yaml
+import git
+
+"""
+This module updates `sync-param-files.yaml` based on the launch parameter files in `autoware.universe`.
+"""
+
+REPO_NAME = "autowarefoundation/autoware.universe"
+REPO_URL = f"https://github.com/{REPO_NAME}.git"
+CLONE_PATH = Path("/tmp/autoware.universe")
 
 
-def src_name_to_dst_name(src: Path) -> Path:
-    module_launch_pkg_name = src.parents[len(src.parents) - 3].stem  # e.g. "tier4_control_launch"
-    file_path_under_config = src.relative_to(Path("launch") / module_launch_pkg_name / "config")
-    dst = Path("autoware_launch/config") / module_launch_pkg_name / file_path_under_config
+@dataclasses.dataclass
+class FileSyncConfig:
+    source: str
+    dest: str
+    replace: Optional[bool] = None
+    delete_orphaned: Optional[bool] = None
+    pre_commands: Optional[str] = None
+    post_commands: Optional[str] = None
 
-    return dst
+
+def paths_sorted(paths: List[Path]) -> List[Path]:
+    return sorted(paths, key = lambda x: x.name)
+
+def create_tier4_launch_sync_configs(tier4_launch_package_path: Path) -> List[FileSyncConfig]:
+    launch_package_name = tier4_launch_package_path.name
+    launch_config_path = tier4_launch_package_path / "config"
+
+    sync_configs = []
+    for param_file_path in tier4_launch_package_path.glob("config/**/*.param.yaml"):
+        relative_param_file_path = param_file_path.relative_to(launch_config_path)
+
+        source = param_file_path.relative_to(CLONE_PATH)
+        dest = Path("autoware_launch/config") / launch_package_name / relative_param_file_path
+
+        sync_configs.append(FileSyncConfig(str(source), str(dest)))
+
+    return sync_configs
+
+
+def dump_sync_config(section_name: str, sync_configs: List[FileSyncConfig]) -> List[str]:
+    indent = 4 * " "
+    lines = [f"{indent}# {section_name}\n"]
+    for sync_config in sync_configs:
+        lines.append(f"{indent}- source: {sync_config.source}\n")
+        lines.append(f"{indent}  dest: {sync_config.dest}\n")
+    lines.append("\n")
+    return lines
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("input_universe_dir", type=str, help="path to the target autoware.universe")
-    parser.add_argument("output_file_path", type=str, help="output path of sync-param-files.yaml")
+    parser.add_argument("sync_param_files_path", type=Path, help="path to sync-param-files.yaml")
     args = parser.parse_args()
 
-    # iterate over the param files to create sync-param-files.yaml
-    sync_files_config = []
-    autoware_launch_dir = Path(args.input_universe_dir) / "launch"
-    for config_path in autoware_launch_dir.glob("**/*.param.yaml"):
-        src = config_path.relative_to(args.input_universe_dir)
-        dst = src_name_to_dst_name(src)
+    # Clone Autoware
+    if not CLONE_PATH.exists():
+        git.Repo.clone_from(REPO_URL, CLONE_PATH)
 
-        sync_files_config.append({"source": str(src), "dest": str(dst)})
-    sync_param_file = [
-        {"repository": "autowarefoundation/autoware.universe", "files": sync_files_config}
-    ]
+    # Create sync config for tier4_*_launch
+    tier4_launch_package_paths = CLONE_PATH.glob("launch/tier4_*_launch")
+    tier4_launch_sync_configs_map = {
+        p.name: create_tier4_launch_sync_configs(p) for p in paths_sorted(tier4_launch_package_paths)
+    }
 
-    # save sync-param-files.yaml
-    with open(args.output_file_path, "w") as f:
-        yaml.dump(sync_param_file, f, sort_keys=False)
+    # Create sync-param-files.yaml
+    with open(args.sync_param_files_path, "w") as f:
+        f.write(f"- repository: {REPO_NAME}\n")
+        f.write(f"  files:\n")
+        for section_name, sync_config in tier4_launch_sync_configs_map.items():
+            f.writelines(dump_sync_config(section_name, sync_config))
 
 
 if __name__ == "__main__":
