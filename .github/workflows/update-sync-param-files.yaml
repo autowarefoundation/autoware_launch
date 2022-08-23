@@ -19,6 +19,11 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
+      - name: Install GitPython
+        run: |
+          pip3 install GitPython
+        shell: bash
+
       - name: Generate sync-param-files.yaml
         run: |
           python3 .github/update-sync-param-files.py .github/sync-param-files.yaml
