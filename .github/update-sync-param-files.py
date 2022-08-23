@@ -71,7 +71,7 @@ def main():
     # Create sync-param-files.yaml
     with open(args.sync_param_files_path, "w") as f:
         f.write(f"- repository: {REPO_NAME}\n")
-        f.write(f"  files:\n")
+        f.write("  files:\n")
         for section_name, sync_config in tier4_launch_sync_configs_map.items():
             f.writelines(dump_sync_config(section_name, sync_config))
 
