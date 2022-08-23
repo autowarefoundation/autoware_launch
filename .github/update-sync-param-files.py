@@ -16,7 +16,7 @@ def main():
     for config_path in autoware_launch_dir.glob("**/*.param.yaml"):
         src = config_path.relative_to(args.input_universe_dir)
 
-        module_launch_pkg_name = src.parents[-3].stem # e.g. "tier4_control_launch"
+        module_launch_pkg_name = src.parents[-3].stem  # e.g. "tier4_control_launch"
         file_path_under_config = src.relative_to(Path("launch") / module_launch_pkg_name / "config")
         dst = Path("autoware_launch/config") / module_launch_pkg_name / file_path_under_config
 
