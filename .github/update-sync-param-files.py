@@ -5,7 +5,7 @@ import yaml
 
 
 def src_name_to_dst_name(src: Path) -> Path:
-    print('~~~~')
+    print("~~~~")
     print(src, len(src.parents), src.resolve())
     print(src.parents[0])
     print(src.parents[-1], src.parents[-2])
