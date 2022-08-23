@@ -26,7 +26,8 @@ class FileSyncConfig:
 
 
 def paths_sorted(paths: List[Path]) -> List[Path]:
-    return sorted(paths, key = lambda x: x.name)
+    return sorted(paths, key=lambda x: x.name)
+
 
 def create_tier4_launch_sync_configs(tier4_launch_package_path: Path) -> List[FileSyncConfig]:
     launch_package_name = tier4_launch_package_path.name
@@ -66,7 +67,8 @@ def main():
     # Create sync config for tier4_*_launch
     tier4_launch_package_paths = CLONE_PATH.glob("launch/tier4_*_launch")
     tier4_launch_sync_configs_map = {
-        p.name: create_tier4_launch_sync_configs(p) for p in paths_sorted(tier4_launch_package_paths)
+        p.name: create_tier4_launch_sync_configs(p)
+        for p in paths_sorted(tier4_launch_package_paths)
     }
 
     # Create sync-param-files.yaml
