@@ -25,10 +25,6 @@ class FileSyncConfig:
     post_commands: Optional[str] = None
 
 
-def paths_sorted(paths: List[Path]) -> List[Path]:
-    return sorted(paths, key=lambda x: x.name)
-
-
 def create_tier4_launch_sync_configs(tier4_launch_package_path: Path) -> List[FileSyncConfig]:
     launch_package_name = tier4_launch_package_path.name
     launch_config_path = tier4_launch_package_path / "config"
@@ -65,10 +61,11 @@ def main():
         git.Repo.clone_from(REPO_URL, CLONE_PATH)
 
     # Create sync config for tier4_*_launch
-    tier4_launch_package_paths = CLONE_PATH.glob("launch/tier4_*_launch")
+    tier4_launch_package_paths = sorted(
+        CLONE_PATH.glob("launch/tier4_*_launch"), key=lambda p: p.name
+    )
     tier4_launch_sync_configs_map = {
-        p.name: create_tier4_launch_sync_configs(p)
-        for p in paths_sorted(tier4_launch_package_paths)
+        p.name: create_tier4_launch_sync_configs(p) for p in tier4_launch_package_paths
     }
 
     # Create sync-param-files.yaml
