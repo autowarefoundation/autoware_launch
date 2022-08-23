@@ -6,6 +6,7 @@ import yaml
 
 def src_name_to_dst_name(src: Path) -> Path:
     print(src, len(src.parents))
+    print(src.parents[-1], src.parents[-2])
     module_launch_pkg_name = src.parents[-3].stem  # e.g. "tier4_control_launch"
     print(module_launch_pkg_name)
     file_path_under_config = src.relative_to(Path("launch") / module_launch_pkg_name / "config")
