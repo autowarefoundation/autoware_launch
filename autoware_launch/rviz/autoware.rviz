@@ -1692,6 +1692,14 @@ Visualization Manager:
       Y std deviation: 0.029999999329447746
       Z position: 0
       Z std deviation: 0.029999999329447746
+    - Class: rviz_plugins/BusInitialPoseTool
+      Pose Topic: /simulation/dummy_perception_publisher/object_info
+      Theta std deviation: 0.0872664600610733
+      Velocity: 0
+      X std deviation: 0.029999999329447746
+      Y std deviation: 0.029999999329447746
+      Z position: 0
+      Z std deviation: 0.029999999329447746
     - Class: rviz_plugins/MissionCheckpointTool
       Pose Topic: /planning/mission_planning/checkpoint
       Theta std deviation: 0.2617993950843811
