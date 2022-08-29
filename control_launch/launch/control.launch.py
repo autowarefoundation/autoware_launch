@@ -30,6 +30,9 @@ import yaml
 
 
 def launch_setup(context, *args, **kwargs):
+    nearest_search_param_path = LaunchConfiguration("nearest_search_param_path").perform(context)
+    with open(nearest_search_param_path, "r") as f:
+        nearest_search_param = yaml.safe_load(f)["/**"]["ros__parameters"]
     lat_controller_param_path = LaunchConfiguration("lat_controller_param_path").perform(context)
     with open(lat_controller_param_path, "r") as f:
         lat_controller_param = yaml.safe_load(f)["/**"]["ros__parameters"]
@@ -73,6 +76,7 @@ def launch_setup(context, *args, **kwargs):
                 "ctrl_period": 0.03,
                 "lateral_controller_mode": LaunchConfiguration("lateral_controller_mode"),
             },
+            nearest_search_param,
             lon_controller_param,
             lat_controller_param,
         ],
@@ -95,7 +99,7 @@ def launch_setup(context, *args, **kwargs):
                 "/control/trajectory_follower/lateral/predicted_trajectory",
             ),
         ],
-        parameters=[lane_departure_checker_param],
+        parameters=[nearest_search_param, lane_departure_checker_param],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
@@ -180,6 +184,7 @@ def launch_setup(context, *args, **kwargs):
             ("control_mode_request", "/control/control_mode_request"),
         ],
         parameters=[
+            nearest_search_param,
             operation_mode_transition_manager_param,
         ],
     )
@@ -249,6 +254,14 @@ def generate_launch_description():
     )
 
     # parameter file path
+    add_launch_arg(
+        "nearest_search_param_path",
+        [
+            FindPackageShare("control_launch"),
+            "/config/common/nearest_search.param.yaml",
+        ],
+        "path to the parameter file of nearest search",
+    )
     add_launch_arg(
         "lat_controller_param_path",
         [
