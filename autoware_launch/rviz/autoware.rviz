@@ -1001,7 +1001,7 @@ Visualization Manager:
                       View Path:
                         Alpha: 0.30000001192092896
                         Color: 115; 210; 22
-                        Constant Color: true
+                        Constant Color: false
                         Value: true
                         Width: 2
                       View Velocity:
