@@ -119,7 +119,9 @@
   </group>
 
   <!-- API -->
-  <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml"/>
+  <group>
+    <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml"/>
+  </group>
 
   <!-- Tools -->
   <group>
