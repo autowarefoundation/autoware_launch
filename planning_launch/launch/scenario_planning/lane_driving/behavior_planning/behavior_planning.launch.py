@@ -419,6 +419,19 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration("use_multithread")),
     )
 
+    # This condition is true if run_out module is enabled and its detection method is Points
+    launch_run_out_with_points_method = PythonExpression(
+        [
+            LaunchConfiguration(
+                "launch_run_out", default=behavior_velocity_planner_param["launch_run_out"]
+            ),
+            " and ",
+            "'",
+            run_out_param["run_out"]["detection_method"],
+            "' == 'Points'",
+        ]
+    )
+
     # load compare map for run out module
     load_compare_map = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -433,19 +446,24 @@ def generate_launch_description():
             "use_multithread": "true",
         }.items(),
         # launch compare map only when run_out module is enabled and detection method is Points
-        condition=IfCondition(
-            PythonExpression(
-                [
-                    LaunchConfiguration(
-                        "launch_run_out", default=behavior_velocity_planner_param["launch_run_out"]
-                    ),
-                    " and ",
-                    "'",
-                    run_out_param["run_out"]["detection_method"],
-                    "' == 'Points'",
-                ]
-            )
+        condition=IfCondition(launch_run_out_with_points_method),
+    )
+
+    load_vector_map_inside_area_filter = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                FindPackageShare("tier4_planning_launch"),
+                "/launch/scenario_planning/lane_driving/behavior_planning/vector_map_inside_area_filter.launch.py",
+            ]
         ),
+        launch_arguments={
+            "use_pointcloud_container": LaunchConfiguration("use_pointcloud_container"),
+            "container_name": LaunchConfiguration("container_name"),
+            "use_multithread": "true",
+            "polygon_type": "no_obstacle_segmentation_area_for_run_out",
+        }.items(),
+        # launch vector map filter only when run_out module is enabled and detection method is Points
+        condition=IfCondition(launch_run_out_with_points_method),
     )
 
     return launch.LaunchDescription(
@@ -460,5 +478,6 @@ def generate_launch_description():
             set_container_mt_executable,
             container,
             load_compare_map,
+            load_vector_map_inside_area_filter,
         ]
     )
