@@ -10,8 +10,8 @@
     ## system_error_monitor
     - source: system/system_error_monitor/config/system_error_monitor.param.yaml
       dest: system_launch/config/system_error_monitor.param.yaml
-    - source: system/system_error_monitor/config/system_error_monitor.planning_simulation.param.yaml
-      dest: system_launch/config/system_error_monitor.planning_simulation.param.yaml
+    # - source: system/system_error_monitor/config/system_error_monitor.planning_simulation.param.yaml
+    #   dest: system_launch/config/system_error_monitor.planning_simulation.param.yaml
 
     ## system_monitor
     - source: system/system_monitor/config/cpu_monitor.param.yaml
