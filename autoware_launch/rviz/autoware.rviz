@@ -1378,44 +1378,6 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/sideshift
                           Value: false
-                        - Class: rviz_common/Group
-                          Displays:
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: MarkerArray
-                              Namespaces:
-                                {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/pull_over/debug/parking_area
-                              Value: true
-                            - Alpha: 0.999
-                              Arrow Length: 0.3
-                              Axes Length: 0.3
-                              Axes Radius: 0.01
-                              Class: rviz_default_plugins/PoseArray
-                              Color: 255; 25; 0
-                              Enabled: false
-                              Head Length: 0.1
-                              Head Radius: 0.2
-                              Name: PullOverPathPoseArray
-                              Shaft Length: 0.2
-                              Shaft Radius: 0.05
-                              Shape: Arrow (3D)
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                Filter size: 10
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/pull_over/debug/path_pose_array
-                              Value: false
-                          Enabled: false
-                          Name: PullOver
-                      Enabled: false
                       Name: DebugMarker
                   Enabled: true
                   Name: BehaviorPlanning
