@@ -56,6 +56,10 @@ def launch_setup(context, *args, **kwargs):
     with open(operation_mode_transition_manager_param_path, "r") as f:
         operation_mode_transition_manager_param = yaml.safe_load(f)["/**"]["ros__parameters"]
 
+    shift_decider_param_path = LaunchConfiguration("shift_decider_param_path").perform(context)
+    with open(shift_decider_param_path, "r") as f:
+        shift_decider_param = yaml.safe_load(f)["/**"]["ros__parameters"]
+
     controller_component = ComposableNode(
         package="trajectory_follower_nodes",
         plugin="autoware::motion::control::trajectory_follower_nodes::Controller",
@@ -114,9 +118,7 @@ def launch_setup(context, *args, **kwargs):
             ("output/gear_cmd", "/control/shift_decider/gear_cmd"),
         ],
         parameters=[
-            {
-                "park_on_goal": True,
-            }
+            shift_decider_param,
         ],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
@@ -303,6 +305,14 @@ def generate_launch_description():
             "/config/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml",
         ],
         "path to the parameter file of vehicle_cmd_gate",
+    )
+    add_launch_arg(
+        "shift_decider_param_path",
+        [
+            FindPackageShare("control_launch"),
+            "/config/shift_decider/shift_decider_param.param.yaml",
+        ],
+        "path to the parameter file of shift_decider",
     )
 
     # vehicle cmd gate
