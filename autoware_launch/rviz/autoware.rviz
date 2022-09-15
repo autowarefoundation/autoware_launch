@@ -816,7 +816,7 @@ Visualization Manager:
                   Class: autoware_auto_perception_rviz_plugin/PredictedObjects
                   Display 3d polygon: true
                   Display Label: true
-                  Display PoseWithCovariance: true
+                  Display PoseWithCovariance: false
                   Display Predicted Path Confidence: true
                   Display Predicted Paths: true
                   Display Twist: true
@@ -1306,44 +1306,78 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/run_out
                           Value: false
-                        - Class: rviz_common/Group
-                          Displays:
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: MarkerArray
-                              Namespaces:
-                                {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/pull_over/debug/parking_area
-                              Value: true
-                            - Alpha: 0.999
-                              Arrow Length: 0.3
-                              Axes Length: 0.3
-                              Axes Radius: 0.01
-                              Class: rviz_default_plugins/PoseArray
-                              Color: 255; 25; 0
-                              Enabled: false
-                              Head Length: 0.1
-                              Head Radius: 0.2
-                              Name: PullOverPathPoseArray
-                              Shaft Length: 0.2
-                              Shaft Radius: 0.05
-                              Shape: Arrow (3D)
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                Filter size: 10
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/pull_over/debug/path_pose_array
-                              Value: false
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: false
+                          Name: Avoidance
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/avoidance
+                          Value: false
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: false
+                          Name: LaneChange
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lanechange
+                          Value: false
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: false
+                          Name: LaneFollowing
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lanefollowing
+                          Value: false
+                        - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
                           Name: PullOver
-                      Enabled: false
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/pullover
+                          Value: false
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: false
+                          Name: PullOut
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/pullout
+                          Value: false
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: false
+                          Name: SideShift
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/sideshift
+                          Value: false
                       Name: DebugMarker
                   Enabled: true
                   Name: BehaviorPlanning
@@ -1414,21 +1448,64 @@ Visualization Manager:
                       Name: VirtualWall
                     - Class: rviz_common/Group
                       Displays:
+                        - Class: rviz_common/Group
+                          Displays:
+                            - Class: rviz_default_plugins/MarkerArray
+                              Enabled: true
+                              Name: SurroundObstacleCheck
+                              Namespaces:
+                                {}
+                              Topic:
+                                Depth: 5
+                                Durability Policy: Volatile
+                                History Policy: Keep Last
+                                Reliability Policy: Reliable
+                                Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/marker
+                              Value: true
+                            - Alpha: 1
+                              Class: rviz_default_plugins/Polygon
+                              Color: 25; 255; 0
+                              Enabled: false
+                              Name: Footprint
+                              Topic:
+                                Depth: 5
+                                Durability Policy: Volatile
+                                Filter size: 10
+                                History Policy: Keep Last
+                                Reliability Policy: Reliable
+                                Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/footprint
+                              Value: false
+                            - Alpha: 1
+                              Class: rviz_default_plugins/Polygon
+                              Color: 239; 41; 41
+                              Enabled: false
+                              Name: FootprintOffset
+                              Topic:
+                                Depth: 5
+                                Durability Policy: Volatile
+                                Filter size: 10
+                                History Policy: Keep Last
+                                Reliability Policy: Reliable
+                                Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/footprint_offset
+                              Value: false
+                            - Alpha: 1
+                              Class: rviz_default_plugins/Polygon
+                              Color: 10; 21; 255
+                              Enabled: false
+                              Name: FootprintRecoverOffset
+                              Topic:
+                                Depth: 5
+                                Durability Policy: Volatile
+                                Filter size: 10
+                                History Policy: Keep Last
+                                Reliability Policy: Reliable
+                                Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/footprint_recover_offset
+                              Value: false
+                          Enabled: true
+                          Name: SurroundObstacleChecker
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
                           Name: ObstacleStop
-                          Namespaces:
-                            {}
-                          Topic:
-                            Depth: 5
-                            Durability Policy: Volatile
-                            History Policy: Keep Last
-                            Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_stop_planner/debug/marker
-                          Value: true
-                        - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
-                          Name: SurroundObstacleCheck
                           Namespaces:
                             {}
                           Topic:
@@ -1652,6 +1729,14 @@ Visualization Manager:
       Pose Topic: /simulation/dummy_perception_publisher/object_info
       Theta std deviation: 0.0872664600610733
       Velocity: 3
+      X std deviation: 0.029999999329447746
+      Y std deviation: 0.029999999329447746
+      Z position: 0
+      Z std deviation: 0.029999999329447746
+    - Class: rviz_plugins/BusInitialPoseTool
+      Pose Topic: /simulation/dummy_perception_publisher/object_info
+      Theta std deviation: 0.0872664600610733
+      Velocity: 0
       X std deviation: 0.029999999329447746
       Y std deviation: 0.029999999329447746
       Z position: 0
