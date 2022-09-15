@@ -28,8 +28,6 @@
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
   <!-- System -->
   <arg name="system_run_mode" default="online" description="run mode in system"/>
-  <!-- API -->
-  <arg name="init_simulator_pose" default="false" description="initialize simulator pose"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
@@ -122,10 +120,9 @@
   </group>
 
   <!-- API -->
-  <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml">
-    <arg name="init_simulator_pose" value="$(var init_simulator_pose)"/>
-    <arg name="init_localization_pose" value="$(var launch_localization)"/>
-  </include>
+  <group>
+    <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml"/>
+  </group>
 
   <!-- Tools -->
   <group>

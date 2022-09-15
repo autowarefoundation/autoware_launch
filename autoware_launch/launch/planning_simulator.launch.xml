@@ -47,22 +47,11 @@
       <!-- Map -->
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
-      <!-- API -->
-      <arg name="init_simulator_pose" value="true"/>
       <!-- Tools -->
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
       <arg name="launch_web_controller" value="$(var launch_web_controller)"/>
     </include>
-  </group>
-
-  <!-- Initial Pose Relay -->
-  <group>
-    <node pkg="topic_tools" exec="relay" name="initial_pose_2d">
-      <param name="input_topic" value="/initialpose"/>
-      <param name="output_topic" value="/initialpose2d"/>
-      <param name="type" value="geometry_msgs/msg/PoseWithCovarianceStamped"/>
-    </node>
   </group>
 
   <!-- Simulator -->
@@ -71,10 +60,13 @@
     <let name="launch_dummy_perception" value="true" unless="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="false" if="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="true" unless="$(var scenario_simulation)"/>
+    <let name="launch_dummy_localization" value="false" if="$(var scenario_simulation)"/>
+    <let name="launch_dummy_localization" value="true" unless="$(var scenario_simulation)"/>
 
     <include file="$(find-pkg-share tier4_simulator_launch)/launch/simulator.launch.xml">
       <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
       <arg name="launch_dummy_vehicle" value="$(var launch_dummy_vehicle)"/>
+      <arg name="launch_dummy_localization" value="$(var launch_dummy_localization)"/>
       <arg name="perception/enable_detection_failure" value="$(var perception/enable_detection_failure)"/>
       <arg name="perception/enable_object_recognition" value="$(var perception/enable_object_recognition)"/>
       <arg name="sensing/visible_range" value="$(var sensing/visible_range)"/>
