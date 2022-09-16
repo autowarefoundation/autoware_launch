@@ -163,4 +163,3 @@
       dest: autoware_launch/config/tier4_system_launch/system_error_monitor/diagnostic_aggregator/control.param.yaml
 
     # tier4_vehicle_launch
-
