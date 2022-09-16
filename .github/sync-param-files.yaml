@@ -7,16 +7,14 @@
       dest: autoware_launch/config/tier4_control_launch/common/nearest_search.param.yaml
     - source: launch/tier4_control_launch/config/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml
       dest: autoware_launch/config/tier4_control_launch/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml
-    - source: launch/tier4_control_launch/config/trajectory_follower/latlon_muxer.param.yaml
-      dest: autoware_launch/config/tier4_control_launch/trajectory_follower/latlon_muxer.param.yaml
     - source: launch/tier4_control_launch/config/trajectory_follower/longitudinal_controller.param.yaml
       dest: autoware_launch/config/tier4_control_launch/trajectory_follower/longitudinal_controller.param.yaml
     - source: launch/tier4_control_launch/config/trajectory_follower/lateral_controller.param.yaml
       dest: autoware_launch/config/tier4_control_launch/trajectory_follower/lateral_controller.param.yaml
+    - source: launch/tier4_control_launch/config/shift_decider/shift_decider.param.yaml
+      dest: autoware_launch/config/tier4_control_launch/shift_decider/shift_decider.param.yaml
     - source: launch/tier4_control_launch/config/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml
       dest: autoware_launch/config/tier4_control_launch/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml
-
-    # tier4_integration_launch
 
     # tier4_localization_launch
     - source: launch/tier4_localization_launch/config/crop_box_filter_measurement_range.param.yaml
@@ -61,6 +59,8 @@
       dest: autoware_launch/config/tier4_planning_launch/scenario_planning/common/motion_velocity_smoother/Analytical.param.yaml
     - source: launch/tier4_planning_launch/config/scenario_planning/common/motion_velocity_smoother/JerkFiltered.param.yaml
       dest: autoware_launch/config/tier4_planning_launch/scenario_planning/common/motion_velocity_smoother/JerkFiltered.param.yaml
+    - source: launch/tier4_planning_launch/config/scenario_planning/lane_driving/behavior_planning/rtc_auto_mode_manager/rtc_auto_mode_manager.param.yaml
+      dest: autoware_launch/config/tier4_planning_launch/scenario_planning/lane_driving/behavior_planning/rtc_auto_mode_manager/rtc_auto_mode_manager.param.yaml
     - source: launch/tier4_planning_launch/config/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/behavior_path_planner.param.yaml
       dest: autoware_launch/config/tier4_planning_launch/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/behavior_path_planner.param.yaml
     - source: launch/tier4_planning_launch/config/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/pull_out/pull_out.param.yaml
@@ -97,8 +97,6 @@
       dest: autoware_launch/config/tier4_planning_launch/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/run_out.param.yaml
     - source: launch/tier4_planning_launch/config/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/traffic_light.param.yaml
       dest: autoware_launch/config/tier4_planning_launch/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/traffic_light.param.yaml
-    - source: launch/tier4_planning_launch/config/scenario_planning/lane_driving/behavior_planning/rtc_auto_approver/rtc_auto_approver.param.yaml
-      dest: autoware_launch/config/tier4_planning_launch/scenario_planning/lane_driving/behavior_planning/rtc_auto_approver/rtc_auto_approver.param.yaml
     - source: launch/tier4_planning_launch/config/scenario_planning/lane_driving/behavior_planning/lane_change_planner/lane_change_planner.param.yaml
       dest: autoware_launch/config/tier4_planning_launch/scenario_planning/lane_driving/behavior_planning/lane_change_planner/lane_change_planner.param.yaml
     - source: launch/tier4_planning_launch/config/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/obstacle_cruise_planner.param.yaml
@@ -165,3 +163,4 @@
       dest: autoware_launch/config/tier4_system_launch/system_error_monitor/diagnostic_aggregator/control.param.yaml
 
     # tier4_vehicle_launch
+
