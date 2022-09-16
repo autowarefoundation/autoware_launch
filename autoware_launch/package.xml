@@ -9,6 +9,7 @@
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
+  <exec_depend>ad_api_adaptors</exec_depend>
   <exec_depend>autoware_api_launch</exec_depend>
   <exec_depend>control_launch</exec_depend>
   <exec_depend>global_parameter_loader</exec_depend>
