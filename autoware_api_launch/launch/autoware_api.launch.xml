@@ -1,6 +1,12 @@
 <launch>
 
   <arg name="respawn" default="true" />
+  <arg name="launch_default_ad_api" default="true"/>
+
+  <!-- AD API -->
+  <group if="$(var launch_default_ad_api)">
+    <include file="$(find-pkg-share default_ad_api)/launch/default_ad_api.launch.py"/>
+  </group>
 
   <!-- awapi (deprecated) -->
   <group>
