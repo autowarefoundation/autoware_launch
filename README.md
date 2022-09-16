@@ -1,5 +1,4 @@
 # autoware_launcher
-This repository is an archived repository. Please check here for the details.
 
 ## Getting started
 
