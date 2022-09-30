@@ -56,7 +56,7 @@
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
       <!-- Perception-->
-      <arg name="enable_traffic_light_fine_detection" value="false"/>
+      <arg name="traffic_light_recognition/enable_fine_detection" value="false"/>
       <!-- Tools -->
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
