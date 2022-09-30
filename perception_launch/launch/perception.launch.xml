@@ -31,6 +31,8 @@
   />
   <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <!-- Traffic Light Recognition Parameters -->
+  <arg name="traffic_light_recognition/enable_fine_detection" default="true"/>
 
   <!-- perception module -->
   <group>
@@ -120,7 +122,9 @@
     <!-- traffic light module -->
     <group>
       <push-ros-namespace namespace="traffic_light_recognition"/>
-      <include file="$(find-pkg-share perception_launch)/launch/traffic_light_recognition/traffic_light.launch.xml"/>
+      <include file="$(find-pkg-share perception_launch)/launch/traffic_light_recognition/traffic_light.launch.xml">
+        <arg name="enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
+      </include>
     </group>
   </group>
 </launch>
