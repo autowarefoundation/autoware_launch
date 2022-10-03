@@ -32,6 +32,8 @@
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
   <arg name="launch_web_controller" default="true" description="launch web controller"/>
+  <!-- Perception -->
+  <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -99,6 +101,7 @@
       <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
     </include>
   </group>
 
