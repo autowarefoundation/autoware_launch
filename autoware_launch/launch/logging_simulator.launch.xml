@@ -8,6 +8,7 @@
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
 
   <!-- Optional parameters -->
+  <arg name="api" default="true" description="launch api" />
   <arg name="vehicle" default="true" description="launch vehicle" />
   <arg name="system" default="true" description="launch system" />
   <arg name="map" default="true" description="launch map" />
@@ -111,7 +112,7 @@
 
   <!-- Autoware API -->
   <group>
-    <include file="$(find-pkg-share autoware_api_launch)/launch/autoware_api.launch.xml"/>
+    <include file="$(find-pkg-share autoware_api_launch)/launch/autoware_api.launch.xml" if="$(var api)"/>
   </group>
 
   <!-- Tools -->
