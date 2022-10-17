@@ -619,7 +619,7 @@ Visualization Manager:
               Position Transformer: XYZ
               Selectable: false
               Size (Pixels): 10
-              Size (m): 0.02
+              Size (m): 0.5
               Style: Squares
               Topic:
                 Depth: 5
