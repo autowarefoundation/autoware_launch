@@ -586,13 +586,13 @@ Visualization Manager:
               Position Transformer: XYZ
               Selectable: false
               Size (Pixels): 10
-              Size (m): 0.02
+              Size (m): 0.5
               Style: Squares
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
-                Reliability Policy: Reliable
+                Reliability Policy: Best Effort
                 Value: /localization/util/downsample/pointcloud
               Use Fixed Frame: true
               Use rainbow: true
@@ -619,7 +619,7 @@ Visualization Manager:
               Position Transformer: XYZ
               Selectable: false
               Size (Pixels): 10
-              Size (m): 0.02
+              Size (m): 0.5
               Style: Squares
               Topic:
                 Depth: 5
