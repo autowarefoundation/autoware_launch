@@ -80,6 +80,7 @@ def launch_setup(context, *args, **kwargs):
             {
                 "ctrl_period": 0.03,
                 "lateral_controller_mode": LaunchConfiguration("lateral_controller_mode"),
+                "longitudinal_controller_mode": LaunchConfiguration("longitudinal_controller_mode"),
             },
             nearest_search_param,
             lon_controller_param,
