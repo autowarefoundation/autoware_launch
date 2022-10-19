@@ -80,6 +80,7 @@ def launch_setup(context, *args, **kwargs):
             {
                 "ctrl_period": 0.03,
                 "lateral_controller_mode": LaunchConfiguration("lateral_controller_mode"),
+                "longitudinal_controller_mode": LaunchConfiguration("longitudinal_controller_mode"),
             },
             nearest_search_param,
             lon_controller_param,
@@ -260,6 +261,13 @@ def generate_launch_description():
         "lateral_controller_mode",
         "mpc_follower",
         "lateral controller mode: `mpc_follower` or `pure_pursuit`",
+    )
+
+    # longitudinal controller mode
+    add_launch_arg(
+        "longitudinal_controller_mode",
+        "pid",
+        "longitudinal controller mode: `pid`",
     )
 
     # parameter file path

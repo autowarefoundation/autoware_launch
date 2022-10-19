@@ -85,8 +85,6 @@ class GroundSegmentationPipeline:
                     {
                         "input_frame": LaunchConfiguration("base_frame"),
                         "output_frame": LaunchConfiguration("base_frame"),
-                        "min_z": self.vehicle_info["min_height_offset"],
-                        "max_z": self.vehicle_info["max_height_offset"],
                     },
                     self.ground_segmentation_param[f"{lidar_name}_crop_box_filter"]["parameters"],
                 ],
@@ -219,8 +217,6 @@ class GroundSegmentationPipeline:
                     {
                         "input_frame": LaunchConfiguration("base_frame"),
                         "output_frame": LaunchConfiguration("base_frame"),
-                        "min_z": self.vehicle_info["min_height_offset"],
-                        "max_z": self.vehicle_info["max_height_offset"],
                     },
                     self.ground_segmentation_param["common_crop_box_filter"]["parameters"],
                 ],
@@ -239,7 +235,12 @@ class GroundSegmentationPipeline:
                     ("input", "range_cropped/pointcloud"),
                     ("output", output_topic),
                 ],
-                parameters=[self.ground_segmentation_param["common_ground_filter"]["parameters"]],
+                parameters=[
+                    self.ground_segmentation_param["common_ground_filter"]["parameters"],
+                    self.vehicle_info,
+                    {"input_frame": "base_link"},
+                    {"output_frame": "base_link"},
+                ],
                 extra_arguments=[
                     {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
                 ],
@@ -268,7 +269,7 @@ class GroundSegmentationPipeline:
             components.append(
                 self.get_additional_lidars_concatenated_component(
                     input_topics=[common_pipeline_output]
-                    + [f"{x}/pointcloud" for x in additional_lidars],
+                    + list(map(lambda x: f"{x}/pointcloud"), additional_lidars),
                     output_topic=relay_topic if use_ransac else output_topic,
                 )
             )
@@ -476,6 +477,7 @@ def launch_setup(context, *args, **kwargs):
                 output_topic=relay_topic
                 if pipeline.use_time_series_filter
                 else pipeline.output_topic,
+                context=context,
             )
         )
     if pipeline.use_time_series_filter:
@@ -516,7 +518,7 @@ def generate_launch_description():
     add_launch_arg("use_intra_process", "True")
     add_launch_arg("use_pointcloud_container", "False")
     add_launch_arg("container_name", "perception_pipeline_container")
-    add_launch_arg("input/pointcloud", "sensing/lidar/concatenated/pointcloud")
+    add_launch_arg("input/pointcloud", "/sensing/lidar/concatenated/pointcloud")
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
