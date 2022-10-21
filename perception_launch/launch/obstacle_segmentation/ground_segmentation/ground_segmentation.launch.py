@@ -269,7 +269,7 @@ class GroundSegmentationPipeline:
             components.append(
                 self.get_additional_lidars_concatenated_component(
                     input_topics=[common_pipeline_output]
-                    + list(map(lambda x: f"{x}/pointcloud"), additional_lidars),
+                    + [f"{x}/pointcloud" for x in additional_lidars],
                     output_topic=relay_topic if use_ransac else output_topic,
                 )
             )
