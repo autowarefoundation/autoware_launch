@@ -120,6 +120,18 @@ def generate_launch_description():
     with open(pull_out_param_path, "r") as f:
         pull_out_param = yaml.safe_load(f)["/**"]["ros__parameters"]
 
+    drivable_area_expansion_param_path = os.path.join(
+        get_package_share_directory("planning_launch"),
+        "config",
+        "scenario_planning",
+        "lane_driving",
+        "behavior_planning",
+        "behavior_path_planner",
+        "drivable_area_expansion.param.yaml",
+    )
+    with open(drivable_area_expansion_param_path, "r") as f:
+        drivable_area_expansion_param = yaml.safe_load(f)["/**"]["ros__parameters"]
+
     behavior_path_planner_param_path = os.path.join(
         get_package_share_directory("planning_launch"),
         "config",
@@ -156,6 +168,7 @@ def generate_launch_description():
             lane_following_param,
             pull_over_param,
             pull_out_param,
+            drivable_area_expansion_param,
             behavior_path_planner_param,
             {
                 "bt_tree_config_path": [
