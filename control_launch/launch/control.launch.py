@@ -319,7 +319,7 @@ def generate_launch_description():
         "shift_decider_param_path",
         [
             FindPackageShare("control_launch"),
-            "/config/shift_decider/shift_decider_param.param.yaml",
+            "/config/shift_decider/shift_decider.param.yaml",
         ],
         "path to the parameter file of shift_decider",
     )
