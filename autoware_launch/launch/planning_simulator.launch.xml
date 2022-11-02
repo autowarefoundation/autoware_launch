@@ -11,6 +11,8 @@
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
   <!-- Control -->
   <arg name="enable_obstacle_collision_checker" default="false" description="use obstacle_collision_checker"/>
+  <arg name="lateral_controller_mode" default="mpc_follower" description="lateral controller mode: mpc_follower or pure_pursuit"/>
+  <arg name="longitudinal_controller_mode" default="pid" description="longitudinal controller mode: default pid"/>
   <!-- System -->
   <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
   <!-- Tools -->
@@ -51,6 +53,8 @@
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
       <!-- Control -->
       <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
+      <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
+      <arg name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
       <!-- Tools -->
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
