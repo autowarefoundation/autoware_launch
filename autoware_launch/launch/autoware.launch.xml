@@ -26,6 +26,8 @@
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <!-- Control -->
+  <arg name="enable_obstacle_collision_checker" default="false" description="use obstacle_collision_checker"/>
   <!-- System -->
   <arg name="system_run_mode" default="online" description="run mode in system"/>
   <!-- Tools -->
@@ -34,8 +36,7 @@
   <arg name="launch_web_controller" default="true" description="launch web controller"/>
   <!-- Perception -->
   <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
-  <!-- Control -->
-  <arg name="enable_obstacle_collision_checker" default="false" description="enable_obstacle_collision_checker"/>
+
 
   <!-- Global parameters -->
   <group scoped="false">
