@@ -37,7 +37,6 @@
   <!-- Control -->
   <arg name="enable_obstacle_collision_checker" default="false" description="enable_obstacle_collision_checker"/>
 
-
   <!-- Global parameters -->
   <group scoped="false">
     <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
