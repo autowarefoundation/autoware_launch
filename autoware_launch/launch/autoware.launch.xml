@@ -34,6 +34,9 @@
   <arg name="launch_web_controller" default="true" description="launch web controller"/>
   <!-- Perception -->
   <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
+  <!-- Control -->
+  <arg name="enable_obstacle_collision_checker" default="false" description="enable_obstacle_collision_checker"/>
+
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -120,6 +123,7 @@
       <arg name="lateral_controller_mode" value="mpc_follower"/>
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
+      <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
     </include>
   </group>
 
