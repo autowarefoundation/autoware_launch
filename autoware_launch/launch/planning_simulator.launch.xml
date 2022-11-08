@@ -55,6 +55,8 @@
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
       <arg name="launch_web_controller" value="$(var launch_web_controller)"/>
+      <!-- Control -->
+      <arg name="use_external_emergency_stop" value="false"/>
     </include>
   </group>
 
