@@ -467,7 +467,7 @@ def generate_launch_description():
     load_vector_map_inside_area_filter = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
-                FindPackageShare("tier4_planning_launch"),
+                FindPackageShare("planning_launch"),
                 "/launch/scenario_planning/lane_driving/behavior_planning/vector_map_inside_area_filter.launch.py",
             ]
         ),
