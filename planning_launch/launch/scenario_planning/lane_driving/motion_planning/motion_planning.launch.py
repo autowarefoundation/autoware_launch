@@ -29,6 +29,19 @@ import yaml
 
 
 def generate_launch_description():
+    launch_arguments = []
+
+    def add_launch_arg(name: str, default_value=None, description=None):
+        launch_arguments.append(
+            DeclareLaunchArgument(name, default_value=default_value, description=description)
+        )
+
+    add_launch_arg(
+        "cruise_planner_type",
+        "obstacle_stop_planner",
+        "cruise_planner: obstacle_stop_planner, obstacle_cruise_planner, none`",
+    )
+
     # planning common param path
     common_param_path = os.path.join(
         get_package_share_directory("planning_launch"),
@@ -237,19 +250,19 @@ def generate_launch_description():
     obstacle_stop_planner_loader = LoadComposableNodes(
         composable_node_descriptions=[obstacle_stop_planner_component],
         target_container=container,
-        condition=LaunchConfigurationEquals("cruise_planner", "obstacle_stop_planner"),
+        condition=LaunchConfigurationEquals("cruise_planner_type", "obstacle_stop_planner"),
     )
 
     obstacle_cruise_planner_loader = LoadComposableNodes(
         composable_node_descriptions=[obstacle_cruise_planner_component],
         target_container=container,
-        condition=LaunchConfigurationEquals("cruise_planner", "obstacle_cruise_planner"),
+        condition=LaunchConfigurationEquals("cruise_planner_type", "obstacle_cruise_planner"),
     )
 
     obstacle_cruise_planner_relay_loader = LoadComposableNodes(
         composable_node_descriptions=[obstacle_cruise_planner_relay_component],
         target_container=container,
-        condition=LaunchConfigurationEquals("cruise_planner", "none"),
+        condition=LaunchConfigurationEquals("cruise_planner_type", "none"),
     )
 
     surround_obstacle_checker_loader = LoadComposableNodes(
@@ -270,15 +283,13 @@ def generate_launch_description():
     )
 
     return launch.LaunchDescription(
-        [
+        launch_arguments
+        + [
             DeclareLaunchArgument(
                 "input_path_topic",
                 default_value="/planning/scenario_planning/lane_driving/behavior_planning/path",
             ),
             DeclareLaunchArgument("use_surround_obstacle_check", default_value="true"),
-            DeclareLaunchArgument(
-                "cruise_planner", default_value="obstacle_stop_planner"
-            ),  # select from "obstacle_stop_planner", "obstacle_cruise_planner", "none"
             DeclareLaunchArgument("use_intra_process", default_value="false"),
             DeclareLaunchArgument("use_multithread", default_value="false"),
             set_container_executable,
