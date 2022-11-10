@@ -1,0 +1,13 @@
+- repository: autowarefoundation/autoware_launch
+  files:
+    - source: autoware_launch/launch/autoware.launch.xml
+    - source: autoware_launch/launch/e2e_simulator.launch.xml
+    - source: autoware_launch/launch/logging_simulator.launch.xml
+    - source: autoware_launch/launch/planning_simulator.launch.xml
+    - source: autoware_launch/launch/pointcloud_container.launch.py
+    - source: autoware_launch/rviz/autoware.rviz
+    - source: autoware_launch/rviz/image/autoware.png
+    - source: autoware_launch/CMakeLists.txt
+    - source: autoware_launch/README.md
+    - source: autoware_launch/autoware_launch.drawio.svg
+    - source: autoware_launch/package.xml
