@@ -1,4 +1,4 @@
-name: sync-files
+name: sync-launch-files
 
 on:
   schedule:
