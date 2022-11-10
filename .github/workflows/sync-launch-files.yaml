@@ -28,7 +28,10 @@ jobs:
         with:
           token: ${{ steps.generate-token.outputs.token }}
           config: .github/sync-launch-files.yaml
+          pr-branch: sync-launch-files
+          pr-title: "chore: sync launch files"
+          pr-commit-message: "chore: sync launch files"
           pr-labels: |
             bot
-            sync-files
+            sync-launch-files
           auto-merge-method: squash
