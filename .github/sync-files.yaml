@@ -21,3 +21,8 @@
     - source: .github/workflows/build-and-test.yaml
     - source: .github/workflows/build-and-test-differential.yaml
     - source: .github/workflows/cancel-previous-workflows.yaml
+
+- repository: autowarefoundation/autoware_launch
+  files:
+    - source: .github/update-sync-param-files.py
+    - source: .github/workflows/update-sync-param-files.yaml
