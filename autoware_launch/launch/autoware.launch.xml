@@ -26,12 +26,16 @@
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <!-- Control -->
+  <arg name="enable_obstacle_collision_checker" default="false" description="use obstacle_collision_checker"/>
   <!-- System -->
   <arg name="system_run_mode" default="online" description="run mode in system"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
   <arg name="launch_web_controller" default="true" description="launch web controller"/>
+  <!-- Perception -->
+  <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -104,6 +108,7 @@
       <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
       <arg name="tier4_perception_launch_param_path" value="$(find-pkg-share autoware_launch)/config/tier4_perception_launch"/>
+      <arg name="enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
     </include>
   </group>
 
@@ -123,6 +128,8 @@
       <arg name="lateral_controller_mode" value="mpc_follower"/>
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="tier4_control_launch_param_path" value="$(find-pkg-share autoware_launch)/config/tier4_control_launch"/>
+      <arg name="vehicle_id" value="$(var vehicle_id)"/>
+      <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
     </include>
   </group>
 
@@ -135,7 +142,6 @@
   <group>
     <!-- Rviz -->
     <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png" if="$(var rviz)"/>
-    <include file="$(find-pkg-share ad_api_adaptors)/launch/rviz_adaptors.launch.xml" if="$(var rviz)"/>
 
     <!-- Web Controller -->
     <include file="$(find-pkg-share web_controller)/launch/web_controller.launch.xml" if="$(var launch_web_controller)"/>

@@ -9,6 +9,8 @@
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <!-- Control -->
+  <arg name="enable_obstacle_collision_checker" default="false" description="use obstacle_collision_checker"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
@@ -47,6 +49,8 @@
       <!-- Map -->
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
+      <!-- Control -->
+      <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
       <!-- Tools -->
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
@@ -60,8 +64,7 @@
     <let name="launch_dummy_perception" value="true" unless="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="false" if="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="true" unless="$(var scenario_simulation)"/>
-    <let name="launch_dummy_localization" value="false" if="$(var scenario_simulation)"/>
-    <let name="launch_dummy_localization" value="true" unless="$(var scenario_simulation)"/>
+    <let name="launch_dummy_localization" value="true"/>
 
     <include file="$(find-pkg-share tier4_simulator_launch)/launch/simulator.launch.xml">
       <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
