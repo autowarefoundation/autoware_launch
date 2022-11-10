@@ -5,6 +5,7 @@
   <!-- pointcloud container -->
   <arg name="use_pointcloud_container"/>
   <arg name="pointcloud_container_name"/>
+  <arg name="cruise_planner_type"/>
 
   <!-- lane_driving scenario -->
   <group>
@@ -28,6 +29,7 @@
       <push-ros-namespace namespace="motion_planning"/>
       <include file="$(find-pkg-share planning_launch)/launch/scenario_planning/lane_driving/motion_planning/motion_planning.launch.py">
         <arg name="use_multithread" value="true" />
+        <arg name="cruise_planner_type" value="$(var cruise_planner_type)" />
       </include>
     </group>
   </group>
