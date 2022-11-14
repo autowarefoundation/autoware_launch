@@ -22,6 +22,8 @@
   <arg name="enable_obstacle_collision_checker" default="false" description="use obstacle_collision_checker"/>
   <!-- Vehicle -->
   <arg name="launch_vehicle_interface" default="false"/>
+  <!-- System -->
+  <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
@@ -49,6 +51,8 @@
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
       <!-- Control -->
       <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
+      <!-- System -->
+      <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
       <!-- Perception-->
