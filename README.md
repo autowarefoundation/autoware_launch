@@ -23,4 +23,3 @@ ros2 launch autoware_launch planning_simulator.launch.xml map_path:=/path/to/map
 - [perception_launch](./perception_launch)
 - [planning_launch](./planning_launch)
 - [system_launch](./system_launch)
-- [vehicle_launch](./vehicle_launch)
