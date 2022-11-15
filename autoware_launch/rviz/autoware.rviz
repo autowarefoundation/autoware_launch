@@ -1440,7 +1440,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_avoidance_planner/debug/wall_marker
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_avoidance_planner/debug/virtual_wall
                           Value: true
                       Enabled: true
                       Name: VirtualWall
