@@ -65,6 +65,8 @@
       <arg name="lateral_controller_mode" value="mpc_follower" />
       <!-- options for longitudinal_controller_mode: pid -->
       <arg name="longitudinal_controller_mode" value="pid" />
+      <!-- Options for external emergency stop module. Heartbeat topic is required if this is true. -->
+      <arg name="use_external_emergency_stop" value="false" />
     </include>
   </group>
 
