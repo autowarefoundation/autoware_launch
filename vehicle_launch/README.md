@@ -28,13 +28,13 @@ This package finds some external packages and settings with variables and packag
 
 ex.)
 
-<https://github.com/tier4/autoware_launcher/blob/d880474/vehicle_launch/launch/vehicle_interface.launch.xml#L9>
+<https://github.com/tier4/autoware_launch/blob/e1ed860/vehicle_launch/launch/vehicle.launch.xml#L9>
 
 ```xml
 <let name="vehicle_model_pkg" value="$(find-pkg-share $(var vehicle_model)_description)"/>
 ```
 
-<https://github.com/tier4/autoware_launcher/blob/d880474/vehicle_launch/launch/vehicle_description.launch.xml#L11>
+<https://github.com/tier4/autoware_launch/blob/e1ed860/vehicle_launch/launch/vehicle_description.launch.xml#L11>
 
 ```xml
 <arg name="config_dir" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)"/>
