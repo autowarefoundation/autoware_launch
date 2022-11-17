@@ -29,6 +29,14 @@
       <arg name="config_file" value="$(var config_file)" />
     </include>
 
+    <!-- Component State Monitor -->
+    <group>
+      <include file="$(find-pkg-share component_state_monitor)/launch/component_state_monitor.launch.py">
+        <arg name="mode" value="$(var run_mode)"/>
+        <arg name="file" value="$(find-pkg-share component_state_monitor)/config/topics.yaml"/>
+      </include>
+    </group>
+
     <!-- Error Monitor -->
     <let name="config_file" value="$(find-pkg-share system_launch)/config/system_error_monitor.param.yaml"/>
     <include file="$(find-pkg-share system_error_monitor)/launch/system_error_monitor.launch.xml">
