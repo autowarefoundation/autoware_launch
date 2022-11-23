@@ -11,6 +11,7 @@
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <arg name="cruise_planner_type" default="obstacle_stop_planner" description="type of cruise planner"/>
   <!-- Optional parameters for scenario simulation -->
   <arg name="initial_engage_state" default="true" description="/vehicle/engage state after starting Autoware"/>
   <arg name="perception/enable_detection_failure" default="true" description="enable to simulate detection failure when using dummy perception"/>
@@ -58,7 +59,9 @@
 
   <!-- Planning -->
   <group>
-    <include file="$(find-pkg-share planning_launch)/launch/planning.launch.xml"/>
+    <include file="$(find-pkg-share planning_launch)/launch/planning.launch.xml">
+      <arg name="cruise_planner_type" value="$(var cruise_planner_type)"/>
+    </include>
   </group>
 
   <!-- Control -->
@@ -68,6 +71,8 @@
       <arg name="lateral_controller_mode" value="mpc_follower" />
       <!-- options for longitudinal_controller_mode: pid -->
       <arg name="longitudinal_controller_mode" value="pid" />
+      <!-- Options for external emergency stop module. Heartbeat topic is required if this is true. -->
+      <arg name="use_external_emergency_stop" value="false" />
     </include>
   </group>
 
