@@ -29,9 +29,6 @@
     <!-- Vehicle -->
     <let name="launch_vehicle_interface" value="false" if="$(var vehicle_simulation)"/>
     <let name="launch_vehicle_interface" value="true" unless="$(var vehicle_simulation)"/>
-    <!-- Tools -->
-    <let name="launch_web_controller" value="false" if="$(var scenario_simulation)"/>
-    <let name="launch_web_controller" value="true" unless="$(var scenario_simulation)"/>
 
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
       <!-- Common -->
@@ -57,7 +54,6 @@
       <!-- Tools -->
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
-      <arg name="launch_web_controller" value="$(var launch_web_controller)"/>
       <!-- Control -->
       <arg name="check_external_emergency_heartbeat" value="false"/>
     </include>

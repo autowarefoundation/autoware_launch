@@ -34,7 +34,6 @@
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
-  <arg name="launch_web_controller" default="true" description="launch web controller"/>
   <!-- Perception -->
   <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
   <!-- Control -->
