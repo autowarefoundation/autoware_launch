@@ -98,7 +98,7 @@
   <!-- Localization -->
   <group if="$(var launch_localization)">
     <include file="$(find-pkg-share tier4_localization_launch)/launch/localization.launch.xml">
-      <arg name="setting_launch" value="$(find-pkg-share autoware_launch)/config/launch_settings/localization_setting.launch.xml"/>
+      <arg name="parameter_configuration" value="$(find-pkg-share autoware_launch)/launch/params/tier4_localization_params.launch.xml"/>
     </include>
   </group>
 
