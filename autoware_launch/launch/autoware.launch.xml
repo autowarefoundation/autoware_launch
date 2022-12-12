@@ -37,7 +37,7 @@
   <!-- Perception -->
   <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
   <!-- Control -->
-  <arg name="check_external_emergency_heartbeat" default="true" description="use external emergency stop"/>
+  <arg name="check_external_emergency_heartbeat" default="false" description="check external emergency heartbeat"/>
 
   <!-- Global parameters -->
   <group scoped="false">
