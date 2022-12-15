@@ -1019,7 +1019,7 @@ Visualization Manager:
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_candidate/lanechange
+                        Value: /planning/path_candidate/lane_change
                       Value: true
                       View Path:
                         Alpha: 0.30000001192092896
@@ -1065,7 +1065,7 @@ Visualization Manager:
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_candidate/pullout
+                        Value: /planning/path_candidate/pull_out
                       Value: true
                       View Path:
                         Alpha: 0.30000001192092896
@@ -1088,7 +1088,7 @@ Visualization Manager:
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_candidate/pullover
+                        Value: /planning/path_candidate/pull_over
                       Value: true
                       View Path:
                         Alpha: 0.30000001192092896
