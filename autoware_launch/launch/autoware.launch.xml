@@ -34,11 +34,10 @@
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
-  <arg name="launch_web_controller" default="true" description="launch web controller"/>
   <!-- Perception -->
   <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
   <!-- Control -->
-  <arg name="use_external_emergency_stop" default="true" description="use external emergency stop"/>
+  <arg name="check_external_emergency_heartbeat" default="false" description="check external emergency heartbeat"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -127,7 +126,7 @@
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
       <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
-      <arg name="use_external_emergency_stop" value="$(var use_external_emergency_stop)"/>
+      <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
     </include>
   </group>
 
@@ -140,8 +139,5 @@
   <group>
     <!-- Rviz -->
     <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png" if="$(var rviz)"/>
-
-    <!-- Web Controller -->
-    <include file="$(find-pkg-share web_controller)/launch/web_controller.launch.xml" if="$(var launch_web_controller)"/>
   </group>
 </launch>
