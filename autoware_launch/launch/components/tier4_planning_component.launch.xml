@@ -15,6 +15,12 @@
     <arg name="common_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml"/>
     <arg name="nearest_search_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml"/>
 
+    <!-- rtc -->
+    <arg
+      name="rtc_auto_mode_manager_param_path"
+      value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/rtc_auto_mode_manager/rtc_auto_mode_manager.param.yaml"
+    />
+
     <!-- behavior path planner -->
     <arg
       name="side_shift_param_path"
