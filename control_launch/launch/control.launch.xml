@@ -7,7 +7,7 @@
   <arg name="operation_mode_transition_manager_param_path" default="$(find-pkg-share control_launch)/config/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
   <arg name="shift_decider_param_path" default="$(find-pkg-share control_launch)/config/shift_decider/shift_decider.param.yaml"/>
   <arg name="initial_selector_mode" default="remote"/>
-  <arg name="use_external_emergency_stop" default="true"/>
+  <arg name="check_external_emergency_heartbeat" default="true"/>
 
   <include file="$(find-pkg-share control_launch)/launch/control.launch.py">
     <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)" />
@@ -17,7 +17,7 @@
     <arg name="operation_mode_transition_manager_param_path" value="$(var operation_mode_transition_manager_param_path)"/>
     <arg name="shift_decider_param_path" value="$(var shift_decider_param_path)"/>
     <arg name="initial_selector_mode" value="$(var initial_selector_mode)"/>
-    <arg name="use_external_emergency_stop" value="$(var use_external_emergency_stop)"/>
+    <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
   </include>
 
 </launch>
