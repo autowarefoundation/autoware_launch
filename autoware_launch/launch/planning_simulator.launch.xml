@@ -67,7 +67,7 @@
     <let name="launch_dummy_vehicle" value="true" unless="$(var scenario_simulation)"/>
     <let name="launch_dummy_localization" value="true"/>
 
-    <include file="$(find-pkg-share tier4_simulator_launch)/launch/simulator.launch.xml">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_simulator_component.launch.xml">
       <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
       <arg name="launch_dummy_vehicle" value="$(var launch_dummy_vehicle)"/>
       <arg name="launch_dummy_localization" value="$(var launch_dummy_localization)"/>
