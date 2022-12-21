@@ -26,5 +26,9 @@
       name="obstacle_segmentation_ground_segmentation_elevation_map_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"
     />
+    <arg
+      name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
+    />
   </include>
 </launch>
