@@ -14,7 +14,7 @@
     <arg name="mrm_comfortable_stop_operator_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_comfortable_stop_operator/mrm_comfortable_stop_operator.param.yaml"/>
     <arg name="mrm_emergency_stop_operator_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_emergency_stop_operator/mrm_emergency_stop_operator.param.yaml"/>
     <arg name="system_error_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.param.yaml"/>
-    <arg name="system_error_monitor_planning_simulator_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor_planning_simulator.param.yaml"/>
+    <arg name="system_error_monitor_planning_simulator_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.planning_simulation.param.yaml"/>
     <arg name="diagnostic_aggregator_vehicle_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/diagnostic_aggregator/vehicle.param.yaml"/>
     <arg name="system_monitor_cpu_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/cpu_monitor.param.yaml"/>
     <arg name="system_monitor_gpu_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/gpu_monitor.param.yaml"/>
