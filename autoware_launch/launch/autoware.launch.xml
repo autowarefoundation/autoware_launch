@@ -121,12 +121,13 @@
 
   <!-- Control -->
   <group if="$(var launch_control)">
-    <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
-      <arg name="lateral_controller_mode" value="mpc_follower"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
       <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
       <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
       <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
+      <arg name="lateral_controller_mode" value="mpc_follower"/>
+      <arg name="longitudinal_controller_mode" value="pid"/>
     </include>
   </group>
 
