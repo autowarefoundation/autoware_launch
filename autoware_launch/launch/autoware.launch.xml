@@ -76,7 +76,7 @@
 
   <!-- Map -->
   <group if="$(var launch_map)">
-    <include file="$(find-pkg-share tier4_map_launch)/launch/map.launch.py">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_map_component.launch.xml">
       <arg name="lanelet2_map_path" value="$(var map_path)/$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_path" value="$(var map_path)/$(var pointcloud_map_file)"/>
     </include>
