@@ -6,7 +6,7 @@
       is_publishing_clearance_map: false # publish clearance map as nav_msgs::OccupancyGrid
       is_publishing_object_clearance_map: false # publish clearance map as nav_msgs::OccupancyGrid
       is_publishing_area_with_objects: false # publish occupancy map as nav_msgs::OccupancyGrid
-
+      is_publishing_drivable_area_boundary: true # publish drivable area boundary as visualization_msgs::MarkerArray
       is_stopping_if_outside_drivable_area: true # stop if the ego's footprint will be outside the drivable area
 
       # show
@@ -18,6 +18,8 @@
       enable_pre_smoothing: true # enable EB
       skip_optimization: false # skip MPT and EB
       reset_prev_optimization: false
+
+      enable_boost_check: true # use boost implementation for polygon intersection check
 
     common:
       # sampling
