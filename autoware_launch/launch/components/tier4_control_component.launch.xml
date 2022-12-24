@@ -7,6 +7,17 @@
   <arg name="lateral_controller_mode"/>
   <arg name="longitudinal_controller_mode"/>
 
+  <let
+    name="lat_controller_param_path"
+    value="$(find-pkg-share autoware_launch)/config/control/mpc_lateral_controller/mpc_lateral_controller.param.yaml"
+    if="$(eval &quot;'$(var lateral_controller_mode)'=='mpc_follower'&quot;)"
+  />
+  <let
+    name="lat_controller_param_path"
+    value="$(find-pkg-share autoware_launch)/config/control/pure_pursuit/pure_pursuit.param.yaml"
+    if="$(eval &quot;'$(var lateral_controller_mode)'=='pure_pursuit'&quot;)"
+  />
+
   <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
     <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
 
@@ -22,8 +33,8 @@
     <arg name="nearest_search_param_path" value="$(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml"/>
 
     <!-- package param path -->
-    <arg name="lat_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/lateral_controller.param.yaml"/>
-    <arg name="lon_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/longitudinal_controller.param.yaml"/>
+    <arg name="lat_controller_param_path" value="$(var lat_controller_param_path)"/>
+    <arg name="lon_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/pid_longitudinal_controller/pid_longitudinal_controller.param.yaml"/>
     <arg name="vehicle_cmd_gate_param_path" value="$(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
     <arg name="lane_departure_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/lane_departure_checker/lane_departure_checker.param.yaml"/>
     <arg name="operation_mode_transition_manager_param_path" value="$(find-pkg-share autoware_launch)/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
