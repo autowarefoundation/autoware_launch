@@ -7,17 +7,6 @@
   <arg name="lateral_controller_mode"/>
   <arg name="longitudinal_controller_mode"/>
 
-  <let
-    name="lat_controller_param_path"
-    value="$(find-pkg-share autoware_launch)/config/control/mpc_lateral_controller/mpc_lateral_controller.param.yaml"
-    if="$(eval &quot;'$(var lateral_controller_mode)'=='mpc_follower'&quot;)"
-  />
-  <let
-    name="lat_controller_param_path"
-    value="$(find-pkg-share autoware_launch)/config/control/pure_pursuit/pure_pursuit.param.yaml"
-    if="$(eval &quot;'$(var lateral_controller_mode)'=='pure_pursuit'&quot;)"
-  />
-
   <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
     <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
 
@@ -26,6 +15,7 @@
     <arg name="vehicle_id" value="$(var vehicle_id)"/>
     <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
     <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
+    <arg name="lat_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/$(var lateral_controller_mode).param.yaml"/>
     <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
     <arg name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
 
