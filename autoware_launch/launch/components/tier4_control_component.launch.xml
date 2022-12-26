@@ -15,7 +15,8 @@
     <arg name="vehicle_id" value="$(var vehicle_id)"/>
     <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
     <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
-    <arg name="lat_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/$(var lateral_controller_mode).param.yaml"/>
+    <arg name="lat_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/lateral/$(var lateral_controller_mode).param.yaml"/>
+    <arg name="lon_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/longitudinal/$(var longitudinal_controller_mode).param.yaml"/>
     <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
     <arg name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
 
@@ -24,7 +25,7 @@
 
     <!-- package param path -->
     <arg name="lat_controller_param_path" value="$(var lat_controller_param_path)"/>
-    <arg name="lon_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/pid_longitudinal_controller/pid_longitudinal_controller.param.yaml"/>
+    <arg name="lon_controller_param_path" value="$(var lon_controller_param_path)"/>
     <arg name="vehicle_cmd_gate_param_path" value="$(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
     <arg name="lane_departure_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/lane_departure_checker/lane_departure_checker.param.yaml"/>
     <arg name="operation_mode_transition_manager_param_path" value="$(find-pkg-share autoware_launch)/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
