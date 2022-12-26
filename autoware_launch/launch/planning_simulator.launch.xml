@@ -54,8 +54,6 @@
       <!-- Tools -->
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
-      <!-- Control -->
-      <arg name="check_external_emergency_heartbeat" value="false"/>
     </include>
   </group>
 

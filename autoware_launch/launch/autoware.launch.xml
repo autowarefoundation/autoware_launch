@@ -36,8 +36,6 @@
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
   <!-- Perception -->
   <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
-  <!-- Control -->
-  <arg name="check_external_emergency_heartbeat" default="false" description="check external emergency heartbeat"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -125,7 +123,6 @@
       <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
       <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
-      <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
       <arg name="lateral_controller_mode" value="mpc"/>
       <arg name="longitudinal_controller_mode" value="pid"/>
     </include>
