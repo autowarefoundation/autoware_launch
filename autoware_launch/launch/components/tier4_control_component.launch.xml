@@ -5,6 +5,10 @@
   <arg name="enable_obstacle_collision_checker"/>
   <arg name="lateral_controller_mode"/>
   <arg name="longitudinal_controller_mode"/>
+  <arg name="use_individual_control_param"/>
+
+  <let name="latlon_controller_param_path_dir" value="$(var vehicle_id)" if="$(var use_individual_control_param)"/>
+  <let name="latlon_controller_param_path_dir" value="" unless="$(var use_individual_control_param)"/>
 
   <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
     <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
@@ -14,8 +18,14 @@
     <arg name="vehicle_id" value="$(var vehicle_id)"/>
     <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
     <arg name="trajectory_follower_node_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/trajectory_follower_node.param.yaml"/>
-    <arg name="lat_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/lateral/$(var lateral_controller_mode).param.yaml"/>
-    <arg name="lon_controller_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/longitudinal/$(var longitudinal_controller_mode).param.yaml"/>
+    <arg
+      name="lat_controller_param_path"
+      value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/$(var latlon_controller_param_path_dir)/lateral/$(var lateral_controller_mode).param.yaml"
+    />
+    <arg
+      name="lon_controller_param_path"
+      value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/$(var latlon_controller_param_path_dir)/longitudinal/$(var longitudinal_controller_mode).param.yaml"
+    />
     <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
     <arg name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
 
