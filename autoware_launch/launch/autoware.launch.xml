@@ -126,7 +126,7 @@
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
       <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
       <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
-      <arg name="lateral_controller_mode" value="mpc_follower"/>
+      <arg name="lateral_controller_mode" value="mpc"/>
       <arg name="longitudinal_controller_mode" value="pid"/>
     </include>
   </group>
