@@ -125,6 +125,7 @@
       <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
       <arg name="lateral_controller_mode" value="mpc"/>
       <arg name="longitudinal_controller_mode" value="pid"/>
+      <arg name="use_individual_control_param" value="false"/>
     </include>
   </group>
 
