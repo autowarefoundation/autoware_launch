@@ -134,17 +134,8 @@
     <include file="$(find-pkg-share autoware_api_launch)/launch/autoware_api.launch.xml"/>
   </group>
 
-  <!-- Tools -->
-  <group>
-    <!-- Rviz -->
-    <node
-      pkg="rviz2"
-      exec="rviz2"
-      name="rviz2"
-      output="screen"
-      args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png"
-      if="$(var rviz)"
-    />
-    <include file="$(find-pkg-share ad_api_adaptors)/launch/rviz_adaptors.launch.xml" if="$(var rviz)"/>
+  <!-- Rviz -->
+  <group if="$(var rviz)">
+    <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png"/>
   </group>
 </launch>
