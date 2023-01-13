@@ -119,9 +119,12 @@
 
   <!-- Control -->
   <group if="$(var launch_control)">
-    <include file="$(find-pkg-share control_launch)/launch/control.launch.xml">
-      <!-- options for lateral_controller_mode: mpc_follower, pure_pursuit -->
-      <arg name="lateral_controller_mode" value="mpc_follower"/>
+    <include file="$(find-pkg-share control_launch)/launch/control.launch.py">
+      <!-- options for lateral_controller_mode: mpc, pure_pursuit -->
+      <arg name="lateral_controller_mode" value="mpc"/>
+      <arg name="longitudinal_controller_mode" value="pid"/>
+      <arg name="lat_controller_param_path" value="$(find-pkg-share control_launch)/config/trajectory_follower/lateral/$(var lateral_controller_mode).param.yaml"/>
+      <arg name="lon_controller_param_path" value="$(find-pkg-share control_launch)/config/trajectory_follower/longitudinal/$(var longitudinal_controller_mode).param.yaml"/>
       <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
     </include>
   </group>
