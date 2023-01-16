@@ -365,6 +365,7 @@ Visualization Manager:
             pedestrian_marking: true
             right_lane_bound: true
             road_lanelets: false
+            speed_bump: true
             stop_lines: true
             shoulder_center_lane_line: false
             shoulder_left_lane_bound: true
@@ -1251,6 +1252,18 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/virtual_wall/run_out
                           Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (SpeedBump)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/virtual_wall/speed_bump
+                          Value: true
                       Enabled: true
                       Name: VirtualWall
                     - Class: rviz_common/Group
@@ -1459,6 +1472,19 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/sideshift
                           Value: false
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: false
+                          Name: SpeedBump
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/speed_bump
+                          Value: false
+                      Enabled: false
                       Name: DebugMarker
                   Enabled: true
                   Name: BehaviorPlanning
@@ -1594,7 +1620,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/marker
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_stop_planner/debug/marker
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
