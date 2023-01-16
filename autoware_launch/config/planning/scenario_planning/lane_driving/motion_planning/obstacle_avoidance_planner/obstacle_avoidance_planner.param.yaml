@@ -19,6 +19,8 @@
       skip_optimization: false # skip MPT and EB
       reset_prev_optimization: false
 
+      enable_boost_check: false # use boost implementation for polygon intersection check
+
     common:
       # sampling
       num_sampling_points: 100 # number of optimizing points
