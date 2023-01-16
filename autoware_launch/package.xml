@@ -21,6 +21,7 @@
   <exec_depend>simulator_launch</exec_depend>
   <exec_depend>system_launch</exec_depend>
   <exec_depend>tier4_map_launch</exec_depend>
+  <exec_depend>tier4_perception_launch</exec_depend>
   <exec_depend>tier4_sensing_launch</exec_depend>
   <exec_depend>tier4_vehicle_launch</exec_depend>
 
