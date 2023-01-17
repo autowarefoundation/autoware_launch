@@ -122,6 +122,7 @@
         value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/behavior_path_planner_tree.xml"
       />
       <arg name="cruise_planner_type" value="obstacle_stop_planner"/>
+      <arg name="enable_fully_automated_lane_change" value="false"/>
       <arg name="use_surround_obstacle_check" value="true"/>
       <arg name="smoother_type" value="JerkFiltered"/>
     </include>
