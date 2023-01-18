@@ -130,9 +130,9 @@
     </include>
   </group>
 
-  <!-- Autoware API -->
+  <!-- API -->
   <group>
-    <include file="$(find-pkg-share autoware_api_launch)/launch/autoware_api.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_autoware_api_component.launch.xml"/>
   </group>
 
   <!-- Rviz -->
