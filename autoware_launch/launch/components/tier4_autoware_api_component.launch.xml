@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Fork the repository and add the parameters here if needed. -->
+  <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml"/>
+</launch>
