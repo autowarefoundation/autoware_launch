@@ -35,8 +35,6 @@
   <!-- Perception -->
   <arg name="perception_mode" default="camera_lidar_fusion" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
   <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
-  <!-- Control -->
-  <arg name="check_external_emergency_heartbeat" default="false" description="check external emergency heartbeat"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -120,13 +118,13 @@
 
   <!-- Control -->
   <group if="$(var launch_control)">
-    <include file="$(find-pkg-share control_launch)/launch/control.launch.py">
-      <!-- options for lateral_controller_mode: mpc, pure_pursuit -->
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
+      <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+      <arg name="vehicle_id" value="$(var vehicle_id)"/>
+      <arg name="enable_obstacle_collision_checker" value="false"/>
       <arg name="lateral_controller_mode" value="mpc"/>
       <arg name="longitudinal_controller_mode" value="pid"/>
-      <arg name="lat_controller_param_path" value="$(find-pkg-share control_launch)/config/trajectory_follower/lateral/$(var lateral_controller_mode).param.yaml"/>
-      <arg name="lon_controller_param_path" value="$(find-pkg-share control_launch)/config/trajectory_follower/longitudinal/$(var longitudinal_controller_mode).param.yaml"/>
-      <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
+      <arg name="use_individual_control_param" value="false"/>
     </include>
   </group>
 
