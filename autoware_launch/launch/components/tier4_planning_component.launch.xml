@@ -119,5 +119,8 @@
     <!-- motion velocity smoother -->
     <arg name="motion_velocity_smoother_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/motion_velocity_smoother/motion_velocity_smoother.param.yaml"/>
     <arg name="smoother_type_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/motion_velocity_smoother/Analytical.param.yaml"/>
+
+    <!-- planning validator -->
+    <arg name="planning_validator_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/planning_validator.param.yaml"/>
   </include>
 </launch>
