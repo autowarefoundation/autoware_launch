@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-    <include file="$(find-pkg-share localization_error_monitor)/launch/localization_error_monitor.launch.xml">
-      <arg name="input/pose_with_cov" value="/localization/kinematic_state"/>
-      <arg name="param_file" value="$(find-pkg-share localization_launch)/config/localization_error_monitor.param.yaml"/>
-    </include>
-</launch>
