@@ -1775,18 +1775,11 @@ Visualization Manager:
                   Value: true
               Enabled: true
               Name: Parking
-            - Alpha: 1
-              Axes Length: 1
-              Axes Radius: 0.30000001192092896
-              Class: rviz_default_plugins/Pose
-              Color: 255; 25; 0
+            - Class: rviz_plugins/PoseWithUuidStamped
               Enabled: true
-              Head Length: 0.30000001192092896
-              Head Radius: 0.10000000149011612
+              Length: 1.5
               Name: ModifiedGoal
-              Shaft Length: 1
-              Shaft Radius: 0.05000000074505806
-              Shape: Axes
+              Radius: 0.5
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
@@ -1794,6 +1787,9 @@ Visualization Manager:
                 History Policy: Keep Last
                 Reliability Policy: Reliable
                 Value: /planning/scenario_planning/modified_goal
+              UUID:
+                Scale: 0.30000001192092896
+                Value: false
               Value: true
           Enabled: true
           Name: ScenarioPlanning
