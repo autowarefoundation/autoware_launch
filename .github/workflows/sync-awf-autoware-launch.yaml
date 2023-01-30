@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  sync-awf-latest:
+  sync-awf-autoware-launch:
     runs-on: ubuntu-latest
     steps:
       - name: Generate token
