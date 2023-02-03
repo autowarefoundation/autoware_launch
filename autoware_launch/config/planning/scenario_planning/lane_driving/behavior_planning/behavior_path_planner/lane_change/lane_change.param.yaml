@@ -18,9 +18,9 @@
       lane_change_sampling_num: 10
 
       # collision check
-      enable_collision_check_at_prepare_phase: true
+      enable_collision_check_at_prepare_phase: false
       prepare_phase_ignore_target_speed_thresh: 0.1 # [m/s]
-      use_predicted_path_outside_lanelet: true
+      use_predicted_path_outside_lanelet: false
       use_all_predicted_path: false
 
       # abort
