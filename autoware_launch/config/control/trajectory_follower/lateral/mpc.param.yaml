@@ -1,6 +1,5 @@
 /**:
   ros__parameters:
-
     # -- system --
     traj_resample_dist: 0.1         # path resampling interval [m]
     use_steer_prediction: false     # flag for using steer prediction (do not use steer measurement)

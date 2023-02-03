@@ -31,4 +31,4 @@
     expected_rear_deceleration_for_abort: -2.0
 
     rear_vehicle_reaction_time: 2.0
-    rear_vehicle_safety_time_margin: 2.0
+    rear_vehicle_safety_time_margin: 1.0

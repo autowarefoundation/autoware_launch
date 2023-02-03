@@ -1,5 +1,5 @@
 ci:
-  autofix_commit_msg: "style(pre-commit): autofix"
+  autofix_commit_msg: "ci(pre-commit): autofix"
   autoupdate_commit_msg: "ci(pre-commit): autoupdate"
 
 repos:
@@ -37,10 +37,7 @@ repos:
     rev: v0.8.0
     hooks:
       - id: flake8-ros
-      - id: prettier-xacro
-      - id: prettier-launch-xml
       - id: prettier-package-xml
-      - id: ros-include-guard
       - id: sort-package-xml
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
