@@ -1,22 +1,18 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="vehicle_param_file"/>
-  <arg name="vehicle_id"/>
-  <arg name="enable_obstacle_collision_checker"/>
-  <arg name="lateral_controller_mode"/>
-  <arg name="longitudinal_controller_mode"/>
-  <arg name="use_individual_control_param"/>
+  <!-- optional parameters are written here -->
+  <arg name="lateral_controller_mode" default="mpc"/>
+  <arg name="longitudinal_controller_mode" default="pid"/>
+  <arg name="use_individual_control_param" default="false"/>
 
   <let name="latlon_controller_param_path_dir" value="$(var vehicle_id)" if="$(var use_individual_control_param)"/>
   <let name="latlon_controller_param_path_dir" value="" unless="$(var use_individual_control_param)"/>
 
   <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
-    <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
-
     <!-- option -->
-    <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
+    <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     <arg name="vehicle_id" value="$(var vehicle_id)"/>
-    <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
+    <arg name="enable_obstacle_collision_checker" value="false"/>
     <arg name="trajectory_follower_node_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/trajectory_follower_node.param.yaml"/>
     <arg
       name="lat_controller_param_path"
