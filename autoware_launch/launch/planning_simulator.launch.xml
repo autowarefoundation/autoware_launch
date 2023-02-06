@@ -43,7 +43,6 @@
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
       <!-- System -->
       <arg name="system_run_mode" value="planning_simulation"/>
-      <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
       <!-- Map -->
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>

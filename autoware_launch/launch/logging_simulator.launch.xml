@@ -56,7 +56,6 @@
       <!-- System -->
       <arg name="launch_system" value="$(var system)"/>
       <arg name="system_run_mode" value="online"/>
-      <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
       <!-- Map -->
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
