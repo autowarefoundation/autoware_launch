@@ -63,14 +63,10 @@
     new_traj_duration_time: 1.0
     new_traj_end_dist: 0.3
 
-    # vehicle parameters
-    vehicle:
-      cg_to_front_m: 1.228
-      cg_to_rear_m: 1.5618
-      mass_kg: 2400.0
-      mass_fl: 600.0
-      mass_fr: 600.0
-      mass_rl: 600.0
-      mass_rr: 600.0
-      cf: 155494.663
-      cr: 155494.663
+    # steer offset
+    steering_offset:
+      enable_auto_steering_offset_removal: true
+      update_vel_threshold: 5.56
+      update_steer_threshold: 0.035
+      average_num: 1000
+      steering_offset_limit: 0.02
