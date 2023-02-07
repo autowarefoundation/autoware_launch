@@ -67,6 +67,12 @@
     # Regularization scale factor
     regularization_scale_factor: 0.01
 
+    # Dynamic map loading distance
+    dynamic_map_loading_update_distance: 20.0
+
+    # Dynamic map loading loading radius
+    dynamic_map_loading_map_radius: 150.0
+
     # Radius of input LiDAR range (used for diagnostics of dynamic map loading)
     lidar_radius: 100.0
 
