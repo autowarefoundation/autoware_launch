@@ -18,7 +18,7 @@
       # control
       joy_controller_connection: default
 
-      # locallization
+      # localization
       localization_accuracy: default
       ndt_scan_matcher: default
 
