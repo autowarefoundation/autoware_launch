@@ -14,7 +14,7 @@
 /**:
   ros__parameters:
     required_diags:
-      
+
       # control
       joy_controller_connection: default
 
