@@ -13,9 +13,9 @@
   <arg name="map" default="true" description="launch map"/>
   <arg name="sensing" default="true" description="launch sensing"/>
   <arg name="localization" default="true" description="launch localization"/>
-  <arg name="perception" default="true" description="launch perception"/>
-  <arg name="planning" default="true" description="launch planning"/>
-  <arg name="control" default="true" description="launch control"/>
+  <arg name="perception" default="false" description="launch perception"/>
+  <arg name="planning" default="false" description="launch planning"/>
+  <arg name="control" default="false" description="launch control"/>
   <!-- Pointcloud container -->
   <arg name="use_pointcloud_container" default="true" description="launch pointcloud container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
