@@ -26,8 +26,6 @@
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
-  <!-- Control -->
-  <arg name="enable_obstacle_collision_checker" default="false" description="use obstacle_collision_checker"/>
   <!-- System -->
   <arg name="system_run_mode" default="online" description="run mode in system"/>
   <arg name="launch_system_monitor" default="true" description="launch system monitor"/>
@@ -113,31 +111,12 @@
 
   <!-- Planning -->
   <group if="$(var launch_planning)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_planning_component.launch.xml">
-      <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-      <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
-      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
-      <arg
-        name="behavior_path_planner_tree_param_path"
-        value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/behavior_path_planner_tree.xml"
-      />
-      <arg name="cruise_planner_type" value="obstacle_stop_planner"/>
-      <arg name="use_experimental_lane_change_function" value="false"/>
-      <arg name="use_surround_obstacle_check" value="true"/>
-      <arg name="smoother_type" value="JerkFiltered"/>
-    </include>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_planning_component.launch.xml"/>
   </group>
 
   <!-- Control -->
   <group if="$(var launch_control)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
-      <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-      <arg name="vehicle_id" value="$(var vehicle_id)"/>
-      <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
-      <arg name="lateral_controller_mode" value="mpc"/>
-      <arg name="longitudinal_controller_mode" value="pid"/>
-      <arg name="use_individual_control_param" value="false"/>
-    </include>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml"/>
   </group>
 
   <!-- API -->

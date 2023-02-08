@@ -7,7 +7,7 @@
     launch_blind_spot: true
     launch_detection_area: true
     launch_virtual_traffic_light: true
-    launch_occlusion_spot: true
+    launch_occlusion_spot: false
     launch_no_stopping_area: true
     launch_run_out: false
     launch_speed_bump: false
