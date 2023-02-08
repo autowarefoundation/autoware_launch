@@ -27,7 +27,7 @@
       z : 0.0
       use_ecef_base_position : false
 
-    reverse_imu_wz: false
+    reverse_imu_wz: true
 
     # Eagleye Navigation Parameters
     # Basic Navigation Functions
@@ -48,7 +48,7 @@
       th_velocity_scale_factor_percent: 10.0          
 
     yawrate_offset_stop:                                  
-      estimated_interval: 4
+      estimated_interval: 3
       outlier_threshold: 0.002
 
     yawrate_offset:                                       
