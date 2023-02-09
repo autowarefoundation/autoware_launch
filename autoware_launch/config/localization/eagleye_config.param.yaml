@@ -1,7 +1,7 @@
 /**:                                               #GNSS cycle 5Hz, IMU cycle 50Hz.
   ros__parameters:
     # Estimate mode
-    use_gnss_mode: RTKLIB
+    use_gnss_mode: rtklib
     use_canless_mode: false  
 
     # Topic
