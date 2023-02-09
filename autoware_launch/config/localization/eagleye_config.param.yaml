@@ -29,7 +29,7 @@
 
     reverse_imu_wz: true
 
-    # Eagleye Navigation Parameters
+    # Navigation Parameters
     # Basic Navigation Functions
     common:
       imu_rate: 50
@@ -131,7 +131,7 @@
       estimated_interval: 4
       outlier_threshold: 0.002
 
-    rtk_deadreckoning:
+    rtk_dead_reckoning:
       rtk_fix_STD: 0.3 #[m]
       proc_noise: 0.05 #[m]
 
@@ -155,7 +155,7 @@
       stop_judgment_velocity_threshold: 0.2 
       stop_judgment_interval: 1
       variance_threshold: 0.000025
-      pitchrate_offset:
+      pitch_rate_offset:
         estimated_interval: 8
       pitching:
         estimated_interval: 5
