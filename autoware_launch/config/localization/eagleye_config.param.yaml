@@ -2,7 +2,7 @@
   ros__parameters:
     # Estimate mode
     use_gnss_mode: rtklib
-    use_canless_mode: false  
+    use_can_less_mode: false
 
     # Topic
     twist:
@@ -38,20 +38,20 @@
       slow_judgment_threshold: 0.278
       moving_judgment_threshold: 2.78
       
-    velocity_scale_factor:                                
+    velocity_scale_factor:
       estimated_minimum_interval: 20
       estimated_maximum_interval: 400
       gnss_receiving_threshold: 0.25
       velocity_scale_factor_save_str: /config/velocity_scale_factor.txt
-      save_velocity_scale_factor: false                    
+      save_velocity_scale_factor: false
       velocity_scale_factor_save_duration: 100.0 
       th_velocity_scale_factor_percent: 10.0          
 
-    yawrate_offset_stop:                                  
+    yaw_rate_offset_stop:
       estimated_interval: 3
       outlier_threshold: 0.002
 
-    yawrate_offset:                                       
+    yaw_rate_offset:
       estimated_minimum_interval: 30
       gnss_receiving_threshold: 0.25
       outlier_threshold: 0.002
@@ -88,12 +88,12 @@
 
     trajectory:                       
       curve_judgment_threshold: 0.017453
-      timer_updata_rate: 10       
+      timer_update_rate: 10
       deadlock_threshold: 1
       sensor_noise_velocity: 0.05
       sensor_scale_noise_velocity: 0.02
-      sensor_noise_yawrate: 0.01
-      sensor_bias_noise_yawrate: 0.1
+      sensor_noise_yaw_rate: 0.01
+      sensor_bias_noise_yaw_rate: 0.1
 
     smoothing:
       moving_average_time: 3
@@ -121,10 +121,10 @@
     monitor:
       print_status: true
       log_output_status: false
-      use_compare_yawrate: false
+      use_compare_yaw_rate: false
       comparison_twist_topic: /calculated_twist
       th_diff_rad_per_sec: 0.17453
-      th_num_continuous_abnormal_yawrate: 25
+      th_num_continuous_abnormal_yaw_rate: 25
 
     # Optional Navigation Functions
     angular_velocity_offset_stop:                         
