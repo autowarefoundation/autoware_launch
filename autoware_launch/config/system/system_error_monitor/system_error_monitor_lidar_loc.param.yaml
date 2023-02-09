@@ -1,19 +1,18 @@
-#Description:
-#name : diag name
-#sf_at : diag level where it becomes Safe Fault
-#lf_at : diag level where it becomes Latent Fault
-#spf_at : diag level where it becomes Single Point Fault
-#auto_recovery : Determines whether the system will automatically recover when it recovers from an \
-  error.
+# Description:
+#   name: diag name
+#   sf_at: diag level where it becomes Safe Fault
+#   lf_at: diag level where it becomes Latent Fault
+#   spf_at: diag level where it becomes Single Point Fault
+#   auto_recovery: Determines whether the system will automatically recover when it recovers from an error.
 #
-#Note:
-#empty - value for sf_at, lf_at and spf_at is "none"
-#default values are:
-#sf_at : "none"
-#lf_at : "warn"
-#spf_at : "error"
-#auto_recovery : "true"
--- -
+# Note:
+# empty-value for sf_at, lf_at and spf_at is "none"
+# default values are:
+#   sf_at: "none"
+#   lf_at: "warn"
+#   spf_at: "error"
+#   auto_recovery: "true"
+---
 /**:
   ros__parameters:
     required_modules:
