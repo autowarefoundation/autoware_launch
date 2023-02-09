@@ -28,7 +28,7 @@
 
     # Dynamic expansion by projecting the ego footprint along the path
     dynamic_expansion:
-      enabled: true
+      enabled: false
       ego:
         extra_footprint_offset:
           front: 0.5 # [m] extra length to add to the front of the ego footprint
@@ -43,7 +43,7 @@
           left: 0.5 # [m] extra length to add to the left of the dynamic object footprint
           right: 0.5 # [m] extra length to add to the rear of the dynamic object footprint
       expansion:
-        method: polygon  # method used to expand the drivable area. Either 'lanelet' or 'polygon'.
+        method: polygon # method used to expand the drivable area. Either 'lanelet' or 'polygon'.
                          # 'lanelet': add lanelets overlapped by the ego footprints
                          # 'polygon': add polygons built around sections of the ego footprint that go out of the drivable area
         max_distance: 0.0 # [m] maximum distance by which the drivable area can be expended (0.0 means no limit)
@@ -51,7 +51,6 @@
         extra_arc_length: 0.5 # [m] extra expansion arc length around an ego footprint
       avoid_linestring:
         types: # linestring types in the lanelet maps that will not be crossed when expanding the drivable area
-          - guard_rail
           - road_border
         distance: 0.0 # [m] distance to keep between the drivable area and the linestrings to avoid
         compensate:
