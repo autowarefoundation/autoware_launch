@@ -3,12 +3,12 @@
   <arg name="run_mode"/>
   <arg name="launch_system_monitor"/>
   <arg name="sensor_model"/>
-  <arg name="localization_mode"/>
+  <arg name="pose_estimator_mode"/>
 
-  <let name="system_error_monitor_param" value="system_error_monitor_lidar_loc.param.yaml" if="$(eval &quot;'$(var localization_mode)'=='lidar'&quot;)"/>
-  <let name="system_error_monitor_param" value="system_error_monitor_gnss_loc.param.yaml" if="$(eval &quot;'$(var localization_mode)'=='gnss'&quot;)"/>
-  <let name="diagnostic_aggregator_localization_param" value="localization_lidar_loc.param.yaml" if="$(eval &quot;'$(var localization_mode)'=='lidar'&quot;)"/>
-  <let name="diagnostic_aggregator_localization_param" value="localization_gnss_loc.param.yaml" if="$(eval &quot;'$(var localization_mode)'=='gnss'&quot;)"/>
+  <let name="system_error_monitor_param" value="system_error_monitor_lidar_loc.param.yaml" if="$(eval &quot;'$(var pose_estimator_mode)'=='lidar'&quot;)"/>
+  <let name="system_error_monitor_param" value="system_error_monitor_gnss_loc.param.yaml" if="$(eval &quot;'$(var pose_estimator_mode)'=='gnss'&quot;)"/>
+  <let name="diagnostic_aggregator_localization_param" value="localization_lidar_loc.param.yaml" if="$(eval &quot;'$(var pose_estimator_mode)'=='lidar'&quot;)"/>
+  <let name="diagnostic_aggregator_localization_param" value="localization_gnss_loc.param.yaml" if="$(eval &quot;'$(var pose_estimator_mode)'=='gnss'&quot;)"/>
 
   <include file="$(find-pkg-share tier4_system_launch)/launch/system.launch.xml">
     <arg name="run_mode" value="$(var run_mode)"/>
