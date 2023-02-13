@@ -8,5 +8,6 @@
     <arg name="pointcloud_map_path" value="$(var pointcloud_map_path)"/>
 
     <arg name="pointcloud_map_loader_param_path" value="$(find-pkg-share autoware_launch)/config/map/pointcloud_map_loader.param.yaml"/>
+    <arg name="lanelet2_map_loader_param_path" value="$(find-pkg-share autoware_launch)/config/map/lanelet2_map_loader.param.yaml"/>
   </include>
 </launch>
