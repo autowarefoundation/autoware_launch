@@ -11,3 +11,7 @@
 #   is_active: "true"
 #   status: "OK"
 ---
+/**:
+  ros__parameters:
+    required_diags:
+      dummy_diag_empty: default
