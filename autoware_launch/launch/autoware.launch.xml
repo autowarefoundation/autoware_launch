@@ -29,6 +29,7 @@
   <!-- System -->
   <arg name="system_run_mode" default="online" description="run mode in system"/>
   <arg name="launch_system_monitor" default="true" description="launch system monitor"/>
+  <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
@@ -66,6 +67,7 @@
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_system_component.launch.xml">
       <arg name="run_mode" value="$(var system_run_mode)"/>
       <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
+      <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
       <arg name="sensor_model" value="$(var sensor_model)"/>
     </include>
   </group>
