@@ -14,36 +14,4 @@
 /**:
   ros__parameters:
     required_diags:
-
-      # control
-      joy_controller_connection: default
-
-      # localization
-      localization_accuracy: default
-      ndt_scan_matcher: default
-
-      # system
-      bagpacker: default
-      NTP Offset: default
-      CPU Temperature: default
-      CPU Usage: default
-      CPU Thermal Throttling: default
-      CPU Frequency: default
-      CPU Load Average: default
-      GPU Temperature: default
-      GPU Usage: default
-      GPU Memory Usage: default
-      GPU Thermal Throttling: default
-      Memory Usage: default
-      Network Usage: default
-      Network Traffic: default
-      HDD Temperature: default
-      HDD Usage: default
-      HDD PowerOnHours: default
-      HDD TotalDataWritten: default
-      High-load: default
-      High-mem: default
-      Tasks Summary: default
-
-      #vehicle
-      vehicle_errors: default
+      dummy_diag_empty: default
