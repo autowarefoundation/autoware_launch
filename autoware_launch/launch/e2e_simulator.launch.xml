@@ -23,6 +23,7 @@
   <arg name="launch_vehicle_interface" default="false"/>
   <!-- System -->
   <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
+  <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
@@ -50,6 +51,7 @@
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
       <!-- System -->
       <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
+      <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
       <!-- Perception-->
