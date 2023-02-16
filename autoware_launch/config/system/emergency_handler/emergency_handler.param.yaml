@@ -1,3 +1,5 @@
+# Default configuration for emergency handler
+---
 /**:
   ros__parameters:
     update_rate: 10
