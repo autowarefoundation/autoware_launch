@@ -1,5 +1,5 @@
 repositories:
-  tier4_ament_lint:
+  autoware_common:
     type: git
-    url: https://github.com/tier4/tier4_ament_lint.git
+    url: https://github.com/autowarefoundation/autoware_common.git
     version: main
