@@ -22,8 +22,8 @@ jobs:
           token: ${{ steps.generate-token.outputs.token }}
           base-branch: awf-latest-s1
           sync-pr-branch: sync-awf-latest-s1
-          sync-target-repository: https://github.com/tier4/autoware_launch.git
-          sync-target-branch: awf-latest
+          sync-target-repository: https://github.com/autowarefoundation/autoware_launch.git
+          sync-target-branch: main
           pr-title: "chore: sync awf-latest-s1"
           pr-labels: |
             bot
