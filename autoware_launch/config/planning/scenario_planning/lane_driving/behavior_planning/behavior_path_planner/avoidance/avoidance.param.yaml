@@ -6,8 +6,6 @@
       resample_interval_for_output: 4.0                 # [m]
       detection_area_right_expand_dist: 0.0             # [m]
       detection_area_left_expand_dist: 1.0              # [m]
-      drivable_area_right_bound_offset: 0.0             # [m]
-      drivable_area_left_bound_offset: 0.0              # [m]
       object_envelope_buffer: 0.3                       # [m]
 
       # avoidance module common setting
@@ -15,6 +13,7 @@
       enable_avoidance_over_same_direction: true
       enable_avoidance_over_opposite_direction: true
       enable_update_path_when_object_is_gone: false
+      left_hand_traffic: true                           # [-] if right-hand traffic, please set false.
       enable_safety_check: false
       enable_yield_maneuver: false
       disable_path_update: false
