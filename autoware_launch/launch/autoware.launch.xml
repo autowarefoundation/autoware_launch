@@ -76,7 +76,7 @@
 
   <!-- Sensing -->
   <group if="$(var launch_sensing)">
-    <include file="$(find-pkg-share tier4_sensing_launch)/launch/sensing.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml"/>
   </group>
 
   <!-- Localization -->
