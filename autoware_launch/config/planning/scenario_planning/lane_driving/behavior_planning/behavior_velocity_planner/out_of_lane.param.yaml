@@ -1,0 +1,6 @@
+/**:
+  ros__parameters:
+    out_of_lane:
+      method: "threshold"  # [-] threshold or TTC
+      distance_threshold: 5.0  # [m] minimum distance
+      overlap_min_distance: 0.0  # [m] minimum distance inside a lanelet to for an overlap to be considered
