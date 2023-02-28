@@ -1872,6 +1872,21 @@ Visualization Manager:
             Reliability Policy: Reliable
             Value: /control/trajectory_follower/controller_node_exe/debug/markers
           Value: false
+        - Class: rviz_default_plugins/MarkerArray
+          Enabled: false
+          Name: Debug/AEB
+          Namespaces:
+            ego_path: true
+            ego_polygons: true
+            predicted_path: true
+            predicted_polygons: true
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /control/autonomous_emergency_braking/debug/markers
+          Value: false
       Enabled: true
       Name: Control
   Enabled: true
