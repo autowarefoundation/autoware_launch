@@ -1191,6 +1191,18 @@ Visualization Manager:
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
+                          Name: VirtualWall (Walkway)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/virtual_wall/walkway
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
                           Name: VirtualWall (DetectionArea)
                           Namespaces:
                             {}
