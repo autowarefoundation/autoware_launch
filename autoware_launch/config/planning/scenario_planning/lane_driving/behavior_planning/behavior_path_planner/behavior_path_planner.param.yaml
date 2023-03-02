@@ -60,3 +60,9 @@
       enable_simultaneous_execution: false
       priority: 2
       max_module_size: 1
+
+    avoidance:
+      enable_module: true
+      enable_simultaneous_execution: false
+      priority: 2
+      max_module_size: 1
