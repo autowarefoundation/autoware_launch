@@ -40,5 +40,11 @@
     pull_out:
       enable_module: true
       enable_simultaneous_execution: false
+      priority: 1
+      max_module_size: 1
+
+    side_shift:
+      enable_module: true
+      enable_simultaneous_execution: false
       priority: 0
       max_module_size: 1
