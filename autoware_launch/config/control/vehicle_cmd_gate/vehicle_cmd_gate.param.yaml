@@ -20,6 +20,6 @@
       vel_lim: 50.0
       lon_acc_lim: 1.0
       lon_jerk_lim: 0.5
-      lat_acc_lim: 1.2
-      lat_jerk_lim: 0.75
-      actual_steer_diff_lim: 0.05
+      lat_acc_lim: 2.0
+      lat_jerk_lim: 7.0
+      actual_steer_diff_lim: 1.0
