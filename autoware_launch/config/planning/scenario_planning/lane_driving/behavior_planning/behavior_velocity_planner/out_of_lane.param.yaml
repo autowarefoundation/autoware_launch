@@ -1,19 +1,21 @@
 /**:
   ros__parameters:
     out_of_lane:
-      use_threshold: true  # if true, use thresholds, otherwise use time intervals to decide to stop
+      use_threshold: false # if true, use thresholds, otherwise use time intervals to decide to stop
       objects:
         minimum_velocity: 0.5  # [m/s] objects lower than this velocity will be ignored
-        time_threshold: 0.5  # [m/s] ignore objects that reach an overlap after this time
-        distance_threshold: 5.0  # [m] ignore objects that are furthen than this distance from an overlap
+        time_threshold: 3.0  # [m/s] stop for objects that will reach an overlap within this time
+        slow_time_threshold: 5.0  # [m/s] slowdown for objects that will reach an overlap within this time
       overlap:
         minimum_distance: 0.0  # [m] minimum distance inside a lanelet for an overlap to be considered
         extra_length: 0.0  # [m] extra length to add to the front and back of an overlap
+      slowdown:
+        velocity: 2.0  # [m/s] velocity to slow down
       stop:
         extra_distance: 0.0  # [m] buffer distance to keep between the ego footprint and lane
         maximum_deceleration: 2.0  # [m/s²] maximum deceleration that can be caused by this module
       ego:
-        extra_front_offset: 3.0 # [m] extra front distance
+        extra_front_offset: 1.0 # [m] extra front distance
         extra_rear_offset: 0.0 # [m] extra rear distance
         extra_right_offset: 0.0 # [m] extra right distance
         extra_left_offset: 0.0 # [m] extra left distance
