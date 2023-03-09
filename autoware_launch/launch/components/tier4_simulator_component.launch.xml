@@ -3,6 +3,8 @@
   <arg name="launch_dummy_perception"/>
   <arg name="launch_dummy_vehicle"/>
   <arg name="launch_dummy_localization"/>
+  <arg name="launch_planning_evaluator"/>
+  <arg name="launch_diagnostic_converter"/>
   <arg name="perception/enable_detection_failure"/>
   <arg name="perception/enable_object_recognition"/>
   <arg name="sensing/visible_range"/>
@@ -14,6 +16,8 @@
     <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
     <arg name="launch_dummy_vehicle" value="$(var launch_dummy_vehicle)"/>
     <arg name="launch_dummy_localization" value="$(var launch_dummy_localization)"/>
+    <arg name="launch_planning_evaluator" value="$(var launch_planning_evaluator)"/>
+    <arg name="launch_diagnostic_converter" value="$(var launch_diagnostic_converter)"/>
     <arg name="perception/enable_detection_failure" value="$(var perception/enable_detection_failure)"/>
     <arg name="perception/enable_object_recognition" value="$(var perception/enable_object_recognition)"/>
     <arg name="sensing/visible_range" value="$(var sensing/visible_range)"/>
