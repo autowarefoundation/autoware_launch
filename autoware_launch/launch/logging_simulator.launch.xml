@@ -56,7 +56,7 @@
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
       <!-- System -->
       <arg name="launch_system" value="$(var system)"/>
-      <arg name="system_run_mode" value="online"/>
+      <arg name="system_run_mode" value="logging_simulation"/>
       <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
       <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
       <!-- Map -->
