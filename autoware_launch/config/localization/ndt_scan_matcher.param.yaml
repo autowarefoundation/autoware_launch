@@ -5,7 +5,7 @@
 
     # Vehicle reference frame
     base_frame: "base_link"
- 
+
     # Subscriber queue size
     input_sensor_points_queue_size: 1
 
@@ -38,7 +38,7 @@
     initial_estimate_particles_num: 100
 
     # Tolerance of timestamp difference between initial_pose and sensor pointcloud. [sec]
-    initial_pose_timeout_sec: 2.0 
+    initial_pose_timeout_sec: 2.0
 
     # Tolerance of distance difference between two initial poses used for linear interpolation. [m]
     initial_pose_distance_tolerance_m: 10.0
