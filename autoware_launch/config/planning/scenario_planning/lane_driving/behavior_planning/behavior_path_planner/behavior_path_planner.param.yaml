@@ -54,3 +54,9 @@
       enable_simultaneous_execution: false
       priority: 2
       max_module_size: 1
+
+    pull_over:
+      enable_module: true
+      enable_simultaneous_execution: false
+      priority: 2
+      max_module_size: 1
