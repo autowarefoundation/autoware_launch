@@ -19,7 +19,7 @@
     turn_signal_shift_length_threshold: 0.3
     turn_signal_on_swerving: true
 
-    enable_akima_spline_first: true
+    enable_akima_spline_first: false
     input_path_interval: 2.0
     output_path_interval: 2.0
 
