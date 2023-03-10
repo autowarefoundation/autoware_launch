@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <launch>
-  <let name="pose_initializer_common_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer_common.param.yaml" if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)"/>
+  <let
+    name="pose_initializer_common_param_path"
+    value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer_common.param.yaml"
+    if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)"
+  />
   <let name="pose_initializer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer.param.yaml" if="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)"/>
   <let
     name="pose_initializer_param_path"
