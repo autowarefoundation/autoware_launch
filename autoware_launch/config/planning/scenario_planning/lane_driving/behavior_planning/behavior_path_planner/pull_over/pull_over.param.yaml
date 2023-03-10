@@ -24,8 +24,8 @@
       use_occupancy_grid: true
       use_occupancy_grid_for_longitudinal_margin: false
       occupancy_grid_collision_check_margin: 0.0
-      theta_size: 360.0
-      obstacle_threshold: 60.0
+      theta_size: 360
+      obstacle_threshold: 60
       # object recognition
       use_object_recognition: true
       object_recognition_collision_check_margin: 1.0
