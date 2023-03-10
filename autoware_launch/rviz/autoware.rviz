@@ -1013,6 +1013,98 @@ Visualization Manager:
                         Value: true
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
+                      Enabled: false
+                      Name: PathReference_Avoidnace
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_reference/avoidance
+                      Value: true
+                      View Path:
+                        Alpha: 0.3
+                        Color: 210; 110; 210
+                        Constant Color: true
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: false
+                      Name: PathReference_LaneChange
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_reference/lane_change
+                      Value: true
+                      View Path:
+                        Alpha: 0.3
+                        Color: 210; 110; 210
+                        Constant Color: true
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: false
+                      Name: PathReference_PullOver
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_reference/pull_over
+                      Value: true
+                      View Path:
+                        Alpha: 0.3
+                        Color: 210; 110; 210
+                        Constant Color: true
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: false
+                      Name: PathReference_PullOut
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_reference/pull_out
+                      Value: true
+                      View Path:
+                        Alpha: 0.3
+                        Color: 210; 110; 210
+                        Constant Color: true
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
                       Enabled: true
                       Name: PathChangeCandidate_LaneChange
                       Topic:
