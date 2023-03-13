@@ -1,19 +1,31 @@
 /**:
   ros__parameters:
-    out_of_lane:
-      use_threshold: false # if true, use thresholds, otherwise use time intervals to decide to stop
+    out_of_lane:  # module to stop or slowdown before overlapping another lane with other objects
+      mode: threshold  # mode used to consider a conflict with an object. "threshold", "intervals", or "ttc"
+      threshold:
+        time_threshold: 5.0  # [m/s] consider objects that will reach an overlap within this time
+      intervals:  # consider objects if their estimated time interval spent on the overlap intersect the estimated time interval of ego
+        ego_time_buffer: 0.5 # [s] extend the ego time interval by this buffer
+        objects_time_buffer: 0.5 # [s] extend the time intervals of objects by this buffer
+      ttc:
+        threshold: 2.0 # [s] consider objects with an estimated time to collision bellow this value while on the overlap
+
       objects:
         minimum_velocity: 0.5  # [m/s] objects lower than this velocity will be ignored
-        time_threshold: 3.0  # [m/s] stop for objects that will reach an overlap within this time
-        slow_time_threshold: 5.0  # [m/s] slowdown for objects that will reach an overlap within this time
+
       overlap:
         minimum_distance: 0.0  # [m] minimum distance inside a lanelet for an overlap to be considered
-        extra_length: 0.0  # [m] extra length to add to the front and back of an overlap
-      slowdown:
-        velocity: 2.0  # [m/s] velocity to slow down
-      stop:
-        extra_distance: 0.0  # [m] buffer distance to keep between the ego footprint and lane
-        maximum_deceleration: 2.0  # [m/s²] maximum deceleration that can be caused by this module
+        extra_length: 0.0  # [m] extra arc length to add to the front and back of an overlap
+
+      action:  # action to insert in the path if an object causes a conflict at an overlap
+        maximum_deceleration: 2.0  # [m/s²] maximum deceleration that can be caused by the action
+        distance_buffer: 0.0  # [m] buffer distance to keep between the ego footprint and lane
+        slowdown:
+          distance_threshold: 50.0 # [m] insert a slowdown when closer than this distance from an overlap
+          velocity: 2.0  # [m/s] slowdown velocity
+        stop:
+          distance_threshold: 50.0 # [m] insert a stop when closer than this distance from an overlap
+
       ego:
         extra_front_offset: 1.0 # [m] extra front distance
         extra_rear_offset: 0.0 # [m] extra rear distance
