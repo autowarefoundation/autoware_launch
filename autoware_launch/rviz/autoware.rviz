@@ -1047,7 +1047,7 @@ Visualization Manager:
                       Value: true
                       View Path:
                         Alpha: 0.3
-                        Color: 210; 110; 210
+                        Color: 210; 210; 110
                         Constant Color: true
                         Value: true
                         Width: 2
@@ -1070,7 +1070,7 @@ Visualization Manager:
                       Value: true
                       View Path:
                         Alpha: 0.3
-                        Color: 210; 110; 210
+                        Color: 110; 110; 210
                         Constant Color: true
                         Value: true
                         Width: 2
@@ -1093,7 +1093,7 @@ Visualization Manager:
                       Value: true
                       View Path:
                         Alpha: 0.3
-                        Color: 210; 110; 210
+                        Color: 210; 110; 110
                         Constant Color: true
                         Value: true
                         Width: 2
