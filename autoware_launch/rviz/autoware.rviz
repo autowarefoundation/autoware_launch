@@ -1014,7 +1014,7 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: false
-                      Name: PathReference_Avoidnace
+                      Name: PathReference_Avoidance
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
