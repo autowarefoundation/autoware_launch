@@ -1037,7 +1037,7 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: false
-                      Name: PathReference_LaneChange
+                      Name: PathReference_LaneChangeRight
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
@@ -1060,7 +1060,7 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: false
-                      Name: PathReference_LaneChange
+                      Name: PathReference_LaneChangeLeft
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
@@ -1129,7 +1129,7 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: true
-                      Name: PathChangeCandidate_LaneChange
+                      Name: PathChangeCandidate_LaneChangeRight
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
@@ -1152,7 +1152,7 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: true
-                      Name: PathChangeCandidate_LaneChange
+                      Name: PathChangeCandidate_LaneChangeLeft
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
