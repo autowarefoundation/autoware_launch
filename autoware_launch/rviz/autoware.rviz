@@ -1639,6 +1639,18 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/virtual_wall/out_of_lane
                           Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (InvalidLanelet)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/virtual_wall/invalid_lanelet
+                          Value: true
                       Enabled: true
                       Name: VirtualWall
                     - Class: rviz_common/Group
@@ -1908,6 +1920,18 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/dynamic_avoidance
+                          Value: false
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: false
+                          Name: InvalidLanelet
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/invalid_lanelet
                           Value: false
                       Enabled: false
                       Name: DebugMarker
