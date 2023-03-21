@@ -34,6 +34,10 @@
     />
     <arg name="avoidance_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/avoidance/avoidance.param.yaml"/>
     <arg
+      name="avoidance_by_lc_param_path"
+      value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/avoidance_by_lc/avoidance_by_lc.param.yaml"
+    />
+    <arg
       name="lane_change_param_path"
       value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/lane_change/lane_change.param.yaml"
     />
