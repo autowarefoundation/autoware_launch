@@ -41,14 +41,14 @@
     # https://github.com/autowarefoundation/autoware.universe/blob/main/planning/behavior_path_planner/CMakeLists.txt
     # NOTE: The smaller the priority number is, the higher the module priority is.
     ext_request_lane_change_left:
-      enable_module: true
-      enable_simultaneous_execution: true
+      enable_module: false
+      enable_simultaneous_execution: false
       priority: 6
       max_module_size: 1
 
     ext_request_lane_change_right:
-      enable_module: true
-      enable_simultaneous_execution: true
+      enable_module: false
+      enable_simultaneous_execution: false
       priority: 6
       max_module_size: 1
 
