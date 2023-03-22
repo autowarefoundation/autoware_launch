@@ -16,6 +16,7 @@
     <arg name="random_downsample_filter_param_path" value="$(find-pkg-share autoware_launch)/config/localization/random_downsample_filter.param.yaml"/>
     <arg name="ndt_scan_matcher_param_path" value="$(find-pkg-share autoware_launch)/config/localization/ndt_scan_matcher.param.yaml"/>
     <arg name="localization_error_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/localization/localization_error_monitor.param.yaml"/>
+    <arg name="ekf_localizer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/ekf_localizer.param.yaml"/>
     <arg name="pose_initializer_common_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer_common.param.yaml"/>
     <arg name="pose_initializer_param_path" value="$(var pose_initializer_param_path)"/>
   </include>
