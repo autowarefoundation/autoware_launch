@@ -23,6 +23,8 @@
   <!-- Vehicle -->
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
   <arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"/>
+  <!-- Control -->
+  <arg name="check_external_emergency_heartbeat" default="false"/>
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
@@ -36,7 +38,7 @@
   <!-- Localization -->
   <arg name="pose_estimator_mode" default="lidar" description="select localization mode. lidar, gnss"/>
   <!-- Perception -->
-  <arg name="perception_mode" default="camera_lidar_fusion" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
+  <arg name="perception_mode" default="lidar" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
   <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
 
   <!-- Global parameters -->

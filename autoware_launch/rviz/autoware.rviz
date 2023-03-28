@@ -1013,14 +1013,152 @@ Visualization Manager:
                         Value: true
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
-                      Enabled: true
-                      Name: PathChangeCandidate_LaneChange
+                      Enabled: false
+                      Name: PathReference_Avoidance
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_candidate/lane_change
+                        Value: /planning/path_reference/avoidance
+                      Value: true
+                      View Path:
+                        Alpha: 0.3
+                        Color: 210; 110; 210
+                        Constant Color: true
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: false
+                      Name: PathReference_LaneChangeRight
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_reference/lane_change_right
+                      Value: true
+                      View Path:
+                        Alpha: 0.3
+                        Color: 210; 210; 110
+                        Constant Color: true
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: false
+                      Name: PathReference_LaneChangeLeft
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_reference/lane_change_left
+                      Value: true
+                      View Path:
+                        Alpha: 0.3
+                        Color: 210; 210; 110
+                        Constant Color: true
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: false
+                      Name: PathReference_PullOver
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_reference/pull_over
+                      Value: true
+                      View Path:
+                        Alpha: 0.3
+                        Color: 110; 110; 210
+                        Constant Color: true
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: false
+                      Name: PathReference_PullOut
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_reference/pull_out
+                      Value: true
+                      View Path:
+                        Alpha: 0.3
+                        Color: 210; 110; 110
+                        Constant Color: true
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: true
+                      Name: PathChangeCandidate_LaneChangeRight
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_candidate/lane_change_right
+                      Value: true
+                      View Path:
+                        Alpha: 0.30000001192092896
+                        Color: 115; 210; 22
+                        Constant Color: false
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: true
+                      Name: PathChangeCandidate_LaneChangeLeft
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_candidate/lane_change_left
                       Value: true
                       View Path:
                         Alpha: 0.30000001192092896
@@ -1883,6 +2021,21 @@ Visualization Manager:
             History Policy: Keep Last
             Reliability Policy: Reliable
             Value: /control/trajectory_follower/controller_node_exe/debug/markers
+          Value: false
+        - Class: rviz_default_plugins/MarkerArray
+          Enabled: false
+          Name: Debug/AEB
+          Namespaces:
+            ego_path: true
+            ego_polygons: true
+            predicted_path: true
+            predicted_polygons: true
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /control/autonomous_emergency_braking/debug/markers
           Value: false
       Enabled: true
       Name: Control
