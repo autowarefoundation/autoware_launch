@@ -5,7 +5,7 @@
       skip_if_already_overlapping: true # do not run this module when ego already overlaps another lane
 
       threshold:
-        time_threshold: 5.0  # [m/s] consider objects that will reach an overlap within this time
+        time_threshold: 5.0  # [s] consider objects that will reach an overlap within this time
       intervals:  # consider objects if their estimated time interval spent on the overlap intersect the estimated time interval of ego
         ego_time_buffer: 0.5 # [s] extend the ego time interval by this buffer
         objects_time_buffer: 0.5 # [s] extend the time intervals of objects by this buffer
