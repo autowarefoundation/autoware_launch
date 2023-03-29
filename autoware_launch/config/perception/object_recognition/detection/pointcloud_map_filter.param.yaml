@@ -1,5 +1,9 @@
 /**:
   ros__parameters:
     use_down_sample_filter: False
+    use_dynamic_map_loading: True
     down_sample_voxel_size: 0.1
     distance_threshold: 0.5
+    timer_interval_ms: 100
+    map_update_distance_threshold: 10.0
+    map_loader_radius: 150.0
