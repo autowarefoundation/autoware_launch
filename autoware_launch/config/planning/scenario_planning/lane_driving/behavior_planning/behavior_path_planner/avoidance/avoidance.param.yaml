@@ -16,8 +16,8 @@
       enable_avoidance_over_opposite_direction: true
       enable_update_path_when_object_is_gone: false
       enable_force_avoidance_for_stopped_vehicle: false
-      enable_safety_check: false
-      enable_yield_maneuver: false
+      enable_safety_check: true
+      enable_yield_maneuver: true
       disable_path_update: false
 
       # for debug
@@ -67,7 +67,7 @@
         lateral:
           lateral_collision_margin: 1.0                 # [m]
           lateral_collision_safety_buffer: 0.7          # [m]
-          lateral_passable_safety_buffer: 0.0           # [m]
+          lateral_passable_safety_buffer: 1.0           # [m]
           road_shoulder_safety_margin: 0.3              # [m]
           avoidance_execution_lateral_threshold: 0.499
           max_right_shift_length: 5.0
