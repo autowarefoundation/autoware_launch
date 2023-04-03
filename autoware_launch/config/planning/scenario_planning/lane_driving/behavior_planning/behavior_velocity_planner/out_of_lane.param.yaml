@@ -33,7 +33,7 @@
           distance_threshold: 15.0 # [m] insert a stop when closer than this distance from an overlap
 
       ego:
-        extra_front_offset: 1.0 # [m] extra front distance
+        extra_front_offset: 0.0 # [m] extra front distance
         extra_rear_offset: 0.0 # [m] extra rear distance
         extra_right_offset: 0.0 # [m] extra right distance
         extra_left_offset: 0.0 # [m] extra left distance
