@@ -1181,7 +1181,7 @@ Visualization Manager:
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_candidate/ext_request_lane_change_right
+                        Value: /planning/path_candidate/external_request_lane_change_right
                       Value: true
                       View Path:
                         Alpha: 0.30000001192092896
@@ -1204,7 +1204,7 @@ Visualization Manager:
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_candidate/ext_request_lane_change_left
+                        Value: /planning/path_candidate/external_request_lane_change_left
                       Value: true
                       View Path:
                         Alpha: 0.30000001192092896
