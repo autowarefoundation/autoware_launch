@@ -14,6 +14,9 @@
       velocity_source_topic: /sensing/gnss/ublox/navpvt
       llh_source_type: 2 # rtklib_msgs/RtklibNav: 0, nmea_msgs/Sentence: 1, sensor_msgs/NavSatFix: 2
       llh_source_topic: /sensing/gnss/ublox/nav_sat_fix
+    sub_gnss:
+      llh_source_type: 2 # nmea_msgs/Sentence: 1, sensor_msgs/NavSatFix: 2
+      llh_source_topic:  /sensing/sub_gnss/ublox/nav_sat_fix
 
     # TF
     tf_gnss_frame:
