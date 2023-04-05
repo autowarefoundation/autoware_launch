@@ -22,7 +22,7 @@ jobs:
           else
             REF_NAME="${{ github.ref_name }}"
           fi
-          echo ::set-output name=ref-name::"$REF_NAME"
+          echo ::set-output name=ref-name::"'$REF_NAME'_launch"
           echo ::set-output name=tag-name::"${REF_NAME#beta/}"
       - name: Generate token
         id: generate-token
