@@ -23,7 +23,7 @@
 
     lane_change_right:
       enable_module: true
-      enable_simultaneous_execution: false
+      enable_simultaneous_execution: true
       priority: 5
       max_module_size: 1
 
