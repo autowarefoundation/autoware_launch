@@ -2,7 +2,10 @@ name: dispatch-release-note
 on:
   push:
     branches:
+      - beta/v*
       - tier4/main
+    tags:
+      - v*
   workflow_dispatch:
     inputs:
       beta-branch-or-tag-name:
