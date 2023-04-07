@@ -1014,6 +1014,29 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: false
+                      Name: PathReference_AvoidanceByLC
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_reference/avoidance_by_lane_change
+                      Value: true
+                      View Path:
+                        Alpha: 0.3
+                        Color: 210; 110; 10
+                        Constant Color: true
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: false
                       Name: PathReference_Avoidance
                       Topic:
                         Depth: 5
@@ -1118,6 +1141,29 @@ Visualization Manager:
                         Alpha: 0.3
                         Color: 210; 110; 110
                         Constant Color: true
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: true
+                      Name: PathChangeCandidate_AvoidanceByLC
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_candidate/avoidance_by_lane_change
+                      Value: true
+                      View Path:
+                        Alpha: 0.30000001192092896
+                        Color: 115; 210; 22
+                        Constant Color: false
                         Value: true
                         Width: 2
                       View Velocity:
