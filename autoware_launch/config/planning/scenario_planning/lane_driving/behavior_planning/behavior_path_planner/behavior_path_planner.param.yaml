@@ -23,6 +23,7 @@
     turn_signal_on_swerving: true
 
     enable_akima_spline_first: false
+    enable_cog_on_centerline: false
     input_path_interval: 2.0
     output_path_interval: 2.0
 
