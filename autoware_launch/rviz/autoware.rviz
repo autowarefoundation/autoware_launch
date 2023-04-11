@@ -1506,6 +1506,18 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/virtual_wall/speed_bump
                           Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (OutOfLane)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/virtual_wall/out_of_lane
+                          Value: true
                       Enabled: true
                       Name: VirtualWall
                     - Class: rviz_common/Group
@@ -1664,7 +1676,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lanechange
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lane_change
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -1676,7 +1688,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lanefollowing
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lane_following
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -1688,7 +1700,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/pullover
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/pull_over
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -1700,7 +1712,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/pullout
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/pull_out
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -1712,7 +1724,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/sideshift
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/side_shift
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -1725,6 +1737,18 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/speed_bump
+                          Value: false
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: false
+                          Name: OutOfLane
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/out_of_lane
                           Value: false
                       Enabled: false
                       Name: DebugMarker
