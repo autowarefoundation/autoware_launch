@@ -1,0 +1,13 @@
+/**:
+  ros__parameters:
+    dynamic_avoidance:
+      # avoidance is performed for the object type with true
+      target_object:
+        car: true
+        truck: true
+        bus: true
+        trailer: true
+        unknown: false
+        bicycle: false
+        motorcycle: false
+        pedestrian: false
