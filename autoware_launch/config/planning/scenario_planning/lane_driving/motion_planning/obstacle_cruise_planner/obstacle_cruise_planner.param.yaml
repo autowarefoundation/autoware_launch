@@ -6,7 +6,7 @@
       enable_debug_info: false
       enable_calculation_time_info: false
 
-      enable_slow_down_planning: false
+      enable_slow_down_planning: true
 
       # longitudinal info
       idling_time: 2.0 # idling time to detect front vehicle starting deceleration [s]
@@ -93,7 +93,7 @@
           max_prediction_time_for_collision_check : 20.0 # prediction time to check collision between obstacle and ego
 
       slow_down:
-        max_lat_margin: 10.0  # lateral margin between obstacle and trajectory band with ego's width
+        max_lat_margin: 1.0  # lateral margin between obstacle and trajectory band with ego's width
 
     cruise:
       pid_based_planner:
@@ -160,11 +160,11 @@
         over_j_weight:  10000.0
 
     slow_down:
-      # parameters to calculate slow down velocity
-      max_lateral_margin: 5.0
-      min_lateral_margin: 3.0
-      max_ego_velocity: 10.0
-      min_ego_velocity: 3.0
+      # parameters to calculate slow down velocity by linear interpolation
+      min_lat_margin: 0.2
+      max_lat_margin: 1.0
+      min_ego_velocity: 2.0
+      max_ego_velocity: 8.0
 
-      # parameter for where to insert slow down point
-      max_deceleration: -2.0
+      # max deceleration during slow down
+      max_deceleration: -1.0
