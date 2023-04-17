@@ -31,7 +31,7 @@ jobs:
 
       - name: Run sync-branches
         uses: autowarefoundation/autoware-github-actions/sync-branches@v1
-        if: ${{ steps.is-holiday.outputs.holiday != 'true' || github.event_name = 'workflow_dispatch' }}
+        if: ${{ steps.is-holiday.outputs.holiday != 'true' || github.event_name == 'workflow_dispatch' }}
         with:
           token: ${{ steps.generate-token.outputs.token }}
           base-branch: tier4/main
