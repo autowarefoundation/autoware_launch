@@ -2,7 +2,7 @@ name: sync-awf-upstream
 
 on:
   schedule:
-    - cron: 0 6 * * 1-5
+    - cron: 0 1 * * 1-5
   workflow_dispatch:
 
 jobs:
