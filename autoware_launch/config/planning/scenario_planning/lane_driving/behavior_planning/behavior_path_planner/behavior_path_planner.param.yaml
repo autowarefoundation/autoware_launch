@@ -2,6 +2,9 @@
   ros__parameters:
     verbose: false
 
+    groot_zmq_publisher_port: 1666
+    groot_zmq_server_port: 1667
+
     planning_hz: 10.0
     backward_path_length: 5.0
     forward_path_length: 300.0
@@ -20,6 +23,7 @@
     turn_signal_on_swerving: true
 
     enable_akima_spline_first: false
+    enable_cog_on_centerline: false
     input_path_interval: 2.0
     output_path_interval: 2.0
 
@@ -37,53 +41,10 @@
     rear_vehicle_reaction_time: 2.0
     rear_vehicle_safety_time_margin: 1.0
 
-    # USE ONLY WHEN THE OPTION COMPILE_WITH_OLD_ARCHITECTURE IS SET TO FALSE.
-    # https://github.com/autowarefoundation/autoware.universe/blob/main/planning/behavior_path_planner/CMakeLists.txt
-    # NOTE: The smaller the priority number is, the higher the module priority is.
-    ext_request_lane_change_left:
-      enable_module: false
-      enable_simultaneous_execution: false
-      priority: 6
-      max_module_size: 1
+    lane_following:
+      drivable_area_right_bound_offset: 0.0
+      drivable_area_left_bound_offset: 0.0
+      drivable_area_types_to_skip: [road_border]
 
-    ext_request_lane_change_right:
-      enable_module: false
-      enable_simultaneous_execution: false
-      priority: 6
-      max_module_size: 1
-
-    lane_change_left:
-      enable_module: true
-      enable_simultaneous_execution: true
-      priority: 5
-      max_module_size: 1
-
-    lane_change_right:
-      enable_module: true
-      enable_simultaneous_execution: false
-      priority: 4
-      max_module_size: 1
-
-    pull_out:
-      enable_module: true
-      enable_simultaneous_execution: false
-      priority: 0
-      max_module_size: 1
-
-    side_shift:
-      enable_module: true
-      enable_simultaneous_execution: false
-      priority: 2
-      max_module_size: 1
-
-    pull_over:
-      enable_module: true
-      enable_simultaneous_execution: false
-      priority: 1
-      max_module_size: 1
-
-    avoidance:
-      enable_module: true
-      enable_simultaneous_execution: false
-      priority: 3
-      max_module_size: 1
+    lane_change:
+      lane_change_prepare_duration: 4.0 # [s]

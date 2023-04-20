@@ -34,5 +34,6 @@
     />
     <arg name="pose_initializer_common_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer_common.param.yaml"/>
     <arg name="pose_initializer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer.planning_simulator.param.yaml"/>
+    <arg name="laserscan_based_occupancy_grid_map_param_path" value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/laserscan_based_occupancy_grid_map.param.yaml"/>
   </include>
 </launch>
