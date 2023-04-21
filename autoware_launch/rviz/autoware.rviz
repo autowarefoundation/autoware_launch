@@ -18,10 +18,6 @@ Panels:
     Splitter Ratio: 0.5
   - Class: tier4_localization_rviz_plugin/InitialPoseButtonPanel
     Name: InitialPoseButtonPanel
-  - Class: AutowareDateTimePanel
-    Name: AutowareDateTimePanel
-  - Class: rviz_plugins::AutowareStatePanel
-    Name: AutowareStatePanel
 Visualization Manager:
   Class: ""
   Displays:
