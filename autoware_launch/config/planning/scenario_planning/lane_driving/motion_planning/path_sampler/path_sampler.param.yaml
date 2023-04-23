@@ -13,18 +13,13 @@
       force_zero_initial_deviation: True  # if true, initial planning starts from the reference path
       force_zero_initial_heading: True # if true, initial planning starts with a heading aligned with the reference path
       smooth_reference_trajectory: False # if true, the reference trajectory is smoothed before being used for planning
-    postprocessing:
-      desired_traj_behind_length: 5.0 # [m] desired trajectory length behind the current ego position
     constraints:
       hard:
         max_curvature: 0.2
         min_curvature: -0.2
-        max_acceleration: 2.0
-        min_acceleration: -2.0
       soft:
         lateral_deviation_weight: 0.1
         longitudinal_deviation_weight: 1.0
-        jerk_weight: 1.0
         length_weight: -1.0  # negative weight to turn the length cost into a reward
         curvature_weight: 1.0
     sampling:
