@@ -2075,6 +2075,7 @@ Visualization Manager:
             Color: 255; 255; 255
             Constant Color: true
             Value: true
+            Constant Width: true
             Width: 0.05000000074505806
           View Velocity:
             Alpha: 1
