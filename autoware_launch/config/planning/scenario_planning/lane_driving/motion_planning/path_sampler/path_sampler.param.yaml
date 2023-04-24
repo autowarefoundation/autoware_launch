@@ -7,7 +7,7 @@
 
     debug:
       # flag to show
-      enable_calculation_time_info: true
+      enable_calculation_time_info: false
 
     preprocessing:
       force_zero_initial_deviation: True  # if true, initial planning starts from the reference path
@@ -26,7 +26,7 @@
       enable_frenet: True
       enable_bezier: True
       resolution: 0.5
-      minimum_committed_length: 10.0
+      previous_path_reuse_points_nb: 3  # number of points reused from the previously generated path (0:no reuse, 1:replan from end of prev path, 2: end and mid of prev path, etc)
       target_lengths: [5.0, 10.0, 15.0, 20.0]
       frenet:
         target_lateral_positions: [0.0]
