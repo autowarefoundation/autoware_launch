@@ -1,13 +1,10 @@
 /**:
   ros__parameters:
     common:
-      # output
-      output_delta_arc_length: 0.5     #  delta arc length for output trajectory [m]
-      output_backward_traj_length: 5.0  # backward length for backward trajectory from base_link [m]
+      output_delta_arc_length: 0.5  #  [m] delta arc length for output trajectory
 
     debug:
-      # flag to show
-      enable_calculation_time_info: false
+      enable_calculation_time_info: false  # flag to print calculation times
       id: 0  # id of the candidate paths for which to print/show details (e.g., footprint in rviz)
 
     preprocessing:
@@ -16,26 +13,26 @@
       smooth_reference_trajectory: False # if true, the reference trajectory is smoothed before being used for planning
     constraints:
       hard:
-        max_curvature: 0.2
-        min_curvature: -0.2
+        max_curvature: 0.1  # [m⁻¹] maximum curvature of a sampled path
+        min_curvature: -0.1  # [m⁻¹] minimum curvature of a sampled path
       soft:
-        lateral_deviation_weight: 0.1
-        length_weight: 1.0
-        curvature_weight: 1.0
+        lateral_deviation_weight: 0.1  # cost weight for lateral deviation between the end of a sampled path and the reference path
+        length_weight: 1.0  # cost weight for the length of a sampled path
+        curvature_weight: 1.0  # cost weight for the curvature of a sampled path
     sampling:
       enable_frenet: True
       enable_bezier: True
-      resolution: 0.5
+      resolution: 0.5  # [m] target distance between sampled path points
       previous_path_reuse_points_nb: 2  # number of points reused from the previously generated path (0:no reuse, 1:replan from end of prev path, 2: end and mid of prev path, etc)
-      target_lengths: [10.0, 20.0]
-      frenet:
+      target_lengths: [10.0, 20.0]  # [m] target lengths of the sampled paths
+      frenet:  # target values for the sampled "lateral deviation over longitudinal position" polynomial
         target_lateral_positions: [-0.5, 0.0, 0.5]
         target_lateral_velocities: [-0.1, 0.0, 0.1]
         target_lateral_accelerations: [0.0]
       bezier:
-        nb_k: 3
-        mk_min: 0.0
-        mk_max: 10.0
-        nb_t: 5
-        mt_min: 0.3
-        mt_max: 1.7
+        nb_k: 3  # number of sampled curvature values
+        mk_min: 0.0  # minimum curvature value
+        mk_max: 10.0  # maximum curvature value
+        nb_t: 5  # number of sampled acceleration values
+        mt_min: 0.3  # minimum acceleration value
+        mt_max: 1.7  # maximum acceleration value
