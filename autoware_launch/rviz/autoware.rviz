@@ -1357,7 +1357,7 @@ Visualization Manager:
                         Scale: 0.30000001192092896
                         Value: false
                     - Class: rviz_default_plugins/MarkerArray
-                      Enabled: true
+                      Enabled: false
                       Name: Bound
                       Namespaces:
                         left_bound: true
