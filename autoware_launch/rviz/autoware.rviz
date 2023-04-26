@@ -1106,7 +1106,7 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: false
-                      Name: PathReference_Goalplanner
+                      Name: PathReference_GoalPlanner
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
@@ -1336,7 +1336,7 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: true
-                      Name: PathChangeCandidate_Goalplanner
+                      Name: PathChangeCandidate_GoalPlanner
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
@@ -1811,7 +1811,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: Goalplanner
+                          Name: GoalPlanner
                           Namespaces:
                             {}
                           Topic:
