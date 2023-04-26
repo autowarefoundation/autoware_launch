@@ -1106,13 +1106,13 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: false
-                      Name: PathReference_PullOver
+                      Name: PathReference_GoalPlanner
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_reference/pull_over
+                        Value: /planning/path_reference/goal_planner
                       Value: true
                       View Path:
                         Alpha: 0.3
@@ -1159,6 +1159,29 @@ Visualization Manager:
                         History Policy: Keep Last
                         Reliability Policy: Reliable
                         Value: /planning/path_candidate/avoidance_by_lane_change
+                      Value: true
+                      View Path:
+                        Alpha: 0.30000001192092896
+                        Color: 115; 210; 22
+                        Constant Color: false
+                        Value: true
+                        Width: 2
+                      View Velocity:
+                        Alpha: 0.30000001192092896
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: false
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: true
+                      Name: (old)PathChangeCandidate_LaneChange
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/path_candidate/lane_change
                       Value: true
                       View Path:
                         Alpha: 0.30000001192092896
@@ -1313,13 +1336,13 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: true
-                      Name: PathChangeCandidate_PullOver
+                      Name: PathChangeCandidate_GoalPlanner
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_candidate/pull_over
+                        Value: /planning/path_candidate/goal_planner
                       Value: true
                       View Path:
                         Alpha: 0.30000001192092896
@@ -1349,6 +1372,102 @@ Visualization Manager:
                       Value: true
                     - Class: rviz_common/Group
                       Displays:
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (Avoidance)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/avoidance
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (AvoidanceByLC)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/avoidance_by_lane_change
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (LaneChangeRight)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/lane_change_right
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (LaneChangeLeft)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/lane_change_left
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (ExtLaneChangeRight)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/external_request_lane_change_right
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (ExtLaneChangeLeft)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/external_request_lane_change_left
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (PullOver)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/pull_over
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (PullOut)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/pull_out
+                          Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
                           Name: VirtualWall (BlindSpot)
@@ -1692,7 +1811,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: PullOver
+                          Name: GoalPlanner
                           Namespaces:
                             {}
                           Topic:
@@ -1700,7 +1819,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/pull_over
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/goal_planner
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -1916,6 +2035,18 @@ Visualization Manager:
                               Value: true
                             - Class: rviz_default_plugins/MarkerArray
                               Enabled: true
+                              Name: SlowDownVirtualWall
+                              Namespaces:
+                                {}
+                              Topic:
+                                Depth: 5
+                                Durability Policy: Volatile
+                                History Policy: Keep Last
+                                Reliability Policy: Reliable
+                                Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/debug/slow_down/virtual_wall
+                              Value: true
+                            - Class: rviz_default_plugins/MarkerArray
+                              Enabled: true
                               Name: DebugMarker
                               Namespaces:
                                 {}
@@ -2063,6 +2194,7 @@ Visualization Manager:
             Color: 255; 255; 255
             Constant Color: true
             Value: true
+            Constant Width: true
             Width: 0.05000000074505806
           View Velocity:
             Alpha: 1
@@ -2141,6 +2273,13 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /planning/mission_planning/goal
+    - Class: tier4_adapi_rviz_plugins::RouteTool
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rviz/routing/rough_goal
     - Class: rviz_plugins/PedestrianInitialPoseTool
       Pose Topic: /simulation/dummy_perception_publisher/object_info
       Theta std deviation: 0.0872664600610733
