@@ -33,10 +33,11 @@
         occlusion_detection_area_length: 70.0 # [m]
         enable_creeping: false # flag to use the creep velocity when reaching occlusion limit stop line
         occlusion_creep_velocity: 0.8333 # the creep velocity to occlusion limit stop line
+        peeking_offset: -0.5 # [m] offset for peeking into detection area
         free_space_max: 43
         occupied_min: 58
         do_dp: true
-        before_creep_stop_time: 1.0 # [s]
+        before_creep_stop_time: 0.1 # [s]
         min_vehicle_brake_for_rss: -2.5 # [m/s^2]
         max_vehicle_velocity_for_rss: 16.66 # [m/s] == 60kmph
 
