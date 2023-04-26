@@ -1106,13 +1106,13 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: false
-                      Name: PathReference_PullOver
+                      Name: PathReference_Goalplanner
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_reference/pull_over
+                        Value: /planning/path_reference/goal_planner
                       Value: true
                       View Path:
                         Alpha: 0.3
@@ -1336,13 +1336,13 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: true
-                      Name: PathChangeCandidate_PullOver
+                      Name: PathChangeCandidate_Goalplanner
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_candidate/pull_over
+                        Value: /planning/path_candidate/goal_planner
                       Value: true
                       View Path:
                         Alpha: 0.30000001192092896
@@ -1715,7 +1715,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: PullOver
+                          Name: Goalplanner
                           Namespaces:
                             {}
                           Topic:
@@ -1723,7 +1723,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/pull_over
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/goal_planner
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
