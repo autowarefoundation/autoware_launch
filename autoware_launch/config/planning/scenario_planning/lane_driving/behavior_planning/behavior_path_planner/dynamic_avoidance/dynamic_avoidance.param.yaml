@@ -11,3 +11,9 @@
         bicycle: false
         motorcycle: false
         pedestrian: false
+
+        min_obstacle_vel: 1.0 # [m/s]
+
+      drivable_area_generation:
+        lat_offset_from_obstacle: 0.8 # [m]
+        time_to_avoid: 3.0 # [s]
