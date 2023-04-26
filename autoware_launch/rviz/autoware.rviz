@@ -1360,8 +1360,8 @@ Visualization Manager:
                       Enabled: true
                       Name: Bound
                       Namespaces:
-                        left_bound: true
-                        right_bound: true
+                        left_bound: false
+                        right_bound: false
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
