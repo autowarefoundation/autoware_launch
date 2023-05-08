@@ -1900,7 +1900,7 @@ Visualization Manager:
                     - Class: rviz_common/Group
                       Displays:
                         - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
+                          Enabled: false
                           Name: Info (Avoidance)
                           Namespaces:
                             avoidable_target_objects_info: false
@@ -1917,7 +1917,7 @@ Visualization Manager:
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/avoidance
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
+                          Enabled: false
                           Name: Info (AvoidanceByLC)
                           Namespaces:
                             {}
@@ -1929,7 +1929,7 @@ Visualization Manager:
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/avoidance_by_lane_change
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
+                          Enabled: false
                           Name: Info (LaneChangeLeft)
                           Namespaces:
                             {}
@@ -1941,7 +1941,7 @@ Visualization Manager:
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/lane_change_left
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
+                          Enabled: false
                           Name: Info (LaneChangeRight)
                           Namespaces:
                             {}
@@ -1953,7 +1953,7 @@ Visualization Manager:
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/lane_change_right
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
+                          Enabled: false
                           Name: Info (ExtLaneChangeLeft)
                           Namespaces:
                             {}
@@ -1965,7 +1965,7 @@ Visualization Manager:
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/external_request_lane_change_left
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
+                          Enabled: false
                           Name: Info (ExtLaneChangeRight)
                           Namespaces:
                             {}
@@ -1977,7 +1977,7 @@ Visualization Manager:
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/external_request_lane_change_right
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
+                          Enabled: false
                           Name: Info (PullOver)
                           Namespaces:
                             {}
@@ -1989,7 +1989,7 @@ Visualization Manager:
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/pull_over
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
+                          Enabled: false
                           Name: Info (PullOut)
                           Namespaces:
                             {}
@@ -2000,7 +2000,7 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/pull_out
                           Value: false
-                      Enabled: true
+                      Enabled: false
                       Name: InfoMarker
                   Enabled: true
                   Name: BehaviorPlanning
