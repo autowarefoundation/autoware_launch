@@ -1921,8 +1921,6 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/dynamic_avoidance
                           Value: false
-                      Enabled: false
-                      Name: DebugMarker
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
                           Name: NoDrivableLane
