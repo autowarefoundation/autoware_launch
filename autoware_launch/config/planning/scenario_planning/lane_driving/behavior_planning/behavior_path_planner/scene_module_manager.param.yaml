@@ -33,7 +33,7 @@
 
     pull_out:
       enable_module: true
-      enable_simultaneous_execution_as_approved_module: false
+      enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: false
       priority: 0
       max_module_size: 1
@@ -45,7 +45,7 @@
       priority: 2
       max_module_size: 1
 
-    pull_over:
+    goal_planner:
       enable_module: true
       enable_simultaneous_execution_as_approved_module: false
       enable_simultaneous_execution_as_candidate_module: false
@@ -65,4 +65,11 @@
       enable_simultaneous_execution_as_approved_module: false
       enable_simultaneous_execution_as_candidate_module: false
       priority: 3
+      max_module_size: 1
+
+    dynamic_avoidance:
+      enable_module: false
+      enable_simultaneous_execution_as_approved_module: true
+      enable_simultaneous_execution_as_candidate_module: true
+      priority: 7
       max_module_size: 1

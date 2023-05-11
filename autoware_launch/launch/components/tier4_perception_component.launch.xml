@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="occupancy_grid_map_method" default="pointcloud_based_occupancy_grid_map" description="options: pointcloud_based_occupancy_grid_map, laserscan_based_occupancy_grid_map"/>
+
   <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
     <arg name="mode" value="$(var perception_mode)"/>
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
@@ -31,5 +33,7 @@
       name="obstacle_segmentation_ground_segmentation_elevation_map_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"
     />
+    <arg name="occupancy_grid_map_method" value="$(var occupancy_grid_map_method)"/>
+    <arg name="occupancy_grid_map_param_path" value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/$(var occupancy_grid_map_method).param.yaml"/>
   </include>
 </launch>
