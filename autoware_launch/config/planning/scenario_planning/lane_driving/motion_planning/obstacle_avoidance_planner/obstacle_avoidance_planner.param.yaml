@@ -33,7 +33,6 @@
     # eb param
     eb:
       option:
-        enable_warm_start: true
         enable_optimization_validation: false
 
       common:
@@ -52,6 +51,8 @@
         lat_error_weight: 0.001
 
       qp:
+        solver: "proxqp"
+        enable_warm_start: true
         max_iteration: 10000  # max iteration when solving QP
         eps_abs: 1.0e-7       # eps abs when solving OSQP
         eps_rel: 1.0e-7       # eps rel when solving OSQP
@@ -65,13 +66,17 @@
         # TODO(murooka) enable the following. Currently enabling the flag makes QP so heavy
         steer_limit_constraint: false
         visualize_sampling_num: 1
-        enable_manual_warm_start: false
-        enable_warm_start: true
         enable_optimization_validation: false
 
       common:
         num_points: 100        # number of points for optimization [-]
         delta_arc_length: 1.0  # delta arc length for optimization [m]
+
+      qp:
+        solver: "proxqp"
+        enable_warm_start: false # For ProxQP, disabling warm start is much faster.
+        enable_manual_warm_start: false
+        eps_abs: 1.0e-3       # eps abs when solving OSQP
 
       # kinematics:
         # If this parameter is commented out, the parameter is set as below by default.
