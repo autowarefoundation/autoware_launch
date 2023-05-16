@@ -106,6 +106,7 @@
       name="obstacle_avoidance_planner_param_path"
       value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/obstacle_avoidance_planner/obstacle_avoidance_planner.param.yaml"
     />
+    <arg name="path_sampler_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/path_sampler/path_sampler.param.yaml"/>
     <arg
       name="obstacle_velocity_limiter_param_path"
       value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/obstacle_velocity_limiter/obstacle_velocity_limiter.param.yaml"
