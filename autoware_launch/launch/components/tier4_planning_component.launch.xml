@@ -69,33 +69,20 @@
 
     <!-- behavior velocity planner -->
     <arg name="behavior_velocity_smoother_type_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/motion_velocity_smoother/Analytical.param.yaml"/>
-    <arg name="blind_spot_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/blind_spot.param.yaml"/>
-    <arg name="crosswalk_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/crosswalk.param.yaml"/>
-    <arg
-      name="detection_area_param_path"
-      value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/detection_area.param.yaml"
-    />
-    <arg name="intersection_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/intersection.param.yaml"/>
-    <arg name="stop_line_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/stop_line.param.yaml"/>
-    <arg name="traffic_light_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/traffic_light.param.yaml"/>
-    <arg
-      name="virtual_traffic_light_param_path"
-      value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/virtual_traffic_light.param.yaml"
-    />
-    <arg
-      name="occlusion_spot_param_path"
-      value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/occlusion_spot.param.yaml"
-    />
-    <arg
-      name="no_stopping_area_param_path"
-      value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/no_stopping_area.param.yaml"
-    />
-    <arg name="run_out_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/run_out.param.yaml"/>
-    <arg name="speed_bump_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/speed_bump.param.yaml"/>
-    <arg name="out_of_lane_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/out_of_lane.param.yaml"/>
     <arg
       name="behavior_velocity_planner_param_path"
       value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/behavior_velocity_planner.param.yaml"
+    />
+    <arg
+      name="behavior_velocity_module_param_paths"
+      value="[$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/blind_spot.param.yaml,
+              $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/crosswalk.param.yaml,
+              $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/detection_area.param.yaml,
+              $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/intersection.param.yaml,
+              $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/stop_line.param.yaml,
+              $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/traffic_light.param.yaml,
+              $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/no_stopping_area.param.yaml,
+              $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/out_of_lane.param.yaml]"
     />
 
     <!-- parking -->
