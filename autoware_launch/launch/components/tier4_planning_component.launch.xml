@@ -70,11 +70,11 @@
     <!-- behavior velocity planner -->
     <arg name="behavior_velocity_smoother_type_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/motion_velocity_smoother/Analytical.param.yaml"/>
     <arg
-      name="behavior_velocity_planner_param_path"
+      name="behavior_velocity_planner_common_param_path"
       value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/behavior_velocity_planner.param.yaml"
     />
     <arg
-      name="behavior_velocity_module_param_paths"
+      name="behavior_velocity_planner_module_param_paths"
       value="[$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/blind_spot.param.yaml,
               $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/crosswalk.param.yaml,
               $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/detection_area.param.yaml,
