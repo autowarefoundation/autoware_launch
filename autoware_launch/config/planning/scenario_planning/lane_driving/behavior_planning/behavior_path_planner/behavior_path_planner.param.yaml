@@ -29,7 +29,7 @@
 
     visualize_maximum_drivable_area: true
 
-    lateral_distance_max_threshold: 2.0
+    lateral_distance_max_threshold: 1.7
     longitudinal_distance_min_threshold: 3.0
 
     expected_front_deceleration: -1.0
