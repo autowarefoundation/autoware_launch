@@ -58,6 +58,7 @@
     <arg name="run_out_param_path" value="$(var behavior_velocity_config_path)/run_out.param.yaml"/>
     <arg name="speed_bump_param_path" value="$(var behavior_velocity_config_path)/speed_bump.param.yaml"/>
     <arg name="out_of_lane_param_path" value="$(var behavior_velocity_config_path)/out_of_lane.param.yaml"/>
+    <arg name="no_drivable_lane_param_path" value="$(var behavior_velocity_config_path)/no_drivable_lane.param.yaml"/>
     <arg name="behavior_velocity_planner_param_path" value="$(var behavior_velocity_config_path)/behavior_velocity_planner.param.yaml"/>
 
     <!-- parking -->
