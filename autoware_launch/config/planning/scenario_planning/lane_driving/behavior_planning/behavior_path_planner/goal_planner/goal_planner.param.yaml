@@ -35,11 +35,11 @@
 
       # pull over
       pull_over:
-        pull_over_velocity: 3.0
+        pull_over_velocity: 5.0
         pull_over_minimum_velocity: 1.38
         decide_path_distance: 10.0
         maximum_deceleration: 1.0
-        maximum_jerk: 1.0
+        maximum_jerk: 2.0
 
         # shift parking
         shift_parking:
