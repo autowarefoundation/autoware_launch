@@ -7,17 +7,51 @@
     if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)"
   />
 
-  <include file="$(find-pkg-share tier4_localization_launch)/launch/localization.launch.xml">
-    <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
-    <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+  <arg name="mode" default="$(var localization_mode)"/>
 
-    <arg name="crop_box_filter_measurement_range_param_path" value="$(find-pkg-share autoware_launch)/config/localization/crop_box_filter_measurement_range.param.yaml"/>
-    <arg name="voxel_grid_downsample_filter_param_path" value="$(find-pkg-share autoware_launch)/config/localization/voxel_grid_filter.param.yaml"/>
-    <arg name="random_downsample_filter_param_path" value="$(find-pkg-share autoware_launch)/config/localization/random_downsample_filter.param.yaml"/>
-    <arg name="ndt_scan_matcher_param_path" value="$(find-pkg-share autoware_launch)/config/localization/ndt_scan_matcher.param.yaml"/>
-    <arg name="localization_error_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/localization/localization_error_monitor.param.yaml"/>
-    <arg name="ekf_localizer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/ekf_localizer.param.yaml"/>
-    <arg name="pose_initializer_common_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer_common.param.yaml"/>
-    <arg name="pose_initializer_param_path" value="$(var pose_initializer_param_path)"/>
-  </include>
+  <group if="$(eval '&quot;$(var mode)&quot;==&quot;ndt&quot;')">
+    <include file="$(find-pkg-share tier4_localization_launch)/launch/localization.launch.xml">
+      <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+
+      <arg name="crop_box_filter_measurement_range_param_path" value="$(find-pkg-share autoware_launch)/config/localization/crop_box_filter_measurement_range.param.yaml"/>
+      <arg name="voxel_grid_downsample_filter_param_path" value="$(find-pkg-share autoware_launch)/config/localization/voxel_grid_filter.param.yaml"/>
+      <arg name="random_downsample_filter_param_path" value="$(find-pkg-share autoware_launch)/config/localization/random_downsample_filter.param.yaml"/>
+      <arg name="ndt_scan_matcher_param_path" value="$(find-pkg-share autoware_launch)/config/localization/ndt_scan_matcher.param.yaml"/>
+      <arg name="localization_error_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/localization/localization_error_monitor.param.yaml"/>
+      <arg name="ekf_localizer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/ekf_localizer.param.yaml"/>
+      <arg name="pose_initializer_common_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer_common.param.yaml"/>
+      <arg name="pose_initializer_param_path" value="$(var pose_initializer_param_path)"/>
+    </include>
+  </group>
+
+  <group if="$(eval '&quot;$(var mode)&quot;==&quot;yabloc&quot;')">
+    <let name="pose_initializer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/yabloc/pose_initializer.logging_simulator.yabloc.param.yaml" 
+      if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)"/>
+
+    <let name="yaml_path" value="$(find-pkg-share autoware_launch)/config/localization/yabloc"/>
+
+    <include file="$(find-pkg-share yabloc_localization_launch)/launch/localization.launch.xml">
+      <!-- yabloc initializer -->
+      <arg name="camera_pose_initializer_param_path" value="$(var yaml_path)/camera_pose_initializer.param.yaml"/>
+      <arg name="particle_initializer_param_path" value="$(var yaml_path)/particle_initializer.param.yaml"/>
+      <!-- yabloc particle filter-->
+      <arg name="camera_particle_corrector_param_path" value="$(var yaml_path)/camera_particle_corrector.param.yaml"/>
+      <arg name="gnss_particle_corrector_param_path" value="$(var yaml_path)/gnss_particle_corrector.param.yaml"/>
+      <arg name="predictor_param_path" value="$(var yaml_path)/predictor.param.yaml"/>
+      <!-- yabloc image processing -->
+      <arg name="graph_segment_param_path" value="$(var yaml_path)/graph_segment.param.yaml"/>
+      <arg name="segment_filter_param_path" value="$(var yaml_path)/segment_filter.param.yaml"/>
+      <arg name="undistort_param_path" value="$(var yaml_path)/undistort.param.yaml"/>
+      <!-- yabloc map -->
+      <arg name="ground_server_param_path" value="$(var yaml_path)/ground_server.param.yaml"/>
+      <arg name="ll2_decomposer_param_path" value="$(var yaml_path)/ll2_decomposer.param.yaml"/>
+
+      <arg name="localization_error_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/localization/localization_error_monitor.param.yaml"/>
+      <arg name="ekf_localizer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/ekf_localizer.param.yaml"/>
+      <arg name="pose_initializer_common_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer_common.param.yaml"/>
+      <arg name="pose_initializer_param_path" value="$(var pose_initializer_param_path)"/>
+    </include>
+  </group>
+
 </launch>
