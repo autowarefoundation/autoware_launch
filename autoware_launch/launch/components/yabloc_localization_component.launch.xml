@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <launch>
-
   <let name="pose_initializer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer.param.yaml" if="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)"/>
-  <let name="pose_initializer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/yabloc/pose_initializer.logging_simulator.yabloc.param.yaml" if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)"/>
+  <let
+    name="pose_initializer_param_path"
+    value="$(find-pkg-share autoware_launch)/config/localization/yabloc/pose_initializer.logging_simulator.yabloc.param.yaml"
+    if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)"
+  />
 
   <let name="yaml_path" value="$(find-pkg-share autoware_launch)/config/localization/yabloc"/>
 
   <include file="$(find-pkg-share yabloc_localization_launch)/launch/localization.launch.xml">
-
     <!-- yabloc initializer -->
     <arg name="camera_pose_initializer_param_path" value="$(var yaml_path)/camera_pose_initializer.param.yaml"/>
     <arg name="particle_initializer_param_path" value="$(var yaml_path)/particle_initializer.param.yaml"/>
