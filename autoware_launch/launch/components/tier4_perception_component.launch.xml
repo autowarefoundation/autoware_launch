@@ -21,6 +21,7 @@
       name="object_recognition_detection_pointcloud_map_filter_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/pointcloud_map_filter.param.yaml"
     />
+    <arg name="object_recognition_detection_fusion_sync_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/roi_sync.param.yaml"/>
     <arg
       name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
