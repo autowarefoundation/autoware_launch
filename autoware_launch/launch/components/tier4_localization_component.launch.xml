@@ -34,7 +34,6 @@
     <include file="$(find-pkg-share yabloc_localization_launch)/launch/localization.launch.xml">
       <!-- yabloc initializer -->
       <arg name="camera_pose_initializer_param_path" value="$(var yaml_path)/camera_pose_initializer.param.yaml"/>
-      <arg name="particle_initializer_param_path" value="$(var yaml_path)/particle_initializer.param.yaml"/>
       <!-- yabloc particle filter-->
       <arg name="camera_particle_corrector_param_path" value="$(var yaml_path)/camera_particle_corrector.param.yaml"/>
       <arg name="gnss_particle_corrector_param_path" value="$(var yaml_path)/gnss_particle_corrector.param.yaml"/>
