@@ -1390,7 +1390,10 @@ Visualization Manager:
                           Enabled: true
                           Name: VirtualWall (AvoidanceByLC)
                           Namespaces:
-                            {}
+                            lane_change_end_text: false
+                            lane_change_endvirtual_wall: false
+                            lane_change_start_text: false
+                            lane_change_startvirtual_wall: false
                           Topic:
                             Depth: 5
                             Durability Policy: Volatile
@@ -1402,7 +1405,10 @@ Visualization Manager:
                           Enabled: true
                           Name: VirtualWall (LaneChangeRight)
                           Namespaces:
-                            {}
+                            lane_change_end_text: false
+                            lane_change_endvirtual_wall: false
+                            lane_change_start_text: false
+                            lane_change_startvirtual_wall: false
                           Topic:
                             Depth: 5
                             Durability Policy: Volatile
@@ -1414,7 +1420,10 @@ Visualization Manager:
                           Enabled: true
                           Name: VirtualWall (LaneChangeLeft)
                           Namespaces:
-                            {}
+                            lane_change_end_text: false
+                            lane_change_endvirtual_wall: false
+                            lane_change_start_text: false
+                            lane_change_startvirtual_wall: false
                           Topic:
                             Depth: 5
                             Durability Policy: Volatile
@@ -1426,7 +1435,10 @@ Visualization Manager:
                           Enabled: true
                           Name: VirtualWall (ExtLaneChangeRight)
                           Namespaces:
-                            {}
+                            lane_change_end_text: false
+                            lane_change_endvirtual_wall: false
+                            lane_change_start_text: false
+                            lane_change_startvirtual_wall: false
                           Topic:
                             Depth: 5
                             Durability Policy: Volatile
@@ -1438,7 +1450,10 @@ Visualization Manager:
                           Enabled: true
                           Name: VirtualWall (ExtLaneChangeLeft)
                           Namespaces:
-                            {}
+                            lane_change_end_text: false
+                            lane_change_endvirtual_wall: false
+                            lane_change_start_text: false
+                            lane_change_startvirtual_wall: false
                           Topic:
                             Depth: 5
                             Durability Policy: Volatile
