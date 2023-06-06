@@ -38,7 +38,7 @@
     <arg name="dynamic_avoidance_param_path" value="$(var behavior_path_config_path)/dynamic_avoidance/dynamic_avoidance.param.yaml"/>
     <arg name="lane_change_param_path" value="$(var behavior_path_config_path)/lane_change/lane_change.param.yaml"/>
     <arg name="goal_planner_param_path" value="$(var behavior_path_config_path)/goal_planner/goal_planner.param.yaml"/>
-    <arg name="pull_out_param_path" value="$(var behavior_path_config_path)/pull_out/pull_out.param.yaml"/>
+    <arg name="start_planner_param_path" value="$(var behavior_path_config_path)/start_planner/start_planner.param.yaml"/>
     <arg name="drivable_area_expansion_param_path" value="$(var behavior_path_config_path)/drivable_area_expansion.param.yaml"/>
     <arg name="scene_module_manager_param_path" value="$(var behavior_path_config_path)/scene_module_manager.param.yaml"/>
     <arg name="behavior_path_planner_tree_param_path" value="$(var behavior_path_config_path)/behavior_path_planner_tree.xml"/>
