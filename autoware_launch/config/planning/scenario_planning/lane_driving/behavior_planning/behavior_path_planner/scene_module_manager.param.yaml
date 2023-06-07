@@ -5,7 +5,7 @@
   ros__parameters:
     external_request_lane_change_left:
       enable_module: false
-      enable_rtc: false
+      enable_rtc: true
       enable_simultaneous_execution_as_approved_module: false
       enable_simultaneous_execution_as_candidate_module: true
       priority: 7
@@ -13,7 +13,7 @@
 
     external_request_lane_change_right:
       enable_module: false
-      enable_rtc: false
+      enable_rtc: true
       enable_simultaneous_execution_as_approved_module: false
       enable_simultaneous_execution_as_candidate_module: true
       priority: 7
@@ -21,7 +21,7 @@
 
     lane_change_left:
       enable_module: true
-      enable_rtc: true
+      enable_rtc: false
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: true
       priority: 6
@@ -29,7 +29,7 @@
 
     lane_change_right:
       enable_module: true
-      enable_rtc: true
+      enable_rtc: false
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: true
       priority: 6
