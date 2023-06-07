@@ -21,7 +21,7 @@
 
     lane_change_left:
       enable_module: true
-      enable_rtc: false
+      enable_rtc: true
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: true
       priority: 6
@@ -29,7 +29,7 @@
 
     lane_change_right:
       enable_module: true
-      enable_rtc: false
+      enable_rtc: true
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: true
       priority: 6
@@ -61,7 +61,7 @@
 
     avoidance:
       enable_module: true
-      enable_rtc: false
+      enable_rtc: true
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: false
       priority: 5
@@ -70,7 +70,7 @@
     # NOTE: This module is unstable. Deprecated for now.
     avoidance_by_lc:
       enable_module: false
-      enable_rtc: false
+      enable_rtc: true
       enable_simultaneous_execution_as_approved_module: false
       enable_simultaneous_execution_as_candidate_module: false
       priority: 4
@@ -78,7 +78,7 @@
 
     dynamic_avoidance:
       enable_module: false
-      enable_rtc: false
+      enable_rtc: true
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: true
       priority: 3
