@@ -1131,13 +1131,13 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: false
-                      Name: PathReference_PullOut
+                      Name: PathReference_StartPlanner
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_reference/pull_out
+                        Value: /planning/path_reference/start_planner
                       Value: true
                       View Path:
                         Alpha: 0.3
@@ -1315,13 +1315,13 @@ Visualization Manager:
                     - Class: rviz_plugins/Path
                       Color Border Vel Max: 3
                       Enabled: true
-                      Name: PathChangeCandidate_PullOut
+                      Name: PathChangeCandidate_StartPlanner
                       Topic:
                         Depth: 5
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_candidate/pull_out
+                        Value: /planning/path_candidate/start_planner
                       Value: true
                       View Path:
                         Alpha: 0.30000001192092896
@@ -1460,7 +1460,7 @@ Visualization Manager:
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
-                          Name: VirtualWall (PullOut)
+                          Name: VirtualWall (StartPlanner)
                           Namespaces:
                             {}
                           Topic:
@@ -1468,7 +1468,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/pull_out
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/start_planner
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
@@ -1863,7 +1863,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: PullOut
+                          Name: StartPlanner
                           Namespaces:
                             {}
                           Topic:
@@ -1871,7 +1871,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/pull_out
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/start_planner
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -2028,7 +2028,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: Info (PullOut)
+                          Name: Info (StartPlanner)
                           Namespaces:
                             {}
                           Topic:
@@ -2036,7 +2036,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/pull_out
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/start_planner
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
