@@ -38,28 +38,31 @@
     <arg name="dynamic_avoidance_param_path" value="$(var behavior_path_config_path)/dynamic_avoidance/dynamic_avoidance.param.yaml"/>
     <arg name="lane_change_param_path" value="$(var behavior_path_config_path)/lane_change/lane_change.param.yaml"/>
     <arg name="goal_planner_param_path" value="$(var behavior_path_config_path)/goal_planner/goal_planner.param.yaml"/>
-    <arg name="pull_out_param_path" value="$(var behavior_path_config_path)/pull_out/pull_out.param.yaml"/>
+    <arg name="start_planner_param_path" value="$(var behavior_path_config_path)/start_planner/start_planner.param.yaml"/>
     <arg name="drivable_area_expansion_param_path" value="$(var behavior_path_config_path)/drivable_area_expansion.param.yaml"/>
     <arg name="scene_module_manager_param_path" value="$(var behavior_path_config_path)/scene_module_manager.param.yaml"/>
     <arg name="behavior_path_planner_tree_param_path" value="$(var behavior_path_config_path)/behavior_path_planner_tree.xml"/>
     <arg name="behavior_path_planner_param_path" value="$(var behavior_path_config_path)/behavior_path_planner.param.yaml"/>
 
     <!-- behavior velocity planner -->
-    <arg name="behavior_velocity_smoother_type_param_path" value="$(var common_config_path)/motion_velocity_smoother/Analytical.param.yaml"/>
-    <arg name="blind_spot_param_path" value="$(var behavior_velocity_config_path)/blind_spot.param.yaml"/>
-    <arg name="crosswalk_param_path" value="$(var behavior_velocity_config_path)/crosswalk.param.yaml"/>
-    <arg name="detection_area_param_path" value="$(var behavior_velocity_config_path)/detection_area.param.yaml"/>
-    <arg name="intersection_param_path" value="$(var behavior_velocity_config_path)/intersection.param.yaml"/>
-    <arg name="stop_line_param_path" value="$(var behavior_velocity_config_path)/stop_line.param.yaml"/>
-    <arg name="traffic_light_param_path" value="$(var behavior_velocity_config_path)/traffic_light.param.yaml"/>
-    <arg name="virtual_traffic_light_param_path" value="$(var behavior_velocity_config_path)/virtual_traffic_light.param.yaml"/>
-    <arg name="occlusion_spot_param_path" value="$(var behavior_velocity_config_path)/occlusion_spot.param.yaml"/>
-    <arg name="no_stopping_area_param_path" value="$(var behavior_velocity_config_path)/no_stopping_area.param.yaml"/>
-    <arg name="run_out_param_path" value="$(var behavior_velocity_config_path)/run_out.param.yaml"/>
-    <arg name="speed_bump_param_path" value="$(var behavior_velocity_config_path)/speed_bump.param.yaml"/>
-    <arg name="out_of_lane_param_path" value="$(var behavior_velocity_config_path)/out_of_lane.param.yaml"/>
-    <arg name="no_drivable_lane_param_path" value="$(var behavior_velocity_config_path)/no_drivable_lane.param.yaml"/>
-    <arg name="behavior_velocity_planner_param_path" value="$(var behavior_velocity_config_path)/behavior_velocity_planner.param.yaml"/>
+    <arg name="behavior_velocity_smoother_type_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/motion_velocity_smoother/Analytical.param.yaml"/>
+    <arg name="behavior_velocity_planner_common_param_path" value="$(var behavior_velocity_config_path)/behavior_velocity_planner.param.yaml"/>
+    <arg
+      name="behavior_velocity_planner_module_param_paths"
+      value="[$(var behavior_velocity_config_path)/blind_spot.param.yaml,
+              $(var behavior_velocity_config_path)/crosswalk.param.yaml,
+              $(var behavior_velocity_config_path)/detection_area.param.yaml,
+              $(var behavior_velocity_config_path)/intersection.param.yaml,
+              $(var behavior_velocity_config_path)/stop_line.param.yaml,
+              $(var behavior_velocity_config_path)/traffic_light.param.yaml,
+              $(var behavior_velocity_config_path)/virtual_traffic_light.param.yaml,
+              $(var behavior_velocity_config_path)/occlusion_spot.param.yaml,
+              $(var behavior_velocity_config_path)/no_stopping_area.param.yaml,
+              $(var behavior_velocity_config_path)/run_out.param.yaml,
+              $(var behavior_velocity_config_path)/speed_bump.param.yaml,
+              $(var behavior_velocity_config_path)/out_of_lane.param.yaml,
+              $(var behavior_velocity_config_path)/no_drivable_lane.param.yaml]"
+    />
 
     <!-- parking -->
     <arg name="freespace_planner_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/parking/freespace_planner/freespace_planner.param.yaml"/>
