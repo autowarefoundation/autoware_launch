@@ -356,6 +356,7 @@ Visualization Manager:
             center_lane_line: false
             center_line_arrows: false
             crosswalk_lanelets: true
+            crosswalk_areas: false
             lane_start_bound: false
             lanelet direction: true
             lanelet_id: false
