@@ -1,4 +1,4 @@
-/**: 
+/**:
   ros__parameters:
     stop_vel_threshold: 0.05
     static_scale_factor: -1.0 # if negative value, static_scale_factor is not used

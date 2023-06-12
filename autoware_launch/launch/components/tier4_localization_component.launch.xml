@@ -1,22 +1,17 @@
 <?xml version="1.0"?>
 <launch>
-
   <let name="yaml_path" value="$(find-pkg-share autoware_launch)/config/localization"/>
   <let name="is_ndt_mode" value="$(eval &quot;'$(var localization_mode)'=='ndt'&quot;)"/>
   <let name="is_yabloc_mode" value="$(eval &quot;'$(var localization_mode)'=='yabloc'&quot;)"/>
 
   <group if="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)" scoped="false">
-    <let name="pose_initializer_param_path" if="$(var is_ndt_mode)"
-      value="$(var yaml_path)/pose_initializer.param.yaml"/>
-    <let name="pose_initializer_param_path" if="$(var is_yabloc_mode)"
-      value="$(var yaml_path)/yabloc/pose_initializer.yabloc.param.yaml"/>
+    <let name="pose_initializer_param_path" if="$(var is_ndt_mode)" value="$(var yaml_path)/pose_initializer.param.yaml"/>
+    <let name="pose_initializer_param_path" if="$(var is_yabloc_mode)" value="$(var yaml_path)/yabloc/pose_initializer.yabloc.param.yaml"/>
   </group>
 
   <group if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)" scoped="false">
-    <let name="pose_initializer_param_path" if="$(var is_ndt_mode)"
-      value="$(var yaml_path)/pose_initializer.logging_simulator.lidar.param.yaml"/>
-    <let name="pose_initializer_param_path" if="$(var is_yabloc_mode)"
-      value="$(var yaml_path)/yabloc/pose_initializer.logging_simulator.yabloc.param.yaml"/>
+    <let name="pose_initializer_param_path" if="$(var is_ndt_mode)" value="$(var yaml_path)/pose_initializer.logging_simulator.lidar.param.yaml"/>
+    <let name="pose_initializer_param_path" if="$(var is_yabloc_mode)" value="$(var yaml_path)/yabloc/pose_initializer.logging_simulator.yabloc.param.yaml"/>
   </group>
 
   <group>
@@ -48,4 +43,3 @@
     </include>
   </group>
 </launch>
-
