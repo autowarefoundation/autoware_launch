@@ -5,7 +5,7 @@
     visualize: false
 
     mahalanobis_distance_threshold: 30.0 # If the distance to GNSS observation exceeds this, the correction is skipped.
-    # 
+    #
     for_fixed/max_weight: 5.0
     for_fixed/flat_radius: 0.5
     for_fixed/max_radius: 10.0
