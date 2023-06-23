@@ -60,7 +60,7 @@
           safety_buffer_lateral: 0.7
           safety_buffer_longitudinal: 0.0
         unknown:
-          enable: false
+          enable: true
           moving_speed_threshold: 0.28                 # 1.0km/h
           moving_time_threshold: 1.0
           max_expand_ratio: 0.0
