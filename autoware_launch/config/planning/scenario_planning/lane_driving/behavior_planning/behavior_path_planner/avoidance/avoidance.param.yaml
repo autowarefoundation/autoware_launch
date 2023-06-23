@@ -60,7 +60,7 @@
           safety_buffer_lateral: 0.7
           safety_buffer_longitudinal: 0.0
         unknown:
-          enable: false
+          enable: true
           moving_speed_threshold: 0.28                 # 1.0km/h
           moving_time_threshold: 1.0
           max_expand_ratio: 0.0
@@ -68,7 +68,7 @@
           safety_buffer_lateral: 0.7
           safety_buffer_longitudinal: 0.0
         bicycle:
-          enable: false
+          enable: true
           moving_speed_threshold: 0.28                 # 1.0km/h
           moving_time_threshold: 1.0
           max_expand_ratio: 0.0
@@ -76,7 +76,7 @@
           safety_buffer_lateral: 1.0
           safety_buffer_longitudinal: 1.0
         motorcycle:
-          enable: false
+          enable: true
           moving_speed_threshold: 1.0                  # 3.6km/h
           moving_time_threshold: 1.0
           max_expand_ratio: 0.0
@@ -84,7 +84,7 @@
           safety_buffer_lateral: 1.0
           safety_buffer_longitudinal: 1.0
         pedestrian:
-          enable: false
+          enable: true
           moving_speed_threshold: 0.28                 # 1.0km/h
           moving_time_threshold: 1.0
           max_expand_ratio: 0.0
