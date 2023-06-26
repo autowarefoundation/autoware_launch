@@ -16,3 +16,5 @@
     map_length: 150.0
     map_width: 150.0
     map_resolution: 0.5
+
+    pub_debug_grid: false
