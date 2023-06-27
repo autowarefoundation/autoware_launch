@@ -2,7 +2,7 @@
 <launch>
   <!-- NOTE: optional parameters are written here -->
   <!-- behavior -->
-  <arg name="use_experimental_lane_change_function" default="false"/>
+  <arg name="use_experimental_lane_change_function" default="true"/>
   <!-- motion -->
   <arg name="cruise_planner_type" default="obstacle_stop_planner" description="options: obstacle_stop_planner, obstacle_cruise_planner, none"/>
   <arg name="use_surround_obstacle_check" default="true"/>
