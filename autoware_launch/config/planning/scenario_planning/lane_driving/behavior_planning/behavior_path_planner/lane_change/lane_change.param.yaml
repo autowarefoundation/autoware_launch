@@ -47,13 +47,13 @@
       # collision check
       enable_prepare_segment_collision_check: false
       prepare_segment_ignore_object_velocity_thresh: 0.1 # [m/s]
-      use_predicted_path_outside_lanelet: false
-      use_all_predicted_path: false
+      use_predicted_path_outside_lanelet: true
+      use_all_predicted_path: true
 
       # lane change cancel
       cancel:
         enable_on_prepare_phase: true
-        enable_on_lane_changing_phase: false
+        enable_on_lane_changing_phase: true
         delta_time: 1.0                     # [s]
         duration: 5.0                       # [s]
         max_lateral_jerk: 100.0             # [m/s3]
