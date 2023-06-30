@@ -22,4 +22,4 @@
 
     projection_dz_threshold: 0.01
     
-    pub_debug_grid: true
+    pub_debug_grid: false
