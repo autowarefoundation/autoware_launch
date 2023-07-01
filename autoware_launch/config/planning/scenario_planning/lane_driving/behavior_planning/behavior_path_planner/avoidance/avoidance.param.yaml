@@ -132,7 +132,7 @@
       avoidance:
         # avoidance lateral parameters
         lateral:
-          lateral_execution_threshold: 0.499            # [m]
+          lateral_execution_threshold: 0.09             # [m]
           lateral_small_shift_threshold: 0.101          # [m]
           road_shoulder_safety_margin: 0.3              # [m]
           max_right_shift_length: 5.0
@@ -156,7 +156,7 @@
 
       constraints:
         # vehicle slows down under longitudinal constraints
-        use_constraints_for_decel: false                # [-]
+        use_constraints_for_decel: true                 # [-]
 
         # lateral constraints
         lateral:
@@ -181,7 +181,7 @@
 
       shift_line_pipeline:
         trim:
-          quantize_filter_threshold: 0.2
+          quantize_filter_threshold: 0.1
           same_grad_filter_1_threshold: 0.1
           same_grad_filter_2_threshold: 0.2
           same_grad_filter_3_threshold: 0.5
