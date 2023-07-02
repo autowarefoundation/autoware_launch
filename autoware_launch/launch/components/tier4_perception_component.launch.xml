@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="occupancy_grid_map_method" default="pointcloud_based_occupancy_grid_map" description="options: pointcloud_based_occupancy_grid_map, laserscan_based_occupancy_grid_map, projective_pointcloud_based_occupancy_grid_map"/>
+  <arg name="occupancy_grid_map_method" default="pointcloud_based_occupancy_grid_map" description="options: pointcloud_based_occupancy_grid_map, laserscan_based_occupancy_grid_map"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
 
   <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
