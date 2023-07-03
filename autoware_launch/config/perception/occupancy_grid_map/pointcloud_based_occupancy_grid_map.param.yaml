@@ -21,7 +21,7 @@
     scan_origin_frame: "velodyne_top"
 
     use_projection: true
-    projection_dz_threshold: 0.01
-    distance_margin: 1.0 # [m]
+    projection_dz_threshold: 0.01 # [m] for avoiding null division
+    obstacle_separation_threshold: 1.0 # [m] fill the interval between obstacls with unknown for this length
 
-    pub_debug_grid: true
+    pub_debug_grid: false
