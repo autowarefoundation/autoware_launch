@@ -51,7 +51,7 @@
           pedestrian: false
 
       slow_down_obstacle_type:
-        unknown: true
+        unknown: false
         car: true
         truck: true
         bus: true
