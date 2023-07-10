@@ -1,7 +1,0 @@
-/**:
-  ros__parameters:
-    gnss_enabled: true
-    ndt_enabled: false
-    ekf_enabled: true
-    yabloc_enabled: true
-    stop_check_enabled: true

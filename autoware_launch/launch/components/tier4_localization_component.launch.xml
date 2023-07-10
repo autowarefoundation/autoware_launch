@@ -1,18 +1,6 @@
 <?xml version="1.0"?>
 <launch>
   <let name="loc_config_path" value="$(find-pkg-share autoware_launch)/config/localization"/>
-  <!-- <let name="is_ndt_mode" value="$(eval &quot;'$(var localization_mode)'=='lidar'&quot;)"/>
-  <let name="is_yabloc_mode" value="$(eval &quot;'$(var localization_mode)'=='camera'&quot;)"/>
-
-  <group if="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)" scoped="false">
-    <let name="pose_initializer_param_path" if="$(var is_ndt_mode)" value="$(var loc_config_path)/pose_initializer.param.yaml"/>
-    <let name="pose_initializer_param_path" if="$(var is_yabloc_mode)" value="$(var loc_config_path)/yabloc/pose_initializer.yabloc.param.yaml"/>
-  </group>
-
-  <group if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)" scoped="false">
-    <let name="pose_initializer_param_path" if="$(var is_ndt_mode)" value="$(var loc_config_path)/pose_initializer.logging_simulator.lidar.param.yaml"/>
-    <let name="pose_initializer_param_path" if="$(var is_yabloc_mode)" value="$(var loc_config_path)/yabloc/pose_initializer.logging_simulator.yabloc.param.yaml"/>
-  </group> -->
 
   <group>
     <include file="$(find-pkg-share tier4_localization_launch)/launch/localization.launch.xml">
@@ -29,9 +17,7 @@
       <arg name="random_downsample_filter_param_path" value="$(var loc_config_path)/random_downsample_filter.param.yaml"/>
       <arg name="localization_error_monitor_param_path" value="$(var loc_config_path)/localization_error_monitor.param.yaml"/>
       <arg name="ekf_localizer_param_path" value="$(var loc_config_path)/ekf_localizer.param.yaml"/>
-      <!-- <arg name="pose_initializer_common_param_path" value="$(var loc_config_path)/pose_initializer_common.param.yaml"/> -->
-      <!-- <arg name="pose_initializer_param_path" value="$(var pose_initializer_param_path)"/> -->
-      <arg name="pose_initializer_param_path" value="$(var loc_config_path)/pose_initializer_common.param.yaml"/>
+      <arg name="pose_initializer_param_path" value="$(var loc_config_path)/pose_initializer.param.yaml"/>
 
       <!-- parameter paths for ndt -->
       <arg name="ndt_scan_matcher_param_path" value="$(var loc_config_path)/ndt_scan_matcher.param.yaml"/>
