@@ -38,6 +38,8 @@
         # TODO(murooka) enable the following. Currently enabling the flag makes QP so heavy
         steer_limit_constraint: false
         visualize_sampling_num: 1
+        enable_manual_warm_start: false
+        enable_warm_start: true # For ProxQP, disabling warm start is much faster.
         enable_optimization_validation: false
 
       common:
@@ -46,8 +48,6 @@
 
       qp:
         solver: "proxqp"
-        enable_warm_start: false # For ProxQP, disabling warm start is much faster.
-        enable_manual_warm_start: false
         eps_abs: 1.0e-3       # eps abs when solving OSQP
 
       # kinematics:
