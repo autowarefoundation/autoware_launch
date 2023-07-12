@@ -10,23 +10,50 @@
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     <arg name="enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
 
+    <!-- clustering -->
+    <arg
+      name="object_recognition_detection_compare_map_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/compare_map.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_euclidean_cluster_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/euclidean_cluster.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_outlier_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/outlier.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_voxel_grid_based_euclidean_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/voxel_grid.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_voxel_grid_based_euclidean_cluster_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml"
+    />
+    <!-- object filtering -->
     <arg
       name="object_recognition_detection_object_lanelet_filter_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_lanelet_filter.param.yaml"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_filter/object_lanelet_filter.param.yaml"
     />
     <arg
       name="object_recognition_detection_object_position_filter_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_position_filter.param.yaml"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_filter/object_position_filter.param.yaml"
     />
+    <!-- pointcloud map-filter -->
     <arg
       name="object_recognition_detection_pointcloud_map_filter_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/pointcloud_map_filter.param.yaml"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/pointcloud_filter/pointcloud_map_filter.param.yaml"
     />
-    <arg name="object_recognition_detection_fusion_sync_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/roi_sync.param.yaml"/>
+    <!-- image_projection_based_fusion -->
+    <arg name="object_recognition_detection_fusion_sync_param_path"
+         value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_sync.param.yaml"/>
+    <!-- tracking -->
     <arg
       name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
     />
+    <!-- segmentation -->
     <arg
       name="obstacle_segmentation_ground_segmentation_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/obstacle_segmentation/ground_segmentation/ground_segmentation.param.yaml"
