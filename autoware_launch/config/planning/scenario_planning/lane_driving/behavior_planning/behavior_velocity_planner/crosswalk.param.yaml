@@ -21,6 +21,7 @@
       stuck_vehicle_attention_range: 10.0 # [m] the detection area is defined as X meters behind the crosswalk
 
       # param for pass judge logic
+      disable_stop_for_yield_cancel: false
       ego_pass_first_margin: 6.0 # [s] time margin for ego pass first situation (the module judges that ego don't have to stop at TTC + MARGIN < TTV condition)
       ego_pass_later_margin: 10.0 # [s] time margin for object pass first situation (the module judges that ego don't have to stop at TTV + MARGIN < TTC condition)
       stop_object_velocity_threshold: 0.28 # [m/s] velocity threshold for the module to judge whether the objects is stopped (0.28 m/s = 1.0 kmph)
