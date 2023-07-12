@@ -41,7 +41,6 @@
     <arg name="start_planner_param_path" value="$(var behavior_path_config_path)/start_planner/start_planner.param.yaml"/>
     <arg name="drivable_area_expansion_param_path" value="$(var behavior_path_config_path)/drivable_area_expansion.param.yaml"/>
     <arg name="scene_module_manager_param_path" value="$(var behavior_path_config_path)/scene_module_manager.param.yaml"/>
-    <arg name="behavior_path_planner_tree_param_path" value="$(var behavior_path_config_path)/behavior_path_planner_tree.xml"/>
     <arg name="behavior_path_planner_param_path" value="$(var behavior_path_config_path)/behavior_path_planner.param.yaml"/>
 
     <!-- behavior velocity planner -->
