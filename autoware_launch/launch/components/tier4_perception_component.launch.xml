@@ -13,18 +13,12 @@
     <arg name="occupancy_grid_map_updater" value="$(var occupancy_grid_map_updater)"/>
 
     <!-- object recognition -->
-    <arg
-      name="object_recognition_detection_compare_map_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/compare_map.param.yaml"
-    />
+    <arg name="object_recognition_detection_compare_map_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/compare_map.param.yaml"/>
     <arg
       name="object_recognition_detection_euclidean_cluster_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/euclidean_cluster.param.yaml"
     />
-    <arg
-      name="object_recognition_detection_outlier_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/outlier.param.yaml"
-    />
+    <arg name="object_recognition_detection_outlier_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/outlier.param.yaml"/>
     <arg
       name="object_recognition_detection_voxel_grid_based_euclidean_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/voxel_grid.param.yaml"
@@ -65,14 +59,7 @@
     />
 
     <!-- occupancy grid map -->
-    <arg
-      name="occupancy_grid_map_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/$(var occupancy_grid_map_method).param.yaml"
-    />
-    <arg
-      name="occupancy_grid_map_updater_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"
-    />
-
+    <arg name="occupancy_grid_map_param_path" value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/$(var occupancy_grid_map_method).param.yaml"/>
+    <arg name="occupancy_grid_map_updater_param_path" value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"/>
   </include>
 </launch>
