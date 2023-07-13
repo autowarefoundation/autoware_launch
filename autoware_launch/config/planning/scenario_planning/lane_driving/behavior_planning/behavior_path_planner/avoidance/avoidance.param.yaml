@@ -19,7 +19,8 @@
       enable_yield_maneuver: true
       enable_yield_maneuver_during_shifting: false
       disable_path_update: false
-      use_hatched_road_markings: false
+      use_hatched_road_markings: true
+      use_intersection_areas: true
 
       # for debug
       publish_debug_marker: false
@@ -105,10 +106,10 @@
       # For target object filtering
       target_filtering:
         # params for avoidance of not-parked objects
-        threshold_time_force_avoidance_for_stopped_vehicle: 10.0    # [s]
+        threshold_time_force_avoidance_for_stopped_vehicle: 1.0      # [s]
         object_ignore_section_traffic_light_in_front_distance: 100.0 # [m]
-        object_ignore_section_crosswalk_in_front_distance: 30.0     # [m]
-        object_ignore_section_crosswalk_behind_distance: 30.0       # [m]
+        object_ignore_section_crosswalk_in_front_distance: 30.0      # [m]
+        object_ignore_section_crosswalk_behind_distance: 30.0        # [m]
         # detection range
         object_check_forward_distance: 150.0            # [m]
         object_check_backward_distance: 10.0            # [m]
@@ -164,18 +165,17 @@
 
         # lateral constraints
         lateral:
-          nominal_lateral_jerk: 0.2                     # [m/s3]
-          max_lateral_jerk: 1.0                         # [m/s3]
+          nominal_lateral_jerk: 0.2                     # [m/sss]
+          max_lateral_jerk: 1.0                         # [m/sss]
+          max_lateral_acceleration: 0.5                 # [m/ss]
 
         # longitudinal constraints
         longitudinal:
           nominal_deceleration: -1.0                    # [m/ss]
           nominal_jerk: 0.5                             # [m/sss]
           max_deceleration: -2.0                        # [m/ss]
-          max_jerk: 1.0
-          # For prevention of large acceleration while avoidance
-          min_avoidance_speed_for_acc_prevention: 3.0   # [m/s]
-          max_avoidance_acceleration: 0.5               # [m/ss]
+          max_jerk: 1.0                                 # [m/sss]
+          max_acceleration: 1.0                         # [m/ss]
 
       target_velocity_matrix:
         col_size: 2
