@@ -19,7 +19,7 @@
       enable_yield_maneuver: true
       enable_yield_maneuver_during_shifting: false
       disable_path_update: false
-      use_hatched_road_markings: false
+      use_hatched_road_markings: true
       use_intersection_areas: true
 
       # for debug
