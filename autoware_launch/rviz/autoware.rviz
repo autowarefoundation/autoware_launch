@@ -1828,7 +1828,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: LaneChange
+                          Name: LeftLaneChange
                           Namespaces:
                             {}
                           Topic:
@@ -1836,7 +1836,19 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lane_change
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lane_change_left
+                          Value: false
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: false
+                          Name: RightLaneChange
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lane_change_right
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
