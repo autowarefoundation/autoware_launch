@@ -1827,8 +1827,8 @@ Visualization Manager:
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/avoidance
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
-                          Name: MarkerArray
+                          Enabled: false
+                          Name: LeftLaneChange
                           Namespaces:
                             {}
                           Topic:
@@ -1839,10 +1839,10 @@ Visualization Manager:
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lane_change_left
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
-                          Name: MarkerArray
+                          Enabled: false
+                          Name: RightLaneChange
                           Namespaces:
-                            lane_change_valid_paths: true
+                            {}
                           Topic:
                             Depth: 5
                             Durability Policy: Volatile
