@@ -5,6 +5,7 @@
   <arg name="longitudinal_controller_mode" default="pid"/>
   <arg name="use_individual_control_param" default="false"/>
   <arg name="enable_autonomous_emergency_braking" default="false"/>
+  <arg name="use_raw_remote_control_command_input" default="true"/>
 
   <let name="latlon_controller_param_path_dir" value="$(var vehicle_id)" if="$(var use_individual_control_param)"/>
   <let name="latlon_controller_param_path_dir" value="" unless="$(var use_individual_control_param)"/>
@@ -41,5 +42,6 @@
     <arg name="external_cmd_selector_param_path" value="$(find-pkg-share autoware_launch)/config/control/external_cmd_selector/external_cmd_selector.param.yaml"/>
     <arg name="aeb_param_path" value="$(find-pkg-share autoware_launch)/config/control/autonomous_emergency_braking/autonomous_emergency_braking.param.yaml"/>
     <arg name="enable_autonomous_emergency_braking" value="$(var enable_autonomous_emergency_braking)"/>
+    <arg name="use_raw_remote_control_command_input" value="$(var use_raw_remote_control_command_input)"/>
   </include>
 </launch>
