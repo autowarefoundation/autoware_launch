@@ -28,6 +28,10 @@
 
     <arg name="fault_injection_param_path" value="$(find-pkg-share autoware_launch)/config/simulator/fault_injection.param.yaml"/>
     <arg
+      name="object_recognition_prediction_map_based_prediction_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/prediction/map_based_prediction.param.yaml"
+    />
+    <arg
       name="obstacle_segmentation_ground_segmentation_elevation_map_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"
     />
