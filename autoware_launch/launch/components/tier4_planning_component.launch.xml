@@ -50,6 +50,7 @@
       name="behavior_velocity_planner_module_param_paths"
       value="[$(var behavior_velocity_config_path)/blind_spot.param.yaml,
               $(var behavior_velocity_config_path)/crosswalk.param.yaml,
+              $(var behavior_velocity_config_path)/walkway.param.yaml,
               $(var behavior_velocity_config_path)/detection_area.param.yaml,
               $(var behavior_velocity_config_path)/intersection.param.yaml,
               $(var behavior_velocity_config_path)/stop_line.param.yaml,
