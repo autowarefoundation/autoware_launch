@@ -48,6 +48,14 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/prediction/map_based_prediction.param.yaml"
     />
     <arg
+      name="object_recognition_detection_object_merger_data_association_matrix_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/data_association_matrix.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_object_merger_distance_threshold_list_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/overlapped_judge.param.yaml"
+    />
+    <arg
       name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
     />
