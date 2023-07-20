@@ -9,8 +9,8 @@
     # distance threshold for compare compare
     distance_threshold: 0.5
 
-    # to skip comparing lower neighbor points with map voxels
-    skip_lower_neighbor_points: False
+    # to enable reduce voxel_leaf_size and neighbor point distance threshold in z axis
+    is_downsize_z_threshold: true
 
     # publish voxelized map pointcloud for debug
     publish_debug_pcd: False
