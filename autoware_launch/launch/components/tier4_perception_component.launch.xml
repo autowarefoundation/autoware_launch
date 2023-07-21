@@ -68,7 +68,6 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/default_tracker.param.yaml"
     />
 
-
     <!-- obstacle segmentation -->
     <arg
       name="obstacle_segmentation_ground_segmentation_param_path"
