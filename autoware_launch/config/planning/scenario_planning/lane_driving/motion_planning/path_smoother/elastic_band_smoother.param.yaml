@@ -26,7 +26,7 @@
         lat_error_weight: 0.001
 
       qp:
-        solver: "proxqp"
+        solver: "osqp" # QP solver used. Can be "osqp" or "proxqp".
         max_iteration: 10000  # max iteration when solving QP
         eps_abs: 1.0e-7       # eps abs when solving OSQP
         eps_rel: 1.0e-7       # eps rel when solving OSQP

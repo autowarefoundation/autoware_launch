@@ -47,7 +47,7 @@
         delta_arc_length: 1.0  # delta arc length for optimization [m]
 
       qp:
-        solver: "proxqp"
+        solver: "osqp" # QP solver used. Can be "osqp" or "proxqp".
         eps_abs: 1.0e-3       # eps abs when solving OSQP
 
       # kinematics:
