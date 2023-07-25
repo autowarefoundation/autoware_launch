@@ -16,7 +16,7 @@
         max_curvature: 0.1  # [m⁻¹] maximum curvature of a sampled path
         min_curvature: -0.1  # [m⁻¹] minimum curvature of a sampled path
       soft:
-        lateral_deviation_weight: 0.1  # cost weight for lateral deviation between the end of a sampled path and the reference path
+        lateral_deviation_weight: 1.0  # cost weight for lateral deviation between the end of a sampled path and the reference path
         length_weight: 1.0  # cost weight for the length of a sampled path
         curvature_weight: 1.0  # cost weight for the curvature of a sampled path
     sampling:
