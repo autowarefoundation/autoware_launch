@@ -1449,7 +1449,7 @@ Visualization Manager:
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
-                          Name: VirtualWall (PullOver)
+                          Name: VirtualWall (GoalPlanner)
                           Namespaces:
                             {}
                           Topic:
@@ -1457,7 +1457,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/pull_over
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/goal_planner
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
@@ -2029,7 +2029,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: Info (PullOver)
+                          Name: Info (GoalPlanner)
                           Namespaces:
                             {}
                           Topic:
@@ -2037,7 +2037,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/pull_over
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/goal_planner
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false

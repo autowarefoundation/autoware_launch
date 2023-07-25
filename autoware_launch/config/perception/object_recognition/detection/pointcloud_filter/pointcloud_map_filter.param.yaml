@@ -9,6 +9,9 @@
     # distance threshold for compare compare
     distance_threshold: 0.5
 
+    # ratio to reduce voxel_leaf_size and neighbor points distance threshold in z axis
+    downsize_ratio_z_axis: 0.6
+
     # publish voxelized map pointcloud for debug
     publish_debug_pcd: False
 

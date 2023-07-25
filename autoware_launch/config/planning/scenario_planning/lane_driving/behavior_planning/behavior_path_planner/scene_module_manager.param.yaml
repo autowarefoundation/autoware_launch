@@ -67,9 +67,8 @@
       priority: 5
       max_module_size: 1
 
-    # NOTE: This module is unstable. Deprecated for now.
     avoidance_by_lc:
-      enable_module: false
+      enable_module: true
       enable_rtc: true
       enable_simultaneous_execution_as_approved_module: false
       enable_simultaneous_execution_as_candidate_module: false
