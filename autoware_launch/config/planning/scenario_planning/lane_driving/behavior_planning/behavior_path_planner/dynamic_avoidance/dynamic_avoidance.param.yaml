@@ -23,6 +23,7 @@
         max_obj_lat_offset_to_ego_path: 1.0 # [m]
 
         cut_in_object:
+          min_time_to_start_cut_in: 1.0 # [s]
           min_lon_offset_ego_to_object: 0.0 # [m]
 
         crossing_object:
