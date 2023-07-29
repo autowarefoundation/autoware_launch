@@ -3,6 +3,7 @@
     dynamic_avoidance:
       common:
         enable_debug_info: true
+        enable_path_planning: false
 
       # avoidance is performed for the object type with true
       target_object:
