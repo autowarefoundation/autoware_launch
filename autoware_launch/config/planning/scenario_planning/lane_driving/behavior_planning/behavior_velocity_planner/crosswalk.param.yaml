@@ -30,6 +30,9 @@
         stuck_vehicle_velocity: 1.0 # [m/s] maximum velocity threshold whether the vehicle is stuck
         max_stuck_vehicle_lateral_offset: 2.0 # [m] maximum lateral offset for stuck vehicle position should be looked
         stuck_vehicle_attention_range: 10.0 # [m] the detection area is defined as X meters behind the crosswalk
+        min_acc: -1.0   # min acceleration [m/ss]
+        min_jerk: -1.0  # min jerk [m/sss]
+        max_jerk: 1.0   # max jerk [m/sss]
 
       # param for pass judge logic
       pass_judge:
