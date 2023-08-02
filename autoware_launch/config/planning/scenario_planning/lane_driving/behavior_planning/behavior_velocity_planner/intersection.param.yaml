@@ -2,7 +2,7 @@
   ros__parameters:
     intersection:
       common:
-        attention_area_margin: 0.5 # [m]
+        attention_area_margin: 0.75 # [m]
         attention_area_length: 200.0 # [m]
         attention_area_angle_threshold: 0.785 # [rad]
         stop_line_margin: 3.0
@@ -46,7 +46,8 @@
         min_vehicle_brake_for_rss: -2.5 # [m/s^2]
         max_vehicle_velocity_for_rss: 16.66 # [m/s] == 60kmph
         denoise_kernel: 1.0 # [m]
-        possible_object_bbox: [1.0, 2.0] # [m x m]
+        possible_object_bbox: [1.5, 2.5] # [m x m]
+        ignore_parked_vehicle_speed_threshold: 0.8333 # == 3.0km/h
 
       enable_rtc:
         intersection: true # If set to true, the scene modules require approval from the rtc (request to cooperate) function. If set to false, the modules can be executed without requiring rtc approval
