@@ -3,6 +3,7 @@
   <let name="loc_config_path" value="$(find-pkg-share autoware_launch)/config/localization"/>
   <arg name="pose_source" default="ndt" description="select pose_estimator: ndt, yabloc, eagleye"/>
   <arg name="twist_source" default="gyro_odom" description="select twist_estimator. gyro_odom, eagleye"/>
+  <arg name="input_pointcloud" default="/sensing/lidar/top/outlier_filtered/pointcloud" description="The topic will be used in the localization util module"/>
 
   <group>
     <include file="$(find-pkg-share tier4_localization_launch)/launch/localization.launch.xml">
@@ -11,6 +12,7 @@
       <arg name="pose_source" value="$(var pose_source)"/>
       <arg name="twist_source" value="$(var twist_source)"/>
       <arg name="system_run_mode" value="$(var system_run_mode)"/>
+      <arg name="input_pointcloud" value="$(var input_pointcloud)"/>
 
       <!-- parameter paths for common -->
       <arg name="crop_box_filter_measurement_range_param_path" value="$(var loc_config_path)/crop_box_filter_measurement_range.param.yaml"/>
