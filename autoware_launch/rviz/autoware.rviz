@@ -89,7 +89,6 @@ Visualization Manager:
             - Class: rviz_plugins/AccelerationMeter
               Enabled: false
               Name: AccelerationMeter
-              Left: 896
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
