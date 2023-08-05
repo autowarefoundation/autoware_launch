@@ -18,6 +18,7 @@
         min_obstacle_vel: 0.0 # [m/s]
 
         successive_num_to_entry_dynamic_avoidance_condition: 5
+        successive_num_to_exit_dynamic_avoidance_condition: 1
 
         min_obj_lat_offset_to_ego_path: 0.0 # [m]
         max_obj_lat_offset_to_ego_path: 1.0 # [m]
