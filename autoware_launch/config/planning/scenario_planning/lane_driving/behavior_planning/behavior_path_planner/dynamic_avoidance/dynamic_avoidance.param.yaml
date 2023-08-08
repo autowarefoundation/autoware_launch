@@ -3,6 +3,7 @@
     dynamic_avoidance:
       common:
         enable_debug_info: true
+        use_hatched_road_markings: true
 
       # avoidance is performed for the object type with true
       target_object:
@@ -53,6 +54,6 @@
 
         # for opposite directional object
         oncoming_object:
-          max_time_to_collision: 15.0 # [s]
+          max_time_to_collision: 40.0 # [s] This value should be the same as overtaking_object's one to suppress chattering of this value for parked vehicles
           start_duration_to_avoid: 12.0  # [s]
           end_duration_to_avoid: 0.0  # [s]
