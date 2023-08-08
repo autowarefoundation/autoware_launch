@@ -44,6 +44,8 @@
       drivable_area_generation:
         lat_offset_from_obstacle: 0.8 # [m]
         max_lat_offset_to_avoid: 0.5 # [m]
+        max_time_for_object_lat_shift: 2.0 # [s]
+        lpf_gain_for_lat_avoid_to_offset: 0.9 # [-]
 
         # for same directional object
         overtaking_object:
