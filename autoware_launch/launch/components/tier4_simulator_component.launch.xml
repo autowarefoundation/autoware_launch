@@ -28,6 +28,10 @@
 
     <arg name="fault_injection_param_path" value="$(find-pkg-share autoware_launch)/config/simulator/fault_injection.param.yaml"/>
     <arg
+      name="object_recognition_prediction_map_based_prediction_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/prediction/map_based_prediction.param.yaml"
+    />
+    <arg
       name="obstacle_segmentation_ground_segmentation_elevation_map_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"
     />
@@ -35,8 +39,7 @@
       name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
     />
-    <arg name="pose_initializer_common_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer_common.param.yaml"/>
-    <arg name="pose_initializer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer.planning_simulator.param.yaml"/>
+    <arg name="pose_initializer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer.param.yaml"/>
     <arg name="laserscan_based_occupancy_grid_map_param_path" value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/laserscan_based_occupancy_grid_map.param.yaml"/>
     <arg name="occupancy_grid_map_updater" value="$(var occupancy_grid_map_updater)"/>
     <arg name="occupancy_grid_map_updater_param_path" value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"/>

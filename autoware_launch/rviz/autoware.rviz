@@ -86,6 +86,15 @@ Visualization Manager:
                 Value: /vehicle/status/velocity_status
               Value: true
               Value height offset: 0
+            - Class: rviz_plugins/AccelerationMeter
+              Enabled: false
+              Name: AccelerationMeter
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /localization/acceleration
             - Alpha: 0.999
               Class: rviz_plugins/VelocityHistory
               Color Border Vel Max: 3
@@ -1449,7 +1458,7 @@ Visualization Manager:
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
-                          Name: VirtualWall (PullOver)
+                          Name: VirtualWall (GoalPlanner)
                           Namespaces:
                             {}
                           Topic:
@@ -1457,7 +1466,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/pull_over
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/goal_planner
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
@@ -1692,32 +1701,6 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/intersection
                           Value: false
-                        - Alpha: 0.5
-                          Autocompute Intensity Bounds: true
-                          Class: grid_map_rviz_plugin/GridMap
-                          Color: 200; 200; 200
-                          Color Layer: color
-                          Color Transformer: IntensityLayer
-                          Enabled: false
-                          Height Layer: elevation
-                          Height Transformer: Layer
-                          History Length: 1
-                          Invert Rainbow: false
-                          Max Color: 255; 255; 255
-                          Max Intensity: 10
-                          Min Color: 0; 0; 0
-                          Min Intensity: 0
-                          Name: IntersectionOcclusion
-                          Show Grid Lines: false
-                          Topic:
-                            Depth: 5
-                            Durability Policy: Volatile
-                            Filter size: 10
-                            History Policy: Keep Last
-                            Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/intersection/occlusion_grid
-                          Use Rainbow: true
-                          Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
                           Name: Blind Spot
@@ -1828,7 +1811,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: LaneChange
+                          Name: LeftLaneChange
                           Namespaces:
                             {}
                           Topic:
@@ -1836,7 +1819,19 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lane_change
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lane_change_left
+                          Value: false
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: false
+                          Name: RightLaneChange
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/lane_change_right
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -2017,7 +2012,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: Info (PullOver)
+                          Name: Info (GoalPlanner)
                           Namespaces:
                             {}
                           Topic:
@@ -2025,7 +2020,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/pull_over
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/goal_planner
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false

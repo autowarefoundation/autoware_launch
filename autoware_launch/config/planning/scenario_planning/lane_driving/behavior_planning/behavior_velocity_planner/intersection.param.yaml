@@ -2,7 +2,7 @@
   ros__parameters:
     intersection:
       common:
-        attention_area_margin: 0.5 # [m]
+        attention_area_margin: 0.75 # [m]
         attention_area_length: 200.0 # [m]
         attention_area_angle_threshold: 0.785 # [rad]
         stop_line_margin: 3.0
@@ -25,8 +25,12 @@
         state_transit_margin_time: 1.0
         min_predicted_path_confidence: 0.05
         minimum_ego_predicted_velocity: 1.388 # [m/s]
-        collision_start_margin_time: 4.0 # [s] this + state_transit_margin_time should be higher to account for collision with fast/accelerating object
-        collision_end_margin_time: 6.0 # [s] this + state_transit_margin_time should be higher to account for collision with slow/decelerating object
+        normal:
+          collision_start_margin_time: 4.0 # [s] this + state_transit_margin_time should be higher to account for collision with fast/accelerating object
+          collision_end_margin_time: 6.0 # [s] this + state_transit_margin_time should be higher to account for collision with slow/decelerating object
+        relaxed:
+          collision_start_margin_time: 2.0
+          collision_end_margin_time: 0.0
         keep_detection_vel_thr: 0.833 # == 3.0km/h. keep detection if ego is ego.vel < keep_detection_vel_thr
 
       occlusion:
@@ -42,7 +46,12 @@
         min_vehicle_brake_for_rss: -2.5 # [m/s^2]
         max_vehicle_velocity_for_rss: 16.66 # [m/s] == 60kmph
         denoise_kernel: 1.0 # [m]
-        pub_debug_grid: false
+        possible_object_bbox: [1.5, 2.5] # [m x m]
+        ignore_parked_vehicle_speed_threshold: 0.8333 # == 3.0km/h
+
+      enable_rtc:
+        intersection: true # If set to true, the scene modules require approval from the rtc (request to cooperate) function. If set to false, the modules can be executed without requiring rtc approval
+        intersection_to_occlusion: true
 
     merge_from_private:
       stop_duration_sec: 1.0
