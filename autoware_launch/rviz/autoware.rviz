@@ -2489,7 +2489,7 @@ Visualization Manager:
       Z position: 0
     - Class: rviz_plugins/DeleteAllObjectsTool
       Pose Topic: /simulation/dummy_perception_publisher/object_info
-    - Class: rviz_plugins/RerouteStaticObstacleTool
+    - Class: rviz_plugins/RerouteStaticObstaclePointPublish
       Single click: true
       Topic:
         Depth: 5
