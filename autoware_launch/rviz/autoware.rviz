@@ -2489,6 +2489,14 @@ Visualization Manager:
       Z position: 0
     - Class: rviz_plugins/DeleteAllObjectsTool
       Pose Topic: /simulation/dummy_perception_publisher/object_info
+    - Class: rviz_plugins/RerouteStaticObstacleTool
+      Single click: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /simulation/planning/reroute_static_obstacle_point_publisher/point
   Value: true
   Views:
     Current:
