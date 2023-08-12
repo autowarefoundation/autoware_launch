@@ -42,6 +42,8 @@
           max_object_angle: 0.785
 
       drivable_area_generation:
+        polygon_generation_method: "ego_path_base" # choose "ego_path_base" and "object_path_base"
+
         lat_offset_from_obstacle: 0.8 # [m]
         max_lat_offset_to_avoid: 0.5 # [m]
         max_time_for_object_lat_shift: 0.0 # [s]
