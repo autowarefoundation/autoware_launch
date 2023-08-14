@@ -12,6 +12,11 @@
     object_buffer_time_length: 2.0 #[s]
     history_time_length: 1.0 #[s]
 
+    on_lane_path_generation:
+      method: "constant_acc" # choose from "minimum_jerk" or "constant_acc"
+      constant_acc:
+        max_lateral_accel: 1.0 # [m/ss]
+
     lane_change_detection:
       method: "lat_diff_distance" # choose from "lat_diff_distance" or "time_to_change_lane"
       time_to_change_lane:
