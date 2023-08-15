@@ -13,7 +13,7 @@
     history_time_length: 1.0 #[s]
 
     on_lane_path_generation:
-      method: "constant_acc" # choose from "minimum_jerk" or "constant_acc"
+      method: "minimum_jerk" # choose from "minimum_jerk" or "constant_acc"
       constant_acc:
         max_lateral_accel: 1.0 # [m/ss]
 
