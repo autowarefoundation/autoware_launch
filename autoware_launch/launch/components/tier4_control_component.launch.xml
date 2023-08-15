@@ -35,6 +35,7 @@
     <arg name="lon_controller_param_path" value="$(var lon_controller_param_path)"/>
     <arg name="vehicle_cmd_gate_param_path" value="$(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
     <arg name="lane_departure_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/lane_departure_checker/lane_departure_checker.param.yaml"/>
+    <arg name="control_validator_param_path" value="$(find-pkg-share autoware_launch)/config/control/control_validator/control_validator.param.yaml"/>
     <arg name="operation_mode_transition_manager_param_path" value="$(find-pkg-share autoware_launch)/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
     <arg name="shift_decider_param_path" value="$(find-pkg-share autoware_launch)/config/control/shift_decider/shift_decider.param.yaml"/>
     <arg name="obstacle_collision_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/obstacle_collision_checker/obstacle_collision_checker.param.yaml"/>
