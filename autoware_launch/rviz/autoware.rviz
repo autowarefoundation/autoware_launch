@@ -2418,6 +2418,34 @@ Visualization Manager:
           Value: false
       Enabled: true
       Name: Control
+    - Class: rviz_common/Group
+      Displays:
+        - Class: rviz_common/Group
+          Displays: ~
+          Enabled: true
+          Name: Map
+        - Class: rviz_common/Group
+          Displays: ~
+          Enabled: true
+          Name: Sensing
+        - Class: rviz_common/Group
+          Displays: ~
+          Enabled: true
+          Name: Localization
+        - Class: rviz_common/Group
+          Displays: ~
+          Enabled: true
+          Name: Perception
+        - Class: rviz_common/Group
+          Displays: ~
+          Enabled: true
+          Name: Planning
+        - Class: rviz_common/Group
+          Displays: ~
+          Enabled: true
+          Name: Control
+      Enabled: false
+      Name: Debug
   Enabled: true
   Global Options:
     Background Color: 10; 10; 10
