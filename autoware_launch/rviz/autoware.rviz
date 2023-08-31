@@ -2429,9 +2429,111 @@ Visualization Manager:
           Enabled: true
           Name: Sensing
         - Class: rviz_common/Group
-          Displays: ~
           Enabled: true
           Name: Localization
+          Displays:
+            - Alpha: 0.9990000128746033
+              Autocompute Intensity Bounds: true
+              Autocompute Value Bounds:
+                Max Value: 10
+                Min Value: -10
+                Value: true
+              Axis: Z
+              Channel Name: intensity
+              Class: rviz_default_plugins/PointCloud2
+              Color: 85; 255; 0
+              Color Transformer: FlatColor
+              Decay Time: 0
+              Enabled: true
+              Invert Rainbow: false
+              Max Color: 85; 255; 127
+              Max Intensity: 0
+              Min Color: 0; 0; 0
+              Min Intensity: 0
+              Name: NDT pointclouds
+              Position Transformer: XYZ
+              Selectable: false
+              Size (Pixels): 10
+              Size (m): 0.5
+              Style: Squares
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                Filter size: 10
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /localization/pose_estimator/points_aligned
+              Use Fixed Frame: true
+              Use rainbow: true
+              Value: true
+            - Alpha: 1
+              Autocompute Intensity Bounds: true
+              Autocompute Value Bounds:
+                Max Value: 10
+                Min Value: -10
+                Value: true
+              Axis: Z
+              Channel Name: intensity
+              Class: rviz_default_plugins/PointCloud2
+              Color: 255; 255; 255
+              Color Transformer: ""
+              Decay Time: 0
+              Enabled: true
+              Invert Rainbow: false
+              Max Color: 255; 255; 255
+              Max Intensity: 4096
+              Min Color: 0; 0; 0
+              Min Intensity: 0
+              Name: NDTLoadedPCDMap
+              Position Transformer: ""
+              Selectable: true
+              Size (Pixels): 3
+              Size (m): 0.1
+              Style: Flat Squares
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                Filter size: 10
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /localization/pose_estimator/debug/loaded_pointcloud_map
+              Use Fixed Frame: true
+              Use rainbow: true
+              Value: true
+            - Buffer Size: 200
+              Class: rviz_plugins::PoseHistory
+              Enabled: true
+              Line:
+                Alpha: 0.9990000128746033
+                Color: 170; 255; 127
+                Value: true
+                Width: 0.10000000149011612
+              Name: NDTPoseHistory
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                Filter size: 10
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /localization/pose_estimator/pose
+              Value: true
+            - Buffer Size: 1000
+              Class: rviz_plugins::PoseHistory
+              Enabled: true
+              Line:
+                Alpha: 0.9990000128746033
+                Color: 0; 255; 255
+                Value: true
+                Width: 0.10000000149011612
+              Name: EKFPoseHistory
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                Filter size: 10
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /localization/pose_twist_fusion_filter/pose
+              Value: true
         - Class: rviz_common/Group
           Displays: ~
           Enabled: true
