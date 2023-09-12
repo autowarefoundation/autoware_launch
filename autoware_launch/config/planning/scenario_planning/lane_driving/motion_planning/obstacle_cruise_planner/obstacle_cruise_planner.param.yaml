@@ -22,7 +22,7 @@
       min_behavior_stop_margin: 3.0 # [m]
       stop_on_curve:
         enable_approaching: false
-        additional_safe_distance_margin: 0.0 # [m]
+        additional_safe_distance_margin: 3.0 # [m]
         min_safe_distance_margin: 3.0 # [m]
       suppress_sudden_obstacle_stop: true
 
