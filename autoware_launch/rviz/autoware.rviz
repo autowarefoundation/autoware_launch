@@ -317,6 +317,8 @@ Visualization Manager:
                 Reliability Policy: Reliable
                 Value: /vehicle/status/turn_indicators_status
               Value: true
+          Enabled: true
+          Name: Vehicle
         - Class: rviz_plugins/MrmSummaryOverlayDisplay
           Enabled: false
           Font Size: 10
@@ -333,8 +335,6 @@ Visualization Manager:
             Value: /system/emergency/hazard_status
           Value: false
           Value height offset: 0
-          Enabled: true
-          Name: Vehicle
       Enabled: true
       Name: System
     - Class: rviz_common/Group
