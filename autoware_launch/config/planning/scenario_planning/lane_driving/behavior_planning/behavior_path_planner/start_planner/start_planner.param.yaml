@@ -34,6 +34,7 @@
       ignore_distance_from_lane_end: 15.0
       # turns signal
       th_turn_signal_on_lateral_offset: 1.0
+      th_distance_to_middle_of_the_road: 0.1
       intersection_search_length: 30.0
       length_ratio_for_turn_signal_deactivation_near_intersection: 0.5
       # freespace planner
