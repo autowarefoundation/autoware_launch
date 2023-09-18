@@ -120,7 +120,7 @@
         # For safety check
         safety_check_params:
           # safety check configuration
-          enable_safety_check: false
+          enable_safety_check: false # Don't set to true if auto_mode is enabled
           # collision check parameters
           check_all_predicted_path: true
           publish_debug_marker: false
