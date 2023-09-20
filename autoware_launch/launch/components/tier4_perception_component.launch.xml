@@ -21,16 +21,11 @@
     <arg name="objects_validation_method" value="$(var detected_objects_validation_method)"/>
 
     <!-- object recognition -->
-    <arg name="object_recognition_detection_compare_map_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/compare_map.param.yaml"/>
     <arg
       name="object_recognition_detection_euclidean_cluster_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/euclidean_cluster.param.yaml"
     />
     <arg name="object_recognition_detection_outlier_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/outlier.param.yaml"/>
-    <arg
-      name="object_recognition_detection_voxel_grid_based_euclidean_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/voxel_grid.param.yaml"
-    />
     <arg
       name="object_recognition_detection_voxel_grid_based_euclidean_cluster_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml"
@@ -62,6 +57,10 @@
     <arg
       name="object_recognition_detection_object_merger_distance_threshold_list_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/overlapped_judge.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_radar_lanelet_filtering_range_param"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_filter/radar_lanelet_filter.param.yaml"
     />
     <arg name="object_recognition_detection_lidar_model_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/lidar_model"/>
     <arg
