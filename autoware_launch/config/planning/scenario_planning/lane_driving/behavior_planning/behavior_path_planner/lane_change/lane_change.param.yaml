@@ -62,6 +62,16 @@
       check_objects_on_other_lanes: true
       use_all_predicted_path: true
 
+      # lane change regulations
+      regulation:
+        crosswalk: false
+        intersection: false
+
+      # ego vehicle stuck detection
+      stuck_detection:
+        velocity: 0.1 # [m/s]
+        stop_time: 3.0 # [s]
+
       # lane change cancel
       cancel:
         enable_on_prepare_phase: true
