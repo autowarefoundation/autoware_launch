@@ -9,7 +9,7 @@
       enable_simultaneous_execution_as_approved_module: false
       enable_simultaneous_execution_as_candidate_module: true
       keep_last: false
-      priority: 7
+      priority: 6
       max_module_size: 1
 
     external_request_lane_change_right:
@@ -18,7 +18,7 @@
       enable_simultaneous_execution_as_approved_module: false
       enable_simultaneous_execution_as_candidate_module: true
       keep_last: false
-      priority: 7
+      priority: 6
       max_module_size: 1
 
     lane_change_left:
@@ -27,7 +27,7 @@
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: true
       keep_last: false
-      priority: 6
+      priority: 5
       max_module_size: 1
 
     lane_change_right:
@@ -36,7 +36,7 @@
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: true
       keep_last: false
-      priority: 6
+      priority: 5
       max_module_size: 1
 
     start_planner:
@@ -72,7 +72,7 @@
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: false
       keep_last: false
-      priority: 5
+      priority: 4
       max_module_size: 1
 
     avoidance_by_lc:
@@ -81,7 +81,7 @@
       enable_simultaneous_execution_as_approved_module: false
       enable_simultaneous_execution_as_candidate_module: false
       keep_last: false
-      priority: 4
+      priority: 3
       max_module_size: 1
 
     dynamic_avoidance:
@@ -89,6 +89,6 @@
       enable_rtc: true
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: true
-      keep_last: false
-      priority: 3
+      keep_last: true
+      priority: 7
       max_module_size: 1
