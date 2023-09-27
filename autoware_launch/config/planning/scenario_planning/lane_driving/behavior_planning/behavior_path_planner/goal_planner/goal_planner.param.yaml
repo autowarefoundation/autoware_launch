@@ -14,12 +14,12 @@
           lateral_weight: 40.0
         path_priority: "efficient_path" # "efficient_path" or "close_goal"
         parking_policy: "left_side" # "left_side" or "right_side"
-        forward_goal_search_length: 20.0
+        forward_goal_search_length: 40.0
         backward_goal_search_length: 20.0
         goal_search_interval: 2.0
         longitudinal_margin: 3.0
-        max_lateral_offset: 0.5
-        lateral_offset_interval: 0.25
+        max_lateral_offset: 1.0
+        lateral_offset_interval: 0.5
         ignore_distance_from_lane_start: 0.0
         margin_from_boundary: 0.75
 
