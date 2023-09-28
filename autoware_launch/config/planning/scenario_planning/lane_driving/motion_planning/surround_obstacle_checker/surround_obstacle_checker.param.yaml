@@ -9,42 +9,42 @@
       surround_check_side_distance: 0.5
       surround_check_back_distance: 0.5
     unknown:
-      enable_check: true
+      enable_check: false
       surround_check_front_distance: 0.5
       surround_check_side_distance: 0.5
       surround_check_back_distance: 0.5
     car:
-      enable_check: true
+      enable_check: false
       surround_check_front_distance: 0.5
       surround_check_side_distance: 0.0
       surround_check_back_distance: 0.5
     truck:
-      enable_check: true
+      enable_check: false
       surround_check_front_distance: 0.5
       surround_check_side_distance: 0.0
       surround_check_back_distance: 0.5
     bus:
-      enable_check: true
+      enable_check: false
       surround_check_front_distance: 0.5
       surround_check_side_distance: 0.0
       surround_check_back_distance: 0.5
     trailer:
-      enable_check: true
+      enable_check: false
       surround_check_front_distance: 0.5
       surround_check_side_distance: 0.0
       surround_check_back_distance: 0.5
     motorcycle:
-      enable_check: true
+      enable_check: false
       surround_check_front_distance: 0.5
       surround_check_side_distance: 0.0
       surround_check_back_distance: 0.5
     bicycle:
-      enable_check: true
+      enable_check: false
       surround_check_front_distance: 0.5
       surround_check_side_distance: 0.5
       surround_check_back_distance: 0.5
     pedestrian:
-      enable_check: true
+      enable_check: false
       surround_check_front_distance: 0.5
       surround_check_side_distance: 0.5
       surround_check_back_distance: 0.5
