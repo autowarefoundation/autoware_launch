@@ -88,6 +88,6 @@
       enable_rtc: false
       enable_simultaneous_execution_as_approved_module: false
       enable_simultaneous_execution_as_candidate_module: false
-      keep_last: true
-      priority: 16
+      keep_last: false
+      priority: 0
       max_module_size: 1
