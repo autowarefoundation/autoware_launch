@@ -4,7 +4,7 @@
   <!-- behavior -->
   <arg name="use_experimental_lane_change_function" default="true"/>
   <!-- motion -->
-  <arg name="cruise_planner_type" default="obstacle_stop_planner" description="options: obstacle_stop_planner, obstacle_cruise_planner, none"/>
+  <arg name="cruise_planner_type" default="obstacle_cruise_planner" description="options: obstacle_stop_planner, obstacle_cruise_planner, none"/>
   <arg name="use_surround_obstacle_check" default="true"/>
   <arg name="path_smoother_type" default="elastic_band" description="options: elastic_band, none"/>
   <arg name="velocity_smoother_type" default="JerkFiltered" description="options: JerkFiltered, L2, Analytical, Linf(Unstable)"/>
