@@ -191,13 +191,13 @@
       pedestrian:
         min_lat_margin: 0.8
         max_lat_margin: 1.3
-        min_ego_velocity: 4.0
-        max_ego_velocity: 7.0
+        min_ego_velocity: 1.0
+        max_ego_velocity: 2.0
       moving_pedestrian:
         min_lat_margin: 0.8
         max_lat_margin: 1.3
-        min_ego_velocity: 4.0
-        max_ego_velocity: 5.0
+        min_ego_velocity: 0.5
+        max_ego_velocity: 1.5
 
       time_margin_on_target_velocity: 1.5 # [s]
 
