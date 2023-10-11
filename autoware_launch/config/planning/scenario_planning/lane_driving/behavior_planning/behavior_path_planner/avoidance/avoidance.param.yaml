@@ -220,12 +220,6 @@
           max_jerk: 1.0                                 # [m/sss]
           max_acceleration: 1.0                         # [m/ss]
 
-      target_velocity_matrix:
-        col_size: 2
-        matrix:
-          [2.78, 13.9,                                  # velocity [m/s]
-           0.50, 1.00]                                  # margin [m]
-
       shift_line_pipeline:
         trim:
           quantize_filter_threshold: 0.1
