@@ -25,9 +25,6 @@
     <arg name="common_param_path" value="$(var common_config_path)/common.param.yaml"/>
     <arg name="nearest_search_param_path" value="$(var common_config_path)/nearest_search.param.yaml"/>
 
-    <!-- rtc -->
-    <arg name="rtc_auto_mode_manager_param_path" value="$(var behavior_config_path)/rtc_auto_mode_manager/rtc_auto_mode_manager.param.yaml"/>
-
     <!-- mission planner -->
     <arg name="mission_planner_param_path" value="$(find-pkg-share autoware_launch)/config/planning/mission_planning/mission_planner/mission_planner.param.yaml"/>
 
