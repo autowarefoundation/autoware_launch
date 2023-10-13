@@ -39,8 +39,8 @@
           collision_start_margin_time: 2.0
           collision_end_margin_time: 0.0
         partially_prioritized:
-          collision_start_margin_time: 2.0
-          collision_end_margin_time: 2.0
+          collision_start_margin_time: 4.0
+          collision_end_margin_time: 6.0
         not_prioritized:
           collision_start_margin_time: 4.0 # [s] this + state_transit_margin_time should be higher to account for collision with fast/accelerating object
           collision_end_margin_time: 6.0 # [s] this + state_transit_margin_time should be higher to account for collision with slow/decelerating object
