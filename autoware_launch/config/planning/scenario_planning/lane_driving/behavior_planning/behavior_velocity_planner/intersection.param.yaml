@@ -39,8 +39,8 @@
           collision_start_margin_time: 2.0
           collision_end_margin_time: 0.0
         partially_prioritized:
-          collision_start_margin_time: 2.0
-          collision_end_margin_time: 2.0
+          collision_start_margin_time: 4.0
+          collision_end_margin_time: 6.0
         not_prioritized:
           collision_start_margin_time: 4.0 # [s] this + state_transit_margin_time should be higher to account for collision with fast/accelerating object
           collision_end_margin_time: 6.0 # [s] this + state_transit_margin_time should be higher to account for collision with slow/decelerating object
@@ -50,7 +50,9 @@
         yield_on_green_traffic_light:
           distance_to_assigned_lanelet_start: 10.0
           duration: 3.0
-          range: 50.0 # [m]
+          object_dist_to_stopline: 10.0 # [m]
+        ignore_on_amber_traffic_light:
+          object_expected_deceleration: 2.0 # [m/ss]
 
       occlusion:
         enable: false
