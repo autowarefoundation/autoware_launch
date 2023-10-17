@@ -1,0 +1,14 @@
+/**:
+  ros__parameters:
+
+    publish_diag: false  # if true, diagnostic msg is published
+
+    # If the number of consecutive invalid predicted_path exceeds this threshold, the Diag will be set to ERROR.
+    # (For example, threshold = 1 means, even if the predicted_path is invalid, Diag will not be ERROR if
+    #  the next predicted_path is valid.)
+    diag_error_count_threshold: 0
+
+    display_on_terminal: false # show error msg on terminal
+
+    thresholds:
+      max_distance_deviation: 1.0

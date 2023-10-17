@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="system_error_monitor_param_path" default="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.param.yaml"/>
+
   <include file="$(find-pkg-share tier4_system_launch)/launch/system.launch.xml">
     <arg name="run_mode" value="$(var system_run_mode)"/>
     <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
@@ -8,9 +10,10 @@
 
     <arg name="component_state_monitor_topic_path" value="$(find-pkg-share autoware_launch)/config/system/component_state_monitor/topics.yaml"/>
     <arg name="emergency_handler_param_path" value="$(find-pkg-share autoware_launch)/config/system/emergency_handler/emergency_handler.param.yaml"/>
+    <arg name="duplicated_node_checker_param_path" value="$(find-pkg-share autoware_launch)/config/system/duplicated_node_checker/duplicated_node_checker.param.yaml"/>
     <arg name="mrm_comfortable_stop_operator_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_comfortable_stop_operator/mrm_comfortable_stop_operator.param.yaml"/>
     <arg name="mrm_emergency_stop_operator_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_emergency_stop_operator/mrm_emergency_stop_operator.param.yaml"/>
-    <arg name="system_error_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.param.yaml"/>
+    <arg name="system_error_monitor_param_path" value="$(var system_error_monitor_param_path)"/>
     <arg name="system_error_monitor_planning_simulator_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.planning_simulation.param.yaml"/>
     <arg name="diagnostic_aggregator_vehicle_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/diagnostic_aggregator/vehicle.param.yaml"/>
     <arg name="diagnostic_aggregator_system_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/diagnostic_aggregator/system.param.yaml"/>

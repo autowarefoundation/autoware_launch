@@ -2,6 +2,13 @@
 <launch>
   <arg name="occupancy_grid_map_method" default="pointcloud_based_occupancy_grid_map" description="options: pointcloud_based_occupancy_grid_map, laserscan_based_occupancy_grid_map"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
+  <arg name="detected_objects_filter_method" default="lanelet_filter" description="options: lanelet_filter, position_filter"/>
+  <arg
+    name="detected_objects_validation_method"
+    default="obstacle_pointcloud"
+    description="options: obstacle_pointcloud, occupancy_grid (occupancy_grid_map_method must be laserscan_based_occupancy_grid_map)"
+  />
+  <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
 
   <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
     <arg name="mode" value="$(var perception_mode)"/>
@@ -11,18 +18,16 @@
     <arg name="enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
     <arg name="occupancy_grid_map_method" value="$(var occupancy_grid_map_method)"/>
     <arg name="occupancy_grid_map_updater" value="$(var occupancy_grid_map_updater)"/>
+    <arg name="objects_filter_method" value="$(var detected_objects_filter_method)"/>
+    <arg name="objects_validation_method" value="$(var detected_objects_validation_method)"/>
+    <arg name="data_path" value="$(var data_path)"/>
 
     <!-- object recognition -->
-    <arg name="object_recognition_detection_compare_map_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/compare_map.param.yaml"/>
     <arg
       name="object_recognition_detection_euclidean_cluster_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/euclidean_cluster.param.yaml"
     />
     <arg name="object_recognition_detection_outlier_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/outlier.param.yaml"/>
-    <arg
-      name="object_recognition_detection_voxel_grid_based_euclidean_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/voxel_grid.param.yaml"
-    />
     <arg
       name="object_recognition_detection_voxel_grid_based_euclidean_cluster_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml"
@@ -44,6 +49,10 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_sync.param.yaml"
     />
     <arg
+      name="object_recognition_detection_obstacle_pointcloud_based_validator_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detected_object_validation/obstacle_pointcloud_based_validator.param.yaml"
+    />
+    <arg
       name="object_recognition_prediction_map_based_prediction_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/prediction/map_based_prediction.param.yaml"
     />
@@ -54,6 +63,10 @@
     <arg
       name="object_recognition_detection_object_merger_distance_threshold_list_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/overlapped_judge.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_radar_lanelet_filtering_range_param"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_filter/radar_lanelet_filter.param.yaml"
     />
     <arg name="object_recognition_detection_lidar_model_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/lidar_model"/>
     <arg
@@ -67,6 +80,18 @@
     <arg
       name="object_recognition_tracking_radar_object_tracker_tracking_setting_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/default_tracker.param.yaml"
+    />
+    <arg
+      name="object_recognition_tracking_radar_object_tracker_node_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/radar_object_tracker.param.yaml"
+    />
+    <arg
+      name="object_recognition_tracking_object_merger_data_association_matrix_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/data_association_matrix.param.yaml"
+    />
+    <arg
+      name="object_recognition_tracking_object_merger_node_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml"
     />
 
     <!-- obstacle segmentation -->
@@ -85,5 +110,9 @@
 
     <!-- traffic light recognition -->
     <arg name="traffic_light_arbiter_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_arbiter/traffic_light_arbiter.param.yaml"/>
+    <arg name="traffic_light_fine_detector_model_path" value="$(var data_path)/traffic_light_fine_detector"/>
+    <arg name="traffic_light_fine_detector_model_name" value="tlr_yolox_s_batch_6"/>
+    <arg name="traffic_light_classifier_model_path" value="$(var data_path)/traffic_light_classifier"/>
+    <arg name="traffic_light_classifier_model_name" value="traffic_light_classifier_mobilenetv2_batch_6"/>
   </include>
 </launch>
