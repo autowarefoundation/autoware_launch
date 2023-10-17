@@ -902,7 +902,7 @@ Visualization Manager:
                 Durability Policy: Volatile
                 History Policy: Keep Last
                 Reliability Policy: Best Effort
-                Value: /perception/traffic_light_recognition/debug/rois
+                Value: /perception/traffic_light_recognition/traffic_light/debug/rois
               Value: true
             - Class: rviz_default_plugins/MarkerArray
               Enabled: true
