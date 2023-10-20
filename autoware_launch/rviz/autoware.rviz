@@ -396,7 +396,7 @@ Visualization Manager:
             shoulder_right_lane_bound: true
             shoulder_road_lanelets: false
             traffic_light: true
-            traffic_light_id: false
+            traffic_light_id: true
             traffic_light_triangle: true
             walkway_lanelets: true
             hatched_road_markings_bound: true
@@ -914,6 +914,18 @@ Visualization Manager:
                 History Policy: Keep Last
                 Reliability Policy: Best Effort
                 Value: /perception/traffic_light_recognition/traffic_light_map_based_detector/debug/markers
+              Value: true
+            - Class: rviz_default_plugins/MarkerArray
+              Enabled: true
+              Name: TrafficLightSignalMarker
+              Namespaces:
+                {}
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /perception/traffic_light_recognition/traffic_signals/markers
               Value: true
           Enabled: true
           Name: TrafficLight
