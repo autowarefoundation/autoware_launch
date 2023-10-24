@@ -3155,13 +3155,13 @@ Visualization Manager:
               Visualization Type: Normal
             - BUS:
                 Alpha: 0.9990000128746033
-                Color: 0; 229; 255
+                Color: 255; 145; 0
               CAR:
                 Alpha: 0.9990000128746033
-                Color: 0; 229; 255
+                Color: 255; 145; 0
               CYCLIST:
                 Alpha: 0.9990000128746033
-                Color: 0; 229; 255
+                Color: 255; 145; 0
               Class: autoware_auto_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
@@ -3175,20 +3175,20 @@ Visualization Manager:
               Line Width: 0.10000000149011612
               MOTORCYCLE:
                 Alpha: 0.9990000128746033
-                Color: 0; 229; 255
-              Name: DetectionByTracker(cyan)
+                Color: 255; 145; 0
+              Name: DetectionByTracker(orange)
               Namespaces:
                 {}
               PEDESTRIAN:
                 Alpha: 0.9990000128746033
-                Color: 0; 229; 255
+                Color: 255; 145; 0
               Polygon Type: 3d
               TRAILER:
                 Alpha: 0.9990000128746033
-                Color: 0; 229; 255
+                Color: 255; 145; 0
               TRUCK:
                 Alpha: 0.9990000128746033
-                Color: 0; 229; 255
+                Color: 255; 145; 0
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
@@ -3197,7 +3197,7 @@ Visualization Manager:
                 Value: /perception/object_recognition/detection/detection_by_tracker/objects
               UNKNOWN:
                 Alpha: 0.9990000128746033
-                Color: 0; 229; 255
+                Color: 255; 145; 0
               Value: false
               Visualization Type: Normal
             - BUS:
