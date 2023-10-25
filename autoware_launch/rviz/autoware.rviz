@@ -401,6 +401,7 @@ Visualization Manager:
             walkway_lanelets: true
             hatched_road_markings_bound: true
             hatched_road_markings_area: false
+            intersection_area: false
           Topic:
             Depth: 5
             Durability Policy: Transient Local
