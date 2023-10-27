@@ -58,7 +58,7 @@
           object_expected_deceleration: 2.0 # [m/ss]
         ignore_on_red_traffic_light:
           object_margin_to_path: 2.0
-        force_stop_distance_margin_to_stop_line: -0.5 # [m] insert zero velocity to entire path points
+        force_stop_distance_margin_to_stop_line: 0.5 # [m] insert zero velocity to entire path points
 
       occlusion:
         enable: false
