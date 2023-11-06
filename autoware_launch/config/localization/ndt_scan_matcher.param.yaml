@@ -71,7 +71,7 @@
         0.0,   0.0,   0.0,   0.0,      0.000625, 0.0,
         0.0,   0.0,   0.0,   0.0,      0.0,      0.000625,
       ]
-    
+
     # 2D Real-time covariance estimation with multiple searches (output_pose_covariance is the minimum value)
     use_covariance_estimation: false
 
