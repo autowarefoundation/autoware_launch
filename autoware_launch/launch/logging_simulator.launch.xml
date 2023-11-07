@@ -7,6 +7,9 @@
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
 
+  <!-- launch module preset -->
+  <arg name="planning_module_preset" default="default" description="planning module preset"/>
+
   <!-- Optional parameters -->
   <!-- Modules to be launched -->
   <arg name="vehicle" default="true" description="launch vehicle"/>
@@ -39,6 +42,8 @@
       <arg name="map_path" value="$(var map_path)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
       <arg name="sensor_model" value="$(var sensor_model)"/>
+      <!-- launch module preset -->
+      <arg name="planning_module_preset" value="$(var planning_module_preset)"/>
       <!-- Modules to be launched -->
       <arg name="launch_vehicle" value="$(var vehicle)"/>
       <arg name="launch_map" value="$(var map)"/>
