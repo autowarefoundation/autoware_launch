@@ -1,0 +1,87 @@
+launch:
+  # - arg:
+  #     name: behavior_path_planner_launch_modules
+  #     default: "[behavior_path_planner::Avoidance,
+  #       behavior_path_planner::AvoidanceByLaneChange,
+  #       behavior_path_planner::DynamicAvoidance,
+  #       behavior_path_planner::LaneChange,
+  #       behavior_path_planner::ExternalLaneChange,
+  #       behavior_path_planner::StartPlanner,
+  #       behavior_path_planner::GoalPlanner,
+  #       behavior_path_planner::SideShift]"
+  #     # option: behavior_path_planner::Avoidance
+  #     #         behavior_path_planner::AvoidanceByLaneChange
+  #     #         behavior_path_planner::DynamicAvoidance
+  #     #         behavior_path_planner::LaneChange
+  #     #         behavior_path_planner::ExternalLaneChange
+  #     #         behavior_path_planner::StartPlanner
+  #     #         behavior_path_planner::GoalPlanner
+  #     #         behavior_path_planner::SideShift"
+
+  - arg:
+      name: behavior_velocity_planner_launch_modules
+      default: "[behavior_velocity_planner::CrosswalkModulePlugin,
+        behavior_velocity_planner::WalkwayModulePlugin,
+        behavior_velocity_planner::TrafficLightModulePlugin,
+        behavior_velocity_planner::IntersectionModulePlugin,
+        behavior_velocity_planner::MergeFromPrivateModulePlugin,
+        behavior_velocity_planner::BlindSpotModulePlugin,
+        behavior_velocity_planner::DetectionAreaModulePlugin,
+        behavior_velocity_planner::NoStoppingAreaModulePlugin,
+        behavior_velocity_planner::StopLineModulePlugin,
+        behavior_velocity_planner::OutOfLaneModulePlugin]"
+      # option: behavior_velocity_planner::CrosswalkModulePlugin
+      #         behavior_velocity_planner::WalkwayModulePlugin
+      #         behavior_velocity_planner::TrafficLightModulePlugin
+      #         behavior_velocity_planner::IntersectionModulePlugin
+      #         behavior_velocity_planner::MergeFromPrivateModulePlugin
+      #         behavior_velocity_planner::BlindSpotModulePlugin
+      #         behavior_velocity_planner::DetectionAreaModulePlugin
+      #         behavior_velocity_planner::VirtualTrafficLightModulePlugin
+      #         behavior_velocity_planner::NoStoppingAreaModulePlugin
+      #         behavior_velocity_planner::StopLineModulePlugin
+      #         behavior_velocity_planner::OcclusionSpotModulePlugin
+      #         behavior_velocity_planner::RunOutModulePlugin
+      #         behavior_velocity_planner::SpeedBumpModulePlugin
+      #         behavior_velocity_planner::OutOfLaneModulePlugin
+      #         behavior_velocity_planner::NoDrivableLaneModulePlugin"
+
+  - arg:
+      name: use_experimental_lane_change_function
+      default: "true"
+
+  - arg:
+      name: launch_surround_obstacle_checker
+      default: "true"
+
+  - arg:
+      name: motion_path_smoother_type
+      default: elastic_band
+      # option: elastic_band
+      #         none
+
+  - arg:
+      name: motion_path_planner_type
+      default: obstacle_avoidance_planner
+      # option: obstacle_avoidance_planner
+      #         path_sampler
+      #         none
+
+  - arg:
+      name: motion_stop_planner_type
+      default: obstacle_stop_planner
+      # option: obstacle_stop_planner
+      #         obstacle_cruise_planner
+      #         none
+
+  - arg:
+      name: motion_velocity_smoother_type
+      default: JerkFiltered
+      # option: JerkFiltered
+      #         L2
+      #         Linf(Unstable)
+      #         Analytical
+
+  - arg:
+      name: launch_parking_module
+      default: "true"
