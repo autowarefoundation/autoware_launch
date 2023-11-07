@@ -184,7 +184,7 @@
         - "pedestrian"
       default:
         moving:
-           min_lat_margin: 0.8
+          min_lat_margin: 0.8
           max_lat_margin: 1.3
           min_ego_velocity: 0.5
           max_ego_velocity: 1.5
@@ -197,8 +197,8 @@
         moving:
           min_lat_margin: 0.8
           max_lat_margin: 1.3
-          min_ego_velocity: 1.0
-          max_ego_velocity: 2.0
+          min_ego_velocity: 0.5
+          max_ego_velocity: 0.8
         static:
           min_lat_margin: 0.8
           max_lat_margin: 1.3
