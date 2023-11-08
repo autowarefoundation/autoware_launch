@@ -3,6 +3,8 @@
     verbose: false
     max_iteration_num: 100
 
+    traffic_light_signal_timeout: 1.0
+
     groot_zmq_publisher_port: 1666
     groot_zmq_server_port: 1667
 
