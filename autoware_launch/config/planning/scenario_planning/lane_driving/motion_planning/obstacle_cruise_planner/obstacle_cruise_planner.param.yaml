@@ -181,7 +181,6 @@
       # parameters to calculate slow down velocity by linear interpolation
       labels:
         - "default"
-        - "pedestrian"
       default:
         moving:
           min_lat_margin: 0.2
