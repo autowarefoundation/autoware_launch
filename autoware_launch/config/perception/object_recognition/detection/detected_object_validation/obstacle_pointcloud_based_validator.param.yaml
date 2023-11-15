@@ -12,4 +12,4 @@
     #UNKNOWN, CAR, TRUCK, BUS, TRAILER, MOTORBIKE, BICYCLE, PEDESTRIAN
       [800.0,     880.0,     800.0,    800.0,         800.0, 800.0,    800.0,         800.0]
 
-    using_2d_validator: false
+    using_2d_validator: true
