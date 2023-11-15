@@ -4,7 +4,7 @@
   args:
     node_name_suffix: vector_map
     topic: /map/vector_map
-    topic_type: autoware_auto_mapping_msgs/msg/HADMapBin
+    topic_type: autoware_map_msgs/msg/LaneletMapBin
     best_effort: false
     transient_local: true
     warn_rate: 0.0
