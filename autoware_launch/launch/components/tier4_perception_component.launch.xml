@@ -49,6 +49,10 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_sync.param.yaml"
     />
     <arg
+      name="object_recognition_detection_obstacle_pointcloud_based_validator_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detected_object_validation/obstacle_pointcloud_based_validator.param.yaml"
+    />
+    <arg
       name="object_recognition_prediction_map_based_prediction_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/prediction/map_based_prediction.param.yaml"
     />
@@ -59,6 +63,10 @@
     <arg
       name="object_recognition_detection_object_merger_distance_threshold_list_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/overlapped_judge.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_detection_by_tracker_param"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml"
     />
     <arg
       name="object_recognition_detection_radar_lanelet_filtering_range_param"
@@ -76,6 +84,22 @@
     <arg
       name="object_recognition_tracking_radar_object_tracker_tracking_setting_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/default_tracker.param.yaml"
+    />
+    <arg
+      name="object_recognition_tracking_radar_object_tracker_node_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/radar_object_tracker.param.yaml"
+    />
+    <arg
+      name="object_recognition_tracking_radar_object_tracker_tracking_config_directory_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/tracking/"
+    />
+    <arg
+      name="object_recognition_tracking_object_merger_data_association_matrix_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/data_association_matrix.param.yaml"
+    />
+    <arg
+      name="object_recognition_tracking_object_merger_node_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml"
     />
 
     <!-- obstacle segmentation -->
