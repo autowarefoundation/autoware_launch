@@ -18,7 +18,7 @@
       soft:
         lateral_deviation_weight: 1.0  # cost weight for lateral deviation between the end of a sampled path and the reference path
         length_weight: 1.0  # cost weight for the length of a sampled path
-        curvature_weight: 1.2  # cost weight for the curvature of a sampled path
+        curvature_weight: 2000.0  # cost weight for the curvature of a sampled path
     sampling:
       enable_frenet: True
       enable_bezier: False
