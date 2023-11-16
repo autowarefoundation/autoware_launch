@@ -2,19 +2,22 @@ launch:
   # behavior path modules
   - arg:
       name: launch_avoidance_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_avoidance_by_lane_change_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_dynamic_avoidance_module
       default: "false"
   - arg:
-      name: launch_lane_change_right_module
+      name: launch_sampling_planner_module
       default: "true"
   - arg:
+      name: launch_lane_change_right_module
+      default: "false"
+  - arg:
       name: launch_lane_change_left_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_external_request_lane_change_right_module
       default: "false"
@@ -23,10 +26,10 @@ launch:
       default: "false"
   - arg:
       name: launch_goal_planner_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_start_planner_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_side_shift_module
       default: "true"
