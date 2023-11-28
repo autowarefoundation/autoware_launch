@@ -49,6 +49,7 @@
     <arg name="behavior_velocity_planner_speed_bump_module_param_path" value="$(var behavior_velocity_config_path)/speed_bump.param.yaml"/>
     <arg name="behavior_velocity_planner_out_of_lane_module_param_path" value="$(var behavior_velocity_config_path)/out_of_lane.param.yaml"/>
     <arg name="behavior_velocity_planner_no_drivable_lane_module_param_path" value="$(var behavior_velocity_config_path)/no_drivable_lane.param.yaml"/>
+    <arg name="behavior_velocity_planner_dynamic_obstacle_stop_module_param_path" value="$(var behavior_velocity_config_path)/dynamic_obstacle_stop.param.yaml"/>
     <arg name="compare_map_filter_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/pointcloud_filter/pointcloud_map_filter.param.yaml"/>
 
     <!-- parking -->
