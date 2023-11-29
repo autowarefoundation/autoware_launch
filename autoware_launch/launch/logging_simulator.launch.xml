@@ -25,6 +25,8 @@
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <!-- Localization -->
+  <arg name="localization_input_pointcloud" default="/sensing/lidar/top/outlier_filtered/pointcloud" description="The topic will be used in the localization util module"/>
   <!-- System -->
   <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
@@ -63,6 +65,8 @@
       <!-- Map -->
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
+      <!-- Localization -->
+      <arg name="localization_input_pointcloud" value="$(var localization_input_pointcloud)" />
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
     </include>
