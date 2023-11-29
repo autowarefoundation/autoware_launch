@@ -57,7 +57,7 @@
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
       <!-- Localization -->
-      <arg name="localization_input_pointcloud" value="$(var localization_input_pointcloud)" />
+      <arg name="localization_input_pointcloud" value="$(var localization_input_pointcloud)"/>
       <!-- Tools -->
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
