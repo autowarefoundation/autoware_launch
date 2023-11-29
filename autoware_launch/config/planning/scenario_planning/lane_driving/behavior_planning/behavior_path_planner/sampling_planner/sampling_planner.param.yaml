@@ -13,8 +13,8 @@
       smooth_reference_trajectory: False # if true, the reference trajectory is smoothed before being used for planning
     constraints:
       hard:
-        max_curvature: 0.1  # [m⁻¹] maximum curvature of a sampled path
-        min_curvature: -0.1  # [m⁻¹] minimum curvature of a sampled path
+        max_curvature: 3.0  # [m⁻¹] maximum curvature of a sampled path
+        min_curvature: -3.0  # [m⁻¹] minimum curvature of a sampled path
       soft:
         lateral_deviation_weight: 1.0  # cost weight for lateral deviation between the end of a sampled path and the reference path
         length_weight: 1.0  # cost weight for the length of a sampled path
