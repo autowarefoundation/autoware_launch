@@ -12,7 +12,7 @@
     # default tracker node parameters
     publish_rate: 10.0
     world_frame_id: map
-    enable_delay_compensation: false
+    enable_delay_compensation: true
     pass_through_unknown_objects: false
     publish_untracked_objects: false
     debug_flag: false
