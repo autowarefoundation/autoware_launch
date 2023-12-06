@@ -26,13 +26,19 @@ launch:
       default: "false"
   - arg:
       name: launch_goal_planner_module
-      default: "false"
+      default: "true"
   - arg:
       name: launch_start_planner_module
-      default: "false"
+      default: "true"
   - arg:
       name: launch_side_shift_module
       default: "true"
+<<<<<<< HEAD
+=======
+  - arg:
+      name: use_experimental_lane_change_function
+      default: "false"
+>>>>>>> 3bfc06b7d (for integ w/ other modules)
 
   # behavior velocity modules
   - arg:
