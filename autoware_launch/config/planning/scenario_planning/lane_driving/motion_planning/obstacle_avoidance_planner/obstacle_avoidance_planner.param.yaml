@@ -8,7 +8,7 @@
 
       debug:
         # flag to publish
-        enable_pub_debug_marker: true           # publish debug marker
+        enable_pub_debug_marker: false           # publish debug marker
         enable_pub_extra_debug_marker: false    # publish extra debug marker
 
         # flag to show
