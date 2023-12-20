@@ -20,6 +20,8 @@ Panels:
     Name: AutowareDateTimePanel
   - Class: rviz_plugins::AutowareStatePanel
     Name: AutowareStatePanel
+  - Class: rviz_plugins::TrafficLightPublishPanel
+    Name: TrafficLightPublishPanel
 Visualization Manager:
   Class: ""
   Displays:
@@ -3773,6 +3775,8 @@ Window Geometry:
   Selection:
     collapsed: false
   Tool Properties:
+    collapsed: false
+  TrafficLightPublishPanel:
     collapsed: false
   Views:
     collapsed: false
