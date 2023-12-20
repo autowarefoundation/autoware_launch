@@ -30,9 +30,6 @@ launch:
   - arg:
       name: launch_side_shift_module
       default: "true"
-  - arg:
-      name: use_experimental_lane_change_function
-      default: "true"
 
   # behavior velocity modules
   - arg:
