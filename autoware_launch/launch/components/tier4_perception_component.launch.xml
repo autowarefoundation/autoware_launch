@@ -72,10 +72,18 @@
       name="object_recognition_detection_radar_lanelet_filtering_range_param"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_filter/radar_lanelet_filter.param.yaml"
     />
+    <arg
+      name="object_recognition_detection_radar_object_clustering_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/radar_object_clustering.param.yaml"
+    />
     <arg name="object_recognition_detection_lidar_model_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/lidar_model"/>
     <arg
       name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
+    />
+    <arg
+      name="object_recognition_tracking_multi_object_tracker_node_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
     />
     <arg
       name="object_recognition_tracking_radar_object_tracker_data_association_matrix_param_path"

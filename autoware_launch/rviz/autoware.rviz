@@ -2485,13 +2485,13 @@ Visualization Manager:
                   Perception:
                     CameraLidarFusion(purple): true
                     Centerpoint(red1): true
-                    CenterpointROIFusion(red3): true
-                    CenterpointValidator(red2): true
+                    CenterpointROIFusion(red2): true
+                    CenterpointValidator(red3): true
                     Detection(yellow): true
                     DetectionByTracker(cyan): true
                     PointPainting(light_green1): true
-                    PointPaintingROIFusion(light_green3): true
-                    PointPaintingValidator(light_green2): true
+                    PointPaintingROIFusion(light_green2): true
+                    PointPaintingValidator(light_green3): true
                     Prediction(light_blue): true
                     RadarFarObjects(white): true
                     Tracking(green): true
@@ -2954,7 +2954,7 @@ Visualization Manager:
               MOTORCYCLE:
                 Alpha: 0.9990000128746033
                 Color: 255; 82; 82
-              Name: CenterpointValidator(red2)
+              Name: CenterpointROIFusion(red2)
               Namespaces:
                 {}
               PEDESTRIAN:
@@ -2972,7 +2972,7 @@ Visualization Manager:
                 Durability Policy: Volatile
                 History Policy: Keep Last
                 Reliability Policy: Best Effort
-                Value: /perception/object_recognition/detection/centerpoint/validation/objects
+                Value: /perception/object_recognition/detection/centerpoint/roi_fusion/objects
               UNKNOWN:
                 Alpha: 0.9990000128746033
                 Color: 255; 82; 82
@@ -3001,7 +3001,7 @@ Visualization Manager:
               MOTORCYCLE:
                 Alpha: 0.9990000128746033
                 Color: 213; 0; 0
-              Name: CenterpointROIFusion(red3)
+              Name: CenterpointValidator(red3)
               Namespaces:
                 {}
               PEDESTRIAN:
@@ -3095,7 +3095,7 @@ Visualization Manager:
               MOTORCYCLE:
                 Alpha: 0.9990000128746033
                 Color: 118; 255; 3
-              Name: PointPaintingValidator(light_green2)
+              Name: PointPaintingROIFusion(light_green2)
               Namespaces:
                 {}
               PEDESTRIAN:
@@ -3113,7 +3113,7 @@ Visualization Manager:
                 Durability Policy: Volatile
                 History Policy: Keep Last
                 Reliability Policy: Best Effort
-                Value: /perception/object_recognition/detection/pointpainting/validation/objects
+                Value: /perception/object_recognition/detection/pointpainting/roi_fusion/objects
               UNKNOWN:
                 Alpha: 0.9990000128746033
                 Color: 118; 255; 3
@@ -3142,7 +3142,7 @@ Visualization Manager:
               MOTORCYCLE:
                 Alpha: 0.9990000128746033
                 Color: 100; 221; 23
-              Name: PointPaintingROIFusion(light_green3)
+              Name: PointPaintingValidator(light_green3)
               Namespaces:
                 {}
               PEDESTRIAN:
@@ -3451,7 +3451,179 @@ Visualization Manager:
           Enabled: true
           Name: Perception
         - Class: rviz_common/Group
-          Displays: ~
+          Displays:
+            - Class: rviz_common/Group
+              Displays:
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: LaneChangeLeft
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/lane_change_left
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: LaneChangeRight
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/lane_change_right
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: AvoidanceLeft
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/avoidance_left
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: AvoidanceRight
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/avoidance_right
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: AvoidanceByLCLeft
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/avoidance_by_lc_left
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: AvoidanceByLCRight
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/avoidance_by_lc_right
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: StartPlanner
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/start_planner
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: GoalPlanner
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/goal_planner
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: Crosswalk
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/crosswalk
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: Intersection
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/intersection
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: BlindSpot
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/blind_spot
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: TrafficLight
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/traffic_light
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: DetectionArea
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/detection_area
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: NoStoppingArea
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/no_stopping_area
+                  Value: true
+              Enabled: true
+              Name: Objects Of Interest
           Enabled: true
           Name: Planning
         - Class: rviz_common/Group
