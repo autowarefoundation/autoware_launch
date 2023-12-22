@@ -217,7 +217,7 @@
         return_dead_line:
           goal:
             enable: true                                # [-]
-            buffer: 25.0                                # [m]
+            buffer: 30.0                                # [m]
           traffic_light:
             enable: true                                # [-]
             buffer: 3.0                                 # [m]
