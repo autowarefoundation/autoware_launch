@@ -14,6 +14,7 @@
     object_buffer_time_length: 2.0 #[s]
     history_time_length: 1.0 #[s]
     max_lateral_accel: 2.0 # [m/ss]
+    min_acceleration_before_curve: -5.0 # [m/ss]
     deceleration_distance_before_curve: 3.5 # [m]
     deceleration_distance_after_curve: 2.0 # [m]
     # parameter for shoulder lane prediction
