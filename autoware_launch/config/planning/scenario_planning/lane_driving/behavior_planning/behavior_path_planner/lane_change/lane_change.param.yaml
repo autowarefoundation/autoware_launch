@@ -29,7 +29,29 @@
 
       # safety check
       safety_check:
+        target_object:
+          car: true
+          truck: true
+          bus: true
+          trailer: true
+          unknown: true
+          bicycle: true
+          motorcycle: true
+          pedestrian: true
+
+        velocity_threshold_to_ignore: 1.0 # [m/s] # object with velocity under this threshold will be ignored
+        check_during_prepare_segment: false # perform collision check during lane change prepare segment
+        check_all_predicted_path: true
+        check_objects_on_current_lanes: true
+        check_objects_on_other_lanes: true
+
+        # lane expansion for object filtering
+        lane_expansion:
+          left_offset: 0.0 # [m]
+          right_offset: 0.0 # [m]
+
         allow_loose_check_for_cancel: true
+
         execution:
           expected_front_deceleration: -1.0
           expected_rear_deceleration: -1.0
@@ -38,6 +60,7 @@
           lateral_distance_max_threshold: 2.0
           longitudinal_distance_min_threshold: 3.0
           longitudinal_velocity_delta_time: 0.8
+
         cancel:
           expected_front_deceleration: -1.0
           expected_rear_deceleration: -2.0
@@ -46,6 +69,7 @@
           lateral_distance_max_threshold: 1.0
           longitudinal_distance_min_threshold: 2.5
           longitudinal_velocity_delta_time: 0.6
+
         stuck:
           expected_front_deceleration: -1.0
           expected_rear_deceleration: -1.0
@@ -55,34 +79,12 @@
           longitudinal_distance_min_threshold: 3.0
           longitudinal_velocity_delta_time: 0.8
 
-        # lane expansion for object filtering
-        lane_expansion:
-          left_offset: 0.0 # [m]
-          right_offset: 0.0 # [m]
-
       # lateral acceleration map
       lateral_acceleration:
         velocity: [0.0, 4.0, 10.0]
         min_values: [0.15, 0.15, 0.15]
         max_values: [0.5, 0.5, 0.5]
 
-      # target object
-      target_object:
-        car: true
-        truck: true
-        bus: true
-        trailer: true
-        unknown: true
-        bicycle: true
-        motorcycle: true
-        pedestrian: true
-
-      # collision check
-      enable_prepare_segment_collision_check: false
-      prepare_segment_ignore_object_velocity_thresh: 0.1 # [m/s]
-      check_objects_on_current_lanes: true
-      check_objects_on_other_lanes: true
-      use_all_predicted_path: true
 
       # lane change regulations
       regulation:
