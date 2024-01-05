@@ -13,6 +13,7 @@
       <arg name="twist_source" value="$(var twist_source)"/>
       <arg name="system_run_mode" value="$(var system_run_mode)"/>
       <arg name="input_pointcloud" value="$(var input_pointcloud)"/>
+      <arg name="gnss_enabled" value="true"/>
 
       <!-- parameter paths for common -->
       <arg name="crop_box_filter_measurement_range_param_path" value="$(var loc_config_path)/crop_box_filter_measurement_range.param.yaml"/>
