@@ -40,7 +40,7 @@
         steer_limit_constraint: false
         visualize_sampling_num: 1
         enable_manual_warm_start: false
-        enable_warm_start: true
+        enable_warm_start: false
         enable_optimization_validation: false
 
       common:
