@@ -29,41 +29,41 @@
         car:
           execute_num: 1                               # [-]
           moving_speed_threshold: 1.0                  # [m/s]
-          moving_time_threshold: 1.0                   # [s]
+          moving_time_threshold: 2.0                   # [s]
           max_expand_ratio: 0.0                        # [-]
-          envelope_buffer_margin: 0.3                  # [m]
-          avoid_margin_lateral: 1.0                    # [m]
-          safety_buffer_lateral: 0.7                   # [m]
+          envelope_buffer_margin: 0.5                  # [m]
+          avoid_margin_lateral: 0.7                    # [m]
+          safety_buffer_lateral: 0.3                   # [m]
           safety_buffer_longitudinal: 0.0              # [m]
           use_conservative_buffer_longitudinal: true   # [-] When set to true, the base_link2front is added to the longitudinal buffer before avoidance.
         truck:
           execute_num: 1
-          moving_speed_threshold: 1.0                  # 3.6km/h
-          moving_time_threshold: 1.0
+          moving_speed_threshold: 2.0                  # 7.2km/h
+          moving_time_threshold: 2.0
           max_expand_ratio: 0.0
-          envelope_buffer_margin: 0.3
-          avoid_margin_lateral: 1.0
-          safety_buffer_lateral: 0.7
+          envelope_buffer_margin: 0.5
+          avoid_margin_lateral: 0.9
+          safety_buffer_lateral: 0.1
           safety_buffer_longitudinal: 0.0
           use_conservative_buffer_longitudinal: true
         bus:
           execute_num: 1
-          moving_speed_threshold: 1.0                  # 3.6km/h
-          moving_time_threshold: 1.0
+          moving_speed_threshold: 2.0                  # 7.2km/h
+          moving_time_threshold: 2.0
           max_expand_ratio: 0.0
-          envelope_buffer_margin: 0.3
-          avoid_margin_lateral: 1.0
-          safety_buffer_lateral: 0.7
+          envelope_buffer_margin: 0.5
+          avoid_margin_lateral: 0.9
+          safety_buffer_lateral: 0.1
           safety_buffer_longitudinal: 0.0
           use_conservative_buffer_longitudinal: true
         trailer:
           execute_num: 1
-          moving_speed_threshold: 1.0                  # 3.6km/h
-          moving_time_threshold: 1.0
+          moving_speed_threshold: 2.0                  # 7.2km/h
+          moving_time_threshold: 2.0
           max_expand_ratio: 0.0
-          envelope_buffer_margin: 0.3
-          avoid_margin_lateral: 1.0
-          safety_buffer_lateral: 0.7
+          envelope_buffer_margin: 0.5
+          avoid_margin_lateral: 0.9
+          safety_buffer_lateral: 0.1
           safety_buffer_longitudinal: 0.0
           use_conservative_buffer_longitudinal: true
         unknown:
@@ -71,9 +71,9 @@
           moving_speed_threshold: 0.28                 # 1.0km/h
           moving_time_threshold: 1.0
           max_expand_ratio: 0.0
-          envelope_buffer_margin: 0.3
-          avoid_margin_lateral: 1.0
-          safety_buffer_lateral: 0.7
+          envelope_buffer_margin: 0.1
+          avoid_margin_lateral: 0.7
+          safety_buffer_lateral: -0.2
           safety_buffer_longitudinal: 0.0
           use_conservative_buffer_longitudinal: true
         bicycle:
@@ -81,9 +81,9 @@
           moving_speed_threshold: 0.28                 # 1.0km/h
           moving_time_threshold: 1.0
           max_expand_ratio: 0.0
-          envelope_buffer_margin: 0.8
-          avoid_margin_lateral: 1.0
-          safety_buffer_lateral: 1.0
+          envelope_buffer_margin: 0.5
+          avoid_margin_lateral: 0.7
+          safety_buffer_lateral: 0.5
           safety_buffer_longitudinal: 1.0
           use_conservative_buffer_longitudinal: true
         motorcycle:
@@ -91,9 +91,9 @@
           moving_speed_threshold: 1.0                  # 3.6km/h
           moving_time_threshold: 1.0
           max_expand_ratio: 0.0
-          envelope_buffer_margin: 0.8
-          avoid_margin_lateral: 1.0
-          safety_buffer_lateral: 1.0
+          envelope_buffer_margin: 0.5
+          avoid_margin_lateral: 0.7
+          safety_buffer_lateral: 0.3
           safety_buffer_longitudinal: 1.0
           use_conservative_buffer_longitudinal: true
         pedestrian:
@@ -101,9 +101,9 @@
           moving_speed_threshold: 0.28                 # 1.0km/h
           moving_time_threshold: 1.0
           max_expand_ratio: 0.0
-          envelope_buffer_margin: 0.8
-          avoid_margin_lateral: 1.0
-          safety_buffer_lateral: 1.0
+          envelope_buffer_margin: 0.5
+          avoid_margin_lateral: 0.7
+          safety_buffer_lateral: 0.5
           safety_buffer_longitudinal: 1.0
           use_conservative_buffer_longitudinal: true
         lower_distance_for_polygon_expansion: 30.0      # [m]
@@ -139,8 +139,9 @@
 
         # params for avoidance of vehicle type objects that are ambiguous as to whether they are parked.
         force_avoidance:
-          enable: false                                  # [-]
-          time_threshold: 1.0                            # [s]
+          enable: true                                   # [-]
+          time_threshold: 3.0                            # [s]
+          distance_threshold: 1.0                        # [m]
           ignore_area:
             traffic_light:
               front_distance: 100.0                      # [m]
@@ -188,7 +189,7 @@
         expected_rear_deceleration: -1.0                 # [m/ss]
         rear_vehicle_reaction_time: 2.0                  # [s]
         rear_vehicle_safety_time_margin: 1.0             # [s]
-        lateral_distance_max_threshold: 0.75             # [m]
+        lateral_distance_max_threshold: 2.0              # [m]
         longitudinal_distance_min_threshold: 3.0         # [m]
         longitudinal_velocity_delta_time: 0.8            # [s]
 
@@ -216,7 +217,7 @@
         return_dead_line:
           goal:
             enable: true                                # [-]
-            buffer: 25.0                                # [m]
+            buffer: 30.0                                # [m]
           traffic_light:
             enable: true                                # [-]
             buffer: 3.0                                 # [m]
