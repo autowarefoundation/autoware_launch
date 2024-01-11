@@ -397,6 +397,7 @@ Visualization Manager:
             shoulder_road_lanelets: false
             traffic_light: true
             traffic_light_id: false
+            traffic_light_reg_elem_id: false
             traffic_light_triangle: true
             walkway_lanelets: true
             hatched_road_markings_bound: true
