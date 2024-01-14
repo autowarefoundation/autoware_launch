@@ -77,6 +77,9 @@ launch:
   - arg:
       name: launch_no_drivable_lane_module
       default: "false"
+  - arg:
+      name: launch_dynamic_obstacle_stop_module
+      default: "true"
 
   # motion planning modules
   - arg:
