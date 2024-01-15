@@ -21,6 +21,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
 
+
 def generate_launch_description():
     def add_launch_arg(name: str, default_value=None):
         return DeclareLaunchArgument(name, default_value=default_value)
