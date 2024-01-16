@@ -21,7 +21,7 @@
   <arg name="planning" default="true" description="launch planning"/>
   <arg name="control" default="true" description="launch control"/>
   <!-- Pointcloud container -->
-  <arg name="use_pointcloud_container" default="true" description="launch pointcloud container"/>
+  <arg name="include_concat_node_in_pointcloud_container" default="false" description="include concat node in pointcloud_container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <!-- Vehicle -->
   <arg name="launch_vehicle_interface" default="false"/>
