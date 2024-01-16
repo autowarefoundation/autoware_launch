@@ -4,7 +4,7 @@
   <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
   <arg name="vehicle_model" description="vehicle model name"/>
   <arg name="sensor_model" description="sensor model name"/>
-  <arg name="include_concat_node_in_pointcloud_container" default="false" description="include concat node in pointcloud_container"/>
+  <arg name="include_concat_node_in_pointcloud_container" default="true" description="include concat node in pointcloud_container"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
 
