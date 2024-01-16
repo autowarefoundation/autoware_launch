@@ -112,7 +112,7 @@ launch:
 
   - arg:
       name: launch_surround_obstacle_checker
-      default: "true"
+      default: "false"
 
   # parking modules
   - arg:
