@@ -24,7 +24,7 @@
     <arg name="behavior_path_planner_scene_module_manager_param_path" value="$(var behavior_path_config_path)/scene_module_manager.param.yaml"/>
     <arg name="behavior_path_planner_side_shift_module_param_path" value="$(var behavior_path_config_path)/side_shift/side_shift.param.yaml"/>
     <arg name="behavior_path_planner_avoidance_module_param_path" value="$(var behavior_path_config_path)/avoidance/avoidance.param.yaml"/>
-    <arg name="behavior_path_planner_avoidance_by_lc_module_param_path" value="$(var behavior_path_config_path)/avoidance_by_lc/avoidance_by_lc.param.yaml"/>
+    <arg name="behavior_path_planner_avoidance_by_lc_module_param_path" value="$(var behavior_path_config_path)/avoidance_by_lane_change/avoidance_by_lane_change.param.yaml"/>
     <arg name="behavior_path_planner_dynamic_avoidance_module_param_path" value="$(var behavior_path_config_path)/dynamic_avoidance/dynamic_avoidance.param.yaml"/>
     <arg name="behavior_path_planner_lane_change_module_param_path" value="$(var behavior_path_config_path)/lane_change/lane_change.param.yaml"/>
     <arg name="behavior_path_planner_goal_planner_module_param_path" value="$(var behavior_path_config_path)/goal_planner/goal_planner.param.yaml"/>
