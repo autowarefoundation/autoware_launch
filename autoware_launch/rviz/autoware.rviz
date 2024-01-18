@@ -3649,6 +3649,22 @@ Visualization Manager:
                   Value: true
               Enabled: true
               Name: Objects Of Interest
+            - Class: rviz_plugins/StringStampedOverlayDisplay
+              Enabled: true
+              Font Size: 15
+              Left: 1024
+              Max Letter Num: 100
+              Name: StringStampedOverlayDisplay
+              Text Color: 25; 255; 240
+              Top: 128
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/internal_state
+              Value: true
+              Value height offset: 0
           Enabled: true
           Name: Planning
         - Class: rviz_common/Group
