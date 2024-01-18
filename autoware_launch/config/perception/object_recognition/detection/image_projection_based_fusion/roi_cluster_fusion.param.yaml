@@ -9,4 +9,4 @@
     roi_scale_factor: 1.1
     iou_threshold: 0.65
     unknown_iou_threshold: 0.1
-    remove_unknown: true
+    remove_unknown: false
