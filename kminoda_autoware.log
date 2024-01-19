@@ -1,0 +1,7 @@
+vehicle name is sample
+vehicle_model: sample_vehicle
+sensor_model: sample_sensor_kit
+map_path: /home/minoda/data/maps/sample-map-rosbag
+[INFO] [launch]: All log files can be found below /home/minoda/.ros/log/2024-01-17-10-20-42-728662-dpc2108003-ubuntu-1371342
+[INFO] [launch]: Default logging verbosity is set to INFO
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
