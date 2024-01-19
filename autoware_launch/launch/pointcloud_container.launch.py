@@ -42,6 +42,7 @@ def generate_launch_description():
         package="glog_component",
         plugin="GlogComponent",
         name="glog_component",
+        namespace="pointcloud_container",
     )
 
     pointcloud_container = ComposableNodeContainer(
