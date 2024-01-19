@@ -44,6 +44,8 @@
   <!-- Perception -->
   <arg name="perception_mode" default="lidar" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
   <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
+  <!-- Auto mode setting-->
+  <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -103,6 +105,7 @@
   <group if="$(var launch_planning)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_planning_component.launch.xml">
       <arg name="module_preset" value="$(var planning_module_preset)"/>
+      <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
     </include>
   </group>
 
