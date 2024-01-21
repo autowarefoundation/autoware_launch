@@ -8,7 +8,7 @@ launch:
       default: "true"
   - arg:
       name: launch_dynamic_avoidance_module
-      default: "false"
+      default: "true"
   - arg:
       name: launch_lane_change_right_module
       default: "true"
