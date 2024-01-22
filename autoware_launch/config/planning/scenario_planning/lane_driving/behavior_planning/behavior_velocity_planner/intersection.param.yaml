@@ -67,7 +67,7 @@
         occupied_min: 58
         denoise_kernel: 1.0
         attention_lane_crop_curvature_threshold: 0.25
-        attention_lane_curvature_calculation_ds: 0.5
+        attention_lane_curvature_calculation_ds: 0.6
         creep_during_peeking:
           enable: false
           creep_velocity: 0.8333
