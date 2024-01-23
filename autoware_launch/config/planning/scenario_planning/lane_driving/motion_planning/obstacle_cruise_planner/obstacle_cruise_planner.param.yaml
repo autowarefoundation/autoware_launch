@@ -90,6 +90,7 @@
           collision_time_margin : 4.0 # time threshold of collision between obstacle adn ego for cruise or stop [s]
 
       cruise:
+        allow_yield: true
         max_lat_margin: 1.0 # lateral margin between obstacle and trajectory band with ego's width
         outside_obstacle:
           obstacle_velocity_threshold : 3.5 # minimum velocity threshold of obstacles outside the trajectory to cruise or stop [m/s]
