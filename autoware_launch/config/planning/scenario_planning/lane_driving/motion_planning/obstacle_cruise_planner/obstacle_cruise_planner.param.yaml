@@ -91,6 +91,8 @@
 
       cruise:
         enable_yield: true
+        yield_lat_distance_threshold: 4.0 # lateral margin between obstacle in neighbor lanes and trajectory band with ego's width for yielding
+        max_lat_dist_between_obstacles: 1.5 # lateral margin between moving obstacle in neighbor lanes and stopped obstacle in front of it
         max_lat_margin: 1.0 # lateral margin between obstacle and trajectory band with ego's width
         outside_obstacle:
           obstacle_velocity_threshold : 3.5 # minimum velocity threshold of obstacles outside the trajectory to cruise or stop [m/s]
