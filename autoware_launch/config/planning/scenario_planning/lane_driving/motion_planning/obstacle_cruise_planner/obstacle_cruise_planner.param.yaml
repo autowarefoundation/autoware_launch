@@ -99,7 +99,7 @@
           enable_yield: true
           lat_distance_threshold: 4.0 # lateral margin between obstacle in neighbor lanes and trajectory band with ego's width for yielding
           max_lat_dist_between_obstacles: 2.0 # lateral margin between moving obstacle in neighbor lanes and stopped obstacle in front of it
-          max_moving_obstacle_long_distance: 50.0 # how far the blocking obstacle
+          max_obstacles_collision_time: 10.0 # how far the blocking obstacle
           max_long_distance_between_obstacles: 50.0 # only consider to yield when the two obstacles are at most this distance apart
       slow_down:
         max_lat_margin: 1.1  # lateral margin between obstacle and trajectory band with ego's width
