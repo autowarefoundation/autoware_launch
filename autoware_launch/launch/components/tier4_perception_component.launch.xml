@@ -82,7 +82,7 @@
     <arg
       name="object_recognition_detection_radar_crossing_objects_noise_filter_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/radar_crossing_objects_noise_filter/radar_crossing_objects_noise_filter.param.yaml"
-      />
+    />
     <arg
       name="object_recognition_detection_radar_lanelet_filtering_range_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_filter/radar_lanelet_filter.param.yaml"
