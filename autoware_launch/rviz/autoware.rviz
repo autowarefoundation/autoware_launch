@@ -2650,15 +2650,10 @@ Visualization Manager:
                   TF: true
                   Value: false
                   Vehicle:
-                    AccelerationMeter: true
-                    ConsoleMeter: true
-                    MaxVelocity: true
                     PolarGridDisplay: true
-                    SteeringAngle: true
-                    TurnSignal: true
                     Value: true
                     VehicleModel: true
-                    VelocityHistory: true
+                    SignalDisplay: true
                 Value: true
               Zoom Factor: 1
             - Alpha: 1
