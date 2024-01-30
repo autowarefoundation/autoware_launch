@@ -100,6 +100,7 @@
           lat_distance_threshold: 5.0 # lateral margin between obstacle in neighbor lanes and trajectory band with ego's width for yielding
           max_lat_dist_between_obstacles: 2.5 # lateral margin between moving obstacle in neighbor lanes and stopped obstacle in front of it
           max_obstacles_collision_time: 10.0 # how far the blocking obstacle
+          stopped_obstacle_velocity_threshold: 0.5
       slow_down:
         max_lat_margin: 1.1  # lateral margin between obstacle and trajectory band with ego's width
         lat_hysteresis_margin: 0.2
