@@ -127,7 +127,7 @@
       exec="rviz2"
       name="rviz2"
       output="screen"
-      args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware_splash.png"
+      args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png"
       if="$(var rviz)"
       respawn="$(var rviz_respawn)"
     />
