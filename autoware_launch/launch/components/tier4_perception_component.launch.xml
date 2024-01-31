@@ -9,7 +9,7 @@
     description="options: obstacle_pointcloud, occupancy_grid (occupancy_grid_map_method must be laserscan_based_occupancy_grid_map)"
   />
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
-  <arg name="traffic_light_recognition/fusion_only" default="true" description="Whether to launch only fusion part of the signal recognition related nodes"/>
+  <arg name="traffic_light_recognition/fusion_only" default="false" description="Whether to launch only fusion part of the signal recognition related nodes"/>
   <arg name="traffic_light_recognition/enable_fine_detection" description="enable traffic light fine detection"/>
 
   <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
