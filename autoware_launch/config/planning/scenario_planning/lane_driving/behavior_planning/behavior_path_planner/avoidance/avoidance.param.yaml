@@ -19,6 +19,7 @@
       use_opposite_lane: true
       use_intersection_areas: true
       use_hatched_road_markings: true
+      use_freespace_areas: true
 
       # for debug
       publish_debug_marker: false
@@ -38,7 +39,7 @@
           use_conservative_buffer_longitudinal: true   # [-] When set to true, the base_link2front is added to the longitudinal buffer before avoidance.
         truck:
           execute_num: 1
-          moving_speed_threshold: 2.0                  # 7.2km/h
+          moving_speed_threshold: 1.0                  # 3.6km/h
           moving_time_threshold: 2.0
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.5
@@ -48,7 +49,7 @@
           use_conservative_buffer_longitudinal: true
         bus:
           execute_num: 1
-          moving_speed_threshold: 2.0                  # 7.2km/h
+          moving_speed_threshold: 1.0                  # 3.6km/h
           moving_time_threshold: 2.0
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.5
@@ -58,7 +59,7 @@
           use_conservative_buffer_longitudinal: true
         trailer:
           execute_num: 1
-          moving_speed_threshold: 2.0                  # 7.2km/h
+          moving_speed_threshold: 1.0                  # 3.6km/h
           moving_time_threshold: 2.0
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.5
@@ -218,7 +219,7 @@
         return_dead_line:
           goal:
             enable: true                                # [-]
-            buffer: 30.0                                # [m]
+            buffer: 3.0                                 # [m]
           traffic_light:
             enable: true                                # [-]
             buffer: 3.0                                 # [m]
