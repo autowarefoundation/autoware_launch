@@ -25,6 +25,7 @@
       <arg name="localization_error_monitor_param_path" value="$(var loc_config_path)/localization_error_monitor.param.yaml"/>
       <arg name="ekf_localizer_param_path" value="$(var loc_config_path)/ekf_localizer.param.yaml"/>
       <arg name="pose_initializer_param_path" value="$(var loc_config_path)/pose_initializer.param.yaml"/>
+      <arg name="twist2accel_param_path" value="$(var loc_config_path)/twist2accel.param.yaml"/>
 
       <!-- parameter paths for ndt -->
       <arg name="ndt_scan_matcher_param_path" value="$(var loc_config_path)/ndt_scan_matcher.param.yaml"/>
