@@ -2,8 +2,8 @@
 <launch>
   <!-- Essential parameters -->
   <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
-  <arg name="vehicle_model" description="vehicle model name"/>
-  <arg name="sensor_model" description="sensor model name"/>
+  <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
+  <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
 
   <!-- launch module preset -->
