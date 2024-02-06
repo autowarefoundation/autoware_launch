@@ -10,6 +10,9 @@ launch:
       name: launch_dynamic_avoidance_module
       default: "true"
   - arg:
+      name: launch_sampling_planner_module
+      default: "false" # Warning, experimental module, use only in simulations
+  - arg:
       name: launch_lane_change_right_module
       default: "true"
   - arg:
