@@ -46,7 +46,10 @@
 
       <!-- parameter paths for lidar_marker_localizer -->
       <arg name="lidar_marker_localizer/lidar_marker_localizer_param_path" value="$(var loc_config_path)/lidar_marker_localizer/lidar_marker_localizer.param.yaml"/>
-      <arg name="lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path" value="$(var loc_config_path)/lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml"/>
+      <arg
+        name="lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path"
+        value="$(var loc_config_path)/lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml"
+      />
       <arg name="lidar_marker_localizer/pointcloud_preprocessor/ring_filter_param_path" value="$(var loc_config_path)/lidar_marker_localizer/pointcloud_preprocessor/ring_filter.param.yaml"/>
     </include>
   </group>
