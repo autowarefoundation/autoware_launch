@@ -244,14 +244,14 @@ Visualization Manager:
               Value: true
               Wave Color: 255; 255; 255
               Wave Velocity: 40
-            - Class: awf_2d_overlay_vehicle/SignalDisplay
+            - Class: autoware_overlay_rviz_plugin/SignalDisplay
               Enabled: true
               Gear Topic Test: /vehicle/status/gear_status
               Hazard Lights Topic: /vehicle/status/hazard_lights_status
               Height: 175
               Left: 10
               Name: SignalDisplay
-              Signal Color: 94; 130; 255
+              Signal Color: 0; 230; 120
               Speed Limit Topic: /planning/scenario_planning/current_max_velocity
               Speed Topic: /vehicle/status/velocity_status
               Steering Topic: /vehicle/status/steering_status
