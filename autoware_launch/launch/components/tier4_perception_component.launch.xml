@@ -14,7 +14,6 @@
     <arg name="mode" value="$(var perception_mode)"/>
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
-    <arg name="enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
     <arg name="occupancy_grid_map_method" value="$(var occupancy_grid_map_method)"/>
     <arg name="occupancy_grid_map_updater" value="$(var occupancy_grid_map_updater)"/>
     <arg name="objects_filter_method" value="$(var detected_objects_filter_method)"/>
@@ -80,7 +79,11 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml"
     />
     <arg
-      name="object_recognition_detection_radar_lanelet_filtering_range_param"
+      name="object_recognition_detection_radar_crossing_objects_noise_filter_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/radar_crossing_objects_noise_filter/radar_crossing_objects_noise_filter.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_radar_lanelet_filtering_range_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_filter/radar_lanelet_filter.param.yaml"
     />
     <arg
@@ -88,6 +91,22 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/radar_object_clustering.param.yaml"
     />
     <arg name="object_recognition_detection_lidar_model_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/lidar_model"/>
+    <arg
+      name="object_recognition_detection_object_velocity_splitter_radar_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_velocity_splitter/object_velocity_splitter_radar.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_object_velocity_splitter_radar_fusion_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_velocity_splitter/object_velocity_splitter_radar_fusion.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_object_range_splitter_radar_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_range_splitter/object_range_splitter_radar.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_object_range_splitter_radar_fusion_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_range_splitter/object_range_splitter_radar_fusion.param.yaml"
+    />
     <arg
       name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
@@ -136,6 +155,11 @@
     <arg name="occupancy_grid_map_updater_param_path" value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"/>
 
     <!-- traffic light recognition -->
+    <arg name="use_traffic_light_recognition" value="true"/>
+    <arg name="traffic_light_recognition/enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
+    <arg name="traffic_light_recognition/fusion_only" value="false"/>
+    <arg name="traffic_light_image_number" value="1"/>
+
     <arg name="traffic_light_arbiter_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_arbiter/traffic_light_arbiter.param.yaml"/>
     <arg name="traffic_light_fine_detector_model_path" value="$(var data_path)/traffic_light_fine_detector"/>
     <arg name="traffic_light_fine_detector_model_name" value="tlr_car_ped_yolox_s_batch_6"/>
