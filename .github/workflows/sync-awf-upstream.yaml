@@ -44,9 +44,9 @@ jobs:
           token: ${{ steps.generate-token.outputs.token }}
           base-branch: ${{ inputs.target_branch }}
           sync-pr-branch: sync-awf-upstream
-          sync-target-repository: https://github.com/autowarefoundation/autoware_launch.git
-          sync-target-branch: main
-          pr-title: "chore: sync awf/autoware_launch"
+          sync-target-repository: https://github.com/tier4/autoware_launch.git
+          sync-target-branch: awf-latest
+          pr-title: "chore: sync tier4/autoware_launch:awf-latest"
           pr-labels: |
             bot
             sync-awf-upstream
