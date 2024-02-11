@@ -128,10 +128,6 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/radar_object_tracker.param.yaml"
     />
     <arg
-      name="object_recognition_tracking_radar_object_tracker_tracking_config_directory_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/tracking/"
-    />
-    <arg
       name="object_recognition_tracking_object_merger_data_association_matrix_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/data_association_matrix.param.yaml"
     />
