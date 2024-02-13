@@ -52,6 +52,9 @@
 
       <!-- parameter paths for eagleye -->
       <arg name="eagleye_param_path" value="$(find-pkg-share autoware_launch)/config/localization/eagleye_config.param.yaml"/>
+
+      <!-- parameter path for ar_tag_based_localizer -->
+      <arg name="ar_tag_based_localizer_param_path" value="$(var loc_config_path)/ar_tag_based_localizer.param.yaml"/>
     </include>
   </group>
 </launch>
