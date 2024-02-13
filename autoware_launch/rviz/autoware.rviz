@@ -58,58 +58,6 @@ Visualization Manager:
           Value: false
         - Class: rviz_common/Group
           Displays:
-            - Class: rviz_plugins/SteeringAngle
-              Enabled: true
-              Name: SteeringAngle
-              Scale: 17
-              Text Color: 25; 255; 240
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /vehicle/status/steering_status
-              Value: true
-              Value height offset: 0
-            - Class: rviz_plugins/ConsoleMeter
-              Enabled: true
-              Name: ConsoleMeter
-              Scale: 3
-              Text Color: 25; 255; 240
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /vehicle/status/velocity_status
-              Value: true
-              Value height offset: 0
-            - Class: rviz_plugins/AccelerationMeter
-              Enabled: false
-              Name: AccelerationMeter
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /localization/acceleration
-            - Alpha: 0.999
-              Class: rviz_plugins/VelocityHistory
-              Color Border Vel Max: 3
-              Constant Color:
-                Color: 255; 255; 255
-                Value: true
-              Enabled: true
-              Name: VelocityHistory
-              Scale: 0.30000001192092896
-              Timeout: 10
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /vehicle/status/velocity_status
-              Value: true
             - Alpha: 0.30000001192092896
               Class: rviz_default_plugins/RobotModel
               Collision Enabled: false
@@ -296,27 +244,22 @@ Visualization Manager:
               Value: true
               Wave Color: 255; 255; 255
               Wave Velocity: 40
-            - Class: rviz_plugins/MaxVelocity
+            - Class: autoware_overlay_rviz_plugin/SignalDisplay
               Enabled: true
-              Name: MaxVelocity
-              Text Color: 255; 255; 255
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /planning/scenario_planning/current_max_velocity
+              Gear Topic Test: /vehicle/status/gear_status
+              Hazard Lights Topic: /vehicle/status/hazard_lights_status
+              Height: 175
+              Left: 10
+              Name: SignalDisplay
+              Signal Color: 0; 230; 120
+              Speed Limit Topic: /planning/scenario_planning/current_max_velocity
+              Speed Topic: /vehicle/status/velocity_status
+              Steering Topic: /vehicle/status/steering_status
+              Top: 10
+              Traffic Topic: /perception/traffic_light_recognition/traffic_signals
+              Turn Signals Topic: /vehicle/status/turn_indicators_status
               Value: true
-            - Class: rviz_plugins/TurnSignal
-              Enabled: true
-              Name: TurnSignal
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /vehicle/status/turn_indicators_status
-              Value: true
+              Width: 517
           Enabled: true
           Name: Vehicle
         - Class: rviz_plugins/MrmSummaryOverlayDisplay
@@ -2707,15 +2650,10 @@ Visualization Manager:
                   TF: true
                   Value: false
                   Vehicle:
-                    AccelerationMeter: true
-                    ConsoleMeter: true
-                    MaxVelocity: true
                     PolarGridDisplay: true
-                    SteeringAngle: true
-                    TurnSignal: true
                     Value: true
                     VehicleModel: true
-                    VelocityHistory: true
+                    SignalDisplay: true
                 Value: true
               Zoom Factor: 1
             - Alpha: 1
