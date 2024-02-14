@@ -26,7 +26,7 @@
     # engage & replan parameters
     replan_vel_deviation: 5.53         # velocity deviation to replan initial velocity [m/s]
     engage_velocity: 0.25              # engage velocity threshold [m/s] (if the trajectory velocity is higher than this value, use this velocity for engage vehicle speed)
-    engage_acceleration: 0.6           # engage acceleration [m/ss] (use this acceleration when engagement)
+    engage_acceleration: 0.5           # engage acceleration [m/ss] (use this acceleration when engagement)
     engage_exit_ratio: 0.5             # exit engage sequence to normal velocity planning when the velocity exceeds engage_exit_ratio x engage_velocity.
     stop_dist_to_prohibit_engage: 0.5  # if the stop point is in this distance, the speed is set to 0 not to move the vehicle [m]
 
