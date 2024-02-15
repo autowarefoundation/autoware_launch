@@ -8,7 +8,7 @@ launch:
       default: "true"
   - arg:
       name: launch_dynamic_avoidance_module
-      default: "false"
+      default: "true"
   - arg:
       name: launch_sampling_planner_module
       default: "false" # Warning, experimental module, use only in simulations
@@ -100,7 +100,7 @@ launch:
 
   - arg:
       name: motion_stop_planner_type
-      default: obstacle_stop_planner
+      default: obstacle_cruise_planner
       # option: obstacle_stop_planner
       #         obstacle_cruise_planner
       #         none
@@ -115,7 +115,7 @@ launch:
 
   - arg:
       name: launch_surround_obstacle_checker
-      default: "false"
+      default: "true"
 
   # parking modules
   - arg:
