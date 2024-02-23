@@ -3613,7 +3613,7 @@ Visualization Manager:
       Name: Debug
   Enabled: true
   Global Options:
-    Background Color: 10; 10; 10
+    Background Color: 42; 42; 42
     Default Light: true
     Fixed Frame: map
     Frame Rate: 30
