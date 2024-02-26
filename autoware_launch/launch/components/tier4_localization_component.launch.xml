@@ -19,16 +19,25 @@
       <arg name="lidar_container_name" value="$(var lidar_container_name)"/>
 
       <!-- parameter paths for common -->
-      <arg name="crop_box_filter_measurement_range_param_path" value="$(var loc_config_path)/crop_box_filter_measurement_range.param.yaml"/>
-      <arg name="voxel_grid_downsample_filter_param_path" value="$(var loc_config_path)/voxel_grid_filter.param.yaml"/>
-      <arg name="random_downsample_filter_param_path" value="$(var loc_config_path)/random_downsample_filter.param.yaml"/>
       <arg name="localization_error_monitor_param_path" value="$(var loc_config_path)/localization_error_monitor.param.yaml"/>
       <arg name="ekf_localizer_param_path" value="$(var loc_config_path)/ekf_localizer.param.yaml"/>
       <arg name="pose_initializer_param_path" value="$(var loc_config_path)/pose_initializer.param.yaml"/>
       <arg name="twist2accel_param_path" value="$(var loc_config_path)/twist2accel.param.yaml"/>
 
       <!-- parameter paths for ndt -->
-      <arg name="ndt_scan_matcher_param_path" value="$(var loc_config_path)/ndt_scan_matcher.param.yaml"/>
+      <arg name="ndt_scan_matcher/ndt_scan_matcher_param_path" value="$(var loc_config_path)/ndt_scan_matcher/ndt_scan_matcher.param.yaml"/>
+      <arg
+        name="ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path"
+        value="$(var loc_config_path)/ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml"
+      />
+      <arg
+        name="ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_downsample_filter_param_path"
+        value="$(var loc_config_path)/ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_filter.param.yaml"
+      />
+      <arg
+        name="ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter_param_path"
+        value="$(var loc_config_path)/ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter.param.yaml"
+      />
 
       <!-- parameter paths for yabloc -->
       <arg name="camera_pose_initializer_param_path" value="$(var loc_config_path)/yabloc/camera_pose_initializer.param.yaml"/>
@@ -43,6 +52,9 @@
 
       <!-- parameter paths for eagleye -->
       <arg name="eagleye_param_path" value="$(find-pkg-share autoware_launch)/config/localization/eagleye_config.param.yaml"/>
+
+      <!-- parameter path for ar_tag_based_localizer -->
+      <arg name="ar_tag_based_localizer_param_path" value="$(var loc_config_path)/ar_tag_based_localizer.param.yaml"/>
     </include>
   </group>
 </launch>
