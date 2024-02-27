@@ -4,11 +4,13 @@
   <arg name="pose_source" default="ndt" description="select pose_estimator: ndt, yabloc, eagleye"/>
   <arg name="twist_source" default="gyro_odom" description="select twist_estimator. gyro_odom, eagleye"/>
   <arg name="input_pointcloud" default="/sensing/lidar/top/pointcloud" description="The topic will be used in the localization util module"/>
-  <arg
-    name="lidar_container_name"
+  
+  <!-- If there is a specific node container to load pointcloud preprocessing nodes for localization, uncomment the following.-->
+  <!--arg
+    name="target_pointcloud_container_name"
     default="/sensing/lidar/top/pointcloud_preprocessor/pointcloud_container"
-    description="The target container to which lidar preprocessing nodes in localization be attached"
-  />
+    description="The target container to which pointcloud preprocessing nodes in the localization component be loaded."
+  /-->
 
   <group>
     <include file="$(find-pkg-share tier4_localization_launch)/launch/localization.launch.xml">
@@ -16,7 +18,6 @@
       <arg name="twist_source" value="$(var twist_source)"/>
       <arg name="system_run_mode" value="$(var system_run_mode)"/>
       <arg name="input_pointcloud" value="$(var input_pointcloud)"/>
-      <arg name="lidar_container_name" value="$(var lidar_container_name)"/>
 
       <!-- parameter paths for common -->
       <arg name="localization_error_monitor_param_path" value="$(var loc_config_path)/localization_error_monitor.param.yaml"/>
