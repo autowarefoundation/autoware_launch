@@ -18,5 +18,5 @@ autoware_launch/launch/components/tier4_planning_component.launch.xml takayuki.m
 autoware_launch/launch/components/tier4_sensing_component.launch.xml shunsuke.miura@tier4.jp
 autoware_launch/launch/components/tier4_simulator_component.launch.xml takayuki.murooka@tier4.jp
 autoware_launch/launch/components/tier4_system_component.launch.xml fumihito.ito@tier4.jp
-autoware_launch/rviz/**  # no codeowers
+autoware_launch/rviz/**  # no codeowners
 autoware_launch/rviz/image/** yukihiro.saito@tier4.jp
