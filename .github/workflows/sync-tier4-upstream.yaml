@@ -1,3 +1,4 @@
+# This workflow is intended for the use in the repositories created by forking tier4/autoware_launch.
 name: sync-tier4-upstream
 
 on:
