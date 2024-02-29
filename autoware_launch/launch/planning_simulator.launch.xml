@@ -69,6 +69,7 @@
       <arg name="rviz_respawn" value="$(var rviz_respawn)"/>
       <!-- Auto mode setting-->
       <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
+      <arg name="is_simulation" value="true"/>
     </include>
   </group>
 
