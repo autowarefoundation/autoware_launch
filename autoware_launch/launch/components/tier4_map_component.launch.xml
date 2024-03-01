@@ -4,7 +4,6 @@
     <arg name="pointcloud_map_path" value="$(var map_path)/$(var pointcloud_map_file)"/>
     <arg name="pointcloud_map_metadata_path" value="$(var map_path)/pointcloud_map_metadata.yaml"/>
     <arg name="lanelet2_map_path" value="$(var map_path)/$(var lanelet2_map_file)"/>
-    <arg name="lanelet2_map_folder_path" value="$(var map_path)/lanelet2_maps"/>
     <arg name="lanelet2_map_metadata_path" value="$(var map_path)/lanelet2_map_metadata.yaml"/>
     <arg name="map_projector_info_path" value="$(var map_path)/map_projector_info.yaml"/>
 
