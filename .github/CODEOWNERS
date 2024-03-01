@@ -1,3 +1,6 @@
+### Automatically generated from package.xml ###
+autoware_launch/** yukihiro.saito@tier4.jp
+
 ### Copied from .github/CODEOWNERS-manual ###
 # /**
 # .github/**
@@ -21,6 +24,3 @@ autoware_launch/launch/components/tier4_simulator_component.launch.xml takayuki.
 autoware_launch/launch/components/tier4_system_component.launch.xml fumihito.ito@tier4.jp isamu.takagi@tier4.jp
 autoware_launch/rviz/**  # no codeowners
 autoware_launch/rviz/image/** yukihiro.saito@tier4.jp ryohsuke.mitsudome@tier4.jp
-
-### Automatically generated from package.xml ###
-autoware_launch/** yukihiro.saito@tier4.jp
