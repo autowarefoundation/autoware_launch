@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="concatenate_data__separate_pointcloud_sync_and_concatenate_nodes" default="true" description="pointcloud concatenation node to publish synchronized pointcloud topic"/>
-
   <include file="$(find-pkg-share tier4_sensing_launch)/launch/sensing.launch.xml">
     <arg name="launch_driver" value="$(var launch_sensing_driver)"/>
     <arg name="sensor_model" value="$(var sensor_model)"/>
