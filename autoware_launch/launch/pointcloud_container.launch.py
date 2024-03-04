@@ -19,6 +19,7 @@ from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
+from launch_ros.descriptions import ComposableNode
 
 
 def generate_launch_description():
@@ -37,13 +38,20 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration("use_multithread")),
     )
 
+    glog_component = ComposableNode(
+        package="glog_component",
+        plugin="GlogComponent",
+        name="glog_component",
+        namespace="pointcloud_container",
+    )
+
     pointcloud_container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
         namespace="/",
         package="rclcpp_components",
         executable=LaunchConfiguration("container_executable"),
-        composable_node_descriptions=[],
-        output="screen",
+        composable_node_descriptions=[glog_component],
+        output="both",
     )
 
     return LaunchDescription(

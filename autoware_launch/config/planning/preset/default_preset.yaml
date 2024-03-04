@@ -10,6 +10,9 @@ launch:
       name: launch_dynamic_avoidance_module
       default: "false"
   - arg:
+      name: launch_sampling_planner_module
+      default: "false" # Warning, experimental module, use only in simulations
+  - arg:
       name: launch_lane_change_right_module
       default: "true"
   - arg:
@@ -29,9 +32,6 @@ launch:
       default: "true"
   - arg:
       name: launch_side_shift_module
-      default: "true"
-  - arg:
-      name: use_experimental_lane_change_function
       default: "true"
 
   # behavior velocity modules
@@ -80,6 +80,9 @@ launch:
   - arg:
       name: launch_no_drivable_lane_module
       default: "false"
+  - arg:
+      name: launch_dynamic_obstacle_stop_module
+      default: "true"
 
   # motion planning modules
   - arg:
@@ -112,7 +115,7 @@ launch:
 
   - arg:
       name: launch_surround_obstacle_checker
-      default: "true"
+      default: "false"
 
   # parking modules
   - arg:

@@ -1,10 +1,14 @@
 <?xml version="1.0"?>
 <launch>
-  <include file="$(find-pkg-share tier4_map_launch)/launch/map.launch.py">
-    <arg name="lanelet2_map_path" value="$(var map_path)/$(var lanelet2_map_file)"/>
+  <include file="$(find-pkg-share tier4_map_launch)/launch/map.launch.xml">
     <arg name="pointcloud_map_path" value="$(var map_path)/$(var pointcloud_map_file)"/>
+    <arg name="pointcloud_map_metadata_path" value="$(var map_path)/pointcloud_map_metadata.yaml"/>
+    <arg name="lanelet2_map_path" value="$(var map_path)/$(var lanelet2_map_file)"/>
+    <arg name="map_projector_info_path" value="$(var map_path)/map_projector_info.yaml"/>
 
     <arg name="pointcloud_map_loader_param_path" value="$(find-pkg-share autoware_launch)/config/map/pointcloud_map_loader.param.yaml"/>
     <arg name="lanelet2_map_loader_param_path" value="$(find-pkg-share autoware_launch)/config/map/lanelet2_map_loader.param.yaml"/>
+    <arg name="map_tf_generator_param_path" value="$(find-pkg-share autoware_launch)/config/map/map_tf_generator.param.yaml"/>
+    <arg name="map_projection_loader_param_path" value="$(find-pkg-share autoware_launch)/config/map/map_projection_loader.param.yaml"/>
   </include>
 </launch>
