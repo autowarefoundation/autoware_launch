@@ -3,13 +3,14 @@
   <!-- NOTE: optional parameters are written here -->
   <arg name="module_preset" default="default"/>
   <arg name="enable_all_modules_auto_mode" default="false"/>
+  <arg name="is_simulation" default="false"/>
   <include file="$(find-pkg-share autoware_launch)/config/planning/preset/$(var module_preset)_preset.yaml"/>
 
   <include file="$(find-pkg-share tier4_planning_launch)/launch/planning.launch.xml">
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-    <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
+    <arg name="is_simulation" value="$(var is_simulation)"/>
 
     <!-- common -->
     <arg name="common_config_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common"/>
@@ -27,6 +28,7 @@
     <arg name="behavior_path_planner_side_shift_module_param_path" value="$(var behavior_path_config_path)/side_shift/side_shift.param.yaml"/>
     <arg name="behavior_path_planner_avoidance_module_param_path" value="$(var behavior_path_config_path)/avoidance/avoidance.param.yaml"/>
     <arg name="behavior_path_planner_avoidance_by_lc_module_param_path" value="$(var behavior_path_config_path)/avoidance_by_lane_change/avoidance_by_lane_change.param.yaml"/>
+    <arg name="behavior_path_planner_sampling_planner_module_param_path" value="$(var behavior_path_config_path)/sampling_planner/sampling_planner.param.yaml"/>
     <arg name="behavior_path_planner_dynamic_avoidance_module_param_path" value="$(var behavior_path_config_path)/dynamic_avoidance/dynamic_avoidance.param.yaml"/>
     <arg name="behavior_path_planner_lane_change_module_param_path" value="$(var behavior_path_config_path)/lane_change/lane_change.param.yaml"/>
     <arg name="behavior_path_planner_goal_planner_module_param_path" value="$(var behavior_path_config_path)/goal_planner/goal_planner.param.yaml"/>
