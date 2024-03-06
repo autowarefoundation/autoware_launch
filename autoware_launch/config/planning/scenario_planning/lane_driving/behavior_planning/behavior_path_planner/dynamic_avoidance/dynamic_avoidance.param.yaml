@@ -2,7 +2,7 @@
   ros__parameters:
     dynamic_avoidance:
       common:
-        enable_debug_info: true
+        enable_debug_info: false
         use_hatched_road_markings: true
 
       # avoidance is performed for the object type with true
@@ -19,8 +19,8 @@
         max_obstacle_vel: 100.0 # [m/s]
         min_obstacle_vel: 0.0 # [m/s]
 
-        successive_num_to_entry_dynamic_avoidance_condition: 1
-        successive_num_to_exit_dynamic_avoidance_condition: 0
+        successive_num_to_entry_dynamic_avoidance_condition: 5
+        successive_num_to_exit_dynamic_avoidance_condition: 1
 
         min_obj_lat_offset_to_ego_path: 0.0 # [m]
         max_obj_lat_offset_to_ego_path: 1.0 # [m]
