@@ -11,8 +11,8 @@
         max_x: 150.0
         min_y: -70.0
         max_y: 70.0
-        max_z: 2.5
-        min_z: -2.5 # recommended 0.0 for non elevation_grid_mode
+        margin_max_z: 0.0  # to extend the crop box max_z from vehicle_height
+        margin_min_z: -2.5 # to extend the crop box min_z from ground
         negative: False
 
     common_ground_filter:
