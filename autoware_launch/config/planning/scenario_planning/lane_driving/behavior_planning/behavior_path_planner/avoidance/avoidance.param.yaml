@@ -4,8 +4,6 @@
     avoidance:
       resample_interval_for_planning: 0.3               # [m]
       resample_interval_for_output: 4.0                 # [m]
-      drivable_area_right_bound_offset: 0.0             # [m]
-      drivable_area_left_bound_offset: 0.0              # [m]
 
       # avoidance module common setting
       enable_bound_clipping: false
@@ -208,6 +206,10 @@
           max_right_shift_length: 5.0
           max_left_shift_length: 5.0
           max_deviation_from_lane: 0.2                  # [m]
+          # approve the next shift line after reaching this percentage of the current shift line length.
+          # this parameter is added to allow waiting for the return of shift approval until the occlusion behind the avoid target is clear.
+          # this feature can be disabled by setting this parameter to 0.0.
+          ratio_for_return_shift_approval: 0.5          # [-]
         # avoidance distance parameters
         longitudinal:
           min_prepare_time: 1.0                         # [s]
