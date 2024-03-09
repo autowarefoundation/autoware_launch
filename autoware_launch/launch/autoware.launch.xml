@@ -45,6 +45,7 @@
   <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
   <!-- Auto mode setting-->
   <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
+  <arg name="is_simulation" default="false" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -104,6 +105,7 @@
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_planning_component.launch.xml">
       <arg name="module_preset" value="$(var planning_module_preset)"/>
       <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
+      <arg name="is_simulation" value="$(var is_simulation)"/>
     </include>
   </group>
 

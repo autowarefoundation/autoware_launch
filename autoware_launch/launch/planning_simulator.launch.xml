@@ -34,6 +34,8 @@
   <arg name="vehicle_simulation" default="true" description="use vehicle simulation"/>
   <!-- Auto mode setting-->
   <arg name="enable_all_modules_auto_mode" default="$(var scenario_simulation)" description="enable all module's auto mode"/>
+  <!-- Simulated time -->
+  <arg name="use_sim_time" default="$(var scenario_simulation)"/>
 
   <group scoped="false">
     <!-- Vehicle -->
@@ -41,8 +43,6 @@
     <let name="launch_vehicle_interface" value="true" unless="$(var vehicle_simulation)"/>
 
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
-      <!-- Global parameters -->
-      <arg name="use_sim_time" value="$(var scenario_simulation)"/>
       <!-- Common -->
       <arg name="map_path" value="$(var map_path)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
@@ -69,6 +69,7 @@
       <arg name="rviz_respawn" value="$(var rviz_respawn)"/>
       <!-- Auto mode setting-->
       <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
+      <arg name="is_simulation" value="true"/>
     </include>
   </group>
 
