@@ -192,7 +192,7 @@
         check_all_predicted_path: false                  # [-]
         safety_check_backward_distance: 100.0            # [m]
         hysteresis_factor_expand_rate: 1.5               # [-]
-        hysteresis_factor_safe_count: 10                 # [-]
+        hysteresis_factor_safe_count: 3                  # [-]
         # predicted path parameters
         min_velocity: 1.38                               # [m/s]
         max_velocity: 50.0                               # [m/s]
@@ -208,7 +208,7 @@
         rear_vehicle_safety_time_margin: 1.0             # [s]
         lateral_distance_max_threshold: 2.0              # [m]
         longitudinal_distance_min_threshold: 3.0         # [m]
-        longitudinal_velocity_delta_time: 0.8            # [s]
+        longitudinal_velocity_delta_time: 0.0            # [s]
 
       # For avoidance maneuver
       avoidance:
