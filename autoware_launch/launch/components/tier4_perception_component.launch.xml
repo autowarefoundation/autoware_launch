@@ -19,6 +19,7 @@
     <arg name="objects_filter_method" value="$(var detected_objects_filter_method)"/>
     <arg name="objects_validation_method" value="$(var detected_objects_validation_method)"/>
     <arg name="data_path" value="$(var data_path)"/>
+    <arg name="use_low_height_cropbox" value="false"/>
 
     <!-- object recognition -->
     <arg
