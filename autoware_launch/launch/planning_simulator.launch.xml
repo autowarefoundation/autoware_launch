@@ -96,4 +96,9 @@
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     </include>
   </group>
+
+  <!-- Dummy doors -->
+  <group>
+    <include file="$(find-pkg-share vehicle_door_simulator)/launch/vehicle_door_simulator.launch.xml"/>
+  </group>
 </launch>
