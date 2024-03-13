@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="occupancy_grid_map_method" default="pointcloud_based_occupancy_grid_map" description="options: pointcloud_based_occupancy_grid_map, laserscan_based_occupancy_grid_map"/>
+  <arg
+    name="occupancy_grid_map_method"
+    default="pointcloud_based_occupancy_grid_map"
+    description="options: pointcloud_based_occupancy_grid_map, laserscan_based_occupancy_grid_map, multi_lidar_pointcloud_based_occupancy_grid_map"
+  />
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
   <arg name="detected_objects_filter_method" default="lanelet_filter" description="options: lanelet_filter, position_filter"/>
   <arg
