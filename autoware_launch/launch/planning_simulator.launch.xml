@@ -16,6 +16,7 @@
   <let name="rviz_initial_pose_auto_fix_target" value="vector_map"/>
   <let name="gnss_initial_pose_auto_fix_target" value="vector_map"/>
   <!-- System -->
+  <arg name="launch_dummy_doors" default="true" description="launch dummy doors simulation"/>
   <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
   <!-- Scenario simulation -->
@@ -86,6 +87,7 @@
       <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
       <arg name="launch_dummy_vehicle" value="$(var launch_dummy_vehicle)"/>
       <arg name="launch_dummy_localization" value="$(var launch_dummy_localization)"/>
+      <arg name="launch_dummy_doors" value="$(var launch_dummy_doors)"/>
       <arg name="launch_diagnostic_converter" value="$(var launch_diagnostic_converter)"/>
       <arg name="perception/enable_detection_failure" value="$(var perception/enable_detection_failure)"/>
       <arg name="perception/enable_object_recognition" value="$(var perception/enable_object_recognition)"/>
@@ -95,10 +97,5 @@
       <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     </include>
-  </group>
-
-  <!-- Dummy doors -->
-  <group>
-    <include file="$(find-pkg-share vehicle_door_simulator)/launch/vehicle_door_simulator.launch.xml"/>
   </group>
 </launch>
