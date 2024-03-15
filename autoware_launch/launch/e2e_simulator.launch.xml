@@ -8,7 +8,6 @@
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
   <arg name="carla" default="false" description="simulation used"/>
 
-
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
 
@@ -46,7 +45,6 @@
     <include file="$(find-pkg-share carla_autoware)/carla_ros.launch.xml"/>
     <include file="$(find-pkg-share carla_autoware)/carla_autoware.launch.xml"/>
   </group>
-
 
   <group scoped="false">
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
