@@ -6,7 +6,7 @@
   <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
   <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
-  <arg name="carla" default="false" description="simulation used"/>
+  <arg name="carla" default="false" description="also launch the interface with the CARLA simulator"/>
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
