@@ -15,3 +15,6 @@
       score_threshold: 0.31
       yaw_norm_thresholds: [0.3, 0.3, 0.3, 0.3, 0.0]
       has_twist: false
+    densification_params:
+      world_frame_id: "map"
+      num_past_frames: 1
