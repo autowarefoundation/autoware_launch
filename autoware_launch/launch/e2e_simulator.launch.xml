@@ -43,11 +43,11 @@
 
   <group if="$(eval '\'$(var simulator_type)\' == \'awsim\'')">
     <arg
-    name="system_error_monitor_param_path"
-    default="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.awsim.param.yaml"
-    description="system error monitor param path"/>
+      name="system_error_monitor_param_path"
+      default="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.awsim.param.yaml"
+      description="system error monitor param path"
+    />
   </group>
-
 
   <group scoped="false">
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
