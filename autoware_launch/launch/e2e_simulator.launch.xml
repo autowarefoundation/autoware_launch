@@ -6,7 +6,7 @@
   <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
   <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
-  <arg name="carla" default="false" description="also launch the interface with the CARLA simulator"/>
+  <arg name="simulator_type" default="awsim" description="select the simulator type ('awsim' or 'carla')"/>
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
@@ -32,19 +32,22 @@
   <!-- System -->
   <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
-  <arg
-    name="system_error_monitor_param_path"
-    default="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.awsim.param.yaml"
-    description="system error monitor param path"
-  />
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
 
-  <group if="$(var carla)">
+  <group if="$(eval '\'$(var simulator_type)\' == \'carla\'')">
     <include file="$(find-pkg-share carla_autoware)/carla_ros.launch.xml"/>
     <include file="$(find-pkg-share carla_autoware)/carla_autoware.launch.xml"/>
   </group>
+
+  <group if="$(eval '\'$(var simulator_type)\' == \'awsim\'')">
+    <arg
+    name="system_error_monitor_param_path"
+    default="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.awsim.param.yaml"
+    description="system error monitor param path"/>
+  </group>
+
 
   <group scoped="false">
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
