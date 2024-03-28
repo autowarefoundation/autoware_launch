@@ -1,10 +1,10 @@
 ### Automatically generated from package.xml ###
-autoware_launch/** yukihiro.saito@tier4.jp
+autoware_launch/** mfc@leodrive.ai ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 
 ### Copied from .github/CODEOWNERS-manual ###
 # /**
 # .github/**
-autoware_launch/** yukihiro.saito@tier4.jp ryohsuke.mitsudome@tier4.jp
+autoware_launch/** yukihiro.saito@tier4.jp ryohsuke.mitsudome@tier4.jp mfc@leodrive.ai
 autoware_launch/config/control/** takayuki.murooka@tier4.jp fumiya.watanabe@tier4.jp satoshi.ota@tier4.jp shumpei.wakabayashi@tier4.jp
 autoware_launch/config/localization/** masahiro.sakamoto@tier4.jp yamato.ando@tier4.jp ryu.yamamoto@tier4.jp kento.yabuuchi.2@tier4.jp shintaro.sakoda@tier4.jp taiki.yamada@tier4.jp anh.nguyen.2@tier4.jp
 autoware_launch/config/map/** masahiro.sakamoto@tier4.jp yamato.ando@tier4.jp ryu.yamamoto@tier4.jp kento.yabuuchi.2@tier4.jp shintaro.sakoda@tier4.jp taiki.yamada@tier4.jp anh.nguyen.2@tier4.jp
