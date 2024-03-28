@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="occupancy_grid_map_method" default="pointcloud_based_occupancy_grid_map" description="options: pointcloud_based_occupancy_grid_map, laserscan_based_occupancy_grid_map"/>
+  <arg
+    name="occupancy_grid_map_method"
+    default="pointcloud_based_occupancy_grid_map"
+    description="options: pointcloud_based_occupancy_grid_map, laserscan_based_occupancy_grid_map, multi_lidar_pointcloud_based_occupancy_grid_map"
+  />
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
   <arg name="detected_objects_filter_method" default="lanelet_filter" description="options: lanelet_filter, position_filter"/>
   <arg
@@ -14,12 +18,12 @@
     <arg name="mode" value="$(var perception_mode)"/>
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
-    <arg name="enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
     <arg name="occupancy_grid_map_method" value="$(var occupancy_grid_map_method)"/>
     <arg name="occupancy_grid_map_updater" value="$(var occupancy_grid_map_updater)"/>
     <arg name="objects_filter_method" value="$(var detected_objects_filter_method)"/>
     <arg name="objects_validation_method" value="$(var detected_objects_validation_method)"/>
     <arg name="data_path" value="$(var data_path)"/>
+    <arg name="use_low_height_cropbox" value="false"/>
 
     <!-- object recognition -->
     <arg
@@ -129,10 +133,6 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/radar_object_tracker.param.yaml"
     />
     <arg
-      name="object_recognition_tracking_radar_object_tracker_tracking_config_directory_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/tracking/"
-    />
-    <arg
       name="object_recognition_tracking_object_merger_data_association_matrix_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/data_association_matrix.param.yaml"
     />
@@ -156,6 +156,11 @@
     <arg name="occupancy_grid_map_updater_param_path" value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"/>
 
     <!-- traffic light recognition -->
+    <arg name="use_traffic_light_recognition" value="true"/>
+    <arg name="traffic_light_recognition/enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
+    <arg name="traffic_light_recognition/fusion_only" value="false"/>
+    <arg name="traffic_light_image_number" value="1"/>
+
     <arg name="traffic_light_arbiter_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_arbiter/traffic_light_arbiter.param.yaml"/>
     <arg name="traffic_light_fine_detector_model_path" value="$(var data_path)/traffic_light_fine_detector"/>
     <arg name="traffic_light_fine_detector_model_name" value="tlr_car_ped_yolox_s_batch_6"/>
