@@ -5,7 +5,7 @@ launch:
       default: "true"
   - arg:
       name: launch_avoidance_by_lane_change_module
-      default: "true" #?
+      default: "true"
   - arg:
       name: launch_dynamic_avoidance_module
       default: "false"
