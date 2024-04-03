@@ -78,7 +78,9 @@
         pedestrian: true
 
       # collision check
-      enable_prepare_segment_collision_check: false
+      enable_collision_check_for_prepare_phase:
+        general_lanes: false
+        intersection: true
       prepare_segment_ignore_object_velocity_thresh: 0.1 # [m/s]
       check_objects_on_current_lanes: false
       check_objects_on_other_lanes: false
