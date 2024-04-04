@@ -14,7 +14,7 @@
     iou_nms_threshold: 0.1
     yaw_norm_thresholds: [0.3, 0.3, 0.3, 0.3, 0.0]
     score_threshold: 0.35
-    has_twist: false
+    has_twist: true
     trt_precision: fp16
     densification_num_past_frames: 1
     densification_world_frame_id: map
