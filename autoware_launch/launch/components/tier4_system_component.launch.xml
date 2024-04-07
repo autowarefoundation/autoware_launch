@@ -26,5 +26,11 @@
     <arg name="system_monitor_ntp_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/ntp_monitor.param.yaml"/>
     <arg name="system_monitor_process_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/process_monitor.param.yaml"/>
     <arg name="system_monitor_voltage_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/voltage_monitor.param.yaml"/>
+
+    <arg name="use_diagnostic_graph" value="false"/>
+    <arg name="mrm_handler_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_handler/mrm_handler.param.yaml"/>
+    <!-- <arg name="diagnostic_graph_aggregator_param_path" value=""/>  Set the value if use_diagnostic_graph is true. -->
+    <!-- <arg name="diagnostic_graph_aggregator_graph_path" value=""/>  Set the value if use_diagnostic_graph is true. -->
+    <!-- <arg name="diagnostic_graph_aggregator_planning_simulator_graph_path" value=""/>  Set the value if use_diagnostic_graph is true. -->
   </include>
 </launch>
