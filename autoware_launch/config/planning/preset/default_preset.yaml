@@ -126,4 +126,3 @@ launch:
   - arg:
       name: launch_avp_module
       default: "true"
-
