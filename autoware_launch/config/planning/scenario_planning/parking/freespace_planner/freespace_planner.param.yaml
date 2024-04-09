@@ -8,7 +8,7 @@
     th_stopped_time_sec: 1.0
     th_stopped_velocity_mps: 0.01
     th_course_out_distance_m: 1.0
-    vehicle_shape_margin_m: 1.0
+    vehicle_shape_margin_m: 0.5
     replan_when_obstacle_found: true
     replan_when_course_out: true
 
@@ -19,9 +19,9 @@
     robot_length: 4.5
     robot_width: 1.75
     robot_base2back: 1.0
-    minimum_turning_radius: 9.0
+    minimum_turning_radius: 5.0
     maximum_turning_radius: 9.0
-    turning_radius_size: 1
+    turning_radius_size: 3
     # search configs
     theta_size: 144
     angle_goal_range: 6.0
@@ -47,3 +47,4 @@
       max_planning_time: 150.0
       neighbor_radius: 8.0
       margin: 0.1
+

@@ -121,3 +121,9 @@ launch:
   - arg:
       name: launch_parking_module
       default: "true"
+
+  # auto parking module, needs launch_parking_module
+  - arg:
+      name: launch_avp_module
+      default: "true"
+
