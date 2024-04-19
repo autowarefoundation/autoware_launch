@@ -40,7 +40,7 @@
           max_overtaking_object_angle: 1.05
           min_oncoming_object_vel: 1.0
           max_oncoming_object_angle: 0.523
-          max_pedestrian_crossing_vel: 1.0
+          max_pedestrian_crossing_vel: 0.8
 
         front_object:
           max_object_angle: 0.785
