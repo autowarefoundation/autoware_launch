@@ -37,7 +37,6 @@
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
 
   <group scoped="false" if="$(eval '\'$(var simulator_type)\' == \'carla\'')">
-    <include file="$(find-pkg-share carla_autoware)/carla_ros.launch.xml"/>
     <include file="$(find-pkg-share carla_autoware)/carla_autoware.launch.xml"/>
     <arg
       name="system_error_monitor_param_path"
