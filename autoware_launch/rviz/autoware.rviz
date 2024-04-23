@@ -278,6 +278,14 @@ Visualization Manager:
             Value: /system/emergency/hazard_status
           Value: false
           Value height offset: 0
+        - Class: autoware_mission_details_overlay_rviz_plugin/MissionDetailsDisplay
+          Enabled: true
+          Name: MissionDetailsDisplay
+          Width: 300
+          Height: 100
+          Left: 800
+          Top: 10
+          Remaining Distance and ETA Topic: vehicle/status/velocity_status 
       Enabled: true
       Name: System
     - Class: rviz_common/Group
