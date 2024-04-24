@@ -22,5 +22,5 @@
     imu_prediction_time_interval: 0.1
     mpc_prediction_time_horizon: 1.5
     mpc_prediction_time_interval: 0.1
-    collision_keeping_sec: 5.0
+    collision_keeping_sec: 2.0
     aeb_hz: 10.0
