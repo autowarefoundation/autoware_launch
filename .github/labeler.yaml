@@ -1,0 +1,16 @@
+"component:control":
+  - "*control*"
+"component:localization":
+  - "*localization*"
+"component:map":
+  - "*map*"
+"component:perception":
+  - "*perception*"
+"component:planning":
+  - "*planning*"
+"component:sensing":
+  - "*sensing*"
+"component:simulation":
+  - "*simulator*"
+"component:system":
+  - "*system*"
