@@ -10,7 +10,7 @@
     mpc_prediction_time_interval: 0.1
 
     # Debug
-    publish_debug_pointcloud: true
+    publish_debug_pointcloud: false
 
     # Point cloud voxelization
     detection_range_min_height: 0.0
