@@ -256,7 +256,7 @@ Visualization Manager:
               Speed Topic: /vehicle/status/velocity_status
               Steering Topic: /vehicle/status/steering_status
               Top: 10
-              Traffic Topic: /perception/traffic_light_recognition/traffic_signals
+              Traffic Topic: /planning/scenario_planning/lane_driving/behavior_planning/debug/traffic_signal
               Turn Signals Topic: /vehicle/status/turn_indicators_status
               Value: true
               Width: 517
