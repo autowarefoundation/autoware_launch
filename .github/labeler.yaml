@@ -1,16 +1,33 @@
+"type:ci":
+  - .github/**/*
+  - "*.json"
+  - "*.yaml"
+  - "*.cfg"
+  - .clang-format
+  - .gitignore
+  - .prettierignore
+"type:documentation":
+  - "**/*.md"
+  - "**/*.rst"
+  - "**/*.jpg"
+  - "**/*.png"
+  - "**/*.svg"
 "component:control":
-  - "*control*"
+  - "**/*control*"
 "component:localization":
-  - "*localization*"
+  - "**/*localization*"
 "component:map":
-  - "*map*"
+  - "**/*map*"
 "component:perception":
-  - "*perception*"
+  - "**/*perception*"
 "component:planning":
-  - "*planning*"
+  - "**/*planning*"
 "component:sensing":
-  - "*sensing*"
+  - "**/*sensing*"
 "component:simulation":
-  - "*simulator*"
+  - "**/*simulator*"
 "component:system":
-  - "*system*"
+  - "**/*system*"
+"component:visualization":
+  - "**/*.rviz"
+  - "**/rviz"
