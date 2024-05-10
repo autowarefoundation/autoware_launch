@@ -930,9 +930,9 @@ Visualization Manager:
               Value: true
             - Class: autoware_mission_details_overlay_rviz_plugin/MissionDetailsDisplay
               Name: MissionDetailsDisplay
-              Width: 225
+              Width: 170
               Height: 100
-              Left: 10
+              Right: 10
               Top: 10
               Remaining Distance and Time Topic: /planning/mission_remaining_distance_time
               Enabled: true
