@@ -935,7 +935,7 @@ Visualization Manager:
               Left: 10
               Top: 10
               Remaining Distance and Time Topic: /planning/mission_remaining_distance_time
-              Enabled: false
+              Enabled: true
           Enabled: true
           Name: MissionPlanning
         - Class: rviz_common/Group
