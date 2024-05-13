@@ -7,7 +7,6 @@
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
   <arg name="simulator_type" default="awsim" description="select the simulator type ('awsim' or 'carla')"/>
 
-
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
 
@@ -32,11 +31,10 @@
   <!-- System -->
   <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
-  
+
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
-
 
   <group scoped="false" if="$(eval '\'$(var simulator_type)\' == \'carla\'')">
     <include file="$(find-pkg-share carla_autoware)/carla_autoware.launch.xml">
