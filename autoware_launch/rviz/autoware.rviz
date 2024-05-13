@@ -928,6 +928,14 @@ Visualization Manager:
                 Reliability Policy: Reliable
                 Value: /planning/mission_planning/echo_back_goal_pose
               Value: true
+            - Class: autoware_mission_details_overlay_rviz_plugin/MissionDetailsDisplay
+              Name: MissionDetailsDisplay
+              Width: 170
+              Height: 100
+              Right: 10
+              Top: 10
+              Remaining Distance and Time Topic: /planning/mission_remaining_distance_time
+              Enabled: true
           Enabled: true
           Name: MissionPlanning
         - Class: rviz_common/Group
