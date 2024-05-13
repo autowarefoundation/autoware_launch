@@ -28,6 +28,6 @@
   - "**/*simulator*"
 "component:system":
   - "**/*system*"
-"component:visualization":
+"component:ui":
   - "**/*.rviz"
   - "**/rviz"
