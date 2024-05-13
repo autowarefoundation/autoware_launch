@@ -32,16 +32,18 @@
   <!-- System -->
   <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
+
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
 
   <group scoped="false" if="$(eval '\'$(var simulator_type)\' == \'carla\'')">
-    <include file="$(find-pkg-share carla_autoware)/carla_ros.launch.xml"/>
-    <include file="$(find-pkg-share carla_autoware)/carla_autoware.launch.xml"/>
+    <include file="$(find-pkg-share carla_autoware)/carla_autoware.launch.xml">
+      <arg name="map_name" value="$(var map_path)"/>
+    </include>
     <arg
       name="system_error_monitor_param_path"
-      default="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.param.yaml"
+      default="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.awsim.param.yaml"
       description="system error monitor param path"
     />
   </group>
