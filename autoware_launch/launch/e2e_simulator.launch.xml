@@ -39,7 +39,6 @@
 
   <group scoped="false" if="$(eval '\'$(var simulator_type)\' == \'carla\'')">
     <include file="$(find-pkg-share carla_autoware)/carla_autoware.launch.xml">
-      <arg name="carla_map_name" value="$(var carla_map)"/>
     </include>
     <arg
       name="system_error_monitor_param_path"
