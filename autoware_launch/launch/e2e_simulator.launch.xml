@@ -7,7 +7,6 @@
   <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
   <arg name="simulator_type" default="awsim" description="select the simulator type ('awsim' or 'carla')"/>
-  <arg name="carla_map" default="Town01" description="Map used for CARLA"/>
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
