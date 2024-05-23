@@ -248,18 +248,18 @@ Visualization Manager:
               Enabled: true
               Gear Topic Test: /vehicle/status/gear_status
               Hazard Lights Topic: /vehicle/status/hazard_lights_status
-              Height: 175
-              Left: 10
+              Height: 100
+              Left: 0
               Name: SignalDisplay
               Signal Color: 0; 230; 120
               Speed Limit Topic: /planning/scenario_planning/current_max_velocity
               Speed Topic: /vehicle/status/velocity_status
               Steering Topic: /vehicle/status/steering_status
               Top: 10
-              Traffic Topic: /perception/traffic_light_recognition/traffic_signals
+              Traffic Topic: /planning/scenario_planning/lane_driving/behavior_planning/debug/traffic_signal
               Turn Signals Topic: /vehicle/status/turn_indicators_status
               Value: true
-              Width: 517
+              Width: 550
           Enabled: true
           Name: Vehicle
         - Class: rviz_plugins/MrmSummaryOverlayDisplay
@@ -928,6 +928,14 @@ Visualization Manager:
                 Reliability Policy: Reliable
                 Value: /planning/mission_planning/echo_back_goal_pose
               Value: true
+            - Class: autoware_mission_details_overlay_rviz_plugin/MissionDetailsDisplay
+              Name: MissionDetailsDisplay
+              Width: 170
+              Height: 100
+              Right: 10
+              Top: 10
+              Remaining Distance and Time Topic: /planning/mission_remaining_distance_time
+              Enabled: true
           Enabled: true
           Name: MissionPlanning
         - Class: rviz_common/Group
