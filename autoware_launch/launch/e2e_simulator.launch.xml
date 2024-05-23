@@ -25,6 +25,7 @@
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
   <!-- Perception -->
   <arg name="traffic_light_namespace" default="traffic_light" description="traffic light recognition namespace1"/>
+  <arg name="external/traffic_signals" default="/v2x/traffic_signals" description="v2x traffic signals"/>
   <!-- Control -->
   <!-- Vehicle -->
   <arg name="launch_vehicle_interface" default="false"/>
