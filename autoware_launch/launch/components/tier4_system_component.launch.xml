@@ -27,10 +27,10 @@
     <arg name="system_monitor_process_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/process_monitor.param.yaml"/>
     <arg name="system_monitor_voltage_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/voltage_monitor.param.yaml"/>
 
-    <arg name="use_diagnostic_graph" value="false"/>
+    <arg name="use_emergency_handler" value="true"/>
     <arg name="mrm_handler_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_handler/mrm_handler.param.yaml"/>
-    <!-- <arg name="diagnostic_graph_aggregator_param_path" value=""/>  Set the value if use_diagnostic_graph is true. -->
-    <!-- <arg name="diagnostic_graph_aggregator_graph_path" value=""/>  Set the value if use_diagnostic_graph is true. -->
-    <!-- <arg name="diagnostic_graph_aggregator_planning_simulator_graph_path" value=""/>  Set the value if use_diagnostic_graph is true. -->
+    <arg name="diagnostic_graph_aggregator_param_path" value="$(find-pkg-share diagnostic_graph_aggregator)/config/default.param.yaml"/>
+    <arg name="diagnostic_graph_aggregator_graph_path_main" value="$(find-pkg-share system_diagnostic_monitor)/config/autoware-main.yaml"/>
+    <arg name="diagnostic_graph_aggregator_graph_path_psim" value="$(find-pkg-share system_diagnostic_monitor)/config/autoware-psim.yaml"/>
   </include>
 </launch>
