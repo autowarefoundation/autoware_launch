@@ -70,8 +70,7 @@
     <arg name="obstacle_stop_planner_acc_param_path" value="$(var motion_config_path)/obstacle_stop_planner/adaptive_cruise_control.param.yaml"/>
     <arg name="obstacle_cruise_planner_param_path" value="$(var motion_config_path)/obstacle_cruise_planner/obstacle_cruise_planner.param.yaml"/>
     <arg name="motion_velocity_planner_param_path" value="$(var motion_config_path)/motion_velocity_planner/motion_velocity_planner.param.yaml"/>
-    <arg name="motion_velocity_planner_out_of_lane_module_param_path" value="$(var behavior_velocity_config_path)/out_of_lane.param.yaml"/>
-    <arg name="motion_velocity_planner_dynamic_obstacle_stop_module_param_path" value="$(var behavior_velocity_config_path)/dynamic_obstacle_stop.param.yaml"/>
+    <arg name="motion_velocity_planner_out_of_lane_module_param_path" value="$(var motion_config_path)/motion_velocity_planner/out_of_lane.param.yaml"/>
     <arg name="motion_velocity_smoother_type_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/motion_velocity_smoother/Analytical.param.yaml"/>
 
     <!-- motion velocity smoother -->
