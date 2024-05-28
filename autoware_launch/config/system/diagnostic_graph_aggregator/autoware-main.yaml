@@ -1,0 +1,2 @@
+files:
+  - { path: $(find-pkg-share system_diagnostic_monitor)/config/autoware-main.yaml }
