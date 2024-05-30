@@ -64,3 +64,4 @@
     # force acceleration
     adjusted_max_acceleration: 2.0
     adjusted_max_jerk: 5.0
+    adjusted_max_lateral_acceleration: 1.0
