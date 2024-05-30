@@ -49,7 +49,7 @@
     />
     <arg
       name="object_recognition_detection_fusion_sync_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_sync.param.yaml"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml"
     />
     <arg
       name="object_recognition_detection_roi_cluster_fusion_param_path"
