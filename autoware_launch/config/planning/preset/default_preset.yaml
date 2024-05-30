@@ -76,7 +76,7 @@ launch:
       default: "false"
   - arg:
       name: launch_out_of_lane_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_no_drivable_lane_module
       default: "false"
@@ -97,6 +97,11 @@ launch:
       # option: obstacle_avoidance_planner
       #         path_sampler
       #         none
+
+  # motion velocity planner modules
+  - arg:
+      name: launch_motion_out_of_lane_module
+      default: "true"
 
   - arg:
       name: motion_stop_planner_type
