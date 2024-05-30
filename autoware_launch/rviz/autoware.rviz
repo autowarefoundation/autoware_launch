@@ -1022,7 +1022,7 @@ Visualization Manager:
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_reference/avoidance
+                        Value: /planning/path_reference/static_obstacle_avoidance
                       Value: true
                       View Path:
                         Alpha: 0.3
@@ -1275,7 +1275,7 @@ Visualization Manager:
                         Durability Policy: Volatile
                         History Policy: Keep Last
                         Reliability Policy: Reliable
-                        Value: /planning/path_candidate/avoidance
+                        Value: /planning/path_candidate/static_obstacle_avoidance
                       Value: true
                       View Path:
                         Alpha: 0.30000001192092896
@@ -1353,7 +1353,7 @@ Visualization Manager:
                       Displays:
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
-                          Name: VirtualWall (Avoidance)
+                          Name: VirtualWall (StaticObstacleAvoidance)
                           Namespaces:
                             {}
                           Topic:
@@ -1361,7 +1361,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/avoidance
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/virtual_wall/static_obstacle_avoidance
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
@@ -1778,7 +1778,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: Avoidance
+                          Name: StaticObstacleAvoidance
                           Namespaces:
                             {}
                           Topic:
@@ -1786,7 +1786,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/avoidance
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/static_obstacle_avoidance
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -1886,7 +1886,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: DynamicAvoidance
+                          Name: DynamicObstacleAvoidance
                           Namespaces:
                             {}
                           Topic:
@@ -1894,7 +1894,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/dynamic_avoidance
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/dynamic_obstacle_avoidance
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -1926,7 +1926,7 @@ Visualization Manager:
                       Displays:
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: Info (Avoidance)
+                          Name: Info (StaticObstacleAvoidance)
                           Namespaces:
                             avoidable_target_objects_info: false
                             avoidable_target_objects_info_reason: false
@@ -1939,7 +1939,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/avoidance
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/static_obstacle_avoidance
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -2027,7 +2027,7 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
-                          Name: Info (DynamicAvoidance)
+                          Name: Info (DynamicObstacleAvoidance)
                           Namespaces:
                             {}
                           Topic:
@@ -2035,7 +2035,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/dynamic_avoidance
+                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/dynamic_obstacle_avoidance
                           Value: false
                       Enabled: false
                       Name: InfoMarker
@@ -2576,11 +2576,11 @@ Visualization Manager:
                         Bound: true
                         DebugMarker:
                           Arrow: true
-                          Avoidance: true
+                          StaticObstacleAvoidance: true
                           Blind Spot: true
                           Crosswalk: true
                           DetectionArea: true
-                          DynamicAvoidance: true
+                          DynamicObstacleAvoidance: true
                           GoalPlanner: true
                           Intersection: true
                           LaneFollowing: true
@@ -2599,9 +2599,9 @@ Visualization Manager:
                           Value: true
                           VirtualTrafficLight: true
                         InfoMarker:
-                          Info (Avoidance): true
+                          Info (StaticObstacleAvoidance): true
                           Info (AvoidanceByLC): true
-                          Info (DynamicAvoidance): true
+                          Info (DynamicObstacleAvoidance): true
                           Info (ExtLaneChangeLeft): true
                           Info (ExtLaneChangeRight): true
                           Info (GoalPlanner): true
@@ -2627,7 +2627,7 @@ Visualization Manager:
                         Value: true
                         VirtualWall:
                           Value: true
-                          VirtualWall (Avoidance): true
+                          VirtualWall (StaticObstacleAvoidance): true
                           VirtualWall (AvoidanceByLC): true
                           VirtualWall (BlindSpot): true
                           VirtualWall (Crosswalk): true
@@ -3500,7 +3500,7 @@ Visualization Manager:
                     Durability Policy: Volatile
                     History Policy: Keep Last
                     Reliability Policy: Reliable
-                    Value: /planning/debug/objects_of_interest/avoidance_left
+                    Value: /planning/debug/objects_of_interest/static_obstacle_avoidance_left
                   Value: true
                 - Class: rviz_default_plugins/MarkerArray
                   Enabled: true
@@ -3512,7 +3512,7 @@ Visualization Manager:
                     Durability Policy: Volatile
                     History Policy: Keep Last
                     Reliability Policy: Reliable
-                    Value: /planning/debug/objects_of_interest/avoidance_right
+                    Value: /planning/debug/objects_of_interest/static_obstacle_avoidance_right
                   Value: true
                 - Class: rviz_default_plugins/MarkerArray
                   Enabled: true
