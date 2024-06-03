@@ -2127,7 +2127,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/motion_velocity_smoother/virtual_wall
+                            Value: /planning/scenario_planning/velocity_smoother/virtual_wall
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true

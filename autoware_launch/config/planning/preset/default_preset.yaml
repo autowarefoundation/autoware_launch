@@ -93,8 +93,8 @@ launch:
 
   - arg:
       name: motion_path_planner_type
-      default: obstacle_avoidance_planner
-      # option: obstacle_avoidance_planner
+      default: path_optimizer
+      # option: path_optimizer
       #         path_sampler
       #         none
 
@@ -111,7 +111,7 @@ launch:
       #         none
 
   - arg:
-      name: motion_velocity_smoother_type
+      name: velocity_smoother_type
       default: JerkFiltered
       # option: JerkFiltered
       #         L2
