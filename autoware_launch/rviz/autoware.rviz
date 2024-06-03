@@ -687,7 +687,7 @@ Visualization Manager:
                   CYCLIST:
                     Alpha: 0.999
                     Color: 119; 11; 32
-                  Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+                  Class: autoware_perception_rviz_plugin/DetectedObjects
                   Display 3d polygon: true
                   Display Label: true
                   Display PoseWithCovariance: true
@@ -735,7 +735,7 @@ Visualization Manager:
                   CYCLIST:
                     Alpha: 0.999
                     Color: 119; 11; 32
-                  Class: autoware_auto_perception_rviz_plugin/TrackedObjects
+                  Class: autoware_perception_rviz_plugin/TrackedObjects
                   Display 3d polygon: true
                   Display Label: true
                   Display PoseWithCovariance: true
@@ -783,7 +783,7 @@ Visualization Manager:
                   CYCLIST:
                     Alpha: 0.999
                     Color: 119; 11; 32
-                  Class: autoware_auto_perception_rviz_plugin/PredictedObjects
+                  Class: autoware_perception_rviz_plugin/PredictedObjects
                   Display 3d polygon: true
                   Display Label: true
                   Display PoseWithCovariance: false
@@ -2749,7 +2749,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.5
                 Color: 255; 255; 255
-              Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+              Class: autoware_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -2906,7 +2906,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 255; 138; 128
-              Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+              Class: autoware_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -2953,7 +2953,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 255; 82; 82
-              Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+              Class: autoware_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -3000,7 +3000,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 213; 0; 0
-              Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+              Class: autoware_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -3047,7 +3047,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 178; 255; 89
-              Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+              Class: autoware_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -3094,7 +3094,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 118; 255; 3
-              Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+              Class: autoware_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -3141,7 +3141,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 100; 221; 23
-              Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+              Class: autoware_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -3188,7 +3188,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 255; 145; 0
-              Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+              Class: autoware_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -3235,7 +3235,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 213; 0; 249
-              Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+              Class: autoware_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -3282,7 +3282,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 255; 255; 255
-              Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+              Class: autoware_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -3329,7 +3329,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 255; 234; 0
-              Class: autoware_auto_perception_rviz_plugin/DetectedObjects
+              Class: autoware_perception_rviz_plugin/DetectedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -3376,7 +3376,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 0; 230; 118
-              Class: autoware_auto_perception_rviz_plugin/TrackedObjects
+              Class: autoware_perception_rviz_plugin/TrackedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: true
@@ -3423,7 +3423,7 @@ Visualization Manager:
               CYCLIST:
                 Alpha: 0.9990000128746033
                 Color: 0; 176; 255
-              Class: autoware_auto_perception_rviz_plugin/PredictedObjects
+              Class: autoware_perception_rviz_plugin/PredictedObjects
               Display Acceleration: true
               Display Label: true
               Display PoseWithCovariance: false
