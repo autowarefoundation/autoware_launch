@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Check if qt5ct is installed and install it if not
+if ! command -v qt5ct &>/dev/null; then
+    echo "qt5ct is not installed. Installing qt5ct..."
+    sudo apt-get update
+    sudo apt-get install -y qt5ct
+fi
+
 find_autoware_dir() {
     local dir
     dir=$(find "$HOME" -type d -name autoware -not -path '*/\.*' 2>/dev/null | while read -r d; do
@@ -27,7 +34,7 @@ cd "$AUTOWARE_DIR" || exit
 # Set the base directory for the ROS package
 PACKAGE_NAME="autoware_launch"
 SRC_DIR=$(colcon list --packages-select $PACKAGE_NAME | awk '{print $2}')
-ICONS_DIR="$SRC_DIR/rviz/autoware-rviz-icons"
+ICONS_DIR="$AUTOWARE_DIR/$SRC_DIR/rviz/autoware-rviz-icons"
 QSS_FILE="$AUTOWARE_DIR/$SRC_DIR/rviz/autoware.qss"
 QT5CT_CONFIG_FILE="$HOME/.config/qt5ct/qt5ct.conf"
 
@@ -73,6 +80,20 @@ if grep -q "stylesheets=" "$QT5CT_CONFIG_FILE"; then
     append_stylesheet
 else
     echo "stylesheets=$QSS_FILE" >>"$QT5CT_CONFIG_FILE"
+fi
+
+# Ensure color_scheme_path is set to /usr/share/qt5ct/colors/darker.conf
+if grep -q "color_scheme_path=" "$QT5CT_CONFIG_FILE"; then
+    sed -i "s|color_scheme_path=.*|color_scheme_path=/usr/share/qt5ct/colors/darker.conf|g" "$QT5CT_CONFIG_FILE"
+else
+    echo "color_scheme_path=/usr/share/qt5ct/colors/darker.conf" >>"$QT5CT_CONFIG_FILE"
+fi
+
+# Ensure style is set to Fusion
+if grep -q "style=" "$QT5CT_CONFIG_FILE"; then
+    sed -i "s|style=.*|style=Fusion|g" "$QT5CT_CONFIG_FILE"
+else
+    echo "style=Fusion" >>"$QT5CT_CONFIG_FILE"
 fi
 
 echo "QSS file updated and qt5ct config modified successfully."
