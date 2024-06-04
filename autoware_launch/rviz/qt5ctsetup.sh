@@ -59,7 +59,7 @@ append_stylesheet() {
     local existing_stylesheet
     existing_stylesheet=$(grep -oP '(?<=stylesheets=).*' "$QT5CT_CONFIG_FILE")
 
-    if [[ "$existing_stylesheet" != *"$QSS_FILE"* ]]; then
+    if [[ $existing_stylesheet != *"$QSS_FILE"* ]]; then
         if [ -n "$existing_stylesheet" ]; then
             sed -i "s|stylesheets=.*|stylesheets=${existing_stylesheet},$QSS_FILE|g" "$QT5CT_CONFIG_FILE"
         else

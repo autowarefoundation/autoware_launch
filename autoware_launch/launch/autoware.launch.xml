@@ -132,7 +132,7 @@
       if="$(var rviz)"
       respawn="$(var rviz_respawn)"
     >
-    <env name="QT_QPA_PLATFORMTHEME" value="qt5ct"/>
+      <env name="QT_QPA_PLATFORMTHEME" value="qt5ct"/>
     </node>
   </group>
 </launch>
