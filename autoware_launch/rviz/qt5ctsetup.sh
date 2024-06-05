@@ -56,7 +56,7 @@ fi
 cp "$QSS_FILE" "$QSS_FILE.bak"
 
 # Update paths in the QSS file
-sed -i "s|url(\(.*\)\(\.png\|\.svg\))|url($ICONS_DIR/\1\2)|g" "$QSS_FILE"
+sed -i "s|url(\"./|url(\"$ICONS_DIR/|g" "$QSS_FILE"
 
 # Ensure the qt5ct config directory exists
 mkdir -p "$(dirname "$QT5CT_CONFIG_FILE")"
