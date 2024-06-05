@@ -70,6 +70,7 @@
       # Tolerance for the number of times rejected estimation results consecutively
       skipping_publish_num: 5
 
+
     score_estimation:
       # Converged param type
       # 0=TRANSFORM_PROBABILITY, 1=NEAREST_VOXEL_TRANSFORMATION_LIKELIHOOD
