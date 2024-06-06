@@ -36,6 +36,7 @@ PACKAGE_NAME="autoware_launch"
 SRC_DIR=$(colcon list --packages-select $PACKAGE_NAME | awk '{print $2}')
 ICONS_DIR="$AUTOWARE_DIR/$SRC_DIR/rviz/autoware-rviz-icons"
 QSS_FILE="$AUTOWARE_DIR/$SRC_DIR/rviz/autoware.qss"
+BASE_QT5CT_CONFIG_FILE="$AUTOWARE_DIR/$SRC_DIR/rviz/base-qt5ct.conf"
 QT5CT_CONFIG_FILE="$HOME/.config/qt5ct/qt5ct.conf"
 
 # Change back to the original working directory
@@ -50,6 +51,16 @@ fi
 if [ ! -f "$QSS_FILE" ]; then
     echo "QSS file not found: $QSS_FILE"
     exit 1
+fi
+
+# If qt5ct config file does not exist, copy the base config file
+if [ ! -f "$QT5CT_CONFIG_FILE" ]; then
+    if [ -f "$BASE_QT5CT_CONFIG_FILE" ]; then
+        cp "$BASE_QT5CT_CONFIG_FILE" "$QT5CT_CONFIG_FILE"
+    else
+        echo "Base qt5ct config file not found: $BASE_QT5CT_CONFIG_FILE"
+        exit 1
+    fi
 fi
 
 # Create backup of the original QSS file
