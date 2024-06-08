@@ -64,3 +64,6 @@ jobs:
           fail_ci_if_error: false
           verbose: true
           flags: total
+
+      - name: Show disk space after the tasks
+        run: df -h
