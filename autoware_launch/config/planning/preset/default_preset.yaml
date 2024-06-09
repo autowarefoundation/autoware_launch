@@ -75,9 +75,6 @@ launch:
       name: launch_speed_bump_module
       default: "false"
   - arg:
-      name: launch_out_of_lane_module
-      default: "false"
-  - arg:
       name: launch_no_drivable_lane_module
       default: "false"
   - arg:
@@ -100,7 +97,7 @@ launch:
 
   # motion velocity planner modules
   - arg:
-      name: launch_motion_out_of_lane_module
+      name: launch_out_of_lane_module
       default: "true"
 
   - arg:
