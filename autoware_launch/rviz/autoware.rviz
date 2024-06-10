@@ -1607,18 +1607,6 @@ Visualization Manager:
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
-                          Name: VirtualWall (OutOfLane)
-                          Namespaces:
-                            {}
-                          Topic:
-                            Depth: 5
-                            Durability Policy: Volatile
-                            History Policy: Keep Last
-                            Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/virtual_wall/out_of_lane
-                          Value: true
-                        - Class: rviz_default_plugins/MarkerArray
-                          Enabled: true
                           Name: VirtualWall (NoDrivableLane)
                           Namespaces:
                             {}
@@ -1872,18 +1860,6 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/speed_bump
-                          Value: false
-                        - Class: rviz_default_plugins/MarkerArray
-                          Enabled: false
-                          Name: OutOfLane
-                          Namespaces:
-                            {}
-                          Topic:
-                            Depth: 5
-                            Durability Policy: Volatile
-                            History Policy: Keep Last
-                            Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/out_of_lane
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
@@ -2589,7 +2565,6 @@ Visualization Manager:
                           NoDrivableLane: true
                           NoStoppingArea: true
                           OcclusionSpot: true
-                          OutOfLane: true
                           RightLaneChange: true
                           RunOut: true
                           SideShift: true
@@ -2643,7 +2618,6 @@ Visualization Manager:
                           VirtualWall (NoDrivableLane): true
                           VirtualWall (NoStoppingArea): true
                           VirtualWall (OcclusionSpot): true
-                          VirtualWall (OutOfLane): true
                           VirtualWall (RunOut): true
                           VirtualWall (SpeedBump): true
                           VirtualWall (StartPlanner): true

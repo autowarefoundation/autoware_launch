@@ -35,6 +35,7 @@
         /autoware/planning/performance_monitoring/trajectory_validation: default
 
         # /autoware/sensing/node_alive_monitoring: default
+        # /autoware/control/autoware_autonomous_emergency_braking/performance_monitoring/emergency_stop: { sf_at: "none", lf_at: "warn", spf_at: "error", auto_recovery: "false", ignore_until_waiting_for_route: "true"}
 
         /autoware/system/node_alive_monitoring: default
         /autoware/system/emergency_stop_operation: default
