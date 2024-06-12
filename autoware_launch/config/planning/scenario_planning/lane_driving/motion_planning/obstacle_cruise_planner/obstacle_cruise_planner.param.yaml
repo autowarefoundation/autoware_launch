@@ -6,6 +6,8 @@
       enable_debug_info: false
       enable_calculation_time_info: false
 
+      use_pointcloud: true
+
       enable_slow_down_planning: true
 
       # longitudinal info
@@ -72,7 +74,6 @@
         pointcloud: false
 
     behavior_determination:
-      use_pointcloud: false
       pointcloud_search_radius: 5.0
       pointcloud_voxel_grid_x: 0.05
       pointcloud_voxel_grid_y: 0.05
