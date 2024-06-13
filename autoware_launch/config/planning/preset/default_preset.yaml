@@ -75,14 +75,8 @@ launch:
       name: launch_speed_bump_module
       default: "false"
   - arg:
-      name: launch_out_of_lane_module
-      default: "false"
-  - arg:
       name: launch_no_drivable_lane_module
       default: "false"
-  - arg:
-      name: launch_dynamic_obstacle_stop_module
-      default: "true"
 
   # motion planning modules
   - arg:
@@ -100,7 +94,13 @@ launch:
 
   # motion velocity planner modules
   - arg:
-      name: launch_motion_out_of_lane_module
+      name: launch_dynamic_obstacle_stop_module
+      default: "true"
+  - arg:
+      name: launch_out_of_lane_module
+      default: "true"
+  - arg:
+      name: launch_obstacle_velocity_limiter_module
       default: "true"
 
   - arg:
