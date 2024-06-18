@@ -52,7 +52,9 @@ def generate_launch_description():
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[glog_component],
         output="both",
-        ros_arguments=["--log-level", [LaunchConfiguration('container_name'), ":=", LaunchConfiguration('log_level')]],
+        ros_arguments=["--log-level", [LaunchConfiguration('container_name'), ":=", LaunchConfiguration('log_level')],
+                       "--log-level", ["occupancy_grid_map.occupancy_grid_map_node:=", LaunchConfiguration("log_level")],
+                       "--log-level", ["occupancy_grid_map.pointcloud_to_laserscan_node:=", LaunchConfiguration("log_level")]],
     )
 
     return LaunchDescription(
