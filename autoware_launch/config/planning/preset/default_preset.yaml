@@ -1,13 +1,13 @@
 launch:
   # behavior path modules
   - arg:
-      name: launch_avoidance_module
+      name: launch_static_obstacle_avoidance
       default: "true"
   - arg:
       name: launch_avoidance_by_lane_change_module
       default: "true"
   - arg:
-      name: launch_dynamic_avoidance_module
+      name: launch_dynamic_obstacle_avoidance
       default: "true"
   - arg:
       name: launch_sampling_planner_module
@@ -75,14 +75,8 @@ launch:
       name: launch_speed_bump_module
       default: "false"
   - arg:
-      name: launch_out_of_lane_module
-      default: "true"
-  - arg:
       name: launch_no_drivable_lane_module
       default: "false"
-  - arg:
-      name: launch_dynamic_obstacle_stop_module
-      default: "true"
 
   # motion planning modules
   - arg:
@@ -93,10 +87,21 @@ launch:
 
   - arg:
       name: motion_path_planner_type
-      default: obstacle_avoidance_planner
-      # option: obstacle_avoidance_planner
+      default: path_optimizer
+      # option: path_optimizer
       #         path_sampler
       #         none
+
+  # motion velocity planner modules
+  - arg:
+      name: launch_dynamic_obstacle_stop_module
+      default: "true"
+  - arg:
+      name: launch_out_of_lane_module
+      default: "true"
+  - arg:
+      name: launch_obstacle_velocity_limiter_module
+      default: "true"
 
   - arg:
       name: motion_stop_planner_type
@@ -106,7 +111,7 @@ launch:
       #         none
 
   - arg:
-      name: motion_velocity_smoother_type
+      name: velocity_smoother_type
       default: JerkFiltered
       # option: JerkFiltered
       #         L2
