@@ -6,8 +6,6 @@
       enable_debug_info: false
       enable_calculation_time_info: false
 
-      use_pointcloud: false
-
       enable_slow_down_planning: true
 
       # longitudinal info
