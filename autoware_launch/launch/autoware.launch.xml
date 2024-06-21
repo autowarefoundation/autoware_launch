@@ -80,7 +80,6 @@
   <!-- System -->
   <group if="$(var launch_system)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_system_component.launch.xml">
-      <arg name="component_state_monitor_topic_path" value="$(var component_state_monitor_topic_path)"/>
       <arg name="log_level" value="$(var log_level)"/>
     </include>
   </group>
@@ -128,7 +127,9 @@
 
   <!-- API -->
   <group if="$(var launch_api)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_autoware_api_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_autoware_api_component.launch.xml">
+      <arg name="log_level" value="$(var log_level)"/>
+    </include>
   </group>
 
   <!-- Tools -->
