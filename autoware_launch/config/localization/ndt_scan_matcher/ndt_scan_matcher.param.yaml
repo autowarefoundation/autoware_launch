@@ -82,7 +82,7 @@
 
       # If converged_param_type is 1
       # Threshold for deciding whether to trust the estimation result
-      converged_param_nearest_voxel_transformation_likelihood: 1.5
+      converged_param_nearest_voxel_transformation_likelihood: 2.3
 
       # Scan matching score based on no ground LiDAR scan
       no_ground_points:
