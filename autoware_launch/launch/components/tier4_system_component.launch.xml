@@ -36,6 +36,5 @@
     <arg name="diagnostic_graph_aggregator_param_path" value="$(var diagnostic_graph_aggregator_param_path)"/>
     <arg name="diagnostic_graph_aggregator_graph_path" value="$(var diagnostic_graph_aggregator_graph_path)"/>
     <arg name="log_level" value="$(var log_level)"/>
-
   </include>
 </launch>

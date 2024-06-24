@@ -22,6 +22,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
 
+
 def generate_launch_description():
     def add_launch_arg(name: str, default_value=None):
         return DeclareLaunchArgument(name, default_value=default_value)
@@ -52,9 +53,14 @@ def generate_launch_description():
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[glog_component],
         output="both",
-        ros_arguments=["--log-level", [LaunchConfiguration('container_name'), ":=", LaunchConfiguration('log_level')],
-                       "--log-level", ["occupancy_grid_map.occupancy_grid_map_node:=", LaunchConfiguration("log_level")],
-                       "--log-level", ["occupancy_grid_map.pointcloud_to_laserscan_node:=", LaunchConfiguration("log_level")]],
+        ros_arguments=[
+            "--log-level",
+            [LaunchConfiguration("container_name"), ":=", LaunchConfiguration("log_level")],
+            "--log-level",
+            ["occupancy_grid_map.occupancy_grid_map_node:=", LaunchConfiguration("log_level")],
+            "--log-level",
+            ["occupancy_grid_map.pointcloud_to_laserscan_node:=", LaunchConfiguration("log_level")],
+        ],
     )
 
     return LaunchDescription(

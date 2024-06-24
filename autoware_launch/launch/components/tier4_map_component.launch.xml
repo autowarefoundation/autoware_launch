@@ -13,6 +13,5 @@
     <arg name="map_tf_generator_param_path" value="$(find-pkg-share autoware_launch)/config/map/map_tf_generator.param.yaml"/>
     <arg name="map_projection_loader_param_path" value="$(find-pkg-share autoware_launch)/config/map/map_projection_loader.param.yaml"/>
     <arg name="log_level" value="$(var log_level)"/>
-
   </include>
 </launch>
