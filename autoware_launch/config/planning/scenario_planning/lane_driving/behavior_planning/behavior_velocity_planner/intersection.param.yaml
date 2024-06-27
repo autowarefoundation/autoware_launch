@@ -89,7 +89,7 @@
           object_time_margin_to_collision_point: 4.0
 
       occlusion:
-        enable: true
+        enable: false
         occlusion_attention_area_length: 70.0
         free_space_max: 43
         occupied_min: 58
