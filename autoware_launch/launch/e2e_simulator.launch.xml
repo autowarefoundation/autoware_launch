@@ -6,6 +6,7 @@
   <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
   <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
+  <arg name="simulator_type" default="awsim" description="select the simulator type ('awsim' or 'carla')"/>
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
@@ -39,6 +40,9 @@
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
+  <group scoped="false" if="$(eval '\'$(var simulator_type)\' == \'carla\'')">
+    <include file="$(find-pkg-share carla_autoware)/carla_autoware.launch.xml"/>
+  </group>
 
   <group scoped="false">
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
@@ -68,6 +72,7 @@
       <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
       <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
       <arg name="system_error_monitor_param_path" value="$(var system_error_monitor_param_path)"/>
+      <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/autoware-awsim.yaml"/>
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
       <!-- Perception-->

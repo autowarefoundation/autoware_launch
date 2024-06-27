@@ -42,6 +42,10 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
     />
     <arg
+      name="object_recognition_tracking_multi_object_tracker_input_channels_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
+    />
+    <arg
       name="object_recognition_tracking_multi_object_tracker_node_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
     />
