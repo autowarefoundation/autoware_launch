@@ -4,6 +4,7 @@
   <arg name="module_preset" default="default"/>
   <arg name="enable_all_modules_auto_mode" default="false"/>
   <arg name="is_simulation" default="false"/>
+  <arg name="log_level" default="WARN"/>
   <include file="$(find-pkg-share autoware_launch)/config/planning/preset/$(var module_preset)_preset.yaml"/>
 
   <include file="$(find-pkg-share tier4_planning_launch)/launch/planning.launch.xml">
@@ -87,5 +88,7 @@
 
     <!-- planning validator -->
     <arg name="planning_validator_param_path" value="$(var common_config_path)/planning_validator/planning_validator.param.yaml"/>
+
+    <arg name="log_level" value="$(var log_level)"/>
   </include>
 </launch>

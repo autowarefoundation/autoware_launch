@@ -13,6 +13,7 @@
   <arg name="initial_engage_state"/>
   <arg name="vehicle_info_param_file"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
+  <arg name="log_level" default="WARN"/>
 
   <include file="$(find-pkg-share tier4_simulator_launch)/launch/simulator.launch.xml">
     <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
@@ -75,5 +76,6 @@
       name="object_recognition_tracking_object_merger_node_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml"
     />
+    <arg name="log_level" value="$(var log_level)"/>
   </include>
 </launch>

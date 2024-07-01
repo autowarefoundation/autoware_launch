@@ -14,6 +14,7 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.actions import OpaqueFunction
 from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
@@ -52,12 +53,21 @@ def generate_launch_description():
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[glog_component],
         output="both",
+        ros_arguments=[
+            "--log-level",
+            [LaunchConfiguration("container_name"), ":=", LaunchConfiguration("log_level")],
+            "--log-level",
+            ["occupancy_grid_map.occupancy_grid_map_node:=", LaunchConfiguration("log_level")],
+            "--log-level",
+            ["occupancy_grid_map.pointcloud_to_laserscan_node:=", LaunchConfiguration("log_level")],
+        ],
     )
 
     return LaunchDescription(
         [
             add_launch_arg("use_multithread", "false"),
             add_launch_arg("container_name", "pointcloud_container"),
+            add_launch_arg("log_level", "WARN"),
             set_container_executable,
             set_container_mt_executable,
             pointcloud_container,

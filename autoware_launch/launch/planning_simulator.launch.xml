@@ -38,6 +38,8 @@
   <!-- Simulated time -->
   <arg name="use_sim_time" default="$(var scenario_simulation)"/>
 
+  <arg name="log_level" default="WARN"/>
+
   <group scoped="false">
     <!-- Vehicle -->
     <let name="launch_vehicle_interface" value="false" if="$(var vehicle_simulation)"/>
@@ -72,6 +74,7 @@
       <!-- Auto mode setting-->
       <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
       <arg name="is_simulation" value="true"/>
+      <arg name="log_level" value="$(var log_level)"/>
     </include>
   </group>
 
@@ -97,6 +100,7 @@
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
       <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+      <arg name="log_level" value="$(var log_level)"/>
     </include>
   </group>
 </launch>
