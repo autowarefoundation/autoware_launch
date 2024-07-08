@@ -21,7 +21,7 @@
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
 
   <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
-    <!-- Options to Switch Launch Function -->
+    <!-- Options to Switch Launch Function/Module -->
     <arg name="mode" value="$(var perception_mode)"/>
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     <arg name="data_path" value="$(var data_path)"/>
@@ -30,11 +30,7 @@
     <arg name="occupancy_grid_map_method" value="$(var occupancy_grid_map_method)"/>
     <arg name="occupancy_grid_map_updater" value="$(var occupancy_grid_map_updater)"/>
 
-    <arg
-      name="use_empty_dynamic_object_publisher"
-      value="$(var use_empty_dynamic_object_publisher)"
-      description="if use_empty_dynamic_object_publisher:=true, /perception/object_recognition/objects topic will contain an empty DynamicObjectArray, and the object recognition modules will not be launched."
-    />
+    <arg name="use_empty_dynamic_object_publisher" value="$(var use_empty_dynamic_object_publisher)"/>
     <arg name="use_low_height_cropbox" default="true" description="use low height crop filter in clustering"/>
     <arg name="use_vector_map" default="true" description="use vector map in prediction"/>
     <arg name="use_pointcloud_map" default="true" description="use pointcloud map in detection"/>
@@ -51,7 +47,7 @@
     <arg name="objects_filter_method" value="$(var detected_objects_filter_method)"/>
     <arg name="objects_validation_method" value="$(var detected_objects_validation_method)"/>
 
-    <arg name="use_traffic_light_recognition" value="$(var use_traffic_light_recognition)" description="launch traffic light recognition module"/>
+    <arg name="use_traffic_light_recognition" value="$(var use_traffic_light_recognition)"/>
     <arg name="traffic_light_recognition/enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
     <arg name="traffic_light_recognition/fusion_only" value="false"/>
     <arg name="traffic_light_image_number" value="2"/>
