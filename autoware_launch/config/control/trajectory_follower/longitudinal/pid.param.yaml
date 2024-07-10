@@ -20,9 +20,9 @@
     emergency_state_traj_rot_dev: 0.7854
 
     # drive state
-    kp: 1.0
-    ki: 0.1
-    kd: 0.0
+    kp: 1.0 # kp > 0 (stability proof)
+    ki: 0.8 # Ki < kp * kd (stability proof)
+    kd: 1.0 # kd > 0 (stability proof)
     max_out: 1.0
     min_out: -1.0
     max_p_effort: 1.0
