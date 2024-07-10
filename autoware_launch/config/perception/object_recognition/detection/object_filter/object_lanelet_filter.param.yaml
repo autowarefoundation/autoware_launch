@@ -13,7 +13,7 @@
     filter_settings:
       # polygon overlap based filter
       polygon_overlap_filter:
-       enabled: true
+        enabled: true
       # velocity direction based filter
       lanelet_direction_filter:
         enabled: false
