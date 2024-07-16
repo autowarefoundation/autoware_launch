@@ -13,6 +13,7 @@
     <arg name="component_state_monitor_topic_path" value="$(find-pkg-share autoware_launch)/config/system/component_state_monitor/topics.yaml"/>
     <arg name="emergency_handler_param_path" value="$(find-pkg-share autoware_launch)/config/system/emergency_handler/emergency_handler.param.yaml"/>
     <arg name="duplicated_node_checker_param_path" value="$(find-pkg-share autoware_launch)/config/system/duplicated_node_checker/duplicated_node_checker.param.yaml"/>
+    <arg name="processing_time_checker_param_path" value="$(find-pkg-share autoware_launch)/config/system/processing_time_checker/processing_time_checker.param.yaml"/>
     <arg name="mrm_comfortable_stop_operator_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_comfortable_stop_operator/mrm_comfortable_stop_operator.param.yaml"/>
     <arg name="mrm_emergency_stop_operator_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_emergency_stop_operator/mrm_emergency_stop_operator.param.yaml"/>
     <arg name="system_error_monitor_param_path" value="$(var system_error_monitor_param_path)"/>
@@ -29,7 +30,7 @@
     <arg name="system_monitor_process_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/process_monitor.param.yaml"/>
     <arg name="system_monitor_voltage_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/voltage_monitor.param.yaml"/>
 
-    <arg name="use_emergency_handler" value="true"/>
+    <arg name="use_emergency_handler" value="false"/>
     <arg name="mrm_handler_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_handler/mrm_handler.param.yaml"/>
     <arg name="diagnostic_graph_aggregator_param_path" value="$(var diagnostic_graph_aggregator_param_path)"/>
     <arg name="diagnostic_graph_aggregator_graph_path" value="$(var diagnostic_graph_aggregator_graph_path)"/>

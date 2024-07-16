@@ -10,7 +10,7 @@
   <let name="latlon_controller_param_path_dir" value="$(var vehicle_id)" if="$(var use_individual_control_param)"/>
   <let name="latlon_controller_param_path_dir" value="" unless="$(var use_individual_control_param)"/>
 
-  <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.py">
+  <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.xml">
     <!-- option -->
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     <arg name="vehicle_id" value="$(var vehicle_id)"/>
@@ -39,7 +39,7 @@
     <arg name="shift_decider_param_path" value="$(find-pkg-share autoware_launch)/config/control/shift_decider/shift_decider.param.yaml"/>
     <arg name="obstacle_collision_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/obstacle_collision_checker/obstacle_collision_checker.param.yaml"/>
     <arg name="external_cmd_selector_param_path" value="$(find-pkg-share autoware_launch)/config/control/external_cmd_selector/external_cmd_selector.param.yaml"/>
-    <arg name="aeb_param_path" value="$(find-pkg-share autoware_launch)/config/control/autonomous_emergency_braking/autonomous_emergency_braking.param.yaml"/>
+    <arg name="aeb_param_path" value="$(find-pkg-share autoware_launch)/config/control/autoware_autonomous_emergency_braking/autonomous_emergency_braking.param.yaml"/>
     <arg name="enable_autonomous_emergency_braking" value="$(var enable_autonomous_emergency_braking)"/>
     <arg name="enable_predicted_path_checker" value="$(var enable_predicted_path_checker)"/>
     <arg name="predicted_path_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/predicted_path_checker/predicted_path_checker.param.yaml"/>
