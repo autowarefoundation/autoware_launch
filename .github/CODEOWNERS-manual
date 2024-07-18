@@ -17,6 +17,6 @@ autoware_launch/launch/components/tier4_perception_component.launch.xml shunsuke
 autoware_launch/launch/components/tier4_planning_component.launch.xml takayuki.murooka@tier4.jp fumiya.watanabe@tier4.jp satoshi.ota@tier4.jp shumpei.wakabayashi@tier4.jp
 autoware_launch/launch/components/tier4_sensing_component.launch.xml shunsuke.miura@tier4.jp yoshi.ri@tier4.jp koji.minoda@tier4.jp
 autoware_launch/launch/components/tier4_simulator_component.launch.xml takayuki.murooka@tier4.jp fumiya.watanabe@tier4.jp satoshi.ota@tier4.jp shumpei.wakabayashi@tier4.jp
-autoware_launch/launch/components/tier4_system_component.launch.xml fumihito.ito@tier4.jp isamu.takagi@tier4.jp
+autoware_launch/launch/components/tier4_system_component.launch.xml fumihito.ito@tier4.jp isamu.takagi@tier4.jp shumpei.wakabayashi@tier4.jp tomoya.kimura@tier4.jp
 autoware_launch/rviz/**  # no codeowners
 autoware_launch/rviz/image/** yukihiro.saito@tier4.jp ryohsuke.mitsudome@tier4.jp
