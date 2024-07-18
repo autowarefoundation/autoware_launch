@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Fork the repository and add the parameters here if needed. -->
-  <arg name="scenario_simulation" default="false"/>
-  <arg name="launch_deprecated_api" default="$(var scenario_simulation)"/>
+  <arg name="launch_deprecated_api" default="true"/>
+  <arg name="rosbridge_enabled" default="true"/>
+  <arg name="rosbridge_max_message_size" default="1000000000"/>
   <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml"/>
 </launch>
