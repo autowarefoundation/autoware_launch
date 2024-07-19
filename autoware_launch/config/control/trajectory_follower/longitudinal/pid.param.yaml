@@ -21,7 +21,7 @@
 
     # drive state
     kp: 1.5 # kp > 0 (stability proof) for third-order
-    ki: 0.1 # ki > 0 && Ki < kp * kd (stability proof) for third-order
+    ki: 1.0 # ki > 0 && Ki < kp * kd (stability proof) for third-order
     kd: 2.5 # kd > 0 (stability proof) for third-order
     max_out: 2.0
     min_out: -2.0
