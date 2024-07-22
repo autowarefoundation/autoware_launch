@@ -21,10 +21,10 @@
 
     # drive state
     kp: 0.1 # kp > 0 (stability proof) for third-order
-    ki: 0.05 # ki > 0 && Ki < kp * kd (stability proof) for third-order
-    kd: 1.5 # kd > 0 (stability proof) for third-order
-    max_out: 2.0
-    min_out: -2.0
+    ki: 0.0 # ki > 0 && Ki < kp * kd (stability proof) for third-order
+    kd: 1.0 # kd > 0 (stability proof) for third-order
+    max_out: 1.0
+    min_out: -1.0
     max_p_effort: 15.0
     min_p_effort: -15.0
     max_i_effort: 4.0
