@@ -12,6 +12,7 @@
   <arg name="vehicle_model"/>
   <arg name="initial_engage_state"/>
   <arg name="vehicle_info_param_file"/>
+  <arg name="raw_vehicle_cmd_converter_param_path"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
 
   <include file="$(find-pkg-share tier4_simulator_launch)/launch/simulator.launch.xml">
@@ -27,6 +28,7 @@
     <arg name="vehicle_model" value="$(var vehicle_model)"/>
     <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
     <arg name="vehicle_info_param_file" value="$(var vehicle_info_param_file)"/>
+    <arg name="raw_vehicle_cmd_converter_param_path" value="$(var raw_vehicle_cmd_converter_param_path)"/>
 
     <arg name="fault_injection_param_path" value="$(find-pkg-share autoware_launch)/config/simulator/fault_injection.param.yaml"/>
     <arg
