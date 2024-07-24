@@ -1,4 +1,4 @@
-name: update-codeowners-from-packages
+name: pre-commit-autoupdate
 
 on:
   schedule:
@@ -11,7 +11,7 @@ jobs:
     secrets:
       secret: ${{ secrets.APP_ID }}
 
-  update-codeowners-from-packages:
+  pre-commit-autoupdate:
     needs: check-secret
     if: ${{ needs.check-secret.outputs.set == 'true' }}
     runs-on: ubuntu-latest
@@ -23,11 +23,15 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.PRIVATE_KEY }}
 
-      - name: Run update-codeowners-from-packages
-        uses: autowarefoundation/autoware-github-actions/update-codeowners-from-packages@v1
+      - name: Run pre-commit-autoupdate
+        uses: autowarefoundation/autoware-github-actions/pre-commit-autoupdate@v1
         with:
           token: ${{ steps.generate-token.outputs.token }}
+          pre-commit-config: .pre-commit-config.yaml
           pr-labels: |
             tag:bot
-            tag:update-codeowners-from-packages
+            tag:pre-commit-autoupdate
+          pr-branch: pre-commit-autoupdate
+          pr-title: "ci(pre-commit): autoupdate"
+          pr-commit-message: "ci(pre-commit): autoupdate"
           auto-merge-method: squash
