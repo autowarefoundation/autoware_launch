@@ -110,7 +110,7 @@
 
       lane_change_finish_judge_buffer: 2.0      # [m]
       finish_judge_lateral_threshold: 0.1        # [m]
-      finish_judge_lateral_angle_deviation: 2.0 # [deg]
+      finish_judge_lateral_angle_deviation: 1.0 # [deg]
 
       # debug
       publish_debug_marker: true
