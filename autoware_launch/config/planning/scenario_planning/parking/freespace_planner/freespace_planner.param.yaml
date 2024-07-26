@@ -24,8 +24,8 @@
     lateral_goal_range: 0.5
     longitudinal_goal_range: 1.0
     curve_weight: 0.5
-    reverse_weight: 1.0
-    direction_change_weight: 1.5
+    reverse_weight: 0.7
+    direction_change_weight: 2.0
     # costmap configs
     obstacle_threshold: 100
 
