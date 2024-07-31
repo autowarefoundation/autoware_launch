@@ -84,7 +84,7 @@
     <let name="launch_dummy_localization" value="true"/>
     <!-- scenario simulator does not support launch_localization_for_sim_vehicle. -->
     <let name="launch_localization_for_sim_vehicle" value="false" if="$(var scenario_simulation)"/>
-    <let name="launch_localization_for_sim_vehicle" value="true" unless="$(var scenario_simulation)"/>
+    <let name="launch_localization_for_sim_vehicle" value="false" unless="$(var scenario_simulation)"/>
     <let name="launch_diagnostic_converter" value="$(var scenario_simulation)"/>
 
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_simulator_component.launch.xml">
