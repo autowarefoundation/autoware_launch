@@ -21,7 +21,7 @@
 
     # drive state
     kp: 1.0
-    ki: 0.1
+    ki: 0.0
     kd: 0.0
     max_out: 1.0
     min_out: -1.0
@@ -31,7 +31,7 @@
     min_i_effort: -0.3
     max_d_effort: 0.0
     min_d_effort: 0.0
-    lpf_vel_error_gain: 0.9
+    lpf_vel_error_gain: 0.98
     enable_integration_at_low_speed: false
     current_vel_threshold_pid_integration: 0.5
     time_threshold_before_pid_integration: 2.0
@@ -59,6 +59,10 @@
     emergency_vel: 0.0
     emergency_acc: -5.0 # denotes acceleration
     emergency_jerk: -3.0
+
+    # acceleration feedback 5/(0.6s+1)
+    lpf_acc_error_gain: 0.95 # 
+    acc_feedback_gain: 1.0
 
     # acceleration limit
     max_acc: 3.0
