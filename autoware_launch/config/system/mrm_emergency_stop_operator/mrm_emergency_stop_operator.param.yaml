@@ -1,5 +1,5 @@
 /**:
   ros__parameters:
     update_rate: 30
-    target_acceleration: -2.5
-    target_jerk: -1.5
+    target_acceleration: -3.0
+    target_jerk: -3.0
