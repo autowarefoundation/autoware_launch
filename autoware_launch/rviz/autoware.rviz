@@ -2461,6 +2461,19 @@ Visualization Manager:
             Reliability Policy: Reliable
             Value: /control/autonomous_emergency_braking/debug/markers
           Value: false
+        - Class: rviz_default_plugins/MarkerArray
+          Enabled: true
+          Name: Info/AEB
+          Namespaces:
+            stop_factor_text: true
+            stop_virtual_wall: true
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /control/autonomous_emergency_braking/info/markers
+          Value: true
       Enabled: true
       Name: Control
     - Class: rviz_common/Group
