@@ -81,7 +81,7 @@
     <let name="launch_dummy_perception" value="true" unless="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="false" if="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="true" unless="$(var scenario_simulation)"/>
-    <!-- candidate velues of localization_sim_mode: nothing, api -->
+    <!-- The following modes are available as localization_sim_mode: nothing, api -->
     <let name="localization_sim_mode" value="api"/>
     <let name="launch_diagnostic_converter" value="$(var scenario_simulation)"/>
 
