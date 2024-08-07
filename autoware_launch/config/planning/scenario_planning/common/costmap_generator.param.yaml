@@ -7,7 +7,7 @@
     activate_by_scenario: False
     grid_min_value: 0.0
     grid_max_value: 1.0
-    grid_resolution: 0.2
+    grid_resolution: 0.3
     grid_length_x: 70.0
     grid_length_y: 70.0
     grid_position_x: 0.0
