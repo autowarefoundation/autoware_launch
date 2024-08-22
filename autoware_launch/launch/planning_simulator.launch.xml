@@ -37,6 +37,12 @@
   <arg name="enable_all_modules_auto_mode" default="$(var scenario_simulation)" description="enable all module's auto mode"/>
   <!-- Simulated time -->
   <arg name="use_sim_time" default="$(var scenario_simulation)"/>
+  <!-- Localization-->
+  <arg
+    name="localization_sim_mode"
+    default="api"
+    description="Select localization mode. Options are 'none', 'api' or 'pose_twist_estimator'. 'pose_twist_estimator' starts most of the localization modules except for the ndt_scan_matcher. 'api' starts an external API for initial position estimation. 'none' does not start any localization-related process."
+  />
 
   <group scoped="false">
     <!-- Vehicle -->
@@ -81,13 +87,12 @@
     <let name="launch_dummy_perception" value="true" unless="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="false" if="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="true" unless="$(var scenario_simulation)"/>
-    <let name="launch_dummy_localization" value="true"/>
     <let name="launch_diagnostic_converter" value="$(var scenario_simulation)"/>
 
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_simulator_component.launch.xml">
       <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
       <arg name="launch_dummy_vehicle" value="$(var launch_dummy_vehicle)"/>
-      <arg name="launch_dummy_localization" value="$(var launch_dummy_localization)"/>
+      <arg name="localization_sim_mode" value="$(var localization_sim_mode)"/>
       <arg name="launch_dummy_doors" value="$(var launch_dummy_doors)"/>
       <arg name="launch_diagnostic_converter" value="$(var launch_diagnostic_converter)"/>
       <arg name="perception/enable_detection_failure" value="$(var perception/enable_detection_failure)"/>
