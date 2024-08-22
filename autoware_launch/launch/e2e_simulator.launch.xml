@@ -37,6 +37,8 @@
     default="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.awsim.param.yaml"
     description="system error monitor param path"
   />
+  <!-- Sensing -->
+  <arg name="launch_sensing_driver" default="false"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
@@ -74,7 +76,7 @@
       <arg name="system_error_monitor_param_path" value="$(var system_error_monitor_param_path)"/>
       <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/autoware-awsim.yaml"/>
       <!-- Sensing -->
-      <arg name="launch_sensing_driver" value="false"/>
+      <arg name="launch_sensing_driver" value="$(var launch_sensing_driver)"/>
       <!-- Perception-->
       <arg name="traffic_light_recognition/enable_fine_detection" value="false"/>
       <arg name="namespace1" value="$(var traffic_light_namespace)"/>
