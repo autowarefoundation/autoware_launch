@@ -61,7 +61,7 @@
     emergency_jerk: -3.0
 
     # acceleration feedback
-    lpf_acc_error_gain: 0.98 # 
+    lpf_acc_error_gain: 0.98
     acc_feedback_gain: 0.0
 
     # acceleration limit
