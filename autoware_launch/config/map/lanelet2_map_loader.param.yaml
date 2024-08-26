@@ -1,6 +1,6 @@
 /**:
   ros__parameters:
-    enabled_dynamic_lanelet_loading: true
+    enable_differential_map_loading: false
 
     allow_unsupported_version: true             # flag to load unsupported format_version anyway. If true, just prints warning.
     center_line_resolution: 5.0                 # [m]
