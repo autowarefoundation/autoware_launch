@@ -36,7 +36,7 @@
       # object recognition
       object_recognition:
         use_object_recognition: true
-        collision_check_soft_margins: [2.0, 1.5, 1.0]
+        collision_check_soft_margins: [5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0]  # the maximum margin when ego and objects are oriented.
         collision_check_hard_margins: [0.6]  # this should be larger than `surround_check_distance` of surround_obstacle_checker
         object_recognition_collision_check_max_extra_stopping_margin: 1.0
         th_moving_object_velocity: 1.0
@@ -55,6 +55,7 @@
         maximum_jerk: 1.0
         path_priority: "efficient_path" # "efficient_path" or "close_goal"
         efficient_path_order: ["SHIFT", "ARC_FORWARD", "ARC_BACKWARD"] # only lane based pull over(exclude freespace parking)
+        lane_departure_check_expansion_margin: 0.0
 
         # shift parking
         shift_parking:
@@ -112,9 +113,11 @@
             use_back: true
             adapt_expansion_distance: true
             expansion_distance: 0.5
+            near_goal_distance: 3.0
             distance_heuristic_weight: 2.0
             smoothness_weight: 0.5
             obstacle_distance_weight: 1.75
+            goal_lat_distance_weight: 5.0
           # -- RRT* search Configurations --
           rrtstar:
             enable_update: true
