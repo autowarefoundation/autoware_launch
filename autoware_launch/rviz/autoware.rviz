@@ -2411,6 +2411,36 @@ Visualization Manager:
             Constant Color: false
             Scale: 0.30000001192092896
             Value: false
+        - Class: rviz_plugins/Trajectory
+          Color Border Vel Max: 3
+          Enabled: false
+          Name: Resampled Reference Trajectory
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /control/trajectory_follower/controller_node_exe/debug/resampled_reference_trajectory
+          Value: true
+          View Path:
+            Alpha: 1
+            Color: 153; 193; 241
+            Constant Color: true
+            Value: false
+            Constant Width: true
+            Width: 0.2
+          View Velocity:
+            Alpha: 1
+            Color: 0; 0; 0
+            Constant Color: false
+            Scale: 0.30000001192092896
+            Value: false
+          View Point:
+            Alpha: 1
+            Color: 0; 60; 255
+            Offset: 0
+            Radius: 0.10000000149011612
+            Value: true
         - Class: rviz_default_plugins/Marker
           Enabled: false
           Name: Stop Reason
