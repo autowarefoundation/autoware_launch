@@ -34,3 +34,6 @@
         low_priority_region_x: -20.0
         center_pcl_shift: 0.0
         radial_divider_angle_deg: 1.0
+
+        # debug parameters
+        publish_processing_time_detail: false
