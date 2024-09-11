@@ -19,6 +19,7 @@
       <!-- parameter paths for common -->
       <arg name="localization_error_monitor_param_path" value="$(var loc_config_path)/localization_error_monitor.param.yaml"/>
       <arg name="ekf_localizer_param_path" value="$(var loc_config_path)/ekf_localizer.param.yaml"/>
+      <arg name="stop_filter_param_path" value="$(var loc_config_path)/stop_filter.param.yaml"/>
       <arg name="pose_initializer_param_path" value="$(var loc_config_path)/pose_initializer.param.yaml"/>
       <arg name="twist2accel_param_path" value="$(var loc_config_path)/twist2accel.param.yaml"/>
 
@@ -50,6 +51,14 @@
 
       <!-- parameter paths for eagleye -->
       <arg name="eagleye_param_path" value="$(find-pkg-share autoware_launch)/config/localization/eagleye_config.param.yaml"/>
+
+      <!-- parameter paths for lidar_marker_localizer -->
+      <arg name="lidar_marker_localizer/lidar_marker_localizer_param_path" value="$(var loc_config_path)/lidar_marker_localizer/lidar_marker_localizer.param.yaml"/>
+      <arg
+        name="lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path"
+        value="$(var loc_config_path)/lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml"
+      />
+      <arg name="lidar_marker_localizer/pointcloud_preprocessor/ring_filter_param_path" value="$(var loc_config_path)/lidar_marker_localizer/pointcloud_preprocessor/ring_filter.param.yaml"/>
 
       <!-- parameter path for ar_tag_based_localizer -->
       <arg name="ar_tag_based_localizer_param_path" value="$(var loc_config_path)/ar_tag_based_localizer.param.yaml"/>
