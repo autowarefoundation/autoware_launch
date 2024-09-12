@@ -530,7 +530,7 @@ Visualization Manager:
               Name: PoseWithCovarianceHistory
               Path:
                 Shape Type:
-                  Alpha: 1
+                  Alpha: 0.999
                   Color: 170; 255; 127
                   Head Length: 0.20000
                   Head diameter: 0.30000
@@ -639,7 +639,7 @@ Visualization Manager:
               Name: PoseWithCovarianceHistory
               Path:
                 Shape Type:
-                  Alpha: 1
+                  Alpha: 0.999
                   Color: 0; 255; 255
                   Head Length: 0.20000
                   Head diameter: 0.300000
