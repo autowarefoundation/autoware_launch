@@ -260,8 +260,8 @@ Visualization Manager:
               Turn Signals Topic: /vehicle/status/turn_indicators_status
               Value: true
               Width: 550
-              Background Alpha: 0.3
-              Background Color: 15; 20; 23
+              Background Alpha: 0.5
+              Background Color: 23; 28; 31
               Dark Traffic Color: 255; 51; 51
               Handle Angle Scale: 17
               Light Traffic Color: 255; 153; 153
@@ -968,8 +968,8 @@ Visualization Manager:
               Remaining Distance and Time Topic: /planning/mission_remaining_distance_time
               Enabled: true
               Value: true
-              Background Alpha: 0.30000001192092896
-              Background Color: 15; 20; 23
+              Background Alpha: 0.5
+              Background Color: 23; 28; 31
               Text Color: 194; 194; 194
           Enabled: true
           Name: MissionPlanning
