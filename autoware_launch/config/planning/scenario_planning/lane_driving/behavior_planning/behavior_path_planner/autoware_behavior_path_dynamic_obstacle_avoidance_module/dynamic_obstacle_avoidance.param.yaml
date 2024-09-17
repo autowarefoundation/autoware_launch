@@ -56,7 +56,7 @@
         object_path_base:
           min_longitudinal_polygon_margin: 3.0 # [m]
 
-        lat_offset_from_obstacle: 1.0 # [m]
+        lat_offset_from_obstacle: 0.3 # [m]
         margin_distance_around_pedestrian: 2.0 # [m]
         predicted_path:
           end_time_to_consider: 2.0 # [s]
