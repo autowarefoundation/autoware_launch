@@ -76,7 +76,7 @@
         bicycle:
           th_moving_speed: 0.28
           th_moving_time: 1.0
-          longitudinal_margin: 1.0
+          longitudinal_margin: 0.6
           lateral_margin:
             soft_margin: 0.7
             hard_margin: 0.5
@@ -87,7 +87,7 @@
         motorcycle:
           th_moving_speed: 1.0
           th_moving_time: 1.0
-          longitudinal_margin: 1.0
+          longitudinal_margin: 0.6
           lateral_margin:
             soft_margin: 0.5
             hard_margin: 0.3
@@ -98,7 +98,7 @@
         pedestrian:
           th_moving_speed: 0.28
           th_moving_time: 1.0
-          longitudinal_margin: 1.0
+          longitudinal_margin: 0.6
           lateral_margin:
             soft_margin: 0.7
             hard_margin: 0.5
