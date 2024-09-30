@@ -88,8 +88,8 @@
       stop_obstacle_hold_time_threshold : 1.0 # maximum time for holding closest stop obstacle
 
       # hysteresis for cruise and stop
-      obstacle_velocity_threshold_from_cruise_to_stop : 3.0 # stop planning is executed to the obstacle whose velocity is less than this value [m/s]
-      obstacle_velocity_threshold_from_stop_to_cruise : 3.5 # stop planning is executed to the obstacle whose velocity is less than this value [m/s]
+      obstacle_velocity_threshold_from_cruise_to_stop : 1.0 # stop planning is executed to the obstacle whose velocity is less than this value [m/s]
+      obstacle_velocity_threshold_from_stop_to_cruise : 1.5 # stop planning is executed to the obstacle whose velocity is less than this value [m/s]
 
       # if crossing vehicle is determined as target obstacles or not
       crossing_obstacle:
