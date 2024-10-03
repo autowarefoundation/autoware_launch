@@ -24,3 +24,6 @@
 
     # radius map for dynamic map loading
     map_loader_radius: 150.0
+
+    # Threshold of grid size to split map pointcloud
+    max_map_grid_size: 100.0
