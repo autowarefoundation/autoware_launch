@@ -14,7 +14,7 @@
     publish_debug_pcd: False
 
     # use dynamic map loading
-    use_dynamic_map_loading: True
+    use_dynamic_map_loading: False
 
     # time interval to check dynamic map loading
     timer_interval_ms: 100
@@ -24,3 +24,6 @@
 
     # radius map for dynamic map loading
     map_loader_radius: 150.0
+
+    # Threshold of grid size to split map pointcloud
+    max_map_grid_size: 100.0
