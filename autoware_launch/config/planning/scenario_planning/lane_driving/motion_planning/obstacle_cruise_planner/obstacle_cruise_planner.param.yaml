@@ -26,7 +26,7 @@
         enable_approaching: false
         additional_safe_distance_margin: 3.0 # [m]
         min_safe_distance_margin: 3.0 # [m]
-      suppress_sudden_obstacle_stop: false
+      suppress_sudden_obstacle_stop: true
 
       stop_obstacle_type:
         pointcloud: false
