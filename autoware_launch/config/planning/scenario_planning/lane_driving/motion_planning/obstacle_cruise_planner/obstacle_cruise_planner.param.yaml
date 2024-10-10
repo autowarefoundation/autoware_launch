@@ -126,7 +126,7 @@
           ego_obstacle_overlap_time_threshold : 0.2 #  time threshold to decide cut-in obstacle for cruise or stop [s]
           max_prediction_time_for_collision_check : 10.0 # prediction time to check collision between obstacle and ego
           max_lateral_time_margin: 5.0 # time threshold of lateral margin between obstacle and trajectory band with ego's width [s]
-          num_of_predicted_paths: 3 # number of the highest confidence predicted path to check collision between obstacle and ego
+          num_of_predicted_paths: 1 # number of the highest confidence predicted path to check collision between obstacle and ego
         yield:
           enable_yield: true
           lat_distance_threshold: 5.0 # lateral margin between obstacle in neighbor lanes and trajectory band with ego's width for yielding
