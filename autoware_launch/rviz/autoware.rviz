@@ -520,39 +520,26 @@ Visualization Manager:
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
-                Filter size: 10
                 History Policy: Keep Last
                 Reliability Policy: Reliable
                 Value: /localization/pose_estimator/pose_with_covariance
-              Value: false
+              Value: true
             - Buffer Size: 200
-              Class: rviz_plugins::PoseWithCovarianceHistory
-              Covariance:
-                Alpha: 0.5
-                Color: 204; 51; 204
-                Scale: 1
-                Value: true
+              Class: rviz_plugins::PoseHistory
               Enabled: false
-              Name: PoseWithCovarianceHistory
-              Path:
-                Shape Type:
-                  Alpha: 0.999
-                  Color: 170; 255; 127
-                  Head Length: 0.20000
-                  Head diameter: 0.30000
-                  Shaft Length: 0.30000
-                  Shaft diameter: 0.15000
-                  Value: Line
-                  Width: 0.10000
+              Line:
+                Color: 170; 255; 127
                 Value: true
+                Width: 0.10000000149011612
+                Alpha: 0.999
+              Name: PoseHistory
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
-                Filter size: 10
                 History Policy: Keep Last
                 Reliability Policy: Reliable
-                Value: /localization/pose_estimator/pose_with_covariance
-              Value: false
+                Value: /localization/pose_estimator/pose
+              Value: true
             - Alpha: 0.999
               Autocompute Intensity Bounds: true
               Autocompute Value Bounds:
@@ -635,32 +622,20 @@ Visualization Manager:
         - Class: rviz_common/Group
           Displays:
             - Buffer Size: 1000
-              Class: rviz_plugins::PoseWithCovarianceHistory
-              Covariance:
-                Alpha: 0.5
-                Color: 153; 193; 241
-                Scale: 1
-                Value: false
+              Class: rviz_plugins::PoseHistory
               Enabled: true
-              Name: PoseWithCovarianceHistory
-              Path:
-                Shape Type:
-                  Alpha: 0.999
-                  Color: 0; 255; 255
-                  Head Length: 0.20000
-                  Head diameter: 0.300000
-                  Shaft Length: 0.30000
-                  Shaft diameter: 0.15000
-                  Value: Line
-                  Width: 0.10000
+              Line:
+                Color: 0; 255; 255
                 Value: true
+                Width: 0.10000000149011612
+                Alpha: 0.999
+              Name: PoseHistory
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
-                Filter size: 10
                 History Policy: Keep Last
                 Reliability Policy: Reliable
-                Value: /localization/pose_with_covariance
+                Value: /localization/pose_twist_fusion_filter/pose
               Value: true
           Enabled: true
           Name: EKF
