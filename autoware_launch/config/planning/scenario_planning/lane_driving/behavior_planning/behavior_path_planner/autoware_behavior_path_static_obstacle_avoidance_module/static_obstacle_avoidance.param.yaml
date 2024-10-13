@@ -100,9 +100,9 @@
           th_moving_time: 1.0
           longitudinal_margin: 1.0
           lateral_margin:
-            soft_margin: 0.7
-            hard_margin: 0.5
-            hard_margin_for_parked_vehicle: 0.5
+            soft_margin: 0.2
+            hard_margin: 0.1
+            hard_margin_for_parked_vehicle: 0.3
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.5
           th_error_eclipse_long_radius : 0.6
