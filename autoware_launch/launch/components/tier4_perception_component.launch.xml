@@ -19,7 +19,7 @@
   <arg name="detected_objects_filter_method" default="lanelet_filter" description="options: lanelet_filter, position_filter"/>
   <arg name="detected_objects_validation_method" default="obstacle_pointcloud" description="options: obstacle_pointcloud, occupancy_grid (must be used with laserscan_based_occupancy_grid_map)"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
-  <arg name="lidar_detection_model" default="centerpoint_tiny" description="options: `centerpoint*`, `transfusion*`, `apollo*`, `pointpainting*`, `clustering*`"/>
+  <arg name="lidar_detection_model" default="centerpoint" description="specify lidar detection model and optinally can add model config like `centerpoint/centerpoint_sigma`"/>
   <arg name="all_traffic_light_camera" default="[camera6, camera7]" description="choose camera which use for traffic light recognition"/>
 
   <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
