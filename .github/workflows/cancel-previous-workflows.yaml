@@ -5,7 +5,7 @@ on:
 
 jobs:
   cancel-previous-workflows:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.12.1

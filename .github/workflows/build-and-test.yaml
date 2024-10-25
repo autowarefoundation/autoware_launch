@@ -9,7 +9,7 @@ on:
 jobs:
   build-and-test:
     if: ${{ github.event_name != 'push' || github.ref_name == github.event.repository.default_branch }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     container: ${{ matrix.container }}
     strategy:
       fail-fast: false
