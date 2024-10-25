@@ -88,14 +88,14 @@
     <let name="launch_dummy_perception" value="true" unless="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="false" if="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="true" unless="$(var scenario_simulation)"/>
-    <let name="launch_diagnostic_converter" value="$(var scenario_simulation)"/>
+    <let name="launch_scenario_simulator_v2_adapter" value="$(var scenario_simulation)"/>
 
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_simulator_component.launch.xml">
       <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
       <arg name="launch_dummy_vehicle" value="$(var launch_dummy_vehicle)"/>
       <arg name="localization_sim_mode" value="$(var localization_sim_mode)"/>
       <arg name="launch_dummy_doors" value="$(var launch_dummy_doors)"/>
-      <arg name="launch_diagnostic_converter" value="$(var launch_diagnostic_converter)"/>
+      <arg name="launch_scenario_simulator_v2_adapter" value="$(var launch_scenario_simulator_v2_adapter)"/>
       <arg name="perception/enable_detection_failure" value="$(var perception/enable_detection_failure)"/>
       <arg name="perception/enable_object_recognition" value="$(var perception/enable_object_recognition)"/>
       <arg name="perception/use_base_link_z" value="$(var perception/use_base_link_z)"/>
