@@ -43,7 +43,7 @@
       lane_departure_margin: 0.2
       lane_departure_check_expansion_margin: 0.0
       backward_velocity: -1.0
-      pull_out_max_steer_angle: 0.26  # 15deg
+      pull_out_max_steer_angle: 0.4  # 22.9deg
       # search start pose backward
       enable_back: true
       search_priority: "efficient_path"  # "efficient_path" or "short_back_distance"
