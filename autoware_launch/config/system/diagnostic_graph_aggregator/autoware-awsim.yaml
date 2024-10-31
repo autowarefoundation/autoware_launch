@@ -3,4 +3,3 @@ files:
 
 edits:
   - { type: remove, path: /autoware/system/duplicated_node_checker }
-  - { type: remove, path: /autoware/control/emergency_braking }
