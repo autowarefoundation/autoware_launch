@@ -7,6 +7,14 @@ files:
   - { path: $(dirname)/system.yaml }
   - { path: $(dirname)/vehicle.yaml }
 
+edits:
+  - { type: remove, path: /autoware/map/topic_rate_check/pointcloud_map }
+  - { type: remove, path: /autoware/localization/scan_matching_status }
+  - { type: remove, path: /autoware/localization/accuracy }
+  - { type: remove, path: /autoware/localization/sensor_fusion_status }
+  - { type: remove, path: /autoware/localization/topic_rate_check/pose_twist_fusion }
+  - { type: remove, path: /autoware/perception/topic_rate_check/pointcloud }
+
 units:
   - path: /autoware/modes/local
     type: and
@@ -68,11 +76,3 @@ units:
     type: and
     list:
       - { type: link, link: /autoware/system/service_log_checker }
-
-edits:
-  - { type: remove, path: /autoware/map/topic_rate_check/pointcloud_map }
-  - { type: remove, path: /autoware/localization/scan_matching_status }
-  - { type: remove, path: /autoware/localization/accuracy }
-  - { type: remove, path: /autoware/localization/sensor_fusion_status }
-  - { type: remove, path: /autoware/localization/topic_rate_check/pose_twist_fusion }
-  - { type: remove, path: /autoware/perception/topic_rate_check/pointcloud }
