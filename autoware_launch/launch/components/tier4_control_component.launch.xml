@@ -4,7 +4,6 @@
   <arg name="module_preset" default="default"/>
   <include file="$(find-pkg-share autoware_launch)/config/control/preset/$(var module_preset)_preset.yaml"/>
   <arg name="use_individual_control_param" default="false"/>
-  <arg name="launch_collision_detector" default="false"/>
 
   <let name="latlon_controller_param_path_dir" value="$(var vehicle_id)" if="$(var use_individual_control_param)"/>
   <let name="latlon_controller_param_path_dir" value="" unless="$(var use_individual_control_param)"/>
@@ -39,7 +38,6 @@
     <arg name="external_cmd_selector_param_path" value="$(find-pkg-share autoware_launch)/config/control/external_cmd_selector/external_cmd_selector.param.yaml"/>
     <arg name="aeb_param_path" value="$(find-pkg-share autoware_launch)/config/control/autoware_autonomous_emergency_braking/autonomous_emergency_braking.param.yaml"/>
     <arg name="collision_detector_param_path" value="$(find-pkg-share autoware_launch)/config/control/autoware_collision_detector/collision_detector.param.yaml"/>
-    <arg name="launch_collision_detector" value="$(var launch_collision_detector)"/>
     <arg name="predicted_path_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/predicted_path_checker/predicted_path_checker.param.yaml"/>
   </include>
 </launch>
