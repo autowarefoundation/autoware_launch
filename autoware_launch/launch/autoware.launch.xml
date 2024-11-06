@@ -9,6 +9,7 @@
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
+  <arg name="control_module_preset" default="default" description="control module preset"/>
 
   <!-- Optional parameters -->
   <!-- Modules to be launched -->
@@ -112,7 +113,9 @@
 
   <!-- Control -->
   <group if="$(var launch_control)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
+      <arg name="module_preset" value="$(var control_module_preset)"/>
+    </include>
   </group>
 
   <!-- API -->

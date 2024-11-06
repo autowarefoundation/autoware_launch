@@ -10,6 +10,7 @@
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
+  <arg name="control_module_preset" default="default" description="control module preset"/>
 
   <!-- Optional parameters -->
   <!-- Modules to be launched -->
@@ -50,6 +51,7 @@
       <arg name="data_path" value="$(var data_path)"/>
       <!-- launch module preset -->
       <arg name="planning_module_preset" value="$(var planning_module_preset)"/>
+      <arg name="control_module_preset" value="$(var control_module_preset)"/>
       <!-- Modules to be launched -->
       <arg name="launch_vehicle" value="$(var vehicle)"/>
       <arg name="launch_map" value="$(var map)"/>

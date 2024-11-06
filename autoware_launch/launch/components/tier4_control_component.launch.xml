@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
 <launch>
   <!-- optional parameters are written here -->
-  <arg name="lateral_controller_mode" default="mpc"/>
-  <arg name="longitudinal_controller_mode" default="pid"/>
+  <arg name="module_preset" default="default"/>
+  <include file="$(find-pkg-share autoware_launch)/config/control/preset/$(var module_preset)_preset.yaml"/>
   <arg name="use_individual_control_param" default="false"/>
-  <arg name="enable_autonomous_emergency_braking" default="true"/>
-  <arg name="enable_predicted_path_checker" default="false"/>
-  <arg name="enable_collision_detector" default="false"/>
+  <arg name="launch_collision_detector" default="false"/>
 
   <let name="latlon_controller_param_path_dir" value="$(var vehicle_id)" if="$(var use_individual_control_param)"/>
   <let name="latlon_controller_param_path_dir" value="" unless="$(var use_individual_control_param)"/>
@@ -15,7 +13,6 @@
     <!-- option -->
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     <arg name="vehicle_id" value="$(var vehicle_id)"/>
-    <arg name="enable_obstacle_collision_checker" value="false"/>
     <arg name="trajectory_follower_node_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/trajectory_follower_node.param.yaml"/>
     <arg
       name="lat_controller_param_path"
@@ -42,9 +39,7 @@
     <arg name="external_cmd_selector_param_path" value="$(find-pkg-share autoware_launch)/config/control/external_cmd_selector/external_cmd_selector.param.yaml"/>
     <arg name="aeb_param_path" value="$(find-pkg-share autoware_launch)/config/control/autoware_autonomous_emergency_braking/autonomous_emergency_braking.param.yaml"/>
     <arg name="collision_detector_param_path" value="$(find-pkg-share autoware_launch)/config/control/autoware_collision_detector/collision_detector.param.yaml"/>
-    <arg name="enable_autonomous_emergency_braking" value="$(var enable_autonomous_emergency_braking)"/>
-    <arg name="enable_predicted_path_checker" value="$(var enable_predicted_path_checker)"/>
-    <arg name="enable_collision_detector" value="$(var enable_collision_detector)"/>
+    <arg name="launch_collision_detector" value="$(var launch_collision_detector)"/>
     <arg name="predicted_path_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/predicted_path_checker/predicted_path_checker.param.yaml"/>
   </include>
 </launch>
