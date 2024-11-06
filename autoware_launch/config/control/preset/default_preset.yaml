@@ -14,7 +14,16 @@ launch:
 
   # modules changeable for debugging/testing only
   - arg:
-      name: launch_trajectory_follower_components
+      name: launch_lane_departure_checker
+      default: "true"
+  - arg:
+      name: launch_shift_decider
+      default: "true"
+  - arg:
+      name: launch_vehicle_cmd_gate
+      default: "true"
+  - arg:
+      name: launch_operation_mode_transition_manager
       default: "true"
   - arg:
       name: launch_external_cmd_selector
