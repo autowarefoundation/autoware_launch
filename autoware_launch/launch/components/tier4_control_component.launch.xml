@@ -6,7 +6,7 @@
   <arg name="use_individual_control_param" default="false"/>
   <arg name="enable_autonomous_emergency_braking" default="true"/>
   <arg name="enable_predicted_path_checker" default="false"/>
-  <arg name="enable_collision_detector" default="false"/>
+  <arg name="enable_collision_detector" default="true"/>
 
   <let name="latlon_controller_param_path_dir" value="$(var vehicle_id)" if="$(var use_individual_control_param)"/>
   <let name="latlon_controller_param_path_dir" value="" unless="$(var use_individual_control_param)"/>
