@@ -42,13 +42,13 @@
 
         outside:
           unknown: false
-          car: true
-          truck: true
-          bus: true
-          trailer: true
-          motorcycle: true
-          bicycle: true
-          pedestrian: true
+          car: false
+          truck: false
+          bus: false
+          trailer: false
+          motorcycle: false
+          bicycle: false
+          pedestrian: false
 
       cruise_obstacle_type:
         inside:
