@@ -29,7 +29,7 @@
   <arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"/>
   <!-- Control -->
   <arg name="check_external_emergency_heartbeat" default="false"/>
-  <arg name="use_aeb_autoware_state_check" default="true"/>
+  <arg name="using_logging_simulator" default="true"/>
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
