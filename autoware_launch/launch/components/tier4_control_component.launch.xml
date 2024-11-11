@@ -4,8 +4,8 @@
   <arg name="lateral_controller_mode" default="mpc"/>
   <arg name="longitudinal_controller_mode" default="pid"/>
   <arg name="use_individual_control_param" default="false"/>
+  <arg name="use_aeb_autoware_state_check" default="true"/>
   <arg name="enable_autonomous_emergency_braking" default="true"/>
-  <arg name="using_logging_simulator" default="false"/>
   <arg name="enable_predicted_path_checker" default="false"/>
   <arg name="enable_collision_detector" default="false"/>
 
@@ -44,7 +44,7 @@
     <arg name="aeb_param_path" value="$(find-pkg-share autoware_launch)/config/control/autoware_autonomous_emergency_braking/autonomous_emergency_braking.param.yaml"/>
     <arg name="collision_detector_param_path" value="$(find-pkg-share autoware_launch)/config/control/autoware_collision_detector/collision_detector.param.yaml"/>
     <arg name="enable_autonomous_emergency_braking" value="$(var enable_autonomous_emergency_braking)"/>
-    <arg name="using_logging_simulator" value="$(var using_logging_simulator)"/>
+    <arg name="use_aeb_autoware_state_check" value="$(var use_aeb_autoware_state_check)"/>
     <arg name="enable_predicted_path_checker" value="$(var enable_predicted_path_checker)"/>
     <arg name="enable_collision_detector" value="$(var enable_collision_detector)"/>
     <arg name="predicted_path_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/predicted_path_checker/predicted_path_checker.param.yaml"/>
