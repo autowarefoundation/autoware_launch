@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.38.0 (2024-11-13)
+-------------------
 * feat(start/goal_planner): increse max dry steering angle (`#1200 <https://github.com/youtalk/autoware_launch/issues/1200>`_)
 * fix(start_planner): set  ignore_distance_from_lane_end param to 0.0 since it is not needed (`#1198 <https://github.com/youtalk/autoware_launch/issues/1198>`_)
   set param to 0.0 since it is not needed
