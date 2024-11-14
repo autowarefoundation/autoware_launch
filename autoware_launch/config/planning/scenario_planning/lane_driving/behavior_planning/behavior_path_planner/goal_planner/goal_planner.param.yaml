@@ -139,13 +139,13 @@
           min_velocity: 1.0
           min_acceleration: 1.0
           max_velocity: 1.0
-          time_horizon_for_front_object: 10.0
-          time_horizon_for_rear_object: 10.0
+          time_horizon_for_front_object: 5.0
+          time_horizon_for_rear_object: 5.0
           time_resolution: 0.5
           delay_until_departure: 1.0
         # For target object filtering
         target_filtering:
-          safety_check_time_horizon: 10.0
+          safety_check_time_horizon: 5.0
           safety_check_time_resolution: 1.0
           # detection range
           object_check_forward_distance: 100.0
@@ -179,7 +179,7 @@
           # safety check configuration
           enable_safety_check: true
           method: "integral_predicted_polygon"
-          keep_unsafe_time: 3.0
+          keep_unsafe_time: 0.5
           # collision check parameters
           publish_debug_marker: false
           rss_params:
@@ -192,7 +192,7 @@
             forward_margin: 1.0
             backward_margin: 1.0
             lat_margin: 1.0
-            time_horizon: 10.0
+            time_horizon: 5.0
           # hysteresis factor to expand/shrink polygon with the value
           hysteresis_factor_expand_rate: 1.0
           collision_check_yaw_diff_threshold: 3.1416
