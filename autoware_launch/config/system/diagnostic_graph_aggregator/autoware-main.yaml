@@ -1,5 +1,2 @@
 files:
-  - { path: $(find-pkg-share system_diagnostic_monitor)/config/autoware-main.yaml }
-
-edits:
-  - { type: remove, path: /autoware/control/emergency_braking }
+  - { path: $(find-pkg-share autoware_launch)/config/system/system_diagnostic_monitor/autoware-main.yaml }

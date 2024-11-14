@@ -39,7 +39,8 @@
   <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/autoware-main.yaml" description="diagnostic graph config"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
-  <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware.rviz" description="rviz config"/>
+  <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
+  <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/$(var rviz_config_name)" description="rviz config path"/>
   <arg name="rviz_respawn" default="true"/>
   <!-- Perception -->
   <arg name="perception_mode" default="lidar" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
