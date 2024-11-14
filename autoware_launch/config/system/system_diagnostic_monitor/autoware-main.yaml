@@ -9,18 +9,10 @@ files:
 
 units:
   - path: /autoware/modes/local
-    type: and
-    list:
-      - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
-      - { type: link, link: /autoware/control/local }
+    type: stale
 
   - path: /autoware/modes/remote
-    type: and
-    list:
-      - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
-      - { type: link, link: /autoware/control/remote }
+    type: stale
 
   - path: /autoware/modes/stop
     type: ok
@@ -30,10 +22,10 @@ units:
     list:
       - { type: link, link: /autoware/map }
       - { type: link, link: /autoware/localization }
-      - { type: link, link: /autoware/planning }
+      - { type: link, link: /planning/autonomous_available }
       - { type: link, link: /autoware/perception }
-      - { type: link, link: /autoware/control }
-      - { type: link, link: /autoware/vehicle }
+      - { type: link, link: /control/autonomous_available }
+      - { type: link, link: /vehicle/autonomous_available }
       - { type: link, link: /autoware/system }
 
   - path: /autoware/modes/pull_over
@@ -41,10 +33,10 @@ units:
     list:
       - { type: link, link: /autoware/map }
       - { type: link, link: /autoware/localization }
-      - { type: link, link: /autoware/planning }
+      - { type: link, link: /planning/pull_over_available }
       - { type: link, link: /autoware/perception }
-      - { type: link, link: /autoware/control }
-      - { type: link, link: /autoware/vehicle }
+      - { type: link, link: /control/pull_over_available }
+      - { type: link, link: /vehicle/pull_over_available }
       - { type: link, link: /autoware/system }
 
   - path: /autoware/modes/comfortable_stop
@@ -52,17 +44,14 @@ units:
     list:
       - { type: link, link: /autoware/map }
       - { type: link, link: /autoware/localization }
-      - { type: link, link: /autoware/planning }
+      - { type: link, link: /planning/comfortable_stop_available }
       - { type: link, link: /autoware/perception }
-      - { type: link, link: /autoware/control }
-      - { type: link, link: /autoware/vehicle }
+      - { type: link, link: /control/comfortable_stop_available }
+      - { type: link, link: /vehicle/comfortable_stop_available }
       - { type: link, link: /autoware/system }
 
   - path: /autoware/modes/emergency_stop
-    type: and
-    list:
-      - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
+    type: ok
 
   - path: /autoware/debug/tools
     type: and

@@ -1,68 +1,129 @@
 units:
-  - path: /autoware/control
+  - path: /control/autonomous_available
     type: and
     list:
-      - { type: link, link: /autoware/control/topic_rate_check/trajectory_follower }
-      - { type: link, link: /autoware/control/topic_rate_check/control_command }
-      - { type: link, link: /autoware/control/node_alive_monitoring/vehicle_cmd_gate }
-      - { type: link, link: /autoware/control/emergency_braking }
-      - { type: link, link: /autoware/control/performance_monitoring/lane_departure }
-      - { type: link, link: /autoware/control/performance_monitoring/trajectory_deviation }
-      - { type: link, link: /autoware/control/performance_monitoring/control_state }
+      - { type: link, link: /control/emergency_stop }
+      - { type: link, link: /control/pull_over }
+      - { type: link, link: /control/comfortable_stop }
 
-  - path: /autoware/control/local
+  - path: /control/pull_over_available
     type: and
     list:
-      - { type: link, link: /autoware/control/topic_rate_check/external_cmd_selector }
-      - { type: link, link: /autoware/control/topic_rate_check/external_cmd_converter }
+      - { type: link, link: /control/emergency_stop }
+      - { type: link, link: /control/comfortable_stop }
 
-  - path: /autoware/control/remote
+  - path: /control/comfortable_stop_available
     type: and
     list:
-      - { type: link, link: /autoware/control/topic_rate_check/external_cmd_selector }
-      - { type: link, link: /autoware/control/topic_rate_check/external_cmd_converter }
+      - { type: link, link: /control/emergency_stop }
 
-  - path: /autoware/control/topic_rate_check/trajectory_follower
-    type: diag
-    node: topic_state_monitor_trajectory_follower_control_cmd
-    name: control_topic_status
+  # *******************************************************************************
+  # NOTE: Please modify this section according to your environment and requirements.
+  # *******************************************************************************
+  - path: /control/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /control/001-topic_status/control_command-error }
+      - { type: link, link: /control/004-lane_departure-error }
+      - { type: link, link: /control/005-trajectory_deviation-error }
+      - { type: link, link: /control/009-aeb_emergency_stop }
+      # - { type: link, link: /control/010-max_distance_deviation-error }
+      # - { type: link, link: /control/011-slip_detection }
+      - { type: link, link: /control/collision_detector }
 
-  - path: /autoware/control/topic_rate_check/control_command
+  - path: /control/comfortable_stop
+    type: and
+
+  - path: /control/pull_over
+    type: and
+
+  - path: /control/none
+    type: and
+    list:
+      - { type: link, link: /control/003-gate_heartbeat }
+      - { type: link, link: /control/007-external_command_converter_heartbeat }
+      - { type: link, link: /control/008-external_command_selector_heartbeat }
+
+  # Intermediate paths
+  - path: /control/001-topic_status/control_command-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/001-topic_status/control_command
+
+  - path: /control/004-lane_departure-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/004-lane_departure
+
+  - path: /control/005-trajectory_deviation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/005-trajectory_deviation
+
+  - path: /control/010-max_distance_deviation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/010-max_distance_deviation
+
+  - path: /control/001-topic_status/control_command
     type: diag
     node: topic_state_monitor_control_command_control_cmd
     name: control_topic_status
+    timeout: 1.0
 
-  - path: /autoware/control/node_alive_monitoring/vehicle_cmd_gate
+  - path: /control/003-gate_heartbeat
     type: diag
     node: vehicle_cmd_gate
     name: heartbeat
+    timeout: 1.0
 
-  - path: /autoware/control/emergency_braking
-    type: diag
-    node: autonomous_emergency_braking
-    name: aeb_emergency_stop
-
-  - path: /autoware/control/performance_monitoring/lane_departure
+  - path: /control/004-lane_departure
     type: diag
     node: lane_departure_checker_node
     name: lane_departure
+    timeout: 1.0
 
-  - path: /autoware/control/performance_monitoring/trajectory_deviation
+  - path: /control/005-trajectory_deviation
     type: diag
     node: lane_departure_checker_node
     name: trajectory_deviation
+    timeout: 1.0
 
-  - path: /autoware/control/performance_monitoring/control_state
-    type: diag
-    node: controller_node_exe
-    name: control_state
-
-  - path: /autoware/control/topic_rate_check/external_cmd_selector
-    type: diag
-    node: external_cmd_selector
-    name: heartbeat
-
-  - path: /autoware/control/topic_rate_check/external_cmd_converter
+  - path: /control/007-external_command_converter_heartbeat
     type: diag
     node: external_cmd_converter
     name: remote_control_topic_status
+    timeout: 1.0
+
+  - path: /control/008-external_command_selector_heartbeat
+    type: diag
+    node: external_cmd_selector
+    name: heartbeat
+    timeout: 1.0
+
+  - path: /control/009-aeb_emergency_stop
+    type: diag
+    node: autonomous_emergency_braking
+    name: aeb_emergency_stop
+    timeout: 1.0
+
+  - path: /control/010-max_distance_deviation
+    type: diag
+    node: control_validator
+    name: control_validation_max_distance_deviation
+    timeout: 1.0
+
+  - path: /control/011-slip_detection
+    type: diag
+    node: slip_detector
+    name: slip_status
+    timeout: 3.0
+
+  - path: /control/collision_detector
+    type: diag
+    node: collision_detector
+    name: collision_detect

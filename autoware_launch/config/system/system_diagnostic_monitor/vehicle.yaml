@@ -1,16 +1,88 @@
 units:
-  - path: /autoware/vehicle
+  - path: /vehicle/autonomous_available
     type: and
     list:
-      - { type: link, link: /autoware/vehicle/topic_rate_check/velocity }
-      - { type: link, link: /autoware/vehicle/topic_rate_check/steering }
+      - { type: link, link: /vehicle/emergency_stop }
+      - { type: link, link: /vehicle/pull_over }
+      - { type: link, link: /vehicle/comfortable_stop }
 
-  - path: /autoware/vehicle/topic_rate_check/velocity
+  - path: /vehicle/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /vehicle/emergency_stop }
+      - { type: link, link: /vehicle/comfortable_stop }
+
+  - path: /vehicle/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /vehicle/emergency_stop }
+
+  # *******************************************************************************
+  # NOTE: Please modify this section according to your environment and requirements.
+  # *******************************************************************************
+  - path: /vehicle/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /vehicle/001-topic_status/velocity-error }
+      - { type: link, link: /vehicle/001-topic_status/steering-error }
+      # - { type: link, link: /vehicle/005-vehicle_heartbeat-error }
+      # - { type: link, link: /vehicle/006-vehicle_errors-error }
+
+  - path: /vehicle/comfortable_stop
+    type: and
+    # list:
+    #   - { type: link, link: /vehicle/006-vehicle_errors }
+
+  - path: /vehicle/pull_over
+    type: and
+
+  - path: /vehicle/none
+    type: and
+
+  - path: /vehicle/001-topic_status/velocity-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/001-topic_status/velocity
+
+  - path: /vehicle/001-topic_status/steering-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/001-topic_status/steering
+
+  # - path: /vehicle/005-vehicle_heartbeat-error
+  #   type: warn-to-ok
+  #   item:
+  #     type: link
+  #     link: /vehicle/005-vehicle_heartbeat
+
+  # - path: /vehicle/006-vehicle_errors-error
+  #   type: warn-to-ok
+  #   item:
+  #     type: link
+  #     link: /vehicle/006-vehicle_errors
+
+  - path: /vehicle/001-topic_status/velocity
     type: diag
     node: topic_state_monitor_vehicle_status_velocity_status
     name: vehicle_topic_status
+    timeout: 1.0
 
-  - path: /autoware/vehicle/topic_rate_check/steering
+  - path: /vehicle/001-topic_status/steering
     type: diag
     node: topic_state_monitor_vehicle_status_steering_status
     name: vehicle_topic_status
+    timeout: 1.0
+
+  # - path: /vehicle/005-vehicle_heartbeat
+  #   type: diag
+  #   node:
+  #   name: vehicle_heartbeat_errors
+  #   timeout: 1.0
+
+  # - path: /vehicle/006-vehicle_errors
+  #   type: diag
+  #   node:
+  #   name: vehicle_errors
+  #   timeout: 1.0
