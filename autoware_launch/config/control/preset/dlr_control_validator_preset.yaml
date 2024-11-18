@@ -1,5 +1,5 @@
 launch:
-  # controler
+  # controller
   - arg:
       name: trajectory_follower_mode
       default: none
