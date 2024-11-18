@@ -4,6 +4,7 @@ files:
   - { path: $(dirname)/map.yaml }
   - { path: $(dirname)/perception.yaml }
   - { path: $(dirname)/planning.yaml }
+  # - { path: $(dirname)/sensing.yaml }
   - { path: $(dirname)/system.yaml }
   - { path: $(dirname)/vehicle.yaml }
 
@@ -31,7 +32,7 @@ units:
       - { type: link, link: /autoware/map }
       - { type: link, link: /autoware/localization }
       - { type: link, link: /autoware/planning }
-      - { type: link, link: /autoware/perception }
+      - { type: link, link: /perception/autonomous_available }
       - { type: link, link: /autoware/control }
       - { type: link, link: /autoware/vehicle }
       - { type: link, link: /autoware/system }
@@ -42,7 +43,7 @@ units:
       - { type: link, link: /autoware/map }
       - { type: link, link: /autoware/localization }
       - { type: link, link: /autoware/planning }
-      - { type: link, link: /autoware/perception }
+      - { type: link, link: /perception/pull_over_available }
       - { type: link, link: /autoware/control }
       - { type: link, link: /autoware/vehicle }
       - { type: link, link: /autoware/system }
@@ -53,7 +54,7 @@ units:
       - { type: link, link: /autoware/map }
       - { type: link, link: /autoware/localization }
       - { type: link, link: /autoware/planning }
-      - { type: link, link: /autoware/perception }
+      - { type: link, link: /perception/comfortable_stop_available }
       - { type: link, link: /autoware/control }
       - { type: link, link: /autoware/vehicle }
       - { type: link, link: /autoware/system }

@@ -32,5 +32,14 @@
       "topic_state_monitor_pose_twist_fusion_filter_pose: localization_topic_status": default
 
       # perception
-      ## /autoware/perception/topic_rate_check/pointcloud
+      ## /perception/001-topic_status/traffic_signals
+      "topic_state_monitor_traffic_light_recognition_traffic_signals: perception_topic_status": default
+
+      ## /perception/001-topic_status/objects
+      "topic_state_monitor_object_recognition_objects: perception_topic_status": default
+
+      ## /perception/001-topic_status/pointcloud
       "topic_state_monitor_obstacle_segmentation_pointcloud: perception_topic_status": default
+
+      ## /perception/002-detection_delay
+      "multi_object_tracker: Perception delay check from original header stamp": default
