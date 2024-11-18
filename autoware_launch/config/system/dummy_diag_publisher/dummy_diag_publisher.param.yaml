@@ -14,22 +14,25 @@
 /**:
   ros__parameters:
     required_diags:
-      # map
-      ## /autoware/map/topic_rate_check/pointcloud_map
-      "topic_state_monitor_pointcloud_map: map_topic_status": default
-
       # localization
-      ## /autoware/localization/scan_matching_status
+      ## /localization/001-topic_status/initialpose
+      "topic_state_monitor_initialpose3d: localization_topic_status": default
+
+      ## /localization/001-topic_status/pose_twist_fusion_filter
+      "topic_state_monitor_pose_twist_fusion_filter_pose: localization_topic_status": default
+
+      ## /localization/002-tf
+      "topic_state_monitor_transform_map_to_base_link: localization_topic_status": default
+
+      ## /localization/003-matching_score
       "ndt_scan_matcher: scan_matching_status": default
 
-      ## /autoware/localization/accuracy
-      "localization_error_monitor: ellipse_error_status": default
+      ## /localization/004-accuracy
+      "localization: localization_error_monitor": default
 
-      ## /autoware/localization/sensor_fusion_status
-      "localization: ekf_localizer": default
-
-      ## /autoware/localization/topic_rate_check/pose_twist_fusion
-      "topic_state_monitor_pose_twist_fusion_filter_pose: localization_topic_status": default
+      # map
+      ## /map/001-topic_status/pointcloud_map
+      "topic_state_monitor_pointcloud_map: map_topic_status": default
 
       # perception
       ## /autoware/perception/topic_rate_check/pointcloud

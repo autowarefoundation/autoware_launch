@@ -28,8 +28,8 @@ units:
   - path: /autoware/modes/autonomous
     type: and
     list:
-      - { type: link, link: /autoware/map }
-      - { type: link, link: /autoware/localization }
+      - { type: link, link: /map/autonomous_available }
+      - { type: link, link: /localization/autonomous_available }
       - { type: link, link: /autoware/planning }
       - { type: link, link: /autoware/perception }
       - { type: link, link: /autoware/control }
@@ -39,8 +39,8 @@ units:
   - path: /autoware/modes/pull_over
     type: and
     list:
-      - { type: link, link: /autoware/map }
-      - { type: link, link: /autoware/localization }
+      - { type: link, link: /map/pull_over_available }
+      - { type: link, link: /localization/pull_over_available }
       - { type: link, link: /autoware/planning }
       - { type: link, link: /autoware/perception }
       - { type: link, link: /autoware/control }
@@ -50,8 +50,8 @@ units:
   - path: /autoware/modes/comfortable_stop
     type: and
     list:
-      - { type: link, link: /autoware/map }
-      - { type: link, link: /autoware/localization }
+      - { type: link, link: /map/comfortable_stop_available }
+      - { type: link, link: /localization/comfortable_stop_available }
       - { type: link, link: /autoware/planning }
       - { type: link, link: /autoware/perception }
       - { type: link, link: /autoware/control }
