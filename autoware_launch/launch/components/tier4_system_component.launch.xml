@@ -28,4 +28,11 @@
     <arg name="diagnostic_graph_aggregator_param_path" value="$(var diagnostic_graph_aggregator_param_path)"/>
     <arg name="diagnostic_graph_aggregator_graph_path" value="$(var diagnostic_graph_aggregator_graph_path)"/>
   </include>
+
+  <!-- For logging of diagnostics_graph error -->
+  <include file="$(find-pkg-share diagnostic_graph_utils)/launch/logging.launch.xml">
+    <arg name="root_path" value="/autoware/modes/autonomous"/>
+    <arg name="max_depth" value="3"/>
+    <arg name="show_rate" value="0.2"/>
+  </include>
 </launch>

@@ -269,13 +269,13 @@ Visualization Manager:
           Enabled: true
           Name: Vehicle
         - Class: rviz_plugins/MrmSummaryOverlayDisplay
-          Enabled: false
+          Enabled: true
           Font Size: 10
-          Left: 512
+          Left: 10
           Max Letter Num: 100
           Name: MRM Summary
           Text Color: 25; 255; 240
-          Top: 64
+          Top: 10
           Topic:
             Depth: 5
             Durability Policy: Volatile
