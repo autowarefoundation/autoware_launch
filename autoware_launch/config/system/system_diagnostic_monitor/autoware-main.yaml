@@ -34,7 +34,7 @@ units:
       - { type: link, link: /autoware/perception }
       - { type: link, link: /autoware/control }
       - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
+      - { type: link, link: /system/autonomous_available }
 
   - path: /autoware/modes/pull_over
     type: and
@@ -45,7 +45,7 @@ units:
       - { type: link, link: /autoware/perception }
       - { type: link, link: /autoware/control }
       - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
+      - { type: link, link: /system/pull_over_available }
 
   - path: /autoware/modes/comfortable_stop
     type: and
@@ -56,7 +56,7 @@ units:
       - { type: link, link: /autoware/perception }
       - { type: link, link: /autoware/control }
       - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
+      - { type: link, link: /system/comfortable_stop_available }
 
   - path: /autoware/modes/emergency_stop
     type: and
@@ -68,3 +68,8 @@ units:
     type: and
     list:
       - { type: link, link: /autoware/system/service_log_checker }
+
+  - path: /autoware/system/service_log_checker
+    type: diag
+    node: service_log_checker
+    name: response_status
