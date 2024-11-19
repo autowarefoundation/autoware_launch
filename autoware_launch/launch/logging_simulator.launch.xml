@@ -9,7 +9,7 @@
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
-  <arg name="control_module_preset" value="$(var control_module_preset)"/>
+  <arg name="control_module_preset" default="default" description="control module preset"/>
 
   <!-- Optional parameters -->
   <!-- Modules to be launched -->
