@@ -39,7 +39,7 @@ def generate_launch_description():
     )
 
     glog_component = ComposableNode(
-        package="glog_component",
+        package="autoware_glog_component",
         plugin="GlogComponent",
         name="glog_component",
         namespace="pointcloud_container",
