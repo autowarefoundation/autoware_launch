@@ -34,5 +34,6 @@
     <arg name="root_path" value="/autoware/modes/autonomous"/>
     <arg name="max_depth" value="3"/>
     <arg name="show_rate" value="0.2"/>
+    <arg name="enable_terminal_log" value="false"/>
   </include>
 </launch>
