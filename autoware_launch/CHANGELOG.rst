@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.39.0 (2024-11-25)
+-------------------
 * youtalk username
 * Merge commit '9d0e7055a' into release-0.39.0
 * feat: change the old diagnostic_convertor to scenario_simulator_v2_adapter (`#1227 <https://github.com/youtalk/autoware_launch/issues/1227>`_)
