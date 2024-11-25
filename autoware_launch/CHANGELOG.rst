@@ -6,7 +6,7 @@ Changelog for package autoware_launch
 -------------------
 * youtalk username
 * Merge commit '9d0e7055a' into release-0.39.0
-* feat: change the old diagnostic_convertor to scenario_simulator_v2_adapter (`#1227 <https://github.com/youtalk/autoware_launch/issues/1227>`_)
+* feat: change the old diagnostic_convertor to scenario_simulator_v2_adapter (`#1227 <https://github.com/autowarefoundation/autoware_launch/issues/1227>`_)
   Co-authored-by: xtk8532704 <1041084556@qq.com>
 * feat(costmap_generator): change lidar height thresholds to vehicle frame (`#1225 <https://github.com/youtalk/autoware_launch/issues/1225>`_)
 * revert(obstacle_cruise): disable ouside stop feature (`#1222 <https://github.com/youtalk/autoware_launch/issues/1222>`_)
