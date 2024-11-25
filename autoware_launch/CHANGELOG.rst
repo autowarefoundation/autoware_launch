@@ -1186,7 +1186,7 @@ Changelog for package autoware_launch
   * feat(goal_planner): prioritize goals before objects to avoid
   ---------
 * feat(start_planner): change th_distance_to_middle_of_the_road 0.5 (`#599 <https://github.com/autowarefoundation/autoware_launch/issues/599>`_)
-* feat(start_planner): enable divide_pull_out_path (`#600 <https://github.com/youtalk/autoware_launch/issues/600>`_)
+* feat(start_planner): enable divide_pull_out_path (`#600 <https://github.com/autowarefoundation/autoware_launch/issues/600>`_)
 * feat(goal_planner): change minimum_request_length 0.0 (`#598 <https://github.com/autowarefoundation/autoware_launch/issues/598>`_)
 * feat(goal_planner): extend goal search area (`#592 <https://github.com/autowarefoundation/autoware_launch/issues/592>`_)
   feat(goal_planner): extend goal search are
