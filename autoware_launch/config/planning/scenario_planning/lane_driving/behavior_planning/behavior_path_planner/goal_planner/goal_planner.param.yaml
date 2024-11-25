@@ -91,7 +91,7 @@
 
         # freespace parking
         freespace_parking:
-          enable_freespace_parking: true
+          enable_freespace_parking: false
           freespace_parking_algorithm: "astar"  # options: astar, rrtstar
           velocity: 1.0
           vehicle_shape_margin: 1.0
