@@ -1,5 +1,6 @@
 /**:
   ros__parameters:
+    output_metrics: false
     update_rate: 10.0
     processing_time_topic_name_list:
       - /control/control_evaluator/debug/processing_time_ms
