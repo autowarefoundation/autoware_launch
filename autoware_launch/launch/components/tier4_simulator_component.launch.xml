@@ -4,7 +4,7 @@
   <arg name="launch_dummy_vehicle"/>
   <arg name="localization_sim_mode"/>
   <arg name="launch_dummy_doors"/>
-  <arg name="launch_diagnostic_converter"/>
+  <arg name="launch_scenario_simulator_v2_adapter"/>
   <arg name="perception/enable_detection_failure"/>
   <arg name="perception/enable_object_recognition"/>
   <arg name="perception/use_base_link_z"/>
@@ -20,7 +20,7 @@
     <arg name="launch_dummy_vehicle" value="$(var launch_dummy_vehicle)"/>
     <arg name="localization_sim_mode" value="$(var localization_sim_mode)"/>
     <arg name="launch_dummy_doors" value="$(var launch_dummy_doors)"/>
-    <arg name="launch_diagnostic_converter" value="$(var launch_diagnostic_converter)"/>
+    <arg name="launch_scenario_simulator_v2_adapter" value="$(var launch_scenario_simulator_v2_adapter)"/>
     <arg name="perception/enable_detection_failure" value="$(var perception/enable_detection_failure)"/>
     <arg name="perception/enable_object_recognition" value="$(var perception/enable_object_recognition)"/>
     <arg name="perception/use_base_link_z" value="$(var perception/use_base_link_z)"/>

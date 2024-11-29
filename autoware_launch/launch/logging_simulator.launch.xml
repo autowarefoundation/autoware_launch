@@ -9,6 +9,7 @@
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
+  <arg name="control_module_preset" default="default" description="control module preset"/>
 
   <!-- Optional parameters -->
   <!-- Modules to be launched -->
@@ -43,6 +44,7 @@
       <arg name="sensor_model" value="$(var sensor_model)"/>
       <!-- launch module preset -->
       <arg name="planning_module_preset" value="$(var planning_module_preset)"/>
+      <arg name="control_module_preset" value="$(var control_module_preset)"/>
       <!-- Modules to be launched -->
       <arg name="launch_vehicle" value="$(var vehicle)"/>
       <arg name="launch_map" value="$(var map)"/>
@@ -63,7 +65,7 @@
       <arg name="system_run_mode" value="logging_simulation"/>
       <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
       <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
-      <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/autoware-main.yaml"/>
+      <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml"/>
       <!-- Map -->
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>

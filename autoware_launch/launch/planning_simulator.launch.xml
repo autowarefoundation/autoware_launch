@@ -8,6 +8,7 @@
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
+  <arg name="control_module_preset" default="default" description="control module preset"/>
 
   <!-- Optional parameters -->
   <!-- Map -->
@@ -18,7 +19,7 @@
   <!-- System -->
   <arg name="launch_dummy_doors" default="true" description="launch dummy doors simulation"/>
   <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
-  <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
+  <arg name="launch_dummy_diag_publisher" default="true" description="launch dummy diag publisher"/>
   <!-- Scenario simulation -->
   <arg name="initial_engage_state" default="true" description="/vehicle/engage state after starting Autoware"/>
   <arg name="perception/enable_detection_failure" default="true" description="enable to simulate detection failure when using dummy perception"/>
@@ -58,6 +59,7 @@
       <arg name="data_path" value="$(var data_path)"/>
       <!-- launch module preset -->
       <arg name="planning_module_preset" value="$(var planning_module_preset)"/>
+      <arg name="control_module_preset" value="$(var control_module_preset)"/>
       <!-- Modules to be launched -->
       <arg name="launch_sensing" value="false"/>
       <arg name="launch_localization" value="false"/>
@@ -68,7 +70,7 @@
       <arg name="system_run_mode" value="planning_simulation"/>
       <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
       <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
-      <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/autoware-psim.yaml"/>
+      <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml"/>
       <!-- Map -->
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
@@ -88,14 +90,14 @@
     <let name="launch_dummy_perception" value="true" unless="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="false" if="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="true" unless="$(var scenario_simulation)"/>
-    <let name="launch_diagnostic_converter" value="$(var scenario_simulation)"/>
+    <let name="launch_scenario_simulator_v2_adapter" value="$(var scenario_simulation)"/>
 
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_simulator_component.launch.xml">
       <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
       <arg name="launch_dummy_vehicle" value="$(var launch_dummy_vehicle)"/>
       <arg name="localization_sim_mode" value="$(var localization_sim_mode)"/>
       <arg name="launch_dummy_doors" value="$(var launch_dummy_doors)"/>
-      <arg name="launch_diagnostic_converter" value="$(var launch_diagnostic_converter)"/>
+      <arg name="launch_scenario_simulator_v2_adapter" value="$(var launch_scenario_simulator_v2_adapter)"/>
       <arg name="perception/enable_detection_failure" value="$(var perception/enable_detection_failure)"/>
       <arg name="perception/enable_object_recognition" value="$(var perception/enable_object_recognition)"/>
       <arg name="perception/use_base_link_z" value="$(var perception/use_base_link_z)"/>
