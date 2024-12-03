@@ -118,7 +118,7 @@ Visualization Manager:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
-                Reliability Policy: Best Effort
+                Reliability Policy: Reliable
                 Value: /robot_description
               Enabled: true
               Links:
