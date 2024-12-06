@@ -2,6 +2,49 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.39.0 (2024-11-25)
+-------------------
+* autowarefoundation username
+* Merge commit '9d0e7055a' into release-0.39.0
+* feat: change the old diagnostic_convertor to scenario_simulator_v2_adapter (`#1227 <https://github.com/autowarefoundation/autoware_launch/issues/1227>`_)
+  Co-authored-by: xtk8532704 <1041084556@qq.com>
+* feat(costmap_generator): change lidar height thresholds to vehicle frame (`#1225 <https://github.com/autowarefoundation/autoware_launch/issues/1225>`_)
+* revert(obstacle_cruise): disable ouside stop feature (`#1222 <https://github.com/autowarefoundation/autoware_launch/issues/1222>`_)
+* feat(aeb): set global param to override autoware state check (`#1218 <https://github.com/autowarefoundation/autoware_launch/issues/1218>`_)
+  * set global param to override autoware state check
+  * change variable for a more generic name
+  * set var to false by default
+  * move param to control component launch
+  * change param name to be more straightforward
+  ---------
+* fix(pid_longitudinal_controller): revive hysteresis of state transition (`#1219 <https://github.com/autowarefoundation/autoware_launch/issues/1219>`_)
+* feat(detection_area)!: add retruction feature (`#1216 <https://github.com/autowarefoundation/autoware_launch/issues/1216>`_)
+* feat(system_monitor): add on/off config for network traffic monitor (`#1186 <https://github.com/autowarefoundation/autoware_launch/issues/1186>`_)
+  feat(system_monitor): add config for network traffic monitor
+  Co-authored-by: ito-san <57388357+ito-san@users.noreply.github.com>
+* feat(goal_planner): set lane departure check margin 0.20 (`#1214 <https://github.com/autowarefoundation/autoware_launch/issues/1214>`_)
+* fix(autoware_ekf_localizer): removed `publish_tf` (`#1212 <https://github.com/autowarefoundation/autoware_launch/issues/1212>`_)
+  Removed `publish_tf`
+* feat(rviz): add rviz config for debugging (`#1213 <https://github.com/autowarefoundation/autoware_launch/issues/1213>`_)
+  * feat(rviz): add rviz config for debugging
+  * feat(launch): select rviz config name
+  ---------
+* feat(lane_change): enable cancel when ego in turn direction lane main (RT0-33893) (`#1209 <https://github.com/autowarefoundation/autoware_launch/issues/1209>`_)
+  RT0-33893 add dist from prev intersection
+* fix: changed `loc_config_path` declaration from let to arg (`#1204 <https://github.com/autowarefoundation/autoware_launch/issues/1204>`_)
+  Changed loc_config_path declaration from let to arg
+* chore: update fusion_common.param.yaml with new image projection sett… (`#1207 <https://github.com/autowarefoundation/autoware_launch/issues/1207>`_)
+  chore: update fusion_common.param.yaml with new image projection settings
+* feat(goal_planner): set lane departure check margin 0.3 (`#1199 <https://github.com/autowarefoundation/autoware_launch/issues/1199>`_)
+* feat(collision detector): add collision detector to launch/config (`#1205 <https://github.com/autowarefoundation/autoware_launch/issues/1205>`_)
+  * add collision_detector
+  * change collision detector default to false
+  ---------
+* chore(diagnostic_graph_aggregator, system_diagnostic_monitor)!: change the config file directories from universe to autoware_launch (`#1201 <https://github.com/autowarefoundation/autoware_launch/issues/1201>`_)
+  * prepare dir
+  * copy files from universe
+* Contributors: Go Sakayori, Kosuke Takeuchi, Maxime CLEMENT, Ryohsuke Mitsudome, SakodaShintaro, Satoshi OTA, Taekjin LEE, Takayuki Murooka, Yuki TAKAGI, Yutaka Kondo, Zulfaqar Azmi, danielsanchezaran, iwatake
+
 0.38.0 (2024-11-13)
 -------------------
 * feat(start/goal_planner): increse max dry steering angle (`#1200 <https://github.com/autowarefoundation/autoware_launch/issues/1200>`_)
@@ -1186,7 +1229,7 @@ Changelog for package autoware_launch
   * feat(goal_planner): prioritize goals before objects to avoid
   ---------
 * feat(start_planner): change th_distance_to_middle_of_the_road 0.5 (`#599 <https://github.com/autowarefoundation/autoware_launch/issues/599>`_)
-* feat(start_planner): enable divide_pull_out_path (`#600 <https://github.com/youtalk/autoware_launch/issues/600>`_)
+* feat(start_planner): enable divide_pull_out_path (`#600 <https://github.com/autowarefoundation/autoware_launch/issues/600>`_)
 * feat(goal_planner): change minimum_request_length 0.0 (`#598 <https://github.com/autowarefoundation/autoware_launch/issues/598>`_)
 * feat(goal_planner): extend goal search area (`#592 <https://github.com/autowarefoundation/autoware_launch/issues/592>`_)
   feat(goal_planner): extend goal search are
