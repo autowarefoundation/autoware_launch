@@ -1,4 +1,5 @@
-- repository: autowarefoundation/autoware
+- repository: autowarefoundation/sync-file-templates
+  source-dir: sources
   files:
     - source: CODE_OF_CONDUCT.md
     - source: CONTRIBUTING.md
@@ -7,27 +8,26 @@
     - source: .github/ISSUE_TEMPLATE/bug.yaml
     - source: .github/ISSUE_TEMPLATE/config.yml
     - source: .github/ISSUE_TEMPLATE/task.yaml
-    - source: .github/PULL_REQUEST_TEMPLATE.md
-    - source: .github/PULL_REQUEST_TEMPLATE/small-change.md
-    - source: .github/PULL_REQUEST_TEMPLATE/standard-change.md
+    - source: .github/pull_request_template.md
     - source: .github/dependabot.yaml
     - source: .github/stale.yml
+    - source: .github/workflows/comment-on-pr.yaml
     - source: .github/workflows/github-release.yaml
     - source: .github/workflows/pre-commit.yaml
     - source: .github/workflows/pre-commit-optional.yaml
     - source: .github/workflows/semantic-pull-request.yaml
+    - source: .github/workflows/spell-check-daily.yaml
     - source: .github/workflows/spell-check-differential.yaml
     - source: .github/workflows/sync-files.yaml
     - source: .markdown-link-check.json
     - source: .markdownlint.yaml
     - source: .pre-commit-config-optional.yaml
     - source: .prettierignore
+      pre-commands: |
+        sd "rviz\n" "rviz\n**/diagnostic_graph_aggregator/\n" {source}
     - source: .prettierrc.yaml
     - source: .yamllint.yaml
     - source: setup.cfg
-
-- repository: autowarefoundation/autoware_common
-  files:
     - source: .github/workflows/build-and-test.yaml
     - source: .github/workflows/build-and-test-differential.yaml
     - source: .github/workflows/cancel-previous-workflows.yaml
