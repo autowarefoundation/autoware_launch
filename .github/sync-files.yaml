@@ -23,6 +23,8 @@
     - source: .markdownlint.yaml
     - source: .pre-commit-config-optional.yaml
     - source: .prettierignore
+      pre-commands: |
+        sd "\n\n" "\n**/diagnostic_graph_aggregator/\n\n" {source}
     - source: .prettierrc.yaml
     - source: .yamllint.yaml
     - source: setup.cfg
