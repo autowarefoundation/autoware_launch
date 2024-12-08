@@ -24,7 +24,7 @@
     - source: .pre-commit-config-optional.yaml
     - source: .prettierignore
       pre-commands: |
-        sd "*.rviz\n" "*.rviz\n**/diagnostic_graph_aggregator/\n" {source}
+        sd "rviz\n" "rviz\n**/diagnostic_graph_aggregator/\n" {source}
     - source: .prettierrc.yaml
     - source: .yamllint.yaml
     - source: setup.cfg
