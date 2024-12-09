@@ -1,26 +1,21 @@
 files:
   - { path: $(dirname)/control.yaml }
+  # - { path: $(dirname)/hardware.yaml }
   - { path: $(dirname)/localization.yaml }
   - { path: $(dirname)/map.yaml }
   - { path: $(dirname)/perception.yaml }
   - { path: $(dirname)/planning.yaml }
+  # - { path: $(dirname)/others.yaml }
+  # - { path: $(dirname)/sensing.yaml }
   - { path: $(dirname)/system.yaml }
   - { path: $(dirname)/vehicle.yaml }
 
 units:
   - path: /autoware/modes/local
-    type: and
-    list:
-      - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
-      - { type: link, link: /autoware/control/local }
+    type: stale
 
   - path: /autoware/modes/remote
-    type: and
-    list:
-      - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
-      - { type: link, link: /autoware/control/remote }
+    type: stale
 
   - path: /autoware/modes/stop
     type: ok
@@ -28,43 +23,45 @@ units:
   - path: /autoware/modes/autonomous
     type: and
     list:
-      - { type: link, link: /autoware/map }
-      - { type: link, link: /autoware/localization }
-      - { type: link, link: /autoware/planning }
-      - { type: link, link: /autoware/perception }
-      - { type: link, link: /autoware/control }
-      - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
+      - { type: link, link: /map/autonomous_available }
+      - { type: link, link: /localization/autonomous_available }
+      - { type: link, link: /planning/autonomous_available }
+      - { type: link, link: /perception/autonomous_available }
+      - { type: link, link: /control/autonomous_available }
+      - { type: link, link: /vehicle/autonomous_available }
+      - { type: link, link: /system/autonomous_available }
 
   - path: /autoware/modes/pull_over
     type: and
     list:
-      - { type: link, link: /autoware/map }
-      - { type: link, link: /autoware/localization }
-      - { type: link, link: /autoware/planning }
-      - { type: link, link: /autoware/perception }
-      - { type: link, link: /autoware/control }
-      - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
+      - { type: link, link: /map/pull_over_available }
+      - { type: link, link: /localization/pull_over_available }
+      - { type: link, link: /planning/pull_over_available }
+      - { type: link, link: /perception/pull_over_available }
+      - { type: link, link: /control/pull_over_available }
+      - { type: link, link: /vehicle/pull_over_available }
+      - { type: link, link: /system/pull_over_available }
 
   - path: /autoware/modes/comfortable_stop
     type: and
     list:
-      - { type: link, link: /autoware/map }
-      - { type: link, link: /autoware/localization }
-      - { type: link, link: /autoware/planning }
-      - { type: link, link: /autoware/perception }
-      - { type: link, link: /autoware/control }
-      - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
+      - { type: link, link: /map/comfortable_stop_available }
+      - { type: link, link: /localization/comfortable_stop_available }
+      - { type: link, link: /planning/comfortable_stop_available }
+      - { type: link, link: /perception/comfortable_stop_available }
+      - { type: link, link: /control/comfortable_stop_available }
+      - { type: link, link: /vehicle/comfortable_stop_available }
+      - { type: link, link: /system/comfortable_stop_available }
 
   - path: /autoware/modes/emergency_stop
-    type: and
-    list:
-      - { type: link, link: /autoware/vehicle }
-      - { type: link, link: /autoware/system }
+    type: ok
 
   - path: /autoware/debug/tools
     type: and
     list:
       - { type: link, link: /autoware/system/service_log_checker }
+
+  - path: /autoware/system/service_log_checker
+    type: diag
+    node: service_log_checker
+    name: response_status

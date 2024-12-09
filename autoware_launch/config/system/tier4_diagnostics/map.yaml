@@ -1,16 +1,60 @@
 units:
-  - path: /autoware/map
+  - path: /map/autonomous_available
     type: and
     list:
-      - { type: link, link: /autoware/map/topic_rate_check/vector_map }
-      - { type: link, link: /autoware/map/topic_rate_check/pointcloud_map }
+      - { type: link, link: /map/emergency_stop }
+      - { type: link, link: /map/pull_over }
+      - { type: link, link: /map/comfortable_stop }
 
-  - path: /autoware/map/topic_rate_check/vector_map
+  - path: /map/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /map/emergency_stop }
+      - { type: link, link: /map/comfortable_stop }
+
+  - path: /map/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /map/emergency_stop }
+
+  # *******************************************************************************
+  # NOTE: Please modify this section according to your environment and requirements.
+  # *******************************************************************************
+  - path: /map/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /map/001-topic_status/vector_map-error }
+      - { type: link, link: /map/001-topic_status/pointcloud_map-error }
+
+  - path: /map/comfortable_stop
+    type: and
+
+  - path: /map/pull_over
+    type: and
+
+  - path: /map/none
+    type: and
+
+  - path: /map/001-topic_status/vector_map-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /map/001-topic_status/vector_map
+
+  - path: /map/001-topic_status/pointcloud_map-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /map/001-topic_status/pointcloud_map
+
+  - path: /map/001-topic_status/vector_map
     type: diag
     node: topic_state_monitor_vector_map
     name: map_topic_status
+    timeout: 1.0
 
-  - path: /autoware/map/topic_rate_check/pointcloud_map
+  - path: /map/001-topic_status/pointcloud_map
     type: diag
     node: topic_state_monitor_pointcloud_map
     name: map_topic_status
+    timeout: 1.0
