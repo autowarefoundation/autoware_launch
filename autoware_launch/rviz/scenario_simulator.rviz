@@ -2492,14 +2492,39 @@ Visualization Manager:
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
-                          Name: VirtualWall (ObstacleCruise)
-                          Namespaces: {}
+                          Name: VirtualWall (ObstacleCruise Stop)
+                          Namespaces:
+                            {}
                           Topic:
                             Depth: 5
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/virtual_wall
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/virtual_wall/stop
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (ObstacleCruise Cruise)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/virtual_wall/cruise
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (ObstacleCruise SlowDown)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/virtual_wall/slow_down
                           Value: true
                       Enabled: true
                       Name: VirtualWall
@@ -2572,28 +2597,6 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_common/Group
                           Displays:
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: CruiseVirtualWall
-                              Namespaces: {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/debug/cruise/virtual_wall
-                              Value: true
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: SlowDownVirtualWall
-                              Namespaces: {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/debug/slow_down/virtual_wall
-                              Value: true
                             - Class: rviz_default_plugins/MarkerArray
                               Enabled: true
                               Name: DebugMarker
