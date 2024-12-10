@@ -1,0 +1,5 @@
+files:
+  - { path: $(dirname)/autoware-main.yaml }
+
+edits:
+  - { type: remove, path: /autoware/system/duplicated_node_checker }
