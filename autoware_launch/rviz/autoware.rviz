@@ -281,7 +281,7 @@ Visualization Manager:
             Durability Policy: Volatile
             History Policy: Keep Last
             Reliability Policy: Reliable
-            Value: /logging_diag_graph/debug/error_graph
+            Value: /logging_diag_graph/debug/error_graph_text
           Value: true
           Value height offset: 0
       Enabled: true
