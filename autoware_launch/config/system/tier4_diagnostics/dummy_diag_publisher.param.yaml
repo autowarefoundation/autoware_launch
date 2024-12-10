@@ -28,7 +28,7 @@
       "ndt_scan_matcher: scan_matching_status": default
 
       ## /localization/004-accuracy
-      "localization: localization_error_monitor": default
+      "localization_error_monitor: ellipse_error_status": default
 
       # map
       ## /map/001-topic_status/pointcloud_map
