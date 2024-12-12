@@ -10,6 +10,7 @@
     - source: .github/ISSUE_TEMPLATE/task.yaml
     - source: .github/pull_request_template.md
     - source: .github/dependabot.yaml
+    - source: .github/workflows/backport.yaml
     - source: .github/stale.yml
     - source: .github/workflows/comment-on-pr.yaml
     - source: .github/workflows/github-release.yaml
