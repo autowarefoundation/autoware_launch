@@ -13,8 +13,6 @@
 
         # For the Lanelet2 map with no explicit stop lines
         stop_distance_from_crosswalk: 3.5 # [m] make stop line away from crosswalk
-        # For the case where the crosswalk width is very wide
-        far_object_threshold: 10.0 # [m] If objects cross X meters behind the stop line, the stop position is determined according to the object position (stop_distance_from_object meters before the object).
         # For the case where the stop position is determined according to the object position.
         stop_distance_from_object_preferred: 3.0 # [m]
         stop_distance_from_object_limit: 3.0 # [m]
@@ -79,7 +77,7 @@
 
       # param for occlusions
       occlusion:
-        enable: true  # if true, ego will slowdown around crosswalks that are occluded
+        enable: false # if true, ego will slowdown around crosswalks that are occluded
         occluded_object_velocity: 2.0 # [m/s] assumed velocity of objects that may come out of the occluded space
         slow_down_velocity: 1.0  # [m/s]
         time_buffer: 0.5  # [s] consecutive time with/without an occlusion to add/remove the slowdown
