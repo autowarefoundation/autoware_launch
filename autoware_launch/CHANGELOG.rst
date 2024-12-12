@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.40.0 (2024-12-12)
+-------------------
 * Merge remote-tracking branch 'origin/main' into release-0.40.0
 * refactor(obstacle_cruise_planner)!: refactor rviz and terminal info (`#1264 <https://github.com/autowarefoundation/autoware_launch/issues/1264>`_)
 * fix(pointcloud_container.launch.py): autoware_glog_component (`#1260 <https://github.com/autowarefoundation/autoware_launch/issues/1260>`_)
