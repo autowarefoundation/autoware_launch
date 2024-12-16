@@ -16,7 +16,7 @@ jobs:
   make-sure-label-is-present:
     uses: autowarefoundation/autoware-github-actions/.github/workflows/make-sure-label-is-present.yaml@v1
     with:
-      label: tag:run-build-and-test-differential
+      label: run:build-and-test-differential
 
   build-and-test-differential:
     needs: make-sure-label-is-present
