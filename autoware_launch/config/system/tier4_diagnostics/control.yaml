@@ -30,6 +30,8 @@ units:
       # - { type: link, link: /control/010-max_distance_deviation-error }
       # - { type: link, link: /control/011-slip_detection }
       - { type: link, link: /control/collision_detector }
+      - { type: link, link: /control/rolling_back }
+      - { type: link, link: control/over_velocity }
 
   - path: /control/comfortable_stop
     type: and
@@ -127,3 +129,13 @@ units:
     type: diag
     node: collision_detector
     name: collision_detect
+
+  - path: /control/rolling_back
+    type: diag
+    node: control_validator
+    name: control_validation_rolling_back
+
+  - path: /control/over_velocity
+    type: diag
+    node: control_validator
+    name: control_validation_over_velocity
