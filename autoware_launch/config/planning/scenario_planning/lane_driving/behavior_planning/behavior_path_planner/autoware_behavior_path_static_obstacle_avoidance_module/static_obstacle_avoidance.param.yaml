@@ -23,9 +23,9 @@
           th_moving_time: 2.0                           # [s]
           longitudinal_margin: 0.0                      # [m]
           lateral_margin:
-            soft_margin: 0.5                            # [m]
+            soft_margin: 0.7                            # [m]
             hard_margin: 0.2                            # [m]
-            hard_margin_for_parked_vehicle: 0.2         # [m]
+            hard_margin_for_parked_vehicle: 0.7         # [m]
           max_expand_ratio: 0.0                         # [-] FOR DEVELOPER
           envelope_buffer_margin: 0.1                   # [m] FOR DEVELOPER
           th_error_eclipse_long_radius : 0.6            # [m]
@@ -34,9 +34,9 @@
           th_moving_time: 2.0
           longitudinal_margin: 0.0
           lateral_margin:
-            soft_margin: 0.5
+            soft_margin: 0.7
             hard_margin: 0.2
-            hard_margin_for_parked_vehicle: 0.2
+            hard_margin_for_parked_vehicle: 0.7
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
           th_error_eclipse_long_radius : 0.6
@@ -45,9 +45,9 @@
           th_moving_time: 2.0
           longitudinal_margin: 0.0
           lateral_margin:
-            soft_margin: 0.5
+            soft_margin: 0.7
             hard_margin: 0.2
-            hard_margin_for_parked_vehicle: 0.2
+            hard_margin_for_parked_vehicle: 0.7
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
           th_error_eclipse_long_radius : 0.6
@@ -56,9 +56,9 @@
           th_moving_time: 2.0
           longitudinal_margin: 0.0
           lateral_margin:
-            soft_margin: 0.5
+            soft_margin: 0.7
             hard_margin: 0.2
-            hard_margin_for_parked_vehicle: 0.2
+            hard_margin_for_parked_vehicle: 0.7
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
           th_error_eclipse_long_radius : 0.6
@@ -67,7 +67,7 @@
           th_moving_time: 1.0
           longitudinal_margin: 0.0
           lateral_margin:
-            soft_margin: 0.5
+            soft_margin: 0.7
             hard_margin: -0.2
             hard_margin_for_parked_vehicle: -0.2
           max_expand_ratio: 0.0
@@ -76,33 +76,33 @@
         bicycle:
           th_moving_speed: 0.28
           th_moving_time: 1.0
-          longitudinal_margin: 0.6
+          longitudinal_margin: 1.0
           lateral_margin:
             soft_margin: 0.7
             hard_margin: 0.5
-            hard_margin_for_parked_vehicle: 0.2
+            hard_margin_for_parked_vehicle: 0.5
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.5
           th_error_eclipse_long_radius : 0.6
         motorcycle:
           th_moving_speed: 1.0
           th_moving_time: 1.0
-          longitudinal_margin: 0.6
+          longitudinal_margin: 1.0
           lateral_margin:
-            soft_margin: 0.5
+            soft_margin: 0.7
             hard_margin: 0.3
-            hard_margin_for_parked_vehicle: 0.2
+            hard_margin_for_parked_vehicle: 0.3
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.5
           th_error_eclipse_long_radius : 0.6
         pedestrian:
           th_moving_speed: 0.28
           th_moving_time: 1.0
-          longitudinal_margin: 0.6
+          longitudinal_margin: 1.0
           lateral_margin:
             soft_margin: 0.7
             hard_margin: 0.5
-            hard_margin_for_parked_vehicle: 0.2
+            hard_margin_for_parked_vehicle: 0.5
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.5
           th_error_eclipse_long_radius : 0.6
@@ -232,7 +232,7 @@
         # avoidance distance parameters
         longitudinal:
           min_prepare_time: 1.0                         # [s]
-          max_prepare_time: 2.0                         # [s]
+          max_prepare_time: 3.0                         # [s]
           min_prepare_distance: 1.0                     # [m]
           min_slow_down_speed: 1.38                     # [m/s]
           buf_slow_down_speed: 0.56                     # [m/s] FOR DEVELOPER
@@ -294,7 +294,7 @@
           velocity: [1.39, 4.17, 11.1]                  # [m/s]
           max_accel_values: [0.5, 0.5, 0.5]             # [m/ss]
           min_jerk_values: [0.2, 0.2, 0.2]              # [m/sss]
-          max_jerk_values: [3.0, 3.0, 3.0]              # [m/sss]
+          max_jerk_values: [1.0, 1.0, 1.0]              # [m/sss]
 
         # longitudinal constraints
         longitudinal:
