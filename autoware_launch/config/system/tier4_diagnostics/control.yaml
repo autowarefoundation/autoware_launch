@@ -31,7 +31,7 @@ units:
       # - { type: link, link: /control/011-slip_detection }
       - { type: link, link: /control/collision_detector }
       - { type: link, link: /control/rolling_back }
-      - { type: link, link: control/over_velocity }
+      - { type: link, link: /control/over_velocity }
 
   - path: /control/comfortable_stop
     type: and
