@@ -1,0 +1,36 @@
+# Description:
+#   required_diags:
+#     <name>: {is_active: <is_active>, status: <status>}
+#   name: diag name
+#   is_active: Force update or not
+#   status: diag status set by dummy diag publisher "OK, Warn, Error, Stale"
+#
+# Note:
+#
+# default values are:
+#   is_active: "true"
+#   status: "OK"
+---
+/**:
+  ros__parameters:
+    required_diags:
+      # map
+      ## /autoware/map/topic_rate_check/pointcloud_map
+      "topic_state_monitor_pointcloud_map: map_topic_status": default
+
+      # localization
+      ## /autoware/localization/scan_matching_status
+      "ndt_scan_matcher: scan_matching_status": default
+
+      ## /autoware/localization/accuracy
+      "localization_error_monitor: ellipse_error_status": default
+
+      ## /autoware/localization/sensor_fusion_status
+      "localization: ekf_localizer": default
+
+      ## /autoware/localization/topic_rate_check/pose_twist_fusion
+      "topic_state_monitor_pose_twist_fusion_filter_pose: localization_topic_status": default
+
+      # perception
+      ## /autoware/perception/topic_rate_check/pointcloud
+      "topic_state_monitor_obstacle_segmentation_pointcloud: perception_topic_status": default
