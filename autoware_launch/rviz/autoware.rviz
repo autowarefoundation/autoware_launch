@@ -2464,6 +2464,18 @@ Visualization Manager:
                 Reliability Policy: Reliable
                 Value: /control/autonomous_emergency_braking/virtual_wall
               Value: true
+            - Class: rviz_default_plugins/MarkerArray
+              Enabled: true
+              Name: VirtualWall (velocity control)
+              Namespaces:
+                {}
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /control/trajectory_follower/controller_node_exe/virtual_wall
+              Value: true
           Enabled: true
           Name: VirtualWall
         - Class: rviz_default_plugins/Marker
