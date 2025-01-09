@@ -44,7 +44,8 @@
     <!-- behavior velocity planner -->
     <arg name="behavior_velocity_config_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner"/>
     <arg name="behavior_velocity_smoother_type_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/Analytical.param.yaml"/>
-    <arg name="behavior_velocity_planner_common_param_path" value="$(var behavior_velocity_config_path)/behavior_velocity_planner.param.yaml"/>
+    <arg name="behavior_velocity_planner_param_path" value="$(var behavior_velocity_config_path)/behavior_velocity_planner.param.yaml"/>
+    <arg name="behavior_velocity_planner_common_param_path" value="$(var behavior_velocity_config_path)/behavior_velocity_planner_common.param.yaml"/>
     <arg name="behavior_velocity_planner_blind_spot_module_param_path" value="$(var behavior_velocity_config_path)/blind_spot.param.yaml"/>
     <arg name="behavior_velocity_planner_crosswalk_module_param_path" value="$(var behavior_velocity_config_path)/crosswalk.param.yaml"/>
     <arg name="behavior_velocity_planner_walkway_module_param_path" value="$(var behavior_velocity_config_path)/walkway.param.yaml"/>
