@@ -1,0 +1,57 @@
+/**:
+  ros__parameters:
+    run_out:  # module to stop or slowdown before sudden collisions with obstacles
+      collision:
+        time_margin: 0.0  # [s] extra time margin needed to determine collisions
+        time_overlap_tolerance: 0.1  # [s] when calculating overlap time intervals, intervals are grouped if they are separated by less than this tolerance value
+        same_direction_angle_threshold: 0.1  # [rad] threshold to determine if a collision is going in the same direction as the ego trajectory
+        opposite_direction_angle_threshold: 0.1  # [rad] threshold around pi to determine if a collision is going in a direction opposite to the ego trajectory
+
+      preventive_slowdown:  # comfortable slowdown
+        on_time_buffer: 0.1   # [s] successive collision detection time required to start the slowdown decision
+        off_time_buffer: 0.5  # [s] successive non-collision detection time required to remove the slowdown decision
+        distance_buffer: 2.0  # [m] longitudinal distance between the collision and the slowdown positions
+        deceleration_limit: 4.0  # [m/s²] minimum deceleration that can be applied by the preventive slowdown
+
+      stop:  # emergency stop when detecting a collision
+        on_time_buffer: 0.5   # [s] successive collision detection time required to start the stopping decision
+        off_time_buffer: 2.0  # [s] successive non-collision detection time required to remove a stopping decision
+        distance_buffer: 2.0  # [m] longitudinal safety distance to keep between ego and the collision position
+        calculate_earliest_position_within_history: false # if true, use the earliest stop position within the history, otherwise the stop position is calculated only from the currently detected collision
+        keep_until_object_is_gone: true  # if true, once ego stopped for an object we keep the stop decision until the object is gone
+
+      passing:  # ignore collisions in some conditions
+        enable_passing_margin: true # If true, a collision where ego arrives first is ignored
+        time_margin: 1.5  # [s] margin to decide if ego passes first (higher is more conservative)
+        max_overlap_duration: 2.0  # [s] the collision is not ignored if ego is predicted to stay on the object's path for longer than this duration
+        enable_deceleration_limit: false # if true, collisions are ignored if happening within the minimum duration required to stop ego comfortably
+
+      ego:
+        # additional margins to calculate the ego footprint used for collision detection
+        lateral_margin: 0.0 # [m] extra lateral margin
+        longitudinal_margin: 0.0 # [m] extra longitudinal margin
+
+      objects:
+        target_labels: ["PEDESTRIAN", "BICYCLE", "MOTORCYCLE"]
+        # for each target labels we can specify the following parameters
+        DEFAULT:
+          ignore:  # options to ignore some objects
+            if_stopped: false # if true, object with a velocity bellow the threshold are ignored
+            stopped_velocity_threshold: 0.5  # [m/s]
+            if_on_ego_trajectory: true  # if true, object located on the ego trajectory footprint are ignored
+            if_behind_ego: true  # if true, objects located behind the ego vehicles are ignored
+            if_on_crosswalk: false # if true, objects located on a crosswalk are ignored
+            if_on_yield_lane: true  # if true, objects are ignored if coming from a lane yielding to the ego lane
+          confidence_filtering:
+            threshold: 0.0  # [-] only use predicted paths with a higher confidence value than this threshold
+            only_use_highest: true  # if true, only the path(s) with the highest confidence are used
+          cut_predicted_paths:  # options to cut predicted paths of dynamic objects
+            if_crossing_ego_from_behind: true # if true, cut after crossing the ego vehicle
+            polygon_types: ["NONE"]  # types of polygons in the vector map used to cut predicted paths
+            linestring_types: ["guard_rail"]  # types of linestrings in the vector map used to cut predicted paths
+        PEDESTRIAN:
+          ignore:  # options to ignore some objects
+            if_on_crosswalk: true # if true, pedestrians located on a crosswalk are ignored
+            if_on_yield_lane: false # if true, non-pedestrians are ignored if coming from a lane yielding to the ego lane
+          cut_predicted_paths:  # options to cut predicted paths of dynamic objects
+            polygon_types: ["crosswalk"]  # types of polygons in the vector map used to cut predicted paths
