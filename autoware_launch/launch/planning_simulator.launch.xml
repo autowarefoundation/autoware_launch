@@ -78,6 +78,8 @@
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
       <arg name="rviz_respawn" value="$(var rviz_respawn)"/>
+      <!-- V2X -->
+      <arg name="launch_v2x" value="false"/>
       <!-- Auto mode setting-->
       <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
       <arg name="is_simulation" value="true"/>
