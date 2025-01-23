@@ -48,7 +48,7 @@
     <arg name="data_path" value="$(var data_path)"/>
 
     <arg name="use_traffic_light_recognition" value="$(var use_traffic_light_recognition)"/>
-    <arg name="traffic_light_recognition/enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
+    <arg name="traffic_light_recognition/use_ml_detector" value="$(var traffic_light_recognition/use_ml_detector)"/>
     <arg name="traffic_light_recognition/fusion_only" value="false"/>
     <arg name="all_traffic_light_camera" value="$(var all_traffic_light_camera)"/>
 
