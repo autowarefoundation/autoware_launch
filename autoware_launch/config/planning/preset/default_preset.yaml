@@ -95,13 +95,13 @@ launch:
   # motion velocity planner modules
   - arg:
       name: launch_obstacle_stop_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_obstacle_slow_down_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_obstacle_cruise_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_dynamic_obstacle_stop_module
       default: "true"
@@ -114,7 +114,7 @@ launch:
 
   - arg:
       name: motion_stop_planner_type
-      default: none
+      default: obstacle_cruise_planner
       # option: obstacle_stop_planner
       #         obstacle_cruise_planner
       #         none
