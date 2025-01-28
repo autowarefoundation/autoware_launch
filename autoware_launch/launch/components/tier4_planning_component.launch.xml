@@ -74,12 +74,9 @@
     <arg name="obstacle_stop_planner_acc_param_path" value="$(var motion_config_path)/obstacle_stop_planner/adaptive_cruise_control.param.yaml"/>
     <arg name="obstacle_cruise_planner_param_path" value="$(var motion_config_path)/obstacle_cruise_planner/obstacle_cruise_planner.param.yaml"/>
     <arg name="motion_velocity_planner_param_path" value="$(var motion_config_path)/motion_velocity_planner/motion_velocity_planner.param.yaml"/>
-    <!-- <arg name="motion_velocity_planner_obstacle_stop_module_param_path" value="$(var motion_config_path)/motion_velocity_planner/obstacle_stop.param.yaml"/> -->
-    <!-- <arg name="motion_velocity_planner_obstacle_slow_down_module_param_path" value="$(var motion_config_path)/motion_velocity_planner/obstacle_slow_down.param.yaml"/> -->
-    <!-- <arg name="motion_velocity_planner_obstacle_cruise_module_param_path" value="$(var motion_config_path)/motion_velocity_planner/obstacle_cruise.param.yaml"/> -->
-    <arg name="motion_velocity_planner_obstacle_stop_module_param_path" value="$(find-pkg-share autoware_motion_velocity_obstacle_stop_module)/config/obstacle_stop.param.yaml"/>
-    <arg name="motion_velocity_planner_obstacle_slow_down_module_param_path" value="$(find-pkg-share autoware_motion_velocity_obstacle_slow_down_module)/config/obstacle_slow_down.param.yaml"/>
-    <arg name="motion_velocity_planner_obstacle_cruise_module_param_path" value="$(find-pkg-share autoware_motion_velocity_obstacle_cruise_module)/config/obstacle_cruise.param.yaml"/>
+    <arg name="motion_velocity_planner_obstacle_stop_module_param_path" value="$(var motion_config_path)/motion_velocity_planner/obstacle_stop.param.yaml"/>
+    <arg name="motion_velocity_planner_obstacle_slow_down_module_param_path" value="$(var motion_config_path)/motion_velocity_planner/obstacle_slow_down.param.yaml"/>
+    <arg name="motion_velocity_planner_obstacle_cruise_module_param_path" value="$(var motion_config_path)/motion_velocity_planner/obstacle_cruise.param.yaml"/>
     <arg name="motion_velocity_planner_dynamic_obstacle_stop_module_param_path" value="$(var motion_config_path)/motion_velocity_planner/dynamic_obstacle_stop.param.yaml"/>
     <arg name="motion_velocity_planner_out_of_lane_module_param_path" value="$(var motion_config_path)/motion_velocity_planner/out_of_lane.param.yaml"/>
     <arg name="motion_velocity_planner_obstacle_velocity_limiter_param_path" value="$(var motion_config_path)/motion_velocity_planner/obstacle_velocity_limiter.param.yaml"/>
