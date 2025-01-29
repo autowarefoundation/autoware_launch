@@ -2,6 +2,123 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(goal_planner): introduce bezier based pullover for bus stop area (`#1308 <https://github.com/autowarefoundation/autoware_launch/issues/1308>`_)
+* feat: apply autoware prefix for state monitor (`#1313 <https://github.com/autowarefoundation/autoware_launch/issues/1313>`_)
+  Co-authored-by: Takagi, Isamu <isamu.takagi@tier4.jp>
+  Co-authored-by: Takagi, Isamu <43976882+isamu-takagi@users.noreply.github.com>
+* revert: revert "feat: apply autoware prefix for state monitor" (`#1312 <https://github.com/autowarefoundation/autoware_launch/issues/1312>`_)
+  Revert "feat: apply autoware prefix for state monitor (`#1311 <https://github.com/autowarefoundation/autoware_launch/issues/1311>`_)"
+* feat: apply autoware prefix for state monitor (`#1311 <https://github.com/autowarefoundation/autoware_launch/issues/1311>`_)
+  Co-authored-by: Ryohsuke Mitsudome <43976834+mitsudome-r@users.noreply.github.com>
+* feat: apply autoware prefix for adapi helpers (`#1309 <https://github.com/autowarefoundation/autoware_launch/issues/1309>`_)
+* feat(autoware_detected_object_validation): add height filter in lanelet filtering (`#1307 <https://github.com/autowarefoundation/autoware_launch/issues/1307>`_)
+  * chore(package.xml): bump version to 0.38.0 (`#1226 <https://github.com/autowarefoundation/autoware_launch/issues/1226>`_)
+  * add changelog
+  * unify package.xml version to 0.37.0
+  * 0.38.0
+  * fix organization
+  ---------
+  * youtalk username
+  * update changelog
+  * 0.39.0
+  * Update autoware_launch/CHANGELOG.rst
+  Co-authored-by: Ryohsuke Mitsudome <43976834+mitsudome-r@users.noreply.github.com>
+  * change username
+  * chore(package.xml): bump version to 0.39.0 (`#1248 <https://github.com/autowarefoundation/autoware_launch/issues/1248>`_)
+  Co-authored-by: Yuki TAKAGI <141538661+yuki-takagi-66@users.noreply.github.com>
+  Co-authored-by: Go Sakayori <go-sakayori@users.noreply.github.com>
+  Co-authored-by: Kosuke Takeuchi <kosuke.tnp@gmail.com>
+  Co-authored-by: Taekjin LEE <technolojin@gmail.com>
+  Co-authored-by: SakodaShintaro <rgbygscrsedppbwg@gmail.com>
+  Co-authored-by: Zulfaqar Azmi <93502286+zulfaqar-azmi-t4@users.noreply.github.com>
+  Co-authored-by: Satoshi OTA <44889564+satoshi-ota@users.noreply.github.com>
+  Co-authored-by: iwatake <take.iwiw2222@gmail.com>
+  Co-authored-by: ito-san <57388357+ito-san@users.noreply.github.com>
+  Co-authored-by: Takayuki Murooka <takayuki5168@gmail.com>
+  Co-authored-by: danielsanchezaran <daniel.sanchez@tier4.jp>
+  Co-authored-by: Maxime CLEMENT <78338830+maxime-clem@users.noreply.github.com>
+  Co-authored-by: Ryohsuke Mitsudome <43976834+mitsudome-r@users.noreply.github.com>
+  Co-authored-by: xtk8532704 <1041084556@qq.com>
+  * feat: add height filter option for lanelet filter
+  * chore: add description in parameter
+  ---------
+  Co-authored-by: Yutaka Kondo <yutaka.kondo@youtalk.jp>
+  Co-authored-by: Ryohsuke Mitsudome <43976834+mitsudome-r@users.noreply.github.com>
+  Co-authored-by: Yuki TAKAGI <141538661+yuki-takagi-66@users.noreply.github.com>
+  Co-authored-by: Go Sakayori <go-sakayori@users.noreply.github.com>
+  Co-authored-by: Kosuke Takeuchi <kosuke.tnp@gmail.com>
+  Co-authored-by: Taekjin LEE <technolojin@gmail.com>
+  Co-authored-by: SakodaShintaro <rgbygscrsedppbwg@gmail.com>
+  Co-authored-by: Zulfaqar Azmi <93502286+zulfaqar-azmi-t4@users.noreply.github.com>
+  Co-authored-by: Satoshi OTA <44889564+satoshi-ota@users.noreply.github.com>
+  Co-authored-by: iwatake <take.iwiw2222@gmail.com>
+  Co-authored-by: ito-san <57388357+ito-san@users.noreply.github.com>
+  Co-authored-by: Takayuki Murooka <takayuki5168@gmail.com>
+  Co-authored-by: danielsanchezaran <daniel.sanchez@tier4.jp>
+  Co-authored-by: Maxime CLEMENT <78338830+maxime-clem@users.noreply.github.com>
+  Co-authored-by: xtk8532704 <1041084556@qq.com>
+  Co-authored-by: Junya Sasaki <j2sasaki1990@gmail.com>
+  Co-authored-by: Ryohsuke Mitsudome <ryohsuke.mitsudome@tier4.jp>
+* chore(system_monitor): add parameters for UDP buf errors (`#1303 <https://github.com/autowarefoundation/autoware_launch/issues/1303>`_)
+* refactor(lane_change): add missing safety check parameter  (`#1300 <https://github.com/autowarefoundation/autoware_launch/issues/1300>`_)
+  * refactor(lane_change): parameterize incoming object angle for filter
+  * add missing param
+  ---------
+* fix: remove unnecesary parameters (`#1301 <https://github.com/autowarefoundation/autoware_launch/issues/1301>`_)
+* feat(lane_change): add time limit param (`#1298 <https://github.com/autowarefoundation/autoware_launch/issues/1298>`_)
+  add time limit param
+* chore(autoware_test_utils): add test_utils rviz config (`#1299 <https://github.com/autowarefoundation/autoware_launch/issues/1299>`_)
+* chore: fix typo in drivable_are_expansion.param.yaml (`#1297 <https://github.com/autowarefoundation/autoware_launch/issues/1297>`_)
+  fix typo in drivable_are_expansion.param.yaml
+* feat(lane_change): using frenet planner to generate lane change path when ego near terminal (`#1290 <https://github.com/autowarefoundation/autoware_launch/issues/1290>`_)
+  * add parameter for enabling frenet
+  * parameterized th_yaw_diff
+  * prepare segment curvature threshold
+  * add curvature smoothing
+  ---------
+* feat(lane_change): add lane change parameter (`#1263 <https://github.com/autowarefoundation/autoware_launch/issues/1263>`_)
+  * add flag to enable/disable terminal path feature
+  * add parameter to cofigure stop point placement
+  * add flag to disable feature near goal
+  * set default flag value to false
+  ---------
+* feat: remove enable_rtc from detection_area (`#1292 <https://github.com/autowarefoundation/autoware_launch/issues/1292>`_)
+* feat(lane_change): add feature flag param (`#1291 <https://github.com/autowarefoundation/autoware_launch/issues/1291>`_)
+  add parameter to enable/disable keeping distance from front stopped object
+* feat(autoware_traffic_light_arbiter): add current time validation (`#1289 <https://github.com/autowarefoundation/autoware_launch/issues/1289>`_)
+  * add config
+  * change ros parameter name
+  ---------
+* feat(image_projection_based_fusion): add cache options (`#1275 <https://github.com/autowarefoundation/autoware_launch/issues/1275>`_)
+  * add timekeeper option
+  * add cache option and mod unrectified_image option
+  * fix parameter names
+  ---------
+* feat(pid_longitudinal_controller): change slope compensation mode to trajectory_goal_adaptive (`#1288 <https://github.com/autowarefoundation/autoware_launch/issues/1288>`_)
+* feat: remove admissible\_{position/yaw}_error from trajectory_follower (`#1284 <https://github.com/autowarefoundation/autoware_launch/issues/1284>`_)
+* feat: add velocity control virtual wall (`#1285 <https://github.com/autowarefoundation/autoware_launch/issues/1285>`_)
+* feat: remove emergency_state_traj\_{trans/rot}_dev from trajectory_follower (`#1283 <https://github.com/autowarefoundation/autoware_launch/issues/1283>`_)
+  * feat: remove emergency_state_traj\_{trans/rot}_dev from trajectory_follower
+  * update codeowner
+  ---------
+* feat(detected_object_validation): add validation for maximum distance in obstacle_pointcloud_based_validator (`#1277 <https://github.com/autowarefoundation/autoware_launch/issues/1277>`_)
+  feat: add validation for maximum distance in obstacle_pointcloud_based_validator
+* chore: sync files (`#1280 <https://github.com/autowarefoundation/autoware_launch/issues/1280>`_)
+  * chore: sync files
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: github-actions <github-actions@github.com>
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat(pid_longitudinal_controller): change default slope compesation source to trajectory_adaptive (`#1276 <https://github.com/autowarefoundation/autoware_launch/issues/1276>`_)
+* feat(image_projection_based_fusion): add timekeeper option (`#1274 <https://github.com/autowarefoundation/autoware_launch/issues/1274>`_)
+  add timekeeper option
+* refactor(autoware_multi_object_tracker): extract tracker parameters (`#1273 <https://github.com/autowarefoundation/autoware_launch/issues/1273>`_)
+* feat(MRM_handler, MRM_emergency_stop_operator): revert mrm_stop parameter, enable mrm_comfortable_stop (`#1265 <https://github.com/autowarefoundation/autoware_launch/issues/1265>`_)
+* Contributors: Autumn60, Mamoru Sobue, Masaki Baba, Masato Saeki, Ryohsuke Mitsudome, Taekjin LEE, Takagi, Isamu, Takayuki Murooka, Yoshi Ri, Yuki TAKAGI, Zulfaqar Azmi, awf-autoware-bot[bot], github-actions, iwatake, jakor97, mkquda
+
 0.40.0 (2024-12-12)
 -------------------
 * Merge remote-tracking branch 'origin/main' into release-0.40.0
