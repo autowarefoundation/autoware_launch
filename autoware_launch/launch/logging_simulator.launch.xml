@@ -71,6 +71,8 @@
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
+      <!-- V2X -->
+      <arg name="launch_v2x" value="false"/>
     </include>
   </group>
 </launch>
