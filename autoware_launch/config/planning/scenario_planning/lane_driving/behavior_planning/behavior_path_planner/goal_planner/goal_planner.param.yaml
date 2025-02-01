@@ -82,7 +82,6 @@
             forward_parking_lane_departure_margin: 0.0
             forward_parking_path_interval: 1.0
             forward_parking_max_steer_angle: 0.4  # 22.9deg
-            forward_parking_max_steer_angle: 0.35  # 20deg
             forward_parking_steer_rate_lim: 0.35
           backward:
             enable_arc_backward_parking: true
