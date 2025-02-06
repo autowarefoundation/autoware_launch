@@ -33,8 +33,6 @@
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
-  <!-- V2X-->
-  <arg name="launch_v2x" default="false" description="launch v2x modules"/>
   <!-- Scenario simulation -->
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
 
@@ -73,8 +71,6 @@
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
-      <!-- V2X -->
-      <arg name="launch_v2x" value="false"/>
     </include>
   </group>
 </launch>
