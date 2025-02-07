@@ -21,6 +21,7 @@
     - source: .github/workflows/sync-files.yaml
     - source: .markdown-link-check.json
     - source: .markdownlint.yaml
+    - source: .pre-commit-config.yaml
     - source: .pre-commit-config-optional.yaml
     - source: .prettierignore
       pre-commands: |
