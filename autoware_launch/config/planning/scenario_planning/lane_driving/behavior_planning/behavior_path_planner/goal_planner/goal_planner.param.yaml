@@ -25,8 +25,8 @@
         high_curvature_threshold: 0.1
         bus_stop_area:
           use_bus_stop_area: false
-          goal_search_interval: 0.5
-          lateral_offset_interval: 0.25
+          goal_search_interval: 0.75
+          lateral_offset_interval: 0.3
 
       # occupancy grid map
       occupancy_grid:
@@ -39,7 +39,6 @@
 
       # object recognition
       object_recognition:
-        use_object_recognition: true
         collision_check_soft_margins: [5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0]  # the maximum margin when ego and objects are oriented.
         collision_check_hard_margins: [0.6]  # this should be larger than `surround_check_distance` of surround_obstacle_checker
         object_recognition_collision_check_max_extra_stopping_margin: 1.0
@@ -52,6 +51,7 @@
       # pull over
       pull_over:
         minimum_request_length: 0.0
+        pull_over_prepare_length: 100.0
         pull_over_velocity: 3.0
         pull_over_minimum_velocity: 1.38
         decide_path_distance: 10.0
@@ -129,6 +129,10 @@
             max_planning_time: 150.0
             neighbor_radius: 8.0
             margin: 1.0
+
+        bezier_parking:
+          pull_over_angle_threshold: 0.5
+          after_shift_straight_distance: 1.5
 
       stop_condition:
         maximum_deceleration_for_stop: 1.0
