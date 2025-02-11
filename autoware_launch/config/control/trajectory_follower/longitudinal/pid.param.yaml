@@ -64,11 +64,11 @@
 
     # acceleration limit
     max_acc: 1.86
-    min_acc: -3.36
+    min_acc: -6.00
 
     # jerk limit
     max_jerk: 2.0
-    min_jerk: -5.0
+    min_jerk: -30.0
     max_acc_cmd_diff: 50.0 # [m/s^2 * s^-1]
 
     # slope compensation

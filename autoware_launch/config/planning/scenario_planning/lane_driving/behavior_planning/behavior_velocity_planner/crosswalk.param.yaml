@@ -32,9 +32,9 @@
         stuck_vehicle_velocity: 1.0 # [m/s] threshold velocity whether other vehicles are assumed to be stuck or not.
         max_stuck_vehicle_lateral_offset: 2.0 # [m] The feature does not handle the vehicles farther than this value to the ego's path.
         required_clearance: 10.0 # [m] clearance to be secured between the ego and the ahead vehicle
-        min_acc: -1.0 # min acceleration [m/ss]
-        min_jerk: -1.0 # min jerk [m/sss]
-        max_jerk: 1.0 # max jerk [m/sss]
+        min_acc: -4.0 # min acceleration [m/ss]
+        min_jerk: -5.0 # min jerk [m/sss]
+        max_jerk: 5.0 # max jerk [m/sss]
 
       # params for the pass judge logic against the crosswalk users such as pedestrians or bicycles
       pass_judge:
@@ -47,8 +47,8 @@
         ego_min_assumed_speed: 2.0 # [m/s] assumed speed to calculate the time to collision point
 
         no_stop_decision: # parameters to determine stop cancel. {-$overrun_threshold_length + f($min_acc, $min_jerk)} is compared against distance to stop pose.
-          min_acc: -1.5 # min acceleration [m/ss]
-          min_jerk: -1.5 # min jerk [m/sss]
+          min_acc: -4.0 # min acceleration [m/ss]
+          min_jerk: -5.0 # min jerk [m/sss]
           overrun_threshold_length: 1.0 # [m] required to avoid giving up against backward movement of the stop position due to approaching pedestrians, etc.
 
         stop_object_velocity_threshold: 0.28 # [m/s] velocity threshold for the module to judge whether the objects is stopped (0.28 m/s = 1.0 kmph)
