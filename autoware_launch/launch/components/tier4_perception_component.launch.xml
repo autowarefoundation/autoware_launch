@@ -13,6 +13,8 @@
   <arg name="use_detection_by_tracker" default="true" description="launch detection_by_tracker function"/>
   <arg name="use_radar_tracking_fusion" default="true" description="if true, radar objects are merged in tracking module. Otherwise, radar objects are merged in detection module."/>
   <arg name="use_object_filter" default="true" description="launch object filter to filter-out detected object"/>
+  <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
+  <arg name="use_obstacle_segmentation_time_series_filter" default="true" description="use time series filter at the ground segmentation"/>
 
   <arg name="occupancy_grid_map_method" default="pointcloud_based" description="options: pointcloud_based, laserscan_based, multi_lidar_pointcloud_based"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
@@ -50,6 +52,9 @@
     <arg name="use_object_filter" value="$(var use_object_filter)"/>
     <arg name="objects_filter_method" value="$(var detected_objects_filter_method)"/>
     <arg name="objects_validation_method" value="$(var detected_objects_validation_method)"/>
+    <arg name="use_obstacle_segmentation_single_frame_filter" value="$(var use_obstacle_segmentation_single_frame_filter)"/>
+    <arg name="use_obstacle_segmentation_time_series_filter" value="$(var use_obstacle_segmentation_time_series_filter)"/>
+
     <arg name="data_path" value="$(var data_path)"/>
 
     <arg name="use_traffic_light_recognition" value="$(var use_traffic_light_recognition)"/>
