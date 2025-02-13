@@ -14,7 +14,7 @@
         # For the Lanelet2 map with no explicit stop lines
         stop_distance_from_crosswalk: 3.5 # [m] make stop line away from crosswalk
         # For the case where the stop position is determined according to the object position.
-        stop_distance_from_object_preferred: 2.0 # [m]
+        stop_distance_from_object_preferred: 5.5 # [m]
         stop_distance_from_object_limit: 2.0 # [m]
         min_acc_preferred: -1.0 # min acceleration [m/ss]
         min_jerk_preferred: -1.0 # min jerk [m/sss]
@@ -31,7 +31,7 @@
         enable_stuck_check_in_intersection: false # [-] flag to enable stuck vehicle checking for crosswalk which is in intersection
         stuck_vehicle_velocity: 1.0 # [m/s] threshold velocity whether other vehicles are assumed to be stuck or not.
         max_stuck_vehicle_lateral_offset: 2.0 # [m] The feature does not handle the vehicles farther than this value to the ego's path.
-        required_clearance: 10.0 # [m] clearance to be secured between the ego and the ahead vehicle
+        required_clearance: 6.0 # [m] clearance to be secured between the ego and the ahead vehicle
         min_acc: -4.0 # min acceleration [m/ss]
         min_jerk: -5.0 # min jerk [m/sss]
         max_jerk: 5.0 # max jerk [m/sss]
@@ -39,7 +39,7 @@
       # params for the pass judge logic against the crosswalk users such as pedestrians or bicycles
       pass_judge:
         ego_pass_first_margin_x: [0.0] # [[s]] time to collision margin vector for ego pass first situation (the module judges that ego don't have to stop at TTC + MARGIN < TTV condition)
-        ego_pass_first_margin_y: [6.0] # [[s]] time to vehicle margin vector for ego pass first situation (the module judges that ego don't have to stop at TTC + MARGIN < TTV condition)
+        ego_pass_first_margin_y: [5.0] # [[s]] time to vehicle margin vector for ego pass first situation (the module judges that ego don't have to stop at TTC + MARGIN < TTV condition)
         ego_pass_first_additional_margin: 0.5 # [s] additional time margin for ego pass first situation to suppress chattering
         ego_pass_later_margin_x: [0.0] # [[s]] time to vehicle margin vector for object pass first situation (the module judges that ego don't have to stop at TTV + MARGIN < TTC condition)
         ego_pass_later_margin_y: [10.0] # [[s]] time to collision margin vector for object pass first situation (the module judges that ego don't have to stop at TTV + MARGIN < TTC condition)
