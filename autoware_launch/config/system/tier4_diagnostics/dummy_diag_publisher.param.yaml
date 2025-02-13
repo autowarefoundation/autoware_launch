@@ -207,8 +207,8 @@
       ## /others/005-visibility_validation/front_lower
       "dual_return_filter: /sensing/lidar/front_lower: visibility_validation": default
 
-      ## /others/005-visibility_validation/left_upper
-      "dual_return_filter: /sensing/lidar/left_upper: visibility_validation": default
+      ## /others/005-visibility_validation/right_upper
+      "dual_return_filter: /sensing/lidar/right_upper: visibility_validation": default
 
       ## /others/010-emergency_vehicle
       "emergency_vehicle_detector: emergency_vehicle": default

@@ -43,7 +43,7 @@ units:
     list:
       # - { type: link, link: /others/002-blockage_validation-error }
       - { type: link, link: /others/004-concat_status }
-      # - { type: link, link: /others/005-visibility_validation-error }
+      - { type: link, link: /others/005-visibility_validation-error }
       # - { type: link, link: /others/012-vehicle_stuck_checker }
 
   - path: /others/fatal_error/emergency_stop
@@ -97,7 +97,7 @@ units:
     type: and
     list:
       - { type: link, link: /others/005-visibility_validation/front_lower }
-      - { type: link, link: /others/005-visibility_validation/left_upper }
+      - { type: link, link: /others/005-visibility_validation/right_upper }
 
   - path: /others/005-visibility_validation-error
     type: warn-to-ok
@@ -165,9 +165,9 @@ units:
     name: visibility_validation
     timeout: 1.0
 
-  - path: /others/005-visibility_validation/left_upper
+  - path: /others/005-visibility_validation/right_upper
     type: diag
-    node: "dual_return_filter: /sensing/lidar/left_upper"
+    node: "dual_return_filter: /sensing/lidar/right_upper"
     name: visibility_validation
     timeout: 1.0
 
