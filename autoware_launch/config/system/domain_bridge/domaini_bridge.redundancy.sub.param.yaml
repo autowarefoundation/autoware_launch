@@ -1,0 +1,135 @@
+name: sub_ecu_domain_bridge
+from_domain: 1
+to_domain: 2
+topics:
+  # main
+  /to_sub/planning/scenario_planning/trajectory:
+    type: autoware_planning_msgs/msg/Trajectory
+    remap: /main/planning/scenario_planning/trajectory
+  /to_sub/localization/pose_with_covariance:
+    type: geometry_msgs/msg/PoseWithCovarianceStamped
+    remap: /main/localization/pose_with_covariance
+  /initialpose3d:
+    type: geometry_msgs/msg/PoseWithCovarianceStamped
+    remap: /main/initialpose3d
+  # for logging at domain 1
+  /control/command/control_cmd:
+    type: autoware_control_msgs/msg/Control
+    reversed: True
+    remap: /sub/control/command/control_cmd
+  /localization/kinematic_state:
+    type: nav_msgs/msg/Odometry
+    reversed: True
+    remap: /sub/localization/kinematic_state
+  /localization/acceleration:
+    type: geometry_msgs/msg/AccelWithCovarianceStamped
+    reversed: True
+    remap: /sub/localization/acceleration
+  /planning/scenario_planning/trajectory:
+    type: autoware_planning_msgs/msg/Trajectory
+    reversed: True
+    remap: /sub/planning/scenario_planning/trajectory
+  /localization/twist_estimator/twist_with_covariance:
+    type: geometry_msgs/msg/TwistWithCovarianceStamped
+    reversed: True
+    remap: /sub/localization/twist_estimator/twist_with_covariance
+  /localization/pose_twist_fusion_filter/kinematic_state:
+    type: nav_msgs/msg/Odometry
+    reversed: True
+    remap: /sub/localization/pose_twist_fusion_filter/kinematic_state
+  /system/election/status:
+    type: tier4_system_msgs/msg/ElectionStatus
+    reversed: True
+    remap: /sub/system/election/status
+  /system/election/communication:
+    type: tier4_system_msgs/msg/ElectionCommunication
+    reversed: True
+    remap: /sub/system/election/communication
+  /system/mrm_request:
+    type: tier4_system_msgs/msg/MrmBehavior
+    reversed: True
+    remap: /sub/system/mrm_request
+  /system/fail_safe/over_all/mrm_state:
+    type: autoware_adapi_v1_msgs/msg/MrmState
+    reversed: True
+    remap: /sub/system/fail_safe/over_all/mrm_state
+  /system/fail_safe/mrm_state:
+    type: autoware_adapi_v1_msgs/msg/MrmState
+    reversed: True
+    remap: /sub/system/fail_safe/mrm_state
+  /diagnostics:
+    type: diagnostic_msgs/msg/DiagnosticArray
+    reversed: True
+    remap: /sub/diagnostics
+  /system/operation_mode/availability:
+    type: tier4_system_msgs/msg/OperationModeAvailability
+    reversed: True
+    remap: /sub/system/operation_mode/availability
+  /can/command/m0_command:
+    type: j6_interface_msgs/msg/M0Command
+    reversed: True
+    remap: /sub/can/command/m0_command
+  /planning/scenario_planning/max_velocity:
+    type: tier4_planning_msgs/msg/VelocityLimit
+    reversed: True
+    remap: /sub/planning/scenario_planning/max_velocity
+  /velocity_smoother/debug/trajectory_external_velocity_limited:
+    type: autoware_planning_msgs/msg/Trajectory
+    reversed: True
+    remap: /sub/planning/scenario_planning/velocity_smoother/debug/trajectory_external_velocity_limited
+  /velocity_smoother/debug/trajectory_lateral_acc_filtered:
+    type: autoware_planning_msgs/msg/Trajectory
+    reversed: True
+    remap: /sub/planning/scenario_planning/velocity_smoother/debug/trajectory_lateral_acc_filtered
+  /velocity_smoother/debug/trajectory_raw:
+    type: autoware_planning_msgs/msg/Trajectory
+    reversed: True
+    remap: /sub/planning/scenario_planning/velocity_smoother/debug/trajectory_raw
+  /velocity_smoother/debug/trajectory_steering_rate_limited:
+    type: autoware_planning_msgs/msg/Trajectory
+    reversed: True
+    remap: /sub/planning/scenario_planning/velocity_smoother/debug/trajectory_steering_rate_limited
+  /velocity_smoother/debug/trajectory_time_resampled:
+    type: autoware_planning_msgs/msg/Trajectory
+    reversed: True
+    remap: /sub/planning/scenario_planning/velocity_smoother/debug/trajectory_time_resampled
+  /velocity_smoother/distance_to_stopline:
+    type: tier4_debug_msgs/msg/Float32Stamped
+    reversed: True
+    remap: /sub/planning/scenario_planning/velocity_smoother/distance_to_stopline
+  /planning/trajectory_repeater/trajectory:
+    type: autoware_planning_msgs/msg/Trajectory
+    reversed: True
+    remap: /sub/planning/trajectory_repeater/trajectory
+  /planning/scenario_planning/max_velocity_candidates:
+    type: tier4_planning_msgs/msg/VelocityLimit
+    reversed: True
+    remap: /sub/planning/scenario_planning/max_velocity_candidates
+  /planning/scenario_planning/current_max_velocity:
+    type: tier4_planning_msgs/msg/VelocityLimit
+    reversed: True
+    remap: /sub/planning/scenario_planning/current_max_velocity
+  /system/operation_mode/state:
+    type: autoware_adapi_v1_msgs/msg/OperationModeState
+    reversed: True
+    remap: /sub/system/operation_mode/state
+  /can/command/m1_command:
+    type: j6_interface_msgs/msg/M1Command
+    reversed: True
+    remap: /sub/can/command/m1_command
+  /can/command/b0_command:
+    type: j6_interface_msgs/msg/B0Command
+    reversed: True
+    remap: /sub/can/command/b0_command
+  /main/localization/pose_with_covariance:
+    type: geometry_msgs/msg/PoseWithCovarianceStamped
+    reversed: True
+    remap: /sub/main/localization/pose_with_covariance
+  /control/trajectory_follower/lateral/diagnostic:
+    type: tier4_debug_msgs/msg/Float32MultiArrayStamped
+    reversed: True
+    remap: /sub/control/trajectory_follower/lateral/diagnostic
+  /control/trajectory_follower/longitudinal/diagnostic:
+    type: tier4_debug_msgs/msg/Float32MultiArrayStamped
+    reversed: True
+    remap: /sub/control/trajectory_follower/longitudinal/diagnostic
