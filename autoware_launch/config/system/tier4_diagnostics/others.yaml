@@ -44,7 +44,7 @@ units:
       # - { type: link, link: /others/002-blockage_validation-error }
       - { type: link, link: /others/004-concat_status }
       - { type: link, link: /others/005-visibility_validation-error }
-      # - { type: link, link: /others/012-vehicle_stuck_checker }
+      - { type: link, link: /others/012-vehicle_stuck_checker }
 
   - path: /others/fatal_error/emergency_stop
     type: and
