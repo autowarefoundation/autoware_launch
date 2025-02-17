@@ -1,5 +1,17 @@
 /**:
   ros__parameters:
+    common:
+      enable_debug_info: false
+      enable_calculation_time_info: false
+
+      stop_obstacle_type:
+        pointcloud: true
+
+      enable_slow_down_planning: true
+    
+      slow_down_obstacle_type:
+        pointcloud: false
+
     smooth_velocity_before_planning: true  # [-] if true, smooth the velocity profile of the input trajectory before planning
 
     trajectory_polygon_collision_check:
