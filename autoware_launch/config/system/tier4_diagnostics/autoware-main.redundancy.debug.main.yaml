@@ -27,5 +27,5 @@ units:
   - path: /dummy_diag_publisher/emergency
     type: diag
     node: ""
-    name: dummy_diag_publisher
+    name: dummy_diag_empty
     timeout: 1.0
