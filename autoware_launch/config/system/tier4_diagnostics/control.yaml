@@ -44,7 +44,7 @@ units:
       - { type: link, link: /control/001-topic_status/control_command-error }
       - { type: link, link: /control/004-lane_departure-error }
       - { type: link, link: /control/005-trajectory_deviation-error }
-      # - { type: link, link: /control/009-aeb_emergency_stop }
+      - { type: link, link: /control/009-aeb_emergency_stop }
       # - { type: link, link: /control/010-max_distance_deviation-error }
       - { type: link, link: /control/011-slip_detection }
       - { type: link, link: /control/collision_detector }
@@ -134,11 +134,11 @@ units:
     name: heartbeat
     timeout: 1.0
 
-  # - path: /control/009-aeb_emergency_stop
-  #   type: diag
-  #   node: autonomous_emergency_braking
-  #   name: aeb_emergency_stop
-  #   timeout: 1.0
+  - path: /control/009-aeb_emergency_stop
+    type: diag
+    node: autonomous_emergency_braking
+    name: aeb_emergency_stop
+    timeout: 1.0
 
   - path: /control/010-max_distance_deviation
     type: diag
