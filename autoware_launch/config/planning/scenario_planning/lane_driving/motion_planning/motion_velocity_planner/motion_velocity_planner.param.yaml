@@ -8,7 +8,7 @@
         pointcloud: true
 
       enable_slow_down_planning: true
-    
+
       slow_down_obstacle_type:
         pointcloud: false
 
