@@ -23,5 +23,5 @@ units:
 
   - path: /autoware/system/emergency_stop_operation
     type: diag
-    node: vehicle_cmd_gate
-    name: emergency_stop_operation
+    node: control_command_gate
+    name: timeout_builtin
