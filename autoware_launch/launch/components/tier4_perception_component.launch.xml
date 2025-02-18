@@ -25,7 +25,7 @@
   <arg name="all_traffic_light_camera" default="[camera6, camera7]" description="choose camera which use for traffic light recognition"/>
   <arg
     name="traffic_light_recognition/ml_detection_model_type"
-    default="whole_image_detection_model"
+    default="fine_detection_model"
     description="select ml model for TL detection: fine_detection_model or whole_image_detection_model"
   />
 
