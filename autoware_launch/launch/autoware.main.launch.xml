@@ -29,6 +29,7 @@
   <arg name="use_sim_time" default="false" description="use_sim_time"/>
   <arg name="is_main_ecu" default="true"/>
   <arg name="is_redundant" default="true"/>
+  <arg name="is_60kph" default="false"/>
   <!-- Vehicle -->
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
   <arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"/>
@@ -124,6 +125,7 @@
       <arg name="module_preset" value="$(var planning_module_preset)"/>
       <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
       <arg name="is_simulation" value="$(var is_simulation)"/>
+      <arg name="is_60kph" value="$(var is_60kph)"/>
     </include>
   </group>
 
