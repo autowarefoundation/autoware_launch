@@ -197,6 +197,10 @@
     <arg name="traffic_light_arbiter_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_arbiter/traffic_light_arbiter.param.yaml"/>
     <arg name="traffic_light_recognition/whole_image_detector_model_path" value="$(var data_path)/tensorrt_yolox"/>
     <arg name="traffic_light_recognition/whole_image_detector_model_name" value="yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
+    <arg
+      name="traffic_light_multi_camera_fusion_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml"
+    />
     <arg name="traffic_light_fine_detector_model_path" value="$(var data_path)/traffic_light_fine_detector"/>
     <arg name="traffic_light_fine_detector_model_name" value="tlr_car_ped_yolox_s_batch_6"/>
     <arg name="traffic_light_classifier_model_path" value="$(var data_path)/traffic_light_classifier"/>
