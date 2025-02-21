@@ -75,8 +75,8 @@
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="$(var launch_sensing_driver)"/>
       <!-- Perception-->
-      <arg name="traffic_light_recognition/use_ml_detector" value="false"/>
-      <arg name="all_traffic_light_camera" value="$(var traffic_light_namespace)"/>
+      <arg name="traffic_light_recognition/use_high_performance_detector" value="false"/>
+      <arg name="traffic_light_recognition/camera_namespace" value="$(var traffic_light_namespace)"/>
       <!-- Tools -->
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
