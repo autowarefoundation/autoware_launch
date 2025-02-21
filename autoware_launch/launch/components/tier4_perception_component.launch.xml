@@ -25,7 +25,11 @@
 
   <arg name="traffic_light_recognition/camera_namespace" default="[camera6, camera7]" description="choose camera which use for traffic light recognition"/>
   <arg name="traffic_light_recognition/use_high_performance_detector" default="true" description="select whether to use high performance detector for traffic light recognition"/>
-  <arg name="traffic_light_recognition/high_performance_detector_type" default="fine_detector" description="select high performance detector type for traffic light recognition: fine_detector or whole_image_detector"/>
+  <arg
+    name="traffic_light_recognition/high_performance_detector_type"
+    default="fine_detector"
+    description="select high performance detector type for traffic light recognition: fine_detector or whole_image_detector"
+  />
 
   <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
     <arg name="data_path" value="$(var data_path)"/>
@@ -204,10 +208,7 @@
       name="traffic_light_fine_detector_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml"
     />
-    <arg
-      name="yolox_traffic_light_detector_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/tensorrt_yolox/yolox_traffic_light_detector.param.yaml"
-    />
+    <arg name="yolox_traffic_light_detector_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/tensorrt_yolox/yolox_traffic_light_detector.param.yaml"/>
     <arg
       name="car_traffic_light_classifier_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml"
@@ -220,10 +221,7 @@
       name="traffic_light_roi_visualizer_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_visualization/traffic_light_roi_visualizer.param.yaml"
     />
-    <arg
-      name="traffic_light_selector_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_selector/traffic_light_selector.param.yaml"
-    />
+    <arg name="traffic_light_selector_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_selector/traffic_light_selector.param.yaml"/>
     <arg
       name="traffic_light_occlusion_predictor_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml"
