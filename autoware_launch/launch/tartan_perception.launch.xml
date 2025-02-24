@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Essential parameters -->
+  <arg name="map_path" default="/autoware_map/sample-map-planning" description="point cloud and lanelet2 map directory path"/>
+  <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
+  <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
+  <arg name="data_path" default="/autoware_data" description="packages data and artifacts directory path"/>
+
+  <!-- launch module preset -->
+  <arg name="planning_module_preset" default="default" description="planning module preset"/>
+  <arg name="control_module_preset" default="default" description="control module preset"/>
+
+  <!-- Optional parameters -->
+  <!-- Modules to be launched -->
+  <arg name="launch_vehicle" default="false" description="launch vehicle"/>
+  <arg name="launch_system" default="false" description="launch system"/>
+  <arg name="launch_map" default="false" description="launch map"/>
+  <arg name="launch_sensing" default="false" description="launch sensing"/>
+  <arg name="launch_sensing_driver" default="false" description="launch sensing driver"/>
+  <arg name="launch_localization" default="false" description="launch localization"/>
+  <arg name="launch_perception" default="true" description="launch perception"/>
+  <arg name="launch_planning" default="false" description="launch planning"/>
+  <arg name="launch_control" default="false" description="launch control"/>
+  <arg name="launch_api" default="false" description="launch api"/>
+
+  <!-- Map -->
+  <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
+  <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <let name="rviz_initial_pose_auto_fix_target" value="vector_map"/>
+  <let name="gnss_initial_pose_auto_fix_target" value="vector_map"/>
+  <!-- System -->
+  <arg name="launch_dummy_doors" default="true" description="launch dummy doors simulation"/>
+  <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
+  <arg name="launch_dummy_diag_publisher" default="true" description="launch dummy diag publisher"/>
+  <!-- Scenario simulation -->
+  <arg name="initial_engage_state" default="true" description="/vehicle/engage state after starting Autoware"/>
+  <arg name="perception/enable_detection_failure" default="true" description="enable to simulate detection failure when using dummy perception"/>
+  <arg name="perception/enable_object_recognition" default="true" description="enable object recognition when using dummy perception"/>
+  <arg name="perception/use_base_link_z" default="true" description="dummy perception uses base_link z axis coordinate if it is true"/>
+  <arg name="sensing/visible_range" default="300.0" description="visible range when using dummy perception"/>
+  <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
+  <!-- Tools -->
+  <arg name="rviz" default="false" description="launch rviz"/>
+  <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
+  <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/$(var rviz_config_name)" description="rviz config path"/>
+  <let name="rviz_respawn" value="false" if="$(var scenario_simulation)"/>
+  <let name="rviz_respawn" value="true" unless="$(var scenario_simulation)"/>
+  <!-- Vcu emulation -->
+  <arg name="vehicle_simulation" default="true" description="use vehicle simulation"/>
+  <!-- Auto mode setting-->
+  <arg name="enable_all_modules_auto_mode" default="$(var scenario_simulation)" description="enable all module's auto mode"/>
+  <!-- Simulated time -->
+  <arg name="use_sim_time" default="$(var scenario_simulation)"/>
+
+  <!-- Perception setting-->
+  <arg name="perception_mode" default="lidar" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
+  <arg name="traffic_light_recognition/enable_fine_detection" default="false" description="enable traffic light fine detection"/>
+
+  <group scoped="false">
+    <!-- Vehicle -->
+    <let name="launch_vehicle_interface" value="false" if="$(var vehicle_simulation)"/>
+    <let name="launch_vehicle_interface" value="true" unless="$(var vehicle_simulation)"/>
+
+    <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
+      <!-- Common -->
+      <arg name="map_path" value="$(var map_path)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="sensor_model" value="$(var sensor_model)"/>
+      <arg name="data_path" value="$(var data_path)"/>
+      <!-- launch module preset -->
+      <arg name="planning_module_preset" value="$(var planning_module_preset)"/>
+      <arg name="control_module_preset" value="$(var control_module_preset)"/>
+      <!-- Modules to be launched -->
+      <arg name="launch_vehicle" value="$(var launch_vehicle)" />
+      <arg name="launch_system" value="$(var launch_system)" />
+      <arg name="launch_map" value="$(var launch_map)" />
+      <arg name="launch_sensing" value="$(var launch_sensing)" />
+      <arg name="launch_sensing_driver" value="$(var launch_sensing_driver)" />
+      <arg name="launch_localization" value="$(var launch_localization)" />
+      <arg name="launch_perception" value="$(var launch_perception)" />
+      <arg name="launch_planning" value="$(var launch_planning)" />
+      <arg name="launch_control" value="$(var launch_control)" />
+      <arg name="launch_api" value="$(var launch_api)" />
+      <!-- Perception -->
+      <arg name="perception_mode" value="$(var perception_mode)"/>
+      <arg name="traffic_light_recognition/enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
+      <!-- Vehicle -->
+      <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
+      <!-- System -->
+      <arg name="system_run_mode" value="planning_simulation"/>
+      <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
+      <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
+      <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml"/>
+      <!-- Map -->
+      <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
+      <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
+      <!-- Tools -->
+      <arg name="rviz" value="$(var rviz)"/>
+      <arg name="rviz_config" value="$(var rviz_config)"/>
+      <arg name="rviz_respawn" value="$(var rviz_respawn)"/>
+      <!-- Auto mode setting-->
+      <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
+      <arg name="is_simulation" value="true"/>
+    </include>
+  </group>
+
+</launch>
