@@ -17,7 +17,7 @@ topics:
     reversed: True
     remap: /sub/control/command/control_cmd
   /system/election/status:
-    type: tier4_system_msgs/msg/ElectionStatus
+    type: redundancy_msgs/msg/ElectionStatus
     reversed: True
     remap: /sub/system/election/status
   # to pass the vehicle status from the domain 1 simulator to domain 2
@@ -33,11 +33,11 @@ topics:
     reversed: True
     remap: /sub/planning/scenario_planning/trajectory
   /system/election/communication:
-    type: tier4_system_msgs/msg/ElectionCommunication
+    type: redundancy_msgs/msg/ElectionCommunication
     reversed: True
     remap: /sub/system/election/communication
   /system/mrm_request:
-    type: tier4_system_msgs/msg/MrmBehavior
+    type: redundancy_msgs/msg/MrmBehavior
     reversed: True
     remap: /sub/system/mrm_request
   /system/fail_safe/over_all/mrm_state:
