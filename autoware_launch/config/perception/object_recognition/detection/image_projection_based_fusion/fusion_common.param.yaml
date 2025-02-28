@@ -1,7 +1,6 @@
 /**:
   ros__parameters:
-    # Note that this parameters are calculated based on 2025/2 xx1 rosbag from vehicle 2 and 7.
-    # Please change ths parameters if you are running fusion node for different projects.
+    # Example of lidar and camera timestamps
     # cloud timestamp: 0.009
     # rois timestamp: 0.107, 0.156, 0.087, 0.071, 0.124, 0.141
     rois_timestamp_offsets: [0.098, 0.147, 0.078, 0.062, 0.115, 0.132]
