@@ -235,16 +235,13 @@
       name="crosswalk_traffic_light_estimator_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml"
     />
-    <arg name="traffic_light_recognition/whole_image_detection/model_path" value="$(var data_path)/tensorrt_yolox"/>
-    <arg name="traffic_light_recognition/whole_image_detection/model_name" value="yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
-    <arg name="traffic_light_recognition/whole_image_detection/label_name" value="car_ped_tl_detector_labels.txt"/>
-    <arg name="traffic_light_recognition/fine_detection/model_path" value="$(var data_path)/traffic_light_fine_detector"/>
-    <arg name="traffic_light_recognition/fine_detection/model_name" value="tlr_car_ped_yolox_s_batch_6.onnx"/>
-    <arg name="traffic_light_recognition/fine_detection/label_name" value="tlr_labels.txt"/>
-    <arg name="traffic_light_recognition/classification/model_path" value="$(var data_path)/traffic_light_classifier"/>
-    <arg name="traffic_light_recognition/classification/car/model_name" value="traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
-    <arg name="traffic_light_recognition/classification/car/label_name" value="lamp_labels.txt"/>
-    <arg name="traffic_light_recognition/classification/pedestrian/model_name" value="ped_traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
-    <arg name="traffic_light_recognition/classification/pedestrian/label_name" value="lamp_labels_ped.txt"/>
+    <arg name="traffic_light_recognition/whole_image_detection/model_path" value="$(var data_path)/tensorrt_yolox/yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
+    <arg name="traffic_light_recognition/whole_image_detection/label_path" value="$(var data_path)/tensorrt_yolox/car_ped_tl_detector_labels.txt"/>
+    <arg name="traffic_light_recognition/fine_detection/model_path" value="$(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx"/>
+    <arg name="traffic_light_recognition/fine_detection/label_path" value="$(var data_path)/traffic_light_fine_detector/tlr_labels.txt"/>
+    <arg name="traffic_light_recognition/classification/car/model_path" value="$(var data_path)/traffic_light_classifier/traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
+    <arg name="traffic_light_recognition/classification/car/label_path" value="$(var data_path)/traffic_light_classifier/lamp_labels.txt"/>
+    <arg name="traffic_light_recognition/classification/pedestrian/model_path" value="$(var data_path)/traffic_light_classifier/ped_traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
+    <arg name="traffic_light_recognition/classification/pedestrian/label_path" value="$(var data_path)/traffic_light_classifier/lamp_labels_ped.txt"/>
   </include>
 </launch>
