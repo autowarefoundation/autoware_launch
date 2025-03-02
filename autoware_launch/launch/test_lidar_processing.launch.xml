@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Launch RViz2 for visualization -->
+  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen">
+    <param name="use_sim_time" value="true"/>
+  </node>
+
+  <!-- Ground segmentation node with explicit frame IDs -->
+  <node pkg="autoware_ground_segmentation" exec="ray_ground_filter_node" name="ray_ground_filter_node" output="screen">
+    <param name="use_sim_time" value="true"/>
+    <param name="input_frame" value="lidar_ouster_top"/>  <!-- Use the actual LiDAR frame from TF -->
+    <param name="output_frame" value="base_link"/>  <!-- Common reference frame -->
+    <remap from="input" to="/sensor/lidar/top/points"/>
+    <remap from="output" to="/perception/obstacle_segmentation/pointcloud"/>
+    
+    <!-- Use the existing parameter file from the package -->
+    <param from="$(find-pkg-share autoware_ground_segmentation)/config/ray_ground_filter.param.yaml"/>
+  </node>
+</launch>
