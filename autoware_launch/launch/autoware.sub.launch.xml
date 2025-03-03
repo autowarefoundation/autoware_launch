@@ -237,6 +237,7 @@
     <!-- j6 interface -->
     <include file="$(find-pkg-share j6_interface)/launch/j6_interface.launch.xml">
       <arg name="velocity_collection_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/vehicle/velocity_collection.param.yaml"/>
+      <arg name="steering_collection_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/vehicle/steering_collection.param.yaml"/>
     </include>
 
     <!-- j6 can interface -->
