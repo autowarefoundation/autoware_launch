@@ -43,7 +43,9 @@
   <group if="$(var launch_sensing)">
     <push-ros-namespace namespace="sensing"/>
     <!-- IMU Driver -->
-    <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/imu.launch.xml"/>
+    <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/imu.launch.xml">
+      <arg name="imu_corrector_param_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/imu_corrector.sub.param.yaml"/>
+    </include>
 
     <!-- Vehicle twist -->
     <include file="$(find-pkg-share autoware_vehicle_velocity_converter)/launch/vehicle_velocity_converter.launch.xml">
