@@ -23,7 +23,7 @@
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
   <arg name="lidar_detection_model" default="centerpoint" description="If the model name is not declared, the default model in perception.launch.xml will be used"/>
 
-  <arg name="traffic_light_recognition/camera_namespace" default="[camera6, camera7]" description="choose camera which use for traffic light recognition"/>
+  <arg name="traffic_light_recognition/camera_namespaces" default="[camera6, camera7]" description="choose camera which use for traffic light recognition"/>
   <arg name="traffic_light_recognition/use_high_performance_detection" default="true" description="select whether to use high performance detector for traffic light recognition"/>
   <arg
     name="traffic_light_recognition/high_performance_detection_type"
@@ -61,7 +61,7 @@
     <!-- traffic light recognition options to switch launch function/module -->
     <arg name="use_traffic_light_recognition" value="$(var use_traffic_light_recognition)"/>
     <arg name="traffic_light_recognition/fusion_only" value="false"/>
-    <arg name="traffic_light_recognition/camera_namespace" value="$(var traffic_light_recognition/camera_namespace)"/>
+    <arg name="traffic_light_recognition/camera_namespaces" value="$(var traffic_light_recognition/camera_namespaces)"/>
     <arg name="traffic_light_recognition/use_high_performance_detection" value="$(var traffic_light_recognition/use_high_performance_detection)"/>
     <arg name="traffic_light_recognition/high_performance_detection_type" value="$(var traffic_light_recognition/high_performance_detection_type)"/>
 
