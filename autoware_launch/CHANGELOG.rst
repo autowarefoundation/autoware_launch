@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.42.0 (2025-03-03)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * chore(ekf_localizer): increase z_filter_proc_dev for large gradient road (`#1337 <https://github.com/autowarefoundation/autoware_launch/issues/1337>`_)
   increase z_filter_proc_dev
