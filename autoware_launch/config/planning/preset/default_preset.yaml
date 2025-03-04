@@ -64,7 +64,7 @@ launch:
       default: "true"
   - arg:
       name: launch_virtual_traffic_light_module
-      default: "false"
+      default: "true"
   - arg:
       name: launch_no_stopping_area_module
       default: "true"

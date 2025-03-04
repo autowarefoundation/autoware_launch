@@ -82,4 +82,7 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml"
     />
   </include>
+  <group if="$(var scenario_simulation)">
+    <include file="$(find-pkg-share autoware_dummy_infrastructure)/launch/dummy_infrastructure.launch.xml"/>
+  </group>
 </launch>
