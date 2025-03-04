@@ -2,6 +2,62 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.42.0 (2025-03-03)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* chore(ekf_localizer): increase z_filter_proc_dev for large gradient road (`#1337 <https://github.com/autowarefoundation/autoware_launch/issues/1337>`_)
+  increase z_filter_proc_dev
+* feat(autoware_motion_velocity_obstacle_slow_down_module): params for obstacle stop and slow down modules (`#1330 <https://github.com/autowarefoundation/autoware_launch/issues/1330>`_)
+  * fix
+  * style(pre-commit): autofix
+  * fix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat(goal_planner): align vehicle center to be parallel to lane boundary (`#1335 <https://github.com/autowarefoundation/autoware_launch/issues/1335>`_)
+* chore(autoware_map_based_prediction): delete unused function and parameter (`#1326 <https://github.com/autowarefoundation/autoware_launch/issues/1326>`_)
+* chore(traffic_light): rename enable_fine_detection (`#1310 <https://github.com/autowarefoundation/autoware_launch/issues/1310>`_)
+  * chore: rename enable_fine_detection
+  * feat: add new tlr param
+  * change back to fine_detector
+  * fix: typo
+  * add args
+  * style(pre-commit): autofix
+  * change default param to fine detector
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: Masato Saeki <78376491+MasatoSaeki@users.noreply.github.com>
+  Co-authored-by: MasatoSaeki <masato.saeki@tier4.jp>
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* chore(traffic_light_multi_camera_fusion): read parameters from yaml file (`#1331 <https://github.com/autowarefoundation/autoware_launch/issues/1331>`_)
+  * chore(traffic_light_multi_camera_fusion): read parameters from yaml file
+  * style(pre-commit): autofix
+  * remove camera namespace parameter from config file
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat(tier4_perception_component): change tlr pedestrian classifier model (`#1329 <https://github.com/autowarefoundation/autoware_launch/issues/1329>`_)
+  change model name
+* fix(ground_segmentation): bring junction parameter from param file to launch argument (`#1327 <https://github.com/autowarefoundation/autoware_launch/issues/1327>`_)
+  * refactor(ground_segmentation): remove single frame filter and keep time series filter disabled
+  * feat(tier4_perception): add single frame and time series filters for obstacle segmentation
+  ---------
+* feat(autoware_probabilistic_occupancy_grid_map): disabled the subsample filters for the ogm (`#1319 <https://github.com/autowarefoundation/autoware_launch/issues/1319>`_)
+  feat: disabled the subsample filters for the ogm since its creation is faster now
+* feat: use motion_velocity_obstacle\_<stop/slow_down/cruise>_module (`#1315 <https://github.com/autowarefoundation/autoware_launch/issues/1315>`_)
+  Revert "enable obstacle_cruise_planner"
+  This reverts commit cbd6873e7786bf139796b20a30ada5d90bd8407b.
+* feat(autoware_behavior_velocity_traffic_light_module): adjust velocity threshold for ensure stop at yellow light (`#1322 <https://github.com/autowarefoundation/autoware_launch/issues/1322>`_)
+* refactor(goal_planner): remove use_object_recognition because it is default (`#1318 <https://github.com/autowarefoundation/autoware_launch/issues/1318>`_)
+* feat(rviz): update autoware.rviz for motion_velocity_obstacle\_<stop/slow_down/cruise>_module (`#1314 <https://github.com/autowarefoundation/autoware_launch/issues/1314>`_)
+  * feat: add motion_velocity_obstacle_stop/slow_down/cruise_module
+  * update autoware.rviz
+  * update rviz
+  * disable obstacle_cruise_planner
+  * update motion velocity planner params
+  * add module.param.yaml
+  * enable obstacle_cruise_planner
+  ---------
+* Contributors: Arjun Jagdish Ram, Kento Yabuuchi, Kenzo Lobos Tsunekawa, Mamoru Sobue, Masato Saeki, Taekjin LEE, Takayuki Murooka, Tomohito ANDO, Tomoya Kimura, badai nguyen, github-actions
+
 0.41.0 (2025-01-29)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
