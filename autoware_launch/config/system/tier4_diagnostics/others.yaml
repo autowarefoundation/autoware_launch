@@ -41,26 +41,26 @@ units:
   - path: /others/emergency_stop
     type: and
     list:
-      # - { type: link, link: /others/002-blockage_validation-error }
+      - { type: link, link: /others/002-blockage_validation-error }
       - { type: link, link: /others/004-concat_status }
-      - { type: link, link: /others/005-visibility_validation-error }
       - { type: link, link: /others/012-vehicle_stuck_checker }
 
   - path: /others/fatal_error/emergency_stop
     type: and
+    list:
+      - { type: link, link: /others/005-visibility_validation-error }
 
   - path: /others/comfortable_stop
     type: and
-    # list:
-    # - { type: link, link: /others/010-emergency_vehicle-error }
 
   - path: /others/fatal_error/comfortable_stop
     type: and
+    list:
+      - { type: link, link: /others/010-emergency_vehicle_main-error }
+      - { type: link, link: /others/011-daytime_monitor }
 
   - path: /others/pull_over
     type: and
-    list:
-      - { type: link, link: /others/011-daytime_monitor }
 
   - path: /others/fatal_error/pull_over
     type: and
@@ -68,11 +68,17 @@ units:
   - path: /others/none
     type: and
 
-  - path: /others/010-emergency_vehicle-error
+  - path: /others/010-emergency_vehicle_main-error
     type: warn-to-ok
     item:
       type: link
-      link: /others/010-emergency_vehicle
+      link: /others/010-emergency_vehicle_main
+
+  - path: /others/013-emergency_vehicle_sub-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /others/013-emergency_vehicle_sub
 
   # Intermediate paths
   - path: /others/002-blockage_validation-error
@@ -171,9 +177,9 @@ units:
     name: visibility_validation
     timeout: 1.0
 
-  - path: /others/010-emergency_vehicle
+  - path: /others/010-emergency_vehicle_main
     type: diag
-    node: emergency_vehicle_detector
+    node: emergency_vehicle_detector_main
     name: emergency_vehicle
     timeout: 3.0
 
@@ -187,4 +193,10 @@ units:
     type: diag
     node: vehicle_stuck_checker
     name: vehicle_stuck_check
+    timeout: 3.0
+
+  - path: /others/013-emergency_vehicle_sub
+    type: diag
+    node: emergency_vehicle_detector_sub
+    name: emergency_vehicle
     timeout: 3.0

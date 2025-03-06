@@ -42,10 +42,11 @@ units:
     type: and
     list:
       - { type: link, link: /system/001-topic_status-error }
-      - { type: link, link: /system/002-emergency_stop_operation-error }
 
   - path: /system/fatal_error/emergency_stop
     type: and
+    list:
+      - { type: link, link: /system/002-emergency_stop_operation-error }
 
   - path: /system/comfortable_stop
     type: and
@@ -55,8 +56,6 @@ units:
 
   - path: /system/pull_over
     type: and
-    # list:
-    #   - { type: link, link: /system/005-fms_connection-error }
 
   - path: /system/fatal_error/pull_over
     type: and

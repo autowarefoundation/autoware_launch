@@ -44,20 +44,19 @@ units:
       - { type: link, link: /vehicle/001-topic_status/velocity-error }
       - { type: link, link: /vehicle/001-topic_status/steering-error }
       - { type: link, link: /vehicle/005-vehicle_heartbeat-error }
-      - { type: link, link: /vehicle/006-vehicle_errors-error }
-      - { type: link, link: /vehicle/006-vehicle_errors }
 
   - path: /vehicle/fatal_error/emergency_stop
     type: and
+    list:
+      - { type: link, link: /vehicle/006-vehicle_errors-error }
 
   - path: /vehicle/comfortable_stop
     type: and
-    # list:
-    #   - { type: link, link: /vehicle/006-vehicle_errors }
 
   - path: /vehicle/fatal_error/comfortable_stop
     type: and
     list:
+      - { type: link, link: /vehicle/006-vehicle_errors }
       - { type: link, link: /vehicle/007-vehicle-emergency-button }
 
   - path: /vehicle/pull_over

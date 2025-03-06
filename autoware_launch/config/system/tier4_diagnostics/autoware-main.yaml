@@ -69,6 +69,7 @@ units:
     type: and
     list:
       - { type: link, link: /hardware/fatal_error/autonomous_available }
+      - { type: link, link: /sensing/fatal_error/autonomous_available }
       - { type: link, link: /planning/fatal_error/autonomous_available }
       - { type: link, link: /control/fatal_error/autonomous_available }
       - { type: link, link: /vehicle/fatal_error/autonomous_available }
@@ -79,6 +80,7 @@ units:
     type: and
     list:
       - { type: link, link: /hardware/fatal_error/pull_over_available }
+      - { type: link, link: /sensing/fatal_error/pull_over_available }
       - { type: link, link: /planning/fatal_error/pull_over_available }
       - { type: link, link: /control/fatal_error/pull_over_available }
       - { type: link, link: /vehicle/fatal_error/pull_over_available }
@@ -89,6 +91,7 @@ units:
     type: and
     list:
       - { type: link, link: /hardware/fatal_error/comfortable_stop_available }
+      - { type: link, link: /sensing/fatal_error/comfortable_stop_available }
       - { type: link, link: /planning/fatal_error/comfortable_stop_available }
       - { type: link, link: /control/fatal_error/comfortable_stop_available }
       - { type: link, link: /vehicle/fatal_error/comfortable_stop_available }

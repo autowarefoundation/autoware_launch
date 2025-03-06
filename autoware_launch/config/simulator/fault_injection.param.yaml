@@ -66,6 +66,9 @@
       # VOICE
       VOICE-001: "vehicle_voice_alert_system: /system/voice_alert_system_connection : voice alert system heartbeat"
 
+      # REDUNDANCY
+      REDUNDANCY-001: "topic_state_monitor_pose_estimator_pose_with_covariance: publish_to_sub_status"
+
       # Sensing
       # IMU
       IMU-001: "imu_monitor: yaw_rate_status"
@@ -129,8 +132,8 @@
       LOCALIZATION-001-1: "topic_state_monitor_initialpose3d: localization_topic_status"
       LOCALIZATION-001-2: "topic_state_monitor_pose_twist_fusion_filter_pose: localization_topic_status"
       LOCALIZATION-002: "topic_state_monitor_transform_map_to_base_link: localization_topic_status"
-      LOCALIZATION-003: "ndt_scan_matcher"
-      LOCALIZATION-004: "localization: localization_error_monitor"
+      LOCALIZATION-003: "ndt_scan_matcher: scan_matching_status"
+      LOCALIZATION-004: "localization_error_monitor: ellipse_error_status"
 
       # Perception
       PERCEPTION-001-1: "topic_state_monitor_traffic_light_recognition_traffic_signals: perception_topic_status"
@@ -192,7 +195,8 @@
       OTHERS-002/rear_upper: "blockage_return_diag: /sensing/lidar/rear_upper: blockage_validation"
       OTHERS-004: "concatenate_data: concat_status"
       OTHERS-005/front_lower: "dual_return_filter: /sensing/lidar/front_lower: visibility_validation"
+      OTHERS-005/right_upper: "dual_return_filter: /sensing/lidar/right_upper: visibility_validation"
       OTHERS-005/left_upper: "dual_return_filter: /sensing/lidar/left_upper: visibility_validation"
-      OTHERS-010: "emergency_vehicle_detector: emergency_vehicle"
+      OTHERS-010: "emergency_vehicle_detector_main: emergency_vehicle"
       OTHERS-011: "daytime_monitor: daytime_status"
       OTHERS-012: "vehicle_stuck_checker: vehicle_stuck_check"

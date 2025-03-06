@@ -94,6 +94,6 @@ units:
 
   - path: /localization/004-accuracy
     type: diag
-    node: localization
-    name: localization_error_monitor
+    node: localization_error_monitor
+    name: ellipse_error_status
     timeout: 1.0

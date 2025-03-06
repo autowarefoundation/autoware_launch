@@ -14,7 +14,7 @@
         # For the Lanelet2 map with no explicit stop lines
         stop_distance_from_crosswalk: 3.5 # [m] make stop line away from crosswalk
         # For the case where the stop position is determined according to the object position.
-        stop_distance_from_object_preferred: 5.5 # [m]
+        stop_distance_from_object_preferred: 3.0 # [m]
         stop_distance_from_object_limit: 2.0 # [m]
         min_acc_preferred: -1.0 # min acceleration [m/ss]
         min_jerk_preferred: -1.0 # min jerk [m/sss]
