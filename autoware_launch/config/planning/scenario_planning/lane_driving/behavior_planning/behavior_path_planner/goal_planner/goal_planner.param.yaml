@@ -14,11 +14,11 @@
           lateral_weight: 40.0
         prioritize_goals_before_objects: true
         parking_policy: "left_side" # "left_side" or "right_side"
-        forward_goal_search_length: 40.0
+        forward_goal_search_length: 0.5
         backward_goal_search_length: 20.0
         goal_search_interval: 2.0
-        longitudinal_margin: 3.0
-        max_lateral_offset: 1.0
+        longitudinal_margin: 6.0
+        max_lateral_offset: 0.0
         lateral_offset_interval: 0.5
         ignore_distance_from_lane_start: 0.0
         margin_from_boundary: 0.75
@@ -65,8 +65,8 @@
         shift_parking:
           enable_shift_parking: true
           shift_sampling_num: 4
-          maximum_lateral_jerk: 2.0
-          minimum_lateral_jerk: 0.5
+          maximum_lateral_jerk: 0.5
+          minimum_lateral_jerk: 0.1
           deceleration_interval: 15.0
           after_shift_straight_distance: 1.5
 
@@ -82,7 +82,7 @@
             forward_parking_path_interval: 1.0
             forward_parking_max_steer_angle: 0.4  # 22.9deg
           backward:
-            enable_arc_backward_parking: true
+            enable_arc_backward_parking: false
             after_backward_parking_straight_distance: 2.0
             backward_parking_velocity: -1.38
             backward_parking_lane_departure_margin: 0.0
@@ -91,7 +91,7 @@
 
         # freespace parking
         freespace_parking:
-          enable_freespace_parking: true
+          enable_freespace_parking: false
           freespace_parking_algorithm: "astar"  # options: astar, rrtstar
           velocity: 1.0
           vehicle_shape_margin: 1.0

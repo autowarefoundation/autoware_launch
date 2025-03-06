@@ -7,8 +7,8 @@
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
 
   <!-- launch module preset -->
-  <arg name="planning_module_preset" default="default" description="planning module preset"/>
-  <arg name="control_module_preset" default="default" description="control module preset"/>
+  <arg name="planning_module_preset" default="x2" description="planning module preset"/>
+  <arg name="control_module_preset" default="x2" description="control module preset"/>
 
   <!-- Optional parameters -->
   <!-- Map -->
@@ -29,7 +29,7 @@
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
-  <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
+  <arg name="rviz_config_name" default="autoware_x2.rviz" description="rviz config name"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/$(var rviz_config_name)" description="rviz config path"/>
   <let name="rviz_respawn" value="false" if="$(var scenario_simulation)"/>
   <let name="rviz_respawn" value="true" unless="$(var scenario_simulation)"/>
@@ -41,6 +41,8 @@
   <arg name="enable_all_modules_auto_mode" default="$(var scenario_simulation)" description="enable all module's auto mode"/>
   <!-- Simulated time -->
   <arg name="use_sim_time" default="$(var scenario_simulation)"/>
+  <!-- L4 tool kit -->
+  <arg name="daytime_monitor_param_file" default="$(find-pkg-share daytime_monitor)/config/daytime_monitor_psim.param.yaml"/>
   <!-- Localization-->
   <arg
     name="localization_sim_mode"
@@ -85,6 +87,8 @@
       <!-- Auto mode setting-->
       <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
       <arg name="is_simulation" value="true"/>
+      <!-- L4 tool kit-->
+      <arg name="daytime_monitor_param_file" value="$(var daytime_monitor_param_file)"/>
     </include>
   </group>
 

@@ -17,8 +17,8 @@
         arc_length_range: 2.0  # [m] arc length range where an expansion distance is initially applied
       ego:
         extra_wheelbase: 0.0 # [m] extra length to add to the wheelbase
-        extra_front_overhang: 0.5 # [m] extra length to add to the front overhang
-        extra_width: 1.0 # [m] extra length to add to the width
+        extra_front_overhang: 0.0 # [m] extra length to add to the front overhang
+        extra_width: 0.0 # [m] extra length to add to the width
       dynamic_objects:
         avoid: false # if true, the drivable area is not expanded in the predicted path of dynamic objects
         extra_footprint_offset:
@@ -34,4 +34,5 @@
         types: # linestring types in the lanelet maps that will not be crossed when expanding the drivable area
           - road_border
           - curbstone
+          - drivable_area
         distance: 0.0 # [m] distance to keep between the drivable area and the linestrings to avoid

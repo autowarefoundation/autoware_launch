@@ -1,0 +1,31 @@
+units:
+  - path: /autoware/modes/local
+    type: stale
+
+  - path: /autoware/modes/remote
+    type: stale
+
+  # Stop is always available
+  - path: /autoware/modes/stop
+    type: ok
+
+  - path: /autoware/modes/autonomous
+    type: and
+    list:
+      - { type: link, link: /dummy_diag_publisher/emergency }
+
+  - path: /autoware/modes/pull_over
+    type: ok
+
+  - path: /autoware/modes/comfortable_stop
+    type: ok
+
+  # Emergency stop is always available
+  - path: /autoware/modes/emergency_stop
+    type: ok
+
+  - path: /dummy_diag_publisher/emergency
+    type: diag
+    node: ""
+    name: dummy_diag_empty
+    timeout: 1.0

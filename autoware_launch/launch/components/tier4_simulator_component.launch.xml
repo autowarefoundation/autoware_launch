@@ -28,6 +28,8 @@
     <arg name="vehicle_model" value="$(var vehicle_model)"/>
     <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
     <arg name="vehicle_info_param_file" value="$(var vehicle_info_param_file)"/>
+    <arg name="external/traffic_signals" value="/v2x/traffic_signals"/>
+    <arg name="all_camera_namespaces" value="[camera4, camera5]"/>
     <arg name="raw_vehicle_cmd_converter_param_path" value="$(var raw_vehicle_cmd_converter_param_path)"/>
 
     <arg name="fault_injection_param_path" value="$(find-pkg-share autoware_launch)/config/simulator/fault_injection.param.yaml"/>

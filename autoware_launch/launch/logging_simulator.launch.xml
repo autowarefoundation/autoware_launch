@@ -8,8 +8,8 @@
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
 
   <!-- launch module preset -->
-  <arg name="planning_module_preset" default="default" description="planning module preset"/>
-  <arg name="control_module_preset" default="default" description="control module preset"/>
+  <arg name="planning_module_preset" default="x2" description="planning module preset"/>
+  <arg name="control_module_preset" default="x2" description="control module preset"/>
 
   <!-- Optional parameters -->
   <!-- Modules to be launched -->
@@ -36,7 +36,9 @@
   <!-- V2X-->
   <arg name="launch_v2x" default="false" description="launch v2x modules"/>
   <!-- Scenario simulation -->
-  <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
+  <arg name="scenario_simulation" default="true" description="use scenario simulation"/>
+  <!-- Perception -->
+  <arg name="centerpoint_model_path" default="/opt/autoware/mlmodels/centerpoint" description="path of centerpoint model file"/>
 
   <group scoped="false">
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
@@ -73,8 +75,10 @@
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
+      <!-- Perception -->
+      <arg name="centerpoint_model_path" value="$(var centerpoint_model_path)"/>
       <!-- V2X -->
-      <arg name="launch_v2x" value="false"/>
+      <arg name="launch_v2x" value="$(var launch_v2x)"/>
     </include>
   </group>
 </launch>

@@ -1,0 +1,73 @@
+name: Cherry pick release/candidate into develop
+on:
+  pull_request:
+    branches:
+      - tier4/main # Branches where the original PRs will be merged
+      - beta/v4.0.2
+      - beta/v4.1.0
+    types:
+      - closed
+      - labeled
+
+jobs:
+  make-sure-label-is-present:
+    uses: autowarefoundation/autoware-github-actions/.github/workflows/make-sure-label-is-present.yaml@v1
+    with:
+      label: tag:enable-automatic-cherry-pick
+
+  cherry-pick:
+    needs: make-sure-label-is-present
+    if: github.event.pull_request.merged == true && needs.make-sure-label-is-present.outputs.result == 'true' && !contains(github.event.pull_request.title, '🍒') # only merged PRs without 'cherry-pick' in title will be cherry picked
+    runs-on: ubuntu-latest
+    name: Start the cherry-pick action
+    strategy:
+      fail-fast: false
+      matrix:
+        following-branch:
+          - tier4/main
+          - beta/v4.0.2
+          - beta/v4.1.0
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive # If you need to operate on submodules
+
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Cherry pick
+        id: cherry-pick
+        uses: tier4/action-auto-cherry-pick@v1.0.5
+        if: ${{ matrix.following-branch != github.base_ref }}
+        with:
+          # Branch which will receive the automatic cherry-picks
+          target-branch: ${{ matrix.following-branch }}
+
+          # If you want the action to fast-forward the submodules to a specific branch
+          pr-title-suffix: 🍒${{ matrix.following-branch }}
+          pr-labels: bot,cherry-pick
+          pr-creator-token: ${{ steps.generate-token.outputs.token }}
+
+      - name: Get the output
+        if: ${{ matrix.following-branch != github.base_ref }}
+        run: echo "The created PR number is ${{steps.cherry-pick.outputs.pr-number }}"
+
+      - name: Publish result to the pull request
+        if: ${{ matrix.following-branch != github.base_ref }}
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "🤖: The created PR number is #${{steps.cherry-pick.outputs.pr-number }} for ${{ matrix.following-branch }}"
+            })
