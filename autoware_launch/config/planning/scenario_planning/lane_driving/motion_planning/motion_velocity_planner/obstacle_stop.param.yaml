@@ -3,7 +3,7 @@
     obstacle_stop:
       option:
         ignore_crossing_obstacle: true
-        suppress_sudden_stop: false
+        suppress_sudden_stop: true
 
       stop_planning:
         stop_margin : 5.0 # longitudinal margin to obstacle [m]
