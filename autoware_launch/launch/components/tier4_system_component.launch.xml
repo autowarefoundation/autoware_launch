@@ -34,7 +34,6 @@
     <arg name="diagnostic_graph_aggregator_param_path" value="$(var diagnostic_graph_aggregator_param_path)"/>
     <arg name="diagnostic_graph_aggregator_graph_path" value="$(var diagnostic_graph_aggregator_graph_path)"/>
     <arg name="diagnostic_graph_aggregator_planning_simulator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/autoware.yaml"/>
-
     <arg name="launch_system_recover_operator" value="true"/>
   </include>
 

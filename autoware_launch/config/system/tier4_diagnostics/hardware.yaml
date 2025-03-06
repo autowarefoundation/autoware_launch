@@ -44,12 +44,8 @@ units:
       - { type: link, link: /hardware/cpu/002-usage-error }
       - { type: link, link: /hardware/cpu/004-throttling-error }
       - { type: link, link: /hardware/hdd/001-temperature-error }
-      - { type: link, link: /hardware/hdd/003-connection-error }
-      - { type: link, link: /hardware/hdd/006-soft_error-error }
       - { type: link, link: /hardware/hdd/007-load-error }
       - { type: link, link: /hardware/memory/001-usage-error }
-      - { type: link, link: /hardware/memory/002-ecc-error }
-      - { type: link, link: /hardware/network/003-crc-error }
       - { type: link, link: /hardware/network/004-packet_reassembles-error }
       - { type: link, link: /hardware/gpu/001-temperature-error }
       - { type: link, link: /hardware/gpu/002-usage-error }
@@ -59,17 +55,25 @@ units:
 
   - path: /hardware/fatal_error/emergency_stop
     type: and
+    list:
+      - { type: link, link: /hardware/hdd/003-connection-error }
+      - { type: link, link: /hardware/hdd/006-soft_error-error }
+      - { type: link, link: /hardware/memory/002-ecc-error }
+      - { type: link, link: /hardware/network/003-crc-error }
 
   - path: /hardware/pull_over
     type: and
-    list:
-      - { type: link, link: /hardware/hdd/002-usage-error }
 
   - path: /hardware/fatal_error/pull_over
     type: and
 
   - path: /hardware/comfortable_stop
     type: and
+    list:
+      - { type: link, link: /hardware/hdd/002-usage-error }
+      - { type: link, link: /hardware/mot/001-connection }
+      - { type: link, link: /hardware/signage/001-connection }
+      - { type: link, link: /hardware/voice/001-connection }
 
   - path: /hardware/fatal_error/comfortable_stop
     type: and
@@ -89,6 +93,7 @@ units:
       - { type: link, link: /hardware/process/002-load }
       - { type: link, link: /hardware/process/003-memory }
       - { type: link, link: /hardware/bios/001-battery }
+
   - path: /hardware/hdd/007-load
     type: and
     list:
@@ -390,3 +395,22 @@ units:
     node: voltage_monitor
     name: CMOS Battery Status
     timeout: 3.0
+
+  # We assume these diagnostics become only OK or STALE
+  - path: /hardware/mot/001-connection
+    type: diag
+    node: mot
+    name: "/system/mot_connection : mot heartbeat"
+    timeout: 5.0
+
+  - path: /hardware/signage/001-connection
+    type: diag
+    node: signage
+    name: "/system/signage_connection : signage heartbeat"
+    timeout: 5.0
+
+  - path: /hardware/voice/001-connection
+    type: diag
+    node: vehicle_voice_alert_system
+    name: "/system/voice_alert_system_connection : voice alert system heartbeat"
+    timeout: 5.0

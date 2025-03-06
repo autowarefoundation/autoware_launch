@@ -33,6 +33,8 @@
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
+  <!-- V2X-->
+  <arg name="launch_v2x" default="false" description="launch v2x modules"/>
   <!-- Scenario simulation -->
   <arg name="scenario_simulation" default="true" description="use scenario simulation"/>
   <!-- Perception -->
@@ -76,7 +78,7 @@
       <!-- Perception -->
       <arg name="centerpoint_model_path" value="$(var centerpoint_model_path)"/>
       <!-- V2X -->
-      <arg name="launch_v2x" value="false"/>
+      <arg name="launch_v2x" value="$(var launch_v2x)"/>
     </include>
   </group>
 </launch>

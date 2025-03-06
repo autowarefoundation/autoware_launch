@@ -2116,6 +2116,42 @@ Visualization Manager:
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
+                          Name: VirtualWall (ObstacleStop)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop/virtual_walls
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (ObstacleSlowDown)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_slow_down/virtual_walls
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (ObstacleCruise)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_cruise/virtual_walls
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
                           Name: VirtualWall (OutOfLane)
                           Namespaces:
                             {}
@@ -2251,6 +2287,42 @@ Visualization Manager:
                           Value: false
                         - Class: rviz_common/Group
                           Displays:
+                            - Class: rviz_default_plugins/MarkerArray
+                              Enabled: true
+                              Name: ObstacleStop
+                              Namespaces:
+                                {}
+                              Topic:
+                                Depth: 5
+                                Durability Policy: Volatile
+                                History Policy: Keep Last
+                                Reliability Policy: Reliable
+                                Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop/debug_markers
+                              Value: true
+                            - Class: rviz_default_plugins/MarkerArray
+                              Enabled: true
+                              Name: ObstacleSlowDown
+                              Namespaces:
+                                {}
+                              Topic:
+                                Depth: 5
+                                Durability Policy: Volatile
+                                History Policy: Keep Last
+                                Reliability Policy: Reliable
+                                Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_slow_down/debug_markers
+                              Value: true
+                            - Class: rviz_default_plugins/MarkerArray
+                              Enabled: true
+                              Name: ObstacleCruise
+                              Namespaces:
+                                {}
+                              Topic:
+                                Depth: 5
+                                Durability Policy: Volatile
+                                History Policy: Keep Last
+                                Reliability Policy: Reliable
+                                Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_cruise/debug_markers
+                              Value: true
                             - Class: rviz_default_plugins/MarkerArray
                               Enabled: true
                               Name: OutOfLane

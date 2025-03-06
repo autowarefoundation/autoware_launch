@@ -17,13 +17,30 @@ units:
     list:
       - { type: link, link: /sensing/emergency_stop }
 
+  - path: /sensing/fatal_error/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /sensing/fatal_error/emergency_stop }
+      - { type: link, link: /sensing/fatal_error/pull_over }
+      - { type: link, link: /sensing/fatal_error/comfortable_stop }
+
+  - path: /sensing/fatal_error/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /sensing/fatal_error/emergency_stop }
+      - { type: link, link: /sensing/fatal_error/comfortable_stop }
+
+  - path: /sensing/fatal_error/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /sensing/fatal_error/emergency_stop }
+
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
   - path: /sensing/emergency_stop
     type: and
     list:
-      - { type: link, link: /sensing/imu/001-monitor-error }
       - { type: link, link: /sensing/imu/002-connection }
       - { type: link, link: /sensing/lidar/pndr/001-connection }
       - { type: link, link: /sensing/lidar/pndr/002-temperature-error }
@@ -31,13 +48,24 @@ units:
       - { type: link, link: /sensing/camera/001-connection }
       - { type: link, link: /sensing/radar/001-connection }
 
+  - path: /sensing/fatal_error/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /sensing/imu/001-monitor-error }
+
   - path: /sensing/pull_over
+    type: and
+
+  - path: /sensing/fatal_error/pull_over
+    type: and
+
+  - path: /sensing/comfortable_stop
     type: and
     list:
       - { type: link, link: /sensing/lidar/pndr/002-temperature }
-      # - { type: link, link: /sensing/gnss/001-connection-error }
+      - { type: link, link: /sensing/gnss/001-connection-error }
 
-  - path: /sensing/comfortable_stop
+  - path: /sensing/fatal_error/comfortable_stop
     type: and
 
   - path: /sensing/none
@@ -117,11 +145,11 @@ units:
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/connection }
-      - { type: link, link: /sensing/radar/front_left/connection }
-      - { type: link, link: /sensing/radar/front_right/connection }
+      # - { type: link, link: /sensing/radar/front_left/connection }
+      # - { type: link, link: /sensing/radar/front_right/connection }
       - { type: link, link: /sensing/radar/rear_center/connection }
-      - { type: link, link: /sensing/radar/rear_left/connection }
-      - { type: link, link: /sensing/radar/rear_right/connection }
+      # - { type: link, link: /sensing/radar/rear_left/connection }
+      # - { type: link, link: /sensing/radar/rear_right/connection }
 
   - path: /sensing/lidar/front_lower/ptp-error
     type: warn-to-ok

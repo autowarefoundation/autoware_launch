@@ -55,7 +55,7 @@
 
     # emergency state
     emergency_vel: 0.0
-    emergency_acc: -2.5 # denotes acceleration
+    emergency_acc: -4.0 # denotes acceleration
     emergency_jerk: -1.5
 
     # acceleration feedback
