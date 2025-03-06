@@ -9,7 +9,7 @@
       max_height: 2.0
 
     # downsample input pointcloud
-    downsample_input_pointcloud: true
+    downsample_input_pointcloud: false
     downsample_voxel_size: 0.125 # [m]
 
     enable_single_frame_mode: false

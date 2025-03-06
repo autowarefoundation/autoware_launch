@@ -27,4 +27,5 @@ jobs:
           pr-title: "chore: sync awf-latest"
           pr-labels: |
             bot
+            run:build-and-test-differential
           auto-merge-method: merge
