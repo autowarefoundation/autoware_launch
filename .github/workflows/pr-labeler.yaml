@@ -10,7 +10,12 @@ jobs:
   label:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/labeler@v5
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run labeler
+        uses: actions/labeler@v5
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           configuration-path: .github/labeler.yaml
