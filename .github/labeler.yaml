@@ -1,5 +1,5 @@
 type:ci:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file:
           - .github/**/*
           - "*.json"
@@ -9,7 +9,7 @@ type:ci:
           - .gitignore
           - .prettierignore
 type:documentation:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file:
           - "*.md"
           - "*.rst"
@@ -17,39 +17,39 @@ type:documentation:
           - "*.png"
           - "*.svg"
 component:control:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file:
           - "**/*control*"
 component:localization:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file:
           - "**/*localization*"
 component:map:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file:
           - "**/*map*"
 component:perception:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file:
           - "**/*perception*"
 component:planning:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file:
           - "**/*planning*"
 component:sensing:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file:
           - "**/*sensing*"
 component:simulation:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file:
           - "**/*simulation*"
 component:system:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file:
           - "**/*system*"
 component:ui:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file:
           - "**/*.rviz"
           - "**/rviz"
