@@ -1,0 +1,31 @@
+/**:
+  ros__parameters:
+    # Enable detailed debug information
+    publish_processing_time_detail: true
+    
+    # Original parameters with adjusted values for debugging
+    global_slope_max_angle_deg: 15.0       # Increased from 10.0 to be more permissive
+    local_slope_max_angle_deg: 20.0        # Increased from 13.0 to be more permissive
+    split_points_distance_tolerance: 0.3   # Increased from 0.2
+    use_virtual_ground_point: false        # Simplified for debugging
+    split_height_distance: 0.3             # Increased from 0.2
+    non_ground_height_threshold: 0.30      # Increased from 0.20
+    grid_size_m: 0.5
+    grid_mode_switch_radius: 20.0
+    gnd_grid_buffer_size: 4
+    detection_range_z_max: 3.5             # Increased from 2.5
+    elevation_grid_mode: true
+    low_priority_region_x: -20.0
+    center_pcl_shift: 0.0
+    radial_divider_angle_deg: 1.0
+    use_recheck_ground_cluster: true
+    use_lowest_point: true
+    
+    # Input/output processing parameters
+    input_frame: "base_link"
+    output_frame: "base_link"
+    max_queue_size: 10
+    use_indices: false
+    latched_indices: false
+    approximate_sync: false
+    has_static_tf_only: true

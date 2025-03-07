@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Debug parameters -->
+  <arg name="verbose_output" default="true" description="Enable verbose output for debugging"/>
+  <arg name="publish_time_detail" default="true" description="Publish detailed processing times"/>
+  
+  <!-- Original parameters -->
+  <arg name="ground_segmentation_param_file" default="$(find-pkg-share autoware_ground_segmentation)/config/scan_ground_filter.param.yaml"/>
+  <arg name="vehicle_info_param_file" default="$(find-pkg-share autoware_vehicle_info_utils)/config/vehicle_info.param.yaml"/>
+  <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
+  <arg name="output/pointcloud" default="/perception/obstacle_segmentation/pointcloud"/>
+  
+  <!-- Debug intermediate topics -->
+  <arg name="debug/ground_points" default="/debug/ground_segmentation/ground_points"/>
+  
+  <!-- Main filter node with additional debug parameters -->
+  <node pkg="autoware_ground_segmentation" exec="scan_ground_filter_node" name="scan_ground_filter_node" output="screen">
+    <remap from="input" to="$(var input/pointcloud)"/>
+    <remap from="output" to="$(var output/pointcloud)"/>
+    <param from="$(var ground_segmentation_param_file)"/>
+    <param from="$(var vehicle_info_param_file)"/>
+    
+    <!-- Override parameters for debugging -->
+    <param name="publish_processing_time_detail" value="$(var publish_time_detail)"/>
+    <param name="use_virtual_ground_point" value="false"/>
+    <param name="elevation_grid_mode" value="true"/>
+    <param name="use_indices" value="false"/>
+    <param name="has_static_tf_only" value="true"/>
+    <param name="non_ground_height_threshold" value="0.3"/>
+    <param name="global_slope_max_angle_deg" value="15.0"/>
+    <param name="local_slope_max_angle_deg" value="20.0"/>
+  </node>
+  
+  <!-- Debug node to monitor point clouds -->
+  <node pkg="topic_tools" exec="relay" name="debug_relay_input" args="$(var input/pointcloud) /debug/input_relay" if="$(var verbose_output)"/>
+  
+  <!-- Point cloud metrics node - Python-based debug node -->
+  <node pkg="autoware_ground_segmentation_debug" exec="pointcloud_stats_node.py" name="pointcloud_stats_node" output="screen" if="$(var verbose_output)">
+    <param name="input_topics" value="['/sensing/lidar/concatenated/pointcloud', '/perception/obstacle_segmentation/pointcloud']"/>
+    <param name="publish_frequency" value="1.0"/>
+  </node>
+</launch>
