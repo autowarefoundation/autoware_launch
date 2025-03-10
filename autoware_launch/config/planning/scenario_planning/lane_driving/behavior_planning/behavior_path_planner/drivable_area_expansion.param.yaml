@@ -20,7 +20,7 @@
         extra_front_overhang: 0.5 # [m] extra length to add to the front overhang
         extra_width: 1.0 # [m] extra length to add to the width
       object_exclusion:
-        exclude_static: true # if true, the drivable area is not expanded over static objects
+        exclude_static: false # if true, the drivable area is not expanded over static objects
         exclude_dynamic: false # if true, the drivable area is not expanded in the predicted path of dynamic objects
         th_stopped_object_velocity: 1.0 # [m/s] velocity threshold for static objects
         safety_margin:
