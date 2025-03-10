@@ -1,19 +1,38 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="ground_segmentation_param_file" default="$(find-pkg-share autoware_ground_segmentation)/config/scan_ground_filter.param.yaml"/>
-
   <!-- vehicle info -->
   <arg name="vehicle_info_param_file" default="$(find-pkg-share autoware_vehicle_info_utils)/config/vehicle_info.param.yaml"/>
-
   <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
-
   <arg name="output/pointcloud" default="/perception/obstacle_segmentation/pointcloud"/>
-
+  
+  <!-- RViz2 configuration -->
+  <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/ground_segmentation.rviz"/>
+  <arg name="use_rviz" default="true" description="Launch RViz2 in addition to other nodes"/>
+  
+  <!-- Ground segmentation node -->
   <node pkg="autoware_ground_segmentation" exec="scan_ground_filter_node" name="scan_ground_filter_node" output="screen">
     <remap from="input" to="$(var input/pointcloud)"/>
     <remap from="output" to="$(var output/pointcloud)"/>
     <param from="$(var ground_segmentation_param_file)"/>
     <param from="$(var vehicle_info_param_file)"/>
   </node>
-  
+
+  <!-- publishing static transform from map to base_link -->
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="map_to_base_link"
+        args="0 0 0 0 0 0 map base_link"
+        output="screen"/>
+
+  <!-- publishing static transform from base_link to lidar_ouster_top -->
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_lidar"
+        args="0 0 1.78 0 0 0 base_link lidar_ouster_top"
+        output="screen"/>
+
+
+        
+  <!-- RViz2 node -->
+  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" if="$(var use_rviz)">
+    <param name="default_config_file" value="$(var rviz_config)"/>
+
+  </node>
 </launch>
