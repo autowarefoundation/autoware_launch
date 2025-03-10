@@ -45,12 +45,16 @@ def launch_setup(context, *args, **kwargs):
     )
 
     return [
-        GroupAction(actions=[
-            SetEnvironmentVariable(
-                name="LD_PRELOAD", value=f"libagnocast_heaphook.so:{os.getenv('LD_PRELOAD', '')}"),
-            SetEnvironmentVariable(name="MEMPOOL_SIZE", value="8589934592"),  # 8GB
-            pointcloud_container
-        ])
+        GroupAction(
+            actions=[
+                SetEnvironmentVariable(
+                    name="LD_PRELOAD",
+                    value=f"libagnocast_heaphook.so:{os.getenv('LD_PRELOAD', '')}",
+                ),
+                SetEnvironmentVariable(name="MEMPOOL_SIZE", value="8589934592"),  # 8GB
+                pointcloud_container,
+            ]
+        )
     ]
 
 
@@ -76,6 +80,6 @@ def generate_launch_description():
             add_launch_arg("container_name", "pointcloud_container"),
             set_container_executable,
             set_container_mt_executable,
-            OpaqueFunction(function=launch_setup)
+            OpaqueFunction(function=launch_setup),
         ]
     )
