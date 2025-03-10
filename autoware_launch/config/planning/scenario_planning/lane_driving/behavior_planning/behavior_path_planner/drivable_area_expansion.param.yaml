@@ -27,7 +27,7 @@
           front: 0.75 # [m] margin to add to the front of object footprint
           rear: 0.75 # [m] margin to add to the rear of object footprint
           left: 0.75 # [m] margin to add to the left of object footprint
-          right: 0.75 # [m] margin to add to the rear of object footprint
+          right: 0.75 # [m] margin to add to the right of object footprint
       path_preprocessing:
         max_arc_length: 100.0 # [m] maximum arc length along the path where the ego footprint is projected (0.0 means no limit)
         resample_interval: 2.0 # [m] fixed interval between resampled path points (0.0 means path points are directly used)
