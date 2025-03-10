@@ -201,7 +201,7 @@
 
     <!-- traffic light recognition parameters -->
     <arg
-      name="traffic_light_map_based_detector_param_path"
+      name="each_traffic_light_map_based_detector_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_map_based_detector/TRAFFIC_LIGHT_RECOGNITION_CAMERA_NAMESPACE_traffic_light_map_based_detector.param.yaml"
     />
     <arg
