@@ -14,7 +14,7 @@ launch:
       default: "true"
   - arg:
       name: launch_dynamic_obstacle_avoidance
-      default: "true"
+      default: "false"
   - arg:
       name: launch_sampling_planner_module
       default: "false" # Warning, experimental module, use only in simulations
