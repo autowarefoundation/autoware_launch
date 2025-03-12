@@ -25,3 +25,8 @@
     # logging
     enable_logging: false
     logging_file_path: "/tmp/decorative_tracker_merger.log"
+
+    # diagnostics
+    diag_delay_main_objects_tolerance: 1.0
+    diag_duration_empty_main_objects_tolerance: 5.0
+    diag_delay_sub_objects_tolerance: 5.0
