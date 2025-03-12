@@ -1,0 +1,96 @@
+<launch>
+  <arg name="camera_id" default="" />
+
+  <arg name="disable_camera_driver" default="false"
+       description="If true, this launcher runs image_transport_decompressor instead of camera driver" />
+
+  <!-- image topic name to be published -->
+  <arg name="image_topic" default="image_raw" />
+  <!-- frame id to be published -->
+  <!-- path to the yaml file that contains parameters for v4l2_camera node -->
+  <let name="v4l2_camera_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/v4l2_$(var camera_id).param.yaml" />
+  <!-- url to the yaml file that contains cameras intrinsic parameters -->
+  <let name="camera_info_url" value="package://individual_params/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/camera$(var camera_id)_info.yaml" />
+  <!-- path to the yaml file that contains parameters for sensor_trigger node -->
+  <let name="sensor_trigger_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/trigger.param.yaml" />
+  <!-- path to the yaml file that contains parameters for readout_delay_setter node -->
+  <let name="readout_delay_setter_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/readout_delay_setter$(var camera_id).param.yaml" />
+
+  <!-- container name that this ROS node to be loaded -->
+  <arg name="container_name" default="" />
+  <!-- flag to use intra process -->
+  <arg name="use_intra_process" default="True" />
+  <!-- flag to use sensor data QoS -->
+  <arg name="use_sensor_data_qos" default="True" />
+  <!-- publish frame number per second. value <= 0 means no limitation on publish rate -->
+  <arg name="publish_rate" default="-1.0" />
+  <!-- use image transport to rectify and compress or use the Accelerated version -->
+  <arg name="use_image_transport" default="False" />
+  <!-- The GPU Process Node will determine if we use default qos or try to search the qos-->
+  <arg name="use_system_default_qos" default="False" />
+  <arg name="rectify" default="false" />
+  <arg name="jpeg_quality" default="80" description="jpeg quality from 1 to 100"/>
+
+  <group>
+    <push-ros-namespace namespace="sensing/camera/camera$(var camera_id)" />
+    <let name="empty_container_is_specified" value="$(eval 'not &quot;$(var container_name)&quot;')" />
+    <!-- If container name is not specified,
+       execute function as an individual node  -->
+    <group if="$(var empty_container_is_specified)">
+      <node pkg="v4l2_camera" exec="v4l2_camera_node" name="v4l2_camera">
+        <remap from="image_raw" to="$(var image_topic)" />
+        <remap from="image_raw/compressed" to="$(var image_topic)/compressed" />
+        <remap from="image_raw/compressedDepth" to="$(var image_topic)/compressedDepth" />
+        <remap from="image_raw/theora" to="$(var image_topic)/theora" />
+        <param from="$(var v4l2_camera_param_path)" />
+        <param name="camera_info_url" value="$(var camera_info_url)" />
+        <param name="use_sensor_data_qos" value="$(var use_sensor_data_qos)" />
+        <param name="publish_rate" value="$(var publish_rate)" />
+      </node>
+    </group>
+
+    <!-- If container name is specified,
+       execute function as a composable node and load it into the container  -->
+    <group unless="$(var empty_container_is_specified)">
+      <load_composable_node target="$(var container_name)">
+        <composable_node pkg="v4l2_camera" plugin="v4l2_camera::V4L2Camera" name="v4l2_camera">
+          <remap from="image_raw" to="$(var image_topic)" />
+          <remap from="image_raw/compressed" to="$(var image_topic)/compressed" />
+          <remap from="image_raw/compressedDepth" to="$(var image_topic)/compressedDepth" />
+          <remap from="image_raw/theora" to="$(var image_topic)/theora" />
+          <param from="$(var v4l2_camera_param_path)" />
+          <param name="camera_info_url" value="$(var camera_info_url)" />
+          <param name="use_sensor_data_qos" value="$(var use_sensor_data_qos)" />
+          <param name="publish_rate" value="$(var publish_rate)" />
+          <param name="use_image_transport" value="$(var use_image_transport)" />
+          <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)" />
+        </composable_node>
+      </load_composable_node>
+      <load_composable_node target="$(var container_name)" unless="$(var use_image_transport)">
+        <!-- cspell:disable-next-line -->
+        <composable_node pkg="accelerated_image_processor" plugin="gpu_imgproc::GpuImgProc" name="gpu_process_node">
+          <param name="rect_impl" value="npp"/>
+          <param name="use_opencv_map_init" value="True"/>
+          <param name="alpha" value="0.0"/>
+          <param name="jpeg_quality" value="$(var jpeg_quality)"/>
+          <param name="do_rectify" value="$(var rectify)"/>
+          <param name="use_system_default_qos" value="$(var use_system_default_qos)"/>
+          <remap from="image_raw" to="$(var image_topic)" />
+          <remap from="image_raw/compressed" to="$(var image_topic)/compressed" />
+          <remap from="image_rect" to="image_rect_color" />
+          <remap from="image_rect/compressed" to="image_rect_color/compressed" />
+          <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)" />
+        </composable_node>
+      </load_composable_node>
+    </group>
+
+    <node pkg="sensor_trigger" exec="sensor_trigger_exe" name="camera$(var camera_id)_trigger">
+      <param from="$(var sensor_trigger_param_path)" />
+    </node>
+    <!-- readout delay setter -->
+    <node pkg="c2_readout_delay_setter" exec="c2_readout_delay_setter" name="readout_delay_setter">
+        <param from="$(var readout_delay_setter_param_path)" />
+        <param name="target_v4l2_node" value="v4l2_camera"/>
+    </node>
+  </group>
+</launch>

@@ -1,0 +1,41 @@
+<launch>
+  <arg name="camera_id" default="" />
+
+  <!-- image topic name to be published -->
+  <arg name="image_topic" default="image_rect_color" />
+
+  <!-- image topic name to be subscribed -->
+  <let name="input/compressed_image" value="$(var image_topic)/compressed" />
+  <!-- image topic name to be published -->
+  <let name="output/raw_image" value="$(var image_topic)" />
+
+  <!-- container naem that this ROS node to be loaded -->
+  <arg name="container_name" default="" />
+  <!-- flag to use ROS2 intra process -->
+  <arg name="use_intra_process" default="True" />
+
+  <group>
+    <push-ros-namespace namespace="sensing/camera/camera$(var camera_id)" />
+    <let name="empty_container_is_specified" value="$(eval 'not &quot;$(var container_name)&quot;')" />
+    <!-- If container name is not specified,
+         execute function as an individual node  -->
+    <group if="$(var empty_container_is_specified)">
+      <node pkg="image_transport_decompressor" exec="image_transport_decompressor_node" name="image_transport_decompressor">
+        <remap from="~/input/compressed_image" to="$(var input/compressed_image)" />
+        <remap from="~/output/raw_image" to="$(var output/raw_image)" />
+      </node>
+    </group>
+
+    <!-- If container name is specified,
+         execute function as a composable node and load it into the container  -->
+    <group unless="$(var empty_container_is_specified)">
+      <load_composable_node target="$(var container_name)">
+        <composable_node pkg="image_transport_decompressor" plugin="image_preprocessor::ImageTransportDecompressor" name="image_transport_decompressor">
+          <remap from="~/input/compressed_image" to="$(var input/compressed_image)" />
+          <remap from="~/output/raw_image" to="$(var output/raw_image)" />
+          <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)" />
+        </composable_node>
+      </load_composable_node>
+    </group>
+  </group>
+</launch>
