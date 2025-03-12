@@ -25,11 +25,12 @@ Key Features:
 Integrators are free to hard-code ECU-specific parameters in this launch file, 
 -->
 <launch>
-  <arg name="object_recognition_camera_ids" default="[4, 5, 6, 7]" />
-  <arg name="camera_driver_camera_ids" default="[4, 5, 6, 7]" />
-  <arg name="traffic_light_camera_ids" default="[4, 5, 6, 7]" />
+  <arg name="object_recognition_camera_ids" default="[8, 9, 10]" />
+  <arg name="camera_driver_camera_ids" default="[8, 9, 10]" />
+  <arg name="traffic_light_camera_ids" default="[8, 9, 10]" />
   <arg name="yolox_precision" default="int8" />
   <arg name="build_engine_only" default="false" />
+  <arg name="use_multithread" default="true" />
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" />
 
   <arg name="live_sensor" default="true" description="If true, this launcher runs image_transport_decompressor instead of camera driver" />

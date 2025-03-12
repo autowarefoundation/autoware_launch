@@ -27,12 +27,12 @@ from distutils.util import strtobool
 def create_camera_container(camera_id, container_name, use_multithread):
     package = FindPackageShare("edge_auto_jetson_launch")
     include = PathJoinSubstitution(
-        [package, f"launch/camera_common/camera_container.launch.xml"]
+        [package, f"launch/camera_common/camera_container.launch.py"]
     )
     local_container_name = container_name + str(camera_id)
     arguments = [
         ("camera_id", str(camera_id)),
-        ("container_name", local_container_name),
+        ("container", local_container_name),
         ("use_multithread", use_multithread),
     ]
     return IncludeLaunchDescription(include, launch_arguments=arguments)
@@ -110,7 +110,7 @@ def launch_setup(context, *args, **kwargs):
     live_sensor = LaunchConfiguration("live_sensor").perform(context)
     container_name = LaunchConfiguration("container_name").perform(context)
     yolox_precision = LaunchConfiguration("yolox_precision").perform(context)
-    use_multi_thread = LaunchConfiguration("use_multi_thread").perform(context)
+    use_multithread = LaunchConfiguration("use_multithread").perform(context)
     build_engine_only = LaunchConfiguration("build_engine_only").perform(context)
 
     # Convert string to list safely
@@ -123,7 +123,7 @@ def launch_setup(context, *args, **kwargs):
     camera_containers = set(object_recognition_camera_ids + traffic_light_camera_ids)
 
     camera_containers = [
-        create_camera_container(camera_id, container_name, use_multi_thread)
+        create_camera_container(camera_id, container_name, use_multithread)
         for camera_id in camera_containers
     ]
 

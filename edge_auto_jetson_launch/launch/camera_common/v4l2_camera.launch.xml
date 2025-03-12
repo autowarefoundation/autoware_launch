@@ -11,10 +11,8 @@
   <let name="v4l2_camera_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/v4l2_$(var camera_id).param.yaml" />
   <!-- url to the yaml file that contains cameras intrinsic parameters -->
   <let name="camera_info_url" value="package://individual_params/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/camera$(var camera_id)_info.yaml" />
-  <!-- path to the yaml file that contains parameters for sensor_trigger node -->
-  <let name="sensor_trigger_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/trigger.param.yaml" />
   <!-- path to the yaml file that contains parameters for readout_delay_setter node -->
-  <let name="readout_delay_setter_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/readout_delay_setter$(var camera_id).param.yaml" />
+  <let name="readout_delay_setter_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/readout_delay_$(var camera_id).param.yaml" />
 
   <!-- container name that this ROS node to be loaded -->
   <arg name="container_name" default="" />
@@ -84,9 +82,6 @@
       </load_composable_node>
     </group>
 
-    <node pkg="sensor_trigger" exec="sensor_trigger_exe" name="camera$(var camera_id)_trigger">
-      <param from="$(var sensor_trigger_param_path)" />
-    </node>
     <!-- readout delay setter -->
     <node pkg="c2_readout_delay_setter" exec="c2_readout_delay_setter" name="readout_delay_setter">
         <param from="$(var readout_delay_setter_param_path)" />

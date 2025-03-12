@@ -7,9 +7,9 @@
   <arg name="container" description="component container name"/>
   <arg name="build_engine_only" default="false" description="exit after trt engine is built"/>
 
-  <arg name="traffic_light_fine_detector_param_path" default="$(find-pkg-share jetson_tlr_launch)/config/traffic_light_fine_detector.param.yaml"/>
-  <arg name="car_traffic_light_classifier_param_path" default="$(find-pkg-share jetson_tlr_launch)/config/car_traffic_light_classifier.param.yaml"/>
-  <arg name="pedestrian_traffic_light_classifier_param_path" default="$(find-pkg-share jetson_tlr_launch)/config/pedestrian_traffic_light_classifier.param.yaml"/>
+  <arg name="traffic_light_fine_detector_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/traffic_light_fine_detector.param.yaml"/>
+  <arg name="car_traffic_light_classifier_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/car_traffic_light_classifier.param.yaml"/>
+  <arg name="pedestrian_traffic_light_classifier_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/pedestrian_traffic_light_classifier.param.yaml"/>
 
   <let name="input/image" value="/sensing/camera/$(var camera_name)/image_raw"/>
   <let name="input/camera_info" value="/sensing/camera/$(var camera_name)/camera_info"/>
@@ -59,7 +59,7 @@
     </group>
 
     <!-- fine detector and classifier -->
-    <include file="$(find-pkg-share jetson_tlr_launch)/launch/traffic_light_recognition/traffic_light_node_container.launch.py">
+    <include file="$(find-pkg-share edge_auto_jetson_launch)/launch/traffic_light_recognition/traffic_light_node_container.launch.py">
       <arg name="traffic_light_fine_detector_param_path" value="$(var traffic_light_fine_detector_param_path)"/>
       <arg name="car_traffic_light_classifier_param_path" value="$(var car_traffic_light_classifier_param_path)"/>
       <arg name="pedestrian_traffic_light_classifier_param_path" value="$(var pedestrian_traffic_light_classifier_param_path)"/>

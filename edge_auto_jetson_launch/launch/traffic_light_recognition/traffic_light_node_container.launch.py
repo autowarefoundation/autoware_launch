@@ -36,6 +36,7 @@ def generate_launch_description():
         )
 
     add_launch_arg("enable_fine_detection", "True")
+    add_launch_arg("use_image_transport", "True")
     add_launch_arg("input/image", "/sensing/camera/traffic_light/image_raw")
     add_launch_arg("output/rois", "/perception/traffic_light_recognition/rois")
     add_launch_arg(
