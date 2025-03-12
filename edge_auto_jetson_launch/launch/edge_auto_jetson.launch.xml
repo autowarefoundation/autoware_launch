@@ -6,8 +6,12 @@ the corresponding edge_auto_jetson launch file.
 -->
 <launch>
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" />
-  <arg name="jetson_id" default="$(env JETSON_ID 0)" />
-  <arg name="ecu_name" default="jetson$(var jetson_id)" />
+  <arg name="jetson_id" default="$(env JETSON_ID -1)" />
+  
+  <let name="ecu_name" value="jetson$(var jetson_id)" if="$(eval '&quot;$(var jetson_id)&quot;>=&quot;0&quot;')"/>
+  <let name="ecu_name" value="addon" unless="$(eval '&quot;$(var jetson_id)&quot;>=&quot;0&quot;')"/>
+
+
   <arg name="live_sensor" default="True"
        description="If true, camera drivers will be booted. Otherwise, image decompressor will be."/>
   <arg name="perception" default="True"
