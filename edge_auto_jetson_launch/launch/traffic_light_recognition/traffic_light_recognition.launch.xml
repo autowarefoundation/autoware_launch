@@ -48,7 +48,7 @@
 
     <!-- map based detector -->
     <group>
-      <push-ros-namespace namespace="detection"/>
+      <push-ros-namespace namespace="perception/detection/$(var camera_name)"/>
       <include file="$(find-pkg-share autoware_traffic_light_map_based_detector)/launch/traffic_light_map_based_detector.launch.xml">
         <arg name="input/camera_info" value="$(var input/camera_info)"/>
         <arg name="min_timestamp_offset" value="-0.04"/>
@@ -56,7 +56,6 @@
         <arg name="output/rois" value="$(var map_based_detector_output_topic)"/>
         <arg name="output/camera_info" value="camera_info"/>
       </include>
-    </group>
 
     <!-- fine detector and classifier -->
     <include file="$(find-pkg-share edge_auto_jetson_launch)/launch/traffic_light_recognition/traffic_light_node_container.launch.py">
@@ -74,5 +73,6 @@
       <arg name="output/pedestrian/traffic_signals" value="$(var output/pedestrian/traffic_signals)"/>
       <arg name="container" value="$(var container)" />
     </include>
+    </group>
   </group>
 </launch>
