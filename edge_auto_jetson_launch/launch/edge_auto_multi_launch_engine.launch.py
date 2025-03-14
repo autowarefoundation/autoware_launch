@@ -126,7 +126,7 @@ def launch_setup(context, *args, **kwargs):
         for camera_id in camera_containers
     ]
 
-    if build_engine_only.lower == "true":
+    if build_engine_only.lower() == "true":
         camera_containers = []
 
     # object recognition
