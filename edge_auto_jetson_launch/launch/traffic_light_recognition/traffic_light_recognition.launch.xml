@@ -44,8 +44,6 @@
 
   <!--  TLR pipeline -->
   <group unless="$(var build_engine_only)">
-    <node pkg="topic_tools" exec="relay" name="traffic_light_camera_info_relay" args="$(var input/camera_info) camera_info"/>
-
     <!-- map based detector -->
     <group>
       <push-ros-namespace namespace="perception/detection/$(var camera_name)"/>
