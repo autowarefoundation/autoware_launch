@@ -121,11 +121,13 @@ def launch_setup(context, *args, **kwargs):
     # containers will be used for object recognition and traffic light recognition
     # so we need to merge them into one set to avoid duplication
     camera_containers = set(object_recognition_camera_ids + traffic_light_camera_ids)
-
     camera_containers = [
         create_camera_container(camera_id, container_name, use_multithread)
         for camera_id in camera_containers
     ]
+
+    if build_engine_only:
+        camera_containers = []
 
     # object recognition
     object_recognitions = [
