@@ -3,7 +3,7 @@
     obstacle_stop:
       option:
         ignore_crossing_obstacle: true
-        suppress_sudden_stop: true
+        suppress_sudden_stop: false
 
       stop_planning:
         stop_margin : 5.0 # longitudinal margin to obstacle [m]
@@ -53,6 +53,14 @@
             motorcycle: false
             bicycle: false
             pedestrian: false
+
+        pointcloud:
+          pointcloud_voxel_grid_x: 0.05
+          pointcloud_voxel_grid_y: 0.05
+          pointcloud_voxel_grid_z: 100000.0
+          pointcloud_cluster_tolerance: 1.0
+          pointcloud_min_cluster_size: 1
+          pointcloud_max_cluster_size: 100000
 
         # hysteresis for velocity
         obstacle_velocity_threshold_to_stop : 3.0 # stop planning is executed to the obstacle whose velocity is less than this value [m/s]
