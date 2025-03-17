@@ -33,14 +33,6 @@ jobs:
       - name: Show disk space before the tasks
         run: df -h
 
-      - name: Free disk space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          tool-cache: false
-          dotnet: false
-          swap-storage: false
-          large-packages: false
-
       - name: Remove exec_depend
         uses: autowarefoundation/autoware-github-actions/remove-exec-depend@v1
 
