@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <launch>
+  
+  <!-- Parameter configuration file path -->
   <arg name="ground_segmentation_param_file" default="$(find-pkg-share autoware_ground_segmentation)/config/scan_ground_filter.param.yaml"/>
+
   <!-- vehicle info -->
   <arg name="vehicle_info_param_file" default="$(find-pkg-share autoware_vehicle_info_utils)/config/vehicle_info.param.yaml"/>
   <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
@@ -27,7 +30,6 @@
   <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_lidar"
         args="0 0 1.78 0 0 0 base_link lidar_ouster_top"
         output="screen"/>
-
 
         
   <!-- RViz2 node -->
