@@ -61,9 +61,9 @@ units:
   - path: /autoware/modes/emergency_stop
     type: and
     list:
-      - { type: link, link: /autoware/planning }
-      - { type: link, link: /autoware/system }
       - { type: link, link: /autoware/vehicle }
+      - { type: link, link: /autoware/system }
+      - { type: link, link: /autoware/planning }
 
   - path: /autoware/debug/tools
     type: and
