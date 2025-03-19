@@ -3,8 +3,8 @@ on:
   pull_request:
     branches:
       - tier4/main # Branches where the original PRs will be merged
-      - beta/v4.0.2
-      - beta/v4.1.0
+      - beta/v4.0
+      - beta/v4.2
     types:
       - closed
       - labeled
@@ -25,8 +25,8 @@ jobs:
       matrix:
         following-branch:
           - tier4/main
-          - beta/v4.0.2
-          - beta/v4.1.0
+          - beta/v4.0
+          - beta/v4.2
 
     steps:
       - name: Checkout
