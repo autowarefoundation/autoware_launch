@@ -1,33 +1,55 @@
-"type:ci":
-  - .github/**/*
-  - "*.json"
-  - "*.yaml"
-  - "*.cfg"
-  - .clang-format
-  - .gitignore
-  - .prettierignore
-"type:documentation":
-  - "**/*.md"
-  - "**/*.rst"
-  - "**/*.jpg"
-  - "**/*.png"
-  - "**/*.svg"
-"component:control":
-  - "**/*control*"
-"component:localization":
-  - "**/*localization*"
-"component:map":
-  - "**/*map*"
-"component:perception":
-  - "**/*perception*"
-"component:planning":
-  - "**/*planning*"
-"component:sensing":
-  - "**/*sensing*"
-"component:simulation":
-  - "**/*simulator*"
-"component:system":
-  - "**/*system*"
-"component:ui":
-  - "**/*.rviz"
-  - "**/rviz"
+type:ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/**/*
+          - "*.json"
+          - "*.yaml"
+          - "*.cfg"
+          - .clang-format
+          - .gitignore
+          - .prettierignore
+type:documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "*.md"
+          - "*.rst"
+          - "*.jpg"
+          - "*.png"
+          - "*.svg"
+component:control:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*control*"
+component:localization:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*localization*"
+component:map:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*map*"
+component:perception:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*perception*"
+component:planning:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*planning*"
+component:sensing:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*sensing*"
+component:simulation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*simulation*"
+component:system:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*system*"
+component:ui:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.rviz"
+          - "**/rviz"

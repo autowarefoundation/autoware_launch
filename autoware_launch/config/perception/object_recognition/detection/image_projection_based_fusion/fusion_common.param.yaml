@@ -1,12 +1,14 @@
 /**:
   ros__parameters:
-    input_offset_ms: [61.67, 111.67, 45.0, 28.33, 78.33, 95.0]
-    timeout_ms: 70.0
-    match_threshold_ms: 50.0
+    # Example of lidar and camera timestamps
+    # cloud timestamp: 0.009
+    # rois timestamp: 0.107, 0.156, 0.087, 0.071, 0.124, 0.141
+    rois_timestamp_offsets: [0.098, 0.147, 0.078, 0.062, 0.115, 0.132]
+    rois_timeout_sec: 0.5
+    msg3d_timeout_sec: 0.05
     image_buffer_size: 15
     # projection setting for each ROI whether unrectify image
     point_project_to_unrectified_image: [false, false, false, false, false, false]
-    debug_mode: false
     filter_scope_min_x: -100.0
     filter_scope_min_y: -100.0
     filter_scope_min_z: -100.0
@@ -21,4 +23,14 @@
     approximation_grid_cell_height: 1.0
 
     # debug parameters
+    debug_mode: false
+    collector_debug_mode: false
     publish_processing_time_detail: false
+
+    publish_previous_but_late_output_msg: false
+    rosbag_length: 10.0
+    # matching strategy
+    matching_strategy:
+      type: advanced
+      msg3d_noise_window: 0.02
+      rois_timestamp_noise_window: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
