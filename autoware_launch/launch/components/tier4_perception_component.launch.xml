@@ -13,6 +13,8 @@
   <arg name="use_detection_by_tracker" default="true" description="launch detection_by_tracker function"/>
   <arg name="use_radar_tracking_fusion" default="true" description="if true, radar objects are merged in tracking module. Otherwise, radar objects are merged in detection module."/>
   <arg name="use_object_filter" default="true" description="launch object filter to filter-out detected object"/>
+  <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
+  <arg name="use_obstacle_segmentation_time_series_filter" default="true" description="use time series filter at the ground segmentation"/>
 
   <arg name="occupancy_grid_map_method" default="pointcloud_based" description="options: pointcloud_based, laserscan_based, multi_lidar_pointcloud_based"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
@@ -21,6 +23,7 @@
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
   <arg name="lidar_detection_model" default="centerpoint" description="If the model name is not declared, the default model in perception.launch.xml will be used"/>
   <arg name="all_traffic_light_camera" default="[camera6, camera7]" description="choose camera which use for traffic light recognition"/>
+  <arg name="traffic_light_recognition/ml_detection_model_type" default="fine_detection_model" description="select ml model for TL detection: fine_detection_model or whole_image_detection_model"/>
 
   <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
     <!-- Options to Switch Launch Function/Module -->
@@ -45,10 +48,14 @@
     <arg name="use_object_filter" value="$(var use_object_filter)"/>
     <arg name="objects_filter_method" value="$(var detected_objects_filter_method)"/>
     <arg name="objects_validation_method" value="$(var detected_objects_validation_method)"/>
+    <arg name="use_obstacle_segmentation_single_frame_filter" value="$(var use_obstacle_segmentation_single_frame_filter)"/>
+    <arg name="use_obstacle_segmentation_time_series_filter" value="$(var use_obstacle_segmentation_time_series_filter)"/>
+
     <arg name="data_path" value="$(var data_path)"/>
 
     <arg name="use_traffic_light_recognition" value="$(var use_traffic_light_recognition)"/>
-    <arg name="traffic_light_recognition/enable_fine_detection" value="$(var traffic_light_recognition/enable_fine_detection)"/>
+    <arg name="traffic_light_recognition/use_ml_detector" value="$(var traffic_light_recognition/use_ml_detector)"/>
+    <arg name="traffic_light_recognition/ml_detection_model_type" value="$(var traffic_light_recognition/ml_detection_model_type)"/>
     <arg name="traffic_light_recognition/fusion_only" value="false"/>
     <arg name="all_traffic_light_camera" value="$(var all_traffic_light_camera)"/>
 
@@ -188,10 +195,16 @@
 
     <!-- traffic light recognition parameters -->
     <arg name="traffic_light_arbiter_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_arbiter/traffic_light_arbiter.param.yaml"/>
+    <arg name="traffic_light_recognition/whole_image_detector_model_path" value="$(var data_path)/tensorrt_yolox"/>
+    <arg name="traffic_light_recognition/whole_image_detector_model_name" value="yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
+    <arg
+      name="traffic_light_multi_camera_fusion_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml"
+    />
     <arg name="traffic_light_fine_detector_model_path" value="$(var data_path)/traffic_light_fine_detector"/>
     <arg name="traffic_light_fine_detector_model_name" value="tlr_car_ped_yolox_s_batch_6"/>
     <arg name="traffic_light_classifier_model_path" value="$(var data_path)/traffic_light_classifier"/>
     <arg name="car_traffic_light_classifier_model_name" value="traffic_light_classifier_mobilenetv2_batch_6"/>
-    <arg name="pedestrian_traffic_light_classifier_model_name" value="ped_traffic_light_classifier_mobilenetv2_batch_4"/>
+    <arg name="pedestrian_traffic_light_classifier_model_name" value="ped_traffic_light_classifier_mobilenetv2_batch_6"/>
   </include>
 </launch>
