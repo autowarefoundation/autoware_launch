@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.43.0 (2025-03-21)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(autoware_launch): rename to max_lat_margin_against_predicted_object_unknown (`#1360 <https://github.com/autowarefoundation/autoware_launch/issues/1360>`_)
 * feat(pid_long): disable overshoot_emergency (`#1359 <https://github.com/autowarefoundation/autoware_launch/issues/1359>`_)
