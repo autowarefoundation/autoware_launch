@@ -1,34 +1,34 @@
 <?xml version="1.0"?>
 <launch>
   <!--default parameter follows node setting -->
-  
-  <arg name="input/obstacle_pointcloud" default="concatenated/pointcloud"/>
-
+  <!-- correct -->
+  <arg name="input/obstacle_pointcloud" default="concatenated/pointcloud"/> 
+  <!-- correct -->
   <arg name="input/raw_pointcloud" default="no_ground/oneshot/pointcloud"/>
-  
+  <!-- correct -->
   <arg name="output" default="/perception/occupancy_grid_map/map"/>
-  
+  <!-- correct -->
   <arg name="use_intra_process" default="false"/>
-  
+  <!-- correct -->
   <arg name="use_multithread" default="false"/>
-  
+  <!-- uncertain -->
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
-  
-  <arg name="occupancy_grid_map_method" description="options: pointcloud_based_occupancy_grid_map, laserscan_based_occupancy_grid_map, multi_lidar_pointcloud_based_occupancy_grid_map"/>
-  
-  <arg name="occupancy_grid_map_param_path"/>
-  
-  <arg name="occupancy_grid_map_updater" description="options: binary_bayes_filter"/>
-  
-  <arg name="occupancy_grid_map_updater_param_path"/>
-  
+  <!-- correct -->
+  <arg name="occupancy_grid_map_method" default="pointcloud_based_occupancy_grid_map"/>
+  <!-- correct -->
+  <arg name="occupancy_grid_map_param_path" default="$(find-pkg-share autoware_probabilistic_occupancy_grid_map)/config/pointcloud_based_occupancy_grid_map.param.yaml"/>
+  <!-- correct -->
+  <arg name="occupancy_grid_map_updater" default="binary_bayes_filter"/>
+  <!-- correct -->
+  <arg name="occupancy_grid_map_updater_param_path" default="$(find-pkg-share autoware_probabilistic_occupancy_grid_map)/config/binary_bayes_filter_updater.param.yaml"/>
+  <!-- correct -->
   <arg name="input_obstacle_pointcloud" default="false" description="subscribe obstacle pointcloud"/>
-  
+  <!-- correct -->
   <arg name="input_obstacle_and_raw_pointcloud" default="true" description="subscribe both obstacle and raw pointcloud"/>
 
   <!--pointcloud based method-->
-  <group if="$(eval &quot;'$(var occupancy_grid_map_method)'=='pointcloud_based_occupancy_grid_map'&quot;)">
-    <include file="$(find-pkg-share autoware_probabilistic_occupancy_grid_map)/launch/pointcloud_based_occupancy_grid_map.launch.py">
+  <group>
+    <include file="pointcloud_based_occupancy_grid_map.launch.py">
       <arg name="input/obstacle_pointcloud" value="$(var input/obstacle_pointcloud)"/>
       <arg name="input/raw_pointcloud" value="$(var input/raw_pointcloud)"/>
       <arg name="output" value="$(var output)"/>
