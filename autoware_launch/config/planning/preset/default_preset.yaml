@@ -165,3 +165,7 @@ launch:
   - arg:
       name: launch_remaining_distance_time_calculator
       default: "true"
+  # waypoint following modules
+  - arg:
+      name: launch_waypoint_following_module
+      default: "false"

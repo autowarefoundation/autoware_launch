@@ -82,6 +82,10 @@
     <!-- parking -->
     <arg name="freespace_planner_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/parking/freespace_planner/freespace_planner.param.yaml"/>
 
+    <!-- waypoint following -->
+    <arg name="waypoint_following_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/waypoint_following/waypoint_maker.param.yaml"/>
+
+
     <!-- motion -->
     <arg name="motion_config_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning"/>
     <arg name="elastic_band_smoother_param_path" value="$(var motion_config_path)/path_smoother/elastic_band_smoother.param.yaml"/>
