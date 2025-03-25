@@ -50,9 +50,10 @@
   <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
   <arg name="is_simulation" default="false" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
   <!-- Agnocast -->
-  <arg name="use_system_heaphook" default="true" description="true: apt installed library, false: locally built"/>
+  <arg name="use_system_heaphook" default="false" description="true: apt installed library, false: locally built"/>
   <let name="heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so" if="$(var use_system_heaphook)"/>
-  <let name="heaphook_path" value="/home/koichiimai/Agnocast/autoware/src/agnocast/install/agnocastlib/lib/libagnocast_heaphook.so" unless="$(var use_system_heaphook)"/>
+  <let name="autoware_base_path" value="$(find-pkg-share autoware_launch)/../../../.."/>
+  <let name="heaphook_path" value="$(var autoware_base_path)/src/agnocast/install/agnocastlib/lib/libagnocast_heaphook.so" unless="$(var use_system_heaphook)"/>
 
   <!-- Global parameters -->
   <group scoped="false">
