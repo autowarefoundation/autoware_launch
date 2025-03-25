@@ -28,6 +28,8 @@ from launch_ros.descriptions import ComposableNode
 
 
 def launch_setup(context, *args, **kwargs):
+    heaphook_path = LaunchConfiguration("heaphook_path").perform(context)
+
     glog_component = ComposableNode(
         package="autoware_glog_component",
         plugin="autoware::glog_component::GlogComponent",
@@ -47,7 +49,7 @@ def launch_setup(context, *args, **kwargs):
     return [
         GroupAction(actions=[
             SetEnvironmentVariable(
-                name="LD_PRELOAD", value=f"libagnocast_heaphook.so:{os.getenv('LD_PRELOAD', '')}"),
+                name="LD_PRELOAD", value=f"{heaphook_path}:{os.getenv('LD_PRELOAD', '')}"),
             SetEnvironmentVariable(name="MEMPOOL_SIZE", value="8589934592"),  # 8GB
             pointcloud_container
         ])
@@ -72,6 +74,7 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
+            add_launch_arg("heaphook_path"),
             add_launch_arg("use_multithread", "false"),
             add_launch_arg("container_name", "pointcloud_container"),
             set_container_executable,
