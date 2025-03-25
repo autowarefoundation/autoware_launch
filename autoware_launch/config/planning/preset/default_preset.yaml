@@ -168,4 +168,4 @@ launch:
   # waypoint following modules
   - arg:
       name: launch_waypoint_following_module
-      default: "false"
+      default: "true"
