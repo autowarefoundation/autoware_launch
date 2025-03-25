@@ -16,8 +16,8 @@
         # For the case where the stop position is determined according to the object position.
         stop_distance_from_object_preferred: 3.0 # [m]
         stop_distance_from_object_limit: 3.0 # [m]
-        min_acc_preferred: -1.0 # min acceleration [m/ss]
-        min_jerk_preferred: -1.0 # min jerk [m/sss]
+        min_acc_preferred: -1.2 # min acceleration [m/ss]
+        min_jerk_preferred: -1.2 # min jerk [m/sss]
 
       # params for ego's slow down velocity. These params are not used for the case of "enable_rtc: false".
       slow_down:
@@ -32,9 +32,9 @@
         stuck_vehicle_velocity: 1.0 # [m/s] threshold velocity whether other vehicles are assumed to be stuck or not.
         max_stuck_vehicle_lateral_offset: 2.0 # [m] The feature does not handle the vehicles farther than this value to the ego's path.
         required_clearance: 6.0 # [m] clearance to be secured between the ego and the ahead vehicle
-        min_acc: -1.0 # min acceleration [m/ss]
-        min_jerk: -1.0 # min jerk [m/sss]
-        max_jerk: 1.0 # max jerk [m/sss]
+        min_acc: -1.2 # min acceleration [m/ss]
+        min_jerk: -1.2 # min jerk [m/sss]
+        max_jerk: 1.2 # max jerk [m/sss]
 
       # params for the pass judge logic against the crosswalk users such as pedestrians or bicycles
       pass_judge:
