@@ -54,4 +54,5 @@
     publish_processing_time: true
     publish_processing_time_detail: true
     publish_debug_markers: true
-    processing_time_tolerance_ms: 500.0 # [ms]
+    processing_time_tolerance: 0.5 #[s]
+    processing_time_consecutive_excess_tolerance: 1.0 #[s]
