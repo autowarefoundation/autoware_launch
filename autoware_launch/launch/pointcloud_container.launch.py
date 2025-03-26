@@ -26,6 +26,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
 
+use_agnocast = os.getenv("ENABLE_AGNOCAST") == "1"
 
 def launch_setup(context, *args, **kwargs):
     agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
@@ -37,38 +38,43 @@ def launch_setup(context, *args, **kwargs):
         namespace="pointcloud_container",
     )
 
+    container_package = "agnocastlib" if use_agnocast else "rclcpp_components"
+
     pointcloud_container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
         namespace="/",
-        package="agnocastlib",
+        package=container_package,
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[glog_component],
         output="both",
     )
 
-    return [
-        GroupAction(actions=[
-            SetEnvironmentVariable(
-                name="LD_PRELOAD", value=f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}"),
-            SetEnvironmentVariable(name="MEMPOOL_SIZE", value="8589934592"),  # 8GB
-            pointcloud_container
-        ])
-    ]
+    actions = ([] if not use_agnocast else [
+        SetEnvironmentVariable(
+            name="LD_PRELOAD", value=f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}"
+        ),
+        SetEnvironmentVariable(name="MEMPOOL_SIZE", value="8589934592"),  # 8GB
+    ])
+    actions.append(pointcloud_container)
 
+    return [GroupAction(actions=actions)]
 
 def generate_launch_description():
     def add_launch_arg(name: str, default_value=None):
         return DeclareLaunchArgument(name, default_value=default_value)
 
+    container_exec = "agnocast_component_container" if use_agnocast else "component_container"
+    container_exec_mt = "agnocast_component_container_mt" if use_agnocast else "component_container_mt"
+
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
-        "agnocast_component_container",
+        container_exec,
         condition=UnlessCondition(LaunchConfiguration("use_multithread")),
     )
 
     set_container_mt_executable = SetLaunchConfiguration(
         "container_executable",
-        "agnocast_component_container_mt",
+        container_exec_mt,
         condition=IfCondition(LaunchConfiguration("use_multithread")),
     )
 
