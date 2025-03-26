@@ -50,10 +50,9 @@
   <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
   <arg name="is_simulation" default="false" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
   <!-- Agnocast -->
-  <arg name="use_system_heaphook" default="false" description="true: apt installed library, false: locally built"/>
-  <let name="heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so" if="$(var use_system_heaphook)"/>
-  <let name="autoware_base_path" value="$(find-pkg-share autoware_launch)/../../../.."/>
-  <let name="heaphook_path" value="$(var autoware_base_path)/src/agnocast/install/agnocastlib/lib/libagnocast_heaphook.so" unless="$(var use_system_heaphook)"/>
+  <arg name="use_system_agnocast_heaphook" default="false" description="true: apt installed library, false: locally built"/>
+  <let name="agnocast_heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so" if="$(var use_system_agnocast_heaphook)"/>
+  <let name="agnocast_heaphook_path" value="$(env AGNOCAST_HEAPHOOK_PATH)" unless="$(var use_system_agnocast_heaphook)"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -65,7 +64,7 @@
 
   <!-- Pointcloud container -->
   <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
-    <arg name="heaphook_path" value="$(var heaphook_path)"/>
+    <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     <arg name="use_multithread" value="true"/>
     <arg name="container_name" value="$(var pointcloud_container_name)"/>
   </include>
@@ -95,7 +94,7 @@
   <!-- Sensing -->
   <group if="$(var launch_sensing)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml">
-      <arg name="heaphook_path" value="$(var heaphook_path)"/>
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     </include>
   </group>
 
@@ -114,7 +113,7 @@
   <!-- Planning -->
   <group if="$(var launch_planning)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_planning_component.launch.xml">
-      <arg name="heaphook_path" value="$(var heaphook_path)"/>
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
       <arg name="module_preset" value="$(var planning_module_preset)"/>
       <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
       <arg name="is_simulation" value="$(var is_simulation)"/>
@@ -124,7 +123,7 @@
   <!-- Control -->
   <group if="$(var launch_control)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
-      <arg name="heaphook_path" value="$(var heaphook_path)"/>
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
       <arg name="module_preset" value="$(var control_module_preset)"/>
     </include>
   </group>
