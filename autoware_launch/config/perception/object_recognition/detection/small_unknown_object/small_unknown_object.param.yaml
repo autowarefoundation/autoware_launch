@@ -1,0 +1,42 @@
+/**:
+  ros__parameters:
+    crop_box_filter:
+      parameters:
+        min_x: 5.0
+        max_x: 100.0
+        min_y: -5.0
+        max_y: 5.0
+        max_z: 0.5  # to extend the crop box max_z from vehicle_height
+        min_z: -0.5 # to extend the crop box min_z from ground
+        negative: False
+
+    ground_segmentation:
+      plugin: "ground_segmentation::ScanGroundFilterComponent"
+      parameters:
+        global_slope_max_angle_deg: 6.0
+        local_slope_max_angle_deg: 25.0 # recommended 30.0 for non elevation_grid_mode
+        split_points_distance_tolerance: 0.2
+        use_virtual_ground_point: True
+        split_height_distance: 0.2
+        non_ground_height_threshold: 0.05
+        grid_size_m: 0.2
+        grid_mode_switch_radius: 20.0
+        gnd_grid_buffer_size: 5
+        detection_range_z_max: 3.2
+        elevation_grid_mode: true
+        use_recheck_ground_cluster: true
+        use_lowest_point: false
+        low_priority_region_x: -20.0
+        center_pcl_shift: 0.0
+        radial_divider_angle_deg: 1.0
+        # debug parameters
+        publish_processing_time_detail: false
+
+    roi_pointcloud_fusion:
+      parameters:
+        fuse_unknown_only: true
+        min_cluster_size: 2
+        max_cluster_size: 100
+        cluster_2d_tolerance: 0.5
+        roi_scale_factor: 2.0
+
