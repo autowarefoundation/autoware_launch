@@ -3,11 +3,11 @@
     crop_box_filter:
       parameters:
         min_x: 5.0
-        max_x: 100.0
+        max_x: 60.0
         min_y: -5.0
         max_y: 5.0
-        max_z: 0.5  # to extend the crop box max_z from vehicle_height
-        min_z: -0.5 # to extend the crop box min_z from ground
+        max_z: 0.5
+        min_z: -0.5
         negative: False
 
     ground_segmentation:
@@ -39,4 +39,3 @@
         max_cluster_size: 100
         cluster_2d_tolerance: 0.5
         roi_scale_factor: 2.0
-
