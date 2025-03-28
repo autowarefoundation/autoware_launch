@@ -53,7 +53,7 @@ def launch_setup(context, *args, **kwargs):
         SetEnvironmentVariable(
             name="LD_PRELOAD", value=f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}"
         ),
-        SetEnvironmentVariable(name="MEMPOOL_SIZE", value="8589934592"),  # 8GB
+        SetEnvironmentVariable(name="AGNOCAST_MEMPOOL_SIZE", value="8589934592"),  # 8GB
     ])
     actions.append(pointcloud_container)
 
