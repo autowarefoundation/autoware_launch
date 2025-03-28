@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="input/pointcloud" default="sensing/lidar/concatenated/pointcloud"/>
+  <arg name="output/objects" default="objects"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
+  <arg name="model_name" default="centerpoint" description="options: `centerpoint` or `centerpoint_tiny`"/>
+  <arg name="model_path" default="/workspace/src/launcher/autoware_launch/autoware_launch/launch/object_recognition/detection/detector/model"/>
+  <arg name="model_param_path" default="$(find-pkg-share autoware_lidar_centerpoint)/config/$(var model_name).param.yaml"/>
+  <arg name="ml_package_param_path" default="$(var model_path)/$(var model_name)_ml_package.param.yaml"/>
+  <arg name="class_remapper_param_path" default="$(var model_path)/detection_class_remapper.param.yaml"/>
+  <arg name="build_only" default="false" description="shutdown node after TensorRT engine file is built"/>
+  <arg name="log_level" default="info"/>
+  <arg name="use_pointcloud_container" default="false" description="use pointcloud_container"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container" description="pointcloud_container name"/>
+  
+  <!-- Add the necessary static transform publishers -->
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="map_to_base_link"
+        args="0 0 0 0 0 0 map base_link"
+        output="screen"/>
+  <!-- publishing static transform from base_link to lidar_ouster_top -->
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_lidar"
+        args="0 0 1.78 0 0 0 base_link lidar_ouster_top"
+        output="screen"/>
+  
+  <group if="$(var use_pointcloud_container)">
+    <load_composable_node target="$(var pointcloud_container_name)">
+      <composable_node pkg="autoware_lidar_centerpoint" plugin="autoware::lidar_centerpoint::LidarCenterPointNode" name="lidar_centerpoint">
+        <remap from="~/input/pointcloud" to="$(var input/pointcloud)"/>
+        <remap from="~/output/objects" to="$(var output/objects)"/>
+        <param from="$(var model_param_path)" allow_substs="true"/>
+        <param from="$(var ml_package_param_path)" allow_substs="true"/>
+        <param from="$(var class_remapper_param_path)"/>
+        <!-- This parameter shall NOT be included in param file. See also: https://github.com/autowarefoundation/autoware_universe/pull/6167 -->
+        <param name="build_only" value="$(var build_only)"/>
+      </composable_node>
+    </load_composable_node>
+  </group>
+  <group unless="$(var use_pointcloud_container)">
+    <node pkg="autoware_lidar_centerpoint" exec="autoware_lidar_centerpoint_node" name="lidar_centerpoint" output="screen">
+      <remap from="~/input/pointcloud" to="$(var input/pointcloud)"/>
+      <remap from="~/output/objects" to="$(var output/objects)"/>
+      <param from="$(var model_param_path)" allow_substs="true"/>
+      <param from="$(var ml_package_param_path)" allow_substs="true"/>
+      <param from="$(var class_remapper_param_path)"/>
+      <!-- This parameter shall NOT be included in param file. See also: https://github.com/autowarefoundation/autoware_universe/pull/6167 -->
+      <param name="build_only" value="$(var build_only)"/>
+    </node>
+  </group>
+
+  <!-- Camera-based 2D Detection using TensorRT YOLOX for multiple cameras -->
+  <arg name="tensorrt_yolox_model" default="yolox-tiny" description="Model for all cameras: 'yolox-tiny' (faster) or 'yolox-sPlus-opt-pseudoV2-T4-960x960-T4-seg16cls' (more accurate)"/>
+  <arg name="tensorrt_yolox_data_path" default="$(env HOME)/autoware_data" description="Path to TensorRT YOLOX model data"/>
+
+  <!-- Include the multiple_yolox launcher with all our cameras -->
+  <include file="$(find-pkg-share autoware_tensorrt_yolox)/launch/multiple_yolox.launch.xml">
+    <!-- Define camera image topics - NOTE: these use raw images, not compressed -->
+    <arg name="image_raw0" value="/sensor/camera/fsp_l/image_rect_color"/>
+    <arg name="image_raw1" value="/sensor/camera/lspf_r/image_rect_color"/>
+    <arg name="image_raw2" value="/sensor/camera/lspr_l/image_rect_color"/>
+    <arg name="image_raw3" value="/sensor/camera/rsp_l/image_rect_color"/>
+    <arg name="image_raw4" value="/sensor/camera/rspf_l/image_rect_color"/>
+    <arg name="image_raw5" value="/sensor/camera/rspr_r/image_rect_color"/>
+    <arg name="image_raw6" value=""/>
+    <arg name="image_raw7" value=""/>
+    <!-- Specify the number of cameras to use -->
+    <arg name="image_number" value="6"/>
+    <!-- Base name for output topics -->
+    <arg name="output_topic" value="perception/camera_detection/objects"/>
+  </include>
+</launch>
