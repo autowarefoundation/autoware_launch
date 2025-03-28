@@ -6,7 +6,7 @@
   <arg name="use_low_height_cropbox" default="false" description="use low height crop filter in clustering"/>
   <arg name="use_vector_map" default="true" description="use vector map in prediction"/>
   <arg name="use_pointcloud_map" default="true" description="use pointcloud map in detection"/>
-  <arg name="use_roi_based_cluster" default="true" description="launch roi_based_cluster in clustering"/>
+  <arg name="use_small_unknown_object_pipeline" default="true" description="enable pipele for small unknown object detection"/>
   <arg name="use_low_intensity_cluster_filter" default="true" description="launch low_intensity_cluster_filter in clustering"/>
   <arg name="use_image_segmentation_based_filter" default="false" description="launch image_segmentation_based_filter in clustering"/>
   <arg name="use_perception_online_evaluator" default="false" description="launch perception online evaluator"/>
@@ -46,7 +46,7 @@
     <arg name="use_low_height_cropbox" value="$(var use_low_height_cropbox)"/>
     <arg name="use_vector_map" value="$(var use_vector_map)"/>
     <arg name="use_pointcloud_map" value="$(var use_pointcloud_map)"/>
-    <arg name="use_roi_based_cluster" value="$(var use_roi_based_cluster)"/>
+    <arg name="use_small_unknown_object_pipeline" value="$(var use_small_unknown_object_pipeline)"/>
     <arg name="use_low_intensity_cluster_filter" value="$(var use_low_intensity_cluster_filter)"/>
     <arg name="use_image_segmentation_based_filter" value="$(var use_image_segmentation_based_filter)"/>
     <arg name="use_perception_online_evaluator" value="$(var use_perception_online_evaluator)"/>
