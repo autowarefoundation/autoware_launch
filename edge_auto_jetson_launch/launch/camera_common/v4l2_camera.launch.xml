@@ -51,7 +51,7 @@
        execute function as a composable node and load it into the container  -->
     <group unless="$(var empty_container_is_specified)">
       <load_composable_node target="$(var container_name)">
-        <composable_node pkg="v4l2_camera" plugin="v4l2_camera::V4L2Camera" name="v4l2_camera">
+        <composable_node pkg="v4l2_camera" plugin="v4l2_camera::V4L2Camera" name="v4l2_camera_camera$(var camera_id)">
           <remap from="image_raw" to="$(var image_topic)" />
           <remap from="image_raw/compressed" to="$(var image_topic)/compressed" />
           <remap from="image_raw/compressedDepth" to="$(var image_topic)/compressedDepth" />
