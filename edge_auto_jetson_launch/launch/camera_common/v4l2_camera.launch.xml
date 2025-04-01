@@ -35,7 +35,7 @@
     <!-- If container name is not specified,
        execute function as an individual node  -->
     <group if="$(var empty_container_is_specified)">
-      <node pkg="v4l2_camera" exec="v4l2_camera_node" name="v4l2_camera">
+      <node pkg="v4l2_camera" exec="v4l2_camera_node" name="v4l2_camera_camera$(var camera_id)">
         <remap from="image_raw" to="$(var image_topic)" />
         <remap from="image_raw/compressed" to="$(var image_topic)/compressed" />
         <remap from="image_raw/compressedDepth" to="$(var image_topic)/compressedDepth" />
@@ -85,7 +85,7 @@
     <!-- readout delay setter -->
     <node pkg="c2_readout_delay_setter" exec="c2_readout_delay_setter" name="readout_delay_setter">
         <param from="$(var readout_delay_setter_param_path)" />
-        <param name="target_v4l2_node" value="v4l2_camera"/>
+        <param name="target_v4l2_node" value="v4l2_camera_camera$(var camera_id)"/>
     </node>
   </group>
 </launch>
