@@ -14,7 +14,7 @@
       plugin: "ground_segmentation::ScanGroundFilterComponent"
       parameters:
         global_slope_max_angle_deg: 6.0
-        local_slope_max_angle_deg: 25.0 # recommended 30.0 for non elevation_grid_mode
+        local_slope_max_angle_deg: 25.0
         split_points_distance_tolerance: 0.2
         use_virtual_ground_point: True
         split_height_distance: 0.2
