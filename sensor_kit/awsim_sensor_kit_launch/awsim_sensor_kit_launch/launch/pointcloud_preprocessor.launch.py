@@ -26,6 +26,7 @@ from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
 
+
 def launch_setup(context, *args, **kwargs):
     # concatenate node parameters
     concatenate_and_time_sync_node_param = ParameterFile(
@@ -47,9 +48,7 @@ def launch_setup(context, *args, **kwargs):
             ("output", "concatenated/pointcloud"),
         ],
         parameters=[concatenate_and_time_sync_node_param],
-        extra_arguments=[
-            {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-        ],
+        extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
     )
 
     # load concat or passthrough filter
@@ -66,9 +65,7 @@ def generate_launch_description():
     launch_arguments = []
 
     def add_launch_arg(name: str, default_value=None):
-        launch_arguments.append(
-            DeclareLaunchArgument(name, default_value=default_value)
-        )
+        launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value))
 
     awsim_sensor_kit_launch_share_dir = get_package_share_directory("awsim_sensor_kit_launch")
     add_launch_arg("use_multithread", "False")
