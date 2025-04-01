@@ -46,7 +46,7 @@
   <group unless="$(var build_engine_only)">
     <!-- map based detector -->
     <group>
-      <push-ros-namespace namespace="perception/detection/$(var camera_name)"/>
+      <push-ros-namespace namespace="perception/traffic_light_recognition/$(var camera_name)"/>
       <node pkg="topic_tools" exec="relay" name="traffic_light_camera_info_relay" args="$(var input/camera_info) camera_info"/>
       <group>
         <push-ros-namespace namespace="detection"/>
