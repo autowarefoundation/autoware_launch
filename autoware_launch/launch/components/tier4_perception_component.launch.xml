@@ -96,8 +96,8 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_cluster_fusion.param.yaml"
     />
     <arg
-      name="object_recognition_detection_roi_pointcloud_fusion_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_pointcloud_fusion.param.yaml"
+      name="object_recognition_detection_irregular_object_detector_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/irregular_object_detection/irregular_object_detector.param.yaml"
     />
     <arg
       name="object_recognition_detection_roi_detected_object_fusion_param_path"
