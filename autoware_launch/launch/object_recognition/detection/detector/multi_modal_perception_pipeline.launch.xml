@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- Add global use_sim_time parameter -->
+  <arg name="use_sim_time" default="true"/>
+
   <!-- Common arguments -->
   <arg name="input/pointcloud" default="sensing/lidar/concatenated/pointcloud"/>
   <arg name="output/objects" default="objects"/>
@@ -20,111 +23,163 @@
   <!-- Map to base_link transform -->
   <node pkg="tf2_ros" exec="static_transform_publisher" name="map_to_base_link"
         args="0 0 0 0 0 0 map base_link"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <!-- Base to key vehicle frames -->
   <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_rear_axle"
         args="-1.425 0 0 0 0 0 base_link rear_axle"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="rear_axle_to_roof_datum"
         args="1.88985 0 1.23242 0 0 0 rear_axle vehicle_roof_datum"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <!-- LiDAR transforms -->
   <node pkg="tf2_ros" exec="static_transform_publisher" name="roof_datum_to_lidar_ouster_top"
         args="-0.65855 0 0.21849 0 -0.017453 0 vehicle_roof_datum lidar_ouster_top"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="roof_datum_to_lidar_left_mount"
         args="-0.03015 0.720 -0.22242 -0.087266 0.087266 0.6562438 vehicle_roof_datum lidar_left_mount"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
         
   <node pkg="tf2_ros" exec="static_transform_publisher" name="lidar_left_mount_to_lidar_left"
         args="0.0288801 -0.0294088 0.110552 0.0499763 0.0151241 -0.00307838 lidar_left_mount lidar_left"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="roof_datum_to_lidar_right_mount"
         args="-0.03015 -0.720 -0.22242 0.087266 0.087266 -0.6562438 vehicle_roof_datum lidar_right_mount"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
         
   <node pkg="tf2_ros" exec="static_transform_publisher" name="lidar_right_mount_to_lidar_right"
         args="0.00939891 0.0238397 0.0606727 -0.0556599 0.00727062 0.000273152 lidar_right_mount lidar_right"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <!-- Camera transforms - Forward facing cameras -->
   <node pkg="tf2_ros" exec="static_transform_publisher" name="roof_datum_to_camera_fsp_l_mount"
         args="-0.11015 0.3 -0.06242 0 0.087266 0 vehicle_roof_datum camera_fsp_l_mount"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_fsp_l_mount_to_sensor"
         args="0 0 0 1.5708 3.1415 1.5708 camera_fsp_l_mount camera_fsp_l_sensor"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_fsp_l_sensor_to_optical"
         args="-0.0159515 -0.0271456 0.114486 0.0368413 0.00292173 -0.009337 camera_fsp_l_sensor camera_fsp_l_optical"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="roof_datum_to_camera_lspf_r_mount"
         args="-0.69015 0.45 -0.00242 0 0.087266 1.151917 vehicle_roof_datum camera_lspf_r_mount"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_lspf_r_mount_to_sensor"
         args="0 0 0 1.5708 3.1415 1.5708 camera_lspf_r_mount camera_lspf_r_sensor"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_lspf_r_sensor_to_optical"
         args="-0.00129624 -0.00739873 0.116781 0.00287316 -0.000663669 -0.0262024 camera_lspf_r_sensor camera_lspf_r_optical"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <!-- Camera transforms - Rear facing cameras -->
   <node pkg="tf2_ros" exec="static_transform_publisher" name="roof_datum_to_camera_lspr_l_mount"
         args="-1.061503 0.450 0.00242 0 0.087266 1.989675 vehicle_roof_datum camera_lspr_l_mount"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_lspr_l_mount_to_sensor"
         args="0 0 0 1.5708 3.1415 1.5708 camera_lspr_l_mount camera_lspr_l_sensor"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_lspr_l_sensor_to_optical"
         args="0.101295 0.0114506 0.025199 -0.0143108 -0.00899993 -0.0256042 camera_lspr_l_sensor camera_lspr_l_optical"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="roof_datum_to_camera_rsp_l_mount"
         args="-1.11015 -0.3 0.00242 0 0.087266 3.141592654 vehicle_roof_datum camera_rsp_l_mount"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_rsp_l_mount_to_sensor"
         args="0 0 0 1.5708 3.1415 1.5708 camera_rsp_l_mount camera_rsp_l_sensor"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_rsp_l_sensor_to_optical"
         args="0.0182792 0.00339082 0.0755967 -0.0296637 -0.00489342 -0.0013936 camera_rsp_l_sensor camera_rsp_l_optical"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="roof_datum_to_camera_rspf_l_mount"
         args="-0.69015 -0.45 -0.00242 0 0.087266 -1.151917 vehicle_roof_datum camera_rspf_l_mount"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_rspf_l_mount_to_sensor"
         args="0 0 0 1.5708 3.1415 1.5708 camera_rspf_l_mount camera_rspf_l_sensor"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_rspf_l_sensor_to_optical"
         args="-0.0317939 -0.0155957 0.0925816 0.0169439 -0.00863387 0.0310647 camera_rspf_l_sensor camera_rspf_l_optical"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="roof_datum_to_camera_rspr_r_mount"
         args="-1.061503 -0.450 0.00242 0 0.087266 -1.989675 vehicle_roof_datum camera_rspr_r_mount"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_rspr_r_mount_to_sensor"
         args="0 0 0 1.5708 3.1415 1.5708 camera_rspr_r_mount camera_rspr_r_sensor"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <node pkg="tf2_ros" exec="static_transform_publisher" name="camera_rspr_r_sensor_to_optical"
         args="-0.112357 -0.00142148 0.0607117 -0.0166038 0.000711473 0.0351392 camera_rspr_r_sensor camera_rspr_r_optical"
-        output="screen"/>
+        output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
   
   <!-- CenterPoint Nodes -->
   <group if="$(var use_pointcloud_container)">
@@ -136,6 +191,7 @@
         <param from="$(var ml_package_param_path)" allow_substs="true"/>
         <param from="$(var class_remapper_param_path)"/>
         <param name="build_only" value="$(var build_only)"/>
+        <param name="use_sim_time" value="$(var use_sim_time)"/>
       </composable_node>
     </load_composable_node>
   </group>
@@ -147,6 +203,7 @@
       <param from="$(var ml_package_param_path)" allow_substs="true"/>
       <param from="$(var class_remapper_param_path)"/>
       <param name="build_only" value="$(var build_only)"/>
+      <param name="use_sim_time" value="$(var use_sim_time)"/>
     </node>
   </group>
 
@@ -170,10 +227,14 @@
     <arg name="build_only" value="$(var build_only)"/>
     <arg name="model_name" value="$(var tensorrt_yolox_model)"/>
     <arg name="data_path" value="$(var tensorrt_yolox_data_path)"/>
+    <arg name="use_sim_time" value="$(var use_sim_time)"/>
   </include>
   
   <!-- ROI Detected Object Fusion Node -->
   <node pkg="autoware_image_projection_based_fusion" exec="roi_detected_object_fusion_node" name="roi_detected_object_fusion" output="screen">
+    <!-- Add sim time parameter -->
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    
     <!-- Number of cameras -->
     <param name="rois_number" value="6"/>
     
@@ -220,10 +281,13 @@
   <arg name="input_channels_path" default="$(find-pkg-share autoware_multi_object_tracker)/config/input_channels.param.yaml"/>
   
   <node pkg="autoware_multi_object_tracker" exec="multi_object_tracker_node" name="multi_object_tracker" output="both">
+    <!-- Add sim time parameter -->
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    
     <!-- Configure to use our merged_objects topic as input -->
     <param name="selected_input_channels" value="['detected_objects']"/>
     
-    <!-- Setup input/output remapping -->
+    <!-- Setup input/output remapping - Fixed mapping -->
     <remap from="/perception/object_recognition/detection/objects" to="/perception/merged_objects"/>
     <remap from="output" to="$(var tracker_output)"/>
     

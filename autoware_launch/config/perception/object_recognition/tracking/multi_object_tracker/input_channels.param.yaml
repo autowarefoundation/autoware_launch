@@ -2,7 +2,7 @@
   ros__parameters:
     input_channels:
       detected_objects:
-        topic: "/perception/object_recognition/detection/objects"
+        topic: "/perception/merged_objects"
         can_spawn_new_tracker: true
         optional:
           name: "detected_objects"
