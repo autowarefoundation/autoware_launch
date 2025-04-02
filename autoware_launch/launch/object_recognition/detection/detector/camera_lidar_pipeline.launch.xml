@@ -172,4 +172,44 @@
     <arg name="data_path" value="$(var tensorrt_yolox_data_path)"/>
   </include>
   
+  <!-- ROI Detected Object Fusion Node -->
+  <node pkg="autoware_image_projection_based_fusion" exec="roi_detected_object_fusion_node" name="roi_detected_object_fusion" output="screen">
+    <!-- Number of cameras -->
+    <param name="rois_number" value="6"/>
+    
+    <!-- I/O Configuration -->
+    <remap from="input" to="/objects"/>
+    <remap from="output" to="/perception/merged_objects"/>
+    
+    <!-- Camera Info Topic Mapping -->
+    <param name="input/camera_info0" value="/sensor/camera/fsp_l/camera_info"/>
+    <param name="input/camera_info1" value="/sensor/camera/lspf_r/camera_info"/>
+    <param name="input/camera_info2" value="/sensor/camera/lspr_l/camera_info"/>
+    <param name="input/camera_info3" value="/sensor/camera/rsp_l/camera_info"/>
+    <param name="input/camera_info4" value="/sensor/camera/rspf_l/camera_info"/>
+    <param name="input/camera_info5" value="/sensor/camera/rspr_r/camera_info"/>
+    
+    <!-- ROI Topic Mapping -->
+    <param name="input/rois0" value="/rois0"/>
+    <param name="input/rois1" value="/rois1"/>
+    <param name="input/rois2" value="/rois2"/>
+    <param name="input/rois3" value="/rois3"/>
+    <param name="input/rois4" value="/rois4"/>
+    <param name="input/rois5" value="/rois5"/>
+    
+    <!-- Debug Images (if needed) -->
+    <param name="input/image0" value="/sensor/camera/fsp_l/image_rect_color"/>
+    <param name="input/image1" value="/sensor/camera/lspf_r/image_rect_color"/>
+    <param name="input/image2" value="/sensor/camera/lspr_l/image_rect_color"/>
+    <param name="input/image3" value="/sensor/camera/rsp_l/image_rect_color"/>
+    <param name="input/image4" value="/sensor/camera/rspf_l/image_rect_color"/>
+    <param name="input/image5" value="/sensor/camera/rspr_r/image_rect_color"/>
+    
+    <!-- Load parameter files -->
+    <param from="$(find-pkg-share autoware_image_projection_based_fusion)/config/roi_detected_object_fusion.param.yaml"/>
+    <param from="$(find-pkg-share autoware_image_projection_based_fusion)/config/fusion_common.param.yaml"/>
+    
+    <!-- Enable debug mode for visualization -->
+    <param name="debug_mode" value="true"/>
+  </node>
 </launch>

@@ -178,7 +178,7 @@
     <param name="rois_number" value="6"/>
     
     <!-- I/O Configuration -->
-    <remap from="input" to="$(var output/objects)"/>
+    <remap from="input" to="/objects"/>
     <remap from="output" to="/perception/merged_objects"/>
     
     <!-- Camera Info Topic Mapping -->
@@ -211,5 +211,25 @@
     
     <!-- Enable debug mode for visualization -->
     <param name="debug_mode" value="true"/>
+  </node>
+
+  <!-- Multi-Object Tracker Node -->
+  <arg name="tracker_output" default="/perception/tracked_objects"/>
+  <arg name="tracker_setting_path" default="$(find-pkg-share autoware_multi_object_tracker)/config/multi_object_tracker_node.param.yaml"/>
+  <arg name="data_association_matrix_path" default="$(find-pkg-share autoware_multi_object_tracker)/config/data_association_matrix.param.yaml"/>
+  <arg name="input_channels_path" default="$(find-pkg-share autoware_multi_object_tracker)/config/input_channels.param.yaml"/>
+  
+  <node pkg="autoware_multi_object_tracker" exec="multi_object_tracker_node" name="multi_object_tracker" output="both">
+    <!-- Configure to use our merged_objects topic as input -->
+    <param name="selected_input_channels" value="['detected_objects']"/>
+    
+    <!-- Setup input/output remapping -->
+    <remap from="/perception/object_recognition/detection/objects" to="/perception/merged_objects"/>
+    <remap from="output" to="$(var tracker_output)"/>
+    
+    <!-- Load parameter files -->
+    <param from="$(var tracker_setting_path)"/>
+    <param from="$(var data_association_matrix_path)"/>
+    <param from="$(var input_channels_path)"/>
   </node>
 </launch>
