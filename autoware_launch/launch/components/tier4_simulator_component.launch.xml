@@ -7,6 +7,7 @@
   <arg name="launch_scenario_simulator_v2_adapter"/>
   <arg name="perception/enable_detection_failure"/>
   <arg name="perception/enable_object_recognition"/>
+  <arg name="perception/enable_traffic_light"/>
   <arg name="perception/use_base_link_z"/>
   <arg name="sensing/visible_range"/>
   <arg name="vehicle_model"/>
@@ -23,6 +24,7 @@
     <arg name="launch_scenario_simulator_v2_adapter" value="$(var launch_scenario_simulator_v2_adapter)"/>
     <arg name="perception/enable_detection_failure" value="$(var perception/enable_detection_failure)"/>
     <arg name="perception/enable_object_recognition" value="$(var perception/enable_object_recognition)"/>
+    <arg name="perception/enable_traffic_light" value="$(var perception/enable_traffic_light)"/>
     <arg name="perception/use_base_link_z" value="$(var perception/use_base_link_z)"/>
     <arg name="sensing/visible_range" value="$(var sensing/visible_range)"/>
     <arg name="vehicle_model" value="$(var vehicle_model)"/>
@@ -82,4 +84,7 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml"
     />
   </include>
+  <group if="$(var scenario_simulation)">
+    <include file="$(find-pkg-share autoware_dummy_infrastructure)/launch/dummy_infrastructure.launch.xml"/>
+  </group>
 </launch>

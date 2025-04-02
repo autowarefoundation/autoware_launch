@@ -36,6 +36,7 @@ units:
       - { type: link, link: /planning/011-trajectory_steering_rate_validation-error }
       - { type: link, link: /planning/012-trajectory_velocity_deviation_validation-error }
       # - { type: link, link: /planning/013-collision_checker-error }
+      - { type: link, link: /planning/014-path_optimizer_emergency_stop-error }
 
   - path: /planning/comfortable_stop
     type: and
@@ -124,6 +125,12 @@ units:
       type: link
       link: /planning/013-collision_checker
 
+  - path: /planning/014-path_optimizer_emergency_stop-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/014-path_optimizer_emergency_stop
+
   - path: /planning/001-topic_status/route
     type: diag
     node: topic_state_monitor_mission_planning_route
@@ -200,4 +207,10 @@ units:
     type: diag
     node: collision_checker
     name: collision_check
+    timeout: 1.0
+
+  - path: /planning/014-path_optimizer_emergency_stop
+    type: diag
+    node: path_optimizer
+    name: path_optimizer_emergency_stop
     timeout: 1.0
