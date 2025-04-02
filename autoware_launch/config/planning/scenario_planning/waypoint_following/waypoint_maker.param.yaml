@@ -8,4 +8,3 @@
       check_distance: 1.0 # m
       check_angle_deg: 45.0 # deg
       stop_duration: 1.0 # s
-
