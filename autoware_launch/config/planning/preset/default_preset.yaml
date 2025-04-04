@@ -14,7 +14,7 @@ launch:
       default: "true"
   - arg:
       name: launch_dynamic_obstacle_avoidance
-      default: "true"
+      default: "false"
   - arg:
       name: launch_sampling_planner_module
       default: "false" # Warning, experimental module, use only in simulations
@@ -55,7 +55,7 @@ launch:
       default: "true"
   - arg:
       name: launch_merge_from_private_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_blind_spot_module
       default: "true"
@@ -64,7 +64,7 @@ launch:
       default: "true"
   - arg:
       name: launch_virtual_traffic_light_module
-      default: "false"
+      default: "true"
   - arg:
       name: launch_no_stopping_area_module
       default: "true"

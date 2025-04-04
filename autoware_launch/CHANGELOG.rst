@@ -2,6 +2,64 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.43.0 (2025-03-21)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(autoware_launch): rename to max_lat_margin_against_predicted_object_unknown (`#1360 <https://github.com/autowarefoundation/autoware_launch/issues/1360>`_)
+* feat(pid_long): disable overshoot_emergency (`#1359 <https://github.com/autowarefoundation/autoware_launch/issues/1359>`_)
+* feat(out_of_lane): add 'use_map_stop_lines' parameter (`#1259 <https://github.com/autowarefoundation/autoware_launch/issues/1259>`_)
+* feat(planning_validator): add parameter for yaw deviation metric (`#1356 <https://github.com/autowarefoundation/autoware_launch/issues/1356>`_)
+* feat(behavior_path_planner_common): update drivable area expansion parameters (`#1353 <https://github.com/autowarefoundation/autoware_launch/issues/1353>`_)
+  * update drivable area expansion parameters
+  * Update autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/drivable_area_expansion.param.yaml
+  Co-authored-by: Maxime CLEMENT <78338830+maxime-clem@users.noreply.github.com>
+  * Update autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/drivable_area_expansion.param.yaml
+  Co-authored-by: Satoshi OTA <44889564+satoshi-ota@users.noreply.github.com>
+  ---------
+  Co-authored-by: Maxime CLEMENT <78338830+maxime-clem@users.noreply.github.com>
+  Co-authored-by: Satoshi OTA <44889564+satoshi-ota@users.noreply.github.com>
+* feat: disable merge_from_private (`#1350 <https://github.com/autowarefoundation/autoware_launch/issues/1350>`_)
+* feat(control_validator)!: add overrun_stop_point_dist parameter (`#1346 <https://github.com/autowarefoundation/autoware_launch/issues/1346>`_)
+* refactor(perception): refactor launch file and add parameter file (`#1336 <https://github.com/autowarefoundation/autoware_launch/issues/1336>`_)
+  * fundamental change
+  * style(pre-commit): autofix
+  * change params name
+  * remove param
+  * integrate model and label path
+  * for awsim
+  * add comment
+  * fix typo
+  * change param name
+  * chore
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+  Co-authored-by: Kenzo Lobos Tsunekawa <kenzo.lobos@tier4.jp>
+* feat(path_generator): add parameters (`#1343 <https://github.com/autowarefoundation/autoware_launch/issues/1343>`_)
+  * feat(path_generator): add parameters (see below)
+  * This fix is for the following PR:
+  https://github.com/autowarefoundation/autoware.core/pull/227
+  * Update autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/path_generator/path_generator.param.yaml
+  Co-authored-by: Kosuke Takeuchi <kosuke.tnp@gmail.com>
+  ---------
+  Co-authored-by: Kosuke Takeuchi <kosuke.tnp@gmail.com>
+* fix(obstacle_cruise_planner): ignore invalid stopping objects (`#1354 <https://github.com/autowarefoundation/autoware_launch/issues/1354>`_)
+  * add parameter
+  * rename ahead_stopped -> side_stopped
+  ---------
+* feat(planning_simulator): disable tlr in psim (`#1352 <https://github.com/autowarefoundation/autoware_launch/issues/1352>`_)
+  disable tlr in psim
+* feat(planning_validator): add diag to check planning component latency (`#1347 <https://github.com/autowarefoundation/autoware_launch/issues/1347>`_)
+* feat(control_validator): add diag to check control component latency (`#1349 <https://github.com/autowarefoundation/autoware_launch/issues/1349>`_)
+* fix(planning): param update for sudden stop (`#1345 <https://github.com/autowarefoundation/autoware_launch/issues/1345>`_)
+  fix for x1
+* feat(dummy_infrastructur): auto approval when ego stops at stop line (`#1344 <https://github.com/autowarefoundation/autoware_launch/issues/1344>`_)
+* feat(image_based_projection_fusion): update parameters for new image based projection fusion node (`#1339 <https://github.com/autowarefoundation/autoware_launch/issues/1339>`_)
+  * feat: new fusion parameters
+  * chore: remove some comment
+  ---------
+* feat(behavior_planning): add behavior_path_planner_type to launch path_generator (`#1342 <https://github.com/autowarefoundation/autoware_launch/issues/1342>`_)
+* Contributors: Arjun Jagdish Ram, Junya Sasaki, Kento Yabuuchi, Kosuke Takeuchi, Masato Saeki, Maxime CLEMENT, Satoshi OTA, Takayuki Murooka, Yi-Hsiang Fang (Vivid), Yuki TAKAGI, github-actions, mkquda
+
 0.42.0 (2025-03-03)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
