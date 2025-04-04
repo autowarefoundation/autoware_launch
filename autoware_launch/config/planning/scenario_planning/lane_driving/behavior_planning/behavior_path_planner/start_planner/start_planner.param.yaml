@@ -45,7 +45,7 @@
       backward_velocity: -1.0
       pull_out_max_steer_angle: 0.4  # 22.9deg
       # search start pose backward
-      enable_back: true
+      enable_back: false
       search_priority: "efficient_path"  # "efficient_path" or "short_back_distance"
       max_back_distance: 20.0
       backward_search_resolution: 2.0
@@ -149,7 +149,7 @@
           rss_params:
             rear_vehicle_reaction_time: 2.0
             rear_vehicle_safety_time_margin: 1.0
-            lateral_distance_max_threshold: 2.0
+            lateral_distance_max_threshold: 3.0
             longitudinal_distance_min_threshold: 3.0
             longitudinal_velocity_delta_time: 0.8
             extended_polygon_policy: "along_path" # [-] select "rectangle" or "along_path"

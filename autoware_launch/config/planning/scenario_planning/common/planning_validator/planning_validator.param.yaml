@@ -21,7 +21,7 @@
       curvature: 1.0
       lateral_acc: 9.8
       longitudinal_max_acc: 9.8
-      longitudinal_min_acc: -9.8
+      longitudinal_min_acc: -98.0
       steering: 1.414
       steering_rate: 10.0
       velocity_deviation: 100.0

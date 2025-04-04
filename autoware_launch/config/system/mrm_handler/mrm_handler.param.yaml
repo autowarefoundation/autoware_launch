@@ -11,6 +11,8 @@
     use_parking_after_stopped: false
     use_pull_over: false
     use_comfortable_stop: true
+    is_mrm_recoverable: false
+    use_pull_over_after_stopped: false
 
     # setting whether to turn hazard lamp on for each situation
     turning_hazard_on:

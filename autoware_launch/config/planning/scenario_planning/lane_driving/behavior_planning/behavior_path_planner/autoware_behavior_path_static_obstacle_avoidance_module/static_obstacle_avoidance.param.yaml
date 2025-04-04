@@ -10,7 +10,7 @@
       # "current_lane"           : use only current lane. this module doesn't use adjacent lane to avoid object.
       # "same_direction_lane"    : this module uses same direction lane to avoid object if need.
       # "opposite_direction_lane": this module uses both same direction and opposite direction lane.
-      use_lane_type: "opposite_direction_lane"
+      use_lane_type: "same_direction_lane"
       # drivable area setting
       use_intersection_areas: true
       use_hatched_road_markings: true
@@ -23,9 +23,9 @@
           th_moving_time: 2.0                           # [s]
           longitudinal_margin: 0.0                      # [m]
           lateral_margin:
-            soft_margin: 0.7                            # [m]
-            hard_margin: 0.2                            # [m]
-            hard_margin_for_parked_vehicle: 0.7         # [m]
+            soft_margin: 0.5                            # [m]
+            hard_margin: 0.05                            # [m]
+            hard_margin_for_parked_vehicle: 0.2         # [m]
           max_expand_ratio: 0.0                         # [-] FOR DEVELOPER
           envelope_buffer_margin: 0.1                   # [m] FOR DEVELOPER
           th_error_eclipse_long_radius : 0.6            # [m]
@@ -34,9 +34,9 @@
           th_moving_time: 2.0
           longitudinal_margin: 0.0
           lateral_margin:
-            soft_margin: 0.7
-            hard_margin: 0.2
-            hard_margin_for_parked_vehicle: 0.7
+            soft_margin: 0.5
+            hard_margin: 0.05
+            hard_margin_for_parked_vehicle: 0.2
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
           th_error_eclipse_long_radius : 0.6
@@ -45,9 +45,9 @@
           th_moving_time: 2.0
           longitudinal_margin: 0.0
           lateral_margin:
-            soft_margin: 0.7
-            hard_margin: 0.2
-            hard_margin_for_parked_vehicle: 0.7
+            soft_margin: 0.5
+            hard_margin: 0.05
+            hard_margin_for_parked_vehicle: 0.2
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
           th_error_eclipse_long_radius : 0.6
@@ -56,9 +56,9 @@
           th_moving_time: 2.0
           longitudinal_margin: 0.0
           lateral_margin:
-            soft_margin: 0.7
-            hard_margin: 0.2
-            hard_margin_for_parked_vehicle: 0.7
+            soft_margin: 0.5
+            hard_margin: 0.05
+            hard_margin_for_parked_vehicle: 0.2
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
           th_error_eclipse_long_radius : 0.6
@@ -117,10 +117,10 @@
           truck: true                                   # [-]
           bus: true                                     # [-]
           trailer: true                                 # [-]
-          unknown: true                                 # [-]
-          bicycle: true                                 # [-]
-          motorcycle: true                              # [-]
-          pedestrian: true                              # [-]
+          unknown: false                                 # [-]
+          bicycle: false                                 # [-]
+          motorcycle: false                              # [-]
+          pedestrian: false                              # [-]
         # detection range
         object_check_goal_distance: 20.0                # [m]
         object_check_return_pose_distance: 20.0         # [m]
@@ -137,7 +137,7 @@
         # filtering parking objects
         parked_vehicle:
           th_offset_from_centerline: 1.0                # [m]
-          th_shiftable_ratio: 0.8                       # [-]
+          th_shiftable_ratio: 0.7                       # [-]
           min_road_shoulder_width: 0.5                  # [m] FOR DEVELOPER
 
         # for merging/deviating vehicle
@@ -150,7 +150,7 @@
           # "auto"   : generate candidate path. if RTC is running as AUTO mode, the ego avoids it automatically.
           # "manual" : generate candidate path and wait operator approval even if RTC is running as AUTO mode.
           # "ignore" : never avoid it.
-          policy: "manual"                              # [-]
+          policy: "ignore"                              # [-]
           condition:
             th_stopped_time: 3.0                        # [s]
             th_moving_distance: 1.0                     # [m]
@@ -220,8 +220,8 @@
         lateral:
           th_avoid_execution: 0.09                      # [m] FOR DEVELOPER
           th_small_shift_length: 0.101                  # [m] FOR DEVELOPER
-          soft_drivable_bound_margin: 0.3               # [m]
-          hard_drivable_bound_margin: 0.3               # [m]
+          soft_drivable_bound_margin: 0.5               # [m]
+          hard_drivable_bound_margin: 0.5               # [m]
           max_right_shift_length: 5.0                   # [m] FOR DEVELOPER
           max_left_shift_length: 5.0                    # [m] FOR DEVELOPER
           max_deviation_from_lane: 0.2                  # [m]
@@ -232,8 +232,8 @@
         # avoidance distance parameters
         longitudinal:
           min_prepare_time: 1.0                         # [s]
-          max_prepare_time: 3.0                         # [s]
-          min_prepare_distance: 1.0                     # [m]
+          max_prepare_time: 2.0                         # [s]
+          min_prepare_distance: 4.0                     # [m]
           min_slow_down_speed: 1.38                     # [m/s]
           buf_slow_down_speed: 0.56                     # [m/s] FOR DEVELOPER
           nominal_avoidance_speed: 8.33                 # [m/s] FOR DEVELOPER
@@ -261,7 +261,7 @@
 
       # For stop maneuver
       stop:
-        max_distance: 20.0                              # [m]
+        max_distance: 30.0                              # [m]
         stop_buffer: 1.0                                # [m] FOR DEVELOPER
 
       policy:
@@ -274,7 +274,7 @@
         #                but there is a possibility that the vehicle can't stop in front of the vehicle.
         # "reliable": insert stop or slow down point with ignoring decel/jerk constraints.
         #             make it possible to increase chance to avoid but uncomfortable deceleration maybe happen.
-        deceleration: "best_effort"                     # [-]
+        deceleration: "reliable"                        # [-]
         # policy for avoidance lateral margin. select "best_effort" or "reliable".
         # "best_effort": output avoidance path with shorten lateral margin when there is no enough longitudinal
         #                margin to avoid.
@@ -282,7 +282,7 @@
         #             with expected lateral margin.
         lateral_margin: "best_effort"                   # [-]
         # if true, module doesn't wait deceleration and outputs avoidance path by best effort margin.
-        use_shorten_margin_immediately: true            # [-]
+        use_shorten_margin_immediately: false           # [-]
 
       # --------------------------------------
       # FOLLOWING PARAMETERS ARE FOR DEVELOPER
@@ -291,10 +291,10 @@
       constraints:
         # lateral constraints
         lateral:
-          velocity: [1.39, 4.17, 11.1]                  # [m/s]
+          velocity: [2.78, 8.33, 11.1]                  # [m/s]
           max_accel_values: [0.5, 0.5, 0.5]             # [m/ss]
           min_jerk_values: [0.2, 0.2, 0.2]              # [m/sss]
-          max_jerk_values: [1.0, 1.0, 1.0]              # [m/sss]
+          max_jerk_values: [0.5, 1.0, 1.0]              # [m/sss]
 
         # longitudinal constraints
         longitudinal:
@@ -302,7 +302,7 @@
           nominal_jerk: 0.5                             # [m/sss]
           max_deceleration: -1.5                        # [m/ss]
           max_jerk: 1.0                                 # [m/sss]
-          max_acceleration: 0.5                         # [m/ss]
+          max_acceleration: 0.3                         # [m/ss]
           min_velocity_to_limit_max_acceleration: 2.78  # [m/ss]
 
       # path generation method. select "shift_line_base" or "optimization_base" or "both".
