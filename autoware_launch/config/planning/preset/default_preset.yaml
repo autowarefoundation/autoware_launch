@@ -11,7 +11,7 @@ launch:
       default: "true"
   - arg:
       name: launch_avoidance_by_lane_change_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_dynamic_obstacle_avoidance
       default: "false"
