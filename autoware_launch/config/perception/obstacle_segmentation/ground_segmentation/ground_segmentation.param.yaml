@@ -35,3 +35,20 @@
 
         # debug parameters
         publish_processing_time_detail: false
+    # default parameters for concatenation node when addition_lidars or ransac inputs are used
+    concatenation:
+      parameters:
+        debug_mode: false
+        has_static_tf_only: false
+        rosbag_length: 10.0
+        maximum_queue_size: 5
+        timeout_sec: 0.2
+        is_motion_compensated: false
+        publish_synchronized_pointcloud: false
+        keep_input_frame_in_synchronized_pointcloud: true
+        publish_previous_but_late_pointcloud: false
+        synchronized_pointcloud_postfix: pointcloud
+        input_twist_topic_type: twist
+        output_frame: base_link
+        matching_strategy:
+          type: advanced
