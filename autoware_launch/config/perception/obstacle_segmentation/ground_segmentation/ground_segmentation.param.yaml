@@ -51,4 +51,4 @@
         input_twist_topic_type: odom
         output_frame: base_link
         matching_strategy:
-          type: advanced
+          type: naive
