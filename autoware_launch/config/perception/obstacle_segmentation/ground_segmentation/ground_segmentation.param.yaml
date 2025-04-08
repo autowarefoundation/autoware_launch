@@ -48,7 +48,7 @@
         keep_input_frame_in_synchronized_pointcloud: true
         publish_previous_but_late_pointcloud: false
         synchronized_pointcloud_postfix: pointcloud
-        input_twist_topic_type: twist
+        input_twist_topic_type: odom
         output_frame: base_link
         matching_strategy:
           type: advanced
