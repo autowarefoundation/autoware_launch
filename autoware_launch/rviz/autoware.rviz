@@ -621,7 +621,7 @@ Visualization Manager:
                 Max Value: 100
                 Min Value: 0
                 Value: false
-              Buffer Size: 15000
+              Buffer Size: 1500
               Class: rviz_plugins::ColoredPoseWithCovarianceHistory
               Enabled: false
               Name: PoseWithExeTimeMs
