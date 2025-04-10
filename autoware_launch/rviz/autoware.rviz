@@ -617,18 +617,20 @@ Visualization Manager:
                 Reliability Policy: Reliable
                 Value: /localization/pose_estimator/monte_carlo_initial_pose_marker
               Value: true
-            - Auto Set Min/Max:
-                Max Value: 1
+           - Auto Set Min/Max:
+                Max Value: 100
                 Min Value: 0
-                Value: true
-              Buffer Size: 10000
+                Value: false
+              Buffer Size: 300
               Class: rviz_plugins::ColoredPoseWithCovarianceHistory
               Enabled: false
               Name: PoseWithExeTimeMs
               Path:
-                Alpha: 1
-                Max Color: 255; 0; 0
-                Min Color: 0; 0; 255
+                Alpha: 0.999
+                Greater Color: 255; 0; 0
+                Less Color: 0; 0; 255
+                Max Color: 255; 255; 0
+                Min Color: 0; 255; 255
                 Value: true
                 Width: 1.0
               Topic:
@@ -642,17 +644,19 @@ Visualization Manager:
               Value Topic: /localization/pose_estimator/exe_time_ms
               Value Type: Float32
             - Auto Set Min/Max:
-                Max Value: 1
-                Min Value: 0
-                Value: true
-              Buffer Size: 10000
+                Max Value: 30
+                Min Value: 1
+                Value: false
+              Buffer Size: 300
               Class: rviz_plugins::ColoredPoseWithCovarianceHistory
               Enabled: false
               Name: PoseWithIterationNum
               Path:
-                Alpha: 1
-                Max Color: 255; 0; 0
-                Min Color: 0; 0; 255
+                Alpha: 0.999
+                Greater Color: 255; 0; 0
+                Less Color: 0; 0; 255
+                Max Color: 255; 255; 0
+                Min Color: 0; 255; 255
                 Value: true
                 Width: 1.0
               Topic:
@@ -666,17 +670,19 @@ Visualization Manager:
               Value Topic: /localization/pose_estimator/iteration_num
               Value Type: Int32
             - Auto Set Min/Max:
-                Max Value: 1
-                Min Value: 0
-                Value: true
-              Buffer Size: 10000
+                Max Value: 7
+                Min Value: 3
+                Value: false
+              Buffer Size: 300
               Class: rviz_plugins::ColoredPoseWithCovarianceHistory
               Enabled: false
               Name: PoseWithTransformProbability
               Path:
-                Alpha: 1
-                Max Color: 255; 0; 0
-                Min Color: 0; 0; 255
+                Alpha: 0.999
+                Greater Color: 255; 255; 0
+                Less Color: 0; 0; 255
+                Max Color: 255; 255; 0
+                Min Color: 0; 255; 255
                 Value: true
                 Width: 1.0
               Topic:
@@ -690,17 +696,19 @@ Visualization Manager:
               Value Topic: /localization/pose_estimator/transform_probability
               Value Type: Float32
             - Auto Set Min/Max:
-                Max Value: 1
-                Min Value: 0
-                Value: true
-              Buffer Size: 10000
+                Max Value: 3.3
+                Min Value: 2.3
+                Value: false
+              Buffer Size: 300
               Class: rviz_plugins::ColoredPoseWithCovarianceHistory
               Enabled: false
               Name: PoseWithNearestVoxelTransformationLikelihood
               Path:
-                Alpha: 1
-                Max Color: 255; 0; 0
-                Min Color: 0; 0; 255
+                Alpha: 0.999
+                Greater Color: 255; 255; 0
+                Less Color: 0; 0; 255
+                Max Color: 255; 255; 0
+                Min Color: 0; 255; 255
                 Value: true
                 Width: 1.0
               Topic:
