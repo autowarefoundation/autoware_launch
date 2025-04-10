@@ -621,7 +621,7 @@ Visualization Manager:
                 Max Value: 100
                 Min Value: 0
                 Value: false
-              Buffer Size: 300
+              Buffer Size: 15000
               Class: rviz_plugins::ColoredPoseWithCovarianceHistory
               Enabled: false
               Name: PoseWithExeTimeMs
@@ -647,7 +647,7 @@ Visualization Manager:
                 Max Value: 30
                 Min Value: 1
                 Value: false
-              Buffer Size: 300
+              Buffer Size: 1500
               Class: rviz_plugins::ColoredPoseWithCovarianceHistory
               Enabled: false
               Name: PoseWithIterationNum
@@ -673,7 +673,7 @@ Visualization Manager:
                 Max Value: 7
                 Min Value: 3
                 Value: false
-              Buffer Size: 300
+              Buffer Size: 1500
               Class: rviz_plugins::ColoredPoseWithCovarianceHistory
               Enabled: false
               Name: PoseWithTransformProbability
@@ -699,7 +699,7 @@ Visualization Manager:
                 Max Value: 3.3
                 Min Value: 2.3
                 Value: false
-              Buffer Size: 300
+              Buffer Size: 1500
               Class: rviz_plugins::ColoredPoseWithCovarianceHistory
               Enabled: false
               Name: PoseWithNearestVoxelTransformationLikelihood
