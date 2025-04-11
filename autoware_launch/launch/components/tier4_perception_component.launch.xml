@@ -104,6 +104,10 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml"
     />
     <arg
+      name="object_recognition_detection_pointpainting_fusion_common_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/pointpainting_common.param.yaml"
+    />
+    <arg
       name="object_recognition_detection_obstacle_pointcloud_based_validator_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detected_object_validation/obstacle_pointcloud_based_validator.param.yaml"
     />
