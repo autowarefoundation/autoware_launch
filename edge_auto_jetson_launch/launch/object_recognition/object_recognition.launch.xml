@@ -3,7 +3,7 @@
     <arg name="roi_id" default="" />
     <arg name="dla_core_id" default="" />
 
-    <arg name="model_name" default="yolox-sPlus-T4-960x960-pseudo-finetune"/>
+    <arg name="model_name" default="yolox-sPlus-T4-960x960-debris"/>
     <arg name="yolox_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/tensorrt_yolox.param.yaml"/>
     <arg name="yolox_precision" default="int8" description="Operation precision to be used on inference. Valid value is one of: [fp32, fp16, int8]."/>
     <arg name="build_engine_only" default="false" />
