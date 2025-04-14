@@ -617,7 +617,7 @@ Visualization Manager:
                 Reliability Policy: Reliable
                 Value: /localization/pose_estimator/monte_carlo_initial_pose_marker
               Value: true
-           - Auto Set Min/Max:
+            - Auto Set Min/Max:
                 Max Value: 100
                 Min Value: 0
                 Value: false
