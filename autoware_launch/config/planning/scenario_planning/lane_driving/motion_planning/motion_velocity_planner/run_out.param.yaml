@@ -4,8 +4,8 @@
       collision:
         time_margin: 0.0  # [s] extra time margin needed to determine collisions
         time_overlap_tolerance: 0.1  # [s] when calculating overlap time intervals, intervals are grouped if they are separated by less than this tolerance value
-        same_direction_angle_threshold: 0.1  # [rad] threshold to determine if a collision is going in the same direction as the ego trajectory
-        opposite_direction_angle_threshold: 0.1  # [rad] threshold around pi to determine if a collision is going in a direction opposite to the ego trajectory
+        same_direction_angle_threshold: 0.5  # [rad] threshold to determine if a collision is going in the same direction as the ego trajectory
+        opposite_direction_angle_threshold: 0.5  # [rad] threshold around pi to determine if a collision is going in a direction opposite to the ego trajectory
 
       preventive_slowdown:  # comfortable slowdown
         on_time_buffer: 0.1   # [s] successive collision detection time required to start the slowdown decision
@@ -15,10 +15,12 @@
 
       stop:  # emergency stop when detecting a collision
         on_time_buffer: 0.5   # [s] successive collision detection time required to start the stopping decision
-        off_time_buffer: 2.0  # [s] successive non-collision detection time required to remove a stopping decision
+        off_time_buffer: 0.5  # [s] successive non-collision detection time required to remove a stopping decision
         distance_buffer: 2.0  # [m] longitudinal safety distance to keep between ego and the collision position
-        calculate_earliest_position_within_history: false # if true, use the earliest stop position within the history, otherwise the stop position is calculated only from the currently detected collision
-        keep_until_object_is_gone: true  # if true, once ego stopped for an object we keep the stop decision until the object is gone
+        keep_condition:  # keep the stop decision if we still find any collision with the object within some time+distance range
+          time: 5.0  # [s] time along the ego trajectory
+          distance: 5.0  # [m] distance along the ego trajectory
+
 
       passing:  # ignore collisions in some conditions
         enable_passing_margin: true # If true, a collision where ego arrives first is ignored
