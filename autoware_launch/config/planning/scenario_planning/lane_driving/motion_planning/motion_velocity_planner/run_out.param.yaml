@@ -23,10 +23,11 @@
 
 
       passing:  # ignore collisions in some conditions
-        enable_passing_margin: true # If true, a collision where ego arrives first is ignored
+        enable_when_unavoidable: true # if true, ignore collision when ego arrives first (margin parameter is not considered) and cannot stop before the collision
+        unavoidable_deceleration: 4.0 # [m/s²] deceleration used to determine if ego can stop before a collision
+        enable_passing_margin: true # if true, a collision where ego arrives first is ignored
         time_margin: 1.5  # [s] margin to decide if ego passes first (higher is more conservative)
         max_overlap_duration: 2.0  # [s] the collision is not ignored if ego is predicted to stay on the object's path for longer than this duration
-        enable_deceleration_limit: false # if true, collisions are ignored if happening within the minimum duration required to stop ego comfortably
 
       ego:
         # additional margins to calculate the ego footprint used for collision detection
