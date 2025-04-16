@@ -2,7 +2,7 @@
   ros__parameters:
     run_out:  # module to stop or slowdown before sudden collisions with obstacles
       collision:
-        time_margin: 0.0  # [s] extra time margin needed to determine collisions
+        time_margin: 0.5  # [s] extra time margin used to determine collisions
         time_overlap_tolerance: 0.1  # [s] when calculating overlap time intervals, intervals are grouped if they are separated by less than this tolerance value
         same_direction_angle_threshold: 0.5  # [rad] threshold to determine if a collision is going in the same direction as the ego trajectory
         opposite_direction_angle_threshold: 0.5  # [rad] threshold around pi to determine if a collision is going in a direction opposite to the ego trajectory
@@ -24,9 +24,9 @@
 
       passing:  # ignore collisions in some conditions
         enable_when_unavoidable: true # if true, ignore collision when ego arrives first (margin parameter is not considered) and cannot stop before the collision
-        unavoidable_deceleration: 4.0 # [m/s²] deceleration used to determine if ego can stop before a collision
+        unavoidable_deceleration: 6.0 # [m/s²] deceleration used to determine if ego can stop before a collision
         enable_passing_margin: true # if true, a collision where ego arrives first is ignored
-        time_margin: 1.5  # [s] margin to decide if ego passes first (higher is more conservative)
+        time_margin: 2.0  # [s] ego needs to enter the overlap before the object and with this time margin to decide to ignore the collision
         max_overlap_duration: 2.0  # [s] the collision is not ignored if ego is predicted to stay on the object's path for longer than this duration
 
       ego:
