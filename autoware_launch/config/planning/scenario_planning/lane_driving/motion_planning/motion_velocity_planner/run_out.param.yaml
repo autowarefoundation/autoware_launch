@@ -45,7 +45,6 @@
             stopped_velocity_threshold: 0.5  # [m/s]
             if_on_ego_trajectory: true  # if true, object located on the ego trajectory footprint are ignored
             if_behind_ego: true  # if true, objects located behind the ego vehicles are ignored
-            if_on_yield_lane: true  # if true, objects are ignored if coming from a lane yielding to the ego lane
             polygon_types: ["NONE"]  # types of polygons in the vector map used to ignore objects
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to ignore objects
           ignore_collisions:  # option to ignore some collisions with the object
@@ -61,10 +60,11 @@
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to cut predicted paths
         PEDESTRIAN:
           ignore:
-            if_on_yield_lane: false
             lanelet_subtypes: ["crosswalk", "walkway"]
           cut_predicted_paths:
             lanelet_subtypes: ["crosswalk", "walkway"]
         BICYCLE:
           ignore_collisions:
             lanelet_subtypes: ["crosswalk", "walkway"]
+    debug:
+      object_label: "PEDESTRIAN"  # debug markers specific to each object classification labels will only be published for this one
