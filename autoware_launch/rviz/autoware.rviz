@@ -3914,6 +3914,18 @@ Visualization Manager:
                     Reliability Policy: Reliable
                     Value: /planning/debug/objects_of_interest/obstacle_cruise_planner
                   Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: RunOut
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/run_out
+                  Value: true
               Enabled: true
               Name: Objects Of Interest
           Enabled: true
