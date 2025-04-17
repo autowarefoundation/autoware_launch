@@ -27,7 +27,7 @@
         enable_when_unavoidable: true # if true, a collision where ego arrives first (margins not considered) and cannot stop before the collision is ignored
         unavoidable_deceleration: 5.0 # [m/s²] deceleration used to determine if ego can stop before a collision
         margin: # margins to decide if we can ignore the collision. linearly interpolated based on the collision time and the provided mappings
-          collision_times: [0.0, 3.0]  # [s] predicted times when ego starts overlapping the path of the object
+          ego_enter_times: [0.0, 3.0]  # [s] predicted times when ego starts overlapping the path of the object
           time_margins: [0.0, 6.0] # [s] margin values used such that ego needs to enter the overlap before the object with this much margin to decide to ignore the collision
         max_overlap_duration: 2.0  # [s] the collision is not ignored if ego is predicted to stay on the object's path for longer than this duration
 
