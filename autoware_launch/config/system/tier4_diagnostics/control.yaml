@@ -29,10 +29,11 @@ units:
       # - { type: link, link: /control/010-max_distance_deviation-error }
       # - { type: link, link: /control/011-slip_detection }
       - { type: link, link: /control/collision_detector }
-      - { type: link, link: /control/acceleration_error }
+      # - { type: link, link: /control/acceleration_error }
       - { type: link, link: /control/rolling_back }
       - { type: link, link: /control/over_velocity }
       - { type: link, link: /control/overrun_stop_point }
+      - { type: link, link: /control/will_overrun_stop_point }
 
   - path: /control/comfortable_stop
     type: and
@@ -138,3 +139,8 @@ units:
     type: diag
     node: control_validator
     name: control_validation_overrun_stop_point
+
+  - path: /control/will_overrun_stop_point
+    type: diag
+    node: control_validator
+    name: control_validation_will_overrun_stop_point
