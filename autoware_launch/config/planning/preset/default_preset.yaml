@@ -76,7 +76,7 @@ launch:
       default: "false"
   - arg:
       name: launch_run_out_module
-      default: "false"
+      default: "true"
   - arg:
       name: launch_speed_bump_module
       default: "false"
@@ -119,7 +119,7 @@ launch:
       default: "true"
   - arg:
       name: launch_mvp_run_out_module
-      default: "true"
+      default: "false"
 
   - arg:
       name: motion_stop_planner_type
