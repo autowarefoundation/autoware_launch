@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.44.0 (2025-04-18)
+-------------------
 * feat(out_of_lane): improve out of lane stability (`#1404 <https://github.com/autowarefoundation/autoware_launch/issues/1404>`_)
   * update out_of_lane parameters
   * change parameter value
