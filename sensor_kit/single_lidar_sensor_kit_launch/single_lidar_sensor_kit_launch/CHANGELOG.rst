@@ -2,6 +2,19 @@
 Changelog for package single_lidar_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* chore: set all versions to 0.43.0 (`#1384 <https://github.com/autowarefoundation/autoware_launch/issues/1384>`_)
+* feat(*_launch): move here (`#1369 <https://github.com/autowarefoundation/autoware_launch/issues/1369>`_)
+* Contributors: Mete Fatih Cırıt
+
+* chore: set all versions to 0.43.0 (`#1384 <https://github.com/autowarefoundation/autoware_launch/issues/1384>`_)
+* feat(*_launch): move here (`#1369 <https://github.com/autowarefoundation/autoware_launch/issues/1369>`_)
+* Contributors: Mete Fatih Cırıt
+
+0.43.0 (2025-03-28)
+-------------------
+
 0.42.0 (2025-03-28)
 -------------------
 * refactor(single_lidar_sensor_kit_launch): remove reference to tamagawa_imu_driver (`#10 <https://github.com/autowarefoundation/single_lidar_sensor_kit_launch/issues/10>`_)

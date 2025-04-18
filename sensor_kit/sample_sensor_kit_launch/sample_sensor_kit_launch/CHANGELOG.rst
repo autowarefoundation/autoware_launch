@@ -2,6 +2,17 @@
 Changelog for package sample_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* feat: remove individual_params references (`#1403 <https://github.com/autowarefoundation/autoware_launch/issues/1403>`_)
+* chore(sensor_kit_launch): remove unused has_static_tf_only param (`#1393 <https://github.com/autowarefoundation/autoware_launch/issues/1393>`_)
+* chore: set all versions to 0.43.0 (`#1384 <https://github.com/autowarefoundation/autoware_launch/issues/1384>`_)
+* feat(*_launch): move here (`#1369 <https://github.com/autowarefoundation/autoware_launch/issues/1369>`_)
+* Contributors: Amadeusz Szymko, Mete Fatih Cırıt
+
+0.43.0 (2025-02-12)
+-------------------
+
 0.41.0 (2025-02-12)
 -------------------
 * feat(sample_sensor_kit_launch): concatenate node load from parameter file (`#108 <https://github.com/autowarefoundation/sample_sensor_kit_launch/issues/108>`_)
