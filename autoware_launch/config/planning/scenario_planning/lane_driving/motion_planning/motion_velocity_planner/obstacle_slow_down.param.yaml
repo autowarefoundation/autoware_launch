@@ -40,7 +40,7 @@
           motorcycle: true
           bicycle: true
           pedestrian: true
-          pointcloud: false
+          pointcloud: true
 
         pointcloud:
           pointcloud_voxel_grid_x: 0.05
