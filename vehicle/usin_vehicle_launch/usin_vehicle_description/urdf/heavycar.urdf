@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<robot name="heavycar">
+  <link name="base_link"/>
+  <link name="laser_link"/>
+  <link name="camera_front_link"/>
+  <link name="camera_left_link"/>
+  <link name="camera_back_link"/>
+  <link name="camera_right_link"/>
+  <link name="imu_link"/>
+  <link name="ultrasound_1_link"/>
+  <link name="ultrasound_2_link"/>
+  <link name="ultrasound_3_link"/>
+  <link name="ultrasound_4_link"/>
+  <link name="ultrasound_5_link"/>
+  <link name="ultrasound_6_link"/>
+  <link name="ultrasound_7_link"/>
+  <link name="ultrasound_8_link"/>
+  <link name="ultrasound_9_link"/>
+  <link name="ultrasound_10_link"/>
+  <link name="ultrasound_11_link"/>
+  <link name="ultrasound_12_link"/>
+  
+  <joint name="laser_link_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="laser_link"/>
+    <origin xyz="0.988 0.000 2.015" rpy="0.0 0.0 1.57"/>
+  </joint>
+  
+  <joint name="camera_front_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="camera_front_link"/>
+    <origin xyz="0.000 -0.278 -0.360" rpy="-2.321 0.0 3.14"/>
+  </joint>
+  
+  <joint name="camera_left_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="camera_left_link"/>
+    <origin xyz="0.432 0.853 -0.329" rpy="-2.442 0.0 -1.57"/>
+  </joint>
+  
+  <joint name="camera_back_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="camera_back_link"/>
+    <origin xyz="0.000 1.806 -0.667" rpy="-2.321 0.0 0.0"/>
+  </joint>
+  
+  <joint name="camera_right_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="camera_right_link"/>
+    <origin xyz="-0.432 0.853 -0.329" rpy="-2.442 0.0 1.57"/>
+  </joint>
+  
+  <joint name="imu_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0.0 0.545 -1.661" rpy="0.0 0.0 0.0"/>
+  </joint>
+  
+  <joint name="ultrasound_1_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_1_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <joint name="ultrasound_2_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_2_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <joint name="ultrasound_3_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_3_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <joint name="ultrasound_4_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_4_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <joint name="ultrasound_5_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_5_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <joint name="ultrasound_6_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_6_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <joint name="ultrasound_7_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_7_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <joint name="ultrasound_8_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_8_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <joint name="ultrasound_9_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_9_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <joint name="ultrasound_10_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_10_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <joint name="ultrasound_11_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_11_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <joint name="ultrasound_12_link_joint" type="fixed">
+    <parent link="laser_link"/>
+    <child link="ultrasound_12_link"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  
+</robot>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="sensor_kit_macro" params="parent x y z roll pitch yaw">
+    <!-- 引入雷达和IMU模型 -->
+    <xacro:include filename="$(find vls_description)/urdf/VLS-128.urdf.xacro"/> <!-- 假设使用LSLidar型号 -->
+    <xacro:include filename="$(find imu_description)/urdf/imu.xacro"/>
+
+    <!-- 校准数据参数 -->
+    <xacro:arg name="config_dir" default="$(find YOUR_PACKAGE_NAME)/config"/>
+    <xacro:property name="calibration" 
+      value="${xacro.load_yaml('$(arg config_dir)/sensor_calibration.yaml')}"/>
+
+    <!-- 传感器基座连接 -->
+    <joint name="sensor_kit_base_joint" type="fixed">
+      <origin xyz="${x} ${y} ${z}" rpy="${roll} ${pitch} ${yaw}"/>
+      <parent link="${parent}"/>
+      <child link="sensor_kit_base_link"/>
+    </joint>
+    <link name="sensor_kit_base_link"/>
+
+    <!-- IMU传感器 -->
+    <joint name="imu_joint" type="fixed">
+      <origin xyz="0.17 0 1.1" rpy="0 0 0"/> <!-- 继承原URDF的IMU位置 [[1]] -->
+      <parent link="sensor_kit_base_link"/>
+      <child link="imu_link"/>
+    </joint>
+    <link name="imu_link">
+      <visual><box size="0.1 0.1 0.1"/></visual>
+    </link>
+    <!-- IMU插件配置，指定话题名称 -->
+    <xacro:imu_macro
+      name="/imu/data"
+      parent="base_link"
+      namespace=""
+      x="0"
+      y="0"
+      z="0"
+      roll="0"
+      pitch="0"
+      yaw="0"
+      fps="100"
+    />
+
+    <!-- 激光雷达 -->
+    <xacro:VLS-128 
+      parent="imu_link" 
+      name="lslidar" 
+      topic="/lslidar_point_cloud"
+      hz="10" samples="220"
+      > <!-- 设置雷达话题 -->
+      <origin xyz="-0.27 0 0" rpy="0 0 0"/> <!-- 继承原URDF的雷达位置 [[6]] -->
+    </xacro:VLS-128>
+  </xacro:macro>
+</robot>

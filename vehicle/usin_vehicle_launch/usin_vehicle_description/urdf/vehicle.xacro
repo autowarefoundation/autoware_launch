@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<robot name="navigation_robot">
+
+  <!-- 定义base_link（底盘） -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.45 0.4 0.2"/> <!-- 长0.45m，宽0.4m，高度0.1m -->
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.45 0.4 0.2"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- imu_link与base_link的固定连接 -->
+  <joint name="base_to_imu" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0.17 0 1.1" rpy="0 0 0"/> <!-- 符合用户指定的xyz坐标 [[1]][[3]] -->
+  </joint>
+  <link name="imu_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.1"/> <!-- IMU传感器尺寸示例 -->
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- 雷达与imu_link的固定连接 -->
+  <joint name="imu_to_laser" type="fixed">
+    <parent link="imu_link"/>
+    <child link="laser_link"/>
+    <origin xyz="-0.27 0 0" rpy="0 0 0"/> <!-- x轴负方向偏移0.27m [[1]][[6]] -->
+  </joint>
+  <link name="laser_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/> <!-- 雷达传感器示例 -->
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- 定义body_link（车身主体） -->
+  <joint name="base_to_body" type="fixed">
+    <parent link="base_link"/>
+    <child link="body_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> <!-- 在base_link上方0.1m [[3]][[5]] -->
+  </joint>
+
+  <link name="body_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.35 0.3 1.0"/> <!-- 长0.35m，宽0.3m，高度0.2m -->
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.35 0.3 1.0"/>
+      </geometry>
+    </collision>
+  </link>
+
+</robot>

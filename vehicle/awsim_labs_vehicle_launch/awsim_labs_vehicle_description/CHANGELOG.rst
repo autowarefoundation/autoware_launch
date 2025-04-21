@@ -1,0 +1,31 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changelog for package awsim_labs_vehicle_description
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+0.43.1 (2025-04-01)
+-------------------
+* chore: set all versions to 0.43.0 (`#1384 <https://github.com/autowarefoundation/autoware_launch/issues/1384>`_)
+* feat(*_launch): move here (`#1369 <https://github.com/autowarefoundation/autoware_launch/issues/1369>`_)
+* Contributors: Mete Fatih Cırıt
+
+* chore: set all versions to 0.43.0 (`#1384 <https://github.com/autowarefoundation/autoware_launch/issues/1384>`_)
+* feat(*_launch): move here (`#1369 <https://github.com/autowarefoundation/autoware_launch/issues/1369>`_)
+* Contributors: Mete Fatih Cırıt
+
+0.43.0 (2025-03-24)
+-------------------
+
+0.42.0 (2025-03-21)
+-------------------
+
+0.41.0 (2025-02-07)
+-------------------
+
+0.40.0 (2025-01-09)
+-------------------
+
+0.39.0 (2024-11-26)
+-------------------
+
+0.38.0 (2024-11-14)
+-------------------
