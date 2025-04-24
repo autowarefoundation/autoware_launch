@@ -1935,193 +1935,6 @@ Visualization Manager:
                           Value: true
                       Enabled: true
                       Name: VirtualWall
-                    - Class: rviz_common/Group
-                      Displays:
-                        - Class: rviz_common/Group
-                          Displays:
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: SurroundObstacleCheck
-                              Namespaces:
-                                {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/marker
-                              Value: true
-                            - Alpha: 1
-                              Class: rviz_default_plugins/Polygon
-                              Color: 25; 255; 0
-                              Enabled: false
-                              Name: Footprint
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                Filter size: 10
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/footprint
-                              Value: false
-                            - Alpha: 1
-                              Class: rviz_default_plugins/Polygon
-                              Color: 239; 41; 41
-                              Enabled: false
-                              Name: FootprintOffset
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                Filter size: 10
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/footprint_offset
-                              Value: false
-                            - Alpha: 1
-                              Class: rviz_default_plugins/Polygon
-                              Color: 10; 21; 255
-                              Enabled: false
-                              Name: FootprintRecoverOffset
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                Filter size: 10
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/footprint_recover_offset
-                              Value: false
-                          Enabled: false
-                          Name: SurroundObstacleChecker
-                        - Class: rviz_default_plugins/MarkerArray
-                          Enabled: false
-                          Name: ObstacleStop
-                          Namespaces:
-                            {}
-                          Topic:
-                            Depth: 5
-                            Durability Policy: Volatile
-                            History Policy: Keep Last
-                            Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_stop_planner/debug/marker
-                          Value: false
-                        - Class: rviz_common/Group
-                          Displays:
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: DebugMarker
-                              Namespaces:
-                                {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/debug/marker
-                              Value: true
-                          Enabled: false
-                          Name: ObstacleCruise
-                        - Class: rviz_default_plugins/MarkerArray
-                          Enabled: false
-                          Name: ObstacleAvoidance
-                          Namespaces:
-                            {}
-                          Topic:
-                            Depth: 5
-                            Durability Policy: Volatile
-                            History Policy: Keep Last
-                            Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_avoidance_planner/debug/marker
-                          Value: false
-                        - Class: rviz_common/Group
-                          Displays:
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: ObstacleStop
-                              Namespaces:
-                                {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop/debug_markers
-                              Value: true
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: ObstacleSlowDown
-                              Namespaces:
-                                {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_slow_down/debug_markers
-                              Value: true
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: ObstacleCruise
-                              Namespaces:
-                                {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_cruise/debug_markers
-                              Value: true
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: OutOfLane
-                              Namespaces:
-                                {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/out_of_lane/debug_markers
-                              Value: true
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: ObstacleVelocityLimiter
-                              Namespaces:
-                                {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_velocity_limiter/debug_markers
-                              Value: true
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: DynamicObstacleStop
-                              Namespaces:
-                                {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/dynamic_obstacle_stop/debug_markers
-                              Value: true
-                            - Class: rviz_default_plugins/MarkerArray
-                              Enabled: true
-                              Name: RunOut
-                              Namespaces:
-                                {}
-                              Topic:
-                                Depth: 5
-                                Durability Policy: Volatile
-                                History Policy: Keep Last
-                                Reliability Policy: Reliable
-                                Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/run_out/debug_markers
-                              Value: true
-                          Enabled: false
-                          Name: MotionVelocityPlanner
-                      Enabled: false
-                      Name: DebugMarker
                   Enabled: true
                   Name: MotionPlanning
               Enabled: true
@@ -3604,7 +3417,7 @@ Visualization Manager:
               - Class: rviz_common/Group
                 Displays:
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Info (StaticObstacleAvoidance)
                     Namespaces:
                       avoidable_target_objects_info: false
@@ -3621,7 +3434,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/static_obstacle_avoidance
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Info (AvoidanceByLC)
                     Namespaces:
                       {}
@@ -3633,7 +3446,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/avoidance_by_lane_change
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Info (LaneChangeLeft)
                     Namespaces:
                       {}
@@ -3645,7 +3458,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/lane_change_left
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Info (LaneChangeRight)
                     Namespaces:
                       {}
@@ -3657,7 +3470,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/lane_change_right
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Info (ExtLaneChangeLeft)
                     Namespaces:
                       {}
@@ -3669,7 +3482,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/external_request_lane_change_left
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Info (ExtLaneChangeRight)
                     Namespaces:
                       {}
@@ -3681,7 +3494,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/external_request_lane_change_right
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Info (GoalPlanner)
                     Namespaces:
                       {}
@@ -3693,7 +3506,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/goal_planner
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Info (StartPlanner)
                     Namespaces:
                       {}
@@ -3705,7 +3518,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/info/start_planner
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Info (DynamicObstacleAvoidance)
                     Namespaces:
                       {}
@@ -3721,7 +3534,7 @@ Visualization Manager:
               - Class: rviz_common/Group
                 Displays:
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Crosswalk
                     Namespaces:
                       {}
@@ -3733,7 +3546,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/crosswalk
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Intersection
                     Namespaces:
                       {}
@@ -3745,7 +3558,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/intersection
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: Blind Spot
                     Namespaces:
                       {}
@@ -3757,7 +3570,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/blind_spot
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: TrafficLight
                     Namespaces:
                       {}
@@ -3769,7 +3582,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/traffic_light
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: VirtualTrafficLight
                     Namespaces:
                       {}
@@ -3781,7 +3594,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/virtual_traffic_light
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: StopLine
                     Namespaces:
                       {}
@@ -3793,7 +3606,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/stop_line
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: DetectionArea
                     Namespaces:
                       {}
@@ -3805,7 +3618,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/detection_area
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: OcclusionSpot
                     Namespaces:
                       {}
@@ -3817,7 +3630,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/occlusion_spot
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: NoStoppingArea
                     Namespaces:
                       {}
@@ -3841,7 +3654,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/run_out
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: SpeedBump
                     Namespaces:
                       {}
@@ -3853,7 +3666,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/speed_bump
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: DynamicObstacleAvoidance
                     Namespaces:
                       {}
@@ -3865,7 +3678,7 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/dynamic_obstacle_avoidance
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
+                    Enabled: true
                     Name: NoDrivableLane
                     Namespaces:
                       {}
@@ -3878,6 +3691,77 @@ Visualization Manager:
                     Value: false
                 Enabled: true
                 Name: BehaviorVelocityPlanner
+              - Class: rviz_default_plugins/MarkerArray
+                Enabled: false
+                Name: ObstacleAvoidance
+                Namespaces:
+                  {}
+                Topic:
+                  Depth: 5
+                  Durability Policy: Volatile
+                  History Policy: Keep Last
+                  Reliability Policy: Reliable
+                  Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_avoidance_planner/debug/marker
+                Value: false
+              - Class: rviz_common/Group
+                Displays: ~
+                Enabled: false
+                Name: MotionVelocityPlanner
+              - Class: rviz_common/Group
+                Displays:
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
+                    Name: SurroundObstacleCheck
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/marker
+                    Value: true
+                  - Alpha: 1
+                    Class: rviz_default_plugins/Polygon
+                    Color: 25; 255; 0
+                    Enabled: false
+                    Name: Footprint
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      Filter size: 10
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/footprint
+                    Value: false
+                  - Alpha: 1
+                    Class: rviz_default_plugins/Polygon
+                    Color: 239; 41; 41
+                    Enabled: false
+                    Name: FootprintOffset
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      Filter size: 10
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/footprint_offset
+                    Value: false
+                  - Alpha: 1
+                    Class: rviz_default_plugins/Polygon
+                    Color: 10; 21; 255
+                    Enabled: false
+                    Name: FootprintRecoverOffset
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      Filter size: 10
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/footprint_recover_offset
+                    Value: false
+                Enabled: false
+                Name: SurroundObstacleChecker
             Enabled: true
             Name: Info
           - Class: rviz_common/Group
@@ -3981,8 +3865,96 @@ Visualization Manager:
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/side_shift
                     Value: false
                 Enabled: false
-                Name: DebugMarker
-            Enabled: true
+                Name: BehaviorPathPlanner
+              - Class: rviz_common/Group
+                Displays:
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
+                    Name: ObstacleStop
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop/debug_markers
+                    Value: true
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
+                    Name: ObstacleSlowDown
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_slow_down/debug_markers
+                    Value: true
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
+                    Name: ObstacleCruise
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_cruise/debug_markers
+                    Value: true
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
+                    Name: OutOfLane
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/out_of_lane/debug_markers
+                    Value: true
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
+                    Name: ObstacleVelocityLimiter
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_velocity_limiter/debug_markers
+                    Value: true
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
+                    Name: DynamicObstacleStop
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/dynamic_obstacle_stop/debug_markers
+                    Value: true
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
+                    Name: RunOut
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/run_out/debug_markers
+                    Value: true
+                Enabled: false
+                Name: MotionVelocityPlanner
+            Enabled: false
             Name: Debug
           Enabled: false
           Name: Planning
