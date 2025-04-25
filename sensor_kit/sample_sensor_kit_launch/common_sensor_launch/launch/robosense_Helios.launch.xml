@@ -1,0 +1,39 @@
+<launch>
+  <!-- Params -->
+  <arg name="launch_driver" default="true"/>
+  <arg name="model" default="Helios"/>
+  <arg name="max_range" default="150.0"/>
+  <arg name="min_range" default="0.2"/>
+  <arg name="sensor_frame" default="robosense"/>
+  <arg name="return_mode" default="SingleStrongest"/>
+  <arg name="sensor_ip" default="192.168.1.200"/>
+  <arg name="host_ip" default="255.255.255.255"/>
+  <arg name="data_port" default="2368"/>
+  <arg name="gnss_port" default="7788"/>
+  <arg name="scan_phase" default="0.0"/>
+  <arg name="cloud_min_angle" default="0"/>
+  <arg name="cloud_max_angle" default="360"/>
+  <arg name="vehicle_mirror_param_file"/>
+  <arg name="container_name" default="robosense_node_container"/>
+  <arg name="udp_only" default="false"/>
+
+  <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
+    <arg name="launch_driver" value="$(var launch_driver)"/>
+    <arg name="sensor_model" value="$(var model)"/>
+    <arg name="return_mode" value="$(var return_mode)"/>
+    <arg name="max_range" value="$(var max_range)"/>
+    <arg name="min_range" value="$(var min_range)"/>
+    <arg name="frame_id" value="$(var sensor_frame)"/>
+    <arg name="sensor_ip" value="$(var sensor_ip)"/>
+    <arg name="host_ip" value="$(var host_ip)"/>
+    <arg name="data_port" value="$(var data_port)"/>
+    <arg name="scan_phase" value="$(var scan_phase)"/>
+    <arg name="cloud_min_angle" value="$(var cloud_min_angle)"/>
+    <arg name="cloud_max_angle" value="$(var cloud_max_angle)"/>
+    <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+    <arg name="use_intra_process" value="true"/>
+    <arg name="use_multithread" value="false"/>
+    <arg name="container_name" value="$(var container_name)"/>
+    <arg name="udp_only" value="$(var udp_only)"/>
+  </include>
+</launch>

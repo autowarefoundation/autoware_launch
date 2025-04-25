@@ -1,0 +1,35 @@
+/**:
+  ros__parameters:
+    sensing:
+      type: diagnostic_aggregator/AnalyzerGroup
+      path: sensing
+      analyzers:
+        lidar:
+          type: diagnostic_aggregator/AnalyzerGroup
+          path: lidar
+          analyzers:
+            velodyne:
+              type: diagnostic_aggregator/AnalyzerGroup
+              path: velodyne
+              analyzers:
+                health_monitoring:
+                  type: diagnostic_aggregator/AnalyzerGroup
+                  path: health_monitoring
+                  analyzers:
+                    connection:
+                      type: diagnostic_aggregator/GenericAnalyzer
+                      path: connection
+                      contains: [": velodyne_connection"]
+                      timeout: 3.0
+
+                    temperature:
+                      type: diagnostic_aggregator/GenericAnalyzer
+                      path: temperature
+                      contains: [": velodyne_temperature"]
+                      timeout: 3.0
+
+                    rpm:
+                      type: diagnostic_aggregator/GenericAnalyzer
+                      path: rpm
+                      contains: [": velodyne_rpm"]
+                      timeout: 3.0

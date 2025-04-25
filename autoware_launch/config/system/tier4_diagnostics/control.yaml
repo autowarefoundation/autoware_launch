@@ -25,13 +25,15 @@ units:
     list:
       - { type: link, link: /control/001-topic_status/control_command-error }
       - { type: link, link: /control/004-lane_departure-error }
-      - { type: link, link: /control/005-trajectory_deviation-error }
       - { type: link, link: /control/009-aeb_emergency_stop }
       # - { type: link, link: /control/010-max_distance_deviation-error }
       # - { type: link, link: /control/011-slip_detection }
       - { type: link, link: /control/collision_detector }
+      # - { type: link, link: /control/acceleration_error }
       - { type: link, link: /control/rolling_back }
       - { type: link, link: /control/over_velocity }
+      - { type: link, link: /control/overrun_stop_point }
+      - { type: link, link: /control/will_overrun_stop_point }
 
   - path: /control/comfortable_stop
     type: and
@@ -59,12 +61,6 @@ units:
       type: link
       link: /control/004-lane_departure
 
-  - path: /control/005-trajectory_deviation-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /control/005-trajectory_deviation
-
   - path: /control/010-max_distance_deviation-error
     type: warn-to-ok
     item:
@@ -87,12 +83,6 @@ units:
     type: diag
     node: lane_departure_checker_node
     name: lane_departure
-    timeout: 1.0
-
-  - path: /control/005-trajectory_deviation
-    type: diag
-    node: lane_departure_checker_node
-    name: trajectory_deviation
     timeout: 1.0
 
   - path: /control/007-external_command_converter_heartbeat
@@ -130,6 +120,11 @@ units:
     node: collision_detector
     name: collision_detect
 
+  - path: /control/acceleration_error
+    type: diag
+    node: control_validator
+    name: control_validation_acceleration_error
+
   - path: /control/rolling_back
     type: diag
     node: control_validator
@@ -139,3 +134,13 @@ units:
     type: diag
     node: control_validator
     name: control_validation_over_velocity
+
+  - path: /control/overrun_stop_point
+    type: diag
+    node: control_validator
+    name: control_validation_overrun_stop_point
+
+  - path: /control/will_overrun_stop_point
+    type: diag
+    node: control_validator
+    name: control_validation_will_overrun_stop_point
