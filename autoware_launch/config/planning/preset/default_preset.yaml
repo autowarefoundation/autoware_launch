@@ -110,7 +110,7 @@ launch:
       default: "true"
   - arg:
       name: launch_dynamic_obstacle_stop_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_out_of_lane_module
       default: "true"
