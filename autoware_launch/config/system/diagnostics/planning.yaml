@@ -27,8 +27,8 @@ units:
 
   - path: /autoware/planning/routing/state
     type: diag
-    node: component_state_diagnostics
-    name: route_state
+    node: /adapi/node/routing
+    name: state
 
   - path: /autoware/planning/topic_rate_check/route
     type: diag
