@@ -221,7 +221,6 @@
       name="traffic_light_roi_visualizer_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_visualization/traffic_light_roi_visualizer.param.yaml"
     />
-    <arg name="traffic_light_selector_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_selector/traffic_light_selector.param.yaml"/>
     <arg
       name="traffic_light_occlusion_predictor_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml"
