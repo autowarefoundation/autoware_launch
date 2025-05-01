@@ -2,6 +2,16 @@
 Changelog for package sample_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.44.0 (2025-05-01)
+-------------------
+* Merge commit 'bdbc8e8' into bump-up-version-to-0.44.0
+* chore: bump version to 0.44.0 (`#1411 <https://github.com/autowarefoundation/autoware_launch/issues/1411>`_)
+* feat: remove individual_params references (`#1403 <https://github.com/autowarefoundation/autoware_launch/issues/1403>`_)
+* chore(sensor_kit_launch): remove unused has_static_tf_only param (`#1393 <https://github.com/autowarefoundation/autoware_launch/issues/1393>`_)
+* chore: set all versions to 0.43.0 (`#1384 <https://github.com/autowarefoundation/autoware_launch/issues/1384>`_)
+* feat(*_launch): move here (`#1369 <https://github.com/autowarefoundation/autoware_launch/issues/1369>`_)
+* Contributors: Amadeusz Szymko, Mete Fatih Cırıt, Ryohsuke Mitsudome, Yutaka Kondo
+
 0.43.1 (2025-04-01)
 -------------------
 * chore: set all versions to 0.43.0 (`#1384 <https://github.com/autowarefoundation/autoware_launch/issues/1384>`_)
