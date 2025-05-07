@@ -2,6 +2,7 @@
 <launch>
   <arg name="enable_image_decompressor" default="false" description="enable image decompressor"/>
   <arg name="enable_fine_detection" default="true" description="enable fine position adjustment of traffic light"/>
+  <arg name="use_image_transport" default="true" description="whether to use image transport in traffic light roi visualizer"/>
 
   <arg name="camera_name" default="camera7" description="camera name"/>
   <arg name="container" description="component container name"/>
@@ -66,6 +67,7 @@
       <arg name="input/image" value="$(var input/image)"/>
       <arg name="enable_image_decompressor" value="$(var enable_image_decompressor)"/>
       <arg name="enable_fine_detection" value="$(var enable_fine_detection)"/>
+      <arg name="use_image_transport" value="$(var use_image_transport)"/>
       <arg name="use_intra_process" value="true"/>
       <arg name="use_multithread" value="true"/>
       <arg name="output/rois" value="$(var output/rois)"/>
