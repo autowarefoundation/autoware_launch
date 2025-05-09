@@ -1,0 +1,216 @@
+units:
+  - path: /planning/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /planning/emergency_stop }
+      - { type: link, link: /planning/pull_over }
+      - { type: link, link: /planning/comfortable_stop }
+
+  - path: /planning/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /planning/emergency_stop }
+      - { type: link, link: /planning/comfortable_stop }
+
+  - path: /planning/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /planning/emergency_stop }
+
+  # *******************************************************************************
+  # NOTE: Please modify this section according to your environment and requirements.
+  # *******************************************************************************
+  - path: /planning/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /planning/001-topic_status/route-error }
+      - { type: link, link: /planning/001-topic_status/trajectory-error }
+      - { type: link, link: /planning/003-trajectory_finite_validation-error }
+      - { type: link, link: /planning/004-trajectory_interval_validation-error }
+      - { type: link, link: /planning/005-trajectory_curvature_validation-error }
+      - { type: link, link: /planning/006-trajectory_relative_angle_validation-error }
+      - { type: link, link: /planning/007-trajectory_lateral_acceleration_validation-error }
+      - { type: link, link: /planning/008-trajectory_acceleration_validation-error }
+      - { type: link, link: /planning/009-trajectory_deceleration_validation-error }
+      - { type: link, link: /planning/010-trajectory_steering_validation-error }
+      - { type: link, link: /planning/011-trajectory_steering_rate_validation-error }
+      - { type: link, link: /planning/012-trajectory_velocity_deviation_validation-error }
+      # - { type: link, link: /planning/013-collision_checker-error }
+      - { type: link, link: /planning/014-path_optimizer_emergency_stop-error }
+
+  - path: /planning/comfortable_stop
+    type: and
+
+  - path: /planning/pull_over
+    type: and
+
+  - path: /planning/none
+    type: and
+
+  - path: /planning/001-topic_status/route-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/001-topic_status/route
+
+  - path: /planning/001-topic_status/trajectory-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/001-topic_status/trajectory
+
+  - path: /planning/003-trajectory_finite_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/003-trajectory_finite_validation
+
+  - path: /planning/004-trajectory_interval_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/004-trajectory_interval_validation
+
+  - path: /planning/005-trajectory_curvature_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/005-trajectory_curvature_validation
+
+  - path: /planning/006-trajectory_relative_angle_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/006-trajectory_relative_angle_validation
+
+  - path: /planning/007-trajectory_lateral_acceleration_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/007-trajectory_lateral_acceleration_validation
+
+  - path: /planning/008-trajectory_acceleration_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/008-trajectory_acceleration_validation
+
+  - path: /planning/009-trajectory_deceleration_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/009-trajectory_deceleration_validation
+
+  - path: /planning/010-trajectory_steering_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/010-trajectory_steering_validation
+
+  - path: /planning/011-trajectory_steering_rate_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/011-trajectory_steering_rate_validation
+
+  - path: /planning/012-trajectory_velocity_deviation_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/012-trajectory_velocity_deviation_validation
+
+  - path: /planning/013-collision_checker-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/013-collision_checker
+
+  - path: /planning/014-path_optimizer_emergency_stop-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/014-path_optimizer_emergency_stop
+
+  - path: /planning/001-topic_status/route
+    type: diag
+    node: topic_state_monitor_mission_planning_route
+    name: planning_topic_status
+    timeout: 1.0
+
+  - path: /planning/001-topic_status/trajectory
+    type: diag
+    node: topic_state_monitor_scenario_planning_trajectory
+    name: planning_topic_status
+    timeout: 1.0
+
+  - path: /planning/003-trajectory_finite_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_finite
+    timeout: 1.0
+
+  - path: /planning/004-trajectory_interval_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_interval
+    timeout: 1.0
+
+  - path: /planning/005-trajectory_curvature_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_curvature
+    timeout: 1.0
+
+  - path: /planning/006-trajectory_relative_angle_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_relative_angle
+    timeout: 1.0
+
+  - path: /planning/007-trajectory_lateral_acceleration_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_lateral_acceleration
+    timeout: 1.0
+
+  - path: /planning/008-trajectory_acceleration_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_acceleration
+    timeout: 1.0
+
+  - path: /planning/009-trajectory_deceleration_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_deceleration
+    timeout: 1.0
+
+  - path: /planning/010-trajectory_steering_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_steering
+    timeout: 1.0
+
+  - path: /planning/011-trajectory_steering_rate_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_steering_rate
+    timeout: 1.0
+
+  - path: /planning/012-trajectory_velocity_deviation_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_velocity_deviation
+    timeout: 1.0
+
+  - path: /planning/013-collision_checker
+    type: diag
+    node: collision_checker
+    name: collision_check
+    timeout: 1.0
+
+  - path: /planning/014-path_optimizer_emergency_stop
+    type: diag
+    node: path_optimizer
+    name: path_optimizer_emergency_stop
+    timeout: 1.0
