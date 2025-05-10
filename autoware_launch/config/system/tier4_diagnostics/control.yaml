@@ -1,0 +1,146 @@
+units:
+  - path: /control/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /control/emergency_stop }
+      - { type: link, link: /control/pull_over }
+      - { type: link, link: /control/comfortable_stop }
+
+  - path: /control/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /control/emergency_stop }
+      - { type: link, link: /control/comfortable_stop }
+
+  - path: /control/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /control/emergency_stop }
+
+  # *******************************************************************************
+  # NOTE: Please modify this section according to your environment and requirements.
+  # *******************************************************************************
+  - path: /control/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /control/001-topic_status/control_command-error }
+      - { type: link, link: /control/004-lane_departure-error }
+      - { type: link, link: /control/009-aeb_emergency_stop }
+      # - { type: link, link: /control/010-max_distance_deviation-error }
+      # - { type: link, link: /control/011-slip_detection }
+      - { type: link, link: /control/collision_detector }
+      # - { type: link, link: /control/acceleration_error }
+      - { type: link, link: /control/rolling_back }
+      - { type: link, link: /control/over_velocity }
+      - { type: link, link: /control/overrun_stop_point }
+      - { type: link, link: /control/will_overrun_stop_point }
+
+  - path: /control/comfortable_stop
+    type: and
+
+  - path: /control/pull_over
+    type: and
+
+  - path: /control/none
+    type: and
+    list:
+      - { type: link, link: /control/003-gate_heartbeat }
+      - { type: link, link: /control/007-external_command_converter_heartbeat }
+      - { type: link, link: /control/008-external_command_selector_heartbeat }
+
+  # Intermediate paths
+  - path: /control/001-topic_status/control_command-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/001-topic_status/control_command
+
+  - path: /control/004-lane_departure-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/004-lane_departure
+
+  - path: /control/010-max_distance_deviation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/010-max_distance_deviation
+
+  - path: /control/001-topic_status/control_command
+    type: diag
+    node: topic_state_monitor_control_command_control_cmd
+    name: control_topic_status
+    timeout: 1.0
+
+  - path: /control/003-gate_heartbeat
+    type: diag
+    node: vehicle_cmd_gate
+    name: heartbeat
+    timeout: 1.0
+
+  - path: /control/004-lane_departure
+    type: diag
+    node: lane_departure_checker_node
+    name: lane_departure
+    timeout: 1.0
+
+  - path: /control/007-external_command_converter_heartbeat
+    type: diag
+    node: external_cmd_converter
+    name: remote_control_topic_status
+    timeout: 1.0
+
+  - path: /control/008-external_command_selector_heartbeat
+    type: diag
+    node: external_cmd_selector
+    name: heartbeat
+    timeout: 1.0
+
+  - path: /control/009-aeb_emergency_stop
+    type: diag
+    node: autonomous_emergency_braking
+    name: aeb_emergency_stop
+    timeout: 1.0
+
+  - path: /control/010-max_distance_deviation
+    type: diag
+    node: control_validator
+    name: control_validation_max_distance_deviation
+    timeout: 1.0
+
+  - path: /control/011-slip_detection
+    type: diag
+    node: slip_detector
+    name: slip_status
+    timeout: 3.0
+
+  - path: /control/collision_detector
+    type: diag
+    node: collision_detector
+    name: collision_detect
+
+  - path: /control/acceleration_error
+    type: diag
+    node: control_validator
+    name: control_validation_acceleration_error
+
+  - path: /control/rolling_back
+    type: diag
+    node: control_validator
+    name: control_validation_rolling_back
+
+  - path: /control/over_velocity
+    type: diag
+    node: control_validator
+    name: control_validation_over_velocity
+
+  - path: /control/overrun_stop_point
+    type: diag
+    node: control_validator
+    name: control_validation_overrun_stop_point
+
+  - path: /control/will_overrun_stop_point
+    type: diag
+    node: control_validator
+    name: control_validation_will_overrun_stop_point
