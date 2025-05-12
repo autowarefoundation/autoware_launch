@@ -2,6 +2,9 @@
 Changelog for package awsim_labs_vehicle_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.44.0 (2025-05-01)
 -------------------
 * Merge commit 'bdbc8e8' into bump-up-version-to-0.44.0
