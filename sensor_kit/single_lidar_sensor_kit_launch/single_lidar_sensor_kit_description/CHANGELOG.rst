@@ -2,6 +2,9 @@
 Changelog for package single_lidar_sensor_kit_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.44.1 (2025-05-12)
+-------------------
+
 0.44.0 (2025-05-01)
 -------------------
 * Merge commit 'bdbc8e8' into bump-up-version-to-0.44.0

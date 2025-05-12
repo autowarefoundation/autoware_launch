@@ -2,6 +2,11 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.44.1 (2025-05-12)
+-------------------
+* feat(duplicated_node_checker): ignore duplicate get parameter (`#1413 <https://github.com/autowarefoundation/autoware_launch/issues/1413>`_)
+* Contributors: Ryohsuke Mitsudome
+
 0.44.0 (2025-05-01)
 -------------------
 * Merge commit 'bdbc8e8' into bump-up-version-to-0.44.0
