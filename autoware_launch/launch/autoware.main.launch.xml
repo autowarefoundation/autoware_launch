@@ -30,6 +30,7 @@
   <arg name="is_main_ecu" default="true"/>
   <arg name="is_redundant" default="true"/>
   <arg name="is_60kph" default="false"/>
+  <arg name="use_control_command_gate" default="true"/>
   <!-- Vehicle -->
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
   <arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"/>
@@ -44,9 +45,10 @@
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
   <arg
     name="diagnostic_graph_aggregator_graph_path"
-    default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.main.yaml"
+    default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.debug.main.yaml"
     description="diagnostic graph config for redundancy"
   />
+  <arg name="diagnostic_graph_aggregator_param_path" default="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/diagnostic_graph_aggregator.redundancy.main.param.yaml"/>
   <!-- <arg
     name="diagnostic_graph_aggregator_graph_path"
     default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.vehicle-test.main.yaml"
@@ -65,6 +67,10 @@
   <arg name="is_simulation" default="false" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
   <!-- L4 tool kit-->
   <arg name="daytime_monitor_param_file" default="$(find-pkg-share daytime_monitor)/config/daytime_monitor.param.yaml" description="daytime_monitor config"/>
+  <!-- Agnocast -->
+  <arg name="use_system_agnocast_heaphook" default="true" description="true: apt installed library, false: locally built"/>
+  <let name="agnocast_heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so" if="$(var use_system_agnocast_heaphook)"/>
+  <let name="agnocast_heaphook_path" value="$(env AGNOCAST_HEAPHOOK_PATH)" unless="$(var use_system_agnocast_heaphook)"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -76,6 +82,7 @@
 
   <!-- Pointcloud container -->
   <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+    <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     <arg name="use_multithread" value="true"/>
     <arg name="container_name" value="$(var pointcloud_container_name)"/>
   </include>
@@ -86,6 +93,7 @@
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
       <arg name="sensor_model" value="$(var sensor_model)"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
+      <arg name="is_redundant" value="$(var is_redundant)"/>
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
       <arg name="config_dir" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)"/>
       <arg name="raw_vehicle_cmd_converter_param_path" value="$(find-pkg-share autoware_launch)/config/vehicle/raw_vehicle_cmd_converter/raw_vehicle_cmd_converter.param.yaml"/>
@@ -104,7 +112,9 @@
 
   <!-- Sensing -->
   <group if="$(var launch_sensing)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml">
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+    </include>
   </group>
 
   <!-- Localization -->
@@ -138,7 +148,7 @@
 
   <!-- Redundancy Switcher Interface -->
   <include file="$(find-pkg-share redundancy_switcher_interface)/launch/redundancy_switcher_interface.launch.xml">
-    <arg name="param_file" value="$(find-pkg-share redundancy_switcher_interface)/config/redundancy_switcher_interface.param.yaml"/>
+    <arg name="param_file" value="$(find-pkg-share redundancy_switcher_interface)/config/redundancy_switcher_interface.main.param.yaml"/>
     <arg name="input_mrm_state" value="/system/fail_safe/mrm_state"/>
   </include>
 

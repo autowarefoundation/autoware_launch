@@ -1,0 +1,132 @@
+units:
+  - path: /foolproof/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /foolproof/emergency_stop }
+      - { type: link, link: /foolproof/pull_over }
+      - { type: link, link: /foolproof/comfortable_stop }
+
+  - path: /foolproof/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /foolproof/emergency_stop }
+      - { type: link, link: /foolproof/comfortable_stop }
+
+  - path: /foolproof/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /foolproof/emergency_stop }
+
+  # *******************************************************************************
+  # NOTE: Please modify this section according to your environment and requirements.
+  # *******************************************************************************
+  - path: /foolproof/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /foolproof/logging/heartbeat }
+      - { type: link, link: /foolproof/perception1/heartbeat }
+      - { type: link, link: /foolproof/perception2/heartbeat }
+      - { type: link, link: /foolproof/logging/ssd_not_found-error }
+      - { type: link, link: /foolproof/perception1/camera_not_found-error }
+      - { type: link, link: /foolproof/perception2/camera_not_found-error }
+      - { type: link, link: /foolproof/perception1/mgbe1_not_ready-error }
+      - { type: link, link: /foolproof/perception2/mgbe1_not_ready-error }
+
+      # - { type: link, link:  /foolproof/device_check }
+
+  - path: /foolproof/pull_over
+    type: and
+    # list:
+
+  - path: /foolproof/comfortable_stop
+    type: and
+    # list:
+
+  # *******************************************************************************
+  # warning makes it ok
+  # *******************************************************************************
+
+  - path: /foolproof/logging/ssd_not_found-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /foolproof/logging/ssd_not_found
+
+  - path: /foolproof/perception1/camera_not_found-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /foolproof/perception1/camera_not_found
+
+  - path: /foolproof/perception2/camera_not_found-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /foolproof/perception2/camera_not_found
+
+  - path: /foolproof/perception1/mgbe1_not_ready-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /foolproof/perception1/mgbe1_not_ready
+
+  - path: /foolproof/perception2/mgbe1_not_ready-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /foolproof/perception2/mgbe1_not_ready
+
+  # *******************************************************************************
+  # Set path, node to identify and name for each individual error.
+  # *******************************************************************************
+
+  # Heartbeat
+  - path: /foolproof/logging/heartbeat
+    type: diag
+    node: autoware_diagnostics_bridge_node_logging
+    name: heartbeat
+    timeout: 3.0
+
+  - path: /foolproof/perception1/heartbeat
+    type: diag
+    node: autoware_diagnostics_bridge_node_perception1
+    name: heartbeat
+    timeout: 3.0
+
+  - path: /foolproof/perception2/heartbeat
+    type: diag
+    node: autoware_diagnostics_bridge_node_perception2
+    name: heartbeat
+    timeout: 3.0
+
+  # fool proof check
+
+  - path: /foolproof/logging/ssd_not_found
+    type: diag
+    node: autoware_diagnostics_bridge_node_logging
+    name: logging_ssd
+    timeout: 3.0
+
+  - path: /foolproof/perception1/camera_not_found
+    type: diag
+    node: autoware_diagnostics_bridge_node_perception1
+    name: perception1_camera
+    timeout: 3.0
+
+  - path: /foolproof/perception2/camera_not_found
+    type: diag
+    node: autoware_diagnostics_bridge_node_perception2
+    name: perception2_camera
+    timeout: 3.0
+
+  - path: /foolproof/perception1/mgbe1_not_ready
+    type: diag
+    node: autoware_diagnostics_bridge_node_perception1
+    name: perception1_mgbe1-ready
+    timeout: 3.0
+
+  - path: /foolproof/perception2/mgbe1_not_ready
+    type: diag
+    node: autoware_diagnostics_bridge_node_perception2
+    name: perception2_mgbe1-ready
+    timeout: 3.0

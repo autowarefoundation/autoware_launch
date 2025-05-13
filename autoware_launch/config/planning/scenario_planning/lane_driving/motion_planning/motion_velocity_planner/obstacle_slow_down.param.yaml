@@ -18,7 +18,7 @@
           default:
             moving:
               min_lat_margin: 0.2
-              max_lat_margin: 0.5
+              max_lat_margin: 0.7
               min_ego_velocity: 2.0
               max_ego_velocity: 5.56
             static:
@@ -51,7 +51,7 @@
           pointcloud_max_cluster_size: 100000
 
         min_lat_margin: 0.0  # lateral margin between obstacle and trajectory band with ego's width to avoid the conflict with the obstacle_stop
-        max_lat_margin: 0.6  # lateral margin between obstacle and trajectory band with ego's width
+        max_lat_margin: 0.8  # lateral margin between obstacle and trajectory band with ego's width
         lat_hysteresis_margin: 0.2
 
         successive_num_to_entry_slow_down_condition: 5

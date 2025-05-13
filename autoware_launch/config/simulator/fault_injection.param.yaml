@@ -181,8 +181,9 @@
       SYSTEM-001: "topic_state_monitor_system_emergency_control_cmd: system_topic_status"
       SYSTEM-002: "vehicle_cmd_gate: emergency_stop_operation"
       SYSTEM-003: "rosbag_status"
-      SYSTEM-004: "disk_status"
+      SYSTEM-004: "disk1_status"
       SYSTEM-005: "edge_core_internet_connection"
+      SYSTEM-006: "disk2_status"
 
       # Others
       OTHERS-002/front_lower: "blockage_return_diag: /sensing/lidar/front_lower: blockage_validation"
