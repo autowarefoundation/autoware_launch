@@ -44,6 +44,7 @@ units:
       - { type: link, link: /vehicle/001-topic_status/velocity-error }
       - { type: link, link: /vehicle/001-topic_status/steering-error }
       - { type: link, link: /vehicle/005-vehicle_heartbeat-error }
+      - { type: link, link: /vehicle/008-vcu-not-authenticated }
 
   - path: /vehicle/fatal_error/emergency_stop
     type: and
@@ -120,4 +121,10 @@ units:
     type: diag
     node: j6_interface
     name: vehicle_emergency_button
+    timeout: 1.0
+
+  - path: /vehicle/008-vcu-not-authenticated
+    type: diag
+    node: j6_interface
+    name: vcu_not_authenticated
     timeout: 1.0

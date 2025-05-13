@@ -158,7 +158,8 @@
       rosbag_status: default
 
       ## /system/004-bagpacker_disk_space
-      disk_status: default
+      disk1_status: default
+      disk2_status: default
 
       ## /system/005-fms_connection
       edge_core_internet_connection: default
@@ -208,11 +209,11 @@
       ## /others/002-blockage_validation/rear_upper
       "blockage_return_diag: /sensing/lidar/rear_upper: blockage_validation": default
 
-      ## /others/005-visibility_validation/front_lower
-      "dual_return_filter: /sensing/lidar/front_lower: visibility_validation": default
+      ## /others/005-visibility_validation/rear_upper
+      "dual_return_filter: /sensing/lidar/rear_upper: visibility_validation": default
 
-      ## /others/005-visibility_validation/left_upper
-      "dual_return_filter: /sensing/lidar/left_upper: visibility_validation": default
+      ## /others/005-visibility_validation/right_upper
+      "dual_return_filter: /sensing/lidar/right_upper: visibility_validation": default
 
       ## /others/010-emergency_vehicle
       "emergency_vehicle_detector: emergency_vehicle": default

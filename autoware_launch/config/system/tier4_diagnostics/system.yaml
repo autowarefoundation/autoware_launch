@@ -64,7 +64,8 @@ units:
     type: and
     list:
       - { type: link, link: /system/003-bagpacker_status }
-      - { type: link, link: /system/004-bagpacker_disk_space }
+      - { type: link, link: /system/004-bagpacker_ROSBAG_space }
+      - { type: link, link: /system/006-bagpacker_LOG_space }
 
   - path: /system/001-topic_status-error
     type: warn-to-ok
@@ -102,10 +103,10 @@ units:
     name: rosbag_status
     timeout: 3.0
 
-  - path: /system/004-bagpacker_disk_space
+  - path: /system/004-bagpacker_ROSBAG_space
     type: diag
     node: ""
-    name: disk_status
+    name: disk1_status
     timeout: 3.0
 
   - path: /system/005-fms_connection
@@ -113,3 +114,9 @@ units:
     node: ""
     name: edge_core_internet_connection
     timeout: 10.0
+
+  - path: /system/006-bagpacker_LOG_space
+    type: diag
+    node: ""
+    name: disk2_status
+    timeout: 3.0
