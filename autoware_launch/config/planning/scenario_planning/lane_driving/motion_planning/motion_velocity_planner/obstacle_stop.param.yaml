@@ -12,7 +12,7 @@
 
         max_negative_velocity: 0.0 # [m/s] maximum velocity of opposing traffic to consider stop planning
         additional_stop_margin_opposing_traffic: 10.0 # Ideal stop-margin from moving opposing obstacle when ego comes to a stop
-        effective_deceleration_opposing_traffic: 2.5 # Setting a higher value brings the actual stop-margin closer to the ideal value above
+        effective_deceleration_opposing_traffic: 4.0 # Setting a higher value brings the final stop-margin closer to the ideal value above
 
         min_on_duration: 0.3  # [s] minimum duration needed before a decision can be triggered
         min_off_duration: 1.0  # [s] minimum duration needed before a decision can be canceled
