@@ -11,7 +11,7 @@ launch:
       default: "true"
   - arg:
       name: launch_avoidance_by_lane_change_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_dynamic_obstacle_avoidance
       default: "false"
@@ -110,7 +110,7 @@ launch:
       default: "true"
   - arg:
       name: launch_dynamic_obstacle_stop_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_out_of_lane_module
       default: "true"
@@ -119,7 +119,7 @@ launch:
       default: "true"
   - arg:
       name: launch_mvp_run_out_module
-      default: "true"
+      default: "false"
 
   - arg:
       name: motion_stop_planner_type

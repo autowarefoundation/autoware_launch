@@ -54,6 +54,7 @@ units:
       - { type: link, link: /control/collision_detector }
       # - { type: link, link: /control/acceleration_error }
       - { type: link, link: /control/rolling_back }
+      - { type: link, link: /control/over_velocity }
       - { type: link, link: /control/overrun_stop_point }
       - { type: link, link: /control/will_overrun_stop_point }
 
