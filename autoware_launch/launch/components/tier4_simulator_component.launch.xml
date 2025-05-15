@@ -83,6 +83,40 @@
       name="object_recognition_tracking_object_merger_node_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml"
     />
+    <arg
+      name="each_traffic_light_map_based_detector_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_map_based_detector/TRAFFIC_LIGHT_RECOGNITION_CAMERA_NAMESPACE_traffic_light_map_based_detector.param.yaml"
+    />
+    <arg
+      name="traffic_light_fine_detector_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml"
+    />
+    <arg name="yolox_traffic_light_detector_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/tensorrt_yolox/yolox_traffic_light_detector.param.yaml"/>
+    <arg
+      name="car_traffic_light_classifier_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml"
+    />
+    <arg
+      name="pedestrian_traffic_light_classifier_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml"
+    />
+    <arg
+      name="traffic_light_roi_visualizer_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_visualization/traffic_light_roi_visualizer.param.yaml"
+    />
+    <arg
+      name="traffic_light_occlusion_predictor_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml"
+    />
+    <arg
+      name="traffic_light_multi_camera_fusion_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml"
+    />
+    <arg name="traffic_light_arbiter_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_arbiter/traffic_light_arbiter.param.yaml"/>
+    <arg
+      name="crosswalk_traffic_light_estimator_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml"
+    />
   </include>
   <group if="$(var scenario_simulation)">
     <include file="$(find-pkg-share autoware_dummy_infrastructure)/launch/dummy_infrastructure.launch.xml"/>

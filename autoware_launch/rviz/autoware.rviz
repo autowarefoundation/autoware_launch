@@ -617,6 +617,110 @@ Visualization Manager:
                 Reliability Policy: Reliable
                 Value: /localization/pose_estimator/monte_carlo_initial_pose_marker
               Value: true
+            - Auto Set Min/Max:
+                Max Value: 100
+                Min Value: 0
+                Value: false
+              Buffer Size: 1500
+              Class: rviz_plugins::ColoredPoseWithCovarianceHistory
+              Enabled: false
+              Name: PoseWithExeTimeMs
+              Path:
+                Alpha: 0.999
+                Greater Color: 255; 0; 0
+                Less Color: 0; 0; 255
+                Max Color: 255; 255; 0
+                Min Color: 0; 255; 255
+                Value: true
+                Width: 1.0
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                Filter size: 10
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /localization/pose_with_covariance
+              Value: false
+              Value Topic: /localization/pose_estimator/exe_time_ms
+              Value Type: Float32
+            - Auto Set Min/Max:
+                Max Value: 30
+                Min Value: 1
+                Value: false
+              Buffer Size: 1500
+              Class: rviz_plugins::ColoredPoseWithCovarianceHistory
+              Enabled: false
+              Name: PoseWithIterationNum
+              Path:
+                Alpha: 0.999
+                Greater Color: 255; 0; 0
+                Less Color: 0; 0; 255
+                Max Color: 255; 255; 0
+                Min Color: 0; 255; 255
+                Value: true
+                Width: 1.0
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                Filter size: 10
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /localization/pose_with_covariance
+              Value: false
+              Value Topic: /localization/pose_estimator/iteration_num
+              Value Type: Int32
+            - Auto Set Min/Max:
+                Max Value: 7
+                Min Value: 3
+                Value: false
+              Buffer Size: 1500
+              Class: rviz_plugins::ColoredPoseWithCovarianceHistory
+              Enabled: false
+              Name: PoseWithTransformProbability
+              Path:
+                Alpha: 0.999
+                Greater Color: 255; 255; 0
+                Less Color: 0; 0; 255
+                Max Color: 255; 255; 0
+                Min Color: 0; 255; 255
+                Value: true
+                Width: 1.0
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                Filter size: 10
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /localization/pose_with_covariance
+              Value: false
+              Value Topic: /localization/pose_estimator/transform_probability
+              Value Type: Float32
+            - Auto Set Min/Max:
+                Max Value: 3.3
+                Min Value: 2.3
+                Value: false
+              Buffer Size: 1500
+              Class: rviz_plugins::ColoredPoseWithCovarianceHistory
+              Enabled: false
+              Name: PoseWithNearestVoxelTransformationLikelihood
+              Path:
+                Alpha: 0.999
+                Greater Color: 255; 255; 0
+                Less Color: 0; 0; 255
+                Max Color: 255; 255; 0
+                Min Color: 0; 255; 255
+                Value: true
+                Width: 1.0
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                Filter size: 10
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /localization/pose_with_covariance
+              Value: false
+              Value Topic: /localization/pose_estimator/nearest_voxel_transformation_likelihood
+              Value Type: Float32
           Enabled: true
           Name: NDT
         - Class: rviz_common/Group
@@ -2186,6 +2290,18 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/dynamic_obstacle_stop/virtual_walls
                           Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (RunOut)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/run_out/virtual_walls
+                          Value: true
                       Enabled: true
                       Name: VirtualWall
                     - Class: rviz_common/Group
@@ -2359,6 +2475,18 @@ Visualization Manager:
                                 Reliability Policy: Reliable
                                 Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/dynamic_obstacle_stop/debug_markers
                               Value: true
+                            - Class: rviz_default_plugins/MarkerArray
+                              Enabled: true
+                              Name: RunOut
+                              Namespaces:
+                                {}
+                              Topic:
+                                Depth: 5
+                                Durability Policy: Volatile
+                                History Policy: Keep Last
+                                Reliability Policy: Reliable
+                                Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/run_out/debug_markers
+                              Value: true
                           Enabled: false
                           Name: MotionVelocityPlanner
                       Enabled: false
@@ -2462,6 +2590,46 @@ Visualization Manager:
                 Reliability Policy: Best Effort
                 Value: /planning/planning_diagnostics/planning_error_monitor/debug/marker
               Value: true
+            - Class: rviz_common/Group
+              Displays:
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: DebugMarker
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/planning_validator/debug/marker
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: VirtualWall
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/planning_validator/virtual_wall
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: false
+                  Name: Output
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/planning_validator/output/markers
+                  Value: false
+              Enabled: true
+              Name: PlanningValidator
           Enabled: false
           Name: Diagnostic
       Enabled: true
@@ -3785,6 +3953,18 @@ Visualization Manager:
                     History Policy: Keep Last
                     Reliability Policy: Reliable
                     Value: /planning/debug/objects_of_interest/obstacle_cruise_planner
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: RunOut
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/debug/objects_of_interest/run_out
                   Value: true
               Enabled: true
               Name: Objects Of Interest
