@@ -265,6 +265,7 @@ Changelog for package autoware_launch
 * feat(goal_planner): expand outer collision check margin (`#1365 <https://github.com/autowarefoundation/autoware_launch/issues/1365>`_)
 * Contributors: Amadeusz Szymko, Kazu, Kosuke Takeuchi, Kotaro Uetake, Kyoichi Sugahara, Masaki Baba, Masato Saeki, Mehmet Dogru, Mete Fatih Cırıt, Satoshi OTA, Taekjin LEE, Takagi, Isamu, Yuki TAKAGI, Zulfaqar Azmi, badai nguyen, eiki, lei.gu, mkquda
 
+
 0.43.0 (2025-03-21)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

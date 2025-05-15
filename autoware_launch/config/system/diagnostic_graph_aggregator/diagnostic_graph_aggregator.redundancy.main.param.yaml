@@ -1,0 +1,16 @@
+/**:
+  ros__parameters:
+    use_operation_mode_availability: true
+    rate: 10.0
+    input_qos_depth: 1000
+    graph_qos_depth: 1
+
+    use_command_mode_mappings: true
+    command_mode_mappings:
+      - "{mode: stop,                       path: /autoware/modes/stop}"
+      - "{mode: autonomous,                 path: /autoware/modes/autonomous}"
+      - "{mode: local,                      path: /autoware/modes/local}"
+      - "{mode: remote,                     path: /autoware/modes/remote}"
+      - "{mode: comfortable_stop,           path: /autoware/modes/comfortable_stop}"
+      - "{mode: main_ecu_in_lane_stop_0_3g, path: /autoware/modes/pull_over}"
+      - "{mode: main_ecu_in_lane_stop_0_6g, path: /autoware/modes/emergency_stop}"
