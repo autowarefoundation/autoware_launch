@@ -95,5 +95,7 @@
 
     <!-- planning validator -->
     <arg name="planning_validator_param_path" value="$(var common_config_path)/planning_validator/planning_validator.param.yaml"/>
+    <arg name="planning_latency_validator_param_path" value="$(var common_config_path)/planning_validator/latency_validator.param.yaml"/>
+    <arg name="planning_trajectory_validator_param_path" value="$(var common_config_path)/planning_validator/trajectory_validator.param.yaml"/>
   </include>
 </launch>
