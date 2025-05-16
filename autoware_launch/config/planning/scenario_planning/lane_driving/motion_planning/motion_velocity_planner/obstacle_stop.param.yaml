@@ -11,7 +11,7 @@
         min_behavior_stop_margin: 3.0 # [m]
 
         max_negative_velocity: 0.0 # [m/s] maximum velocity of opposing traffic to consider stop planning
-        additional_stop_margin_opposing_traffic: 10.0 # Ideal stop-margin from moving opposing obstacle when ego comes to a stop
+        stop_margin_opposing_traffic: 10.0 # Ideal stop-margin from moving opposing obstacle when ego comes to a stop
         effective_deceleration_opposing_traffic: 4.0 # Setting a higher value brings the final stop-margin closer to the ideal value above
 
         min_on_duration: 0.3  # [s] minimum duration needed before a decision can be triggered
@@ -88,3 +88,4 @@
 
         crossing_obstacle:
           collision_time_margin : 1.0 # time threshold of collision between obstacle adn ego for cruise or stop [s]
+          traj_angle_threshold: 0.523599 # [rad] = 70 [deg], yaw threshold of crossing obstacle against the nearest trajectory point for cruise or stop
