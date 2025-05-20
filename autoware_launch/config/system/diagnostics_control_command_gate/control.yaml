@@ -7,7 +7,6 @@ units:
       - { type: link, link: /autoware/control/node_alive_monitoring/control_command_gate }
       - { type: link, link: /autoware/control/emergency_braking }
       - { type: link, link: /autoware/control/performance_monitoring/lane_departure }
-      - { type: link, link: /autoware/control/performance_monitoring/trajectory_deviation }
       - { type: link, link: /autoware/control/performance_monitoring/control_state }
 
   - path: /autoware/control/local
@@ -46,11 +45,6 @@ units:
     type: diag
     node: lane_departure_checker_node
     name: lane_departure
-
-  - path: /autoware/control/performance_monitoring/trajectory_deviation
-    type: diag
-    node: lane_departure_checker_node
-    name: trajectory_deviation
 
   - path: /autoware/control/performance_monitoring/control_state
     type: diag

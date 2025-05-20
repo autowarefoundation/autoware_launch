@@ -1,11 +1,11 @@
 files:
   - { path: $(dirname)/control.yaml }
-  - { path: $(dirname)/../localization.yaml }
-  - { path: $(dirname)/../map.yaml }
-  - { path: $(dirname)/../perception.yaml }
-  - { path: $(dirname)/../planning.yaml }
+  - { path: $(dirname)/localization.yaml }
+  - { path: $(dirname)/map.yaml }
+  - { path: $(dirname)/perception.yaml }
+  - { path: $(dirname)/planning.yaml }
   - { path: $(dirname)/system.yaml }
-  - { path: $(dirname)/../vehicle.yaml }
+  - { path: $(dirname)/vehicle.yaml }
 
 units:
   - path: /autoware/modes/local
@@ -14,6 +14,7 @@ units:
       - { type: link, link: /autoware/vehicle }
       - { type: link, link: /autoware/system }
       - { type: link, link: /autoware/control/local }
+      - { type: link, link: /adapi/mrm_request/delegate }
 
   - path: /autoware/modes/remote
     type: and
@@ -21,9 +22,12 @@ units:
       - { type: link, link: /autoware/vehicle }
       - { type: link, link: /autoware/system }
       - { type: link, link: /autoware/control/remote }
+      - { type: link, link: /adapi/mrm_request/delegate }
 
   - path: /autoware/modes/stop
-    type: ok
+    type: and
+    list:
+      - { type: link, link: /adapi/mrm_request/delegate }
 
   - path: /autoware/modes/autonomous
     type: and
@@ -35,6 +39,7 @@ units:
       - { type: link, link: /autoware/control }
       - { type: link, link: /autoware/vehicle }
       - { type: link, link: /autoware/system }
+      - { type: link, link: /adapi/mrm_request/delegate }
 
   - path: /autoware/modes/pull_over
     type: and
@@ -68,3 +73,8 @@ units:
     type: and
     list:
       - { type: link, link: /autoware/system/service_log_checker }
+
+  - path: /adapi/mrm_request/delegate
+    type: diag
+    node: /adapi/node/mrm_request
+    name: delegate
