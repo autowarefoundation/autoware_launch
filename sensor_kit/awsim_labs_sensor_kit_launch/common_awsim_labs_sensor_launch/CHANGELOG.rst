@@ -2,8 +2,8 @@
 Changelog for package common_awsim_labs_sensor_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.45.0 (2025-05-22)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(ring_outlier_filter): update node parameters (`#1421 <https://github.com/autowarefoundation/autoware_launch/issues/1421>`_)
 * Contributors: Kotaro Uetake, github-actions

@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.45.0 (2025-05-22)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * chore(traffic_light_recognition): add comment in config of autoware_traffic_light_map_based_detector (`#1448 <https://github.com/autowarefoundation/autoware_launch/issues/1448>`_)
   add comment
