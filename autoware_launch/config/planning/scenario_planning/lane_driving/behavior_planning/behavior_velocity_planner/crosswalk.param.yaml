@@ -101,4 +101,4 @@
         min_ego_stop_duration: 1.0  # [s] minimum duration ego should stop before it can continue
         ego_inside_safe_area_margin: 0.3  # [m] margin used to consider if ego is inside the search area. Should be higher than the expected longitudinal error when stopping.
         parked_velocity_threshold: 0.5  # [m/s] vehicle are considered to be parked if their velocity is less or equal this threshold
-        parked_velocity_hysteresis: 1.0  # [m/s] once a vehicle is detected to be parked, this value is added to the threshold
+        parked_velocity_hysteresis: 2.0  # [m/s] once a vehicle is detected to be parked, this value is added to the threshold
