@@ -28,6 +28,7 @@
         detection_range_z_max: 2.5
         elevation_grid_mode: true
         use_recheck_ground_cluster: true
+        recheck_ignore_distance: 20.0
         use_lowest_point: true
         low_priority_region_x: -20.0
         center_pcl_shift: 0.0
