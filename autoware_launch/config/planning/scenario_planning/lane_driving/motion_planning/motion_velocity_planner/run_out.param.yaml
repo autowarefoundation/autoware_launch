@@ -49,6 +49,11 @@
             if_behind_ego: true  # if true, objects located behind the ego vehicles are ignored
             polygon_types: ["NONE"]  # types of polygons in the vector map used to ignore objects
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to ignore objects
+          carefully_ignore:  # option to ignore the object except for some short time/distance
+            max_time_considered: 4.0  # [s] maximum time horizon considered when an object is carefully ignored
+            max_length_considered: 5.0  # [m] maximum distance considered when an object is carefully ignored
+            polygon_types: ["NONE"]  # types of polygons in the vector map used to carefully ignore objects
+            lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to carefully ignore objects
           ignore_collisions:  # option to ignore some collisions with the object
             polygon_types: ["NONE"]  # types of polygons in the vector map where collisions are ignored
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used where collisions are ignored
@@ -61,7 +66,7 @@
             linestring_types: ["guard_rail"]  # types of linestrings in the vector map used to cut predicted paths
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to cut predicted paths
         PEDESTRIAN:
-          ignore:
+          carefully_ignore:
             lanelet_subtypes: ["crosswalk", "walkway"]
           cut_predicted_paths:
             lanelet_subtypes: ["crosswalk", "walkway"]
