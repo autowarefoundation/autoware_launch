@@ -40,3 +40,4 @@
         max_cluster_size: 100
         cluster_2d_tolerance: 0.5
         roi_scale_factor: 2.0
+        max_object_size: 2.0
