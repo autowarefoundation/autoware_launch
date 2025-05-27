@@ -122,13 +122,6 @@ launch:
       default: "false"
 
   - arg:
-      name: motion_stop_planner_type
-      default: none
-      # option: obstacle_stop_planner
-      #         obstacle_cruise_planner
-      #         none
-
-  - arg:
       name: velocity_smoother_type
       default: JerkFiltered
       # option: JerkFiltered
