@@ -49,9 +49,13 @@
             if_behind_ego: true  # if true, objects located behind the ego vehicles are ignored
             polygon_types: ["NONE"]  # types of polygons in the vector map used to ignore objects
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to ignore objects
+            start_ignore_time: 0.0  # [s] the object's predicted paths are ignored starting from this time (0.0 means the object is completely ignored)
+            start_ignore_distance: 0.0 # [m] the object's predicted paths are ignored starting from this distance (0.0 means the object is completely ignored)
           ignore_collisions:  # option to ignore some collisions with the object
             polygon_types: ["NONE"]  # types of polygons in the vector map where collisions are ignored
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used where collisions are ignored
+            start_ignore_time: 0.0  # [s] collisions are only ignored if happening after this time
+            start_ignore_distance: 0.0 # [m] collisions are only ignored if happnening after this distance along the object's predicted path
           confidence_filtering:
             threshold: 0.0  # [-] only use predicted paths with a higher confidence value than this threshold
             only_use_highest: true  # if true, only the path(s) with the highest confidence are used
@@ -60,6 +64,8 @@
             polygon_types: ["NONE"]  # types of polygons in the vector map used to cut predicted paths
             linestring_types: ["guard_rail"]  # types of linestrings in the vector map used to cut predicted paths
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to cut predicted paths
+            start_cut_time: 0.0  # [s] predicted paths are cut starting from this time
+            start_cut_distance: 0.0 # [m] predicted paths are cut starting from this distance
         PEDESTRIAN:
           ignore:
             lanelet_subtypes: ["crosswalk", "walkway"]
