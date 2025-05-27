@@ -144,3 +144,11 @@ launch:
   - arg:
       name: launch_parking_module
       default: "true"
+
+  # validator modules
+  - arg:
+      name: launch_latency_checker
+      default: "true"
+  - arg:
+      name: launch_trajectory_checker
+      default: "true"
