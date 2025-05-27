@@ -17,8 +17,8 @@
         arc_length_range: 2.0  # [m] arc length range where an expansion distance is initially applied
       ego:
         extra_wheelbase: 0.0 # [m] extra length to add to the wheelbase
-        extra_front_overhang: 0.5 # [m] extra length to add to the front overhang
-        extra_width: 1.0 # [m] extra length to add to the width
+        extra_front_overhang: 0.0 # [m] extra length to add to the front overhang
+        extra_width: 0.0 # [m] extra length to add to the width
       object_exclusion:
         exclude_static: false # if true, the drivable area is not expanded over static objects
         exclude_dynamic: false # if true, the drivable area is not expanded in the predicted path of dynamic objects

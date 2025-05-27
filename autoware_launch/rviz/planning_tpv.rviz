@@ -372,21 +372,23 @@ Visualization Manager:
               Width: 550
           Enabled: true
           Name: Vehicle
-        - Class: rviz_plugins/MrmSummaryOverlayDisplay
-          Enabled: false
-          Font Size: 10
-          Left: 512
-          Max Letter Num: 100
-          Name: MRM Summary
-          Text Color: 25; 255; 240
-          Top: 64
+        - Class: autoware_string_stamped_rviz_plugin/StringStampedOverlayDisplay
+          Enabled: true
+          Font Size: 11
+          Left: 10
+          Max Letter Num: 70
+          Name: Error Diag Graph
+          Text Color: 51; 201; 220
+          Time To Erase Last Diag: 2
+          Time To Keep Last Diag: 1
+          Top: 100
           Topic:
-            Depth: 5
+            Depth: 1
             Durability Policy: Volatile
             History Policy: Keep Last
             Reliability Policy: Reliable
-            Value: /system/emergency/hazard_status
-          Value: false
+            Value: /logging_diag_graph/debug/error_graph_text
+          Value: true
           Value height offset: 0
       Enabled: true
       Name: System
@@ -2741,7 +2743,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/virtual_wall/stop
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop/virtual_walls
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
@@ -2753,7 +2755,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/virtual_wall/cruise
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_cruise/virtual_walls
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
@@ -2765,7 +2767,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/virtual_wall/slow_down
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_slow_down/virtual_walls
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
@@ -4486,7 +4488,7 @@ Visualization Manager:
         Reliability Policy: Best Effort
         Value: /sensing/camera/image
       Value: true
-    - Class: rviz_plugins/StringStampedOverlayDisplay
+    - Class: autoware_string_stamped_rviz_plugin/StringStampedOverlayDisplay
       Enabled: true
       Font Size: 15
       Left: 24
@@ -4500,22 +4502,6 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Best Effort
         Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/debug/internal_state
-      Value: true
-      Value height offset: 0
-    - Class: rviz_plugins/MrmSummaryOverlayDisplay
-      Enabled: true
-      Font Size: 16
-      Left: 24
-      Max Letter Num: 100
-      Name: MrmSummaryOverlayDisplay
-      Text Color: 51; 201; 220
-      Top: 120
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /system/emergency/hazard_status
       Value: true
       Value height offset: 0
   Enabled: true

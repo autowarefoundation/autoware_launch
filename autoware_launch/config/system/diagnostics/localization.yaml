@@ -14,8 +14,8 @@ units:
 
   - path: /autoware/localization/state
     type: diag
-    node: component_state_diagnostics
-    name: localization_state
+    node: /adapi/node/localization
+    name: state
 
   - path: /autoware/localization/topic_rate_check/transform
     type: diag
