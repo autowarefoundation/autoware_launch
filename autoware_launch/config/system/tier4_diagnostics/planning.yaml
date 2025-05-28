@@ -17,6 +17,24 @@ units:
     list:
       - { type: link, link: /planning/emergency_stop }
 
+  - path: /planning/fatal_error/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /planning/fatal_error/emergency_stop }
+      - { type: link, link: /planning/fatal_error/pull_over }
+      - { type: link, link: /planning/fatal_error/comfortable_stop }
+
+  - path: /planning/fatal_error/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /planning/fatal_error/emergency_stop }
+      - { type: link, link: /planning/fatal_error/comfortable_stop }
+
+  - path: /planning/fatal_error/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /planning/fatal_error/emergency_stop }
+
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
@@ -38,10 +56,19 @@ units:
       # - { type: link, link: /planning/013-collision_checker-error }
       - { type: link, link: /planning/014-path_optimizer_emergency_stop-error }
 
+  - path: /planning/fatal_error/emergency_stop
+    type: and
+
   - path: /planning/comfortable_stop
     type: and
 
+  - path: /planning/fatal_error/comfortable_stop
+    type: and
+
   - path: /planning/pull_over
+    type: and
+
+  - path: /planning/fatal_error/pull_over
     type: and
 
   - path: /planning/none
@@ -119,11 +146,11 @@ units:
       type: link
       link: /planning/012-trajectory_velocity_deviation_validation
 
-  - path: /planning/013-collision_checker-error
+  - path: /planning/013-trajectory_shift_validation-error
     type: warn-to-ok
     item:
       type: link
-      link: /planning/013-collision_checker
+      link: /planning/013-trajectory_shift_validation
 
   - path: /planning/014-path_optimizer_emergency_stop-error
     type: warn-to-ok
@@ -203,10 +230,10 @@ units:
     name: trajectory_validation_velocity_deviation
     timeout: 1.0
 
-  - path: /planning/013-collision_checker
+  - path: /planning/013-trajectory_shift_validation
     type: diag
-    node: collision_checker
-    name: collision_check
+    node: planning_validator
+    name: trajectory_validation_trajectory_shift
     timeout: 1.0
 
   - path: /planning/014-path_optimizer_emergency_stop

@@ -1,0 +1,19 @@
+units:
+  - path: /autoware/modes/sub_ecu_in_lane_stop_0_3g
+    type: and
+    list:
+      - { type: link, link: /debug/injection/sub_ecu_in_lane_stop_0_3g_available }
+      - { type: link, link: /redundancy/redundancy_switcher }
+
+  # diag
+  - path: /debug/injection/sub_ecu_in_lane_stop_0_3g_available
+    type: diag
+    node: ""
+    name: injection_sub_ecu_in_lane_stop_0_3g_available
+    timeout: 1.0
+
+  - path: /redundancy/redundancy_switcher
+    type: diag
+    node: redundancy_switcher_interface
+    name: redundancy_switcher_status
+    timeout: 1.0

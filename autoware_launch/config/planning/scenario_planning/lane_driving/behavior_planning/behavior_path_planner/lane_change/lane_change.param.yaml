@@ -19,14 +19,14 @@
 
       # trajectory generation
       trajectory:
-        max_prepare_duration: 4.0
-        min_prepare_duration: 2.0
-        lateral_jerk: 0.5
-        min_longitudinal_acc: -1.0
-        max_longitudinal_acc: 1.0
+        max_prepare_duration: 3.0
+        min_prepare_duration: 1.0
+        lateral_jerk: 0.3
+        min_longitudinal_acc: -0.5
+        max_longitudinal_acc: 0.2
         th_prepare_length_diff: 1.0
         th_lane_changing_length_diff: 1.0
-        min_lane_changing_velocity: 2.78
+        min_lane_changing_velocity: 1.5
         lon_acc_sampling_num: 5
         lat_acc_sampling_num: 3
         lane_changing_decel_factor: 0.5
@@ -51,8 +51,8 @@
         enable_target_lane_bound_check: true
         stopped_object_velocity_threshold: 1.0 # [m/s]
         execution:
-          expected_front_deceleration: -1.0
-          expected_rear_deceleration: -1.0
+          expected_front_deceleration: -1.5
+          expected_rear_deceleration: -1.5
           rear_vehicle_reaction_time: 2.0
           rear_vehicle_safety_time_margin: 1.0
           lateral_distance_max_threshold: 2.0
@@ -65,25 +65,25 @@
           rear_vehicle_reaction_time: 1.0
           rear_vehicle_safety_time_margin: 0.8
           lateral_distance_max_threshold: 1.0
-          longitudinal_distance_min_threshold: 3.0
+          longitudinal_distance_min_threshold: 2.0
           longitudinal_velocity_delta_time: 0.0
           extended_polygon_policy: "rectangle"
         cancel:
-          expected_front_deceleration: -1.0
-          expected_rear_deceleration: -2.0
-          rear_vehicle_reaction_time: 1.5
-          rear_vehicle_safety_time_margin: 0.8
-          lateral_distance_max_threshold: 1.0
-          longitudinal_distance_min_threshold: 2.5
+          expected_front_deceleration: -1.5
+          expected_rear_deceleration: -2.5
+          rear_vehicle_reaction_time: 1.0
+          rear_vehicle_safety_time_margin: 0.5
+          lateral_distance_max_threshold: 0.75
+          longitudinal_distance_min_threshold: 2.0
           longitudinal_velocity_delta_time: 0.0
           extended_polygon_policy: "rectangle"
         stuck:
-          expected_front_deceleration: -1.0
-          expected_rear_deceleration: -1.0
-          rear_vehicle_reaction_time: 2.0
-          rear_vehicle_safety_time_margin: 1.0
-          lateral_distance_max_threshold: 2.0
-          longitudinal_distance_min_threshold: 3.0
+          expected_front_deceleration: -1.5
+          expected_rear_deceleration: -2.0
+          rear_vehicle_reaction_time: 1.0
+          rear_vehicle_safety_time_margin: 0.7
+          lateral_distance_max_threshold: 1.0
+          longitudinal_distance_min_threshold: 2.0
           longitudinal_velocity_delta_time: 0.0
           extended_polygon_policy: "rectangle"
 
@@ -95,8 +95,8 @@
       # lateral acceleration map
       lateral_acceleration:
         velocity: [0.0, 4.0, 10.0]
-        min_values: [0.4, 0.4, 0.4]
-        max_values: [0.65, 0.65, 0.65]
+        min_values: [0.15, 0.15, 0.15]
+        max_values: [0.5, 0.5, 0.5]
 
       # target object
       target_object:
@@ -118,7 +118,7 @@
         prediction_time_resolution: 0.5
         th_incoming_object_yaw: 2.3562 # [rad]
         yaw_diff_threshold: 3.1416 # [rad]
-        check_current_lanes: false
+        check_current_lanes: true
         check_other_lanes: false
         use_all_predicted_paths: false
 
@@ -136,13 +136,13 @@
       # lane change cancel
       cancel:
         enable_on_prepare_phase: true
-        enable_on_lane_changing_phase: true
-        delta_time: 1.0                     # [s]
+        enable_on_lane_changing_phase: false
+        delta_time: 2.0                     # [s]
         duration: 5.0                       # [s]
         max_lateral_jerk: 100.0             # [m/s3]
         overhang_tolerance: 0.0             # [m]
         unsafe_hysteresis_threshold: 5      # [/]
-        deceleration_sampling_num: 5 # [/]
+        deceleration_sampling_num: 1 # [/]
 
       lane_change_finish_judge_buffer: 2.0      # [m]
       finish_judge_lateral_threshold: 0.1        # [m]

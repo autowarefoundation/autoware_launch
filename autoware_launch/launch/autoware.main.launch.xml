@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Essential parameters -->
+  <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
+  <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
+  <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
+
+  <!-- launch module preset -->
+  <arg name="planning_module_preset" default="x2" description="planning module preset"/>
+  <arg name="control_module_preset" default="x2" description="control module preset"/>
+
+  <!-- Optional parameters -->
+  <!-- Modules to be launched -->
+  <arg name="launch_vehicle" default="true" description="launch vehicle"/>
+  <arg name="launch_system" default="true" description="launch system"/>
+  <arg name="launch_map" default="true" description="launch map"/>
+  <arg name="launch_sensing" default="true" description="launch sensing"/>
+  <arg name="launch_sensing_driver" default="true" description="launch sensing driver"/>
+  <arg name="launch_localization" default="true" description="launch localization"/>
+  <arg name="launch_perception" default="true" description="launch perception"/>
+  <arg name="launch_planning" default="true" description="launch planning"/>
+  <arg name="launch_control" default="true" description="launch control"/>
+  <arg name="launch_api" default="true" description="launch api"/>
+  <arg name="launch_v2x" default="true" description="launch V2X"/>
+  <arg name="launch_l4_toolkit" default="true" description="launch L4 Toolkit"/>
+  <!-- Global parameters -->
+  <arg name="use_sim_time" default="false" description="use_sim_time"/>
+  <arg name="is_main_ecu" default="true"/>
+  <arg name="is_redundant" default="true"/>
+  <arg name="is_60kph" default="false"/>
+  <arg name="use_control_command_gate" default="true"/>
+  <!-- Vehicle -->
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
+  <arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"/>
+  <!-- Control -->
+  <arg name="check_external_emergency_heartbeat" default="false"/>
+  <!-- Map -->
+  <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
+  <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <!-- System -->
+  <arg name="system_run_mode" default="online" description="run mode in system"/>
+  <arg name="launch_system_monitor" default="true" description="launch system monitor"/>
+  <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
+  <arg
+    name="diagnostic_graph_aggregator_graph_path"
+    default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.debug.main.yaml"
+    description="diagnostic graph config for redundancy"
+  />
+  <arg name="diagnostic_graph_aggregator_param_path" default="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/diagnostic_graph_aggregator.redundancy.main.param.yaml"/>
+  <!-- <arg
+    name="diagnostic_graph_aggregator_graph_path"
+    default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.vehicle-test.main.yaml"
+    description="diagnostic graph config for redundancy vehicle test"/> -->
+  <!-- Tools -->
+  <arg name="rviz" default="false" description="launch rviz"/>
+  <arg name="rviz_config_name" default="autoware_x2.rviz" description="rviz config name"/>
+  <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/$(var rviz_config_name)" description="rviz config path"/>
+  <arg name="rviz_respawn" default="true"/>
+  <!-- Perception -->
+  <arg name="perception_mode" default="camera_lidar_fusion" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
+  <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
+  <arg name="centerpoint_model_path" default="/opt/autoware/mlmodels/centerpoint" description="path of centerpoint model file"/>
+  <!-- Auto mode setting-->
+  <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
+  <arg name="is_simulation" default="false" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
+  <!-- L4 tool kit-->
+  <arg name="daytime_monitor_param_file" default="$(find-pkg-share daytime_monitor)/config/daytime_monitor.param.yaml" description="daytime_monitor config"/>
+  <!-- Agnocast -->
+  <arg name="use_system_agnocast_heaphook" default="true" description="true: apt installed library, false: locally built"/>
+  <let name="agnocast_heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so" if="$(var use_system_agnocast_heaphook)"/>
+  <let name="agnocast_heaphook_path" value="$(env AGNOCAST_HEAPHOOK_PATH)" unless="$(var use_system_agnocast_heaphook)"/>
+
+  <!-- Global parameters -->
+  <group scoped="false">
+    <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+  <!-- Pointcloud container -->
+  <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+    <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+    <arg name="use_multithread" value="true"/>
+    <arg name="container_name" value="$(var pointcloud_container_name)"/>
+  </include>
+
+  <!-- Vehicle -->
+  <group if="$(var launch_vehicle)">
+    <include file="$(find-pkg-share tier4_vehicle_launch)/launch/vehicle.launch.xml">
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="sensor_model" value="$(var sensor_model)"/>
+      <arg name="vehicle_id" value="$(var vehicle_id)"/>
+      <arg name="is_redundant" value="$(var is_redundant)"/>
+      <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
+      <arg name="config_dir" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)"/>
+      <arg name="raw_vehicle_cmd_converter_param_path" value="$(find-pkg-share autoware_launch)/config/vehicle/raw_vehicle_cmd_converter/raw_vehicle_cmd_converter.param.yaml"/>
+    </include>
+  </group>
+
+  <!-- System -->
+  <group if="$(var launch_system)">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_system_component.launch.xml"/>
+  </group>
+
+  <!-- Map -->
+  <group if="$(var launch_map)">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_map_component.launch.xml"/>
+  </group>
+
+  <!-- Sensing -->
+  <group if="$(var launch_sensing)">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml">
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+    </include>
+  </group>
+
+  <!-- Localization -->
+  <group if="$(var launch_localization)">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_localization_component.launch.xml"/>
+  </group>
+
+  <!-- Perception -->
+  <group if="$(var launch_perception)">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_perception_component.launch.xml">
+      <arg name="data_path" value="$(var data_path)"/>
+    </include>
+  </group>
+
+  <!-- Planning -->
+  <group if="$(var launch_planning)">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_planning_component.launch.xml">
+      <arg name="module_preset" value="$(var planning_module_preset)"/>
+      <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
+      <arg name="is_simulation" value="$(var is_simulation)"/>
+      <arg name="is_60kph" value="$(var is_60kph)"/>
+    </include>
+  </group>
+
+  <!-- Control -->
+  <group if="$(var launch_control)">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
+      <arg name="module_preset" value="$(var control_module_preset)"/>
+    </include>
+  </group>
+
+  <!-- Redundancy Switcher Interface -->
+  <include file="$(find-pkg-share redundancy_switcher_interface)/launch/redundancy_switcher_interface.launch.xml">
+    <arg name="param_file" value="$(find-pkg-share redundancy_switcher_interface)/config/redundancy_switcher_interface.main.param.yaml"/>
+    <arg name="input_mrm_state" value="/system/fail_safe/mrm_state"/>
+  </include>
+
+  <!-- Redundancy Relay Manager -->
+  <include file="$(find-pkg-share autoware_redundancy_relay_manager)/launch/redundancy_relay_manager.launch.xml">
+    <arg name="config_file" value="$(find-pkg-share autoware_redundancy_relay_manager)/config/redundancy_relay_manager.param.yaml"/>
+  </include>
+
+  <!-- Topic Relay Controller -->
+  <include file="$(find-pkg-share autoware_topic_relay_controller)/launch/topic_relay_controller.launch.xml">
+    <arg name="node_name_suffix" value="trajectory"/>
+    <arg name="config_file" value="$(find-pkg-share autoware_launch)/config/system/topic_relay_controller/planning_scenario_planning_trajectory.param.yaml"/>
+  </include>
+
+  <include file="$(find-pkg-share autoware_topic_relay_controller)/launch/topic_relay_controller.launch.xml">
+    <arg name="node_name_suffix" value="pose_with_covariance"/>
+    <arg name="config_file" value="$(find-pkg-share autoware_launch)/config/system/topic_relay_controller/localization_pose_with_covariance.param.yaml"/>
+  </include>
+
+  <group if="$(eval &quot;'$(var system_run_mode)'=='planning_simulation'&quot;)">
+    <!-- control cmd switcher-->
+    <include file="$(find-pkg-share control_cmd_switcher)/launch/control_cmd_switcher.launch.xml"/>
+  </group>
+
+  <group unless="$(eval &quot;'$(var system_run_mode)'=='planning_simulation'&quot;)">
+    <!-- topic state monitor for pose_with_covariance-->
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="pose_estimator_pose_with_covariance"/>
+      <arg name="topic" value="/localization/pose_estimator/pose_with_covariance"/>
+      <arg name="topic_type" value="geometry_msgs/msg/PoseWithCovarianceStamped"/>
+      <arg name="diag_name" value="publish_to_sub_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include>
+
+    <!-- dummy diag publisher: for vehicle test -->
+    <!-- <arg name="launch_rqt_reconfigure" default="false"/>
+    <arg name="launch_rqt_runtime_monitor" default="false"/>
+    <arg name="launch_rqt_robot_monitor" default="false"/>
+    <arg name="launch_rqt_runtime_monitor_err" default="false"/>
+
+    <include file="$(find-pkg-share autoware_dummy_diag_publisher)/launch/dummy_diag_publisher.launch.xml">
+      <arg name="config_file" value="$(find-pkg-share autoware_dummy_diag_publisher)/config/_empty.param.yaml"/>
+      <arg name="extra_config_file_sensor" value="$(find-pkg-share autoware_dummy_diag_publisher)/config/_empty.param.yaml"/>
+      <arg name="update_rate" value="10.0"/>
+      <arg name="launch_rqt_reconfigure" value="$(var launch_rqt_reconfigure)"/>
+      <arg name="launch_rqt_runtime_monitor" value="$(var launch_rqt_runtime_monitor)"/>
+      <arg name="launch_rqt_robot_monitor" value="$(var launch_rqt_robot_monitor)"/>
+      <arg name="launch_rqt_runtime_monitor_err" value="$(var launch_rqt_runtime_monitor_err)"/>
+    </include> -->
+  </group>
+
+  <!-- API -->
+  <group if="$(var launch_api)">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_autoware_api_component.launch.xml"/>
+  </group>
+
+  <!-- V2X -->
+  <group if="$(var launch_v2x)">
+    <include file="$(find-pkg-share jpn_signal_launcher)/launch/jpn_signal.launch.xml">
+      <arg name="map_path" value="$(var map_path)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="vehicle_id" value="1"/>
+    </include>
+  </group>
+
+  <!-- L4 Toolkit -->
+  <group if="$(var launch_l4_toolkit)">
+    <include file="$(find-pkg-share l4_toolkit_launch)/launch/l4_toolkit.launch.xml">
+      <arg name="daytime_monitor_param_file" value="$(var daytime_monitor_param_file)"/>
+    </include>
+  </group>
+
+  <!-- Tools -->
+  <group>
+    <node
+      pkg="rviz2"
+      exec="rviz2"
+      name="rviz2"
+      output="screen"
+      args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png"
+      if="$(var rviz)"
+      respawn="$(var rviz_respawn)"
+    >
+      <env name="QT_QPA_PLATFORMTHEME" value="qt5ct"/>
+    </node>
+  </group>
+</launch>

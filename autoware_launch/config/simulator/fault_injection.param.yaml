@@ -1,37 +1,203 @@
 /**:
   ros__parameters:
     event_diag_list:
-      vehicle_is_out_of_lane: "lane_departure"
-      trajectory_deviation_is_high: "trajectory_deviation"
-      localization_matching_score_is_low: "scan_matching_status"
-      localization_accuracy_is_low: "localization_error_ellipse"
-      map_version_is_different: "map_version"
-      trajectory_is_invalid: "trajectory_point_validation"
-      cpu_temperature_is_high: "CPU Temperature"
-      cpu_usage_is_high: "CPU Usage"
-      cpu_is_in_thermal_throttling: "CPU Thermal Throttling"
-      storage_temperature_is_high: "HDD Temperature"
-      storage_usage_is_high: "HDD Usage"
-      network_usage_is_high: "Network Usage"
-      clock_error_is_large: "NTP Offset"
-      gpu_temperature_is_high: "GPU Temperature"
-      gpu_usage_is_high: "GPU Usage"
-      gpu_memory_usage_is_high: "GPU Memory Usage"
-      gpu_is_in_thermal_throttling: "GPU Thermal Throttling"
-      driving_recorder_storage_error: "driving_recorder"
-      debug_data_logger_storage_error: "bagpacker"
-      emergency_stop_operation: "emergency_stop_operation"
-      vehicle_error_occurred: "vehicle_errors"
-      vehicle_ecu_connection_is_lost: "can_bus_connection"
-      obstacle_crash_sensor_is_activated: "obstacle_crash"
-      /control/command_gate/node_alive_monitoring: "vehicle_cmd_gate: heartbeat"
-      /control/autonomous_driving/node_alive_monitoring: "control_topic_status"
-      /control/external_command_selector/node_alive_monitoring: "external_cmd_selector: heartbeat"
-      /localization/node_alive_monitoring: "localization_topic_status"
-      /map/node_alive_monitoring: "map_topic_status"
-      /planning/node_alive_monitoring: "planning_topic_status"
-      /sensing/lidar/node_alive_monitoring: "lidar_topic_status"
-      /sensing/imu/node_alive_monitoring: "imu_connection"
-      /sensing/gnss/node_alive_monitoring: "gnss_connection"
-      /system/node_alive_monitoring: "system_topic_status"
-      /vehicle/node_alive_monitoring: "vehicle_topic_status"
+      # Hardware
+      # CPU
+      CPU-001: "cpu_monitor: CPU Temperature"
+      CPU-002: "cpu_monitor: CPU Usage"
+      CPU-003: "cpu_monitor: CPU Load Average"
+      CPU-004: "cpu_monitor: CPU Thermal Throttling"
+      CPU-005: "cpu_monitor: CPU Frequency"
+
+      # HDD
+      HDD-001: "hdd_monitor: HDD Temperature"
+      HDD-002: "hdd_monitor: HDD Usage"
+      HDD-003: "hdd_monitor: HDD Connection"
+      HDD-004: "hdd_monitor: HDD TotalDataWritten"
+      HDD-005: "hdd_monitor: HDD PowerOnHours"
+      HDD-006: "hdd_monitor: HDD RecoveredError"
+      HDD-007-1: "hdd_monitor: HDD ReadDataRate"
+      HDD-007-2: "hdd_monitor: HDD WriteDataRate"
+      HDD-007-3: "hdd_monitor: HDD ReadIOPS"
+      HDD-007-4: "hdd_monitor: HDD WriteIOPS"
+
+      # Memory
+      MEM-001: "mem_monitor: Memory Usage"
+      MEM-002: "mem_monitor: Memory ECC"
+
+      # Network
+      NET-001: "net_monitor: Network Usage"
+      NET-002: "net_monitor: Network Traffic"
+      NET-003: "net_monitor: Network CRC Error"
+      NET-004: "net_monitor: IP Packet Reassembles Failed"
+
+      # NTP
+      NTP-001: "ntp_monitor: NTP Offset"
+
+      # Process
+      PRO-001: "process_monitor: Tasks Summary"
+      PRO-002-0: "process_monitor: High-load Proc[0]"
+      PRO-002-1: "process_monitor: High-load Proc[1]"
+      PRO-002-2: "process_monitor: High-load Proc[2]"
+      PRO-002-3: "process_monitor: High-load Proc[3]"
+      PRO-002-4: "process_monitor: High-load Proc[4]"
+      PRO-003-0: "process_monitor: High-mem Proc[0]"
+      PRO-003-1: "process_monitor: High-mem Proc[1]"
+      PRO-003-2: "process_monitor: High-mem Proc[2]"
+      PRO-003-3: "process_monitor: High-mem Proc[3]"
+      PRO-003-4: "process_monitor: High-mem Proc[4]"
+
+      # GPU
+      GPU-001: "gpu_monitor: GPU Temperature"
+      GPU-002: "gpu_monitor: GPU Usage"
+      GPU-003: "gpu_monitor: GPU Memory Usage"
+      GPU-004: "gpu_monitor: GPU Thermal Throttling"
+      GPU-005: "gpu_monitor: GPU Frequency"
+
+      # BIOS
+      BIOS-001: "voltage_monitor: CMOS Battery Status"
+
+      # MOT
+      MOT-001: "mot: /system/mot_connection : mot heartbeat"
+
+      # SIGNAGE
+      SIGNAGE-001: "signage: /system/signage_connection : signage heartbeat"
+
+      # VOICE
+      VOICE-001: "vehicle_voice_alert_system: /system/voice_alert_system_connection : voice alert system heartbeat"
+
+      # REDUNDANCY
+      REDUNDANCY-001: "topic_state_monitor_pose_estimator_pose_with_covariance: publish_to_sub_status"
+
+      # Sensing
+      # IMU
+      IMU-001: "imu_monitor: yaw_rate_status"
+      IMU-002: "topic_state_monitor_imu_data: imu_topic_status"
+      IMU-003: "gyro_bias_estimator: gyro_bias_validator"
+
+      # GNS
+      GNS-001: "topic_state_monitor_gnss_pose: gnss_topic_status"
+      GNS-002: "septentrio_driver: Quality indicators"
+
+      # LiDAR
+      PNDR-001/front_lower: "/sensing/lidar/front_lower/hesai_ros_wrapper_node: hesai_status"
+      PNDR-001/front_upper: "/sensing/lidar/front_upper/hesai_ros_wrapper_node: hesai_status"
+      PNDR-001/left_lower: "/sensing/lidar/left_lower/hesai_ros_wrapper_node: hesai_status"
+      PNDR-001/left_upper: "/sensing/lidar/left_upper/hesai_ros_wrapper_node: hesai_status"
+      PNDR-001/right_lower: "/sensing/lidar/right_lower/hesai_ros_wrapper_node: hesai_status"
+      PNDR-001/right_upper: "/sensing/lidar/right_upper/hesai_ros_wrapper_node: hesai_status"
+      PNDR-001/rear_lower: "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: hesai_status"
+      PNDR-001/rear_upper: "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: hesai_status"
+      PNDR-002/front_lower: "/sensing/lidar/front_lower/hesai_ros_wrapper_node: hesai_temperature"
+      PNDR-002/front_upper: "/sensing/lidar/front_upper/hesai_ros_wrapper_node: hesai_temperature"
+      PNDR-002/left_lower: "/sensing/lidar/left_lower/hesai_ros_wrapper_node: hesai_temperature"
+      PNDR-002/left_upper: "/sensing/lidar/left_upper/hesai_ros_wrapper_node: hesai_temperature"
+      PNDR-002/right_lower: "/sensing/lidar/right_lower/hesai_ros_wrapper_node: hesai_temperature"
+      PNDR-002/right_upper: "/sensing/lidar/right_upper/hesai_ros_wrapper_node: hesai_temperature"
+      PNDR-002/rear_lower: "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: hesai_temperature"
+      PNDR-002/rear_upper: "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: hesai_temperature"
+      PNDR-003/front_lower: "/sensing/lidar/front_lower/hesai_ros_wrapper_node: hesai_ptp"
+      PNDR-003/front_upper: "/sensing/lidar/front_upper/hesai_ros_wrapper_node: hesai_ptp"
+      PNDR-003/left_lower: "/sensing/lidar/left_lower/hesai_ros_wrapper_node: hesai_ptp"
+      PNDR-003/left_upper: "/sensing/lidar/left_upper/hesai_ros_wrapper_node: hesai_ptp"
+      PNDR-003/right_lower: "/sensing/lidar/right_lower/hesai_ros_wrapper_node: hesai_ptp"
+      PNDR-003/right_upper: "/sensing/lidar/right_upper/hesai_ros_wrapper_node: hesai_ptp"
+      PNDR-003/rear_lower: "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: hesai_ptp"
+      PNDR-003/rear_upper: "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: hesai_ptp"
+
+      # CAMERA
+      LPD-001/camera0: "v4l2_camera_camera0: capture_status"
+      LPD-001/camera1: "v4l2_camera_camera1: capture_status"
+      LPD-001/camera2: "v4l2_camera_camera2: capture_status"
+      LPD-001/camera3: "v4l2_camera_camera3: capture_status"
+      LPD-001/camera4: "v4l2_camera_camera4: capture_status"
+      LPD-001/camera5: "v4l2_camera_camera5: capture_status"
+      LPD-001/camera6: "v4l2_camera_camera6: capture_status"
+      LPD-001/camera7: "v4l2_camera_camera7: capture_status"
+
+      # RADAR
+      SENSING-001/front_center: "topic_state_monitor_radar_front_center: radar_front_center_topic_status"
+      SENSING-001/front_left: "topic_state_monitor_radar_front_left: radar_front_left_topic_status"
+      SENSING-001/front_right: "topic_state_monitor_radar_front_right: radar_front_right_topic_status"
+      SENSING-001/rear_center: "topic_state_monitor_radar_rear_center: radar_rear_center_topic_status"
+      SENSING-001/rear_left: "topic_state_monitor_radar_rear_left: radar_rear_left_topic_status"
+      SENSING-001/rear_right: "topic_state_monitor_radar_rear_right: radar_rear_right_topic_status"
+
+      # Software
+      # Map
+      MAP-001-1: "topic_state_monitor_vector_map: map_topic_status"
+      MAP-001-2: "topic_state_monitor_pointcloud_map: map_topic_status"
+
+      # Localization
+      LOCALIZATION-001-1: "topic_state_monitor_initialpose3d: localization_topic_status"
+      LOCALIZATION-001-2: "topic_state_monitor_pose_twist_fusion_filter_pose: localization_topic_status"
+      LOCALIZATION-002: "topic_state_monitor_transform_map_to_base_link: localization_topic_status"
+      LOCALIZATION-003: "ndt_scan_matcher: scan_matching_status"
+      LOCALIZATION-004: "localization_error_monitor: ellipse_error_status"
+
+      # Perception
+      PERCEPTION-001-1: "topic_state_monitor_traffic_light_recognition_traffic_signals: perception_topic_status"
+      PERCEPTION-001-2: "topic_state_monitor_object_recognition_objects: perception_topic_status"
+      PERCEPTION-001-3: "topic_state_monitor_obstacle_segmentation_pointcloud: perception_topic_status"
+      PERCEPTION-002: "multi_object_tracker: Perception delay check from original header stamp"
+
+      # Planning
+      PLANNING-001-1: "topic_state_monitor_mission_planning_route: planning_topic_status"
+      PLANNING-001-2: "topic_state_monitor_scenario_planning_trajectory: planning_topic_status"
+      PLANNING-003: "planning_validator: trajectory_validation_finite"
+      PLANNING-004: "planning_validator: trajectory_validation_interval"
+      PLANNING-005: "planning_validator: trajectory_validation_curvature"
+      PLANNING-006: "planning_validator: trajectory_validation_relative_angle"
+      PLANNING-007: "planning_validator: trajectory_validation_lateral_acceleration"
+      PLANNING-008: "planning_validator: trajectory_validation_acceleration"
+      PLANNING-009: "planning_validator: trajectory_validation_deceleration"
+      PLANNING-010: "planning_validator: trajectory_validation_steering"
+      PLANNING-011: "planning_validator: trajectory_validation_steering_rate"
+      PLANNING-012: "planning_validator: trajectory_validation_velocity_deviation"
+      PLANNING-013: "collision_checker: collision_check"
+
+      # Control
+      CONTROL-001: "topic_state_monitor_control_command_control_cmd: control_topic_status"
+      CONTROL-003: "vehicle_cmd_gate: heartbeat"
+      CONTROL-004: "lane_departure_checker_node: lane_departure"
+      CONTROL-005: "lane_departure_checker_node: trajectory_deviation"
+      CONTROL-007: "external_cmd_converter: remote_control_topic_status"
+      CONTROL-008: "external_cmd_selector: heartbeat"
+      CONTROL-009: "autonomous_emergency_braking: aeb_emergency_stop"
+      CONTROL-010: "control_validator: control_validation_max_distance_deviation"
+      CONTROL-011: "slip_detector: slip_status"
+      CONTROL-collision_detector: "collision_detector: collision_detect"
+      CONTROL-rolling_back: "control_validator: control_validation_rolling_back"
+      CONTROL-over_velocity: "control_validator: control_validation_over_velocity"
+
+      # Vehicle
+      VEHICLE-001-1: "topic_state_monitor_vehicle_status_velocity_status: vehicle_topic_status"
+      VEHICLE-001-2: "topic_state_monitor_vehicle_status_steering_status: vehicle_topic_status"
+      VEHICLE-005: "j6_interface: vehicle_heartbeat_errors"
+      VEHICLE-006: "j6_interface: vehicle_errors"
+      VEHICLE-007: "j6_interface: vehicle_emergency_button"
+
+      # System
+      SYSTEM-001: "topic_state_monitor_system_emergency_control_cmd: system_topic_status"
+      SYSTEM-002: "vehicle_cmd_gate: emergency_stop_operation"
+      SYSTEM-003: "rosbag_status"
+      SYSTEM-004: "disk1_status"
+      SYSTEM-005: "edge_core_internet_connection"
+      SYSTEM-006: "disk2_status"
+
+      # Others
+      OTHERS-002/front_lower: "blockage_return_diag: /sensing/lidar/front_lower: blockage_validation"
+      OTHERS-002/front_upper: "blockage_return_diag: /sensing/lidar/front_upper: blockage_validation"
+      OTHERS-002/left_lower: "blockage_return_diag: /sensing/lidar/left_lower: blockage_validation"
+      OTHERS-002/left_upper: "blockage_return_diag: /sensing/lidar/left_upper: blockage_validation"
+      OTHERS-002/right_lower: "blockage_return_diag: /sensing/lidar/right_lower: blockage_validation"
+      OTHERS-002/right_upper: "blockage_return_diag: /sensing/lidar/right_upper: blockage_validation"
+      OTHERS-002/rear_lower: "blockage_return_diag: /sensing/lidar/rear_lower: blockage_validation"
+      OTHERS-002/rear_upper: "blockage_return_diag: /sensing/lidar/rear_upper: blockage_validation"
+      OTHERS-004: "concatenate_data: concat_status"
+      OTHERS-005/front_lower: "dual_return_filter: /sensing/lidar/front_lower: visibility_validation"
+      OTHERS-005/right_upper: "dual_return_filter: /sensing/lidar/right_upper: visibility_validation"
+      OTHERS-005/left_upper: "dual_return_filter: /sensing/lidar/left_upper: visibility_validation"
+      OTHERS-010: "emergency_vehicle_detector_main: emergency_vehicle"
+      OTHERS-011: "daytime_monitor: daytime_status"
+      OTHERS-012: "vehicle_stuck_checker: vehicle_stuck_check"
