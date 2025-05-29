@@ -8,7 +8,7 @@ units:
         list:
           - { type: link, link: /autoware/planning/topic_rate_check/route }
           - { type: link, link: /autoware/planning/topic_rate_check/trajectory }
-          - { type: link, link: /autoware/planning/trajectory_validation }
+          # - { type: link, link: /autoware/planning/trajectory_validation }
 
   - path: /autoware/planning/trajectory_validation
     type: and
