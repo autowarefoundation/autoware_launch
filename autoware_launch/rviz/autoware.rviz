@@ -269,7 +269,7 @@ Visualization Manager:
           Enabled: true
           Name: Vehicle
         - Class: autoware_string_stamped_rviz_plugin/StringStampedOverlayDisplay
-          Enabled: true
+          Enabled: false
           Font Size: 11
           Left: 10
           Max Letter Num: 70
