@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 FILE_REFERENCE="$1"
 FILE_TARGET="$2"

@@ -1,56 +1,51 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 CAMERA_TOPIC_NAME="${1:-/sensing/camera/image}"
 
-CURRENT_DIR=$(
+SCRIPT_DIR=$(
     cd "$(dirname "$0")" || exit
     pwd
 )
 
+# get autoware_launch directory
+AUTOWARE_LAUNCH_DIR="$SCRIPT_DIR"/../../
+
+# define rviz files
+AUTOWARE_RVIZ="$AUTOWARE_LAUNCH_DIR"/rviz/autoware.rviz
+PLANNING_BEV_RVIZ="$AUTOWARE_LAUNCH_DIR"/rviz/planning_bev.rviz
+PLANNING_TPV_RVIZ="$AUTOWARE_LAUNCH_DIR"/rviz/planning_tpv.rviz
+
 # planning_bev.rviz
 ## 1. replace 'Displays:' block
-"$CURRENT_DIR"/replace_displays_block.sh "$CURRENT_DIR"/../autoware.rviz "$CURRENT_DIR"/../planning_bev.rviz
+"$SCRIPT_DIR"/replace_displays_block.sh "$AUTOWARE_RVIZ" "$PLANNING_BEV_RVIZ"
 ## 2. enable Debug/Planning
-sed -i 'N;/      Enabled: false\n      Name: Debug/ {s/false/true/g};P;D' "$CURRENT_DIR"/../planning_bev.rviz
-sed -i 'N;/          Enabled: false\n          Name: Planning/ {s/false/true/g};P;D' "$CURRENT_DIR"/../planning_bev.rviz
+sed -i 'N;/      Enabled: false\n      Name: Debug/ {s/false/true/g};P;D' "$PLANNING_BEV_RVIZ"
+sed -i 'N;/          Enabled: false\n          Name: Planning/ {s/false/true/g};P;D' "$PLANNING_BEV_RVIZ"
 ## 3. add camera image
-camera_image_block="        - Class: rviz_default_plugins/Image
-          Enabled: true
-          Max Value: 1
-          Median window: 5
-          Min Value: 0
-          Name: Image
-          Normalize Range: true
-          Topic:
-            Depth: 5
-            Durability Policy: Volatile
-            History Policy: Keep Last
-            Reliability Policy: Best Effort
-            Value: ${CAMERA_TOPIC_NAME}
-          Value: true"
-camera_image_block_escaped=$(printf '%s\n' "$camera_image_block" | sed ':a;N;$!ba;s/\n/\\n/g')
-sed -i "/        - Class: autoware_string_stamped_rviz_plugin\/StringStampedOverlayDisplay/i\\${camera_image_block_escaped}" "$CURRENT_DIR"/../planning_bev.rviz
+CAMERA_IMAGE_BLOCK="    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Image
+      Normalize Range: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: ${CAMERA_TOPIC_NAME}
+      Value: true"
+CAMERA_IMAGE_BLOCK_ESCAPED=$(printf '%s\n' "$CAMERA_IMAGE_BLOCK" | sed ':a;N;$!ba;s/\n/\\n/g')
+sed -i "/^  Enabled: true$/{N;/^  Enabled: true\n  Global Options:\$/i\\$CAMERA_IMAGE_BLOCK_ESCAPED
+}" "$PLANNING_BEV_RVIZ"
 
 # planning_tpv.rviz
 ## 1. replace 'Displays:' block
-"$CURRENT_DIR"/replace_displays_block.sh "$CURRENT_DIR"/../autoware.rviz "$CURRENT_DIR"/../planning_tpv.rviz
+"$SCRIPT_DIR"/replace_displays_block.sh "$AUTOWARE_RVIZ" "$PLANNING_TPV_RVIZ"
 ## 2. enable Debug/Planning
-sed -i 'N;/      Enabled: false\n      Name: Debug/ {s/false/true/g};P;D' "$CURRENT_DIR"/../planning_tpv.rviz
-sed -i 'N;/          Enabled: false\n          Name: Planning/ {s/false/true/g};P;D' "$CURRENT_DIR"/../planning_tpv.rviz
+sed -i 'N;/      Enabled: false\n      Name: Debug/ {s/false/true/g};P;D' "$PLANNING_TPV_RVIZ"
+sed -i 'N;/          Enabled: false\n          Name: Planning/ {s/false/true/g};P;D' "$PLANNING_TPV_RVIZ"
 ## 3. add camera image
-camera_image_block="        - Class: rviz_default_plugins/Image
-          Enabled: true
-          Max Value: 1
-          Median window: 5
-          Min Value: 0
-          Name: Image
-          Normalize Range: true
-          Topic:
-            Depth: 5
-            Durability Policy: Volatile
-            History Policy: Keep Last
-            Reliability Policy: Best Effort
-            Value: ${CAMERA_TOPIC_NAME}
-          Value: true"
-camera_image_block_escaped=$(printf '%s\n' "$camera_image_block" | sed ':a;N;$!ba;s/\n/\\n/g')
-sed -i "/        - Class: autoware_string_stamped_rviz_plugin\/StringStampedOverlayDisplay/i\\${camera_image_block_escaped}" "$CURRENT_DIR"/../planning_tpv.rviz
+sed -i "/^  Enabled: true$/{N;/^  Enabled: true\n  Global Options:\$/i\\$CAMERA_IMAGE_BLOCK_ESCAPED
+}" "$PLANNING_TPV_RVIZ"
