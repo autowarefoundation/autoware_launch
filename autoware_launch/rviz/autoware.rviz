@@ -3928,6 +3928,38 @@ Visualization Manager:
           Displays: ~
           Enabled: false
           Name: Control
+        - Class: rviz_common/Group
+          Displays:
+            - Class: rviz_common/Group
+              Displays:
+                - Class: rviz_plugins/AccelerationMeter
+                  Emergency Color: 255; 80; 80
+                  Enabled: true
+                  Left: 896
+                  Length: 256
+                  Max Emergency Threshold: 1
+                  Min Emergency Threshold: -2.5
+                  Name: AccelerationMeter
+                  Text Color: 25; 255; 240
+                  Top: 128
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /localization/acceleration
+                  Value: true
+                  Value Scale: 0.14999249577522278
+                  Value height offset: 0
+                  Value: true
+              Enabled: true
+              Name: Info
+            - Class: rviz_common/Group
+              Displays: ~
+              Enabled: false
+              Name: Debug
+          Enabled: false
+          Name: Vehicle
       Enabled: false
       Name: Debug
   Enabled: true
