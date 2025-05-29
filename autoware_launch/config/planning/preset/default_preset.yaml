@@ -148,3 +148,6 @@ launch:
   - arg:
       name: launch_trajectory_checker
       default: "true"
+  - arg:
+      name: launch_collision_checker
+      default: "true"
