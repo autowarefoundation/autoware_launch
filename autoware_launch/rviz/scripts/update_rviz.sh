@@ -39,6 +39,8 @@ CAMERA_IMAGE_BLOCK="    - Class: rviz_default_plugins/Image
 CAMERA_IMAGE_BLOCK_ESCAPED=$(printf '%s\n' "$CAMERA_IMAGE_BLOCK" | sed ':a;N;$!ba;s/\n/\\n/g')
 sed -i "/^  Enabled: true$/{N;/^  Enabled: true\n  Global Options:\$/i\\$CAMERA_IMAGE_BLOCK_ESCAPED
 }" "$PLANNING_BEV_RVIZ"
+## 4. enable error_diag_graph visualization
+sed -i 'N;/        - Class: autoware_string_stamped_rviz_plugin\/StringStampedOverlayDisplay\n          Enabled: false/ {s/false/true/g};P;D' "$PLANNING_BEV_RVIZ"
 
 # planning_tpv.rviz
 ## 1. replace 'Displays:' block
@@ -49,3 +51,5 @@ sed -i 'N;/          Enabled: false\n          Name: Planning/ {s/false/true/g};
 ## 3. add camera image
 sed -i "/^  Enabled: true$/{N;/^  Enabled: true\n  Global Options:\$/i\\$CAMERA_IMAGE_BLOCK_ESCAPED
 }" "$PLANNING_TPV_RVIZ"
+## 4. enable error_diag_graph visualization
+sed -i 'N;/        - Class: autoware_string_stamped_rviz_plugin\/StringStampedOverlayDisplay\n          Enabled: false/ {s/false/true/g};P;D' "$PLANNING_TPV_RVIZ"
