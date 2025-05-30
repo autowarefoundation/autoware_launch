@@ -2,6 +2,15 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* feat(launch/components): launch in a component-wise manner (`#1469 <https://github.com/autowarefoundation/autoware_launch/issues/1469>`_)
+* insert args to autoware.launch.xml
+* remove component_wise_launch
+* style(pre-commit): autofix
+* launch component-wise
+* Contributors: Ryohsuke Mitsudome, Yutaka Kondo, pre-commit-ci[bot]
+
 0.44.1 (2025-05-12)
 -------------------
 * feat(duplicated_node_checker): ignore duplicate get parameter (`#1413 <https://github.com/autowarefoundation/autoware_launch/issues/1413>`_)
