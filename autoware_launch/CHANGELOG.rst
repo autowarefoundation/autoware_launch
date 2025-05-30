@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.44.2 (2025-05-30)
+-------------------
 * feat(launch/components): launch in a component-wise manner (`#1469 <https://github.com/autowarefoundation/autoware_launch/issues/1469>`_)
 * insert args to autoware.launch.xml
 * remove component_wise_launch
