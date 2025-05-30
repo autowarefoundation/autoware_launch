@@ -8,6 +8,20 @@
   <arg name="longitudinal_controller_mode" default="pid"/>
   <arg name="use_individual_control_param" default="false"/>
   <arg name="use_aeb_autoware_state_check" default="true"/>
+  <arg name="use_sim_time" default="false"/>
+  <arg name="vehicle_model" default="sample_vehicle"/>
+  <arg name="component_wise_launch" default="false"
+    description="Launch in a component-wise manner.
+    If true, this launch file will be launched in a component-wise manner.
+    If false, this launch file will be launched in the autoware.launch.xml."/>
+
+  <!-- Global parameters -->
+  <group if="$(var component_wise_launch)" scoped="false">
+    <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
 
   <let name="latlon_controller_param_path_dir" value="$(var vehicle_id)" if="$(var use_individual_control_param)"/>
   <let name="latlon_controller_param_path_dir" value="" unless="$(var use_individual_control_param)"/>
