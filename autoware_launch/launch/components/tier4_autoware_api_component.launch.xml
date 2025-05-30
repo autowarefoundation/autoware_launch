@@ -5,10 +5,13 @@
   <arg name="launch_deprecated_api" default="$(var scenario_simulation)"/>
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
-  <arg name="component_wise_launch" default="false"
+  <arg
+    name="component_wise_launch"
+    default="false"
     description="Launch in a component-wise manner.
     If true, this launch file will be launched in a component-wise manner.
-    If false, this launch file will be launched in the autoware.launch.xml."/>
+    If false, this launch file will be launched in the autoware.launch.xml."
+  />
 
   <!-- Global parameters -->
   <group if="$(var component_wise_launch)" scoped="false">
