@@ -10,8 +10,10 @@
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
   <exec_depend>autoware_gnss_poser</exec_depend>
+  <exec_depend>autoware_imu_corrector</exec_depend>
   <exec_depend>autoware_pointcloud_preprocessor</exec_depend>
   <exec_depend>autoware_vehicle_velocity_converter</exec_depend>
+  <exec_depend>common_awsim_labs_sensor_launch</exec_depend>
   <exec_depend>common_sensor_launch</exec_depend>
   <exec_depend>topic_tools</exec_depend>
   <exec_depend>ublox_gps</exec_depend>
