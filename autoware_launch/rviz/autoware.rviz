@@ -2163,21 +2163,6 @@ Visualization Manager:
             Reliability Policy: Reliable
             Value: /control/trajectory_follower/controller_node_exe/debug/markers
           Value: false
-        - Class: rviz_default_plugins/MarkerArray
-          Enabled: false
-          Name: Debug/AEB
-          Namespaces:
-            ego_path: true
-            ego_polygons: true
-            predicted_path: true
-            predicted_polygons: true
-          Topic:
-            Depth: 5
-            Durability Policy: Volatile
-            History Policy: Keep Last
-            Reliability Policy: Reliable
-            Value: /control/autonomous_emergency_braking/debug/markers
-          Value: false
       Enabled: true
       Name: Control
     - Class: rviz_common/Group
@@ -2203,7 +2188,6 @@ Visualization Manager:
               Value: true
               Visibility:
                 Control:
-                  Debug/AEB: true
                   Debug/MPC: true
                   Debug/PurePursuit: true
                   Predicted Trajectory: true
@@ -3925,7 +3909,30 @@ Visualization Manager:
           Enabled: false
           Name: Planning
         - Class: rviz_common/Group
-          Displays: ~
+          Displays:
+            - Class: rviz_common/Group
+              Displays:
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: AEB
+                  Namespaces:
+                    ego_path: true
+                    ego_polygons: true
+                    predicted_path: true
+                    predicted_polygons: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /control/autonomous_emergency_braking/debug/markers
+                  Value: false
+              Enabled: true
+              Name: Info
+            - Class: rviz_common/Group
+              Displays: ~
+              Enabled: false
+              Name: Debug
           Enabled: false
           Name: Control
         - Class: rviz_common/Group
