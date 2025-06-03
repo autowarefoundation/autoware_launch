@@ -69,12 +69,12 @@
         PEDESTRIAN:
           ignore:
             lanelet_subtypes: ["crosswalk", "walkway"]
-            start_ignore_time: 2.0  # [s] collisions are only ignored if happening after this time
+            start_ignore_time: 3.0  # [s] collisions are only ignored if happening after this time
             start_ignore_distance: 2.0 # [m] collisions are only ignored if happnening after this distance along the object's predicted path
           cut_predicted_paths:
             lanelet_subtypes: ["crosswalk", "walkway"]
-            start_cut_time: 2.0  # [s] predicted paths are cut starting from this time
-            start_cut_distance: 5.0 # [m] predicted paths are cut starting from this distance
+            start_cut_time: 3.0  # [s] predicted paths are cut starting from this time
+            start_cut_distance: 2.0 # [m] predicted paths are cut starting from this distance
         BICYCLE:
           ignore_collisions:
             lanelet_subtypes: ["crosswalk", "walkway"]
