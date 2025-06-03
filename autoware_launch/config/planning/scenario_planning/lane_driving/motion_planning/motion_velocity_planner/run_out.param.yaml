@@ -68,6 +68,7 @@
             start_cut_distance: 0.0 # [m] predicted paths are cut starting from this distance
         PEDESTRIAN:
           ignore:
+            if_stopped: true
             lanelet_subtypes: ["crosswalk", "walkway"]
             start_ignore_time: 3.0  # [s] collisions are only ignored if happening after this time
             start_ignore_distance: 2.0 # [m] collisions are only ignored if happnening after this distance along the object's predicted path
