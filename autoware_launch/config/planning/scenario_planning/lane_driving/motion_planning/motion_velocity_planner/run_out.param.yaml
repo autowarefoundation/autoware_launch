@@ -66,6 +66,7 @@
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to cut predicted paths
             preserved_duration: 0.0  # [s] predicted paths are cut starting from this time
             preserved_distance: 0.0 # [m] predicted paths are cut starting from this distance
+          standstill_duration_after_cut: 2.0  # [s] after cutting a predicted path, assume the object stands still at the last point for this duration
         PEDESTRIAN:
           ignore:
             if_stopped: true
