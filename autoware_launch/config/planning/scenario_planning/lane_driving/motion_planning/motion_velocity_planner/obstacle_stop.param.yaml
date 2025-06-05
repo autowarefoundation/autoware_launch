@@ -74,6 +74,7 @@
 
         outside_obstacle:
           estimation_time_horizon: 1.0
+          max_lateral_velocity: 5.0 # maximum lateral velocity to consider the obstacle as a stop obstacle [m/s]
           pedestrian_deceleration_rate: 1.0 # planner perceives pedestrians will stop with this rate to avoid unnecessary stops [m/ss]
           bicycle_deceleration_rate: 2.0 # planner perceives bicycles will stop with this rate to avoid unnecessary stops [m/ss]
 
