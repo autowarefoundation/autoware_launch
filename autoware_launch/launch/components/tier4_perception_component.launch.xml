@@ -143,6 +143,10 @@
       name="object_recognition_detection_radar_object_clustering_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/radar_object_clustering.param.yaml"
     />
+    <arg
+      name="object_recognition_detection_shape_estimation_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/shape_estimation/shape_estimation.param.yaml"
+    />
     <arg name="object_recognition_detection_lidar_model_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/lidar_model"/>
     <arg
       name="object_recognition_detection_object_velocity_splitter_radar_param_path"
