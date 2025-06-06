@@ -44,7 +44,7 @@
         DEFAULT:
           ignore:  # options to ignore some objects
             if_stopped: false # if true, object with a velocity bellow the threshold are ignored
-            stopped_velocity_threshold: 0.5  # [m/s]
+            stopped_velocity_threshold: 0.25  # [m/s]
             if_on_ego_trajectory: true  # if true, object located on the ego trajectory footprint are ignored
             if_behind_ego: true  # if true, objects located behind the ego vehicles are ignored
             polygon_types: ["NONE"]  # types of polygons in the vector map used to ignore objects
@@ -55,7 +55,7 @@
             polygon_types: ["NONE"]  # types of polygons in the vector map where collisions are ignored
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used where collisions are ignored
             start_ignore_time: 0.0  # [s] collisions are only ignored if happening after this time
-            start_ignore_distance: 0.0 # [m] collisions are only ignored if happnening after this distance along the ego trajectory
+            start_ignore_distance: 0.0 # [m] collisions are only ignored if happening after this distance along the ego trajectory
           confidence_filtering:
             threshold: 0.0  # [-] only use predicted paths with a higher confidence value than this threshold
             only_use_highest: true  # if true, only the path(s) with the highest confidence are used
@@ -66,18 +66,17 @@
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to cut predicted paths
             preserved_duration: 0.0  # [s] predicted paths are cut starting from this time
             preserved_distance: 0.0 # [m] predicted paths are cut starting from this distance
+          preserved_duration: 0.0  # [s] when cutting a predicted path or ignoring an object, at least this much duration is preserved from the predicted paths
+          preserved_distance: 0.0 # [m] when cutting a predicted path or ignoring an object, at least this much distance is preserved from the predicted paths
           standstill_duration_after_cut: 2.0  # [s] after cutting a predicted path, assume the object stands still at the last point for this duration
         PEDESTRIAN:
           ignore:
             if_stopped: true
-            stopped_velocity_threshold: 0.25  # [m/s]
             lanelet_subtypes: ["crosswalk", "walkway"]
-            preserved_duration: 3.0  # [s] collisions are only ignored if happening after this time
-            preserved_distance: 2.0 # [m] collisions are only ignored if happnening after this distance along the object's predicted path
           cut_predicted_paths:
             lanelet_subtypes: ["crosswalk", "walkway"]
-            preserved_duration: 3.0  # [s] predicted paths are cut starting from this time
-            preserved_distance: 2.0 # [m] predicted paths are cut starting from this distance
+          preserved_duration: 3.0  # [s] when cutting a predicted path or ignoring an object, at least this much duration is preserved from the predicted paths
+          preserved_distance: 2.0 # [m] when cutting a predicted path or ignoring an object, at least this much distance is preserved from the predicted paths
         BICYCLE:
           ignore_collisions:
             lanelet_subtypes: ["crosswalk", "walkway"]
