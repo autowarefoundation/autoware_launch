@@ -21,6 +21,8 @@
   <exec_depend>individual_params</exec_depend>
   <exec_depend>compressed_image_transport</exec_depend>
   <exec_depend>topic_tools</exec_depend>
+  <exec_depend>tier4_camera_sync_doctor</exec_depend>
+
 
   <exec_depend>autoware_tensorrt_yolox</exec_depend>
   <exec_depend>autoware_bytetrack</exec_depend>

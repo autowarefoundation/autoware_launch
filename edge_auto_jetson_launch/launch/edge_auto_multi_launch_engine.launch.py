@@ -22,6 +22,7 @@ from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
 import json
 from distutils.util import strtobool
+import os
 
 
 def create_camera_container(camera_id, container_name, use_multithread):
@@ -103,6 +104,49 @@ def create_image_diagnostics(camera_id, container_name):
     arguments = [("camera_id", str(camera_id)), ("container_name", container_name)]
     return IncludeLaunchDescription(include, launch_arguments=arguments)
 
+def create_camera_sync_doctor(
+        camera_id, container_name, use_sxpf,
+        trigger_id, trigger_time_tolerance_ns, camera_time_tolerance_ns
+):
+    package = FindPackageShare("edge_auto_jetson_launch")
+    include = PathJoinSubstitution(
+        [package, f"launch/camera_common/camera_sync_doctor.launch.xml"]
+    )
+    container_name = "" if container_name is "" else container_name + str(camera_id)
+
+    individual_param_package = FindPackageShare("individual_params")
+    individual_param_dir = PathJoinSubstitution(
+        [individual_param_package, "config", os.environ.get("VEHICLE_ID", "default"),
+         os.environ.get("SENSOR_MODEL", "aip_x2_gen2"), "tier4-c2/"]
+    )
+    if (use_sxpf):
+        camera_driver_param_path = PathJoinSubstitution(
+            [individual_param_dir, f"camera{camera_id}_sxpf.param.yaml"]
+        )
+        # sxpf param file also includes readout delay information
+        readout_delay_param_path = camera_driver_param_path
+    else:
+        camera_driver_param_path = PathJoinSubstitution(
+            [individual_param_dir, f"v4l2_{camera_id}.param.yaml"]
+        )
+        readout_delay_param_path = PathJoinSubstitution(
+            [individual_param_dir, f"readout_delay_{camera_id}.param.yaml"]
+        )
+
+    trigger_param_path = PathJoinSubstitution(
+            [individual_param_dir, f"camera{camera_id}_trigger.param.yaml"]
+    )
+
+    arguments = [
+        ("camera_id", str(camera_id)), ("container_name", container_name),
+        ("trigger_id", trigger_id),
+        ("camera_driver_param_path", camera_driver_param_path),
+        ("readout_delay_param_path", readout_delay_param_path),
+        ("trigger_time_tolerance_ns", trigger_time_tolerance_ns),
+        ("camera_time_tolerance_ns", camera_time_tolerance_ns)
+    ]
+    return IncludeLaunchDescription(include, launch_arguments=arguments)
+
 def launch_setup(context, *args, **kwargs):
 
     # Load all camera ids
@@ -123,6 +167,9 @@ def launch_setup(context, *args, **kwargs):
     yolox_precision = LaunchConfiguration("yolox_precision").perform(context)
     use_multithread = LaunchConfiguration("use_multithread").perform(context)
     build_engine_only = LaunchConfiguration("build_engine_only").perform(context)
+    trigger_id = LaunchConfiguration("trigger_id").perform(context)
+    trigger_time_tolerance_ns = LaunchConfiguration("trigger_time_tolerance_ns").perform(context)
+    camera_time_tolerance_ns = LaunchConfiguration("camera_time_tolerance_ns").perform(context)
 
     # Convert string to list safely
     object_recognition_camera_ids = json.loads(object_recognition_camera_ids)
@@ -167,12 +214,32 @@ def launch_setup(context, *args, **kwargs):
             for camera_id in camera_driver_camera_ids
         ]
         image_decompressors = []
+
+        # Run camera sync doctor for all related cameras
+        camera_sync_doctor_camera_ids = list(
+            set(camera_driver_camera_ids)
+            | set(object_recognition_camera_ids)
+            | set(traffic_light_camera_ids)
+        )
+        # If IDs for camera driver are not specified at all,
+        # that implies the camera drivers are executed outside of this launch package,
+        # i.e., the SXPF case
+        use_sxpf = (len(camera_driver_camera_ids) == 0)
+        container_name_sync_doc = "" if use_sxpf else container_name
+        camera_sync_doctors = [
+            create_camera_sync_doctor(
+                camera_id, container_name_sync_doc, use_sxpf, trigger_id,
+                trigger_time_tolerance_ns, camera_time_tolerance_ns
+            )
+            for camera_id in camera_sync_doctor_camera_ids
+        ]
     if not bool(strtobool(live_sensor)):
         camera_drivers = []
         image_decompressors = [
             create_image_decompressor(camera_id, container_name)
             for camera_id in camera_driver_camera_ids
         ]
+        camera_sync_doctors = []
 
     return (
         camera_containers
@@ -181,6 +248,7 @@ def launch_setup(context, *args, **kwargs):
         + camera_drivers
         + image_decompressors
         + image_diagnostics
+        + camera_sync_doctors
     )
 
 
@@ -214,6 +282,17 @@ def generate_launch_description():
             ),
             DeclareLaunchArgument(
                 "build_engine_only", description="build engine only or not"
+            ),
+            DeclareLaunchArgument(
+                "trigger_id", description="camera id under which trigger_time is published "
+            ),
+            DeclareLaunchArgument(
+                "trigger_time_tolerance_ns",
+                description="tolerance time in nanoseconds for trigger sync diagnostic"
+            ),
+            DeclareLaunchArgument(
+                "camera_time_tolerance_ns",
+                description="tolerance time in nanoseconds for camera sync diagnostic"
             ),
             OpaqueFunction(function=launch_setup),
         ]

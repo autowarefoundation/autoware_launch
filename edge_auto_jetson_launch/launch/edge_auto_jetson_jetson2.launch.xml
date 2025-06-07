@@ -10,10 +10,12 @@ This launch file sets up a Gen2 multi-camera perception pipeline that includes:
    - TensorRT-optimized YOLOX object detection
    - ByteTrack object tracking
 
-2. Traffic Light Detection Pipeline (for each camera):
+3. Traffic Light Detection Pipeline (for each camera):
    - Map based detector
    - Fine Detector
    - Traffic Light Classifier
+
+4. Camera Sync doctor (for each camera. configurable via live_sensor arg)
 
 Key Features:
 - Supports multiple cameras (configured via camera_ids arrays)
@@ -40,7 +42,11 @@ Integrators are free to hard-code ECU-specific parameters in this launch file,
 
   <!-- path to the yaml file that contains parameters for sensor_trigger node -->
   <arg name="launch_sensor_trigger" default="true"/>
-  <let name="sensor_trigger_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/camera4_trigger.param.yaml" />
+    <let name="trigger_id" value="4"/>
+  <let name="sensor_trigger_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/camera$(trigger_id)_trigger.param.yaml" />
+
+  <let name="trigger_time_tolerance_ns" value="1000000" />
+  <let name="camera_time_tolerance_ns"  value="10000000" />
 
   <!-- object recognition -->
   <include file="$(find-pkg-share edge_auto_jetson_launch)/launch/edge_auto_multi_launch_engine.launch.py">
@@ -52,6 +58,9 @@ Integrators are free to hard-code ECU-specific parameters in this launch file,
     <arg name="container_name" value="$(var container_name)" />
     <arg name="yolox_precision" value="$(var yolox_precision)" />
     <arg name="build_engine_only" value="$(var build_engine_only)" />
+    <arg name="trigger_id" value="$(var trigger_id)" />
+    <arg name="trigger_time_tolerance_ns" value="$(var trigger_time_tolerance_ns)" />
+    <arg name="camera_time_tolerance_ns" value="$(var camera_time_tolerance_ns)" />
     <arg name="use_multithread" value="$(var use_multithread)" />
   </include>
 
