@@ -12,6 +12,7 @@
         margin_max_z: 0.0  # to extend the crop box max_z from vehicle_height
         margin_min_z: -2.5 # to extend the crop box min_z from ground
         negative: False
+        processing_time_threshold_sec: 0.01
 
     common_ground_filter:
       plugin: "ground_segmentation::ScanGroundFilterComponent"
