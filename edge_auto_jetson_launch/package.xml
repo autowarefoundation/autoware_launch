@@ -10,11 +10,14 @@
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
+  <exec_depend>autoware_cmake</exec_depend>
   <exec_depend>accelerated_image_processor</exec_depend>
   <exec_depend>v4l2_camera</exec_depend>
   <exec_depend>sensor_trigger</exec_depend>
   <exec_depend>image_view</exec_depend>
   <exec_depend>image_transport_plugins</exec_depend>
+  <exec_depend>autoware_image_diagnostics</exec_depend>
+  <exec_depend>autoware_image_transport_decompressor</exec_depend>
   <exec_depend>individual_params</exec_depend>
   <exec_depend>compressed_image_transport</exec_depend>
   <exec_depend>topic_tools</exec_depend>
@@ -25,7 +28,7 @@
   <exec_depend>autoware_traffic_light_fine_detector</exec_depend>
   <exec_depend>autoware_traffic_light_visualization</exec_depend>
   <exec_depend>autoware_traffic_light_classifier</exec_depend>
-  
+
   <exec_depend>c2_readout_delay_setter</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>

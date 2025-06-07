@@ -94,6 +94,14 @@ def create_image_decompressor(camera_id, container_name):
     arguments = [("camera_id", str(camera_id)), ("container_name", container_name)]
     return IncludeLaunchDescription(include, launch_arguments=arguments)
 
+def create_image_diagnostics(camera_id, container_name):
+    package = FindPackageShare("edge_auto_jetson_launch")
+    include = PathJoinSubstitution(
+        [package, f"launch/camera_common/image_diagnostics.launch.xml"]
+    )
+    container_name += str(camera_id)
+    arguments = [("camera_id", str(camera_id)), ("container_name", container_name)]
+    return IncludeLaunchDescription(include, launch_arguments=arguments)
 
 def launch_setup(context, *args, **kwargs):
 
@@ -107,6 +115,9 @@ def launch_setup(context, *args, **kwargs):
     camera_driver_camera_ids = LaunchConfiguration("camera_driver_camera_ids").perform(
         context
     )
+    image_diagnostics_camera_ids = LaunchConfiguration("image_diagnostics_camera_ids").perform(
+        context
+    )
     live_sensor = LaunchConfiguration("live_sensor").perform(context)
     container_name = LaunchConfiguration("container_name").perform(context)
     yolox_precision = LaunchConfiguration("yolox_precision").perform(context)
@@ -117,6 +128,7 @@ def launch_setup(context, *args, **kwargs):
     object_recognition_camera_ids = json.loads(object_recognition_camera_ids)
     camera_driver_camera_ids = json.loads(camera_driver_camera_ids)
     traffic_light_camera_ids = json.loads(traffic_light_camera_ids)
+    image_diagnostics_camera_ids = json.loads(image_diagnostics_camera_ids)
 
     # containers will be used for object recognition and traffic light recognition
     # so we need to merge them into one set to avoid duplication
@@ -141,6 +153,12 @@ def launch_setup(context, *args, **kwargs):
         create_traffic_light_recognition(camera_id, container_name, build_engine_only)
         for camera_id in traffic_light_camera_ids
     ]
+
+    image_diagnostics = [
+        create_image_diagnostics(camera_id, container_name)
+        for camera_id in image_diagnostics_camera_ids
+    ]
+
     # cspell: ignore decompressors
     # camera driver and image decompressor
     if bool(strtobool(live_sensor)):
@@ -162,6 +180,7 @@ def launch_setup(context, *args, **kwargs):
         + traffic_light_recognitions
         + camera_drivers
         + image_decompressors
+        + image_diagnostics
     )
 
 
@@ -179,6 +198,10 @@ def generate_launch_description():
             DeclareLaunchArgument(
                 "camera_driver_camera_ids",
                 description="camera index list for starting camera driver",
+            ),
+            DeclareLaunchArgument(
+                "image_diagnostics_camera_ids",
+                description="camera index list for image blockage diagnostics",
             ),
             DeclareLaunchArgument(
                 "live_sensor", description="live camera driver or not"

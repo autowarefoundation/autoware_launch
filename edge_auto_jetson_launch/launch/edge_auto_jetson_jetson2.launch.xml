@@ -10,7 +10,7 @@ This launch file sets up a Gen2 multi-camera perception pipeline that includes:
    - TensorRT-optimized YOLOX object detection
    - ByteTrack object tracking
 
-2. Traffic Light Detection Pipeline (for each camera): 
+2. Traffic Light Detection Pipeline (for each camera):
    - Map based detector
    - Fine Detector
    - Traffic Light Classifier
@@ -22,12 +22,13 @@ Key Features:
 - Containerized components for efficient resource management
 - Build engine only option for building TensorRT engines only
 
-Integrators are free to hard-code ECU-specific parameters in this launch file, 
+Integrators are free to hard-code ECU-specific parameters in this launch file,
 -->
 <launch>
   <arg name="object_recognition_camera_ids" default="[8, 9, 10]" />
   <arg name="camera_driver_camera_ids" default="[8, 9, 10]" />
   <arg name="traffic_light_camera_ids" default="[]" />
+  <arg name="image_diagnostics_camera_ids" default="[]" />
   <arg name="yolox_precision" default="int8" />
   <arg name="build_engine_only" default="false" />
   <arg name="use_multithread" default="true" />
@@ -46,6 +47,7 @@ Integrators are free to hard-code ECU-specific parameters in this launch file,
     <arg name="object_recognition_camera_ids" value="$(var object_recognition_camera_ids)" />
     <arg name="traffic_light_camera_ids" value="$(var traffic_light_camera_ids)" />
     <arg name="camera_driver_camera_ids" value="$(var camera_driver_camera_ids)" />
+    <arg name="image_diagnostics_camera_ids" value="$(var image_diagnostics_camera_ids)" />
     <arg name="live_sensor" value="$(var live_sensor)" />
     <arg name="container_name" value="$(var container_name)" />
     <arg name="yolox_precision" value="$(var yolox_precision)" />
