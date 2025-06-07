@@ -1,0 +1,52 @@
+<launch>
+  <arg name="camera_id" default="" />
+  <arg name="trigger_id" default="" />
+  <arg name="camera_driver_param_path" />
+  <arg name="readout_delay_param_path" />
+  <arg name="trigger_time_tolerance_ns" default="1000000" />
+  <arg name="camera_time_tolerance_ns"  default="10000000" />
+
+  <!-- container name that this RPS node to be loaded -->
+  <arg name="container_name" default="" />
+
+  <let name="trigger_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/camera$(var trigger_id)_trigger.param.yaml" />
+
+  <group>
+    <push-ros-namespace namespace="sensing/camera/camera$(var camera_id)" />
+    <let name="empty_container_is_specified" value="$(eval 'not &quot;$(var container_name)&quot;')" />
+    <!-- If container name is not specified,
+       execute function as an individual node  -->
+    <group if="$(var empty_container_is_specified)">
+      <node pkg="tier4_camera_sync_doctor" exec="tier4_camera_sync_doctor"
+            name="tier4_camera_sync_doctor$(var camera_id)">
+        <remap from="~/input/camera_info" to="camera_info" />
+        <remap from="~/input/trigger_time" to="/sensing/camera/camera$(var trigger_id)/trigger_time" />
+        <param name="v4l2_param_path" value="$(var camera_driver_param_path)" />
+        <param name="trigger_param_path" value="$(var trigger_param_path)" />
+        <param name="readout_delay_param_path" value="$(var readout_delay_param_path)" />
+        <param name="trigger_time_tolerance_ns" value="$(var trigger_time_tolerance_ns)" />
+        <param name="camera_time_tolerance_ns" value="$(var camera_time_tolerance_ns)" />
+        <param name="hardware_id" value="camera$(var camera_id)" />
+      </node>
+    </group>
+
+    <!-- If container name is specified,
+       execute function as a composable node and load it into the container  -->
+    <group unless="$(var empty_container_is_specified)">
+      <load_composable_node target="$(var container_name)">
+        <composable_node pkg="tier4_camera_sync_doctor" plugin="tier4_camera_sync_doctor::Tier4CameraSyncDoctor"
+                         name="tier4_camera_sync_doctor$(var camera_id)">
+          <remap from="~/input/camera_info" to="camera_info" />
+          <remap from="~/input/trigger_time" to="$(var trigger_time_namespace)/trigger_time" />
+          <param name="v4l2_param_path" value="$(var camera_driver_param_path)" />
+          <param name="trigger_param_path" value="$(var trigger_param_path)" />
+          <param name="readout_delay_param_path" value="$(var readout_delay_param_path)" />
+          <param name="trigger_time_tolerance_ns" value="$(var trigger_time_tolerance_ns)" />
+          <param name="camera_time_tolerance_ns" value="$(var camera_time_tolerance_ns)" />
+          <param name="hardware_id" value="camera$(var camera_id)" />
+          <extra_arg name="use_intra_process_comms" value="true" />
+        </composable_node>
+      </load_composable_node>
+    </group>
+  </group>
+</launch>
