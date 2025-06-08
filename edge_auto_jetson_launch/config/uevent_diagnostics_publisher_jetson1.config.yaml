@@ -1,0 +1,44 @@
+uevent_description:
+  hardware_type: "vi_camera"
+  devpath: "/devices/platform/tegra-capture-vi"
+  identifier_key: "CAUSE1"
+  key_is: ".* 43-001c"
+  hardware_id: "camera4"
+  value_key: "FUSA_HW_FAULT"
+  value_type: "error_flag"
+  criteria:
+    status_ok: 1
+    status_error: 0
+uevent_description:
+  hardware_type: "vi_camera"
+  devpath: "/devices/platform/tegra-capture-vi"
+  identifier_key: "CAUSE1"
+  key_is: ".* 42-001c"
+  hardware_id: "camera5"
+  value_key: "FUSA_HW_FAULT"
+  value_type: "error_flag"
+  criteria:
+    status_ok: 1
+    status_error: 0
+uevent_description:
+  hardware_type: "vi_camera"
+  devpath: "/devices/platform/tegra-capture-vi"
+  identifier_key: "CAUSE1"
+  key_is: ".* 41-001c"
+  hardware_id: "camera6"
+  value_key: "FUSA_HW_FAULT"
+  value_type: "error_flag"
+  criteria:
+    status_ok: 1
+    status_error: 0
+uevent_description:
+  hardware_type: "vi_camera"
+  devpath: "/devices/platform/tegra-capture-vi"
+  identifier_key: "CAUSE1"
+  key_is: ".* 40-001c"
+  hardware_id: "camera7"
+  value_key: "FUSA_HW_FAULT"
+  value_type: "error_flag"
+  criteria:
+    status_ok: 1
+    status_error: 0

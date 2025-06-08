@@ -17,6 +17,8 @@ This launch file sets up a Gen2 multi-camera perception pipeline that includes:
 
 4. Camera Sync doctor (for each camera. configurable via live_sensor arg)
 
+5. Uevent diagnostics publisher for camera hardware monitoring (one instance per ECU. configurable via live_sensor arg)
+
 Key Features:
 - Supports multiple cameras (configured via camera_ids arrays)
 - Configurable YOLOX precision (fp32/fp16/int8)
@@ -63,6 +65,15 @@ Integrators are free to hard-code ECU-specific parameters in this launch file,
     <arg name="camera_time_tolerance_ns" value="$(var camera_time_tolerance_ns)" />
     <arg name="use_multithread" value="$(var use_multithread)" />
   </include>
+
+  <!-- uevent diagnostics publisher -->
+  <group if="$(var live_sensor)">
+    <node pkg="uevent_diagnostics_publisher" exec="uevent_diagnostics_publisher_node"
+          name="uevent_diagnostics_publisher_$(env JETSON_ID)">
+      <param name="config_yaml_path"
+             value="$(find-pkg-share edge_auto_jetson_launch)/config/uevent_diagnostics_publisher_jetson$(env JETSON_ID).config.yaml"/>
+    </node>
+  </group>
 
   <!-- Run a trigger node as individual process to keep time interval accuracy -->
   <group if="$(var launch_sensor_trigger)">
