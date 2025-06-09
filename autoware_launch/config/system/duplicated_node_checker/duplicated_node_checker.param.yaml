@@ -5,3 +5,4 @@
     nodes_to_ignore:  # List of nodes to ignore when checking for duplicates
       - /rviz2
       - /simulation/getParameter
+      - /launch_ros_1
