@@ -149,5 +149,5 @@ launch:
       name: launch_trajectory_checker
       default: "true"
   - arg:
-      name: launch_collision_checker
+      name: launch_intersection_collision_checker
       default: "true"
