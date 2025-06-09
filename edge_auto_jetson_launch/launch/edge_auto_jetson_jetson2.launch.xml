@@ -10,10 +10,12 @@ This launch file sets up a Gen2 multi-camera perception pipeline that includes:
    - TensorRT-optimized YOLOX object detection
    - ByteTrack object tracking
 
-2. Traffic Light Detection Pipeline (for each camera):
+3. Traffic Light Detection Pipeline (for each camera):
    - Map based detector
    - Fine Detector
    - Traffic Light Classifier
+
+4. Camera Sync doctor (for each camera. configurable via live_sensor arg)
 
 Key Features:
 - Supports multiple cameras (configured via camera_ids arrays)
