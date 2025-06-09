@@ -9,6 +9,7 @@
         max_z: 0.5
         min_z: -0.5
         negative: False
+        processing_time_threshold_sec: 0.01
 
     ground_segmentation:
       plugin: "ground_segmentation::ScanGroundFilterComponent"
