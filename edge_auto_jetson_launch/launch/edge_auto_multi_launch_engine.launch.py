@@ -112,7 +112,7 @@ def create_camera_sync_doctor(
     include = PathJoinSubstitution(
         [package, f"launch/camera_common/camera_sync_doctor.launch.xml"]
     )
-    container_name = "" if container_name is "" else container_name + str(camera_id)
+    container_name = "" if container_name == "" else container_name + str(camera_id)
 
     individual_param_package = FindPackageShare("individual_params")
     individual_param_dir = PathJoinSubstitution(
@@ -125,6 +125,7 @@ def create_camera_sync_doctor(
         )
         # sxpf param file also includes readout delay information
         readout_delay_param_path = camera_driver_param_path
+        trigger_topic = "/addon_trigger/trigger_time"
     else:
         camera_driver_param_path = PathJoinSubstitution(
             [individual_param_dir, f"v4l2_{camera_id}.param.yaml"]
@@ -132,14 +133,12 @@ def create_camera_sync_doctor(
         readout_delay_param_path = PathJoinSubstitution(
             [individual_param_dir, f"readout_delay_{camera_id}.param.yaml"]
         )
-
-    trigger_param_path = PathJoinSubstitution(
-            [individual_param_dir, f"camera{camera_id}_trigger.param.yaml"]
-    )
+        trigger_topic = f"/sensing/camera/camera{trigger_id}/trigger_time"
 
     arguments = [
         ("camera_id", str(camera_id)), ("container_name", container_name),
         ("trigger_id", trigger_id),
+        ("trigger_topic", trigger_topic),
         ("camera_driver_param_path", camera_driver_param_path),
         ("readout_delay_param_path", readout_delay_param_path),
         ("trigger_time_tolerance_ns", trigger_time_tolerance_ns),
@@ -269,6 +268,7 @@ def generate_launch_description():
             ),
             DeclareLaunchArgument(
                 "image_diagnostics_camera_ids",
+                default_value="[]",
                 description="camera index list for image blockage diagnostics",
             ),
             DeclareLaunchArgument(
@@ -284,14 +284,18 @@ def generate_launch_description():
                 "build_engine_only", description="build engine only or not"
             ),
             DeclareLaunchArgument(
-                "trigger_id", description="camera id under which trigger_time is published "
+                "trigger_id",
+                default_value="0",
+                description="camera id under which trigger_time is published "
             ),
             DeclareLaunchArgument(
                 "trigger_time_tolerance_ns",
+                default_value="1000000",
                 description="tolerance time in nanoseconds for trigger sync diagnostic"
             ),
             DeclareLaunchArgument(
                 "camera_time_tolerance_ns",
+                default_value="10000000",
                 description="tolerance time in nanoseconds for camera sync diagnostic"
             ),
             OpaqueFunction(function=launch_setup),

@@ -1,6 +1,7 @@
 <launch>
   <arg name="camera_id" default="" />
   <arg name="trigger_id" default="" />
+  <arg name="trigger_topic" default="/sensing/camera/camera$(var trigger_id)/trigger_time"/>
   <arg name="camera_driver_param_path" />
   <arg name="readout_delay_param_path" />
   <arg name="trigger_time_tolerance_ns" default="1000000" />
@@ -17,10 +18,10 @@
     <!-- If container name is not specified,
        execute function as an individual node  -->
     <group if="$(var empty_container_is_specified)">
-      <node pkg="tier4_camera_sync_doctor" exec="tier4_camera_sync_doctor"
+      <node pkg="tier4_camera_sync_doctor" exec="tier4_camera_sync_doctor_node"
             name="tier4_camera_sync_doctor$(var camera_id)">
         <remap from="~/input/camera_info" to="camera_info" />
-        <remap from="~/input/trigger_time" to="/sensing/camera/camera$(var trigger_id)/trigger_time" />
+        <remap from="~/input/trigger_time" to="$(var trigger_topic)" />
         <param name="v4l2_param_path" value="$(var camera_driver_param_path)" />
         <param name="trigger_param_path" value="$(var trigger_param_path)" />
         <param name="readout_delay_param_path" value="$(var readout_delay_param_path)" />
@@ -37,7 +38,7 @@
         <composable_node pkg="tier4_camera_sync_doctor" plugin="tier4_camera_sync_doctor::Tier4CameraSyncDoctor"
                          name="tier4_camera_sync_doctor$(var camera_id)">
           <remap from="~/input/camera_info" to="camera_info" />
-          <remap from="~/input/trigger_time" to="$(var trigger_time_namespace)/trigger_time" />
+          <remap from="~/input/trigger_time" to="$(var trigger_topic)" />
           <param name="v4l2_param_path" value="$(var camera_driver_param_path)" />
           <param name="trigger_param_path" value="$(var trigger_param_path)" />
           <param name="readout_delay_param_path" value="$(var readout_delay_param_path)" />

@@ -30,7 +30,7 @@ Key Features:
   <arg name="object_recognition_camera_ids" default="[0, 1, 2, 3]" />
   <arg name="camera_driver_camera_ids" default="[0, 1, 2, 3]" />
   <arg name="traffic_light_camera_ids" default="[]" />
-  <arg name="image_diagnostics_camera_ids" default="[3,]" />
+  <arg name="image_diagnostics_camera_ids" default="[3]" />
   <arg name="yolox_precision" default="int8" />
   <arg name="build_engine_only" default="false" />
   <arg name="use_multithread" default="true" />
