@@ -2,6 +2,13 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* feat: add pointcloud container arg for simulator component (`#1479 <https://github.com/autowarefoundation/autoware_launch/issues/1479>`_) (`#1487 <https://github.com/autowarefoundation/autoware_launch/issues/1487>`_)
+* feat: add pointcloud container arg for simulator component (`#1479 <https://github.com/autowarefoundation/autoware_launch/issues/1479>`_)
+  feat(autoware_launch): add pointcloud container arg for simulator component
+* Contributors: Ryohsuke Mitsudome
+
 0.44.2 (2025-05-30)
 -------------------
 * feat(launch/components): launch in a component-wise manner (`#1469 <https://github.com/autowarefoundation/autoware_launch/issues/1469>`_)

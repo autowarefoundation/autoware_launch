@@ -2,6 +2,9 @@
 Changelog for package sample_sensor_kit_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.44.2 (2025-05-30)
 -------------------
 

@@ -2,6 +2,9 @@
 Changelog for package common_awsim_labs_sensor_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.44.2 (2025-05-30)
 -------------------
 
