@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>common_awsim_labs_sensor_launch</name>
-  <version>0.44.2</version>
+  <version>0.44.3</version>
   <description>The common_sensor_launch package</description>
   <maintainer email="piotr.jaroszek@robotec.ai">Piotr Jaroszek</maintainer>
   <license>Apache License 2.0</license>

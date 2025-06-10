@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>autoware_launch</name>
-  <version>0.44.2</version>
+  <version>0.44.3</version>
   <description>The autoware_launch package</description>
 
   <maintainer email="yukihiro.saito@tier4.jp">Yukihiro Saito</maintainer>
