@@ -32,7 +32,7 @@ Integrators are free to hard-code ECU-specific parameters in this launch file,
   <arg name="object_recognition_camera_ids" default="[4, 5]" />
   <arg name="camera_driver_camera_ids" default="[4, 5, 6, 7]" />
   <arg name="traffic_light_camera_ids" default="[4, 5, 6, 7]" />
-  <arg name="image_diagnostics_camera_ids" default="[5,]" />
+  <arg name="image_diagnostics_camera_ids" default="[5]" />
   <arg name="yolox_precision" default="int8" />
   <arg name="build_engine_only" default="false" />
   <arg name="use_multithread" default="true" />

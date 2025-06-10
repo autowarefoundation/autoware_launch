@@ -8,7 +8,8 @@
   <arg name="image_topic" default="image_raw" />
   <!-- frame id to be published -->
   <!-- path to the yaml file that contains parameters for autoware_image_diagnostics node -->
-  <let name="image_diagnostics_param_path" value="$(find-pkg-share autoware_image_diagnostics)/config/image_diagnostics_node.param.yaml" />
+  <!-- <let name="image_diagnostics_param_path" value="$(find-pkg-share autoware_image_diagnostics)/config/image_diagnostics_node.param.yaml" /> -->
+    <let name="image_diagnostics_param_path" value="$(find-pkg-share edge_auto_jetson_launch)/config/image_diagnostics_node.param.yaml" />
 
   <!-- container name that this RPS node to be loaded -->
   <arg name="container_name" default="" />
@@ -38,8 +39,8 @@
             name="image_diagnostics$(var camera_id)">
           <remap from="input/raw_image" to="$(var image_topic)" />
           <param name="hardware_id" value="camera$(var camera_id)" />
-          <param from="$(find-pkg-share autoware_image_diagnostics)/config/image_diagnostics_node.param.yaml" />
-          <extra_arg name="use_intra_process_comms" value="$(var use_intra_process" />
+          <param from="$(var image_diagnostics_param_path)" />
+          <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)" />
         </composable_node>
       </load_composable_node>
     </group>
