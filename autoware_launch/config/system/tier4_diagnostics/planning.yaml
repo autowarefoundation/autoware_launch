@@ -35,8 +35,10 @@ units:
       - { type: link, link: /planning/010-trajectory_steering_validation-error }
       - { type: link, link: /planning/011-trajectory_steering_rate_validation-error }
       - { type: link, link: /planning/012-trajectory_velocity_deviation_validation-error }
-      # - { type: link, link: /planning/013-collision_checker-error }
-      - { type: link, link: /planning/014-path_optimizer_emergency_stop-error }
+      # - { type: link, link: /planning/013-trajectory_shift_validation-error }
+      # - { type: link, link: /planning/014-intersection_collision_checker-error }
+      # - { type: link, link: /planning/015-collision_checker-error }
+      - { type: link, link: /planning/016-path_optimizer_emergency_stop-error }
 
   - path: /planning/comfortable_stop
     type: and
@@ -119,17 +121,29 @@ units:
       type: link
       link: /planning/012-trajectory_velocity_deviation_validation
 
-  - path: /planning/013-collision_checker-error
+  - path: /planning/013-trajectory_shift_validation-error
     type: warn-to-ok
     item:
       type: link
-      link: /planning/013-collision_checker
+      link: /planning/013-trajectory_shift_validation
 
-  - path: /planning/014-path_optimizer_emergency_stop-error
+  - path: /planning/014-intersection_collision_checker-error
     type: warn-to-ok
     item:
       type: link
-      link: /planning/014-path_optimizer_emergency_stop
+      link: /planning/014-intersection_collision_checker
+
+  - path: /planning/015-collision_checker-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/015-collision_checker
+
+  - path: /planning/016-path_optimizer_emergency_stop-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/016-path_optimizer_emergency_stop
 
   - path: /planning/001-topic_status/route
     type: diag
@@ -203,13 +217,25 @@ units:
     name: trajectory_validation_velocity_deviation
     timeout: 1.0
 
-  - path: /planning/013-collision_checker
+  - path: /planning/013-trajectory_shift_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_trajectory_shift
+    timeout: 1.0
+
+  - path: /planning/014-intersection_collision_checker
+    type: diag
+    node: planning_validator
+    name: intersection_validation_collision_check
+    timeout: 1.0
+
+  - path: /planning/015-collision_checker
     type: diag
     node: collision_checker
     name: collision_check
     timeout: 1.0
 
-  - path: /planning/014-path_optimizer_emergency_stop
+  - path: /planning/016-path_optimizer_emergency_stop
     type: diag
     node: path_optimizer
     name: path_optimizer_emergency_stop
