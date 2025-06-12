@@ -31,6 +31,7 @@ units:
       - { type: link, link: /foolproof/perception2/camera_not_found-error }
       - { type: link, link: /foolproof/perception1/mgbe1_not_ready-error }
       - { type: link, link: /foolproof/perception2/mgbe1_not_ready-error }
+      - { type: link, link: /foolproof/node_alive } # letterbox_monitor
 
       # - { type: link, link:  /foolproof/device_check }
 
@@ -130,3 +131,45 @@ units:
     node: autoware_diagnostics_bridge_node_perception2
     name: perception2_mgbe1-ready
     timeout: 3.0
+
+  # letterbox_monitor aggregate
+  - path: /foolproof/node_alive
+    type: and
+    list:
+      - { type: link, link: /foolproof/main/autoware_node_alive }
+      - { type: link, link: /foolproof/main/autoware_system_node_alive }
+      - { type: link, link: /foolproof/perception1/recognition_node_alive }
+      - { type: link, link: /foolproof/perception2/recognition_node_alive }
+      # - { type: link, link:  /foolproof/addon/recognition_node_alive }
+
+  # letterbox_monitor individual
+
+  - path: /foolproof/main/autoware_node_alive
+    type: diag
+    node: autoware_diagnostics_bridge_node_main
+    name: main_autoware_node_alive
+    timeout: 3.0
+
+  - path: /foolproof/main/autoware_system_node_alive
+    type: diag
+    node: autoware_diagnostics_bridge_node_main
+    name: main_autoware_system_node_alive
+    timeout: 3.0
+
+  - path: /foolproof/perception1/recognition_node_alive
+    type: diag
+    node: autoware_diagnostics_bridge_node_perception1
+    name: perception1_recognition_node_alive
+    timeout: 3.0
+
+  - path: /foolproof/perception2/recognition_node_alive
+    type: diag
+    node: autoware_diagnostics_bridge_node_perception2
+    name: perception2_recognition_node_alive
+    timeout: 3.0
+
+  # - path: /foolproof/addon/recognition_node_alive
+  #   type: diag
+  #   node: autoware_diagnostics_bridge_node_addon
+  #   name: addon_recognition_node_alive
+  #   timeout: 3.0

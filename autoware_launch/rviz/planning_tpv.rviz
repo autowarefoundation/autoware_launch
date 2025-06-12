@@ -2743,7 +2743,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/virtual_wall/stop
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop/virtual_walls
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
@@ -2755,7 +2755,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/virtual_wall/cruise
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_cruise/virtual_walls
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
@@ -2767,7 +2767,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/virtual_wall/slow_down
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_slow_down/virtual_walls
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
