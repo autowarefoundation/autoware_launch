@@ -3,7 +3,7 @@
   <arg name="use_empty_dynamic_object_publisher" default="false" description="if true, /perception/object_recognition/objects topic has an empty DynamicObjectArray"/>
   <arg name="use_traffic_light_recognition" default="true" description="use traffic light recognition module, if false, traffic light recognition module will not be launched"/>
 
-  <arg name="use_low_height_cropbox" default="false" description="use low height crop filter in clustering"/>
+  <arg name="use_low_height_cropbox" default="true" description="use low height crop filter in clustering"/>
   <arg name="use_vector_map" default="true" description="use vector map in prediction"/>
   <arg name="use_pointcloud_map" default="true" description="use pointcloud map in detection"/>
   <arg name="use_irregular_object_detector" default="true" description="enable pipeline for small unknown object detection"/>
@@ -14,8 +14,8 @@
   <arg name="use_radar_tracking_fusion" default="true" description="if true, radar objects are merged in tracking module. Otherwise, radar objects are merged in detection module."/>
   <arg name="use_object_filter" default="true" description="launch object filter to filter-out detected object"/>
   <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
-  <arg name="use_obstacle_segmentation_time_series_filter" default="true" description="use time series filter at the ground segmentation"/>
   <arg name="segmentation_pointcloud_fusion_camera_ids" default="[0,2,4]" description="list of camera ids used for segmentation_pointcloud_fusion node, mainly using front camera"/>
+  <arg name="use_obstacle_segmentation_time_series_filter" default="false" description="use time series filter at the ground segmentation"/>
 
   <arg name="occupancy_grid_map_method" default="pointcloud_based" description="options: pointcloud_based, laserscan_based, multi_lidar_pointcloud_based"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
@@ -24,7 +24,7 @@
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
   <arg name="lidar_detection_model" default="centerpoint" description="If the model name is not declared, the default model in perception.launch.xml will be used"/>
 
-  <arg name="traffic_light_recognition/camera_namespaces" default="[camera6, camera7]" description="choose camera which use for traffic light recognition"/>
+  <arg name="traffic_light_recognition/camera_namespaces" default="[camera4, camera5]" description="choose camera which use for traffic light recognition"/>
   <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="select whether to use high accuracy detector for traffic light recognition"/>
   <arg
     name="traffic_light_recognition/high_accuracy_detection_type"
@@ -59,13 +59,36 @@
     <arg name="use_obstacle_segmentation_single_frame_filter" value="$(var use_obstacle_segmentation_single_frame_filter)"/>
     <arg name="use_obstacle_segmentation_time_series_filter" value="$(var use_obstacle_segmentation_time_series_filter)"/>
     <arg name="segmentation_pointcloud_fusion_camera_ids" value="$(var segmentation_pointcloud_fusion_camera_ids)"/>
+    <arg name="irregular_object_detector_fusion_camera_ids" value="[3,5]"/>
 
     <!-- traffic light recognition options to switch launch function/module -->
     <arg name="use_traffic_light_recognition" value="$(var use_traffic_light_recognition)"/>
-    <arg name="traffic_light_recognition/fusion_only" value="false"/>
+    <arg name="traffic_light_recognition/fusion_only" value="true"/>
     <arg name="traffic_light_recognition/camera_namespaces" value="$(var traffic_light_recognition/camera_namespaces)"/>
     <arg name="traffic_light_recognition/use_high_accuracy_detection" value="$(var traffic_light_recognition/use_high_accuracy_detection)"/>
     <arg name="traffic_light_recognition/high_accuracy_detection_type" value="$(var traffic_light_recognition/high_accuracy_detection_type)"/>
+
+    <arg name="data_path" value="$(var data_path)"/>
+    <arg name="lidar_detection_model_name" value="centerpoint_x2"/>
+    <arg name="object_recognition_detection_lidar_model_param_path" value="$(var centerpoint_model_path)"/>
+    <arg name="external/traffic_signals" value="/v2x/traffic_signals"/>
+    <arg name="image_number" value="6"/>
+    <arg name="image_raw0" value="/sensing/camera/camera0/image_raw"/>
+    <arg name="image_raw1" value="/sensing/camera/camera1/image_raw"/>
+    <arg name="image_raw2" value="/sensing/camera/camera2/image_raw"/>
+    <arg name="image_raw3" value="/sensing/camera/camera3/image_raw"/>
+    <arg name="image_raw4" value="/sensing/camera/camera4/image_raw"/>
+    <arg name="image_raw5" value="/sensing/camera/camera5/image_raw"/>
+    <arg name="image_raw6" value="/sensing/camera/camera8/image_raw"/>
+    <arg name="image_raw7" value="/sensing/camera/camera9/image_raw"/>
+    <arg name="image_raw8" value="/sensing/camera/camera10/image_raw"/>
+    <!-- camera info and rois override-->
+    <arg name="camera_info6" value="/sensing/camera/camera8/camera_info"/>
+    <arg name="detection_rois6" value="/perception/object_recognition/detection/rois8"/>
+    <arg name="camera_info7" value="/sensing/camera/camera9/camera_info"/>
+    <arg name="detection_rois7" value="/perception/object_recognition/detection/rois9"/>
+    <arg name="camera_info8" value="/sensing/camera/camera10/camera_info"/>
+    <arg name="detection_rois8" value="/perception/object_recognition/detection/rois10"/>
 
     <!-- object recognition parameters -->
     <arg
@@ -159,6 +182,14 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_range_splitter/object_range_splitter_radar_fusion.param.yaml"
     />
     <arg
+      name="object_recognition_detection_detection_by_tracker_param"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_radar_lanelet_filtering_range_param"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_filter/radar_lanelet_filter.param.yaml"
+    />
+    <arg
       name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
     />
@@ -227,6 +258,7 @@
       name="traffic_light_roi_visualizer_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_visualization/traffic_light_roi_visualizer.param.yaml"
     />
+    <arg name="traffic_light_selector_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_selector/traffic_light_selector.param.yaml"/>
     <arg
       name="traffic_light_occlusion_predictor_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml"
