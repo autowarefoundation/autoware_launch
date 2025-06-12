@@ -37,7 +37,6 @@
       - /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/debug/obstacle_velocity_limiter/processing_time_ms
       - /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/debug/out_of_lane/processing_time_ms
       - /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/debug/processing_time_ms
-      - /planning/scenario_planning/lane_driving/motion_planning/obstacle_cruise_planner/debug/processing_time_ms
       - /planning/scenario_planning/lane_driving/motion_planning/path_optimizer/debug/processing_time_ms
       - /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/debug/processing_time_ms
       - /planning/scenario_planning/parking/costmap_generator/debug/processing_time_ms

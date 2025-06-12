@@ -39,6 +39,9 @@ launch:
   - arg:
       name: launch_side_shift_module
       default: "true"
+  - arg:
+      name: launch_bidirectional_traffic_module
+      default: "true"
 
   # behavior velocity modules
   - arg:
@@ -122,13 +125,6 @@ launch:
       default: "false"
 
   - arg:
-      name: motion_stop_planner_type
-      default: none
-      # option: obstacle_stop_planner
-      #         obstacle_cruise_planner
-      #         none
-
-  - arg:
       name: velocity_smoother_type
       default: JerkFiltered
       # option: JerkFiltered
@@ -143,4 +139,12 @@ launch:
   # parking modules
   - arg:
       name: launch_parking_module
+      default: "true"
+
+  # validator modules
+  - arg:
+      name: launch_latency_checker
+      default: "true"
+  - arg:
+      name: launch_trajectory_checker
       default: "true"
