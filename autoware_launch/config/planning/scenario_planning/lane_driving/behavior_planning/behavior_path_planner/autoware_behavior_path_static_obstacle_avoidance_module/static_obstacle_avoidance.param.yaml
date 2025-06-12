@@ -67,7 +67,7 @@
           th_moving_time: 1.0
           longitudinal_margin: 0.0
           lateral_margin:
-            soft_margin: 0.7
+            soft_margin: 1.0
             hard_margin: -0.2
             hard_margin_for_parked_vehicle: -0.2
           max_expand_ratio: 0.0
