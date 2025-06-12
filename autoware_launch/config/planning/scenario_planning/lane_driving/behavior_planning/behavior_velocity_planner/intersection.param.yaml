@@ -52,7 +52,7 @@
       collision_detection:
         consider_wrong_direction_vehicle: false
         collision_detection_hold_time: 0.5
-        min_predicted_path_confidence: 0.05
+        min_predicted_path_confidence: 0.01 # NOTE(soblin): only for right-turn after shiojiri city-hall
         target_type:
           car: true
           bus: true

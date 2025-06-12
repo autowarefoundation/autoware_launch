@@ -82,5 +82,5 @@ units:
   - path: /perception/002-detection_delay
     type: diag
     node: multi_object_tracker
-    name: Perception delay check from original header stamp
+    name: Tracker Timing Diagnostics
     timeout: 1.0

@@ -151,7 +151,7 @@
       "topic_state_monitor_obstacle_segmentation_pointcloud: perception_topic_status": default
 
       ## /perception/002-detection_delay
-      "multi_object_tracker: Perception delay check from original header stamp": default
+      "multi_object_tracker: Tracker Timing Diagnostics": default
 
       # system
       ## /system/003-bagpacker_status

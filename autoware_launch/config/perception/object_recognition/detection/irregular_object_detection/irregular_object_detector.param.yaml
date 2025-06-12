@@ -26,6 +26,7 @@
         elevation_grid_mode: true
         use_recheck_ground_cluster: true
         use_lowest_point: true
+        recheck_start_distance: 20.0
         low_priority_region_x: -20.0
         center_pcl_shift: 0.0
         radial_divider_angle_deg: 1.0
@@ -34,8 +35,10 @@
 
     roi_pointcloud_fusion:
       parameters:
-        fuse_unknown_only: true
+        fuse_unknown_only: false
+        override_class_with_unknown: true
         min_cluster_size: 2
-        max_cluster_size: 200
+        max_cluster_size: 1000
         cluster_2d_tolerance: 0.5
-        roi_scale_factor: 2.0
+        roi_scale_factor: 1.0
+        max_object_size: 2.0
