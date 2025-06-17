@@ -151,3 +151,6 @@ launch:
   - arg:
       name: launch_intersection_collision_checker
       default: "true"
+  - arg:
+      name: launch_rear_collision_checker
+      default: "true"
