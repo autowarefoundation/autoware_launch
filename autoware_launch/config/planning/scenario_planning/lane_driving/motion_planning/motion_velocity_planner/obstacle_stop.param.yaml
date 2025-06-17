@@ -87,5 +87,5 @@
           bicycle_deceleration: 2.0 # planner perceives bicycles will stop with this rate to avoid unnecessary stops [m/ss]
 
         crossing_obstacle:
-          collision_time_margin : 1.0 # time threshold of collision between obstacle adn ego for cruise or stop [s]
+          collision_time_margin : 1.0 # time threshold of collision between obstacle and ego for cruise or stop [s]
           traj_angle_threshold: 0.523599 # [rad] = 70 [deg], yaw threshold of crossing obstacle against the nearest trajectory point for cruise or stop
