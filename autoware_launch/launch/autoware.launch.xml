@@ -37,7 +37,7 @@
   <arg name="system_run_mode" default="online" description="run mode in system"/>
   <arg name="launch_system_monitor" default="true" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
-  <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml" description="diagnostic graph config"/>
+  <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml" description="diagnostic graph config"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
@@ -71,7 +71,7 @@
       <arg name="sensor_model" value="$(var sensor_model)"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
-      <arg name="config_dir" value="$(find-pkg-share $(var sensor_model)_description)/config"/>
+      <arg name="config_dir" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)"/>
       <arg name="raw_vehicle_cmd_converter_param_path" value="$(find-pkg-share autoware_launch)/config/vehicle/raw_vehicle_cmd_converter/raw_vehicle_cmd_converter.param.yaml"/>
     </include>
   </group>
