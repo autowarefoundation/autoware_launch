@@ -1,7 +1,6 @@
 /**:
   ros__parameters:
     boundary_departure_prevention:
-      th_data_timeout_s: 1.0
       boundary_types_to_detect: [road_border]
       th_max_lateral_query_num: 5
       th_dist_hysteresis_m: 1.0
@@ -14,8 +13,8 @@
         normal:
           enable: true
           footprint_envelop:
-            lon_m: 0.25
-            lat_m: 0.25
+            lon_m: 0.0
+            lat_m: 0.0
 
         localization:
           enable: true
@@ -40,7 +39,7 @@
         #  2: ERROR
         near_boundary: 1
         approaching_departure: 1
-        critical_departure: 1
+        critical_departure: 2
 
       slow_down_behavior:
         enable:
