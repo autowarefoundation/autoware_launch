@@ -56,6 +56,22 @@ Changelog for package autoware_launch
 * feat(planning_validator): add lateral jerk validation parameters (`#1406 <https://github.com/autowarefoundation/autoware_launch/issues/1406>`_)
 * Contributors: Arjun Jagdish Ram, Kento Yabuuchi, Kenzo Lobos Tsunekawa, Kyoichi Sugahara, Masaki Baba, Masato Saeki, Maxime CLEMENT, Mitsuhiro Sakamoto, Ryohsuke Mitsudome, Satoshi OTA, Sho Iwasawa, Takagi, Isamu, Takayuki Murooka, Yuki TAKAGI, badai nguyen, github-actions, mkquda
 
+0.44.3 (2025-06-10)
+-------------------
+* feat: add pointcloud container arg for simulator component (`#1479 <https://github.com/autowarefoundation/autoware_launch/issues/1479>`_) (`#1487 <https://github.com/autowarefoundation/autoware_launch/issues/1487>`_)
+* feat: add pointcloud container arg for simulator component (`#1479 <https://github.com/autowarefoundation/autoware_launch/issues/1479>`_)
+  feat(autoware_launch): add pointcloud container arg for simulator component
+* Contributors: Ryohsuke Mitsudome
+
+0.44.2 (2025-05-30)
+-------------------
+* feat(launch/components): launch in a component-wise manner (`#1469 <https://github.com/autowarefoundation/autoware_launch/issues/1469>`_)
+* insert args to autoware.launch.xml
+* remove component_wise_launch
+* style(pre-commit): autofix
+* launch component-wise
+* Contributors: Ryohsuke Mitsudome, Yutaka Kondo, pre-commit-ci[bot]
+
 0.44.1 (2025-05-12)
 -------------------
 * feat(duplicated_node_checker): ignore duplicate get parameter (`#1413 <https://github.com/autowarefoundation/autoware_launch/issues/1413>`_)
