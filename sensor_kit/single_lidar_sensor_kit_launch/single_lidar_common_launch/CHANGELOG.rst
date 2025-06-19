@@ -2,6 +2,12 @@
 Changelog for package single_lidar_common_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.45.0 (2025-05-22)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(ring_outlier_filter): update node parameters (`#1421 <https://github.com/autowarefoundation/autoware_launch/issues/1421>`_)
+* Contributors: Kotaro Uetake, github-actions
+
 0.44.3 (2025-06-10)
 -------------------
 
@@ -24,6 +30,9 @@ Changelog for package single_lidar_common_launch
 * chore: set all versions to 0.43.0 (`#1384 <https://github.com/autowarefoundation/autoware_launch/issues/1384>`_)
 * feat(*_launch): move here (`#1369 <https://github.com/autowarefoundation/autoware_launch/issues/1369>`_)
 * Contributors: Mete Fatih Cırıt
+
+0.43.0 (2025-03-28)
+-------------------
 
 0.42.0 (2025-03-28)
 -------------------

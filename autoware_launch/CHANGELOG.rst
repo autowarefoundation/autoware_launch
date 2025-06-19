@@ -2,6 +2,60 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.45.0 (2025-05-22)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* chore(traffic_light_recognition): add comment in config of autoware_traffic_light_map_based_detector (`#1448 <https://github.com/autowarefoundation/autoware_launch/issues/1448>`_)
+  add comment
+* feat(crosswalk): update stop position logic (`#1409 <https://github.com/autowarefoundation/autoware_launch/issues/1409>`_)
+  * change crosswalk param list
+  ---------
+* feat(perception_component_launch): add common param for pointpainting_fusion (`#1401 <https://github.com/autowarefoundation/autoware_launch/issues/1401>`_)
+  add common param
+* fix(collision_detector): rename parameters to prevent launch issues (`#1447 <https://github.com/autowarefoundation/autoware_launch/issues/1447>`_)
+  rename params
+* feat(control_validator): add lateral jerk validation (`#1440 <https://github.com/autowarefoundation/autoware_launch/issues/1440>`_)
+  fix(control_validator): add lateral jerk threshold to parameters
+* feat(rviz): replace MRM Summary overlay with Error Diag Graph in debug rviz (`#1414 <https://github.com/autowarefoundation/autoware_launch/issues/1414>`_)
+  * feat(rviz): replace MRM Summary overlay with Error Diag Graph
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat(collision_detector): time buffer and ignore behind rear axle (`#1443 <https://github.com/autowarefoundation/autoware_launch/issues/1443>`_)
+* feat(dynamic_drivable_area_expansion): set extra offsets to 0 (`#1445 <https://github.com/autowarefoundation/autoware_launch/issues/1445>`_)
+* feat(autoware_launch): remove trajectory_deviation from diagnostic graph (`#1442 <https://github.com/autowarefoundation/autoware_launch/issues/1442>`_)
+* feat(autoware_launch): update adapi diags (`#1444 <https://github.com/autowarefoundation/autoware_launch/issues/1444>`_)
+* fix(tier4_perception_launch): add camera ids param for segmentation_pointcloud_fusion (`#1439 <https://github.com/autowarefoundation/autoware_launch/issues/1439>`_)
+  fix: add camera ids for segmentation_pointcloud_fusion
+* fix(probabilistic_occupancy_grid_map): add missing parameter for multi-lidar  (`#1426 <https://github.com/autowarefoundation/autoware_launch/issues/1426>`_)
+  add new parameter for multi-lidar
+* feat(static_obstacle_avoidance): add flag to wait approval when the ego uses opposite lane (`#1431 <https://github.com/autowarefoundation/autoware_launch/issues/1431>`_)
+* feat(behavior_velocity_planner)!: remove unused function parameter for extendLine (`#1422 <https://github.com/autowarefoundation/autoware_launch/issues/1422>`_)
+  remove unused parameter
+* feat(duplicated_node_checker): ignore duplicate get parameter (`#1413 <https://github.com/autowarefoundation/autoware_launch/issues/1413>`_)
+* feat(autoware_bevfusion): added bevfusion config files (`#1416 <https://github.com/autowarefoundation/autoware_launch/issues/1416>`_)
+  feat: added bevfusion files
+* chore(simulator.launch): remove params of traffic_light_selector (`#1415 <https://github.com/autowarefoundation/autoware_launch/issues/1415>`_)
+  remove param
+* feat: add input_timeout in operation_mode_transition_manager (`#1407 <https://github.com/autowarefoundation/autoware_launch/issues/1407>`_)
+* feat(traffic_light): remove unnecessary config file (`#1396 <https://github.com/autowarefoundation/autoware_launch/issues/1396>`_)
+  remove unnecessary file
+* feat(autoware_motion_velocity_planner): point-cloud clustering optimization (`#1410 <https://github.com/autowarefoundation/autoware_launch/issues/1410>`_)
+  * fix
+  * fix
+  * fix
+  ---------
+* feat(mvp_run_out): update for new motion_velocity_planner run_out (`#1388 <https://github.com/autowarefoundation/autoware_launch/issues/1388>`_)
+* feat(planning_validator): detect sudden trajectory shift (`#1380 <https://github.com/autowarefoundation/autoware_launch/issues/1380>`_)
+  * update planning validator config
+  * add new planning diagnostic path
+  * visualize planning validator virtual wall by default
+  * move planning validator display under planning/diagnostic namespace
+  * add jerk limit parameter
+  ---------
+* feat(planning_validator): add lateral jerk validation parameters (`#1406 <https://github.com/autowarefoundation/autoware_launch/issues/1406>`_)
+* Contributors: Arjun Jagdish Ram, Kento Yabuuchi, Kenzo Lobos Tsunekawa, Kyoichi Sugahara, Masaki Baba, Masato Saeki, Maxime CLEMENT, Mitsuhiro Sakamoto, Ryohsuke Mitsudome, Satoshi OTA, Sho Iwasawa, Takagi, Isamu, Takayuki Murooka, Yuki TAKAGI, badai nguyen, github-actions, mkquda
+
 0.44.3 (2025-06-10)
 -------------------
 * feat: add pointcloud container arg for simulator component (`#1479 <https://github.com/autowarefoundation/autoware_launch/issues/1479>`_) (`#1487 <https://github.com/autowarefoundation/autoware_launch/issues/1487>`_)
