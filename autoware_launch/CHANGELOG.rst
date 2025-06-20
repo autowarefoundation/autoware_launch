@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.46.0 (2025-06-20)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat: boundary departure prevention module (`#1489 <https://github.com/autowarefoundation/autoware_launch/issues/1489>`_)
   * feat: boundary departure prevention module
