@@ -16,6 +16,7 @@
   <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
   <arg name="use_obstacle_segmentation_time_series_filter" default="true" description="use time series filter at the ground segmentation"/>
   <arg name="segmentation_pointcloud_fusion_camera_ids" default="[0,2,4]" description="list of camera ids used for segmentation_pointcloud_fusion node, mainly using front camera"/>
+  <arg name="use_multi_channel_tracker_merger" default="false" description="if true, multi channel tracker merger is used. Otherwise, merged object is used."/>
 
   <arg name="occupancy_grid_map_method" default="pointcloud_based" description="options: pointcloud_based, laserscan_based, multi_lidar_pointcloud_based"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
@@ -37,6 +38,7 @@
     <!-- general options to switch launch function/module -->
     <arg name="mode" value="$(var perception_mode)"/>
     <arg name="lidar_detection_model" value="$(var lidar_detection_model)"/>
+    <arg name="use_multi_channel_tracker_merger" value="$(var use_multi_channel_tracker_merger)"/>
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
 
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
@@ -130,16 +132,8 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml"
     />
     <arg
-      name="object_recognition_detection_radar_crossing_objects_noise_filter_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/radar_crossing_objects_noise_filter/radar_crossing_objects_noise_filter.param.yaml"
-    />
-    <arg
       name="object_recognition_detection_radar_lanelet_filtering_range_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_filter/radar_lanelet_filter.param.yaml"
-    />
-    <arg
-      name="object_recognition_detection_radar_object_clustering_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/radar_object_clustering.param.yaml"
     />
     <arg name="object_recognition_detection_lidar_model_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/lidar_model"/>
     <arg
