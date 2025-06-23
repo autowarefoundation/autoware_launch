@@ -5,8 +5,9 @@
       detection_range: 50.0 # [m]
       ttc_threshold: 2.0 # [s]
       ego_deceleration: 1.0 # [m/s^2]
-      min_time_horizon: 5.0 # [s]
-      timeout: 1.0 # [s]
+      min_time_horizon: 7.0 # [s]
+      on_time_buffer: 0.3 # [s]
+      off_time_buffer: 1.0 # [s]
 
       right_turn:
         enable: true
