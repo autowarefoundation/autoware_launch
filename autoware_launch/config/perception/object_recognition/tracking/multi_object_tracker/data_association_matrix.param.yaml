@@ -57,4 +57,3 @@
 
     unknown_association_giou_threshold: -0.8  # GIoU threshold for unknown-unknown association
 
-
