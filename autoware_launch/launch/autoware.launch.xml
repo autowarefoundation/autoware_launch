@@ -141,15 +141,6 @@
     </include>
   </group>
 
-  <!-- V2X -->
-  <group if="$(var launch_v2x)">
-    <include file="$(find-pkg-share jpn_signal_launcher)/launch/jpn_signal.launch.xml">
-      <arg name="map_path" value="$(var map_path)"/>
-      <arg name="vehicle_model" value="$(var vehicle_model)"/>
-      <arg name="vehicle_id" value="1"/>
-    </include>
-  </group>
-
   <!-- Tools -->
   <group>
     <node
