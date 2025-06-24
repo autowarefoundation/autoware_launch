@@ -1,5 +1,22 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- Launch parameters -->
+  <arg name="launch_pointcloud_container" default="true" description="if true, launch pointcloud container"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container" description="name of pointcloud container"/>
+  <arg name="launch_sensing_driver" default="true"/>
+  <arg name="sensor_model" default="sample_sensor_kit"/>
+  <arg name="use_sim_time" default="false"/>
+  <arg name="vehicle_model" default="sample_vehicle"/>
+
+  <!-- Pointcloud container -->
+  <group if="$(var launch_pointcloud_container)">
+    <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+      <arg name="use_multithread" value="true"/>
+      <arg name="container_name" value="$(var pointcloud_container_name)"/>
+    </include>
+  </group>
+
+  <!-- Wait for container to be ready before launching sensing -->
   <include file="$(find-pkg-share tier4_sensing_launch)/launch/sensing.launch.xml">
     <arg name="launch_driver" value="$(var launch_sensing_driver)"/>
     <arg name="sensor_model" value="$(var sensor_model)"/>
