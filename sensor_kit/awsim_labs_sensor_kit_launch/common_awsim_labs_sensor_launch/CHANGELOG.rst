@@ -2,11 +2,29 @@
 Changelog for package common_awsim_labs_sensor_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.46.0 (2025-06-20)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat: add paramter for diag msg (`#1429 <https://github.com/autowarefoundation/autoware_launch/issues/1429>`_)
+  * feat: add paramter for diag msg
+  * chore: update mismatch threshold
+  * chore: udpate variable name
+  * chore: fix parameter naming
+  * chore: add cropbox parameter
+  ---------
+* Contributors: Yi-Hsiang Fang (Vivid), github-actions
+
 0.45.0 (2025-05-22)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(ring_outlier_filter): update node parameters (`#1421 <https://github.com/autowarefoundation/autoware_launch/issues/1421>`_)
 * Contributors: Kotaro Uetake, github-actions
+
+0.44.3 (2025-06-10)
+-------------------
+
+0.44.2 (2025-05-30)
+-------------------
 
 0.44.1 (2025-05-12)
 -------------------
@@ -24,6 +42,9 @@ Changelog for package common_awsim_labs_sensor_launch
 * chore: set all versions to 0.43.0 (`#1384 <https://github.com/autowarefoundation/autoware_launch/issues/1384>`_)
 * feat(*_launch): move here (`#1369 <https://github.com/autowarefoundation/autoware_launch/issues/1369>`_)
 * Contributors: Mete Fatih Cırıt
+
+0.43.0 (2025-03-28)
+-------------------
 
 0.42.0 (2025-03-28)
 -------------------

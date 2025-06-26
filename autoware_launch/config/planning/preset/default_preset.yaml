@@ -123,6 +123,9 @@ launch:
   - arg:
       name: launch_mvp_run_out_module
       default: "false"
+  - arg:
+      name: launch_boundary_departure_prevention_module
+      default: "true"
 
   - arg:
       name: velocity_smoother_type
@@ -147,4 +150,10 @@ launch:
       default: "true"
   - arg:
       name: launch_trajectory_checker
+      default: "true"
+  - arg:
+      name: launch_intersection_collision_checker
+      default: "true"
+  - arg:
+      name: launch_rear_collision_checker
       default: "true"
