@@ -3387,13 +3387,6 @@ Visualization Manager:
                   - Class: rviz_default_plugins/MarkerArray
                     Enabled: true
                     Name: Info (StaticObstacleAvoidance)
-                    Namespaces:
-                      avoidable_target_objects_info: false
-                      avoidable_target_objects_info_reason: false
-                      avoidable_target_objects_envelope_polygon: false
-                      unavoidable_target_objects_info: false
-                      unavoidable_target_objects_info_reason: false
-                      unavoidable_target_objects_envelope_polygon: false
                     Topic:
                       Depth: 5
                       Durability Policy: Volatile
