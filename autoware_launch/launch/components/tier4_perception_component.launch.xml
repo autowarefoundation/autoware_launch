@@ -1,7 +1,21 @@
 <?xml version="1.0"?>
 <launch>
+  <arg
+    name="launch_pointcloud_container"
+    default="false"
+    description="if true, launch pointcloud container. Please note that it is not intended to launch pointcloud_container_name with the same name in both tier4_sensing_component.launch.xml and tier4_perception_component.launch.xml."
+  />
+  <arg name="pointcloud_container_name" default="pointcloud_container" description="name of pointcloud container"/>
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
+
+  <!-- Pointcloud container -->
+  <group if="$(var launch_pointcloud_container)">
+    <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+      <arg name="use_multithread" value="true"/>
+      <arg name="container_name" value="$(var pointcloud_container_name)"/>
+    </include>
+  </group>
 
   <!-- Global parameters -->
   <group scoped="false">
