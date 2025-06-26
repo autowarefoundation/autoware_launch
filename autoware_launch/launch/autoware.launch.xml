@@ -58,12 +58,6 @@
     </include>
   </group>
 
-  <!-- Pointcloud container -->
-  <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
-    <arg name="use_multithread" value="true"/>
-    <arg name="container_name" value="$(var pointcloud_container_name)"/>
-  </include>
-
   <!-- Vehicle -->
   <group if="$(var launch_vehicle)">
     <include file="$(find-pkg-share tier4_vehicle_launch)/launch/vehicle.launch.xml">
