@@ -17,6 +17,24 @@ units:
     list:
       - { type: link, link: /system/emergency_stop }
 
+  - path: /system/fatal_error/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /system/fatal_error/emergency_stop }
+      - { type: link, link: /system/fatal_error/pull_over }
+      - { type: link, link: /system/fatal_error/comfortable_stop }
+
+  - path: /system/fatal_error/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /system/fatal_error/emergency_stop }
+      - { type: link, link: /system/fatal_error/comfortable_stop }
+
+  - path: /system/fatal_error/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /system/fatal_error/emergency_stop }
+
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
@@ -24,16 +42,30 @@ units:
     type: and
     list:
       - { type: link, link: /system/001-topic_status-error }
+
+  - path: /system/fatal_error/emergency_stop
+    type: and
+    list:
       - { type: link, link: /system/002-emergency_stop_operation-error }
 
   - path: /system/comfortable_stop
     type: and
 
+  - path: /system/fatal_error/comfortable_stop
+    type: and
+
   - path: /system/pull_over
+    type: and
+
+  - path: /system/fatal_error/pull_over
     type: and
 
   - path: /system/none
     type: and
+    list:
+      - { type: link, link: /system/003-bagpacker_status }
+      - { type: link, link: /system/004-bagpacker_ROSBAG_space }
+      - { type: link, link: /system/006-bagpacker_LOG_space }
 
   - path: /system/001-topic_status-error
     type: warn-to-ok
@@ -47,6 +79,12 @@ units:
       type: link
       link: /system/002-emergency_stop_operation
 
+  - path: /system/005-fms_connection-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/005-fms_connection
+
   - path: /system/001-topic_status
     type: diag
     node: topic_state_monitor_system_emergency_control_cmd
@@ -58,3 +96,27 @@ units:
     node: vehicle_cmd_gate
     name: emergency_stop_operation
     timeout: 1.0
+
+  - path: /system/003-bagpacker_status
+    type: diag
+    node: ""
+    name: rosbag_status
+    timeout: 3.0
+
+  - path: /system/004-bagpacker_ROSBAG_space
+    type: diag
+    node: ""
+    name: disk1_status
+    timeout: 3.0
+
+  - path: /system/005-fms_connection
+    type: diag
+    node: ""
+    name: edge_core_internet_connection
+    timeout: 10.0
+
+  - path: /system/006-bagpacker_LOG_space
+    type: diag
+    node: ""
+    name: disk2_status
+    timeout: 3.0

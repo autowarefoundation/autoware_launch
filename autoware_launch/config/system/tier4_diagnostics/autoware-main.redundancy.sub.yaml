@@ -1,0 +1,53 @@
+units:
+  - path: /autoware/modes/local
+    type: stale
+
+  - path: /autoware/modes/remote
+    type: stale
+
+  - path: /autoware/modes/stop
+    type: stale
+
+  - path: /autoware/modes/autonomous
+    type: stale
+
+  - path: /autoware/modes/pull_over
+    type: stale
+
+  - path: /autoware/modes/comfortable_stop
+    type: and
+    list:
+      - { type: link, link: /sub/localization/comfortable_stop_available }
+      - { type: link, link: /sub/control/comfortable_stop_available }
+
+  - path: /autoware/modes/emergency_stop
+    type: stale
+
+  - path: /sub/localization/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /sub/localization/topic_status/kinematic_state }
+      - { type: link, link: /sub/localization/topic_status/acceleration }
+
+  - path: /sub/control/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /sub/control/topic_status/control_cmd }
+
+  - path: /sub/localization/topic_status/kinematic_state
+    type: diag
+    node: topic_state_monitor_stop_filter
+    name: planning_topic_status
+    timeout: 1.0
+
+  - path: /sub/localization/topic_status/acceleration
+    type: diag
+    node: topic_state_monitor_twist2accel
+    name: planning_topic_status
+    timeout: 1.0
+
+  - path: /sub/control/topic_status/control_cmd
+    type: diag
+    node: topic_state_monitor_trajectory_follower
+    name: control_topic_status
+    timeout: 1.0
