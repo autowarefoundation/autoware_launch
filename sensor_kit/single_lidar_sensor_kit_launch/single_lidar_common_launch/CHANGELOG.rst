@@ -2,6 +2,9 @@
 Changelog for package single_lidar_common_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.45.1 (2025-06-27)
+-------------------
+
 0.45.0 (2025-05-22)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
