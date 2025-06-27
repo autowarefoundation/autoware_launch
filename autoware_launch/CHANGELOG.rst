@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.45.1 (2025-06-27)
+-------------------
 * feat(launch/components): launch `pointcloud_container` in a component-wise manner (`#1513 <https://github.com/autowarefoundation/autoware_launch/issues/1513>`_)
   * component-wise pointcloud_container
   * remove comments
