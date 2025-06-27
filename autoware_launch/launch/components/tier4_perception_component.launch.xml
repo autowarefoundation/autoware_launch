@@ -3,7 +3,7 @@
   <arg
     name="launch_pointcloud_container"
     default="false"
-    description="if true, launch pointcloud container. Please note that it is not intended to launch pointcloud_container_name with the same name in both tier4_sensing_component.launch.xml and tier4_perception_component.launch.xml."
+    description="if true, launch pointcloud container. Please note that it is not intended to launch pointcloud_container_name with the same name in other launch files."
   />
   <arg name="pointcloud_container_name" description="name of pointcloud container"/>
   <arg name="use_sim_time" default="false"/>
