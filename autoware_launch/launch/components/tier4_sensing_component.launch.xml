@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="launch_pointcloud_container" default="true" description="if true, launch pointcloud container"/>
-  <arg name="pointcloud_container_name" default="pointcloud_container" description="name of pointcloud container"/>
+  <arg name="pointcloud_container_name" description="name of pointcloud container"/>
   <arg name="launch_sensing_driver" default="true"/>
   <arg name="sensor_model" default="sample_sensor_kit"/>
   <arg name="use_sim_time" default="false"/>
