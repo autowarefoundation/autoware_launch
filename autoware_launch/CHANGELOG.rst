@@ -2,6 +2,21 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* feat(launch/components): launch `pointcloud_container` in a component-wise manner (`#1513 <https://github.com/autowarefoundation/autoware_launch/issues/1513>`_)
+  * component-wise pointcloud_container
+  * remove comments
+  * style(pre-commit): autofix
+  * Update autoware_launch/launch/components/tier4_perception_component.launch.xml
+  Co-authored-by: Yukihiro Saito <yukky.saito@gmail.com>
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+  Co-authored-by: Yukihiro Saito <yukky.saito@gmail.com>
+* feat(launch/components): launch `autoware_global_parameter_loader` in a component-wise manner (`#1512 <https://github.com/autowarefoundation/autoware_launch/issues/1512>`_)
+  add global parameters
+* Contributors: Yutaka Kondo
+
 0.45.0 (2025-05-22)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

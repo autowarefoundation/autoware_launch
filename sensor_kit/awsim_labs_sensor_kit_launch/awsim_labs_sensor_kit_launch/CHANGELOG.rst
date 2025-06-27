@@ -2,6 +2,9 @@
 Changelog for package awsim_labs_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.45.0 (2025-05-22)
 -------------------
 

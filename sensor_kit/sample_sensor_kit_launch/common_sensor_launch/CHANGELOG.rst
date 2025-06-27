@@ -2,6 +2,9 @@
 Changelog for package common_sensor_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.45.0 (2025-05-22)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
