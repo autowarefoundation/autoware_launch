@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.45.2 (2025-06-28)
+-------------------
 * fix:  `pointcloud_contaner` is launched on `autoware.launch.xml` by default (`#1523 <https://github.com/autowarefoundation/autoware_launch/issues/1523>`_) (`#1524 <https://github.com/autowarefoundation/autoware_launch/issues/1524>`_)
 * fix:  `pointcloud_contaner` is launched on `autoware.launch.xml` by default (`#1523 <https://github.com/autowarefoundation/autoware_launch/issues/1523>`_)
 * Contributors: Ryohsuke Mitsudome, Yutaka Kondo
