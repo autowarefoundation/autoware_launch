@@ -6,6 +6,19 @@
   <arg name="input_pointcloud" default="/sensing/lidar/concatenated/pointcloud" description="The topic will be used in the localization util module"/>
   <arg name="localization_pointcloud_container_name" default="/pointcloud_container" description="The target container to which pointcloud preprocessing nodes in localization be attached"/>
   <arg name="initial_pose" default="[]" description="initial pose (x, y, z, quat_x, quat_y, quat_z, quat_w)"/>
+  <arg
+    name="launch_pointcloud_container"
+    default="false"
+    description="if true, launch pointcloud container. Please note that it is not intended to launch pointcloud_container_name with the same name in other launch files."
+  />
+
+  <!-- Pointcloud container -->
+  <group if="$(var launch_pointcloud_container)">
+    <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+      <arg name="use_multithread" value="true"/>
+      <arg name="container_name" value="$(var localization_pointcloud_container_name)"/>
+    </include>
+  </group>
 
   <group>
     <include file="$(find-pkg-share tier4_localization_launch)/launch/localization.launch.xml">
