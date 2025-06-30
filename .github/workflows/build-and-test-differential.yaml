@@ -28,9 +28,13 @@ jobs:
       matrix:
         rosdistro:
           - humble
+          - jazzy
         include:
           - rosdistro: humble
             container: ros:humble
+            build-depends-repos: build_depends.repos
+          - rosdistro: jazzy
+            container: ros:jazzy
             build-depends-repos: build_depends.repos
     steps:
       - name: Set PR fetch depth
