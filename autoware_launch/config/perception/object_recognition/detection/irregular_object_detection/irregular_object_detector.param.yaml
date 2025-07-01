@@ -9,6 +9,7 @@
         max_z: 0.5
         min_z: -0.5
         negative: False
+        processing_time_threshold_sec: 0.01
 
     ground_segmentation:
       plugin: "ground_segmentation::ScanGroundFilterComponent"
@@ -36,7 +37,9 @@
     roi_pointcloud_fusion:
       parameters:
         fuse_unknown_only: true
+        override_class_with_unknown: false
         min_cluster_size: 2
         max_cluster_size: 100
         cluster_2d_tolerance: 0.5
         roi_scale_factor: 2.0
+        max_object_size: 2.0
