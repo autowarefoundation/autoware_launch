@@ -39,6 +39,8 @@
   <arg name="scenario_simulation" default="true" description="use scenario simulation"/>
   <!-- Perception -->
   <arg name="centerpoint_model_path" default="/opt/autoware/mlmodels/centerpoint" description="path of centerpoint model file"/>
+  <!-- Scheduling settings -->
+  <arg name="enable_scheduling_settings" default="false" description="enable scheduling settings"/>
 
   <group scoped="false">
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
@@ -79,6 +81,8 @@
       <arg name="centerpoint_model_path" value="$(var centerpoint_model_path)"/>
       <!-- V2X -->
       <arg name="launch_v2x" value="$(var launch_v2x)"/>
+      <!-- Scheduling settings -->
+      <arg name="enable_scheduling_settings" value="$(var enable_scheduling_settings)"/>
     </include>
   </group>
 </launch>

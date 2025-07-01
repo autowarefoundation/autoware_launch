@@ -50,6 +50,8 @@
     default="api"
     description="Select localization mode. Options are 'none', 'api' or 'pose_twist_estimator'. 'pose_twist_estimator' starts most of the localization modules except for the ndt_scan_matcher. 'api' starts an external API for initial position estimation. 'none' does not start any localization-related process."
   />
+  <!-- Scheduling settings -->
+  <arg name="enable_scheduling_settings" default="false" description="enable scheduling settings"/>
 
   <group scoped="false">
     <!-- Vehicle -->
@@ -90,6 +92,8 @@
       <arg name="is_simulation" value="true"/>
       <!-- L4 tool kit-->
       <arg name="daytime_monitor_param_file" value="$(var daytime_monitor_param_file)"/>
+      <!-- Scheduling settings -->
+      <arg name="enable_scheduling_settings" value="$(var enable_scheduling_settings)"/>
     </include>
   </group>
 
