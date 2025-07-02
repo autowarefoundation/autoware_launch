@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="enable_image_decompressor" default="false" description="enable image decompressor"/>
-  <arg name="enable_fine_detection" default="true" description="enable fine position adjustment of traffic light"/>
-  <arg name="use_image_transport" default="true" description="whether to use image transport in traffic light roi visualizer"/>
-
+  <arg name="use_high_accuracy_detection" default="true" description="enable fine position adjustment of traffic light"/>
+  <arg name="high_accuracy_detection_type" default="fine_detection" description="select high accuracy detector type for traffic light recognition: fine_detection or whole_image_detection"/>
+  
   <arg name="camera_name" default="camera7" description="camera name"/>
   <arg name="container" description="component container name"/>
   <arg name="build_engine_only" default="false" description="exit after trt engine is built"/>
@@ -11,6 +10,8 @@
   <arg name="traffic_light_fine_detector_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/traffic_light_fine_detector.param.yaml"/>
   <arg name="car_traffic_light_classifier_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/car_traffic_light_classifier.param.yaml"/>
   <arg name="pedestrian_traffic_light_classifier_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/pedestrian_traffic_light_classifier.param.yaml"/>
+  <arg name="traffic_light_roi_visualizer_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/traffic_light_roi_visualizer.param.yaml"/>
+  <arg name="whole_image_detector_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/yolox_traffic_light_detector.param.yaml"/>
 
   <let name="input/image" value="/sensing/camera/$(var camera_name)/image_raw"/>
   <let name="input/camera_info" value="/sensing/camera/$(var camera_name)/camera_info"/>
@@ -18,15 +19,15 @@
   <let name="output/traffic_signals" value="/perception/traffic_light_recognition/$(var camera_name)/classification/traffic_signals"/>
   <let name="output/car/traffic_signals" value="/perception/traffic_light_recognition/$(var camera_name)/classification/classified/car/traffic_signals"/>
   <let name="output/pedestrian/traffic_signals" value="/perception/traffic_light_recognition/$(var camera_name)/classification/classified/pedestrian/traffic_signals"/>
-  <let name="map_based_detector_output_topic" value="rough/rois" if="$(var enable_fine_detection)"/>
-  <let name="map_based_detector_output_topic" value="$(var output/rois)" unless="$(var enable_fine_detection)"/>
+  <let name="map_based_detector_output_topic" value="rough/rois" if="$(var use_high_accuracy_detection)"/>
+  <let name="map_based_detector_output_topic" value="$(var output/rois)" unless="$(var use_high_accuracy_detection)"/>
 
   <!--  Build engine file only -->
   <group if="$(var build_engine_only)">
     <node pkg="autoware_traffic_light_fine_detector" exec="traffic_light_fine_detector_node" name="traffic_light_fine_detector" output="screen">
       <param from="$(var traffic_light_fine_detector_param_path)" allow_substs="true"/>
       <param name="build_only" value="$(var build_engine_only)"/>
-     </node>
+    </node>
 
     <node pkg="autoware_traffic_light_classifier"
           exec="traffic_light_classifier_node"
@@ -34,10 +35,18 @@
       <param from="$(var car_traffic_light_classifier_param_path)" allow_substs="true"/>
       <param name="build_only" value="$(var build_engine_only)"/>
     </node>
+
     <node pkg="autoware_traffic_light_classifier"
           exec="traffic_light_classifier_node"
           name="traffic_light_classifier" output="screen">
       <param from="$(var pedestrian_traffic_light_classifier_param_path)" allow_substs="true"/>
+      <param name="build_only" value="$(var build_engine_only)"/>
+    </node>
+
+    <node pkg="autoware_tensorrt_yolox"
+          exec="autoware_tensorrt_yolox_node_exe"
+          name="tensorrt_yolox" output="screen">
+      <param from="$(var whole_image_detector_param_path)" allow_substs="true"/>
       <param name="build_only" value="$(var build_engine_only)"/>
     </node>
   </group>
@@ -64,10 +73,12 @@
       <arg name="traffic_light_fine_detector_param_path" value="$(var traffic_light_fine_detector_param_path)"/>
       <arg name="car_traffic_light_classifier_param_path" value="$(var car_traffic_light_classifier_param_path)"/>
       <arg name="pedestrian_traffic_light_classifier_param_path" value="$(var pedestrian_traffic_light_classifier_param_path)"/>
+      <arg name="traffic_light_roi_visualizer_param_path" value="$(var traffic_light_roi_visualizer_param_path)"/>
+      <arg name="whole_image_detector_param_path" value="$(var whole_image_detector_param_path)"/>
       <arg name="input/image" value="$(var input/image)"/>
-      <arg name="enable_image_decompressor" value="$(var enable_image_decompressor)"/>
-      <arg name="enable_fine_detection" value="$(var enable_fine_detection)"/>
-      <arg name="use_image_transport" value="$(var use_image_transport)"/>
+      <arg name="input/camera_info" value="$(var input/camera_info)"/>
+      <arg name="use_high_accuracy_detection" value="$(var use_high_accuracy_detection)"/>
+      <arg name="high_accuracy_detection_type" value="$(var high_accuracy_detection_type)"/>
       <arg name="use_intra_process" value="true"/>
       <arg name="use_multithread" value="true"/>
       <arg name="output/rois" value="$(var output/rois)"/>

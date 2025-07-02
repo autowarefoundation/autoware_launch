@@ -21,6 +21,7 @@ from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PythonExpression
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
@@ -35,9 +36,11 @@ def generate_launch_description():
             DeclareLaunchArgument(name, default_value=default_value, description=description)
         )
 
-    add_launch_arg("enable_fine_detection", "True")
+    add_launch_arg("use_high_accuracy_detection", "True")
+    add_launch_arg("high_accuracy_detection_type", "whole_image_detection")
     add_launch_arg("use_image_transport", "False")
     add_launch_arg("input/image", "/sensing/camera/traffic_light/image_raw")
+    add_launch_arg("input/camera_info", "/sensing/camera/traffic_light/camera_info")
     add_launch_arg("output/rois", "/perception/traffic_light_recognition/rois")
     add_launch_arg(
         "output/traffic_signals", "/perception/traffic_light_recognition/traffic_signals"
@@ -57,12 +60,8 @@ def generate_launch_description():
     add_launch_arg("traffic_light_fine_detector_param_path")
     add_launch_arg("car_traffic_light_classifier_param_path")
     add_launch_arg("pedestrian_traffic_light_classifier_param_path")
-
-    def create_parameter_dict(*args):
-        result = {}
-        for x in args:
-            result[x] = LaunchConfiguration(x)
-        return result
+    add_launch_arg("traffic_light_roi_visualizer_param_path")
+    add_launch_arg("whole_image_detector_param_path")
 
     traffic_light_nodes = [
         ComposableNode(
@@ -82,7 +81,7 @@ def generate_launch_description():
             remappings=[
                 ("~/input/image", LaunchConfiguration("input/image")),
                 ("~/input/rois", LaunchConfiguration("output/rois")),
-                ("~/output/traffic_signals", "classified/car/traffic_signals"),
+                ("~/output/traffic_signals", "car/traffic_signals"),
             ],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         ),
@@ -105,7 +104,7 @@ def generate_launch_description():
             remappings=[
                 ("~/input/image", LaunchConfiguration("input/image")),
                 ("~/input/rois", LaunchConfiguration("output/rois")),
-                ("~/output/traffic_signals", "classified/pedestrian/traffic_signals"),
+                ("~/output/traffic_signals", "pedestrian/traffic_signals"),
             ],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         ),
@@ -113,7 +112,15 @@ def generate_launch_description():
             package="autoware_traffic_light_visualization",
             plugin="autoware::traffic_light::TrafficLightRoiVisualizerNode",
             name="traffic_light_roi_visualizer",
-            parameters=[create_parameter_dict("enable_fine_detection", "use_image_transport")],
+            parameters=[
+                ParameterFile(
+                    param_file=LaunchConfiguration("traffic_light_roi_visualizer_param_path"),
+                    allow_substs=True,
+                ),
+                {
+                    "use_high_accuracy_detection": LaunchConfiguration("use_high_accuracy_detection"),
+                },
+            ],
             remappings=[
                 ("~/input/image", LaunchConfiguration("input/image")),
                 ("~/input/rois", LaunchConfiguration("output/rois")),
@@ -161,7 +168,93 @@ def generate_launch_description():
             ),
         ],
         target_container=LaunchConfiguration("container"),
-        condition=IfCondition(LaunchConfiguration("enable_fine_detection")),
+        condition=IfCondition(
+            PythonExpression(
+                [
+                    "'", LaunchConfiguration("high_accuracy_detection_type"), "'",
+                    " == 'fine_detection'"
+                ]
+            )
+        )
+    )
+
+    internal_node_name = "traffic_light_whole_image_detector"
+    whole_img_detector_loader = LoadComposableNodes(
+        composable_node_descriptions=[
+            ComposableNode(
+                package="autoware_tensorrt_yolox",
+                plugin="autoware::tensorrt_yolox::TrtYoloXNode",
+                name=internal_node_name,
+                namespace="detection",
+                parameters=[
+                    ParameterFile(
+                        param_file=LaunchConfiguration("whole_image_detector_param_path"),
+                        allow_substs=True,
+                    ),
+                    {
+                        "build_only": False,
+                    },
+                ],
+                remappings=[
+                    ("~/in/image", LaunchConfiguration("input/image")),
+                    ("~/out/objects", internal_node_name),
+                    ("~/out/image", internal_node_name + "/debug/image"),
+                    (
+                        "~/out/image/compressed",
+                        internal_node_name + "/debug/image/compressed",
+                    ),
+                    (
+                        "~/out/image/compressedDepth",
+                        internal_node_name + "/debug/image/compressedDepth",
+                    ),
+                    ("~/out/image/theora", internal_node_name + "/debug/image/theora"),
+                ],
+                extra_arguments=[
+                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+                ],
+            ),
+            ComposableNode(
+                package="autoware_traffic_light_selector",
+                plugin="autoware::traffic_light::TrafficLightSelectorNode",
+                name="traffic_light_selector",
+                namespace="detection",
+                parameters=[],
+                remappings=[
+                    ("input/detected_rois", internal_node_name),
+                    ("input/rough_rois", "rough/rois"),
+                    ("input/expect_rois", "expect/rois"),
+                    ("input/camera_info", LaunchConfiguration("input/camera_info")),
+                    ("output/traffic_rois", LaunchConfiguration("output/rois")),
+                ],
+                extra_arguments=[
+                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+                ],
+            ),
+            ComposableNode(
+                package="autoware_traffic_light_category_merger",
+                plugin="autoware::traffic_light::TrafficLightCategoryMergerNode",
+                name="traffic_light_category_merger",
+                namespace="classification",
+                parameters=[],
+                remappings=[
+                    ("input/car_signals", "car/traffic_signals"),
+                    ("input/pedestrian_signals", "pedestrian/traffic_signals"),
+                    ("output/traffic_signals", LaunchConfiguration("output/traffic_signals")),
+                ],
+                extra_arguments=[
+                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+                ],
+            ),
+        ],
+        target_container=LaunchConfiguration("container"),
+        condition=IfCondition(
+            PythonExpression(
+                [
+                    "'", LaunchConfiguration("high_accuracy_detection_type"), "'",
+                    " == 'whole_image_detection' ",
+                ]
+            )
+        ),
     )
 
     set_container_executable = SetLaunchConfiguration(
@@ -183,5 +276,6 @@ def generate_launch_description():
             set_container_mt_executable,
             traffic_light_node_loader,
             fine_detector_loader,
+            whole_img_detector_loader,
         ]
     )
