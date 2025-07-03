@@ -59,7 +59,7 @@
         disable_yield_for_new_stopped_object: false # for the crosswalks with traffic signal
         # If the pedestrian does not move for X seconds after the ego has stopped in front the crosswalk, the module judge that the pedestrian has no intention to walk and allows the ego to proceed.
         distance_set_for_no_intention_to_walk: [1.0, 5.0] # [m] ascending order
-        timeout_set_for_no_intention_to_walk: [3.0, 0.0] # [s]
+        timeout_set_for_no_intention_to_walk: [60.0, 60.0] # [s]
         timeout_ego_stop_for_yield: 3.0 # [s] If the ego maintains the stop for this amount of time, then the ego proceeds, assuming it has stopped long time enough.
 
       # params for suppressing the ego to restart when the ego is close to the next stop position.
