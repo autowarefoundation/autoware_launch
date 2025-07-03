@@ -152,10 +152,10 @@
           # "auto"   : generate candidate path. if RTC is running as AUTO mode, the ego avoids it automatically.
           # "manual" : generate candidate path and wait operator approval even if RTC is running as AUTO mode.
           # "ignore" : never avoid it.
-          policy: "ignore"                              # [-]
+          policy: "manual"                              # [-]
           condition:
-            th_stopped_time: 3.0                        # [s]
-            th_moving_distance: 1.0                     # [m]
+            th_stopped_time: 1.0                        # [s]
+            th_moving_distance: 5.0                     # [m]
           ignore_area:
             traffic_light:
               front_distance: 20.0                      # [m]
@@ -201,7 +201,7 @@
         collision_check_yaw_diff_threshold: 3.1416      # [rad]
         # predicted path parameters
         min_velocity: 1.38                              # [m/s]
-        max_velocity: 50.0                              # [m/s]
+        max_velocity: 9.72                              # [m/s] (35km/h)
         time_resolution: 0.5                            # [s]
         time_horizon_for_front_object: 3.0              # [s]
         time_horizon_for_rear_object: 10.0              # [s]
@@ -234,7 +234,7 @@
         # avoidance distance parameters
         longitudinal:
           min_prepare_time: 1.0                         # [s]
-          max_prepare_time: 2.0                         # [s]
+          max_prepare_time: 3.0                         # [s]
           min_prepare_distance: 4.0                     # [m]
           min_slow_down_speed: 1.38                     # [m/s]
           buf_slow_down_speed: 0.56                     # [m/s] FOR DEVELOPER
@@ -264,7 +264,7 @@
       # For stop maneuver
       stop:
         max_distance: 30.0                              # [m]
-        stop_buffer: 1.0                                # [m] FOR DEVELOPER
+        stop_buffer: 3.0                                # [m] FOR DEVELOPER
 
       policy:
         # policy for module behavior. select "reliable" or "not_enough".
@@ -300,16 +300,16 @@
           velocity: [2.78, 8.33, 11.1]                  # [m/s]
           max_accel_values: [0.5, 0.5, 0.5]             # [m/ss]
           min_jerk_values:
-            avoid: [0.2, 0.2, 0.2]                      # [m/sss]
-            return: [0.2, 0.2, 0.2]                     # [m/sss]
+            avoid: [0.5, 0.5, 0.5]                      # [m/sss]
+            return: [0.9, 0.9, 0.9]                     # [m/sss]
           max_jerk_values: [1.0, 1.0, 1.0]              # [m/sss]
 
         # longitudinal constraints
         longitudinal:
-          nominal_deceleration: -1.0                    # [m/ss]
-          nominal_jerk: 0.5                             # [m/sss]
-          max_deceleration: -1.5                        # [m/ss]
-          max_jerk: 1.0                                 # [m/sss]
+          nominal_deceleration: -1.5                    # [m/ss]
+          nominal_jerk: 0.6                             # [m/sss]
+          max_deceleration: -4.0                        # [m/ss]
+          max_jerk: 5.0                                 # [m/sss]
           max_acceleration: 0.3                         # [m/ss]
           min_velocity_to_limit_max_acceleration: 2.78  # [m/ss]
 
