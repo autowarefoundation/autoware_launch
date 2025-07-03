@@ -74,7 +74,7 @@
             lanelet_subtypes: ["crosswalk", "walkway"]
           cut_predicted_paths:
             lanelet_subtypes: ["crosswalk", "walkway"]
-          preserved_duration: 3.0  # [s] when cutting a predicted path or ignoring an object, at least this much duration is preserved from the predicted paths
+          preserved_duration: 2.5  # [s] when cutting a predicted path or ignoring an object, at least this much duration is preserved from the predicted paths
           preserved_distance: 2.0 # [m] when cutting a predicted path or ignoring an object, at least this much distance is preserved from the predicted paths
         BICYCLE:
           ignore_collisions:
