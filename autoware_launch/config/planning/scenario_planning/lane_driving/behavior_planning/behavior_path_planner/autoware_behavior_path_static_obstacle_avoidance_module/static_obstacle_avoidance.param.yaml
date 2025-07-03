@@ -299,8 +299,10 @@
         lateral:
           velocity: [2.78, 8.33, 11.1]                  # [m/s]
           max_accel_values: [0.5, 0.5, 0.5]             # [m/ss]
-          min_jerk_values: [0.2, 0.2, 0.2]              # [m/sss]
-          max_jerk_values: [0.5, 1.0, 1.0]              # [m/sss]
+          min_jerk_values:
+            avoid: [0.2, 0.2, 0.2]                      # [m/sss]
+            return: [0.2, 0.2, 0.2]                     # [m/sss]
+          max_jerk_values: [1.0, 1.0, 1.0]              # [m/sss]
 
         # longitudinal constraints
         longitudinal:
