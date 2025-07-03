@@ -1,0 +1,20 @@
+# Description:
+#   required_diags:
+#     <name>: {is_active: <is_active>, status: <status>}
+#   name: diag name
+#   is_active: Force update or not
+#   status: diag status set by dummy diag publisher "OK, Warn, Error, Stale"
+#
+# Note:
+#
+# default values are:
+#   is_active: "true"
+#   status: "OK"
+---
+/**:
+  ros__parameters:
+    required_diags:
+      # debug
+
+      ## /debug/injection/sub_ecu_in_lane_stop_0_3g_available
+      "injection_sub_ecu_in_lane_stop_0_3g_available": default
