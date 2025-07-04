@@ -3436,11 +3436,7 @@ Visualization Manager:
                     Enabled: true
                     Name: Info (StaticObstacleAvoidance)
                     Namespaces:
-                      avoidable_target_objects_info: false
-                      avoidable_target_objects_info_reason: false
                       avoidable_target_objects_envelope_polygon: false
-                      unavoidable_target_objects_info: false
-                      unavoidable_target_objects_info_reason: false
                       unavoidable_target_objects_envelope_polygon: false
                     Topic:
                       Depth: 5
@@ -3800,7 +3796,31 @@ Visualization Manager:
                     Enabled: false
                     Name: StaticObstacleAvoidance
                     Namespaces:
-                      {}
+                      avoidable_target_objects_info: false
+                      unavoidable_target_objects_info: false
+                      others_none_info: false
+                      others_out_of_target_area_info: false
+                      others_further_than_threshold_info: false
+                      others_further_than_goal_info: false
+                      others_is_not_target_object_info: false
+                      others_is_not_parking_object_info: false
+                      others_too_near_to_centerline_info: false
+                      others_too_near_to_goal_info: false
+                      others_moving_object_info: false
+                      others_unstable_object_info: false
+                      others_crosswalk_user_info: false
+                      others_enough_lateral_distance_info: false
+                      others_less_than_execution_threshold_info: false
+                      others_parallel_to_ego_lane_info: false
+                      others_merging_to_ego_lane_info: false
+                      others_deviating_from_ego_lane_info: false
+                      others_need_deceleration_info: false
+                      others_same_direction_shift_info: false
+                      others_limit_drivable_space_temporary_info: false
+                      others_insufficient_drivable_space_info: false
+                      others_insufficient_longitudinal_distance_info: false
+                      others_invalid_shift_line_info: false
+                      others_ambiguous_stopped_vehicle_info: false
                     Topic:
                       Depth: 5
                       Durability Policy: Volatile

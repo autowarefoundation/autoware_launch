@@ -88,7 +88,9 @@
 
   <!-- Sensing -->
   <group if="$(var launch_sensing)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml">
+      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+    </include>
   </group>
 
   <!-- Localization -->
@@ -100,6 +102,7 @@
   <group if="$(var launch_perception)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_perception_component.launch.xml">
       <arg name="data_path" value="$(var data_path)"/>
+      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     </include>
   </group>
 
