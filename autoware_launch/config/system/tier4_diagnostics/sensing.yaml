@@ -1,0 +1,35 @@
+units:
+  - path: /sensing/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /sensing/emergency_stop }
+      - { type: link, link: /sensing/pull_over }
+      - { type: link, link: /sensing/comfortable_stop }
+
+  - path: /sensing/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /sensing/emergency_stop }
+      - { type: link, link: /sensing/comfortable_stop }
+
+  - path: /sensing/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /sensing/emergency_stop }
+
+  # *******************************************************************************
+  # NOTE: Please modify this section according to your environment and requirements.
+  # *******************************************************************************
+  - path: /sensing/emergency_stop
+    type:
+      and
+      # - { type: link, link: /sensing/radar/001-connection }
+
+  - path: /sensing/pull_over
+    type: and
+
+  - path: /sensing/comfortable_stop
+    type: and
+
+  - path: /sensing/none
+    type: and
