@@ -59,6 +59,14 @@
   <arg name="use_system_agnocast_heaphook" default="true" description="true: apt installed library, false: locally built"/>
   <let name="agnocast_heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so" if="$(var use_system_agnocast_heaphook)"/>
   <let name="agnocast_heaphook_path" value="$(env AGNOCAST_HEAPHOOK_PATH)" unless="$(var use_system_agnocast_heaphook)"/>
+  <!-- Scheduling settings -->
+  <arg name="enable_scheduling_settings" default="true" description="enable scheduling settings"/>
+  <arg name="scheduling_settings_script_file" default="/opt/autoware/services/scheduling-settings/scheduling_settings.py" description="python script that does scheduling settings"/>
+  <arg
+    name="scheduling_settings_autoware_yaml_file"
+    default="/opt/autoware/services/scheduling-settings/scheduling_settings_autoware.yaml"
+    description="yaml file for scheduling settings of autoware processes"
+  />
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -174,5 +182,11 @@
     >
       <env name="QT_QPA_PLATFORMTHEME" value="qt5ct"/>
     </node>
+  </group>
+  <group if="$(var enable_scheduling_settings)">
+    <include file="$(find-pkg-share autoware_launch)/launch/scheduling_settings.launch.py">
+      <arg name="scheduling_settings_script_file" value="$(var scheduling_settings_script_file)"/>
+      <arg name="scheduling_settings_autoware_yaml_file" value="$(var scheduling_settings_autoware_yaml_file)"/>
+    </include>
   </group>
 </launch>
