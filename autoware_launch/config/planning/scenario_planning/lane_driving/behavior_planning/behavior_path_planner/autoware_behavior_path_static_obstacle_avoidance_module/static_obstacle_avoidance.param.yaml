@@ -222,8 +222,8 @@
         lateral:
           th_avoid_execution: 0.09                      # [m] FOR DEVELOPER
           th_small_shift_length: 0.101                  # [m] FOR DEVELOPER
-          soft_drivable_bound_margin: 0.5               # [m]
-          hard_drivable_bound_margin: 0.5               # [m]
+          soft_drivable_bound_margin: 0.75              # [m]
+          hard_drivable_bound_margin: 0.75              # [m]
           max_right_shift_length: 5.0                   # [m] FOR DEVELOPER
           max_left_shift_length: 5.0                    # [m] FOR DEVELOPER
           max_deviation_from_lane: 0.2                  # [m]
