@@ -1,12 +1,13 @@
 files:
   - { path: $(dirname)/control.yaml }
-  # - { path: $(dirname)/hardware.yaml }
+  - { path: $(dirname)/foolproof.yaml }
+  - { path: $(dirname)/hardware.yaml }
   - { path: $(dirname)/localization.yaml }
   - { path: $(dirname)/map.yaml }
   - { path: $(dirname)/perception.yaml }
   - { path: $(dirname)/planning.yaml }
-  # - { path: $(dirname)/others.yaml }
-  # - { path: $(dirname)/sensing.yaml }
+  - { path: $(dirname)/others.yaml }
+  - { path: $(dirname)/sensing.yaml }
   - { path: $(dirname)/system.yaml }
   - { path: $(dirname)/vehicle.yaml }
 
@@ -23,45 +24,83 @@ units:
   - path: /autoware/modes/autonomous
     type: and
     list:
-      - { type: link, link: /map/autonomous_available }
-      - { type: link, link: /localization/autonomous_available }
-      - { type: link, link: /planning/autonomous_available }
-      - { type: link, link: /perception/autonomous_available }
       - { type: link, link: /control/autonomous_available }
-      - { type: link, link: /vehicle/autonomous_available }
+      - { type: link, link: /foolproof/autonomous_available }
+      - { type: link, link: /hardware/autonomous_available }
+      - { type: link, link: /localization/autonomous_available }
+      - { type: link, link: /map/autonomous_available }
+      - { type: link, link: /perception/autonomous_available }
+      - { type: link, link: /planning/autonomous_available }
+      - { type: link, link: /others/autonomous_available }
+      - { type: link, link: /sensing/autonomous_available }
       - { type: link, link: /system/autonomous_available }
+      - { type: link, link: /vehicle/autonomous_available }
+      - { type: link, link: /autoware/fatal_error/autonomous_available }
 
   - path: /autoware/modes/pull_over
     type: and
     list:
-      - { type: link, link: /map/pull_over_available }
-      - { type: link, link: /localization/pull_over_available }
-      - { type: link, link: /planning/pull_over_available }
-      - { type: link, link: /perception/pull_over_available }
       - { type: link, link: /control/pull_over_available }
-      - { type: link, link: /vehicle/pull_over_available }
+      - { type: link, link: /foolproof/pull_over_available }
+      - { type: link, link: /hardware/pull_over_available }
+      - { type: link, link: /localization/pull_over_available }
+      - { type: link, link: /map/pull_over_available }
+      - { type: link, link: /perception/pull_over_available }
+      - { type: link, link: /planning/pull_over_available }
+      - { type: link, link: /others/pull_over_available }
+      - { type: link, link: /sensing/pull_over_available }
       - { type: link, link: /system/pull_over_available }
+      - { type: link, link: /vehicle/pull_over_available }
+      - { type: link, link: /autoware/fatal_error/pull_over_available }
 
   - path: /autoware/modes/comfortable_stop
     type: and
     list:
-      - { type: link, link: /map/comfortable_stop_available }
-      - { type: link, link: /localization/comfortable_stop_available }
-      - { type: link, link: /planning/comfortable_stop_available }
-      - { type: link, link: /perception/comfortable_stop_available }
       - { type: link, link: /control/comfortable_stop_available }
-      - { type: link, link: /vehicle/comfortable_stop_available }
+      - { type: link, link: /foolproof/comfortable_stop_available }
+      - { type: link, link: /hardware/comfortable_stop_available }
+      - { type: link, link: /localization/comfortable_stop_available }
+      - { type: link, link: /map/comfortable_stop_available }
+      - { type: link, link: /perception/comfortable_stop_available }
+      - { type: link, link: /planning/comfortable_stop_available }
+      - { type: link, link: /others/comfortable_stop_available }
+      - { type: link, link: /sensing/comfortable_stop_available }
       - { type: link, link: /system/comfortable_stop_available }
+      - { type: link, link: /vehicle/comfortable_stop_available }
+      - { type: link, link: /autoware/fatal_error/comfortable_stop_available }
+
+  - path: /autoware/fatal_error/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /hardware/fatal_error/autonomous_available }
+      - { type: link, link: /sensing/fatal_error/autonomous_available }
+      - { type: link, link: /planning/fatal_error/autonomous_available }
+      - { type: link, link: /control/fatal_error/autonomous_available }
+      - { type: link, link: /vehicle/fatal_error/autonomous_available }
+      - { type: link, link: /system/fatal_error/autonomous_available }
+      - { type: link, link: /others/fatal_error/autonomous_available }
+
+  - path: /autoware/fatal_error/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /hardware/fatal_error/pull_over_available }
+      - { type: link, link: /sensing/fatal_error/pull_over_available }
+      - { type: link, link: /planning/fatal_error/pull_over_available }
+      - { type: link, link: /control/fatal_error/pull_over_available }
+      - { type: link, link: /vehicle/fatal_error/pull_over_available }
+      - { type: link, link: /system/fatal_error/pull_over_available }
+      - { type: link, link: /others/fatal_error/pull_over_available }
+
+  - path: /autoware/fatal_error/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /hardware/fatal_error/comfortable_stop_available }
+      - { type: link, link: /sensing/fatal_error/comfortable_stop_available }
+      - { type: link, link: /planning/fatal_error/comfortable_stop_available }
+      - { type: link, link: /control/fatal_error/comfortable_stop_available }
+      - { type: link, link: /vehicle/fatal_error/comfortable_stop_available }
+      - { type: link, link: /system/fatal_error/comfortable_stop_available }
+      - { type: link, link: /others/fatal_error/comfortable_stop_available }
 
   - path: /autoware/modes/emergency_stop
     type: ok
-
-  - path: /autoware/debug/tools
-    type: and
-    list:
-      - { type: link, link: /autoware/system/service_log_checker }
-
-  - path: /autoware/system/service_log_checker
-    type: diag
-    node: service_log_checker
-    name: response_status
