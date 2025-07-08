@@ -230,7 +230,7 @@
           # approve the next shift line after reaching this percentage of the current shift line length.
           # this parameter is added to allow waiting for the return of shift approval until the occlusion behind the avoid target is clear.
           # this feature can be disabled by setting this parameter to 0.0.
-          ratio_for_return_shift_approval: 0.5          # [-]
+          ratio_for_return_shift_approval: 1.0          # [-]
         # avoidance distance parameters
         longitudinal:
           min_prepare_time: 1.0                         # [s]
