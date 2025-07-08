@@ -24,8 +24,8 @@
     # Point cloud partitioning
     detection_range_min_height: 0.0
     detection_range_max_height_margin: 0.0
-    voxel_grid_x: 0.1
-    voxel_grid_y: 0.1
+    voxel_grid_x: 0.2
+    voxel_grid_y: 0.2
     voxel_grid_z: 0.5
 
     # Point cloud cropping

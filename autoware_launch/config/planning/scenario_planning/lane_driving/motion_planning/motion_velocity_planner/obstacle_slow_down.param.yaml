@@ -18,14 +18,14 @@
           default:
             moving:
               min_lat_margin: 0.2
-              max_lat_margin: 1.0
+              max_lat_margin: 0.7
               min_ego_velocity: 2.0
-              max_ego_velocity: 8.0
+              max_ego_velocity: 5.56
             static:
               min_lat_margin: 0.2
-              max_lat_margin: 1.0
-              min_ego_velocity: 4.0
-              max_ego_velocity: 8.0
+              max_lat_margin: 0.7
+              min_ego_velocity: 2.0
+              max_ego_velocity: 5.56
 
         moving_object_speed_threshold: 0.5 # [m/s] how fast the object needs to move to be considered as "moving"
         moving_object_hysteresis_range: 0.1 # [m/s] hysteresis range used to prevent chattering when obstacle moves close to moving_object_speed_threshold
@@ -43,7 +43,7 @@
           pointcloud: false
 
         min_lat_margin: 0.0  # lateral margin between obstacle and trajectory band with ego's width to avoid the conflict with the obstacle_stop
-        max_lat_margin: 1.1  # lateral margin between obstacle and trajectory band with ego's width
+        max_lat_margin: 0.8  # lateral margin between obstacle and trajectory band with ego's width
         lat_hysteresis_margin: 0.2
 
         successive_num_to_entry_slow_down_condition: 5

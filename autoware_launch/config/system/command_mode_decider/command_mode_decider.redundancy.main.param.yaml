@@ -1,0 +1,16 @@
+/**:
+  ros__parameters:
+    update_rate: 10.0
+    request_timeout: 1.0
+    initial_autoware_control: false
+    initial_operation_mode: stop
+    command_modes:
+      - manual
+      - stop
+      - autonomous
+      - local
+      - remote
+      - comfortable_stop
+      - main_ecu_in_lane_stop_0_3g
+      - main_ecu_in_lane_stop_0_6g
+      - sub_ecu_in_lane_stop_0_3g
