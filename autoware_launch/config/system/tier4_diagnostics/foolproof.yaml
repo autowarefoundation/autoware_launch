@@ -32,6 +32,8 @@ units:
       - { type: link, link: /foolproof/perception1/mgbe1_not_ready-error }
       - { type: link, link: /foolproof/perception2/mgbe1_not_ready-error }
       - { type: link, link: /foolproof/node_alive } # letterbox_monitor
+      - { type: link, link: /foolproof/main/scheduling_settings_others }
+      - { type: link, link: /foolproof/main/scheduling_settings_autoware }
 
       # - { type: link, link:  /foolproof/device_check }
 
@@ -173,3 +175,16 @@ units:
   #   node: autoware_diagnostics_bridge_node_addon
   #   name: addon_recognition_node_alive
   #   timeout: 3.0
+
+  # scheduling_settings
+  - path: /foolproof/main/scheduling_settings_others
+    type: diag
+    node: autoware_diagnostics_bridge_node_main
+    name: main_scheduling_settings_others
+    timeout: 3.0
+
+  - path: /foolproof/main/scheduling_settings_autoware
+    type: diag
+    node: autoware_diagnostics_bridge_node_main
+    name: main_scheduling_settings_autoware
+    timeout: 3.0
