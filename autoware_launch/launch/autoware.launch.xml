@@ -103,6 +103,9 @@
     </include>
   </group>
 
+
+
+
   <!-- Planning -->
   <group if="$(var launch_planning)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_planning_component.launch.xml">
@@ -110,6 +113,14 @@
       <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
       <arg name="is_simulation" value="$(var is_simulation)"/>
     </include>
+
+    <!-- Relay node for trajectory topic -->
+    <!-- This is a temporary addition for migration purposes. -->
+    <!-- https://github.com/orgs/autowarefoundation/discussions/5033#discussioncomment-13704802 -->
+    <node pkg="topic_tools" exec="relay" name="trajectory_relay">
+      <remap from="input" to="/planning/scenario_planning/trajectory"/>
+      <remap from="output" to="/planning/trajectory"/>
+    </node>
   </group>
 
   <!-- Control -->
@@ -126,15 +137,7 @@
 
   <!-- Tools -->
   <group>
-    <node
-      pkg="rviz2"
-      exec="rviz2"
-      name="rviz2"
-      output="screen"
-      args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png"
-      if="$(var rviz)"
-      respawn="$(var rviz_respawn)"
-    >
+    <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png" if="$(var rviz)" respawn="$(var rviz_respawn)">
       <env name="QT_QPA_PLATFORMTHEME" value="qt5ct"/>
     </node>
   </group>
