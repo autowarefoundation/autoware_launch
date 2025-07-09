@@ -12,7 +12,6 @@
     # lateral acceleration limit parameters
     enable_lateral_acc_limit: true     # To toggle the lateral acc filter on and off. You can switch it dynamically at runtime.
     lateral_acceleration_limits: [0.6]             # max lateral acceleration limit [m/ss]
-    min_curve_velocity: 2.74            # min velocity at lateral acceleration limit and steering angle rate limit [m/s]
     max_lateral_accel: 0.6             # max lateral acceleration limit [m/ss]
     min_curve_velocity: 2.74            # min velocity at lateral acceleration limit and steering angle rate limit [m/s]
     decel_distance_before_curve: 3.5   # slow speed distance before a curve for lateral acceleration limit
