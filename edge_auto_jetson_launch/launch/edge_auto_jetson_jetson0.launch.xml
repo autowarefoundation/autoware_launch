@@ -43,7 +43,7 @@ Key Features:
   <!-- path to the yaml file that contains parameters for sensor_trigger node -->
   <arg name="launch_sensor_trigger" default="true"/>
   <let name="trigger_id" value="0"/>
-  <let name="sensor_trigger_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/camera$(var trigger_id)_trigger.param.yaml" />
+  <let name="sensor_trigger_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/perception1_trigger.param.yaml" />
 
   <let name="trigger_time_tolerance_ns" value="1000000" />
   <let name="camera_time_tolerance_ns"  value="10000000" />
