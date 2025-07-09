@@ -66,26 +66,6 @@
     <arg name="traffic_light_arbiter_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_arbiter/traffic_light_arbiter.param.yaml"/>
 
     <arg
-      name="object_recognition_tracking_radar_object_tracker_data_association_matrix_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/data_association_matrix.param.yaml"
-    />
-    <arg
-      name="object_recognition_tracking_radar_object_tracker_tracking_setting_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/default_tracker.param.yaml"
-    />
-    <arg
-      name="object_recognition_tracking_radar_object_tracker_node_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/radar_object_tracker.param.yaml"
-    />
-    <arg
-      name="object_recognition_tracking_object_merger_data_association_matrix_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/data_association_matrix.param.yaml"
-    />
-    <arg
-      name="object_recognition_tracking_object_merger_node_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml"
-    />
-    <arg
       name="each_traffic_light_map_based_detector_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_map_based_detector/TRAFFIC_LIGHT_RECOGNITION_CAMERA_NAMESPACE_traffic_light_map_based_detector.param.yaml"
     />
