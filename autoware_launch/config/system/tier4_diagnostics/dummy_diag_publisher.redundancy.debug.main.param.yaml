@@ -1,0 +1,38 @@
+# Description:
+#   required_diags:
+#     <name>: {is_active: <is_active>, status: <status>}
+#   name: diag name
+#   is_active: Force update or not
+#   status: diag status set by dummy diag publisher "OK, Warn, Error, Stale"
+#
+# Note:
+#
+# default values are:
+#   is_active: "true"
+#   status: "OK"
+---
+/**:
+  ros__parameters:
+    required_diags:
+      # debug
+
+      ## /debug/injection/stop_available
+      "injection_stop_available": default
+
+      ## /debug/injection/autonomous_available
+      "injection_autonomous_available": default
+
+      ## /debug/injection/local_available
+      "injection_local_available": default
+
+      ## /debug/injection/remote_available
+      "injection_remote_available": default
+
+      ## /debug/injection/comfortable_stop_available
+      "injection_comfortable_stop_available": default
+
+      ## /debug/injection/main_ecu_in_lane_stop_0_3g_available
+      "injection_main_ecu_in_lane_stop_0_3g_available": default
+
+      ## /debug/injection/main_ecu_in_lane_stop_0_6g_available
+      "injection_main_ecu_in_lane_stop_0_6g_available": default

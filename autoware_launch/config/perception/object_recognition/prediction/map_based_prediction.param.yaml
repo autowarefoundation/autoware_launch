@@ -1,7 +1,7 @@
 /**:
   ros__parameters:
     prediction_time_horizon:
-      vehicle: 15.0 #[s]
+      vehicle: 18.0 #[s]
       pedestrian: 10.0 #[s]
       unknown: 10.0 #[s]
     lateral_control_time_horizon: 5.0 #[s]

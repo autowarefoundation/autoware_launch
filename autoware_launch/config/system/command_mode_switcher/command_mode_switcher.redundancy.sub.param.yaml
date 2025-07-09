@@ -1,0 +1,5 @@
+/**:
+  ros__parameters:
+    update_rate: 10.0
+    plugins:
+      - j6_gen2_command_mode_switcher::SubEcuInLaneStop03GSwitcher
