@@ -25,7 +25,7 @@
       lanelet_object_elevation_filter:
         enabled: true
         max_elevation_threshold: 5.0 # [m] from a lanelet's surface
-        min_elevation_threshold: 0.0 # [m] from a lanelet's surface
+        min_elevation_threshold: -0.5 # [m] from a lanelet's surface
 
       lanelet_extra_margin: 0.0
       debug: false
