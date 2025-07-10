@@ -12,4 +12,3 @@
     check_footprint_inside_lanes: true
     allow_reroute_in_autonomous_mode: true
     prioritize_bus_stop_as_start_lane: false # If the start pose overlaps with multiple lanelets, prioritize the one tagged as "bus_stop"
-
