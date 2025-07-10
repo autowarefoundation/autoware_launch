@@ -60,7 +60,7 @@
           cut_predicted_paths:  # options to cut predicted paths of dynamic objects
             if_crossing_ego_from_behind: true # if true, cut after crossing the ego vehicle
             polygon_types: ["NONE"]  # types of polygons in the vector map used to cut predicted paths
-            linestring_types: ["NONE"]  # types of linestrings in the vector map used to cut predicted paths
+            linestring_types: ["guard_rail", "fence"]  # types of linestrings in the vector map used to cut predicted paths
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to cut predicted paths
             strict_polygon_types: ["NONE"]  # same as polygon_types but the cut is not subjected to the preserved duration/distance
             strict_linestring_types: ["guard_rail"]  # same as linestring_types but the cut is not subjected to the preserved duration/distance

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Essential parameters -->
+  <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
+  <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
+
+  <!-- launch module preset -->
+  <arg name="planning_module_preset" default="x2" description="planning module preset"/>
+  <arg name="control_module_preset" default="x2" description="control module preset"/>
+
+  <!-- Optional parameters -->
+  <!-- Modules to be launched -->
+  <arg name="launch_vehicle" default="true" description="launch vehicle"/>
+  <arg name="launch_system" default="true" description="launch system"/>
+  <arg name="launch_map" default="true" description="launch map"/>
+  <arg name="launch_sensing" default="true" description="launch sensing"/>
+  <arg name="launch_sensing_driver" default="true" description="launch sensing driver"/>
+  <arg name="launch_localization" default="true" description="launch localization"/>
+  <arg name="launch_perception" default="true" description="launch perception"/>
+  <arg name="launch_planning" default="true" description="launch planning"/>
+  <arg name="launch_control" default="true" description="launch control"/>
+  <arg name="launch_api" default="true" description="launch api"/>
+  <arg name="launch_v2x" default="true" description="launch V2X"/>
+  <arg name="launch_l4_toolkit" default="true" description="launch L4 Toolkit"/>
+  <!-- Global parameters -->
+  <arg name="use_sim_time" default="false" description="use_sim_time"/>
+  <arg name="is_main_ecu" default="true"/>
+  <arg name="is_redundant" default="true"/>
+  <arg name="is_60kph" default="false"/>
+  <!-- Vehicle -->
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
+  <!-- Auto mode setting-->
+  <arg name="is_simulation" default="false" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
+
+  <!-- Global parameters -->
+  <group scoped="false">
+    <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+  <!-- Localization -->
+  <group if="$(var launch_localization)">
+    <push-ros-namespace namespace="localization"/>
+    <!-- Localization args-->
+    <let name="loc_config_path" value="$(find-pkg-share autoware_launch)/config/localization"/>
+    <arg name="ekf_localizer_param_path" default="$(var loc_config_path)/ekf_localizer.param.yaml"/>
+
+    <!-- ekf localizer -->
+    <group>
+      <include file="$(find-pkg-share autoware_ekf_localizer)/launch/ekf_localizer.launch.xml">
+        <arg name="input_initial_pose_name" value="/main/initialpose3d"/>
+        <arg name="input_pose_with_cov_name" value="/main/localization/pose_with_covariance"/>
+        <arg name="input_twist_with_cov_name" value="/main/localization/twist_estimator/twist_with_covariance"/>
+        <arg name="output_odom_name" value="/localization/pose_twist_fusion_filter/kinematic_state"/>
+        <arg name="output_pose_name" value="/localization/pose_twist_fusion_filter/pose"/>
+        <arg name="output_pose_with_covariance_name" value="/localization/pose_with_covariance"/>
+        <arg name="output_biased_pose_name" value="/localization/pose_twist_fusion_filter/biased_pose"/>
+        <arg name="output_biased_pose_with_covariance_name" value="/localization/pose_twist_fusion_filter/biased_pose_with_covariance"/>
+        <arg name="output_twist_name" value="/localization/pose_twist_fusion_filter/twist"/>
+        <arg name="output_twist_with_covariance_name" value="/localization/pose_twist_fusion_filter/twist_with_covariance"/>
+        <arg name="param_file" value="$(var ekf_localizer_param_path)"/>
+      </include>
+    </group>
+
+    <!-- stop filter -->
+    <group>
+      <include file="$(find-pkg-share autoware_stop_filter)/launch/stop_filter.launch.xml">
+        <arg name="use_twist_with_covariance" value="True"/>
+        <arg name="input_odom_name" value="/localization/pose_twist_fusion_filter/kinematic_state"/>
+        <arg name="input_twist_with_covariance_name" value="/localization/pose_twist_fusion_filter/twist_with_covariance"/>
+        <arg name="output_odom_name" value="/localization/kinematic_state"/>
+      </include>
+    </group>
+
+    <!-- twist2accel -->
+    <group>
+      <include file="$(find-pkg-share autoware_twist2accel)/launch/twist2accel.launch.xml">
+        <arg name="use_odom" value="true"/>
+        <arg name="in_odom" value="/localization/kinematic_state"/>
+        <arg name="in_twist" value="/localization/twist_estimator/twist_with_covariance"/>
+        <arg name="out_accel" value="/localization/acceleration"/>
+      </include>
+    </group>
+  </group>
+
+  <!-- Planning -->
+  <group if="$(var launch_planning)">
+    <!-- topic relay controller -->
+    <include file="$(find-pkg-share autoware_topic_relay_controller)/launch/topic_relay_controller.launch.xml">
+      <arg name="node_name_suffix" value="trajectory"/>
+      <arg name="config_file" value="$(find-pkg-share autoware_launch)/config/system/topic_relay_controller/main_planning_scenario_planning_trajectory.param.yaml"/>
+    </include>
+  </group>
+
+  <!-- Control -->
+  <group if="$(var launch_control)">
+    <push-ros-namespace namespace="control"/>
+    <!-- Control args -->
+    <arg name="lateral_controller_mode" default="mpc"/>
+    <arg name="longitudinal_controller_mode" default="pid"/>
+    <arg name="use_individual_control_param" default="false"/>
+    <let name="latlon_controller_param_path_dir" value="$(var vehicle_id)" if="$(var use_individual_control_param)"/>
+    <let name="latlon_controller_param_path_dir" value="" unless="$(var use_individual_control_param)"/>
+
+    <arg name="nearest_search_param_path" default="$(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml"/>
+    <arg name="trajectory_follower_node_param_path" default="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/trajectory_follower_node.param.yaml"/>
+    <arg
+      name="lat_controller_param_path"
+      default="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/$(var latlon_controller_param_path_dir)/lateral/$(var lateral_controller_mode).param.yaml"
+    />
+    <arg
+      name="lon_controller_param_path"
+      default="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/$(var latlon_controller_param_path_dir)/longitudinal/$(var longitudinal_controller_mode).redundancy.sub.param.yaml"
+    />
+    <log message="$(var lon_controller_param_path)"/>
+    <arg name="vehicle_info_param_path" default="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+
+    <!-- trajectory follower -->
+    <node_container pkg="rclcpp_components" exec="component_container" name="trajectory_follower_container" namespace="">
+      <composable_node
+        pkg="autoware_trajectory_follower_node"
+        plugin="autoware::motion::control::trajectory_follower_node::Controller"
+        name="trajectory_follower_node_exe"
+        namespace="trajectory_follower"
+      >
+        <param name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
+        <param name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
+        <param from="$(var nearest_search_param_path)"/>
+        <param from="$(var trajectory_follower_node_param_path)"/>
+        <param from="$(var lon_controller_param_path)"/>
+        <param from="$(var lat_controller_param_path)"/>
+        <param from="$(var vehicle_info_param_path)"/>
+
+        <remap from="~/input/reference_trajectory" to="/planning/topic_relay_controller/trajectory"/>
+        <remap from="~/input/current_steering" to="/main/vehicle/status/steering_status"/>
+        <remap from="~/input/current_odometry" to="/localization/kinematic_state"/>
+        <remap from="~/input/current_accel" to="/localization/acceleration"/>
+        <remap from="~/input/current_operation_mode" to="/main/system/operation_mode/state"/>
+        <remap from="~/output/predicted_trajectory" to="lateral/predicted_trajectory"/>
+        <remap from="~/output/lateral_diagnostic" to="lateral/diagnostic"/>
+        <remap from="~/output/slope_angle" to="longitudinal/slope_angle"/>
+        <remap from="~/output/longitudinal_diagnostic" to="longitudinal/diagnostic"/>
+        <remap from="~/output/stop_reason" to="longitudinal/stop_reason"/>
+        <remap from="~/output/control_cmd" to="control_cmd"/>
+      </composable_node>
+      <composable_node pkg="autoware_glog_component" plugin="autoware::glog_component::GlogComponent" name="glog_component_trajectory_follower" namespace=""/>
+    </node_container>
+
+    <!-- jerk constant deceleration controller -->
+    <include file="$(find-pkg-share jerk_constant_deceleration_controller)/launch/jerk_constant_deceleration_controller.launch.xml">
+      <arg name="input_jerk_constant_deceleration_trigger" value="/main/control/jerk_constant_deceleration_trigger"/>
+    </include>
+  </group>
+
+  <!-- System -->
+  <group if="$(var launch_system)">
+    <push-ros-namespace namespace="system"/>
+    <let name="psim_param_option" value="psim." if="$(var is_simulation)"/>
+    <let name="psim_param_option" value="" unless="$(var is_simulation)"/>
+
+    <!-- System args -->
+    <arg name="domain_bridge_param_path" default="$(find-pkg-share autoware_launch)/config/system/domain_bridge/domain_bridge.redundancy.main.mrm.$(var psim_param_option)param.yaml"/>
+    <arg name="mrm_stop_operator_param_path" default="$(find-pkg-share mrm_stop_operator)/config/mrm_stop_operator.param.yaml"/>
+
+    <!-- domain bridge -->
+    <include file="$(find-pkg-share domain_bridge)/launch/domain_bridge.launch.xml">
+      <arg name="config" value="$(var domain_bridge_param_path)"/>
+      <!-- Optionally override domain IDs -->
+      <arg name="from_domain" value="1"/>
+      <arg name="to_domain" value="3"/>
+    </include>
+
+    <!-- topic_state_monitor -->
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="stop_filter"/>
+      <arg name="topic" value="/localization/kinematic_state"/>
+      <arg name="topic_type" value="nav_msgs/msg/Odometry"/>
+      <arg name="diag_name" value="planning_topic_status"/>
+      <arg name="warn_rate" value="20.0"/>
+      <arg name="error_rate" value="4.0"/>
+      <arg name="timeout" value="0.25"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="twist2accel"/>
+      <arg name="topic" value="/localization/acceleration"/>
+      <arg name="topic_type" value="geometry_msgs/msg/AccelWithCovarianceStamped"/>
+      <arg name="diag_name" value="planning_topic_status"/>
+      <arg name="warn_rate" value="20.0"/>
+      <arg name="error_rate" value="4.0"/>
+      <arg name="timeout" value="0.25"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="trajectory_follower"/>
+      <arg name="topic" value="/control/trajectory_follower/control_cmd"/>
+      <arg name="topic_type" value="autoware_control_msgs/msg/Control"/>
+      <arg name="diag_name" value="control_topic_status"/>
+      <arg name="warn_rate" value="15.0"/>
+      <arg name="error_rate" value="3.0"/>
+      <arg name="timeout" value="0.3"/>
+    </include>
+  </group>
+</launch>
