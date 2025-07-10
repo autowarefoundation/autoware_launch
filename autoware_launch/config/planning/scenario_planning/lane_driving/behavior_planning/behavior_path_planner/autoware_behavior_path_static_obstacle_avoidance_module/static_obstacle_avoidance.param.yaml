@@ -118,9 +118,9 @@
           bus: true                                     # [-]
           trailer: true                                 # [-]
           unknown: false                                 # [-]
-          bicycle: false                                 # [-]
-          motorcycle: false                              # [-]
-          pedestrian: false                              # [-]
+          bicycle: true                                 # [-]
+          motorcycle: true                              # [-]
+          pedestrian: true                              # [-]
         # detection range
         object_check_goal_distance: 20.0                # [m]
         object_check_return_pose_distance: 20.0         # [m]
