@@ -48,6 +48,9 @@
         outer_road_detection_offset: 1.0
         inner_road_detection_offset: 0.0
 
+      # path decision state controller
+      path_decision_state_controller:
+        check_collision_duration: 1.0  # Duration to check collision before transition from DECIDING to DECIDED
 
       # pull over
       pull_over:
@@ -152,7 +155,7 @@
           # detection range
           object_check_forward_distance: 100.0
           object_check_backward_distance: 100.0
-          ignore_object_velocity_threshold: 1.0
+          ignore_object_velocity_threshold: 0.25
           # ObjectTypesToCheck
           object_types_to_check:
             check_car: true

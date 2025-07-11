@@ -1,5 +1,30 @@
 <?xml version="1.0"?>
 <launch>
+  <arg
+    name="launch_pointcloud_container"
+    default="false"
+    description="if true, launch pointcloud container. Please note that it is not intended to launch pointcloud_container_name with the same name in other launch files."
+  />
+  <arg name="pointcloud_container_name" description="name of pointcloud container"/>
+  <arg name="use_sim_time" default="false"/>
+  <arg name="vehicle_model" default="sample_vehicle"/>
+
+  <!-- Pointcloud container -->
+  <group if="$(var launch_pointcloud_container)">
+    <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+      <arg name="use_multithread" value="true"/>
+      <arg name="container_name" value="$(var pointcloud_container_name)"/>
+    </include>
+  </group>
+
+  <!-- Global parameters -->
+  <group scoped="false">
+    <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
   <arg name="use_empty_dynamic_object_publisher" default="false" description="if true, /perception/object_recognition/objects topic has an empty DynamicObjectArray"/>
   <arg name="use_traffic_light_recognition" default="true" description="use traffic light recognition module, if false, traffic light recognition module will not be launched"/>
 
@@ -16,6 +41,7 @@
   <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
   <arg name="use_obstacle_segmentation_time_series_filter" default="true" description="use time series filter at the ground segmentation"/>
   <arg name="segmentation_pointcloud_fusion_camera_ids" default="[0,2,4]" description="list of camera ids used for segmentation_pointcloud_fusion node, mainly using front camera"/>
+  <arg name="use_multi_channel_tracker_merger" default="false" description="if true, multi channel tracker merger is used. Otherwise, merged object is used."/>
 
   <arg name="occupancy_grid_map_method" default="pointcloud_based" description="options: pointcloud_based, laserscan_based, multi_lidar_pointcloud_based"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
@@ -37,6 +63,7 @@
     <!-- general options to switch launch function/module -->
     <arg name="mode" value="$(var perception_mode)"/>
     <arg name="lidar_detection_model" value="$(var lidar_detection_model)"/>
+    <arg name="use_multi_channel_tracker_merger" value="$(var use_multi_channel_tracker_merger)"/>
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
 
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
@@ -106,6 +133,10 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml"
     />
     <arg
+      name="object_recognition_detection_pointpainting_fusion_common_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/pointpainting_common.param.yaml"
+    />
+    <arg
       name="object_recognition_detection_obstacle_pointcloud_based_validator_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detected_object_validation/obstacle_pointcloud_based_validator.param.yaml"
     />
@@ -126,16 +157,8 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml"
     />
     <arg
-      name="object_recognition_detection_radar_crossing_objects_noise_filter_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/radar_crossing_objects_noise_filter/radar_crossing_objects_noise_filter.param.yaml"
-    />
-    <arg
       name="object_recognition_detection_radar_lanelet_filtering_range_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_filter/radar_lanelet_filter.param.yaml"
-    />
-    <arg
-      name="object_recognition_detection_radar_object_clustering_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/radar_object_clustering.param.yaml"
     />
     <arg name="object_recognition_detection_lidar_model_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/lidar_model"/>
     <arg
@@ -167,16 +190,12 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
     />
     <arg
-      name="object_recognition_tracking_radar_object_tracker_data_association_matrix_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/data_association_matrix.param.yaml"
+      name="object_recognition_tracking_radar_tracked_object_sorter_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/tracked_object_sorter.param.yaml"
     />
     <arg
-      name="object_recognition_tracking_radar_object_tracker_tracking_setting_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/default_tracker.param.yaml"
-    />
-    <arg
-      name="object_recognition_tracking_radar_object_tracker_node_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/radar_object_tracker.param.yaml"
+      name="object_recognition_tracking_radar_tracked_object_lanelet_filter_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/tracked_object_lanelet_filter.param.yaml"
     />
     <arg
       name="object_recognition_tracking_object_merger_data_association_matrix_param_path"

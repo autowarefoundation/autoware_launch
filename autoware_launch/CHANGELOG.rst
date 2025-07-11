@@ -2,182 +2,224 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.44.0 (2025-04-18)
+0.46.0 (2025-06-20)
 -------------------
-* feat(out_of_lane): improve out of lane stability (`#1404 <https://github.com/autowarefoundation/autoware_launch/issues/1404>`_)
-  * update out_of_lane parameters
-  * change parameter value
-  * remove unused parameter
-  * fix spelling
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat: boundary departure prevention module (`#1489 <https://github.com/autowarefoundation/autoware_launch/issues/1489>`_)
+  * feat: boundary departure prevention module
+  * include diagnostic settings
+  * add goal dist param
+  * removed unused param
   ---------
-* feat(control_validator): add over run estimation feature (`#1394 <https://github.com/autowarefoundation/autoware_launch/issues/1394>`_)
-* feat(autoware_launch): add ColoredPoseWithCovarianceHistory to Localization NDT (`#1382 <https://github.com/autowarefoundation/autoware_launch/issues/1382>`_)
-  * feat: update autoware.rviz
-  - add Localization/NDT ColoredPoseWithCovarianceHistory
-  * add: /localization/pose_estimator/nearest_voxel_transformation_likelihood
-  * change color and alpha
-  * fix: buffer size (15 seconds)
-  * fix: typo
-  * fix: add space
+* chore(static_obstacle_avoidance): modify rviz visualization (`#1496 <https://github.com/autowarefoundation/autoware_launch/issues/1496>`_)
+* feat(intersection): more conservative stop for NOT_PRIORITIZED (`#1501 <https://github.com/autowarefoundation/autoware_launch/issues/1501>`_)
+* feat(planning_validator): add condition to check the yaw deviation (`#1494 <https://github.com/autowarefoundation/autoware_launch/issues/1494>`_)
+* feat(autoware_behavior_velocity_traffic_light_module): add v2i  (`#1482 <https://github.com/autowarefoundation/autoware_launch/issues/1482>`_)
+  * add v2i parameter
+  * reflect review
+  * reflect review
   ---------
-* feat(traffic_light): add traffic light restart suppression parameters (`#1405 <https://github.com/autowarefoundation/autoware_launch/issues/1405>`_)
-  * feat: add traffic light restart_suppression param
+* fix(roi_cluster_fusion): rename param (`#1500 <https://github.com/autowarefoundation/autoware_launch/issues/1500>`_)
+* chore: clean up unused-parameters along with refactoring in motion_velocity_planner (`#1498 <https://github.com/autowarefoundation/autoware_launch/issues/1498>`_)
+* feat(launch/components): launch in a component-wise manner (`#1497 <https://github.com/autowarefoundation/autoware_launch/issues/1497>`_)
+  * launch component-wise
   * style(pre-commit): autofix
+  * remove component_wise_launch
+  * insert args to autoware.launch.xml
   ---------
+  Co-authored-by: Yutaka Kondo <yutaka.kondo@youtalk.jp>
   Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
-* feat: remove individual_params references (`#1403 <https://github.com/autowarefoundation/autoware_launch/issues/1403>`_)
-* refactor(planning_validator): separate validation check for steering and steering rate (`#1402 <https://github.com/autowarefoundation/autoware_launch/issues/1402>`_)
-  feat(planning_validator): separate steering rate parameter for improved configuration
-* feat(lidar_transfusion): add transfusion common param file (`#1400 <https://github.com/autowarefoundation/autoware_launch/issues/1400>`_)
-  add transfusion_common param
-* feat(multi_object_tracker): add detailed processing time publishing option (`#1398 <https://github.com/autowarefoundation/autoware_launch/issues/1398>`_)
-  * feat(multi_object_tracker): add detailed processing time publishing option
-  * fix(multi_object_tracker): disable detailed processing time publishing option
+* feat(planning_validator): add new validation feature (`#1493 <https://github.com/autowarefoundation/autoware_launch/issues/1493>`_)
+* fix(autoware_static_obstacle_avoidance): fix classification method of unstable object (`#1492 <https://github.com/autowarefoundation/autoware_launch/issues/1492>`_)
+  * add param
+  * Update autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/autoware_behavior_path_static_obstacle_avoidance_module/static_obstacle_avoidance.param.yaml
+  Co-authored-by: Satoshi OTA <44889564+satoshi-ota@users.noreply.github.com>
   ---------
-* feat(radar_object_tracker): add diagnostics param (`#1399 <https://github.com/autowarefoundation/autoware_launch/issues/1399>`_)
-  * add diagnostics param
-  * fix param name
-  * change callback param name
+  Co-authored-by: Satoshi OTA <44889564+satoshi-ota@users.noreply.github.com>
+* fix(crosswalk_module): rename parameters in crosswalk_module (`#1491 <https://github.com/autowarefoundation/autoware_launch/issues/1491>`_)
+  * fix(crosswalk_module): rename parameter
+  * fix some parameter name
+* feat(detection_area): improve log message (`#1490 <https://github.com/autowarefoundation/autoware_launch/issues/1490>`_)
+* feat(planning_validator): implement collision prevention feature when ego makes a turn (`#1485 <https://github.com/autowarefoundation/autoware_launch/issues/1485>`_)
+  * add collision checker param file, and update planning component launch file
+  * add configuration parameters
+  * rename module
+  * use proper name for module param
   ---------
-* feat(multi_object_tracker): vehicle's ego frame as a parameter (`#1397 <https://github.com/autowarefoundation/autoware_launch/issues/1397>`_)
-* revert(lane_departure_checker): "fix(lane_departure_checker): replace curbstone to road_border… (`#1395 <https://github.com/autowarefoundation/autoware_launch/issues/1395>`_)
-  Revert "fix(lane_departure_checker): replace curbstone to road_border (RT1-9845) (`#1391 <https://github.com/autowarefoundation/autoware_launch/issues/1391>`_)"
-  This reverts commit b26f3375d419f5e2e2621d8b36b7d6e8a0ded209.
-* feat(probabilistic_occupancy_grid_map): add diagnostics warning when … (`#1387 <https://github.com/autowarefoundation/autoware_launch/issues/1387>`_)
-  * feat(probabilistic_occupancy_grid_map): add diagnostics warning when latency is too long
-  * style(pre-commit): autofix
-  * feat(probabilistic_occupancy_grid_map):add tolerance duration
-  * feat(probabilistic_occupancy_grid_map):  fix variable names to processing time
+* feat: add pointcloud container arg for simulator component (`#1479 <https://github.com/autowarefoundation/autoware_launch/issues/1479>`_)
+  feat(autoware_launch): add pointcloud container arg for simulator component
+* feat(planning_factor): add console output option (`#1474 <https://github.com/autowarefoundation/autoware_launch/issues/1474>`_)
+* feat: add paramter for diag msg (`#1429 <https://github.com/autowarefoundation/autoware_launch/issues/1429>`_)
+  * feat: add paramter for diag msg
+  * chore: update mismatch threshold
+  * chore: udpate variable name
+  * chore: fix parameter naming
+  * chore: add cropbox parameter
   ---------
-  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
-* fix(lane_departure_checker): replace curbstone to road_border (RT1-9845) (`#1391 <https://github.com/autowarefoundation/autoware_launch/issues/1391>`_)
-  fix(lane_departure_checker): replace curbstone to road_border
-* feat(lidar_centerpoint): add common param file (`#1377 <https://github.com/autowarefoundation/autoware_launch/issues/1377>`_)
-  * add common param
-  * fix comment and change value to float
+* chore(perception): remove unused radar filer configs (`#1449 <https://github.com/autowarefoundation/autoware_launch/issues/1449>`_)
+  * feat(autoware_launch): remove deprecated radar object clustering and noise filter parameters
+  Deleted unused parameter files for radar object clustering and radar crossing objects noise filter, and updated the launch configuration accordingly.
+  * feat(autoware_launch): remove unused object validation filter parameters
+  Deleted parameter files for object lanelet filter and object position filter to clean up the configuration. These parameters are no longer needed in the current implementation.
   ---------
-* feat(autoware_launch): remove exec_depend on autoware_launch from tier4_simulator_launch (`#1392 <https://github.com/autowarefoundation/autoware_launch/issues/1392>`_)
-* refactor(planning_validator): restructure planning validator configuration (`#1389 <https://github.com/autowarefoundation/autoware_launch/issues/1389>`_)
-  update planning validator config
-* feat: add parameter for irregular object pipeline (`#1381 <https://github.com/autowarefoundation/autoware_launch/issues/1381>`_)
-  * feat: add parameter for small unknown object pipeline
-  * chore: rename param
-  * refactor
-  * chore: spelling
-  * refactor: file renaming
-  * fix: param rename
-  * refactor: param path update
-  ---------
-* feat(multi_object_tracker): add diagnostics warning when extrapolation time exceeds limit with latency guarantee enabled (`#1378 <https://github.com/autowarefoundation/autoware_launch/issues/1378>`_)
-  * feat(multi_object_tracker): add diagnostics warning when extrapolation time exceeds limit with latency guarantee enabled
-  * style(pre-commit): autofix
-  ---------
-  Co-authored-by: lei.gu <lei.gu@tier4.jp>
-  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
-* fix(detection_area): integrate RTC feature (`#1383 <https://github.com/autowarefoundation/autoware_launch/issues/1383>`_)
-* feat(start/goal_planner): update max steer angle parameters to use margin scale (`#1368 <https://github.com/autowarefoundation/autoware_launch/issues/1368>`_)
-* feat: add parameter for diagnostics (`#1362 <https://github.com/autowarefoundation/autoware_launch/issues/1362>`_)
-* feat(perception): add parameter for diag (`#1357 <https://github.com/autowarefoundation/autoware_launch/issues/1357>`_)
-  * add parameter for diag
+* feat(goal_planner): add param of path_decision_state_controller.check_collision_duration (`#1478 <https://github.com/autowarefoundation/autoware_launch/issues/1478>`_)
+* fix(path_generator): ensure refined path connects start and goal (`#1484 <https://github.com/autowarefoundation/autoware_launch/issues/1484>`_)
+  fix/path-generator-smooth-goal-connection
+* feat(velocity_smoother): adjusting jerk weight (`#1475 <https://github.com/autowarefoundation/autoware_launch/issues/1475>`_)
+  update JerkFiltered.param.yaml
+* feat(run_out): option to preserve parts of ignored predicted paths (`#1476 <https://github.com/autowarefoundation/autoware_launch/issues/1476>`_)
+* feat(perception): add parameters to use pedestrian traffic signal result estimated in perception pipeline (`#1477 <https://github.com/autowarefoundation/autoware_launch/issues/1477>`_)
+  * add params
   * change param name
-  * add unit
   ---------
-* fix(roi_pointcloud_fusion): add roi scale factor param (`#1376 <https://github.com/autowarefoundation/autoware_launch/issues/1376>`_)
-* feat(control_validator)!: add acceleration check (`#1375 <https://github.com/autowarefoundation/autoware_launch/issues/1375>`_)
-* feat(crosswalk_module): add param to consider objects on crosswalk when pedestrian traffic light is red (`#1374 <https://github.com/autowarefoundation/autoware_launch/issues/1374>`_)
-* feat(crosswalk): fix stop position calclaton params (`#1370 <https://github.com/autowarefoundation/autoware_launch/issues/1370>`_)
-* feat(multi_object_tracker): add input channel flags for selective update per channel (`#1364 <https://github.com/autowarefoundation/autoware_launch/issues/1364>`_)
-  feat(multi_object_tracker): update input channel flags for improved tracking parameters
-* feat(goal_planner): expand outer collision check margin (`#1365 <https://github.com/autowarefoundation/autoware_launch/issues/1365>`_)
-* Contributors: Amadeusz Szymko, Kazu, Kosuke Takeuchi, Kotaro Uetake, Kyoichi Sugahara, Masaki Baba, Masato Saeki, Mehmet Dogru, Mete Fatih Cırıt, Satoshi OTA, Taekjin LEE, Takagi, Isamu, Yuki TAKAGI, Zulfaqar Azmi, badai nguyen, eiki, lei.gu, mkquda
+* chore(multi_object_tracker): add multi-channel mot option, change deprecated channel configuration (`#1425 <https://github.com/autowarefoundation/autoware_launch/issues/1425>`_)
+  feat(multi_object_tracker): clean up input_channels parameters by removing unused topics
+* feat(goal_planner, start_planner): ignore_object_velocity_threshold: 0.25 (`#1471 <https://github.com/autowarefoundation/autoware_launch/issues/1471>`_)
+  feat(goal_planenr,start_planner): ignore_object_velocity_threshold: 0.25
+* feat(rviz): add ControlModeDisplay panel to RViz configuration (`#1473 <https://github.com/autowarefoundation/autoware_launch/issues/1473>`_)
+* feat(crosswalk_module): add parked vehicles stop feature (`#1452 <https://github.com/autowarefoundation/autoware_launch/issues/1452>`_)
+* feat(intersection): conservative stop in merging (`#1456 <https://github.com/autowarefoundation/autoware_launch/issues/1456>`_)
+* feat(autoware_detected_object_validation): add lanelet object elevation filter option (`#1446 <https://github.com/autowarefoundation/autoware_launch/issues/1446>`_)
+  * add 3d lanelet filter option
+  * add 3d lanelet filter option
+  * refactor
+  ---------
+* feat(autoware_euclidean_cluster): enhance VoxelGridBasedEuclideanCluster with Large Cluster Filtering Parameters (`#1457 <https://github.com/autowarefoundation/autoware_launch/issues/1457>`_)
+  * feat(autoware_euclidean_cluster): enhance VoxelGridBasedEuclideanCluster with Large Cluster Filtering
+  * fix(voxel_grid_based_euclidean_cluster): update max cluster size and output parameters
+  Adjusted max_cluster_size to 3000 and renamed max_num_points_per_cluster to max_voxel_cluster_for_output with a new value of 800 for improved clarity and functionality in clustering operations.
+  * fix(voxel_grid_based_euclidean_cluster): reduce min voxel cluster size for filtering from 150 to 65 to enhance clustering performance
+  ---------
+  Co-authored-by: badai nguyen <94814556+badai-nguyen@users.noreply.github.com>
+* feat(rviz): add a script to sync rviz (`#1465 <https://github.com/autowarefoundation/autoware_launch/issues/1465>`_)
+  * feat(rviz): add a script to sync rviz
+  * update planing rviz
+  * fix
+  * fix
+  * update
+  * update
+  ---------
+* feat(rviz): add AccelerationMeter display configuration to RViz (`#1468 <https://github.com/autowarefoundation/autoware_launch/issues/1468>`_)
+* feat: add logging.launch.xml of diagnostic_graph_utils (`#1466 <https://github.com/autowarefoundation/autoware_launch/issues/1466>`_)
+  * feat: add logging.launch.xml
+  * update rviz
+  * disable by default
+  ---------
+* fix(ground_segmentation): extend mode switch radius (`#1464 <https://github.com/autowarefoundation/autoware_launch/issues/1464>`_)
+* refactor(planning_validator): implement plugin structure for planning validator node (`#1441 <https://github.com/autowarefoundation/autoware_launch/issues/1441>`_)
+  * add plugins param files and update planning component launch file
+  * rename param files
+  * separate trajectory checker parameters
+  * add preset args for validator modules
+  ---------
+* feat(hazard_lights_selector): add a hazard lights selector package (`#1459 <https://github.com/autowarefoundation/autoware_launch/issues/1459>`_)
+* fix(rviz): modify unused topic names (`#1461 <https://github.com/autowarefoundation/autoware_launch/issues/1461>`_)
+  fix topic names
+* fix(irregular_object_detector): add param for roi_pointcloud (`#1450 <https://github.com/autowarefoundation/autoware_launch/issues/1450>`_)
+  * fix(irregular_object_detector): add param for roi_pointcloud
+  * fix: add max_object size threshold
+  ---------
+* refactor(rviz): organize planning info/debug topics (`#1419 <https://github.com/autowarefoundation/autoware_launch/issues/1419>`_)
+  update rviz
+* feat(atuoware_behavior_path_bidirectional_traffic_module): add a functionality for bidirectional traffic (`#1423 <https://github.com/autowarefoundation/autoware_launch/issues/1423>`_)
+  * add bidirectional traffic module
+  * add parameter file
+  * update
+  * update bidirectional_traffic
+  * update param
+  * update
+  ---------
+* feat!: remove obstacle_stop_planner and obstacle_cruise_planner (`#1460 <https://github.com/autowarefoundation/autoware_launch/issues/1460>`_)
+  feat: remove obstacle_stop_planner and obstacle_cruise_planner
+* feat(obstacle_stop_module): maintain larger stop distance for opposing traffic (`#1437 <https://github.com/autowarefoundation/autoware_launch/issues/1437>`_)
+  * launch changes for opposing traffic
+  * fix
+  ---------
+* feat(ground_segmentation): add new parameter (`#1455 <https://github.com/autowarefoundation/autoware_launch/issues/1455>`_)
+  * feat(ground_segmentation): add new parameter
+  * fix: rename param
+  ---------
+* Contributors: Arjun Jagdish Ram, Fumiya Watanabe, Kosuke Takeuchi, Kotakku, Kyoichi Sugahara, Makoto Kurihara, Mamoru Sobue, Masaki Baba, Masato Saeki, Maxime CLEMENT, Ryohsuke Mitsudome, Satoshi OTA, Taekjin LEE, Takayuki Murooka, Yi-Hsiang Fang (Vivid), Yuki TAKAGI, Yukinari Hisaki, Yuxuan Liu, Zulfaqar Azmi, badai nguyen, github-actions, lei.gu, mkquda
 
-* feat(out_of_lane): improve out of lane stability (`#1404 <https://github.com/autowarefoundation/autoware_launch/issues/1404>`_)
-  * update out_of_lane parameters
-  * change parameter value
-  * remove unused parameter
-  * fix spelling
+0.45.0 (2025-05-22)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* chore(traffic_light_recognition): add comment in config of autoware_traffic_light_map_based_detector (`#1448 <https://github.com/autowarefoundation/autoware_launch/issues/1448>`_)
+  add comment
+* feat(crosswalk): update stop position logic (`#1409 <https://github.com/autowarefoundation/autoware_launch/issues/1409>`_)
+  * change crosswalk param list
   ---------
-* feat(control_validator): add over run estimation feature (`#1394 <https://github.com/autowarefoundation/autoware_launch/issues/1394>`_)
-* feat(autoware_launch): add ColoredPoseWithCovarianceHistory to Localization NDT (`#1382 <https://github.com/autowarefoundation/autoware_launch/issues/1382>`_)
-  * feat: update autoware.rviz
-  - add Localization/NDT ColoredPoseWithCovarianceHistory
-  * add: /localization/pose_estimator/nearest_voxel_transformation_likelihood
-  * change color and alpha
-  * fix: buffer size (15 seconds)
-  * fix: typo
-  * fix: add space
-  ---------
-* feat(traffic_light): add traffic light restart suppression parameters (`#1405 <https://github.com/autowarefoundation/autoware_launch/issues/1405>`_)
-  * feat: add traffic light restart_suppression param
+* feat(perception_component_launch): add common param for pointpainting_fusion (`#1401 <https://github.com/autowarefoundation/autoware_launch/issues/1401>`_)
+  add common param
+* fix(collision_detector): rename parameters to prevent launch issues (`#1447 <https://github.com/autowarefoundation/autoware_launch/issues/1447>`_)
+  rename params
+* feat(control_validator): add lateral jerk validation (`#1440 <https://github.com/autowarefoundation/autoware_launch/issues/1440>`_)
+  fix(control_validator): add lateral jerk threshold to parameters
+* feat(rviz): replace MRM Summary overlay with Error Diag Graph in debug rviz (`#1414 <https://github.com/autowarefoundation/autoware_launch/issues/1414>`_)
+  * feat(rviz): replace MRM Summary overlay with Error Diag Graph
   * style(pre-commit): autofix
   ---------
   Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
-* feat: remove individual_params references (`#1403 <https://github.com/autowarefoundation/autoware_launch/issues/1403>`_)
-* refactor(planning_validator): separate validation check for steering and steering rate (`#1402 <https://github.com/autowarefoundation/autoware_launch/issues/1402>`_)
-  feat(planning_validator): separate steering rate parameter for improved configuration
-* feat(lidar_transfusion): add transfusion common param file (`#1400 <https://github.com/autowarefoundation/autoware_launch/issues/1400>`_)
-  add transfusion_common param
-* feat(multi_object_tracker): add detailed processing time publishing option (`#1398 <https://github.com/autowarefoundation/autoware_launch/issues/1398>`_)
-  * feat(multi_object_tracker): add detailed processing time publishing option
-  * fix(multi_object_tracker): disable detailed processing time publishing option
+* feat(collision_detector): time buffer and ignore behind rear axle (`#1443 <https://github.com/autowarefoundation/autoware_launch/issues/1443>`_)
+* feat(dynamic_drivable_area_expansion): set extra offsets to 0 (`#1445 <https://github.com/autowarefoundation/autoware_launch/issues/1445>`_)
+* feat(autoware_launch): remove trajectory_deviation from diagnostic graph (`#1442 <https://github.com/autowarefoundation/autoware_launch/issues/1442>`_)
+* feat(autoware_launch): update adapi diags (`#1444 <https://github.com/autowarefoundation/autoware_launch/issues/1444>`_)
+* fix(tier4_perception_launch): add camera ids param for segmentation_pointcloud_fusion (`#1439 <https://github.com/autowarefoundation/autoware_launch/issues/1439>`_)
+  fix: add camera ids for segmentation_pointcloud_fusion
+* fix(probabilistic_occupancy_grid_map): add missing parameter for multi-lidar  (`#1426 <https://github.com/autowarefoundation/autoware_launch/issues/1426>`_)
+  add new parameter for multi-lidar
+* feat(static_obstacle_avoidance): add flag to wait approval when the ego uses opposite lane (`#1431 <https://github.com/autowarefoundation/autoware_launch/issues/1431>`_)
+* feat(behavior_velocity_planner)!: remove unused function parameter for extendLine (`#1422 <https://github.com/autowarefoundation/autoware_launch/issues/1422>`_)
+  remove unused parameter
+* feat(duplicated_node_checker): ignore duplicate get parameter (`#1413 <https://github.com/autowarefoundation/autoware_launch/issues/1413>`_)
+* feat(autoware_bevfusion): added bevfusion config files (`#1416 <https://github.com/autowarefoundation/autoware_launch/issues/1416>`_)
+  feat: added bevfusion files
+* chore(simulator.launch): remove params of traffic_light_selector (`#1415 <https://github.com/autowarefoundation/autoware_launch/issues/1415>`_)
+  remove param
+* feat: add input_timeout in operation_mode_transition_manager (`#1407 <https://github.com/autowarefoundation/autoware_launch/issues/1407>`_)
+* feat(traffic_light): remove unnecessary config file (`#1396 <https://github.com/autowarefoundation/autoware_launch/issues/1396>`_)
+  remove unnecessary file
+* feat(autoware_motion_velocity_planner): point-cloud clustering optimization (`#1410 <https://github.com/autowarefoundation/autoware_launch/issues/1410>`_)
+  * fix
+  * fix
+  * fix
   ---------
-* feat(radar_object_tracker): add diagnostics param (`#1399 <https://github.com/autowarefoundation/autoware_launch/issues/1399>`_)
-  * add diagnostics param
-  * fix param name
-  * change callback param name
+* feat(mvp_run_out): update for new motion_velocity_planner run_out (`#1388 <https://github.com/autowarefoundation/autoware_launch/issues/1388>`_)
+* feat(planning_validator): detect sudden trajectory shift (`#1380 <https://github.com/autowarefoundation/autoware_launch/issues/1380>`_)
+  * update planning validator config
+  * add new planning diagnostic path
+  * visualize planning validator virtual wall by default
+  * move planning validator display under planning/diagnostic namespace
+  * add jerk limit parameter
   ---------
-* feat(multi_object_tracker): vehicle's ego frame as a parameter (`#1397 <https://github.com/autowarefoundation/autoware_launch/issues/1397>`_)
-* revert(lane_departure_checker): "fix(lane_departure_checker): replace curbstone to road_border… (`#1395 <https://github.com/autowarefoundation/autoware_launch/issues/1395>`_)
-  Revert "fix(lane_departure_checker): replace curbstone to road_border (RT1-9845) (`#1391 <https://github.com/autowarefoundation/autoware_launch/issues/1391>`_)"
-  This reverts commit b26f3375d419f5e2e2621d8b36b7d6e8a0ded209.
-* feat(probabilistic_occupancy_grid_map): add diagnostics warning when … (`#1387 <https://github.com/autowarefoundation/autoware_launch/issues/1387>`_)
-  * feat(probabilistic_occupancy_grid_map): add diagnostics warning when latency is too long
-  * style(pre-commit): autofix
-  * feat(probabilistic_occupancy_grid_map):add tolerance duration
-  * feat(probabilistic_occupancy_grid_map):  fix variable names to processing time
-  ---------
-  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
-* fix(lane_departure_checker): replace curbstone to road_border (RT1-9845) (`#1391 <https://github.com/autowarefoundation/autoware_launch/issues/1391>`_)
-  fix(lane_departure_checker): replace curbstone to road_border
-* feat(lidar_centerpoint): add common param file (`#1377 <https://github.com/autowarefoundation/autoware_launch/issues/1377>`_)
-  * add common param
-  * fix comment and change value to float
-  ---------
-* feat(autoware_launch): remove exec_depend on autoware_launch from tier4_simulator_launch (`#1392 <https://github.com/autowarefoundation/autoware_launch/issues/1392>`_)
-* refactor(planning_validator): restructure planning validator configuration (`#1389 <https://github.com/autowarefoundation/autoware_launch/issues/1389>`_)
-  update planning validator config
-* feat: add parameter for irregular object pipeline (`#1381 <https://github.com/autowarefoundation/autoware_launch/issues/1381>`_)
-  * feat: add parameter for small unknown object pipeline
-  * chore: rename param
-  * refactor
-  * chore: spelling
-  * refactor: file renaming
-  * fix: param rename
-  * refactor: param path update
-  ---------
-* feat(multi_object_tracker): add diagnostics warning when extrapolation time exceeds limit with latency guarantee enabled (`#1378 <https://github.com/autowarefoundation/autoware_launch/issues/1378>`_)
-  * feat(multi_object_tracker): add diagnostics warning when extrapolation time exceeds limit with latency guarantee enabled
-  * style(pre-commit): autofix
-  ---------
-  Co-authored-by: lei.gu <lei.gu@tier4.jp>
-  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
-* fix(detection_area): integrate RTC feature (`#1383 <https://github.com/autowarefoundation/autoware_launch/issues/1383>`_)
-* feat(start/goal_planner): update max steer angle parameters to use margin scale (`#1368 <https://github.com/autowarefoundation/autoware_launch/issues/1368>`_)
-* feat: add parameter for diagnostics (`#1362 <https://github.com/autowarefoundation/autoware_launch/issues/1362>`_)
-* feat(perception): add parameter for diag (`#1357 <https://github.com/autowarefoundation/autoware_launch/issues/1357>`_)
-  * add parameter for diag
-  * change param name
-  * add unit
-  ---------
-* fix(roi_pointcloud_fusion): add roi scale factor param (`#1376 <https://github.com/autowarefoundation/autoware_launch/issues/1376>`_)
-* feat(control_validator)!: add acceleration check (`#1375 <https://github.com/autowarefoundation/autoware_launch/issues/1375>`_)
-* feat(crosswalk_module): add param to consider objects on crosswalk when pedestrian traffic light is red (`#1374 <https://github.com/autowarefoundation/autoware_launch/issues/1374>`_)
-* feat(crosswalk): fix stop position calclaton params (`#1370 <https://github.com/autowarefoundation/autoware_launch/issues/1370>`_)
-* feat(multi_object_tracker): add input channel flags for selective update per channel (`#1364 <https://github.com/autowarefoundation/autoware_launch/issues/1364>`_)
-  feat(multi_object_tracker): update input channel flags for improved tracking parameters
-* feat(goal_planner): expand outer collision check margin (`#1365 <https://github.com/autowarefoundation/autoware_launch/issues/1365>`_)
-* Contributors: Amadeusz Szymko, Kazu, Kosuke Takeuchi, Kotaro Uetake, Kyoichi Sugahara, Masaki Baba, Masato Saeki, Mehmet Dogru, Mete Fatih Cırıt, Satoshi OTA, Taekjin LEE, Takagi, Isamu, Yuki TAKAGI, Zulfaqar Azmi, badai nguyen, eiki, lei.gu, mkquda
+* feat(planning_validator): add lateral jerk validation parameters (`#1406 <https://github.com/autowarefoundation/autoware_launch/issues/1406>`_)
+* Contributors: Arjun Jagdish Ram, Kento Yabuuchi, Kenzo Lobos Tsunekawa, Kyoichi Sugahara, Masaki Baba, Masato Saeki, Maxime CLEMENT, Mitsuhiro Sakamoto, Ryohsuke Mitsudome, Satoshi OTA, Sho Iwasawa, Takagi, Isamu, Takayuki Murooka, Yuki TAKAGI, badai nguyen, github-actions, mkquda
 
+0.44.3 (2025-06-10)
+-------------------
+* feat: add pointcloud container arg for simulator component (`#1479 <https://github.com/autowarefoundation/autoware_launch/issues/1479>`_) (`#1487 <https://github.com/autowarefoundation/autoware_launch/issues/1487>`_)
+* feat: add pointcloud container arg for simulator component (`#1479 <https://github.com/autowarefoundation/autoware_launch/issues/1479>`_)
+  feat(autoware_launch): add pointcloud container arg for simulator component
+* Contributors: Ryohsuke Mitsudome
+
+0.44.2 (2025-05-30)
+-------------------
+* feat(launch/components): launch in a component-wise manner (`#1469 <https://github.com/autowarefoundation/autoware_launch/issues/1469>`_)
+* insert args to autoware.launch.xml
+* remove component_wise_launch
+* style(pre-commit): autofix
+* launch component-wise
+* Contributors: Ryohsuke Mitsudome, Yutaka Kondo, pre-commit-ci[bot]
+
+0.44.1 (2025-05-12)
+-------------------
+* feat(duplicated_node_checker): ignore duplicate get parameter (`#1413 <https://github.com/autowarefoundation/autoware_launch/issues/1413>`_)
+* Contributors: Ryohsuke Mitsudome
+
+0.44.0 (2025-05-01)
+-------------------
+* Merge commit 'bdbc8e8' into bump-up-version-to-0.44.0
+* chore: bump version to 0.44.0 (`#1411 <https://github.com/autowarefoundation/autoware_launch/issues/1411>`_)
 * feat(out_of_lane): improve out of lane stability (`#1404 <https://github.com/autowarefoundation/autoware_launch/issues/1404>`_)
   * update out_of_lane parameters
   * change parameter value
@@ -263,7 +305,10 @@ Changelog for package autoware_launch
 * feat(multi_object_tracker): add input channel flags for selective update per channel (`#1364 <https://github.com/autowarefoundation/autoware_launch/issues/1364>`_)
   feat(multi_object_tracker): update input channel flags for improved tracking parameters
 * feat(goal_planner): expand outer collision check margin (`#1365 <https://github.com/autowarefoundation/autoware_launch/issues/1365>`_)
-* Contributors: Amadeusz Szymko, Kazu, Kosuke Takeuchi, Kotaro Uetake, Kyoichi Sugahara, Masaki Baba, Masato Saeki, Mehmet Dogru, Mete Fatih Cırıt, Satoshi OTA, Taekjin LEE, Takagi, Isamu, Yuki TAKAGI, Zulfaqar Azmi, badai nguyen, eiki, lei.gu, mkquda
+* Contributors: Amadeusz Szymko, Kazu, Kosuke Takeuchi, Kotaro Uetake, Kyoichi Sugahara, Masaki Baba, Masato Saeki, Mehmet Dogru, Mete Fatih Cırıt, Ryohsuke Mitsudome, Satoshi OTA, Taekjin LEE, Takagi, Isamu, Yuki TAKAGI, Yutaka Kondo, Zulfaqar Azmi, badai nguyen, eiki, lei.gu, mkquda
+
+0.43.1 (2025-04-01)
+-------------------
 
 0.43.0 (2025-03-21)
 -------------------
