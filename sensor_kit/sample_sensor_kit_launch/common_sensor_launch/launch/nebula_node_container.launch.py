@@ -136,6 +136,8 @@ def launch_setup(context, *args, **kwargs):
                         "packet_mtu_size",
                         "setup_sensor",
                         "udp_only",
+                        "advanced_diagnostics",
+                        "diag_span",
                     ),
                 },
             ],
@@ -281,6 +283,8 @@ def generate_launch_description():
     add_launch_arg("use_intra_process", "False", "use ROS 2 component container communication")
     add_launch_arg("lidar_container_name", "nebula_node_container")
     add_launch_arg("output_as_sensor_frame", "True", "output final pointcloud in sensor frame")
+    add_launch_arg("advanced_diagnostics", "false", "advanced_diagnostics")
+    add_launch_arg("diag_span", "1000", "diag_span")
     add_launch_arg(
         "vehicle_mirror_param_file", description="path to the file of vehicle mirror position yaml"
     )
