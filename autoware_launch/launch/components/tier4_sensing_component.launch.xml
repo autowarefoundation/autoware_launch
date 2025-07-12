@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="launch_pointcloud_container" default="true" description="if true, launch pointcloud container"/>
+  <arg
+    name="launch_pointcloud_container"
+    default="false"
+    description="if true, launch pointcloud container. Please note that it is not intended to launch pointcloud_container_name with the same name in other launch files."
+  />
   <arg name="pointcloud_container_name" description="name of pointcloud container"/>
   <arg name="launch_sensing_driver" default="true"/>
   <arg name="sensor_model" default="sample_sensor_kit"/>

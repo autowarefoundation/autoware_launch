@@ -39,7 +39,7 @@
         longitudinal_margin: 0.0 # [m] extra longitudinal margin
 
       objects:
-        target_labels: ["PEDESTRIAN", "BICYCLE", "MOTORCYCLE"]
+        target_labels: ["PEDESTRIAN", "BICYCLE"]
         # for each target labels we can specify the following parameters
         DEFAULT:
           ignore:  # options to ignore some objects
@@ -60,8 +60,11 @@
           cut_predicted_paths:  # options to cut predicted paths of dynamic objects
             if_crossing_ego_from_behind: true # if true, cut after crossing the ego vehicle
             polygon_types: ["NONE"]  # types of polygons in the vector map used to cut predicted paths
-            linestring_types: ["guard_rail"]  # types of linestrings in the vector map used to cut predicted paths
+            linestring_types: ["NONE"]  # types of linestrings in the vector map used to cut predicted paths
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to cut predicted paths
+            strict_polygon_types: ["NONE"]  # same as polygon_types but the cut is not subjected to the preserved duration/distance
+            strict_linestring_types: ["guard_rail"]  # same as linestring_types but the cut is not subjected to the preserved duration/distance
+            strict_lanelet_subtypes: ["NONE"]  # same as lanelet_subtypes but the cut is not subjected to the preserved duration/distance
           preserved_duration: 0.0  # [s] when cutting a predicted path or ignoring an object, at least this much duration is preserved from the predicted paths
           preserved_distance: 0.0 # [m] when cutting a predicted path or ignoring an object, at least this much distance is preserved from the predicted paths
           standstill_duration_after_cut: 2.0  # [s] after cutting a predicted path, assume the object stands still at the last point for this duration
@@ -71,7 +74,7 @@
             lanelet_subtypes: ["crosswalk", "walkway"]
           cut_predicted_paths:
             lanelet_subtypes: ["crosswalk", "walkway"]
-          preserved_duration: 3.0  # [s] when cutting a predicted path or ignoring an object, at least this much duration is preserved from the predicted paths
+          preserved_duration: 2.5  # [s] when cutting a predicted path or ignoring an object, at least this much duration is preserved from the predicted paths
           preserved_distance: 2.0 # [m] when cutting a predicted path or ignoring an object, at least this much distance is preserved from the predicted paths
         BICYCLE:
           ignore_collisions:

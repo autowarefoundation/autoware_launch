@@ -17,15 +17,15 @@
 
       # velocity direction based filter
       lanelet_direction_filter:
-        enabled: false
+        enabled: true
         velocity_yaw_threshold: 0.785398 # [rad] (45 deg)
         object_speed_threshold: 3.0 # [m/s]
 
       # object's elevation from lanelet based filter
       lanelet_object_elevation_filter:
         enabled: true
-        max_elevation_threshold: 5.0 # [m] from a lanelet's surface
-        min_elevation_threshold: 0.0 # [m] from a lanelet's surface
+        max_elevation_threshold: 3.0 # [m] from a lanelet's surface
+        min_elevation_threshold: -0.5 # [m] from a lanelet's surface
 
       lanelet_extra_margin: 0.0
       debug: false

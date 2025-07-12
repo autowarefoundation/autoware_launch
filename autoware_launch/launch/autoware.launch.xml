@@ -58,6 +58,12 @@
     </include>
   </group>
 
+  <!-- Pointcloud container -->
+  <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+    <arg name="use_multithread" value="true"/>
+    <arg name="container_name" value="$(var pointcloud_container_name)"/>
+  </include>
+
   <!-- Vehicle -->
   <group if="$(var launch_vehicle)">
     <include file="$(find-pkg-share tier4_vehicle_launch)/launch/vehicle.launch.xml">
@@ -82,7 +88,9 @@
 
   <!-- Sensing -->
   <group if="$(var launch_sensing)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml">
+      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+    </include>
   </group>
 
   <!-- Localization -->
@@ -94,6 +102,7 @@
   <group if="$(var launch_perception)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_perception_component.launch.xml">
       <arg name="data_path" value="$(var data_path)"/>
+      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     </include>
   </group>
 
@@ -106,6 +115,14 @@
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
     </include>
+
+    <!-- Relay node for trajectory topic -->
+    <!-- This is a temporary addition for migration purposes. -->
+    <!-- https://github.com/orgs/autowarefoundation/discussions/5033#discussioncomment-13704802 -->
+    <node pkg="topic_tools" exec="relay" name="trajectory_relay">
+      <remap from="input" to="/planning/scenario_planning/trajectory"/>
+      <remap from="output" to="/planning/trajectory"/>
+    </node>
   </group>
 
   <!-- Control -->
