@@ -1,0 +1,88 @@
+units:
+  - path: /autoware/modes/local
+    type: and
+    list:
+      - { type: link, link: /debug/injection/local_available }
+
+  - path: /autoware/modes/remote
+    type: and
+    list:
+      - { type: link, link: /debug/injection/remote_available }
+
+  - path: /autoware/modes/stop
+    type: and
+    list:
+      - { type: link, link: /debug/injection/stop_available }
+
+  - path: /autoware/modes/autonomous
+    type: and
+    list:
+      - { type: link, link: /debug/injection/autonomous_available }
+      - { type: link, link: /redundancy/redundancy_switcher }
+
+  - path: /autoware/modes/comfortable_stop
+    type: and
+    list:
+      - { type: link, link: /debug/injection/comfortable_stop_available }
+      - { type: link, link: /redundancy/redundancy_switcher }
+
+  - path: /autoware/modes/pull_over
+    type: and
+    list:
+      - { type: link, link: /debug/injection/main_ecu_in_lane_stop_0_3g_available }
+      - { type: link, link: /redundancy/redundancy_switcher }
+
+  - path: /autoware/modes/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /debug/injection/main_ecu_in_lane_stop_0_6g_available }
+      - { type: link, link: /redundancy/redundancy_switcher }
+
+  # diag
+  - path: /debug/injection/local_available
+    type: diag
+    node: ""
+    name: injection_local_available
+    timeout: 1.0
+
+  - path: /debug/injection/remote_available
+    type: diag
+    node: ""
+    name: injection_remote_available
+    timeout: 1.0
+
+  - path: /debug/injection/stop_available
+    type: diag
+    node: ""
+    name: injection_stop_available
+    timeout: 1.0
+
+  - path: /debug/injection/autonomous_available
+    type: diag
+    node: ""
+    name: injection_autonomous_available
+    timeout: 1.0
+
+  - path: /debug/injection/comfortable_stop_available
+    type: diag
+    node: ""
+    name: injection_comfortable_stop_available
+    timeout: 1.0
+
+  - path: /debug/injection/main_ecu_in_lane_stop_0_3g_available
+    type: diag
+    node: ""
+    name: injection_main_ecu_in_lane_stop_0_3g_available
+    timeout: 1.0
+
+  - path: /debug/injection/main_ecu_in_lane_stop_0_6g_available
+    type: diag
+    node: ""
+    name: injection_main_ecu_in_lane_stop_0_6g_available
+    timeout: 1.0
+
+  - path: /redundancy/redundancy_switcher
+    type: diag
+    node: redundancy_switcher_interface
+    name: redundancy_switcher_status
+    timeout: 1.0
