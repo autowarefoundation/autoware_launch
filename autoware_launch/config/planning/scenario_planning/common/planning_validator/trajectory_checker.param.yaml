@@ -39,7 +39,7 @@
         is_critical: false
       distance_deviation:
         enable: true
-        threshold: 100.0
+        threshold: 0.5
         is_critical: false
       lon_distance_deviation:
         enable: true
