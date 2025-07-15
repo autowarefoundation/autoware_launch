@@ -7,8 +7,9 @@
           check_bicycle: true
           check_motorcycle: true
           check_unknown: true
-        search_length: 200.0  # [m]
+        search_length: 100.0  # [m]
         adjacent_lane_check: true
+        adjacent_lane_margin: 3.0
         exclude_crosswalk_users: true
         crosswalk_margin: 1.0  # [m]
         exclude_sidewalk_users: true
@@ -16,12 +17,14 @@
 
       stop_decision:
         stop_margin: 10.0  # [m]
-        max_deceleration: 2.0  # [m/s^2]
+        max_deceleration: 3.0  # [m/s^2]
+        max_jerk: 5.0  # [m/s^3]
 
       in_place_stop:
         enable: true
         wrong_way_angle_threshold: 150.0  # [deg]
-        deceleration: 1.0  # [m/s^2]
+        min_speed_threshold: 0.5  # [m/s]
+        deceleration: 2.0  # [m/s^2]
 
       debug:
         publish_debug_markers: true
