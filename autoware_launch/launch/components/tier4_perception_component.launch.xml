@@ -3,7 +3,7 @@
   <arg name="use_empty_dynamic_object_publisher" default="false" description="if true, /perception/object_recognition/objects topic has an empty DynamicObjectArray"/>
   <arg name="use_traffic_light_recognition" default="true" description="use traffic light recognition module, if false, traffic light recognition module will not be launched"/>
 
-  <arg name="use_low_height_cropbox" default="true" description="use low height crop filter in clustering"/>
+  <arg name="use_low_height_cropbox" default="false" description="use low height crop filter in clustering"/>
   <arg name="use_vector_map" default="true" description="use vector map in prediction"/>
   <arg name="use_pointcloud_map" default="true" description="use pointcloud map in detection"/>
   <arg name="use_irregular_object_detector" default="true" description="enable pipeline for small unknown object detection"/>
