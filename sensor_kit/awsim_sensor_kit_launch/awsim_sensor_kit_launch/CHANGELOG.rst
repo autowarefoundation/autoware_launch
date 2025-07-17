@@ -2,6 +2,9 @@
 Changelog for package awsim_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.45.2 (2025-06-28)
 -------------------
 
