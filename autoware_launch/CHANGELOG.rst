@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.45.3 (2025-07-17)
+-------------------
 * chore: back port 1527, 1528, 1529 to humble (`#1559 <https://github.com/autowarefoundation/autoware_launch/issues/1559>`_)
 * feat: add launch_pointcloud_container to tier4_localization_component.launch.xml (`#1529 <https://github.com/autowarefoundation/autoware_launch/issues/1529>`_)
 * feat: add global parameters to tier4_localization_component.launch.xml (`#1528 <https://github.com/autowarefoundation/autoware_launch/issues/1528>`_)
