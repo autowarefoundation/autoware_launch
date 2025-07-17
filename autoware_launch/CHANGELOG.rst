@@ -2,6 +2,15 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.45.3 (2025-07-17)
+-------------------
+* chore: back port 1527, 1528, 1529 to humble (`#1559 <https://github.com/autowarefoundation/autoware_launch/issues/1559>`_)
+* feat: add launch_pointcloud_container to tier4_localization_component.launch.xml (`#1529 <https://github.com/autowarefoundation/autoware_launch/issues/1529>`_)
+* feat: add global parameters to tier4_localization_component.launch.xml (`#1528 <https://github.com/autowarefoundation/autoware_launch/issues/1528>`_)
+* fix(perception): add `pointcloud_container_name` parameter to give (`#1527 <https://github.com/autowarefoundation/autoware_launch/issues/1527>`_)
+  add arg parameter to give
+* Contributors: Masato Saeki, Ryohsuke Mitsudome
+
 0.45.2 (2025-06-28)
 -------------------
 * fix:  `pointcloud_contaner` is launched on `autoware.launch.xml` by default (`#1523 <https://github.com/autowarefoundation/autoware_launch/issues/1523>`_) (`#1524 <https://github.com/autowarefoundation/autoware_launch/issues/1524>`_)
