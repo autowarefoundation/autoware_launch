@@ -7,4 +7,5 @@
 
     use_command_mode_mappings: true
     command_mode_mappings:
-      - "{mode: sub_ecu_in_lane_stop_0_3g,  path: /autoware/modes/sub_ecu_in_lane_stop_0_3g}"
+      - "{mode: 4001, path: /autoware/modes/sub_ecu_standby}"
+      - "{mode: 4002, path: /autoware/modes/sub_ecu_in_lane_moderate_stop}"
