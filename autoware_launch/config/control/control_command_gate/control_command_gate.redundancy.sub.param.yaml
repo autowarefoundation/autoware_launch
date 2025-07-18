@@ -1,8 +1,13 @@
 /**:
   ros__parameters:
+    inputs: [31]  # main is for autonomous, pull_over, comfortable_stop
+    inputs_names:
+      31: in_lane_stop
     rate: 10.0
-    inputs: [in_lane_stop]  # main is for autonomous, pull_over, comfortable_stop
-    builtin_emergency_acceleration: -3.0
+    builtin_emergency_acceleration: -4.0
+    stop_hold_acceleration: -1.5
+    emergency_acceleration: -4.0
+    moderate_stop_acceleration: -1.5
     diag_timeout_warn_duration: 1.0
     diag_timeout_error_duration: 2.0
     stop_check_duration: 1.0
