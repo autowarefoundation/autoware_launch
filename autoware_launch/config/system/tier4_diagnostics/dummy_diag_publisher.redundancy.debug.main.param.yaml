@@ -36,3 +36,5 @@
 
       ## /debug/injection/main_ecu_in_lane_emergency_stop_available
       "injection_main_ecu_in_lane_emergency_stop_available": default
+
+      "j6_interface: override_when_level4_driving": default
