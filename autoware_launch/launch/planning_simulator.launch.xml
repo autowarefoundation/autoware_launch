@@ -11,6 +11,9 @@
   <arg name="control_module_preset" default="x2" description="control module preset"/>
 
   <!-- Optional parameters -->
+  <!-- Redundant system parameters-->
+  <arg name="is_redundant" default="false" description="is_redundant"/>
+  <arg name="is_main_ecu" default="true" description="is_main_ecu"/>
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
@@ -58,7 +61,7 @@
     <let name="launch_vehicle_interface" value="false" if="$(var vehicle_simulation)"/>
     <let name="launch_vehicle_interface" value="true" unless="$(var vehicle_simulation)"/>
 
-    <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
+    <include file="$(find-pkg-share autoware_launch)/launch/autoware.main.launch.xml">
       <!-- Common -->
       <arg name="map_path" value="$(var map_path)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
@@ -77,10 +80,12 @@
       <arg name="system_run_mode" value="planning_simulation"/>
       <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
       <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
-      <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml"/>
       <!-- Map -->
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
+      <!-- Redundant system parameters-->
+      <arg name="is_redundant" value="$(var is_redundant)"/>
+      <arg name="is_main_ecu" value="$(var is_main_ecu)"/>
       <!-- Tools -->
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>

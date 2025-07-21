@@ -27,7 +27,9 @@
   <arg name="launch_l4_toolkit" default="true" description="launch L4 Toolkit"/>
   <!-- Global parameters -->
   <arg name="use_sim_time" default="false" description="use_sim_time"/>
+  <!-- Redundant system parameters-->
   <arg name="is_redundant" default="false" description="is_redundant"/>
+  <arg name="is_main_ecu" default="true" description="is_main_ecu"/>
   <!-- Vehicle -->
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
   <arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"/>
@@ -40,7 +42,6 @@
   <arg name="system_run_mode" default="online" description="run mode in system"/>
   <arg name="launch_system_monitor" default="true" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
-  <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml" description="diagnostic graph config"/>
   <!-- Tools -->
   <arg name="rviz" default="false" description="launch rviz"/>
   <arg name="rviz_config_name" default="autoware_x2.rviz" description="rviz config name"/>
