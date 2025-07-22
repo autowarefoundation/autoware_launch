@@ -44,6 +44,7 @@ def launch_setup(context, *args, **kwargs):
         remappings=[
             ("~/input/twist", "/sensing/vehicle_velocity_converter/twist_with_covariance"),
             ("output", "concatenated/pointcloud"),
+            ("output_info", "concatenated/pointcloud_info"),
         ],
         parameters=[concatenate_and_time_sync_node_param],
         extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
