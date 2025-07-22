@@ -6,8 +6,8 @@
         suppress_sudden_stop: false
 
       stop_planning:
-        stop_margin : 5.0 # longitudinal margin to obstacle [m]
-        terminal_stop_margin : 3.0 # Stop margin at the goal. This value cannot exceed stop margin. [m]
+        stop_margin : 6.0 # longitudinal margin to obstacle [m]
+        terminal_stop_margin : 6.0 # Stop margin at the goal. This value cannot exceed stop margin. [m]
         min_behavior_stop_margin: 3.0 # [m]
 
         max_negative_velocity: -0.1 # [m/s] maximum velocity of opposing traffic to consider stop planning
@@ -22,9 +22,9 @@
         hold_stop_distance_threshold: 0.3 # The ego keeps stopping if the distance to stop changes within the threshold [m]
 
         stop_on_curve:
-          enable_approaching: false
-          additional_stop_margin: 3.0 # [m]
-          min_stop_margin: 3.0 # [m]
+          enable_approaching: true
+          additional_stop_margin: 2.0 # [m]
+          min_stop_margin: 3.5 # [m]
 
         object_type_specified_params:
           types: # For the listed types, the node try to read the following type specified values

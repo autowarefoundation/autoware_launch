@@ -1,0 +1,14 @@
+/**:
+  ros__parameters:
+    topic: "/localization/pose_with_covariance"
+    topic_type: "geometry_msgs/msg/PoseWithCovarianceStamped" # unnecessary for /tf or /tf_static
+    remap_topic: "/to_mrm/localization/pose_with_covariance"
+    #frame_id: necessary for /tf or /tf_static
+    #child_frame_id: necessary for /tf or /tf_static
+    qos_depth: 1
+    transient_local: false # Change qos to transient_local. Default is volatile.
+    best_effort: false # Change qos to best_effort. Default is reliable.
+    enable_relay_control: true
+    srv_name: "/system/topic_relay_controller_pose_with_covariance/operate" # necessary for enable_relay_control is true
+    enable_keep_publishing: false
+    #update_rate: #necessary for enable_keep_publishing is true
