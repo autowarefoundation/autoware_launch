@@ -13,10 +13,6 @@
         stop_margin_opposing_traffic: 10.0 # Ideal stop-margin from moving opposing obstacle when ego comes to a stop
         effective_deceleration_opposing_traffic: 4.0 # Setting a higher value brings the final stop-margin closer to the ideal value above
 
-        min_on_duration: 0.3  # [s] minimum duration needed before a decision can be triggered
-        min_off_duration: 1.0  # [s] minimum duration needed before a decision can be canceled
-        update_distance_th: 0.5 # [m] minimum distance threshold to update stop point
-
         hold_stop_velocity_threshold: 0.01 # The maximum ego velocity to hold stopping [m/s]
         hold_stop_distance_threshold: 0.3 # The ego keeps stopping if the distance to stop changes within the threshold [m]
 
@@ -39,29 +35,24 @@
             motorcycle: false
             unknown: false
 
-        # Lanelet-based filtering
-        adjacent_lane_margin: 2.0 # [m]
+        # Trajectory-based filtering
+        trajectory_lateral_margin: 1.0 # lateral margin from ego trajectory to detect objects [m]
         
+        # Wrong-way detection
+        opposing_traffic_detection:
+          enable: true
+          angle_threshold: 150.0 # [deg]
+          min_speed_threshold: 0.5 # [m/s]
+
+        # Intersection filtering
+        exclude_intersection: false # If true, exclude objects inside intersection lanelets
         # Special area filtering
         exclude_crosswalk_users: true
         crosswalk_margin: 1.0 # [m]
         
-        # Wrong-way detection
-        wrong_way_detection:
-          enable: true
-          angle_threshold: 150.0 # [deg]
-          min_speed_threshold: 0.5 # [m/s]
-        
+
         # Temporal filtering
         min_detection_duration: 0.1 # [s]
-        tracked_object_cleanup_threshold: 2.0 # [s] time threshold to remove tracked objects that haven't been detected
+        lost_object_retention_duration: 2.0 # [s] duration to keep tracking objects after they are lost or exit the detection area
         
-        # Intersection filtering
-        exclude_intersection: false # If true, exclude objects inside intersection lanelets
-
         polygon_expansion_length: 0.5 # [m] Factor to expand object polygon when object was previously inside detection area
-
-      # Common parameters (these would normally come from common_param.yaml)
-      common_param:
-        limit_max_accel: 1.0 # [m/s^2] maximum acceleration limit
-        limit_min_accel: -2.5 # [m/s^2] minimum acceleration limit
