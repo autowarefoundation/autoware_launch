@@ -31,8 +31,10 @@
       ## /debug/injection/comfortable_stop_available
       "injection_comfortable_stop_available": default
 
-      ## /debug/injection/main_ecu_in_lane_stop_0_3g_available
-      "injection_main_ecu_in_lane_stop_0_3g_available": default
+      ## /debug/injection/main_ecu_in_lane_moderate_stop_available
+      "injection_main_ecu_in_lane_moderate_stop_available": default
 
-      ## /debug/injection/main_ecu_in_lane_stop_0_6g_available
-      "injection_main_ecu_in_lane_stop_0_6g_available": default
+      ## /debug/injection/main_ecu_in_lane_emergency_stop_available
+      "injection_main_ecu_in_lane_emergency_stop_available": default
+
+      "j6_interface: override_when_level4_driving": default

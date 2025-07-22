@@ -6,7 +6,7 @@
         attention_area_margin: 0.75
         attention_area_angle_threshold: 0.785
         use_intersection_area: false
-        default_stopline_margin: 3.0
+        default_stopline_margin: 4.0
         stopline_overshoot_margin: 0.5
         path_interpolation_ds: 0.1
         max_accel: -4.0
@@ -90,7 +90,7 @@
 
       occlusion:
         enable: true
-        request_approval_wo_traffic_light: false
+        request_approval_wo_traffic_light: true
         occlusion_attention_area_length: 70.0
         free_space_max: 43
         occupied_min: 58

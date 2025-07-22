@@ -33,6 +33,9 @@ launch:
   - arg:
       name: launch_side_shift_module
       default: "false"
+  - arg:
+      name: launch_bidirectional_traffic_module
+      default: "true"
 
   # behavior velocity modules
   - arg:

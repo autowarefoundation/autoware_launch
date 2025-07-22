@@ -16,5 +16,5 @@
     required_diags:
       # debug
 
-      ## /debug/injection/sub_ecu_in_lane_stop_0_3g_available
-      "injection_sub_ecu_in_lane_stop_0_3g_available": default
+      ## /debug/injection/sub_ecu_in_lane_moderate_stop_available
+      "injection_sub_ecu_in_lane_moderate_stop_available": default
