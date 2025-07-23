@@ -8,7 +8,7 @@ topics:
     remap: /main/planning/scenario_planning/trajectory
   /system/command_mode/status:
     type: tier4_system_msgs/msg/CommandModeStatus
-    remap: /sub/system/command_mode/status
+    remap: /in_sub/system/command_mode/status
   # localization is not working on the planning simulator
   /localization/kinematic_state:
     type: nav_msgs/msg/Odometry
@@ -19,8 +19,20 @@ topics:
     type: autoware_control_msgs/msg/Control
     reversed: True
     remap: /sub/control/command/control_cmd
+  /control/command/gear_cmd:
+    type: autoware_vehicle_msgs/msg/GearCommand
+    reversed: True
+    remap: /sub/control/command/gear_cmd
+  /control/command/turn_indicators_cmd:
+    type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
+    reversed: True
+    remap: /sub/control/command/turn_indicators_cmd
+  /control/command/hazard_lights_cmd:
+    type: autoware_vehicle_msgs/msg/HazardLightsCommand
+    reversed: True
+    remap: /sub/control/command/hazard_lights_cmd
   /system/election/status:
-    type: redundancy_msgs/msg/ElectionStatus
+    type: tier4_external_api_msgs/msg/ElectionStatus
     reversed: True
     remap: /sub/system/election/status
   # to pass the vehicle status from the domain 1 simulator to domain 2
@@ -31,12 +43,64 @@ topics:
   /vehicle/status/velocity_status:
     type: autoware_vehicle_msgs/msg/VelocityReport
   # to pass availability to the domain 1
-  /sub/system/command_mode/status:
+  /in_sub/system/command_mode/status:
     type: tier4_system_msgs/msg/CommandModeStatus
     reversed: True
     remap: /system/command_mode/status
+  /in_sub/system/command_mode/availability:
+    type: tier4_system_msgs/msg/CommandModeAvailability
+    reversed: True
+    remap: /system/command_mode/availability
+  /system/command_mode/availability:
+    type: tier4_system_msgs/msg/CommandModeAvailability
+    remap: /in_sub/system/command_mode/availability
+  /system/command_mode/transition/available:
+    type: tier4_system_msgs/msg/ModeChangeAvailable
+  # to pass operation mode service to the domain 1
+  /to_mrm/system/operation_mode/operation_mode_command:
+    type: autoware_adapi_v1_msgs/msg/OperationModeState
+    remap: /main/system/operation_mode/operation_mode_command
+  /to_mrm/system/operation_mode/autoware_control_command:
+    type: autoware_adapi_v1_msgs/msg/OperationModeState
+    remap: /main/system/operation_mode/autoware_control_command
+  /main/diagnostics_graph/reset_command:
+    type: builtin_interfaces/msg/Time
+  # to merge diag graph each other
+  /in_main/diagnostics_graph/status:
+    type: tier4_system_msgs/msg/DiagGraphStatus
+  /in_sub/diagnostics_graph/status:
+    type: tier4_system_msgs/msg/DiagGraphStatus
+    reversed: True
+  /in_main/diagnostics_graph/struct:
+    type: tier4_system_msgs/msg/DiagGraphStruct
+  /in_sub/diagnostics_graph/struct:
+    type: tier4_system_msgs/msg/DiagGraphStruct
+    reversed: True
+  # for mot and signage
+  /to_mot/system/fail_safe/mrm_state:
+    type: autoware_adapi_v1_msgs/msg/MrmState
+    reversed: True
+    remap: /system/fail_safe/mrm_state
+  /to_mot/diagnostics_graph/status:
+    type: tier4_system_msgs/msg/DiagGraphStatus
+    reversed: True
+    remap: /diagnostics_graph/status
+  /to_mot/diagnostics_graph/struct:
+    type: tier4_system_msgs/msg/DiagGraphStruct
+    reversed: True
+    remap: /diagnostics_graph/struct
+  /api/system/heartbeat:
+    type: autoware_adapi_v1_msgs/msg/Heartbeat
+    reversed: True
+  # for diagnostic status auto reset manager
+  /api/localization/initialization_state:
+    type: autoware_adapi_v1_msgs/msg/LocalizationInitializationState
+  /api/routing/state:
+    type: autoware_adapi_v1_msgs/msg/RouteState
+  /api/operation_mode/state:
+    type: autoware_adapi_v1_msgs/msg/OperationModeState
   # for logging at domain 1
-  /system/fail_safe/mrm_state:
+  /in_sub/system/fail_safe/mrm_state:
     type: autoware_adapi_v1_msgs/msg/MrmState
     reversed: True
     remap: /sub/system/fail_safe/mrm_state
@@ -44,14 +108,6 @@ topics:
     type: diagnostic_msgs/msg/DiagnosticArray
     reversed: True
     remap: /sub/diagnostics
-  /system/operation_mode/availability:
-    type: tier4_system_msgs/msg/OperationModeAvailability
-    reversed: True
-    remap: /sub/system/operation_mode/availability
-  /system/command_mode/availability:
-    type: tier4_system_msgs/msg/CommandModeAvailability
-    reversed: True
-    remap: /sub/system/command_mode/availability
   /system/command_mode/request:
     type: tier4_system_msgs/msg/CommandModeRequest
     reversed: True
