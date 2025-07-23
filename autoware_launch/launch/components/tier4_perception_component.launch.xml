@@ -49,7 +49,7 @@
   <arg name="detected_objects_validation_method" default="obstacle_pointcloud" description="options: obstacle_pointcloud, occupancy_grid (must be used with laserscan_based_occupancy_grid_map)"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
   <arg name="lidar_detection_model" default="centerpoint" description="If the model name is not declared, the default model in perception.launch.xml will be used"/>
-  <arg name="ml_camera_lidar_merger_priority_mode" default="3" description="priority mode for ml and camera_lidar merger, options: `0: Object0`, `1: Object1`, `2: ConfidenceBased`, `3: ClassBased`"/>
+  <arg name="ml_camera_lidar_merger_priority_mode" default="0" description="priority mode for ml and camera_lidar merger, options: `0: Object0`, `1: Object1`, `2: ConfidenceBased`, `3: ClassBased`"/>
 
   <arg name="traffic_light_recognition/camera_namespaces" default="[camera6, camera7]" description="choose camera which use for traffic light recognition"/>
   <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="select whether to use high accuracy detector for traffic light recognition"/>
