@@ -195,7 +195,7 @@
 
     <!-- command mode decider -->
     <include file="$(find-pkg-share autoware_command_mode_decider)/launch/decider.launch.xml">
-      <arg name="config" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.param.yaml"/>
+      <arg name="config" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.psim.param.yaml"/>
       <arg name="~/command_mode/status" value="/in_sub/system/command_mode/status"/>
       <arg name="~/command_mode/availability" value="/in_sub/system/command_mode/availability"/>
       <arg name="~/operation_mode/change_operation_mode" value="/sub/system/operation_mode/change_operation_mode"/>

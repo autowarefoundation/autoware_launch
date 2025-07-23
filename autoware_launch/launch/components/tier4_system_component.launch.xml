@@ -22,7 +22,14 @@
 
   <let name="command_mode_switcher_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/switcher.redundancy.main.param.yaml" if="$(var is_redundant)"/>
   <let name="command_mode_switcher_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/switcher.param.yaml" unless="$(var is_redundant)"/>
-  <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.param.yaml" if="$(var is_redundant)"/>
+  <group scoped="false" if="$(eval &quot;'$(var system_run_mode)'=='planning_simulation'&quot;)">
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.psim.param.yaml" if="$(var is_redundant)"/>
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.param.yaml" unless="$(var is_redundant)"/>
+  </group>
+  <group scoped="false" unless="$(eval &quot;'$(var system_run_mode)'=='planning_simulation'&quot;)">
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.param.yaml" if="$(var is_redundant)"/>
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.param.yaml" unless="$(var is_redundant)"/>
+  </group>
   <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.param.yaml" unless="$(var is_redundant)"/>
   <let name="availability_converter_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/converter.redundancy.param.yaml" if="$(var is_redundant)"/>
   <let name="availability_converter_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/converter.param.yaml" unless="$(var is_redundant)"/>
