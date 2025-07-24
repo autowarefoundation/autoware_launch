@@ -157,3 +157,8 @@ launch:
   - arg:
       name: launch_rear_collision_checker
       default: "true"
+
+  # other modules
+  - arg:
+      name: launch_remaining_distance_time_calculator
+      default: "true"
