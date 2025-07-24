@@ -36,6 +36,26 @@
                 max_lat_margin: 1.0
                 min_ego_velocity: 4.0
                 max_ego_velocity: 8.0
+          car.left.static:
+                min_lat_margin: 0.7
+                max_lat_margin: 1.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
+          bus.left.static:
+                min_lat_margin: 0.7
+                max_lat_margin: 1.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
+          truck.left.static:
+                min_lat_margin: 0.7
+                max_lat_margin: 1.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
+          trailer.left.static:
+                min_lat_margin: 0.7
+                max_lat_margin: 1.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
           # car.left.moving.min_ego_velocity: 3.0  # example specific override
 
         moving_object_speed_threshold: 0.5 # [m/s] how fast the object needs to move to be considered as "moving"
