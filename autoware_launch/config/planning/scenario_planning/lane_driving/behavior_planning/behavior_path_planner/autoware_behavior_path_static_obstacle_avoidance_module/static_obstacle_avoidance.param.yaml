@@ -161,7 +161,7 @@
               front_distance: 20.0                      # [m]
             crosswalk:
               front_distance: 20.0                      # [m]
-              behind_distance: 0.0                      # [m]
+              behind_distance: 10.0                      # [m]
           wait_and_see:
             target_behaviors: ["MERGING", "DEVIATING"]  # [-]
             th_closest_distance: 10.0                   # [m]
