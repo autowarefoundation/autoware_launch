@@ -54,7 +54,7 @@
           pointcloud: false
 
         min_lat_margin: 0.0  # lateral margin between obstacle and trajectory band with ego's width to avoid the conflict with the obstacle_stop
-        max_lat_margin: 1.1  # lateral margin between obstacle and trajectory band with ego's width
+        max_lat_margin: 0.8  # lateral margin between obstacle and trajectory band with ego's width
         lat_hysteresis_margin: 0.2
 
         successive_num_to_entry_slow_down_condition: 5
