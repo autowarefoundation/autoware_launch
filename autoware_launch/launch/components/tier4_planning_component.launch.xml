@@ -97,6 +97,7 @@
     <arg name="motion_velocity_planner_obstacle_velocity_limiter_param_path" value="$(var motion_config_path)/motion_velocity_planner/obstacle_velocity_limiter.param.yaml"/>
     <arg name="motion_velocity_planner_run_out_param_path" value="$(var motion_config_path)/motion_velocity_planner/run_out.param.yaml"/>
     <arg name="motion_velocity_planner_boundary_departure_prevention_module_param_path" value="$(var motion_config_path)/motion_velocity_planner/boundary_departure_prevention.param.yaml"/>
+    <arg name="motion_velocity_planner_road_user_stop_module_param_path" value="$(var motion_config_path)/motion_velocity_planner/road_user_stop.param.yaml"/>
     <arg
       name="motion_velocity_planner_velocity_smoother_type_param_path"
       value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/Analytical.param.yaml"
