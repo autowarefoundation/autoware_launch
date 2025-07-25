@@ -7,19 +7,12 @@
     processing_steps:  # processing steps used to calculate the latency.
       # The name of the steps are only used for setting the parameters and for debug outputs
       sequence:  # sequence ordered from first to last step
-        - map_based_prediction
         - multi_object_tracker
         - decorative_object_merger_node
+        - map_based_prediction
         - planning
         - control
       # Each step needs to be associated with a topic, a topic type, a timestamp meaning, and a multiplier
-      map_based_prediction:
-        topic: # input topic with the timestamp and the latency duration of the processing step
-          /perception/object_recognition/prediction/map_based_prediction/debug/processing_time_ms
-        topic_type: # type of the input topic
-          autoware_internal_debug_msgs/msg/Float64Stamped
-        timestamp_meaning: "start" # whether the timestamp represent the "start" or "end" time of the step
-        latency_multiplier: 1.0  # multiplier to convert the input latency duration into ms (e.g., 1e3 for s->ms, 1e-3 for us->ms)
       multi_object_tracker:
         topic: # input topic with the timestamp and the latency duration of the processing step
           /perception/object_recognition/tracking/multi_object_tracker/debug/meas_to_tracked_object_ms
@@ -34,6 +27,13 @@
           autoware_internal_debug_msgs/msg/Float64Stamped
         timestamp_meaning: "start" # whether the timestamp represent the "start" or "end" time of the step
         latency_multiplier: 1.0 # multiplier to convert the input latency duration into ms (e.g., 1e3 for s->ms, 1e-3 for us->ms)
+      map_based_prediction:
+        topic: # input topic with the timestamp and the latency duration of the processing step
+          /perception/object_recognition/prediction/map_based_prediction/debug/processing_time_ms
+        topic_type: # type of the input topic
+          autoware_internal_debug_msgs/msg/Float64Stamped
+        timestamp_meaning: "start" # whether the timestamp represent the "start" or "end" time of the step
+        latency_multiplier: 1.0  # multiplier to convert the input latency duration into ms (e.g., 1e3 for s->ms, 1e-3 for us->ms)
       planning:
         topic: # input topic with the timestamp and the latency duration of the processing step
           /planning/planning_validator/validation_status
