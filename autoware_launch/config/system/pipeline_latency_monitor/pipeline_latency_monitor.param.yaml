@@ -18,35 +18,35 @@
           /perception/object_recognition/tracking/multi_object_tracker/debug/meas_to_tracked_object_ms
         topic_type: # type of the input topic
           autoware_internal_debug_msgs/msg/Float64Stamped
-        timestamp_meaning: "start" # whether the timestamp represent the "start" or "end" time of the step
+        timestamp_meaning: "end" # whether the timestamp represent the "start" or "end" time of the step
         latency_multiplier: 1.0 # multiplier to convert the input latency duration into ms (e.g., 1e3 for s->ms, 1e-3 for us->ms)
       decorative_object_merger_node:
         topic: # input topic with the timestamp and the latency duration of the processing step
           /perception/object_recognition/tracking/decorative_object_merger_node/debug/processing_time_ms
         topic_type: # type of the input topic
           autoware_internal_debug_msgs/msg/Float64Stamped
-        timestamp_meaning: "start" # whether the timestamp represent the "start" or "end" time of the step
+        timestamp_meaning: "end" # whether the timestamp represent the "start" or "end" time of the step
         latency_multiplier: 1.0 # multiplier to convert the input latency duration into ms (e.g., 1e3 for s->ms, 1e-3 for us->ms)
       map_based_prediction:
         topic: # input topic with the timestamp and the latency duration of the processing step
           /perception/object_recognition/prediction/map_based_prediction/debug/processing_time_ms
         topic_type: # type of the input topic
           autoware_internal_debug_msgs/msg/Float64Stamped
-        timestamp_meaning: "start" # whether the timestamp represent the "start" or "end" time of the step
+        timestamp_meaning: "end" # whether the timestamp represent the "start" or "end" time of the step
         latency_multiplier: 1.0  # multiplier to convert the input latency duration into ms (e.g., 1e3 for s->ms, 1e-3 for us->ms)
       planning:
         topic: # input topic with the timestamp and the latency duration of the processing step
           /planning/planning_validator/validation_status
         topic_type: # type of the input topic
           autoware_planning_validator/msg/PlanningValidatorStatus
-        timestamp_meaning: "start" # whether the timestamp represent the "start" or "end" time of the step
+        timestamp_meaning: "end" # whether the timestamp represent the "start" or "end" time of the step
         latency_multiplier: 1.0e3 # multiplier to convert the input latency duration into ms (e.g., 1e3 for s->ms, 1e-3 for us->ms)
       control:
         topic: # input topic with the timestamp and the latency duration of the processing step
           /control/control_component_latency
         topic_type: # type of the input topic
           autoware_internal_debug_msgs/msg/Float64Stamped
-        timestamp_meaning: "start" # whether the timestamp represent the "start" or "end" time of the step
+        timestamp_meaning: "end" # whether the timestamp represent the "start" or "end" time of the step
         latency_multiplier: 1.0e3 # multiplier to convert the input latency duration into ms (e.g., 1e3 for s->ms, 1e-3 for us->ms)
 
     latency_offsets_ms:  # [ms] extra offset to add to the total latency
