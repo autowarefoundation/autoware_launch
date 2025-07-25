@@ -53,5 +53,5 @@
       - 0.0 # sensing
       - 1.4 # perception
       - 50.0 # planning
-      - 0.0 # control
+      - 15.0 # control
       - 191.0 # vehicle interface
