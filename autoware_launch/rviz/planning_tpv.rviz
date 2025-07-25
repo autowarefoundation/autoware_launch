@@ -1021,6 +1021,43 @@ Visualization Manager:
                 Reliability Policy: Best Effort
                 Value: /perception/traffic_light_recognition/traffic_light_map_based_detector/debug/markers
               Value: true
+            - Class: autoware_perception_rviz_plugin/TrafficLight
+              Enabled: true
+              Lanelet Map Topic: /map/vector_map
+              Name: TrafficLight
+              Show Bulb: true
+              Show Text: false
+              Text Prefix: ""
+              Text X Offset: 0
+              Text Y Offset: 0
+              Text Z Offset: 2.3
+              Traffic Light Topic: /perception/traffic_light_recognition/traffic_signals
+              Value: true
+            - Class: autoware_perception_rviz_plugin/TrafficLight
+              Enabled: true
+              Lanelet Map Topic: /map/vector_map
+              Name: TrafficLight(TLR)
+              Show Bulb: false
+              Show Text: true
+              Text Prefix: "TLR:"
+              Text X Offset: -0.2
+              Text Y Offset: 0
+              Text Z Offset: 1.8
+              Traffic Light Topic: /perception/traffic_light_recognition/internal/traffic_signals
+              Value: true
+            - Class: autoware_perception_rviz_plugin/TrafficLight
+              Enabled: true
+              Font Size: 0.5
+              Lanelet Map Topic: /map/vector_map
+              Name: TrafficLight(V2X)
+              Show Bulb: false
+              Show Text: true
+              Text Prefix: "V2X:"
+              Text X Offset: 0.2
+              Text Y Offset: 0
+              Text Z Offset: 1.3
+              Traffic Light Topic: /v2x/traffic_signals
+              Value: true
           Enabled: true
           Name: TrafficLight
         - Class: rviz_common/Group
