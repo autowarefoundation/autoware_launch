@@ -43,7 +43,7 @@
         latency_multiplier: 1.0e3 # multiplier to convert the input latency duration into ms (e.g., 1e3 for s->ms, 1e-3 for us->ms)
       control:
         topic: # input topic with the timestamp and the latency duration of the processing step
-          /control/control_system_latency
+          /control/control_component_latency
         topic_type: # type of the input topic
           autoware_internal_debug_msgs/msg/Float64Stamped
         timestamp_meaning: "start" # whether the timestamp represent the "start" or "end" time of the step
