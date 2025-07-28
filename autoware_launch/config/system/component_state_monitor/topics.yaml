@@ -59,7 +59,7 @@
     topic_type: sensor_msgs/msg/PointCloud2
     best_effort: true
     transient_local: false
-    warn_rate: 5.0
+    warn_rate: 6.5
     error_rate: 1.0
     timeout: 1.0
 

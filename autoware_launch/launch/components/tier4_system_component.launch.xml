@@ -1,7 +1,51 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="diagnostic_graph_aggregator_param_path" default="$(find-pkg-share autoware_diagnostic_graph_aggregator)/config/default.param.yaml"/>
-  <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml"/>
+  <arg name="is_redundant" default="false"/>
+  <arg name="use_control_command_gate" default="false"/>
+
+  <let
+    name="diagnostic_graph_aggregator_param_path"
+    value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/diagnostic_graph_aggregator.redundancy.main.param.yaml"
+    if="$(var is_redundant)"
+  />
+  <let name="diagnostic_graph_aggregator_param_path" value="$(find-pkg-share autoware_diagnostic_graph_aggregator)/config/default.param.yaml" unless="$(var is_redundant)"/>
+  <let name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.debug.main.yaml" if="$(var is_redundant)"/>
+  <let name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml" unless="$(var is_redundant)"/>
+
+  <let name="dummy_diag_publisher_param_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/dummy_diag_publisher.redundancy.debug.main.param.yaml" if="$(var is_redundant)"/>
+  <let name="dummy_diag_publisher_param_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/dummy_diag_publisher.param.yaml" unless="$(var is_redundant)"/>
+
+  <let name="change_operation_mode_srv" value="/main/system/operation_mode/change_operation_mode" if="$(var is_redundant)"/>
+  <let name="change_operation_mode_srv" value="/system/operation_mode/change_operation_mode" unless="$(var is_redundant)"/>
+  <let name="change_autoware_control_srv" value="/main/system/operation_mode/change_autoware_control" if="$(var is_redundant)"/>
+  <let name="change_autoware_control_srv" value="/system/operation_mode/change_autoware_control" unless="$(var is_redundant)"/>
+
+  <let name="command_mode_switcher_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/switcher.redundancy.main.param.yaml" if="$(var is_redundant)"/>
+  <let name="command_mode_switcher_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/switcher.param.yaml" unless="$(var is_redundant)"/>
+  <group scoped="false" if="$(eval &quot;'$(var system_run_mode)'=='planning_simulation'&quot;)">
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.psim.param.yaml" if="$(var is_redundant)"/>
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.param.yaml" unless="$(var is_redundant)"/>
+  </group>
+  <group scoped="false" unless="$(eval &quot;'$(var system_run_mode)'=='planning_simulation'&quot;)">
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.param.yaml" if="$(var is_redundant)"/>
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.param.yaml" unless="$(var is_redundant)"/>
+  </group>
+  <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.param.yaml" unless="$(var is_redundant)"/>
+  <let name="availability_converter_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/converter.redundancy.param.yaml" if="$(var is_redundant)"/>
+  <let name="availability_converter_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/converter.param.yaml" unless="$(var is_redundant)"/>
+
+  <let name="change_autoware_control_srv" value="/main/system/operation_mode/change_autoware_control" if="$(var is_redundant)"/>
+  <let name="change_autoware_control_srv" value="/system/operation_mode/change_autoware_control" unless="$(var is_redundant)"/>
+
+  <let name="mrm_state_topic" value="/in_main/system/fail_safe/mrm_state" if="$(var is_redundant)"/>
+  <let name="mrm_state_topic" value="/system/fail_safe/mrm_state" unless="$(var is_redundant)"/>
+
+  <let name="diag_struct_topic" value="/in_main/diagnostics_graph/struct" if="$(var is_redundant)"/>
+  <let name="diag_struct_topic" value="/diagnostics_graph/struct" unless="$(var is_redundant)"/>
+  <let name="diag_status_topic" value="/in_main/diagnostics_graph/status" if="$(var is_redundant)"/>
+  <let name="diag_status_topic" value="/diagnostics_graph/status" unless="$(var is_redundant)"/>
+  <let name="diag_reset_srv" value="/main/diagnostics_graph/reset" if="$(var is_redundant)"/>
+  <let name="diag_reset_srv" value="/diagnostics_graph/reset" unless="$(var is_redundant)"/>
 
   <include file="$(find-pkg-share tier4_system_launch)/launch/system.launch.xml">
     <arg name="run_mode" value="$(var system_run_mode)"/>
@@ -15,7 +59,7 @@
     <arg name="pipeline_latency_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/pipeline_latency_monitor/pipeline_latency_monitor.param.yaml"/>
     <arg name="mrm_comfortable_stop_operator_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_comfortable_stop_operator/mrm_comfortable_stop_operator.param.yaml"/>
     <arg name="mrm_emergency_stop_operator_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_emergency_stop_operator/mrm_emergency_stop_operator.param.yaml"/>
-    <arg name="dummy_diag_publisher_param_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/dummy_diag_publisher.param.yaml"/>
+    <arg name="dummy_diag_publisher_param_path" value="$(var dummy_diag_publisher_param_path)"/>
     <arg name="system_monitor_cpu_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/cpu_monitor.param.yaml"/>
     <arg name="system_monitor_gpu_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/gpu_monitor.param.yaml"/>
     <arg name="system_monitor_hdd_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/hdd_monitor.param.yaml"/>
@@ -26,17 +70,24 @@
     <arg name="system_monitor_voltage_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/system_monitor/voltage_monitor.param.yaml"/>
 
     <arg name="mrm_handler_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_handler/mrm_handler.param.yaml"/>
+    <arg name="mrm_state_topic" value="$(var mrm_state_topic)"/>
+    <arg name="change_operation_mode_srv" value="$(var change_operation_mode_srv)"/>
+    <arg name="change_autoware_control_srv" value="$(var change_autoware_control_srv)"/>
     <arg name="diagnostic_graph_aggregator_param_path" value="$(var diagnostic_graph_aggregator_param_path)"/>
     <arg name="diagnostic_graph_aggregator_graph_path" value="$(var diagnostic_graph_aggregator_graph_path)"/>
-    <arg name="command_mode_switcher_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/switcher.param.yaml"/>
-    <arg name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.param.yaml"/>
-    <arg name="availability_converter_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/converter.param.yaml"/>
+    <arg name="diag_struct_topic" value="$(var diag_struct_topic)"/>
+    <arg name="diag_status_topic" value="$(var diag_status_topic)"/>
+    <arg name="diag_reset_srv" value="$(var diag_reset_srv)"/>
+    <arg name="command_mode_switcher_param_path" value="$(var command_mode_switcher_param_path)"/>
+    <arg name="command_mode_decider_param_path" value="$(var command_mode_decider_param_path)"/>
+    <arg name="availability_converter_param_path" value="$(var availability_converter_param_path)"/>
+    <arg name="diagnostic_graph_aggregator_planning_simulator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/autoware.yaml"/>
   </include>
 
   <!-- For logging of diagnostics_graph error -->
   <include file="$(find-pkg-share autoware_diagnostic_graph_utils)/launch/logging.launch.xml">
     <arg name="root_path" value="/autoware/modes/autonomous"/>
-    <arg name="max_depth" value="3"/>
+    <arg name="max_depth" value="5"/>
     <arg name="show_rate" value="10.0"/>
     <arg name="enable_terminal_log" value="true"/>
   </include>
