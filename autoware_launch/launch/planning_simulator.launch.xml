@@ -127,4 +127,7 @@
       <arg name="raw_vehicle_cmd_converter_param_path" value="$(find-pkg-share autoware_launch)/config/vehicle/raw_vehicle_cmd_converter/raw_vehicle_cmd_converter.param.yaml"/>
     </include>
   </group>
+  <group>
+    <include file="$(find-pkg-share max_speed_selector)/launch/max_speed_selector.launch.xml"/>
+  </group>
 </launch>
