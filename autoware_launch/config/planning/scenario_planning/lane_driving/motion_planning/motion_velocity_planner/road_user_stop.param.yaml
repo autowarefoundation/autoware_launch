@@ -10,7 +10,7 @@
           terminal_margin: 3.0 # Stop margin at the goal. This value cannot exceed stop margin. [m]
           minimum_margin: 3.0 # [m]
 
-        opposing_traffic: 
+        opposing_traffic:
           stop_margin: 10.0 # Ideal stop-margin from moving opposing obstacle when ego comes to a stop
           max_negative_velocity: -0.1 # [m/s] maximum velocity of opposing traffic to consider stop planning
           min_velocity_for_stop_planning: 2.77 # [m/s] minimum velocity of ego to consider stop planning
