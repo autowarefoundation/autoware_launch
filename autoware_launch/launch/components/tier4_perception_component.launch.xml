@@ -34,7 +34,7 @@
   <arg name="use_irregular_object_detector" default="true" description="enable pipeline for small unknown object detection"/>
   <arg name="use_low_intensity_cluster_filter" default="true" description="launch low_intensity_cluster_filter in clustering"/>
   <arg name="use_image_segmentation_based_filter" default="false" description="launch image_segmentation_based_filter in clustering"/>
-  <arg name="use_perception_online_evaluator" default="false" description="launch perception online evaluator"/>
+  <arg name="use_perception_online_evaluator" default="true" description="launch perception online evaluator"/>
   <arg name="use_detection_by_tracker" default="true" description="launch detection_by_tracker function"/>
   <arg name="use_radar_tracking_fusion" default="true" description="if true, radar objects are merged in tracking module. Otherwise, radar objects are merged in detection module."/>
   <arg name="use_object_filter" default="true" description="launch object filter to filter-out detected object"/>
