@@ -84,5 +84,6 @@
         enabled_markers:  # if true, the corresponding debug markers are published
           ego_footprint: true
           objects: true
-          decisions: false
+          collisions : true
+          decisions: true
           filtering_data: false
