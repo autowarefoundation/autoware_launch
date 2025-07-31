@@ -126,6 +126,9 @@ launch:
   - arg:
       name: launch_boundary_departure_prevention_module
       default: "true"
+  - arg:
+      name: launch_road_user_stop_module
+      default: "false"
 
   - arg:
       name: velocity_smoother_type
