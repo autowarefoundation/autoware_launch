@@ -77,12 +77,39 @@ def create_traffic_light_recognition(camera_id, container_name, build_engine_onl
 
 
 def create_camera_driver(camera_id, container_name):
+    # get bsp version as suffix when bsp version >= 36
+    cti_version_file = "/etc/cti/CTI-L4T.version"
+    version_suffix = ""
+    try:
+        with open(cti_version_file) as f:
+            version_line = f.read()
+            version_str = version_line.split("ORIN-AGX-")[-1].split("-")[0]
+            major_version = int(version_str.split(".")[0])
+            if major_version >= 36:
+                version_suffix = "_bsp_r36"
+    except Exception:
+        pass
+    
+    individual_param_package = FindPackageShare("individual_params")
+    individual_param_dir = PathJoinSubstitution(
+        [individual_param_package, "config", os.environ.get("VEHICLE_ID", "default"),
+         os.environ.get("SENSOR_MODEL", "aip_x2_gen2"), "tier4-c2/"]
+    )
+    readout_delay_param_path = PathJoinSubstitution(
+            [individual_param_dir, f"readout_delay_{camera_id}{version_suffix}.param.yaml"]
+    )
+
     package = FindPackageShare("edge_auto_jetson_launch")
     include = PathJoinSubstitution(
         [package, f"launch/camera_common/v4l2_camera.launch.xml"]
     )
     container_name += str(camera_id)
-    arguments = [("camera_id", str(camera_id)), ("container_name", container_name)]
+    
+    arguments = [
+        ("camera_id", str(camera_id)),
+        ("readout_delay_setter_param_path", readout_delay_param_path),
+        ("container_name", container_name),
+    ]
     return IncludeLaunchDescription(include, launch_arguments=arguments)
 
 
@@ -127,11 +154,24 @@ def create_camera_sync_doctor(
         readout_delay_param_path = camera_driver_param_path
         trigger_topic = "/addon_trigger/trigger_time"
     else:
+        # get bsp version as suffix when bsp version >= 36
+        cti_version_file = "/etc/cti/CTI-L4T.version"
+        version_suffix = ""
+        try:
+            with open(cti_version_file) as f:
+                version_line = f.read()
+                version_str = version_line.split("ORIN-AGX-")[-1].split("-")[0]
+                major_version = int(version_str.split(".")[0])
+                if major_version >= 36:
+                    version_suffix = "_bsp_r36"
+        except Exception:
+            pass
+
         camera_driver_param_path = PathJoinSubstitution(
             [individual_param_dir, f"v4l2_{camera_id}.param.yaml"]
         )
         readout_delay_param_path = PathJoinSubstitution(
-            [individual_param_dir, f"readout_delay_{camera_id}.param.yaml"]
+            [individual_param_dir, f"readout_delay_{camera_id}{version_suffix}.param.yaml"]
         )
         trigger_topic = f"/sensing/camera/camera{trigger_id}/trigger_time"
 

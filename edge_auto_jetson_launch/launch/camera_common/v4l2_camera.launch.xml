@@ -14,8 +14,7 @@
   <!-- path to the yaml file that contains rate diagnostics configuration -->
   <let name="rate_diagnostics_param_path" value="$(find-pkg-share edge_auto_jetson_launch)/config/rate_diagnostics.param.yaml" />
   <!-- path to the yaml file that contains parameters for readout_delay_setter node -->
-  <let name="readout_delay_setter_param_path" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/readout_delay_$(var camera_id).param.yaml" />
-
+  <arg name="readout_delay_setter_param_path" default="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/readout_delay_$(var camera_id).param.yaml" />
 
   <!-- container name that this ROS node to be loaded -->
   <arg name="container_name" default="" />
