@@ -121,8 +121,8 @@
     <!-- This is a temporary addition for migration purposes. -->
     <!-- https://github.com/orgs/autowarefoundation/discussions/5033#discussioncomment-13704802 -->
     <node pkg="topic_tools" exec="relay" name="trajectory_relay">
-      <remap from="input" to="/planning/scenario_planning/trajectory"/>
-      <remap from="output" to="/planning/trajectory"/>
+      <param name="input_topic" value="/planning/scenario_planning/trajectory"/>
+      <param name="output_topic" value="/planning/trajectory"/>
     </node>
   </group>
 
