@@ -57,6 +57,9 @@ launch:
       name: launch_intersection_module
       default: "true"
   - arg:
+      name: launch_roundabout_module
+      default: "false"
+  - arg:
       name: launch_merge_from_private_module
       default: "false"
   - arg:
