@@ -10,7 +10,7 @@
         goal_dist_m: 1.0
 
       th_cutoff_time_s:
-        predicted_path: 4.0
+        predicted_path: 3.5
         near_boundary: 3.5
         departure: 2.0
 
