@@ -17,6 +17,24 @@ units:
     list:
       - { type: link, link: /control/emergency_stop }
 
+  - path: /control/fatal_error/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /control/fatal_error/emergency_stop }
+      - { type: link, link: /control/fatal_error/pull_over }
+      - { type: link, link: /control/fatal_error/comfortable_stop }
+
+  - path: /control/fatal_error/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /control/fatal_error/emergency_stop }
+      - { type: link, link: /control/fatal_error/comfortable_stop }
+
+  - path: /control/fatal_error/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /control/fatal_error/emergency_stop }
+
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
@@ -24,21 +42,33 @@ units:
     type: and
     list:
       - { type: link, link: /control/001-topic_status/control_command-error }
+      - { type: link, link: /control/010-max_distance_deviation-error }
+      - { type: link, link: /control/will_overrun_stop_point }
+
+  - path: /control/fatal_error/emergency_stop
+    type: and
+    list:
       - { type: link, link: /control/004-lane_departure-error }
       - { type: link, link: /control/009-aeb_emergency_stop }
-      # - { type: link, link: /control/010-max_distance_deviation-error }
-      # - { type: link, link: /control/011-slip_detection }
+      - { type: link, link: /control/011-slip_detection }
       - { type: link, link: /control/collision_detector }
       # - { type: link, link: /control/acceleration_error }
       - { type: link, link: /control/rolling_back }
-      - { type: link, link: /control/over_velocity }
       - { type: link, link: /control/overrun_stop_point }
-      - { type: link, link: /control/will_overrun_stop_point }
+      - { type: link, link: /control/yaw_deviation-error }
 
   - path: /control/comfortable_stop
     type: and
+    list:
+      - { type: link, link: /control/over_velocity }
+
+  - path: /control/fatal_error/comfortable_stop
+    type: and
 
   - path: /control/pull_over
+    type: and
+
+  - path: /control/fatal_error/pull_over
     type: and
 
   - path: /control/none
@@ -66,6 +96,12 @@ units:
     item:
       type: link
       link: /control/010-max_distance_deviation
+
+  - path: /control/yaw_deviation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/yaw_deviation
 
   - path: /control/001-topic_status/control_command
     type: diag
@@ -144,3 +180,8 @@ units:
     type: diag
     node: control_validator
     name: control_validation_will_overrun_stop_point
+
+  - path: /control/yaw_deviation
+    type: diag
+    node: control_validator
+    name: control_validation_yaw_deviation

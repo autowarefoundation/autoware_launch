@@ -1,0 +1,202 @@
+units:
+  - path: /others/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /others/emergency_stop }
+      - { type: link, link: /others/pull_over }
+      - { type: link, link: /others/comfortable_stop }
+
+  - path: /others/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /others/emergency_stop }
+      - { type: link, link: /others/comfortable_stop }
+
+  - path: /others/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /others/emergency_stop }
+
+  - path: /others/fatal_error/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /others/fatal_error/emergency_stop }
+      - { type: link, link: /others/fatal_error/pull_over }
+      - { type: link, link: /others/fatal_error/comfortable_stop }
+
+  - path: /others/fatal_error/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /others/fatal_error/emergency_stop }
+      - { type: link, link: /others/fatal_error/comfortable_stop }
+
+  - path: /others/fatal_error/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /others/fatal_error/emergency_stop }
+
+  # *******************************************************************************
+  # NOTE: Please modify this section according to your environment and requirements.
+  # *******************************************************************************
+  - path: /others/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /others/002-blockage_validation-error }
+      - { type: link, link: /others/004-concat_status }
+      - { type: link, link: /others/012-vehicle_stuck_checker }
+
+  - path: /others/fatal_error/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /others/005-visibility_validation-error }
+
+  - path: /others/comfortable_stop
+    type: and
+
+  - path: /others/fatal_error/comfortable_stop
+    type: and
+    list:
+      - { type: link, link: /others/010-emergency_vehicle_main-error }
+      - { type: link, link: /others/011-daytime_monitor }
+
+  - path: /others/pull_over
+    type: and
+
+  - path: /others/fatal_error/pull_over
+    type: and
+
+  - path: /others/none
+    type: and
+
+  - path: /others/010-emergency_vehicle_main-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /others/010-emergency_vehicle_main
+
+  - path: /others/013-emergency_vehicle_sub-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /others/013-emergency_vehicle_sub
+
+  # Intermediate paths
+  - path: /others/002-blockage_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /others/002-blockage_validation
+
+  - path: /others/002-blockage_validation
+    type: and
+    list:
+      - { type: link, link: /others/002-blockage_validation/front_lower }
+      - { type: link, link: /others/002-blockage_validation/front_upper }
+      - { type: link, link: /others/002-blockage_validation/left_lower }
+      - { type: link, link: /others/002-blockage_validation/left_upper }
+      - { type: link, link: /others/002-blockage_validation/right_lower }
+      - { type: link, link: /others/002-blockage_validation/right_upper }
+      - { type: link, link: /others/002-blockage_validation/rear_lower }
+      - { type: link, link: /others/002-blockage_validation/rear_upper }
+
+  - path: /others/005-visibility_validation
+    type: and
+    list:
+      - { type: link, link: /others/005-visibility_validation/rear_upper }
+      - { type: link, link: /others/005-visibility_validation/right_upper }
+
+  - path: /others/005-visibility_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /others/005-visibility_validation
+
+  - path: /others/002-blockage_validation/front_lower
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/front_lower"
+    name: blockage_validation
+    timeout: 1.0
+
+  - path: /others/002-blockage_validation/front_upper
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/front_upper"
+    name: blockage_validation
+    timeout: 1.0
+
+  - path: /others/002-blockage_validation/left_lower
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/left_lower"
+    name: blockage_validation
+    timeout: 1.0
+
+  - path: /others/002-blockage_validation/left_upper
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/left_upper"
+    name: blockage_validation
+    timeout: 1.0
+
+  - path: /others/002-blockage_validation/right_lower
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/right_lower"
+    name: blockage_validation
+    timeout: 1.0
+
+  - path: /others/002-blockage_validation/right_upper
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/right_upper"
+    name: blockage_validation
+    timeout: 1.0
+
+  - path: /others/002-blockage_validation/rear_lower
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/rear_lower"
+    name: blockage_validation
+    timeout: 1.0
+
+  - path: /others/002-blockage_validation/rear_upper
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/rear_upper"
+    name: blockage_validation
+    timeout: 1.0
+
+  - path: /others/004-concat_status
+    type: diag
+    node: concatenate_data
+    name: concat_status
+    timeout: 1.0
+
+  - path: /others/005-visibility_validation/rear_upper
+    type: diag
+    node: "dual_return_filter: /sensing/lidar/rear_upper"
+    name: visibility_validation
+    timeout: 1.0
+
+  - path: /others/005-visibility_validation/right_upper
+    type: diag
+    node: "dual_return_filter: /sensing/lidar/right_upper"
+    name: visibility_validation
+    timeout: 1.0
+
+  - path: /others/010-emergency_vehicle_main
+    type: diag
+    node: emergency_vehicle_detector_main
+    name: emergency_vehicle
+    timeout: 3.0
+
+  - path: /others/011-daytime_monitor
+    type: diag
+    node: daytime_monitor
+    name: daytime_status
+    timeout: 3.0
+
+  - path: /others/012-vehicle_stuck_checker
+    type: diag
+    node: vehicle_stuck_checker
+    name: vehicle_stuck_check
+    timeout: 3.0
+
+  - path: /others/013-emergency_vehicle_sub
+    type: diag
+    node: emergency_vehicle_detector_sub
+    name: emergency_vehicle
+    timeout: 3.0

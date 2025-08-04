@@ -63,7 +63,7 @@
             linestring_types: ["NONE"]  # types of linestrings in the vector map used to cut predicted paths
             lanelet_subtypes: ["NONE"]  # subtypes of lanelets in the vector map used to cut predicted paths
             strict_polygon_types: ["NONE"]  # same as polygon_types but the cut is not subjected to the preserved duration/distance
-            strict_linestring_types: ["guard_rail"]  # same as linestring_types but the cut is not subjected to the preserved duration/distance
+            strict_linestring_types: ["guard_rail", "fence"]  # same as linestring_types but the cut is not subjected to the preserved duration/distance
             strict_lanelet_subtypes: ["NONE"]  # same as lanelet_subtypes but the cut is not subjected to the preserved duration/distance
           preserved_duration: 0.0  # [s] when cutting a predicted path or ignoring an object, at least this much duration is preserved from the predicted paths
           preserved_distance: 0.0 # [m] when cutting a predicted path or ignoring an object, at least this much distance is preserved from the predicted paths
