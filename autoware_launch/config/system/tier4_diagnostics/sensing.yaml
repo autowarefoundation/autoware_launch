@@ -215,48 +215,48 @@ units:
     timeout: 5.0
   - path: /sensing/gnss/002-quality
     type: diag
-    node: septentrio_driver
+    node: /sensing/gnss/septentrio
     name: Quality indicators
     timeout: 5.0
   - path: /sensing/camera/0/connection
     type: diag
     node: v4l2_camera_camera0
-    name: capture_status
+    name: camera0_diagnostics
     timeout: 1.0
   - path: /sensing/camera/1/connection
     type: diag
     node: v4l2_camera_camera1
-    name: capture_status
+    name: camera1_diagnostics
     timeout: 1.0
   - path: /sensing/camera/2/connection
     type: diag
     node: v4l2_camera_camera2
-    name: capture_status
+    name: camera2_diagnostics
     timeout: 1.0
   - path: /sensing/camera/3/connection
     type: diag
     node: v4l2_camera_camera3
-    name: capture_status
+    name: camera3_diagnostics
     timeout: 1.0
   - path: /sensing/camera/4/connection
     type: diag
     node: v4l2_camera_camera4
-    name: capture_status
+    name: camera4_diagnostics
     timeout: 1.0
   - path: /sensing/camera/5/connection
     type: diag
     node: v4l2_camera_camera5
-    name: capture_status
+    name: camera5_diagnostics
     timeout: 1.0
   - path: /sensing/camera/6/connection
     type: diag
     node: v4l2_camera_camera6
-    name: capture_status
+    name: camera6_diagnostics
     timeout: 1.0
   - path: /sensing/camera/7/connection
     type: diag
     node: v4l2_camera_camera7
-    name: capture_status
+    name: camera7_diagnostics
     timeout: 1.0
   - path: /sensing/radar/front_center/connection
     type: diag
