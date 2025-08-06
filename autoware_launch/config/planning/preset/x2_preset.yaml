@@ -52,7 +52,7 @@ launch:
       default: "true"
   - arg:
       name: launch_merge_from_private_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_blind_spot_module
       default: "true"
