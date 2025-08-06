@@ -85,6 +85,7 @@
             max_velocity: 30.0
             position_diff: 1.0
           velocity_estimation:
+            use_estimated_velocity: false
             min_clamp_velocity: 0.0
             max_clamp_velocity: 20.0
             required_velocity_count: 5
