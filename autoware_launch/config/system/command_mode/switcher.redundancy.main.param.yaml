@@ -14,7 +14,7 @@
     plugin_parameters:
       autoware::command_mode_switcher::ComfortableStopSwitcher:
         hazard_lights_hz: 20
-        min_acceleration: -1.0
+        min_acceleration: -1.5
         max_jerk: 0.6
         min_jerk: -0.6
       x2_command_mode_switcher::MainEcuInLaneModerateStopSwitcher:
