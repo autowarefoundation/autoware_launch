@@ -3,7 +3,7 @@
     crop_box_filter:
       parameters:
         min_x: 5.0
-        max_x: 60.0
+        max_x: 120.0
         min_y: -5.0
         max_y: 5.0
         max_z: 0.5
@@ -21,7 +21,7 @@
         split_height_distance: 0.1
         non_ground_height_threshold: 0.07
         grid_size_m: 0.2
-        grid_mode_switch_radius: 20.0
+        grid_mode_switch_radius: 120.0
         gnd_grid_buffer_size: 5
         detection_range_z_max: 3.2
         elevation_grid_mode: true
