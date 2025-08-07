@@ -126,6 +126,9 @@ launch:
   - arg:
       name: launch_boundary_departure_prevention_module
       default: "true"
+  - arg:
+      name: launch_road_user_stop_module
+      default: "true"
 
   - arg:
       name: velocity_smoother_type
@@ -156,4 +159,9 @@ launch:
       default: "true"
   - arg:
       name: launch_rear_collision_checker
+      default: "true"
+
+  # other modules
+  - arg:
+      name: launch_remaining_distance_time_calculator
       default: "true"
