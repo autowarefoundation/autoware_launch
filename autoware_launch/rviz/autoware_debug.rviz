@@ -368,7 +368,7 @@ Visualization Manager:
           Text Color: 51; 201; 220
           Time To Erase Last Diag: 2
           Time To Keep Last Diag: 1
-          Top: 10
+          Top: 130
           Topic:
             Depth: 1
             Durability Policy: Volatile
