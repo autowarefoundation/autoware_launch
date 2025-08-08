@@ -15,7 +15,7 @@
     turn_signal_intersection_search_distance: 30.0
     turn_signal_intersection_angle_threshold_deg: 15.0
     turn_signal_roundabout_on_entry: "None" # "None", "Left", "Right"
-    turn_signal_roundabout_entry_persist: true
+    turn_signal_roundabout_entry_indicator_persistence: true
     turn_signal_roundabout_on_exit: "Left" # "None", "Left", "Right",
     turn_signal_roundabout_search_distance: 30.0
     turn_signal_roundabout_angle_threshold_deg: 15.0
