@@ -2,6 +2,14 @@
 Changelog for package awsim_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.47.0 (2025-08-11)
+-------------------
+* feat(autoware_pointcloud_preprocessor): add remappings (`#1563 <https://github.com/autowarefoundation/autoware_launch/issues/1563>`_)
+* Contributors: Amadeusz Szymko
+
+0.46.0 (2025-06-20)
+-------------------
+
 0.45.3 (2025-07-17)
 -------------------
 
