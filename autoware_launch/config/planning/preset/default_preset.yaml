@@ -39,6 +39,9 @@ launch:
   - arg:
       name: launch_side_shift_module
       default: "true"
+  - arg:
+      name: launch_bidirectional_traffic_module
+      default: "true"
 
   # behavior velocity modules
   - arg:
@@ -76,7 +79,7 @@ launch:
       default: "false"
   - arg:
       name: launch_run_out_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_speed_bump_module
       default: "false"
@@ -119,14 +122,13 @@ launch:
       default: "true"
   - arg:
       name: launch_mvp_run_out_module
-      default: "false"
-
+      default: "true"
   - arg:
-      name: motion_stop_planner_type
-      default: none
-      # option: obstacle_stop_planner
-      #         obstacle_cruise_planner
-      #         none
+      name: launch_boundary_departure_prevention_module
+      default: "true"
+  - arg:
+      name: launch_road_user_stop_module
+      default: "true"
 
   - arg:
       name: velocity_smoother_type
@@ -143,4 +145,23 @@ launch:
   # parking modules
   - arg:
       name: launch_parking_module
+      default: "true"
+
+  # validator modules
+  - arg:
+      name: launch_latency_checker
+      default: "true"
+  - arg:
+      name: launch_trajectory_checker
+      default: "true"
+  - arg:
+      name: launch_intersection_collision_checker
+      default: "true"
+  - arg:
+      name: launch_rear_collision_checker
+      default: "true"
+
+  # other modules
+  - arg:
+      name: launch_remaining_distance_time_calculator
       default: "true"
