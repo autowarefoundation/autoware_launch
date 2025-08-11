@@ -2,6 +2,9 @@
 Changelog for package common_sensor_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.45.3 (2025-07-17)
 -------------------
 

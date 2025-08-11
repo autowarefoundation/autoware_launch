@@ -2,6 +2,9 @@
 Changelog for package sample_vehicle_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.45.3 (2025-07-17)
 -------------------
 

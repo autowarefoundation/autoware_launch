@@ -2,6 +2,9 @@
 Changelog for package awsim_sensor_kit_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.45.3 (2025-07-17)
 -------------------
 
