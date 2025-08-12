@@ -51,7 +51,7 @@
       reparking_forward_first_weight: 100.0
       reparking_deviation_penalty: 10.0
       reparking_alignment_weight: 2.0
-      min_out_distance: 2.0
+      reparking_distance: 2.0
 
     # -- RRT* search Configurations --
     rrtstar:
