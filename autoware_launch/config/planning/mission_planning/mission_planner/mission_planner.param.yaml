@@ -3,7 +3,7 @@
     map_frame: map
     arrival_check_angle_deg: 45.0
     arrival_check_distance: 1.0
-    arrival_check_past_goal_distance: 2.0  # If the the vehicle passed the goal, it will check the distance .
+    arrival_check_overshoot_distance: 2.0  # If the vehicle has passed the goal, this distance will be used for arrival checking.
     arrival_check_duration: 1.0
     goal_angle_threshold_deg: 45.0
     enable_correct_goal_pose: false
