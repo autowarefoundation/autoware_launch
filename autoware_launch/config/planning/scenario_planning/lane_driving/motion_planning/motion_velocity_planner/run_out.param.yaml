@@ -39,7 +39,7 @@
         longitudinal_margin: 0.0 # [m] extra longitudinal margin
 
       objects:
-        target_labels: ["PEDESTRIAN", "BICYCLE", "MOTORCYCLE"]
+        target_labels: ["PEDESTRIAN", "BICYCLE"]
         # for each target labels we can specify the following parameters
         DEFAULT:
           ignore:  # options to ignore some objects
