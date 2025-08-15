@@ -54,10 +54,9 @@
         check_inside: # If true, the planner checks if the obstacle is inside the ego's footprint
           default: true
           pointcloud: false
-        check_outside: # If true, the planner checks if the obstacle is outside the ego's footprint
+        check_outside: # If true, the planner checks if the obstacle is outside the ego's footprint. pointcloud obstacles are not supported.
           default: true
           unknown: false
-          # pointcloud: false # This field is not supported.
 
         trim_trajectory: # This feature support only pointcloud obstacles yet.
           enable_trim:
@@ -74,7 +73,7 @@
         min_velocity_to_reach_collision_point: 2.0 # minimum velocity margin to calculate time to reach collision [m/s]
         stop_obstacle_hold_time_threshold : 1.0 # maximum time for holding closest stop obstacle
 
-        outside_obstacle:
+        outside_obstacle: # Parameters for predicting if an obstacle will cut in. Pointcloud obstacles are not supported.
           estimation_time_horizon: 1.0
           max_lateral_velocity: 5.0 # maximum lateral velocity to consider the obstacle as a stop obstacle [m/s]
           deceleration: # planner perceives the object will stop with this rate to avoid unnecessary stops [m/ss]
@@ -82,7 +81,7 @@
             pedestrian: 1.0
             bicycle: 2.0
 
-        crossing_obstacle:
+        crossing_obstacle: # Parameters for predicting if an obstacle will dissappear. Pointcloud obstacles are not supported.
           collision_time_margin : 1.0 # time threshold of collision between obstacle adn ego for cruise or stop [s]
           traj_angle_threshold: 0.523599 # [rad] = 70 [deg], yaw threshold of crossing obstacle against the nearest trajectory point for cruise or stop
 
