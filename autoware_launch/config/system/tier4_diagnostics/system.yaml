@@ -1,0 +1,60 @@
+units:
+  - path: /system/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/pull_over }
+      - { type: link, link: /system/comfortable_stop }
+
+  - path: /system/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/comfortable_stop }
+
+  - path: /system/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /system/emergency_stop }
+
+  # *******************************************************************************
+  # NOTE: Please modify this section according to your environment and requirements.
+  # *******************************************************************************
+  - path: /system/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /system/001-topic_status-error }
+      - { type: link, link: /system/002-emergency_stop_operation-error }
+
+  - path: /system/comfortable_stop
+    type: and
+
+  - path: /system/pull_over
+    type: and
+
+  - path: /system/none
+    type: and
+
+  - path: /system/001-topic_status-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/001-topic_status
+
+  - path: /system/002-emergency_stop_operation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/002-emergency_stop_operation
+
+  - path: /system/001-topic_status
+    type: diag
+    node: topic_state_monitor_system_emergency_control_cmd
+    name: system_topic_status
+    timeout: 1.0
+
+  - path: /system/002-emergency_stop_operation
+    type: diag
+    node: vehicle_cmd_gate
+    name: emergency_stop_operation
+    timeout: 1.0
