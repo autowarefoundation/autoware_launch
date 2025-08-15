@@ -319,12 +319,14 @@ Visualization Manager:
           Name: Vehicle
         - Class: autoware_string_stamped_rviz_plugin/StringStampedOverlayDisplay
           Enabled: true
-          Font Size: 12
+          Font Size: 11
           Left: 10
           Max Letter Num: 70
           Name: Error Diag Graph
           Text Color: 51; 201; 220
-          Top: 10
+          Time To Erase Last Diag: 2
+          Time To Keep Last Diag: 1
+          Top: 100
           Topic:
             Depth: 1
             Durability Policy: Volatile
@@ -1529,8 +1531,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/static_obstacle_avoidance
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1543,8 +1545,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/avoidance_by_lane_change
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1557,8 +1559,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/lane_change_right
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1571,8 +1573,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/lane_change_left
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1585,8 +1587,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/external_request_lane_change_right
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1599,8 +1601,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/external_request_lane_change_left
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1613,8 +1615,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/goal_planner
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1627,8 +1629,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/start_planner
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1641,8 +1643,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/bidirectional_traffic
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1655,8 +1657,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/blind_spot
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1669,8 +1671,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/crosswalk
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1683,8 +1685,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/walkway
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1697,8 +1699,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/detection_area
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1711,8 +1713,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/intersection
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1725,8 +1727,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/intersection_occlusion
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1739,8 +1741,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/merge_from_private
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1753,8 +1755,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/no_stopping_area
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1767,8 +1769,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/occlusion_spot
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1781,8 +1783,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/stop_line
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1795,8 +1797,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/traffic_light
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1809,8 +1811,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/virtual_traffic_light
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1823,8 +1825,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/run_out
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1837,8 +1839,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/speed_bump
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1851,8 +1853,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/no_drivable_lane
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1865,8 +1867,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/side_shift
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1879,8 +1881,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/dynamic_obstacle_avoidance
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1893,8 +1895,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/behavior_path_planner
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                       Enabled: true
                       Name: PlanningFactor
@@ -1966,8 +1968,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/surround_obstacle_checker
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1980,8 +1982,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/obstacle_stop
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -1994,8 +1996,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/obstacle_slow_down
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -2008,8 +2010,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/obstacle_cruise
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -2022,8 +2024,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/boundary_departure_prevention
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -2036,8 +2038,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/out_of_lane
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -2050,8 +2052,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/dynamic_obstacle_stop
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -2064,8 +2066,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/mvp_run_out
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
@@ -2078,8 +2080,8 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/road_user_stop
-                          Show Safety Factors: false
-                          show_safety_factors: false
+                          Show Safety Factors: true
+                          show_safety_factors: true
                           Value: true
                       Enabled: true
                       Name: PlanningFactor
@@ -2234,8 +2236,8 @@ Visualization Manager:
                         Reliability Policy: Reliable
                         Value: /planning/planning_factors/rear_collision_checker
                       Value: true
-                      Show Safety Factors: false
-                      show_safety_factors: false
+                      Show Safety Factors: true
+                      show_safety_factors: true
                     - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                       Enabled: true
                       Name: PlanningFactor(IntersectionCollisionChecker)
@@ -2248,8 +2250,8 @@ Visualization Manager:
                         Reliability Policy: Reliable
                         Value: /planning/planning_factors/intersection_collision_checker
                       Value: true
-                      Show Safety Factors: false
-                      show_safety_factors: false
+                      Show Safety Factors: true
+                      show_safety_factors: true
                   Enabled: true
                   Name: PlanningFactor
               Enabled: true
