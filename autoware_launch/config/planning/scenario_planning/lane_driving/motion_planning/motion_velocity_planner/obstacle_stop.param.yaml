@@ -65,12 +65,12 @@
             pointcloud: true
           min_trajectory_length: 30.0  # [m] minimum trajectory length to trim trajectory
           braking_distance_scale_factor: 1.5  # scale factor for brake distance to trim trajectory
-        
+
         max_lat_margin: # lateral margin between the obstacles and ego's footprint
           default: 0.3
           unknown: 0.3
           pointcloud: 0.3
-    
+
         min_velocity_to_reach_collision_point: 2.0 # minimum velocity margin to calculate time to reach collision [m/s]
         stop_obstacle_hold_time_threshold : 1.0 # maximum time for holding closest stop obstacle
 
@@ -79,7 +79,7 @@
           max_lateral_velocity: 5.0 # maximum lateral velocity to consider the obstacle as a stop obstacle [m/s]
           deceleration: # planner perceives the object will stop with this rate to avoid unnecessary stops [m/ss]
             default: 0.0
-            pedestrian: 1.0 
+            pedestrian: 1.0
             bicycle: 2.0
 
         crossing_obstacle:
