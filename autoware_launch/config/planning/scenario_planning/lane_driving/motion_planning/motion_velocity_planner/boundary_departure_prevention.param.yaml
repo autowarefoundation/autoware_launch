@@ -53,9 +53,9 @@
 
       slow_down_behavior:
         enable:
-          slow_down_near_boundary: false
-          slow_down_before_departure: false
-          stop_before_departure: false
+          slow_down_near_boundary: true
+          slow_down_before_departure: true
+          stop_before_departure: true
 
         th_trigger:
           th_vel_kmph:
