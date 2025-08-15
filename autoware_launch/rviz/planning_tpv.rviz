@@ -1953,6 +1953,18 @@ Visualization Manager:
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_velocity_limiter/virtual_walls
                           Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (BoundaryDeparturePrevention)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/boundary_departure_prevention/virtual_walls
+                          Value: true
                       Enabled: true
                       Name: VirtualWall
                     - Class: rviz_common/Group
@@ -2010,20 +2022,6 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/planning_factors/obstacle_cruise
-                          Show Safety Factors: true
-                          show_safety_factors: true
-                          Value: true
-                        - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
-                          Enabled: true
-                          Name: PlanningFactor(BoundaryDeparturePrevention)
-                          Namespaces:
-                            {}
-                          Topic:
-                            Depth: 5
-                            Durability Policy: Volatile
-                            History Policy: Keep Last
-                            Reliability Policy: Reliable
-                            Value: /planning/planning_factors/boundary_departure_prevention
                           Show Safety Factors: true
                           show_safety_factors: true
                           Value: true
@@ -2611,13 +2609,13 @@ Visualization Manager:
                           Value: true
                           VirtualWall (MotionVelocitySmoother): true
                           VirtualWall (ObstacleVelocityLimiter): true
+                          VirtualWall (BoundaryDeparturePrevention): true
                         PlanningFactor:
                           Value: true
                           PlanningFactor (SurroundObstacle): true
                           PlanningFactor (ObstacleStop): true
                           PlanningFactor (ObstacleSlowDown): true
                           PlanningFactor (ObstacleCruise): true
-                          PlanningFactor (BoundaryDeparturePrevention): true
                           PlanningFactor (OutOfLane): true
                           PlanningFactor (DynamicObstacleStop): true
                           PlanningFactor (MvpRunOut): true
