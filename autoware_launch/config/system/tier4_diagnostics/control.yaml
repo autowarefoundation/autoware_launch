@@ -34,6 +34,7 @@ units:
       - { type: link, link: /control/over_velocity }
       - { type: link, link: /control/overrun_stop_point }
       - { type: link, link: /control/will_overrun_stop_point }
+      - { type: link, link: /control/yaw_deviation-error }
 
   - path: /control/comfortable_stop
     type: and
@@ -66,6 +67,12 @@ units:
     item:
       type: link
       link: /control/010-max_distance_deviation
+
+  - path: /control/yaw_deviation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/yaw_deviation
 
   - path: /control/001-topic_status/control_command
     type: diag
@@ -144,3 +151,8 @@ units:
     type: diag
     node: control_validator
     name: control_validation_will_overrun_stop_point
+
+  - path: /control/yaw_deviation
+    type: diag
+    node: control_validator
+    name: control_validation_yaw_deviation

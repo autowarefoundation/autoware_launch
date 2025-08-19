@@ -40,6 +40,8 @@ units:
       # - { type: link, link: /planning/015-collision_checker-error }
       - { type: link, link: /planning/016-path_optimizer_emergency_stop-error }
       # - { type: link, link: /planning/017-rear_collision_checker-error }
+      - { type: link, link: /planning/018-trajectory_yaw_deviation_validation-error }
+      - { type: link, link: /planning/019-trajectory_distance_deviation_validation-error }
       - { type: link, link: /planning/020-boundary_departure-error }
 
   - path: /planning/comfortable_stop
@@ -153,6 +155,18 @@ units:
       type: link
       link: /planning/017-rear_collision_checker
 
+  - path: /planning/018-trajectory_yaw_deviation_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/018-trajectory_yaw_deviation_validation
+
+  - path: /planning/019-trajectory_distance_deviation_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/019-trajectory_distance_deviation_validation
+
   - path: /planning/020-boundary_departure-error
     type: warn-to-ok
     item:
@@ -261,8 +275,19 @@ units:
     name: rear_collision_check
     timeout: 1.0
 
+  - path: /planning/018-trajectory_yaw_deviation_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_yaw_deviation
+    timeout: 1.0
+
+  - path: /planning/019-trajectory_distance_deviation_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_distance_deviation
+    timeout: 1.0
+
   - path: /planning/020-boundary_departure
     type: diag
     node: motion_velocity_planner
     name: boundary_departure
-    timeout: 1.0
