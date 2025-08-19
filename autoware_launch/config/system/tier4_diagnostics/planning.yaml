@@ -35,7 +35,7 @@ units:
       - { type: link, link: /planning/010-trajectory_steering_validation-error }
       - { type: link, link: /planning/011-trajectory_steering_rate_validation-error }
       - { type: link, link: /planning/012-trajectory_velocity_deviation_validation-error }
-      # - { type: link, link: /planning/013-trajectory_shift_validation-error }
+      - { type: link, link: /planning/013-trajectory_shift_validation-error }
       # - { type: link, link: /planning/014-intersection_collision_checker-error }
       # - { type: link, link: /planning/015-collision_checker-error }
       - { type: link, link: /planning/016-path_optimizer_emergency_stop-error }
