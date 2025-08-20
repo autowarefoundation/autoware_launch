@@ -2,7 +2,6 @@
   ros__parameters:
     roundabout:
       common:
-        attention_area_length: 200.0
         attention_area_margin: 0.75
         attention_area_angle_threshold: 0.785
         default_stopline_margin: 1.5
