@@ -47,18 +47,15 @@ topics:
     type: tier4_system_msgs/msg/DiagGraphStruct
     reversed: True
   # for mot and signage
-  /to_mot/system/fail_safe/mrm_state:
+  /api/fail_safe/mrm_state:
     type: autoware_adapi_v1_msgs/msg/MrmState
     reversed: True
-    remap: /system/fail_safe/mrm_state
-  /to_mot/diagnostics_graph/status:
-    type: tier4_system_msgs/msg/DiagGraphStatus
+  /api/system/diagnostics/status:
+    type: autoware_adapi_v1_msgs/msg/DiagGraphStatus
     reversed: True
-    remap: /diagnostics_graph/status
-  /to_mot/diagnostics_graph/struct:
-    type: tier4_system_msgs/msg/DiagGraphStruct
+  /api/system/diagnostics/struct:
+    type: autoware_adapi_v1_msgs/msg/DiagGraphStruct
     reversed: True
-    remap: /diagnostics_graph/struct
   /api/system/heartbeat:
     type: autoware_adapi_v1_msgs/msg/Heartbeat
     reversed: True
