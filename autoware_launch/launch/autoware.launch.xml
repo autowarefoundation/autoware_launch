@@ -115,14 +115,6 @@
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
     </include>
-
-    <!-- Relay node for trajectory topic -->
-    <!-- This is a temporary addition for migration purposes. -->
-    <!-- https://github.com/orgs/autowarefoundation/discussions/5033#discussioncomment-13704802 -->
-    <node pkg="topic_tools" exec="relay" name="trajectory_relay">
-      <param name="input_topic" value="/planning/trajectory"/>
-      <param name="output_topic" value="/planning/scenario_planning/trajectory"/>
-    </node>
   </group>
 
   <!-- Control -->
@@ -141,6 +133,15 @@
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
     </include>
   </group>
+
+  <!-- Relay node for trajectory topic -->
+  <!-- This is a temporary addition for migration purposes. -->
+  <!-- https://github.com/orgs/autowarefoundation/discussions/5033#discussioncomment-13704802 -->
+  <node pkg="topic_tools" exec="relay" name="trajectory_relay">
+    <param name="input_topic" value="/planning/trajectory"/>
+    <param name="output_topic" value="/planning/scenario_planning/trajectory"/>
+  </node>
+
 
   <!-- Tools -->
   <group>
