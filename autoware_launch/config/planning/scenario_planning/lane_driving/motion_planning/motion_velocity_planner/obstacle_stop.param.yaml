@@ -75,7 +75,7 @@
               default: 0.4 # for test
             is_moving_threshold_velocity: 0.5 # [m/s] threshold to consider the obstacle as a moving obstacle. Pointcloud obstacles are always considered as stop obstacles.
             is_stop_obstacle: # [m] additional stop margin for stop obstacle
-              default: 0.0 
+              default: 0.0
             is_moving_obstacle: # [m] additional stop margin for moving obstacle
               default: 0.0
 
