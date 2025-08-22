@@ -142,7 +142,6 @@
     <param name="output_topic" value="/planning/scenario_planning/trajectory"/>
   </node>
 
-
   <!-- Tools -->
   <group>
     <node
