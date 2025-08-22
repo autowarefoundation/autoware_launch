@@ -239,7 +239,7 @@
     <!-- diagnostic_graph_aggregator -->
     <include file="$(find-pkg-share autoware_diagnostic_graph_aggregator)/launch/aggregator.launch.xml">
       <arg name="param_file" value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/diagnostic_graph_aggregator.redundancy.sub.param.yaml"/>
-      <arg name="graph_file" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.debug.sub.yaml"/>
+      <arg name="graph_file" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.sub.yaml"/>
       <arg name="~/availability" value="/in_sub/system/command_mode/availability"/>
       <arg name="~/struct" value="/in_sub/diagnostics_graph/struct"/>
       <arg name="~/status" value="/in_sub/diagnostics_graph/status"/>

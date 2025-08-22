@@ -3,67 +3,60 @@ units:
     type: and
     list:
       - { type: link, link: /vehicle/emergency_stop }
-      - { type: link, link: /vehicle/pull_over }
-      - { type: link, link: /vehicle/comfortable_stop }
-
-  - path: /vehicle/pull_over_available
-    type: and
-    list:
-      - { type: link, link: /vehicle/emergency_stop }
+      - { type: link, link: /vehicle/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /vehicle/in_lane_emergency_stop }
+      - { type: link, link: /vehicle/in_lane_moderate_stop }
       - { type: link, link: /vehicle/comfortable_stop }
 
   - path: /vehicle/comfortable_stop_available
     type: and
     list:
       - { type: link, link: /vehicle/emergency_stop }
+      - { type: link, link: /vehicle/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /vehicle/in_lane_emergency_stop }
+      - { type: link, link: /vehicle/in_lane_moderate_stop }
 
-  - path: /vehicle/fatal_error/autonomous_available
+  - path: /vehicle/in_lane_moderate_stop_available
     type: and
     list:
-      - { type: link, link: /vehicle/fatal_error/emergency_stop }
-      - { type: link, link: /vehicle/fatal_error/pull_over }
-      - { type: link, link: /vehicle/fatal_error/comfortable_stop }
+      - { type: link, link: /vehicle/emergency_stop }
+      - { type: link, link: /vehicle/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /vehicle/in_lane_emergency_stop }
 
-  - path: /vehicle/fatal_error/pull_over_available
+  - path: /vehicle/in_lane_emergency_stop_available
     type: and
     list:
-      - { type: link, link: /vehicle/fatal_error/emergency_stop }
-      - { type: link, link: /vehicle/fatal_error/comfortable_stop }
+      - { type: link, link: /vehicle/emergency_stop }
+      - { type: link, link: /vehicle/sub_ecu_in_lane_moderate_stop }
 
-  - path: /vehicle/fatal_error/comfortable_stop_available
+  - path: /vehicle/sub_ecu_in_lane_moderate_stop_available
     type: and
     list:
-      - { type: link, link: /vehicle/fatal_error/emergency_stop }
+      - { type: link, link: /vehicle/emergency_stop }
 
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
   - path: /vehicle/emergency_stop
     type: and
-    list:
-      - { type: link, link: /vehicle/001-topic_status/velocity-error }
-      - { type: link, link: /vehicle/001-topic_status/steering-error }
-      - { type: link, link: /vehicle/005-vehicle_heartbeat-error }
-      - { type: link, link: /vehicle/008-vcu-not-authenticated }
-
-  - path: /vehicle/fatal_error/emergency_stop
-    type: and
-    list:
-      - { type: link, link: /vehicle/006-vehicle_errors-error }
 
   - path: /vehicle/comfortable_stop
     type: and
-
-  - path: /vehicle/fatal_error/comfortable_stop
-    type: and
     list:
-      - { type: link, link: /vehicle/006-vehicle_errors }
       - { type: link, link: /vehicle/007-vehicle-emergency-button }
 
-  - path: /vehicle/pull_over
+  - path: /vehicle/in_lane_moderate_stop
+    type: and
+    list:
+      - { type: link, link: /vehicle/001-topic_status/velocity-error }
+      - { type: link, link: /vehicle/001-topic_status/steering-error }
+      - { type: link, link: /vehicle/006-vehicle_errors-error }
+      - { type: link, link: /vehicle/override_when_level4_driving }
+
+  - path: /vehicle/in_lane_emergency_stop
     type: and
 
-  - path: /vehicle/fatal_error/pull_over
+  - path: /vehicle/sub_ecu_in_lane_moderate_stop
     type: and
 
   - path: /vehicle/none
@@ -81,12 +74,6 @@ units:
       type: link
       link: /vehicle/001-topic_status/steering
 
-  - path: /vehicle/005-vehicle_heartbeat-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /vehicle/005-vehicle_heartbeat
-
   - path: /vehicle/006-vehicle_errors-error
     type: warn-to-ok
     item:
@@ -98,33 +85,32 @@ units:
     node: topic_state_monitor_vehicle_status_velocity_status
     name: vehicle_topic_status
     timeout: 1.0
+    latch: 0.0
 
   - path: /vehicle/001-topic_status/steering
     type: diag
     node: topic_state_monitor_vehicle_status_steering_status
     name: vehicle_topic_status
     timeout: 1.0
-
-  - path: /vehicle/005-vehicle_heartbeat
-    type: diag
-    node: j6_interface
-    name: vehicle_heartbeat_errors
-    timeout: 1.0
+    latch: 0.0
 
   - path: /vehicle/006-vehicle_errors
     type: diag
     node: j6_interface
     name: vehicle_errors
     timeout: 1.0
+    latch: 0.0
 
   - path: /vehicle/007-vehicle-emergency-button
     type: diag
     node: j6_interface
     name: vehicle_emergency_button
     timeout: 1.0
+    latch: 0.0
 
-  - path: /vehicle/008-vcu-not-authenticated
+  - path: /vehicle/override_when_level4_driving
     type: diag
     node: j6_interface
-    name: vcu_not_authenticated
+    name: override_when_level4_driving
     timeout: 1.0
+    latch: 0.0
