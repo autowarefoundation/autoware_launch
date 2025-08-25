@@ -41,6 +41,9 @@ sed -i "/^  Enabled: true$/{N;/^  Enabled: true\n  Global Options:\$/i\\$CAMERA_
 }" "$PLANNING_BEV_RVIZ"
 ## 4. enable error_diag_graph visualization
 sed -i 'N;/        - Class: autoware_string_stamped_rviz_plugin\/StringStampedOverlayDisplay\n          Enabled: false/ {s/false/true/g};P;D' "$PLANNING_BEV_RVIZ"
+## 5. enable safety factors
+sed -i 's/Show Safety Factors: false/Show Safety Factors: true/g' "$PLANNING_BEV_RVIZ"
+sed -i 's/show_safety_factors: false/show_safety_factors: true/g' "$PLANNING_BEV_RVIZ"
 
 # planning_tpv.rviz
 ## 1. replace 'Displays:' block
@@ -53,3 +56,6 @@ sed -i "/^  Enabled: true$/{N;/^  Enabled: true\n  Global Options:\$/i\\$CAMERA_
 }" "$PLANNING_TPV_RVIZ"
 ## 4. enable error_diag_graph visualization
 sed -i 'N;/        - Class: autoware_string_stamped_rviz_plugin\/StringStampedOverlayDisplay\n          Enabled: false/ {s/false/true/g};P;D' "$PLANNING_TPV_RVIZ"
+## 5. enable safety factors
+sed -i 's/Show Safety Factors: false/Show Safety Factors: true/g' "$PLANNING_TPV_RVIZ"
+sed -i 's/show_safety_factors: false/show_safety_factors: true/g' "$PLANNING_TPV_RVIZ"
