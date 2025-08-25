@@ -3,16 +3,33 @@ units:
     type: and
     list:
       - { type: link, link: /sensing/emergency_stop }
-      - { type: link, link: /sensing/pull_over }
-      - { type: link, link: /sensing/comfortable_stop }
-
-  - path: /sensing/pull_over_available
-    type: and
-    list:
-      - { type: link, link: /sensing/emergency_stop }
+      - { type: link, link: /sensing/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /sensing/in_lane_emergency_stop }
+      - { type: link, link: /sensing/in_lane_moderate_stop }
       - { type: link, link: /sensing/comfortable_stop }
 
   - path: /sensing/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /sensing/emergency_stop }
+      - { type: link, link: /sensing/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /sensing/in_lane_emergency_stop }
+      - { type: link, link: /sensing/in_lane_moderate_stop }
+
+  - path: /sensing/in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /sensing/emergency_stop }
+      - { type: link, link: /sensing/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /sensing/in_lane_emergency_stop }
+
+  - path: /sensing/in_lane_emergency_stop_available
+    type: and
+    list:
+      - { type: link, link: /sensing/emergency_stop }
+      - { type: link, link: /sensing/sub_ecu_in_lane_moderate_stop }
+
+  - path: /sensing/sub_ecu_in_lane_moderate_stop_available
     type: and
     list:
       - { type: link, link: /sensing/emergency_stop }
@@ -21,15 +38,730 @@ units:
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
   - path: /sensing/emergency_stop
-    type:
-      and
-      # - { type: link, link: /sensing/radar/001-connection }
-
-  - path: /sensing/pull_over
     type: and
 
   - path: /sensing/comfortable_stop
     type: and
+    list:
+      - { type: link, link: /sensing/gnss/001-connection-error }
+      - { type: link, link: /sensing/camera/001-connection-error }
+      - { type: link, link: /sensing/camera/003-sync-error }
+      - { type: link, link: /sensing/camera/004-image-error }
+      - { type: link, link: /sensing/camera/006-hw-diag-error }
+      - { type: link, link: /sensing/radar/001-connection-error }
+      - { type: link, link: /sensing/radar/002-dynamics-error }
+      - { type: link, link: /sensing/radar/003-internal-error }
+      - { type: link, link: /sensing/radar/004-blockage-error }
+      - { type: link, link: /sensing/radar/005-object-rate-error }
+      - { type: link, link: /sensing/radar/006-detections-rate-error }
+
+  - path: /sensing/in_lane_moderate_stop
+    type: and
+    list:
+      - { type: link, link: /sensing/lidar/concat_status-error }
+      - { type: link, link: /sensing/lidar/preprocessor-error }
+      - { type: link, link: /sensing/lidar/001-connection-error }
+      - { type: link, link: /sensing/lidar/003-ptp-error }
+      - { type: link, link: /sensing/lidar/004-blockage-error }
+
+  - path: /sensing/in_lane_emergency_stop
+    type: and
+
+  - path: /sensing/sub_ecu_in_lane_moderate_stop
+    type: and
+    list:
+      - { type: link, link: /sensing/imu/002-connection }
 
   - path: /sensing/none
     type: and
+    list:
+      - { type: link, link: /sensing/imu/003-gyro_bias }
+      - { type: link, link: /sensing/gnss/002-quality }
+
+  # Intermediate paths
+  - path: /sensing/imu/001-monitor-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/imu/001-monitor
+
+  - path: /sensing/gnss/001-connection-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/gnss/001-connection
+
+  - path: /sensing/lidar/concat_status-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/lidar/concat_status
+  - path: /sensing/lidar/preprocessor-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/lidar/preprocessor
+
+  - path: /sensing/lidar/001-connection-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/lidar/001-connection
+
+  - path: /sensing/lidar/003-ptp-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/lidar/003-ptp
+
+  - path: /sensing/lidar/004-blockage-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/lidar/004-blockage
+
+  - path: /sensing/camera/001-connection-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/camera/001-connection
+
+  - path: /sensing/camera/003-sync-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/camera/003-sync
+
+  - path: /sensing/camera/004-image-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/camera/004-image
+
+  - path: /sensing/camera/006-hw-diag-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/camera/006-hw-diag
+
+  - path: /sensing/radar/001-connection-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/radar/001-connection
+
+  - path: /sensing/radar/002-dynamics-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/radar/002-dynamics
+
+  - path: /sensing/radar/003-internal-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/radar/003-internal
+
+  - path: /sensing/radar/004-blockage-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/radar/004-blockage
+
+  - path: /sensing/radar/005-object-rate-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/radar/005-object-rate
+
+  - path: /sensing/radar/006-detections-rate-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/radar/006-detections-rate
+  # Diagnostics paths
+  # imu
+  - path: /sensing/imu/001-monitor
+    type: diag
+    node: imu_monitor
+    name: yaw_rate_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/imu/002-connection
+    type: diag
+    node: topic_state_monitor_imu_data
+    name: imu_topic_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/imu/003-gyro_bias
+    type: diag
+    node: gyro_bias_validator
+    name: gyro_bias_validator
+    timeout: 1.0
+    latch: 0.0
+  # gnss
+  - path: /sensing/gnss/001-connection
+    type: diag
+    node: topic_state_monitor_gnss_pose
+    name: gnss_topic_status
+    timeout: 5.0
+    latch: 0.0
+  - path: /sensing/gnss/002-quality
+    type: diag
+    node: /sensing/gnss/septentrio
+    name: Quality indicators
+    timeout: 5.0
+    latch: 0.0
+  # lidar
+  - path: /sensing/lidar/concat_status
+    type: diag
+    node: concatenate_data
+    name: /sensing/lidar/concatenate_data
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/lidar/preprocessor
+    type: and
+    list:
+      - { type: link, link: /sensing/lidar/front_lower/preprocessor }
+      - { type: link, link: /sensing/lidar/front_upper/preprocessor }
+      - { type: link, link: /sensing/lidar/left_lower/preprocessor }
+      - { type: link, link: /sensing/lidar/left_upper/preprocessor }
+      - { type: link, link: /sensing/lidar/right_lower/preprocessor }
+      - { type: link, link: /sensing/lidar/right_upper/preprocessor }
+      - { type: link, link: /sensing/lidar/rear_lower/preprocessor }
+      - { type: link, link: /sensing/lidar/rear_upper/preprocessor }
+
+  - path: /sensing/lidar/front_lower/preprocessor
+    type: diag
+    node: /sensing/lidar/front_lower/cuda_pointcloud_preprocessor_node
+    name: cuda_pointcloud_preprocessor_node
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/front_upper/preprocessor
+    type: diag
+    node: /sensing/lidar/front_upper/cuda_pointcloud_preprocessor_node
+    name: cuda_pointcloud_preprocessor_node
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/left_lower/preprocessor
+    type: diag
+    node: /sensing/lidar/left_lower/cuda_pointcloud_preprocessor_node
+    name: cuda_pointcloud_preprocessor_node
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/left_upper/preprocessor
+    type: diag
+    node: /sensing/lidar/left_upper/cuda_pointcloud_preprocessor_node
+    name: cuda_pointcloud_preprocessor_node
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/right_lower/preprocessor
+    type: diag
+    node: /sensing/lidar/right_lower/cuda_pointcloud_preprocessor_node
+    name: cuda_pointcloud_preprocessor_node
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/right_upper/preprocessor
+    type: diag
+    node: /sensing/lidar/right_upper/cuda_pointcloud_preprocessor_node
+    name: cuda_pointcloud_preprocessor_node
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/rear_lower/preprocessor
+    type: diag
+    node: /sensing/lidar/rear_lower/cuda_pointcloud_preprocessor_node
+    name: cuda_pointcloud_preprocessor_node
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/rear_upper/preprocessor
+    type: diag
+    node: /sensing/lidar/rear_upper/cuda_pointcloud_preprocessor_node
+    name: cuda_pointcloud_preprocessor_node
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/lidar/001-connection
+    type: and
+    list:
+      - { type: link, link: /sensing/lidar/front_lower/connection }
+      - { type: link, link: /sensing/lidar/front_upper/connection }
+      - { type: link, link: /sensing/lidar/left_lower/connection }
+      - { type: link, link: /sensing/lidar/left_upper/connection }
+      - { type: link, link: /sensing/lidar/right_lower/connection }
+      - { type: link, link: /sensing/lidar/right_upper/connection }
+      - { type: link, link: /sensing/lidar/rear_lower/connection }
+      - { type: link, link: /sensing/lidar/rear_upper/connection }
+  - path: /sensing/lidar/front_lower/connection
+    type: diag
+    node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
+    name: hesai_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/front_upper/connection
+    type: diag
+    node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
+    name: hesai_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/left_lower/connection
+    type: diag
+    node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
+    name: hesai_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/left_upper/connection
+    type: diag
+    node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
+    name: hesai_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/right_lower/connection
+    type: diag
+    node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
+    name: hesai_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/right_upper/connection
+    type: diag
+    node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
+    name: hesai_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/rear_lower/connection
+    type: diag
+    node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
+    name: hesai_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/rear_upper/connection
+    type: diag
+    node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
+    name: hesai_status
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/lidar/003-ptp
+    type: and
+    list:
+      - { type: link, link: /sensing/lidar/front_lower/ptp }
+      - { type: link, link: /sensing/lidar/front_upper/ptp }
+      - { type: link, link: /sensing/lidar/left_lower/ptp }
+      - { type: link, link: /sensing/lidar/left_upper/ptp }
+      - { type: link, link: /sensing/lidar/right_lower/ptp }
+      - { type: link, link: /sensing/lidar/right_upper/ptp }
+      - { type: link, link: /sensing/lidar/rear_lower/ptp }
+      - { type: link, link: /sensing/lidar/rear_upper/ptp }
+  - path: /sensing/lidar/front_lower/ptp
+    type: diag
+    node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
+    name: hesai_ptp
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/front_upper/ptp
+    type: diag
+    node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
+    name: hesai_ptp
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/left_lower/ptp
+    type: diag
+    node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
+    name: hesai_ptp
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/left_upper/ptp
+    type: diag
+    node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
+    name: hesai_ptp
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/right_lower/ptp
+    type: diag
+    node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
+    name: hesai_ptp
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/rear_lower/ptp
+    type: diag
+    node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
+    name: hesai_ptp
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/right_upper/ptp
+    type: diag
+    node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
+    name: hesai_ptp
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/rear_upper/ptp
+    type: diag
+    node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
+    name: hesai_ptp
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/lidar/004-blockage
+    type: and
+    list:
+      - { type: link, link: /sensing/lidar/front_lower/blockage_validation }
+      - { type: link, link: /sensing/lidar/front_upper/blockage_validation }
+      - { type: link, link: /sensing/lidar/left_lower/blockage_validation }
+      - { type: link, link: /sensing/lidar/left_upper/blockage_validation }
+      - { type: link, link: /sensing/lidar/right_lower/blockage_validation }
+      - { type: link, link: /sensing/lidar/right_upper/blockage_validation }
+      - { type: link, link: /sensing/lidar/rear_lower/blockage_validation }
+      - { type: link, link: /sensing/lidar/rear_upper/blockage_validation }
+  - path: /sensing/lidar/front_lower/blockage_validation
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/front_lower"
+    name: blockage_validation
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/front_upper/blockage_validation
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/front_upper"
+    name: blockage_validation
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/left_lower/blockage_validation
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/left_lower"
+    name: blockage_validation
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/left_upper/blockage_validation
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/left_upper"
+    name: blockage_validation
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/right_lower/blockage_validation
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/right_lower"
+    name: blockage_validation
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/rear_lower/blockage_validation
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/rear_lower"
+    name: blockage_validation
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/right_upper/blockage_validation
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/right_upper"
+    name: blockage_validation
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/lidar/rear_upper/blockage_validation
+    type: diag
+    node: "blockage_return_diag: /sensing/lidar/rear_upper"
+    name: blockage_validation
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/001-connection
+    type: and
+    list:
+      - { type: link, link: /sensing/camera/0/connection }
+      - { type: link, link: /sensing/camera/1/connection }
+      - { type: link, link: /sensing/camera/2/connection }
+      - { type: link, link: /sensing/camera/3/connection }
+      - { type: link, link: /sensing/camera/4/connection }
+      - { type: link, link: /sensing/camera/5/connection }
+      - { type: link, link: /sensing/camera/6/connection }
+      - { type: link, link: /sensing/camera/7/connection }
+  - path: /sensing/camera/0/connection
+    type: diag
+    node: v4l2_camera_camera0
+    name: camera0_diagnostics
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/1/connection
+    type: diag
+    node: v4l2_camera_camera1
+    name: camera1_diagnostics
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/2/connection
+    type: diag
+    node: v4l2_camera_camera2
+    name: camera2_diagnostics
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/3/connection
+    type: diag
+    node: v4l2_camera_camera3
+    name: camera3_diagnostics
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/4/connection
+    type: diag
+    node: v4l2_camera_camera4
+    name: camera4_diagnostics
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/5/connection
+    type: diag
+    node: v4l2_camera_camera5
+    name: camera5_diagnostics
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/6/connection
+    type: diag
+    node: v4l2_camera_camera6
+    name: camera6_diagnostics
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/7/connection
+    type: diag
+    node: v4l2_camera_camera7
+    name: camera7_diagnostics
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/camera/003-sync
+    type: and
+    list:
+      - { type: link, link: /sensing/camera/0/sync }
+      - { type: link, link: /sensing/camera/1/sync }
+      - { type: link, link: /sensing/camera/2/sync }
+      - { type: link, link: /sensing/camera/3/sync }
+      - { type: link, link: /sensing/camera/4/sync }
+      - { type: link, link: /sensing/camera/5/sync }
+      - { type: link, link: /sensing/camera/6/sync }
+      - { type: link, link: /sensing/camera/7/sync }
+  - path: /sensing/camera/0/sync
+    type: diag
+    node: tier4_camera_sync_doctor0
+    name: camera0_sync_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/1/sync
+    type: diag
+    node: tier4_camera_sync_doctor1
+    name: camera1_sync_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/2/sync
+    type: diag
+    node: tier4_camera_sync_doctor2
+    name: camera2_sync_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/3/sync
+    type: diag
+    node: tier4_camera_sync_doctor3
+    name: camera3_sync_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/4/sync
+    type: diag
+    node: tier4_camera_sync_doctor4
+    name: camera4_sync_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/5/sync
+    type: diag
+    node: tier4_camera_sync_doctor5
+    name: camera5_sync_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/6/sync
+    type: diag
+    node: tier4_camera_sync_doctor6
+    name: camera6_sync_status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/7/sync
+    type: diag
+    node: tier4_camera_sync_doctor7
+    name: camera7_sync_status
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/camera/004-image
+    type: and
+    list:
+      - { type: link, link: /sensing/camera/3/image }
+      - { type: link, link: /sensing/camera/5/image }
+  - path: /sensing/camera/3/image
+    type: diag
+    node: image_diagnostics3
+    name: camera3
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/5/image
+    type: diag
+    node: image_diagnostics5
+    name: camera5
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/camera/006-hw-diag
+    type: and
+    list:
+      - { type: link, link: /sensing/camera/0/hw-diag }
+      - { type: link, link: /sensing/camera/1/hw-diag }
+      - { type: link, link: /sensing/camera/2/hw-diag }
+      - { type: link, link: /sensing/camera/3/hw-diag }
+      - { type: link, link: /sensing/camera/4/hw-diag }
+      - { type: link, link: /sensing/camera/5/hw-diag }
+      - { type: link, link: /sensing/camera/6/hw-diag }
+      - { type: link, link: /sensing/camera/7/hw-diag }
+  - path: /sensing/camera/0/hw-diag
+    type: diag
+    node: uevent_diagnostics_publisher_0
+    name: camera0_uevent_diag
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/1/hw-diag
+    type: diag
+    node: uevent_diagnostics_publisher_0
+    name: camera1_uevent_diag
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/2/hw-diag
+    type: diag
+    node: uevent_diagnostics_publisher_0
+    name: camera2_uevent_diag
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/3/hw-diag
+    type: diag
+    node: uevent_diagnostics_publisher_0
+    name: camera3_uevent_diag
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/4/hw-diag
+    type: diag
+    node: uevent_diagnostics_publisher_1
+    name: camera4_uevent_diag
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/5/hw-diag
+    type: diag
+    node: uevent_diagnostics_publisher_1
+    name: camera5_uevent_diag
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/6/hw-diag
+    type: diag
+    node: uevent_diagnostics_publisher_1
+    name: camera6_uevent_diag
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/camera/7/hw-diag
+    type: diag
+    node: uevent_diagnostics_publisher_1
+    name: camera7_uevent_diag
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/radar/001-connection
+    type: and
+    list:
+      - { type: link, link: /sensing/radar/front_center/connection }
+      - { type: link, link: /sensing/radar/rear_center/connection }
+  - path: /sensing/radar/front_center/connection
+    type: diag
+    node: /sensing/radar/front_center/nebula_continental_ars548
+    name: Liveness
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/radar/rear_center/connection
+    type: diag
+    node: /sensing/radar/rear_center/nebula_continental_ars548
+    name: Liveness
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/radar/002-dynamics
+    type: and
+    list:
+      - { type: link, link: /sensing/radar/front_center/dynamics }
+      - { type: link, link: /sensing/radar/rear_center/dynamics }
+  - path: /sensing/radar/front_center/dynamics
+    type: diag
+    node: /sensing/radar/front_center/nebula_continental_ars548
+    name: Dynamics
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/radar/rear_center/dynamics
+    type: diag
+    node: /sensing/radar/rear_center/nebula_continental_ars548
+    name: Dynamics
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/radar/003-internal
+    type: and
+    list:
+      - { type: link, link: /sensing/radar/front_center/internal }
+      - { type: link, link: /sensing/radar/rear_center/internal }
+  - path: /sensing/radar/front_center/internal
+    type: diag
+    node: /sensing/radar/front_center/nebula_continental_ars548
+    name: Internal
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/radar/rear_center/internal
+    type: diag
+    node: /sensing/radar/rear_center/nebula_continental_ars548
+    name: Internal
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/radar/004-blockage
+    type: and
+    list:
+      - { type: link, link: /sensing/radar/front_center/blockage_validation }
+      - { type: link, link: /sensing/radar/rear_center/blockage_validation }
+  - path: /sensing/radar/front_center/blockage_validation
+    type: diag
+    node: /sensing/radar/front_center/nebula_continental_ars548
+    name: Blockage
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/radar/rear_center/blockage_validation
+    type: diag
+    node: /sensing/radar/rear_center/nebula_continental_ars548
+    name: Blockage
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/radar/005-object-rate
+    type: and
+    list:
+      - { type: link, link: /sensing/radar/front_center/object_rate }
+      - { type: link, link: /sensing/radar/rear_center/object_rate }
+  - path: /sensing/radar/front_center/object_rate
+    type: diag
+    node: /sensing/radar/front_center/nebula_continental_ars548
+    name: Objects rate bound status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/radar/rear_center/object_rate
+    type: diag
+    node: /sensing/radar/rear_center/nebula_continental_ars548
+    name: Objects rate bound status
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/radar/006-detections-rate
+    type: and
+    list:
+      - { type: link, link: /sensing/radar/front_center/detections_rate }
+      - { type: link, link: /sensing/radar/rear_center/detections_rate }
+  - path: /sensing/radar/front_center/detections_rate
+    type: diag
+    node: /sensing/radar/front_center/nebula_continental_ars548
+    name: Detections rate bound status
+    timeout: 1.0
+    latch: 0.0
+  - path: /sensing/radar/rear_center/detections_rate
+    type: diag
+    node: /sensing/radar/rear_center/nebula_continental_ars548
+    name: Detections rate bound status
+    timeout: 1.0
+    latch: 0.0

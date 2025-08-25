@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="default_adapi_param_path" default="$(find-pkg-share autoware_launch)/config/system/default_adapi_universe/default_adapi_universe.param.yaml"/>
+
   <!-- Fork the repository and add the parameters here if needed. -->
   <arg name="launch_deprecated_api" default="true"/>
   <arg name="rosbridge_enabled" default="true"/>
@@ -15,5 +17,7 @@
     </include>
   </group>
 
-  <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml"/>
+  <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml">
+    <arg name="default_adapi_param_path" value="$(var default_adapi_param_path)"/>
+  </include>
 </launch>
