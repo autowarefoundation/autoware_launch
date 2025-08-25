@@ -232,24 +232,24 @@
 
       # sensing
       ## /sensing/lidar/preprocessor
-      "/sensing/lidar/front_lower/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/front_upper/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/left_lower/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/left_upper/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/right_lower/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/right_upper/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/rear_lower/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/rear_upper/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/front_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/front_upper/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/left_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/left_upper/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/right_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/right_upper/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/rear_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/rear_upper/cuda_pointcloud_preprocessor_node": default
 
       ##/sensing/lidar/004-blockage
-      "blockage_return_diag: /sensing/lidar/front_lower: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/front_upper: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/left_lower: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/left_upper: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/right_lower: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/right_upper: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/rear_lower: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/rear_upper: blockage_diag": default
+      "blockage_return_diag: /sensing/lidar/front_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/front_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/left_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/left_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/right_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/right_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/rear_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/rear_upper: blockage_validation": default
       "dust_validation: /sensing/lidar/front_lower: dust_diag": default
       "dust_validation: /sensing/lidar/front_upper: dust_diag": default
       "dust_validation: /sensing/lidar/left_lower: dust_diag": default

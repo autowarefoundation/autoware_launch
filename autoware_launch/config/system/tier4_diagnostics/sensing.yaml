@@ -234,50 +234,50 @@ units:
 
   - path: /sensing/lidar/front_lower/preprocessor
     type: diag
-    node: /sensing/lidar/front_lower/cuda_pointcloud_preprocessor_node
-    name: cuda_pointcloud_preprocessor_node
+    node: cuda_pointcloud_preprocessor_node
+    name: /sensing/lidar/front_lower/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/front_upper/preprocessor
     type: diag
-    node: /sensing/lidar/front_upper/cuda_pointcloud_preprocessor_node
-    name: cuda_pointcloud_preprocessor_node
+    node: cuda_pointcloud_preprocessor_node
+    name: /sensing/lidar/front_upper/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/left_lower/preprocessor
     type: diag
-    node: /sensing/lidar/left_lower/cuda_pointcloud_preprocessor_node
-    name: cuda_pointcloud_preprocessor_node
+    node: cuda_pointcloud_preprocessor_node
+    name: /sensing/lidar/left_lower/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/left_upper/preprocessor
     type: diag
-    node: /sensing/lidar/left_upper/cuda_pointcloud_preprocessor_node
-    name: cuda_pointcloud_preprocessor_node
+    node: cuda_pointcloud_preprocessor_node
+    name: /sensing/lidar/left_upper/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/right_lower/preprocessor
     type: diag
-    node: /sensing/lidar/right_lower/cuda_pointcloud_preprocessor_node
-    name: cuda_pointcloud_preprocessor_node
+    node: cuda_pointcloud_preprocessor_node
+    name: /sensing/lidar/right_lower/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/right_upper/preprocessor
     type: diag
-    node: /sensing/lidar/right_upper/cuda_pointcloud_preprocessor_node
-    name: cuda_pointcloud_preprocessor_node
+    node: cuda_pointcloud_preprocessor_node
+    name: /sensing/lidar/right_upper/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/rear_lower/preprocessor
     type: diag
-    node: /sensing/lidar/rear_lower/cuda_pointcloud_preprocessor_node
-    name: cuda_pointcloud_preprocessor_node
+    node: cuda_pointcloud_preprocessor_node
+    name: /sensing/lidar/rear_lower/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/rear_upper/preprocessor
     type: diag
-    node: /sensing/lidar/rear_upper/cuda_pointcloud_preprocessor_node
-    name: cuda_pointcloud_preprocessor_node
+    node: cuda_pointcloud_preprocessor_node
+    name: /sensing/lidar/rear_upper/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
 

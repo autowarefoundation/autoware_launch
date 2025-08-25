@@ -230,30 +230,26 @@
       ## /vehicle/override_when_level4_driving
       "j6_interface: override_when_level4_driving": default
 
-# redundancy
-      ## /redundancy/pub_pose_with_covariance_to_sub_ecu
-      "topic_state_monitor_pose_estimator_pose_with_covariance: publish_to_sub_status": default
-
       # sensing
       ## /sensing/lidar/preprocessor
-      "/sensing/lidar/front_lower/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/front_upper/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/left_lower/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/left_upper/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/right_lower/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/right_upper/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/rear_lower/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
-      "/sensing/lidar/rear_upper/cuda_pointcloud_preprocessor_node: cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/front_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/front_upper/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/left_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/left_upper/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/right_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/right_upper/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/rear_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/rear_upper/cuda_pointcloud_preprocessor_node": default
 
       ##/sensing/lidar/004-blockage
-      "blockage_return_diag: /sensing/lidar/front_lower: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/front_upper: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/left_lower: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/left_upper: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/right_lower: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/right_upper: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/rear_lower: blockage_diag": default
-      "blockage_return_diag: /sensing/lidar/rear_upper: blockage_diag": default
+      "blockage_return_diag: /sensing/lidar/front_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/front_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/left_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/left_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/right_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/right_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/rear_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/rear_upper: blockage_validation": default
       "dust_validation: /sensing/lidar/front_lower: dust_diag": default
       "dust_validation: /sensing/lidar/front_upper: dust_diag": default
       "dust_validation: /sensing/lidar/left_lower: dust_diag": default
@@ -262,6 +258,12 @@
       "dust_validation: /sensing/lidar/right_upper: dust_diag": default
       "dust_validation: /sensing/lidar/rear_lower: dust_diag": default
       "dust_validation: /sensing/lidar/rear_upper: dust_diag": default
+
+      ## /others/005-visibility_validation/rear_upper
+      "dual_return_filter: /sensing/lidar/rear_upper: visibility_validation": default
+
+      ## /others/005-visibility_validation/right_upper
+      "dual_return_filter: /sensing/lidar/right_upper: visibility_validation": default
 
       ## /others/010-emergency_vehicle
       "emergency_vehicle_detector_main: emergency_vehicle": default
