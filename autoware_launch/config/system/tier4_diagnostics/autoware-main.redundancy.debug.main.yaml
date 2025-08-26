@@ -62,49 +62,49 @@ units:
     node: ""
     name: injection_local_available
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /debug/injection/remote_available
     type: diag
     node: ""
     name: injection_remote_available
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /debug/injection/stop_available
     type: diag
     node: ""
     name: injection_stop_available
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /debug/injection/autonomous_available
     type: diag
     node: ""
     name: injection_autonomous_available
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /debug/injection/comfortable_stop_available
     type: diag
     node: ""
     name: injection_comfortable_stop_available
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /debug/injection/main_ecu_in_lane_moderate_stop_available
     type: diag
     node: ""
     name: injection_main_ecu_in_lane_moderate_stop_available
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /debug/injection/main_ecu_in_lane_emergency_stop_available
     type: diag
     node: ""
     name: injection_main_ecu_in_lane_emergency_stop_available
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /redundancy/redundancy_switcher
     type: diag

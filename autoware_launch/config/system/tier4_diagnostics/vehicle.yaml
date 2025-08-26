@@ -85,32 +85,32 @@ units:
     node: topic_state_monitor_vehicle_status_velocity_status
     name: vehicle_topic_status
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /vehicle/001-topic_status/steering
     type: diag
     node: topic_state_monitor_vehicle_status_steering_status
     name: vehicle_topic_status
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /vehicle/006-vehicle_errors
     type: diag
     node: j6_interface
     name: vehicle_errors
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /vehicle/007-vehicle-emergency-button
     type: diag
     node: j6_interface
     name: vehicle_emergency_button
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /vehicle/override_when_level4_driving
     type: diag
     node: j6_interface
     name: override_when_level4_driving
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0

@@ -27,7 +27,7 @@ units:
     node: ""
     name: injection_sub_ecu_in_lane_moderate_stop_available
     timeout: 1.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /redundancy/redundancy_switcher
     type: diag
