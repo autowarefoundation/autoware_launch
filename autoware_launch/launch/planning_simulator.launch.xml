@@ -56,6 +56,9 @@
   <!-- Scheduling settings -->
   <arg name="enable_scheduling_settings" default="false" description="enable scheduling settings"/>
 
+  <!-- Perception Filter Options -->
+  <arg name="use_perception_filter" default="false" description="launch perception filter for external approval"/>
+
   <group scoped="false">
     <!-- Vehicle -->
     <let name="launch_vehicle_interface" value="false" if="$(var vehicle_simulation)"/>
