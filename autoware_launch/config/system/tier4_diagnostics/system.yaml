@@ -3,16 +3,33 @@ units:
     type: and
     list:
       - { type: link, link: /system/emergency_stop }
-      - { type: link, link: /system/pull_over }
-      - { type: link, link: /system/comfortable_stop }
-
-  - path: /system/pull_over_available
-    type: and
-    list:
-      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /system/in_lane_emergency_stop }
+      - { type: link, link: /system/in_lane_moderate_stop }
       - { type: link, link: /system/comfortable_stop }
 
   - path: /system/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /system/in_lane_emergency_stop }
+      - { type: link, link: /system/in_lane_moderate_stop }
+
+  - path: /system/in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /system/in_lane_emergency_stop }
+
+  - path: /system/in_lane_emergency_stop_available
+    type: and
+    list:
+      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
+
+  - path: /system/sub_ecu_in_lane_moderate_stop_available
     type: and
     list:
       - { type: link, link: /system/emergency_stop }
@@ -22,39 +39,67 @@ units:
   # *******************************************************************************
   - path: /system/emergency_stop
     type: and
-    list:
-      - { type: link, link: /system/001-topic_status-error }
-      - { type: link, link: /system/002-emergency_stop_operation-error }
 
   - path: /system/comfortable_stop
     type: and
+    list:
+      - { type: link, link: /system/005-daytime_monitor }
+      - { type: link, link: /system/002-latency/total-latency-error }
 
-  - path: /system/pull_over
+  - path: /system/in_lane_moderate_stop
+    type: and
+    list:
+      - { type: link, link: /system/006-vehicle_stuck_checker }
+
+  - path: /system/in_lane_emergency_stop
+    type: and
+
+  - path: /system/sub_ecu_in_lane_moderate_stop
     type: and
 
   - path: /system/none
     type: and
+    list:
+      - { type: link, link: /system/012-fms_connection }
+      - { type: link, link: /system/013-vcu-not-authenticated }
 
-  - path: /system/001-topic_status-error
+  - path: /system/002-latency/total-latency-error
     type: warn-to-ok
     item:
       type: link
-      link: /system/001-topic_status
+      link: /system/002-latency/total-latency
 
-  - path: /system/002-emergency_stop_operation-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /system/002-emergency_stop_operation
-
-  - path: /system/001-topic_status
+  - path: /system/002-latency/total-latency
     type: diag
-    node: topic_state_monitor_system_emergency_control_cmd
-    name: system_topic_status
+    node: pipeline_latency_monitor
+    name: Total Latency
     timeout: 1.0
+    # latch: 0.0
 
-  - path: /system/002-emergency_stop_operation
+  - path: /system/005-daytime_monitor
     type: diag
-    node: vehicle_cmd_gate
-    name: emergency_stop_operation
+    node: daytime_monitor
+    name: daytime_status
     timeout: 1.0
+    # latch: 0.0
+
+  - path: /system/006-vehicle_stuck_checker
+    type: diag
+    node: vehicle_stuck_checker
+    name: vehicle_stuck_check
+    timeout: 3.0
+    # latch: 0.0
+
+  - path: /system/012-fms_connection
+    type: diag
+    node: ""
+    name: edge_core_internet_connection
+    timeout: 10.0
+    # latch: 0.0
+
+  - path: /system/013-vcu-not-authenticated
+    type: diag
+    node: j6_interface
+    name: vcu_not_authenticated
+    timeout: 10.0
+    # latch: 0.0
