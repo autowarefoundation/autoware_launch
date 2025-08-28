@@ -30,7 +30,7 @@
 
       # occupancy grid map
       occupancy_grid:
-        use_occupancy_grid_for_goal_search: true
+        use_occupancy_grid_for_goal_search: false
         use_occupancy_grid_for_goal_longitudinal_margin: false
         use_occupancy_grid_for_path_collision_check: false
         occupancy_grid_collision_check_margin: 0.0
