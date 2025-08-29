@@ -74,32 +74,32 @@ units:
     node: pipeline_latency_monitor
     name: Total Latency
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /system/005-daytime_monitor
     type: diag
     node: daytime_monitor
     name: daytime_status
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /system/006-vehicle_stuck_checker
     type: diag
     node: vehicle_stuck_checker
     name: vehicle_stuck_check
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /system/012-fms_connection
     type: diag
     node: ""
     name: edge_core_internet_connection
     timeout: 10.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /system/013-vcu-not-authenticated
     type: diag
     node: j6_interface
     name: vcu_not_authenticated
     timeout: 10.0
-    # latch: 0.0
+    latch: 0.0

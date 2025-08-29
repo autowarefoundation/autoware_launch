@@ -88,74 +88,74 @@ units:
     node: topic_state_monitor_control_command_control_cmd
     name: control_topic_status
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /control/009-aeb_emergency_stop
     type: diag
     node: autonomous_emergency_braking
     name: aeb_emergency_stop
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /control/010-max_distance_deviation
     type: diag
     node: control_validator
     name: control_validation_max_distance_deviation
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /control/011-slip_detection
     type: diag
     node: slip_detector
     name: slip_status
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /control/collision_detector
     type: diag
     node: collision_detector
     name: collision_detect
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /control/acceleration_error
     type: diag
     node: control_validator
     name: control_validation_acceleration_error
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /control/rolling_back
     type: diag
     node: control_validator
     name: control_validation_rolling_back
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /control/over_velocity
     type: diag
     node: control_validator
     name: control_validation_over_velocity
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /control/overrun_stop_point
     type: diag
     node: control_validator
     name: control_validation_overrun_stop_point
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /control/will_overrun_stop_point
     type: diag
     node: control_validator
     name: control_validation_will_overrun_stop_point
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /control/yaw_deviation
     type: diag
     node: control_validator
     name: control_validation_yaw_deviation
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0

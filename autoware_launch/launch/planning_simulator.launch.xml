@@ -130,6 +130,12 @@
       <arg name="raw_vehicle_cmd_converter_param_path" value="$(find-pkg-share autoware_launch)/config/vehicle/raw_vehicle_cmd_converter/raw_vehicle_cmd_converter.param.yaml"/>
     </include>
   </group>
+
+  <!-- diagnostic latch canceler for scenario simulator -->
+  <group unless="$(var is_redundant)">
+    <include file="$(find-pkg-share diagnostic_latch_canceler)/launch/diagnostic_latch_canceler.launch.xml"/>
+  </group>
+
   <group>
     <include file="$(find-pkg-share max_speed_selector)/launch/max_speed_selector.launch.xml"/>
   </group>

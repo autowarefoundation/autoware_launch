@@ -63,11 +63,11 @@ units:
     node: topic_state_monitor_vector_map
     name: map_topic_status
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /map/001-topic_status/pointcloud_map
     type: diag
     node: topic_state_monitor_pointcloud_map
     name: map_topic_status
     timeout: 1.0
-    # latch: 0.0
+    latch: 0.0

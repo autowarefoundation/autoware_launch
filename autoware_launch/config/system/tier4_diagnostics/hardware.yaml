@@ -200,273 +200,273 @@ units:
     node: cpu_monitor
     name: CPU Temperature
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/cpu/002-usage
     type: diag
     node: cpu_monitor
     name: CPU Usage
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/cpu/003-load_average
     type: diag
     node: cpu_monitor
     name: CPU Load Average
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/cpu/004-throttling
     type: diag
     node: cpu_monitor
     name: CPU Thermal Throttling
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/cpu/005-frequency
     type: diag
     node: cpu_monitor
     name: CPU Frequency
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/hdd/001-temperature
     type: diag
     node: hdd_monitor
     name: HDD Temperature
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/hdd/002-usage
     type: diag
     node: hdd_monitor
     name: HDD Usage
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/hdd/003-connection
     type: diag
     node: hdd_monitor
     name: HDD Connection
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/hdd/004-total_written
     type: diag
     node: hdd_monitor
     name: HDD TotalDataWritten
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/hdd/005-warranty_period
     type: diag
     node: hdd_monitor
     name: HDD PowerOnHours
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/hdd/006-soft_error
     type: diag
     node: hdd_monitor
     name: HDD RecoveredError
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/hdd/007-load/read_rate
     type: diag
     node: hdd_monitor
     name: HDD ReadDataRate
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/hdd/007-load/write_rate
     type: diag
     node: hdd_monitor
     name: HDD WriteDataRate
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/hdd/007-load/read_iops
     type: diag
     node: hdd_monitor
     name: HDD ReadIOPS
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/hdd/007-load/write_iops
     type: diag
     node: hdd_monitor
     name: HDD WriteIOPS
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/memory/001-usage
     type: diag
     node: mem_monitor
     name: Memory Usage
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/memory/002-ecc
     type: diag
     node: mem_monitor
     name: Memory ECC
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/network/001-usage
     type: diag
     node: net_monitor
     name: Network Usage
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/network/002-traffic
     type: diag
     node: net_monitor
     name: Network Traffic
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/network/003-crc
     type: diag
     node: net_monitor
     name: Network CRC Error
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/network/004-packet_reassembles
     type: diag
     node: net_monitor
     name: IP Packet Reassembles Failed
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/ntp/001-sync
     type: diag
     node: ntp_monitor
     name: NTP Offset
     timeout: 10.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/process/001-summary
     type: diag
     node: process_monitor
     name: Tasks Summary
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/process/002-load/proc-0
     type: diag
     node: process_monitor
     name: High-load Proc[0]
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/process/002-load/proc-1
     type: diag
     node: process_monitor
     name: High-load Proc[1]
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/process/002-load/proc-2
     type: diag
     node: process_monitor
     name: High-load Proc[2]
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/process/002-load/proc-3
     type: diag
     node: process_monitor
     name: High-load Proc[3]
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/process/002-load/proc-4
     type: diag
     node: process_monitor
     name: High-load Proc[4]
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/process/003-memory/proc-0
     type: diag
     node: process_monitor
     name: High-mem Proc[0]
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/process/003-memory/proc-1
     type: diag
     node: process_monitor
     name: High-mem Proc[1]
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/process/003-memory/proc-2
     type: diag
     node: process_monitor
     name: High-mem Proc[2]
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/process/003-memory/proc-3
     type: diag
     node: process_monitor
     name: High-mem Proc[3]
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/process/003-memory/proc-4
     type: diag
     node: process_monitor
     name: High-mem Proc[4]
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/gpu/001-temperature
     type: diag
     node: gpu_monitor
     name: GPU Temperature
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/gpu/002-usage
     type: diag
     node: gpu_monitor
     name: GPU Usage
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/gpu/003-memory
     type: diag
     node: gpu_monitor
     name: GPU Memory Usage
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/gpu/004-throttling
     type: diag
     node: gpu_monitor
     name: GPU Thermal Throttling
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/gpu/005-frequency
     type: diag
     node: gpu_monitor
     name: GPU Frequency
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/bios/001-battery
     type: diag
     node: voltage_monitor
     name: CMOS Battery Status
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   # We assume these diagnostics become only OK or STALE
   - path: /hardware/mot/001-connection
@@ -474,18 +474,18 @@ units:
     node: mot
     name: "/system/mot_connection : mot heartbeat"
     timeout: 5.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/signage/001-connection
     type: diag
     node: signage
     name: "/system/signage_connection : signage heartbeat"
     timeout: 5.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /hardware/voice/001-connection
     type: diag
     node: vehicle_voice_alert_system
     name: "/system/voice_alert_system_connection : voice alert system heartbeat"
     timeout: 5.0
-    # latch: 0.0
+    latch: 0.0
