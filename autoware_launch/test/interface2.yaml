@@ -1,6 +1,0 @@
-param-tests:
-  - schema: { package: package-name, file: file-path }
-    params:
-      - { package: package-name, path: file-path-1 }
-      - { package: package-name, path: file-path-2 }
-      - { name: param-name, value: param-value}
