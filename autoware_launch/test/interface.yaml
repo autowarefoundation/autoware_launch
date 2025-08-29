@@ -1,5 +1,4 @@
 param-checks:
-
   - schema:
       package: autoware_mission_planner_universe
       file: schema/mission_planner.schema.json
