@@ -28,7 +28,6 @@
     rosbag_length: 10.0
     # matching strategy
     matching_strategy:
-      type: naive
-      threshold: 0.05
+      type: advanced
       msg3d_noise_window: 0.02
       rois_timestamp_noise_window: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
