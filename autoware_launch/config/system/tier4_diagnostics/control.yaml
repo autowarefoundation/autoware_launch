@@ -63,7 +63,7 @@ units:
   - path: /control/comfortable_stop
     type: and
     list:
-      - { type: link, link: /control/yaw_deviation }
+      - { type: link, link: /control/yaw_deviation-error }
 
   - path: /control/none
     type: and
@@ -82,6 +82,12 @@ units:
     item:
       type: link
       link: /control/010-max_distance_deviation
+
+  - path: /control/yaw_deviation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/yaw_deviation
 
   - path: /control/001-topic_status/control_command
     type: diag
