@@ -1,8 +1,8 @@
 /**:
   ros__parameters:
-    devices: ["*"]
+    devices: ["enp3s0", "enp4s0", "enp5s0f0", "enp5s0f1", "lo"]
     monitor_program: "greengrass"
-    enable_traffic_monitor: true
+    enable_traffic_monitor: false
     crc_error_check_duration: 1
     crc_error_count_threshold: 1
     reassembles_failed_check_duration: 1

@@ -3,16 +3,33 @@ units:
     type: and
     list:
       - { type: link, link: /perception/emergency_stop }
-      - { type: link, link: /perception/pull_over }
-      - { type: link, link: /perception/comfortable_stop }
-
-  - path: /perception/pull_over_available
-    type: and
-    list:
-      - { type: link, link: /perception/emergency_stop }
+      - { type: link, link: /perception/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /perception/in_lane_emergency_stop }
+      - { type: link, link: /perception/in_lane_moderate_stop }
       - { type: link, link: /perception/comfortable_stop }
 
   - path: /perception/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /perception/emergency_stop }
+      - { type: link, link: /perception/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /perception/in_lane_emergency_stop }
+      - { type: link, link: /perception/in_lane_moderate_stop }
+
+  - path: /perception/in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /perception/emergency_stop }
+      - { type: link, link: /perception/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /perception/in_lane_emergency_stop }
+
+  - path: /perception/in_lane_emergency_stop_available
+    type: and
+    list:
+      - { type: link, link: /perception/emergency_stop }
+      - { type: link, link: /perception/sub_ecu_in_lane_moderate_stop }
+
+  - path: /perception/sub_ecu_in_lane_moderate_stop_available
     type: and
     list:
       - { type: link, link: /perception/emergency_stop }
@@ -22,20 +39,39 @@ units:
   # *******************************************************************************
   - path: /perception/emergency_stop
     type: and
-    list:
-      - { type: link, link: /perception/001-topic_status/traffic_signals-error }
-      - { type: link, link: /perception/001-topic_status/objects-error }
-      - { type: link, link: /perception/001-topic_status/pointcloud-error }
-      - { type: link, link: /perception/002-detection_delay-error }
 
   - path: /perception/comfortable_stop
     type: and
+    list:
+      - { type: link, link: /perception/001-topic_status/traffic_signals-error }
+      - { type: link, link: /perception/009-spec_limit/voxel_based_compare_map_filter-error }
 
-  - path: /perception/pull_over
+  - path: /perception/in_lane_moderate_stop
+    type: and
+    list:
+      - { type: link, link: /perception/001-topic_status/objects-error }
+      - { type: link, link: /perception/001-topic_status/pointcloud-error }
+
+  - path: /perception/in_lane_emergency_stop
+    type: and
+
+  - path: /perception/sub_ecu_in_lane_moderate_stop
     type: and
 
   - path: /perception/none
     type: and
+    list:
+      - { type: link, link: /perception/002-detection_delay/tracker }
+      - { type: link, link: /perception/003-timeout/map_based_prediction }
+      - { type: link, link: /perception/003-timeout/lidar_centerpoint }
+      - { type: link, link: /perception/003-timeout/occupancy_grid_map }
+      - { type: link, link: /perception/004-spec_limit/lidar_centerpoint }
+      - { type: link, link: /perception/005-invalid_input/roi_detected_object_fusion }
+      - { type: link, link: /perception/005-invalid_input/roi_cluster_fusion }
+      - { type: link, link: /perception/005-invalid_input/roi_pointcloud_fusion }
+      - { type: link, link: /perception/006-no_detection/traffic_light }
+      - { type: link, link: /perception/007-missing_input/object_merger_alpha }
+      - { type: link, link: /perception/007-missing_input/object_merger_beta }
 
   - path: /perception/001-topic_status/traffic_signals-error
     type: warn-to-ok
@@ -55,32 +91,113 @@ units:
       type: link
       link: /perception/001-topic_status/pointcloud
 
-  - path: /perception/002-detection_delay-error
+  - path: /perception/009-spec_limit/voxel_based_compare_map_filter-error
     type: warn-to-ok
     item:
       type: link
-      link: /perception/002-detection_delay
+      link: /perception/009-spec_limit/voxel_based_compare_map_filter
 
   - path: /perception/001-topic_status/traffic_signals
     type: diag
     node: topic_state_monitor_traffic_light_recognition_traffic_signals
     name: perception_topic_status
     timeout: 1.0
+    latch: 0.0
 
   - path: /perception/001-topic_status/objects
     type: diag
     node: topic_state_monitor_object_recognition_objects
     name: perception_topic_status
     timeout: 1.0
+    latch: 0.0
 
   - path: /perception/001-topic_status/pointcloud
     type: diag
     node: topic_state_monitor_obstacle_segmentation_pointcloud
     name: perception_topic_status
     timeout: 1.0
+    latch: 0.0
 
-  - path: /perception/002-detection_delay
+  - path: /perception/002-detection_delay/tracker
     type: diag
     node: multi_object_tracker
     name: Tracker Timing Diagnostics
     timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/003-timeout/map_based_prediction
+    type: diag
+    node: map_based_prediction
+    name: map_based_prediction
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/003-timeout/lidar_centerpoint
+    type: diag
+    node: lidar_centerpoint
+    name: processing_time_status
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/003-timeout/occupancy_grid_map
+    type: diag
+    node: occupancy_grid_map_node
+    name: pointcloud_based_probabilistic_occupancy_grid_map
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/004-spec_limit/lidar_centerpoint
+    type: diag
+    node: lidar_centerpoint
+    name: centerpoint_trt
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/005-invalid_input/roi_detected_object_fusion
+    type: diag
+    node: roi_detected_object_fusion
+    name: roi_detected_object_fusion_status
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/005-invalid_input/roi_cluster_fusion
+    type: diag
+    node: roi_cluster_fusion
+    name: roi_cluster_fusion_status
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/005-invalid_input/roi_pointcloud_fusion
+    type: diag
+    node: roi_pointcloud_fusion
+    name: roi_pointcloud_fusion_status
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/006-no_detection/traffic_light
+    type: diag
+    node: car_traffic_light_classifier
+    name: traffic_light_classifier
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/007-missing_input/object_merger_alpha
+    type: diag
+    node: object_association_merger_alpha
+    name: object_association_merger
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/007-missing_input/object_merger_beta
+    type: diag
+    node: object_association_merger_beta
+    name: object_association_merger
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/009-spec_limit/voxel_based_compare_map_filter
+    type: diag
+    node: voxel_based_compare_map_filter
+    name: Compare map filter status
+    timeout: 1.0
+    latch: 0.0

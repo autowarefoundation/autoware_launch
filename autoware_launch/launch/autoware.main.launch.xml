@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Please refer to autoware.launch.xml for the parameters -->
+  <!-- Essential parameters -->
+  <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
+  <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
+  <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
+
+  <!-- Map -->
+  <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
+  <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+
+  <arg name="use_perception_filter" default="true" description="use perception filter or not"/>
+
+  <!-- Redundant system parameters-->
+  <arg name="is_redundant" default="false" description="is_redundant"/>
+  <arg name="is_main_ecu" default="true" description="is_main_ecu"/>
+
+  <!-- Optional parameters for MRM test -->
+  <!-- Planning-->
+  <arg name="is_60kph" default="false" description="max speed limit is 60kph"/>
+
+  <!-- Optional parameters for redundant system -->
+  <!-- Control -->
+  <let name="use_control_command_gate" value="true" if="$(var is_redundant)"/>
+  <let name="use_control_command_gate" value="false" unless="$(var is_redundant)"/>
+
+  <group scoped="false">
+    <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
+      <!-- Essential parameters -->
+      <arg name="map_path" value="$(var map_path)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="sensor_model" value="$(var sensor_model)"/>
+      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="data_path" value="$(var data_path)"/>
+      <!-- Map -->
+      <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
+      <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
+      <!-- Redundant system parameters-->
+      <arg name="is_redundant" value="$(var is_redundant)"/>
+      <arg name="is_main_ecu" value="$(var is_main_ecu)"/>
+      <!-- Planning-->
+      <arg name="is_60kph" value="$(var is_60kph)"/>
+      <!-- Control -->
+      <arg name="use_control_command_gate" value="$(var use_control_command_gate)"/>
+      <!-- Perception Filter -->
+      <arg name="use_perception_filter" value="$(var use_perception_filter)"/>
+    </include>
+  </group>
+
+  <group if="$(var is_redundant)">
+    <!-- Redundancy Switcher Interface -->
+    <include file="$(find-pkg-share redundancy_switcher_interface)/launch/redundancy_switcher_interface.launch.xml">
+      <arg name="param_file" value="$(find-pkg-share redundancy_switcher_interface)/config/redundancy_switcher_interface.main.param.yaml"/>
+      <arg name="input_mrm_state" value="/system/fail_safe/mrm_state"/>
+    </include>
+
+    <!-- Redundancy Relay Manager -->
+    <include file="$(find-pkg-share autoware_redundancy_relay_manager)/launch/redundancy_relay_manager.launch.xml">
+      <arg name="config_file" value="$(find-pkg-share autoware_redundancy_relay_manager)/config/redundancy_relay_manager.param.yaml"/>
+    </include>
+
+    <!-- Topic Relay Controller -->
+    <include file="$(find-pkg-share autoware_topic_relay_controller)/launch/topic_relay_controller.launch.xml">
+      <arg name="node_name_suffix" value="trajectory"/>
+      <arg name="config_file" value="$(find-pkg-share autoware_launch)/config/system/topic_relay_controller/planning_scenario_planning_trajectory.param.yaml"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_topic_relay_controller)/launch/topic_relay_controller.launch.xml">
+      <arg name="node_name_suffix" value="pose_with_covariance"/>
+      <arg name="config_file" value="$(find-pkg-share autoware_launch)/config/system/topic_relay_controller/localization_pose_with_covariance.param.yaml"/>
+    </include>
+
+    <!-- Diagnostic Graph Merger -->
+    <include file="$(find-pkg-share diagnostic_graph_merger)/launch/merge.launch.xml">
+      <arg name="param_file" value="$(find-pkg-share diagnostic_graph_merger)/config/merge.param.yaml"/>
+      <arg name="~/output/struct" value="/diagnostics_graph/struct/merge"/>
+      <arg name="~/output/status" value="/diagnostics_graph/status/merge"/>
+      <arg name="~/input1/struct" value="/in_main/diagnostics_graph/struct"/>
+      <arg name="~/input1/status" value="/in_main/diagnostics_graph/status"/>
+      <arg name="~/input2/struct" value="/in_sub/diagnostics_graph/struct"/>
+      <arg name="~/input2/status" value="/in_sub/diagnostics_graph/status"/>
+    </include>
+
+    <!-- Output Master Manager -->
+    <include file="$(find-pkg-share output_master_manager)/launch/output_master_manager.launch.xml">
+      <arg name="config_file" value="$(find-pkg-share output_master_manager)/config/default.param.yaml"/>
+      <arg name="is_main_ecu" value="$(var is_main_ecu)"/>
+      <arg name="input_diag_status" value="/diagnostics_graph/status/merge"/>
+      <arg name="input_diag_struct" value="/diagnostics_graph/struct/merge"/>
+      <arg name="input_mrm_state" value="/in_main/system/fail_safe/mrm_state"/>
+      <arg name="input_election_status" value="/system/election/status"/>
+      <arg name="output_mrm_state" value="/system/fail_safe/mrm_state"/>
+      <arg name="output_diag_status" value="/diagnostics_graph/status"/>
+      <arg name="output_diag_struct" value="/diagnostics_graph/struct"/>
+    </include>
+
+    <!-- diagnostic status auto reset manager -->
+    <include file="$(find-pkg-share autoware_diagnostic_status_auto_reset_manager)/launch/diagnostic_status_auto_reset_manager.launch.xml"/>
+
+    <!-- Operation Mode Service Divider -->
+    <include file="$(find-pkg-share autoware_operation_mode_service_divider)/launch/operation_mode_service_divider.launch.xml"/>
+
+    <!-- Reset Service Divider -->
+    <include file="$(find-pkg-share autoware_reset_service_divider)/launch/reset_service_divider.launch.xml"/>
+
+    <!-- Control Cmd Switcher -->
+    <group if="$(eval &quot;'$(var system_run_mode)'=='planning_simulation'&quot;)">
+      <include file="$(find-pkg-share control_cmd_switcher)/launch/control_cmd_switcher.launch.xml"/>
+    </group>
+  </group>
+</launch>
