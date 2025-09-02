@@ -8,10 +8,10 @@
       collision_judge_debounce: 1.0 # [s]
       critical_stopline_margin: 1.0 # [m]
       detect_non_vru:
-        car: false
-        truck: false
-        bus: false
-        trailer: false
+        car: true
+        truck: true
+        bus: true
+        trailer: true
       brake:
         critical:
           deceleration: -6.0 # [m/ss]
