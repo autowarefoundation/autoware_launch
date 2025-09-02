@@ -11,6 +11,8 @@ files:
   - { path: $(dirname)/vehicle.yaml }
   - { path: $(dirname)/foolproof.yaml }
   - { path: $(dirname)/redundancy.yaml }
+  - { path: $(dirname)/mrm_domain/localization.yaml }
+  - { path: $(dirname)/mrm_domain/planning.yaml }
 
 units:
   - path: /autoware/modes/local
@@ -69,6 +71,8 @@ units:
       - { type: link, link: /vehicle/in_lane_moderate_stop_available }
       - { type: link, link: /foolproof/autonomous_available }
       - { type: link, link: /redundancy/in_lane_moderate_stop_available }
+      - { type: link, link: /mrm_domain/localization/in_lane_moderate_stop_available }
+      - { type: link, link: /mrm_domain/planning/in_lane_moderate_stop_available }
 
   - path: /autoware/modes/in_lane_emergency_stop
     type: and
@@ -85,6 +89,8 @@ units:
       - { type: link, link: /vehicle/in_lane_emergency_stop_available }
       - { type: link, link: /foolproof/autonomous_available }
       - { type: link, link: /redundancy/in_lane_emergency_stop_available }
+      - { type: link, link: /mrm_domain/localization/in_lane_emergency_stop_available }
+      - { type: link, link: /mrm_domain/planning/in_lane_emergency_stop_available }
 
   - path: /autoware/modes/emergency_stop
     type: ok

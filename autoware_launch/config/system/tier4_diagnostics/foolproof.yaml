@@ -29,9 +29,6 @@ units:
       - { type: link, link: /foolproof/emergency_stop }
       - { type: link, link: /foolproof/sub_ecu_in_lane_moderate_stop }
 
-  - path: /foolproof/sub_ecu_in_lane_moderate_stop_available
-    type: ok
-
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************

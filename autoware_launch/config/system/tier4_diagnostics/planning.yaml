@@ -29,11 +29,6 @@ units:
       - { type: link, link: /planning/emergency_stop }
       - { type: link, link: /planning/sub_ecu_in_lane_moderate_stop }
 
-  - path: /planning/sub_ecu_in_lane_moderate_stop_available
-    type: and
-    list:
-      - { type: link, link: /planning/emergency_stop }
-
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************

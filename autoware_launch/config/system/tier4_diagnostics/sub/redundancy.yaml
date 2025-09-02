@@ -1,0 +1,92 @@
+units:
+  - path: /sub_ecu/redundancy/sub_ecu_in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /sub_ecu/redundancy/redundancy_switcher_status/warn-to-ok }
+
+  - path: /sub_ecu/redundancy/notification
+    type: and
+    list:
+      - { type: link, link: /sub_ecu/redundancy/main_ecu_fault }
+      - { type: link, link: /sub_ecu/redundancy/sub_ecu_fault }
+      - { type: link, link: /sub_ecu/redundancy/main_vcu_fault }
+      - { type: link, link: /sub_ecu/redundancy/sub_vcu_fault }
+      - { type: link, link: /sub_ecu/redundancy/main_ecu_to_sub_ecu_link_fault }
+      - { type: link, link: /sub_ecu/redundancy/main_ecu_to_main_vcu_link_fault }
+      - { type: link, link: /sub_ecu/redundancy/main_ecu_to_sub_vcu_link_fault }
+      - { type: link, link: /sub_ecu/redundancy/sub_ecu_to_main_vcu_link_fault }
+      - { type: link, link: /sub_ecu/redundancy/sub_ecu_to_sub_vcu_link_fault }
+      - { type: link, link: /sub_ecu/redundancy/main_vcu_to_sub_vcu_link_fault }
+
+  - path: /sub_ecu/redundancy/redundancy_switcher_status/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/redundancy/redundancy_switcher_status
+
+  - path: /sub_ecu/redundancy/redundancy_switcher_status
+    type: diag
+    node: sub_ecu_redundancy_switcher_interface
+    name: redundancy_switcher_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/redundancy/main_ecu_fault
+    type: diag
+    node: sub_ecu_redundancy_switcher_interface
+    name: main_ecu_fault
+    timeout: 3.0
+
+  - path: /sub_ecu/redundancy/sub_ecu_fault
+    type: diag
+    node: sub_ecu_redundancy_switcher_interface
+    name: sub_ecu_fault
+    timeout: 3.0
+
+  - path: /sub_ecu/redundancy/main_vcu_fault
+    type: diag
+    node: sub_ecu_redundancy_switcher_interface
+    name: main_vcu_fault
+    timeout: 3.0
+
+  - path: /sub_ecu/redundancy/sub_vcu_fault
+    type: diag
+    node: sub_ecu_redundancy_switcher_interface
+    name: sub_vcu_fault
+    timeout: 3.0
+
+  - path: /sub_ecu/redundancy/main_ecu_to_sub_ecu_link_fault
+    type: diag
+    node: sub_ecu_redundancy_switcher_interface
+    name: main_ecu_to_sub_ecu_link_fault
+    timeout: 3.0
+
+  - path: /sub_ecu/redundancy/main_ecu_to_main_vcu_link_fault
+    type: diag
+    node: sub_ecu_redundancy_switcher_interface
+    name: main_ecu_to_main_vcu_link_fault
+    timeout: 3.0
+
+  - path: /sub_ecu/redundancy/main_ecu_to_sub_vcu_link_fault
+    type: diag
+    node: sub_ecu_redundancy_switcher_interface
+    name: main_ecu_to_sub_vcu_link_fault
+    timeout: 3.0
+
+  - path: /sub_ecu/redundancy/sub_ecu_to_main_vcu_link_fault
+    type: diag
+    node: sub_ecu_redundancy_switcher_interface
+    name: sub_ecu_to_main_vcu_link_fault
+    timeout: 3.0
+
+  - path: /sub_ecu/redundancy/sub_ecu_to_sub_vcu_link_fault
+    type: diag
+    node: sub_ecu_redundancy_switcher_interface
+    name: sub_ecu_to_sub_vcu_link_fault
+    timeout: 3.0
+
+  - path: /sub_ecu/redundancy/main_vcu_to_sub_vcu_link_fault
+    type: diag
+    node: sub_ecu_redundancy_switcher_interface
+    name: main_vcu_to_sub_vcu_link_fault
+    timeout: 3.0

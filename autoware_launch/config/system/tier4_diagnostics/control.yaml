@@ -29,11 +29,6 @@ units:
       - { type: link, link: /control/emergency_stop }
       - { type: link, link: /control/sub_ecu_in_lane_moderate_stop }
 
-  - path: /control/sub_ecu_in_lane_moderate_stop_available
-    type: and
-    list:
-      - { type: link, link: /control/emergency_stop }
-
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
@@ -42,6 +37,9 @@ units:
 
   - path: /control/sub_ecu_in_lane_moderate_stop
     type: and
+    list:
+      - { type: link, link: /control/control_command_gate/timeout_in_lane_stop-error }
+      - { type: link, link: /control/control_command_gate/timeout_output-error }
 
   - path: /control/in_lane_emergency_stop
     type: and
@@ -59,11 +57,13 @@ units:
       - { type: link, link: /control/over_velocity }
       - { type: link, link: /control/011-slip_detection }
       - { type: link, link: /control/collision_detector }
+      - { type: link, link: /control/control_command_gate/timeout_main-error }
 
   - path: /control/comfortable_stop
     type: and
     list:
       - { type: link, link: /control/yaw_deviation-error }
+      - { type: link, link: /control/control_command_gate/timeout_stop-error }
 
   - path: /control/none
     type: and
@@ -88,6 +88,30 @@ units:
     item:
       type: link
       link: /control/yaw_deviation
+
+  - path: /control/control_command_gate/timeout_stop-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/control_command_gate/timeout_stop
+
+  - path: /control/control_command_gate/timeout_main-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/control_command_gate/timeout_main
+
+  - path: /control/control_command_gate/timeout_in_lane_stop-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/control_command_gate/timeout_in_lane_stop
+
+  - path: /control/control_command_gate/timeout_output-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/control_command_gate/timeout_output
 
   - path: /control/001-topic_status/control_command
     type: diag
@@ -163,5 +187,33 @@ units:
     type: diag
     node: control_validator
     name: control_validation_yaw_deviation
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /control/control_command_gate/timeout_stop
+    type: diag
+    node: control_command_gate
+    name: timeout_stop
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /control/control_command_gate/timeout_main
+    type: diag
+    node: control_command_gate
+    name: timeout_main
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /control/control_command_gate/timeout_in_lane_stop
+    type: diag
+    node: control_command_gate
+    name: timeout_in_lane_stop
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /control/control_command_gate/timeout_output
+    type: diag
+    node: control_command_gate
+    name: timeout_output
     timeout: 1.0
     latch: 0.0

@@ -29,11 +29,6 @@ units:
       - { type: link, link: /vehicle/emergency_stop }
       - { type: link, link: /vehicle/sub_ecu_in_lane_moderate_stop }
 
-  - path: /vehicle/sub_ecu_in_lane_moderate_stop_available
-    type: and
-    list:
-      - { type: link, link: /vehicle/emergency_stop }
-
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
@@ -52,6 +47,7 @@ units:
       - { type: link, link: /vehicle/001-topic_status/steering-error }
       - { type: link, link: /vehicle/006-vehicle_errors-error }
       - { type: link, link: /vehicle/override_when_level4_driving }
+      - { type: link, link: /vehicle/t4_vcu_version_check-error }
 
   - path: /vehicle/in_lane_emergency_stop
     type: and
@@ -79,6 +75,12 @@ units:
     item:
       type: link
       link: /vehicle/006-vehicle_errors
+
+  - path: /vehicle/t4_vcu_version_check-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/t4_vcu_version_check
 
   - path: /vehicle/001-topic_status/velocity
     type: diag
@@ -113,4 +115,11 @@ units:
     node: j6_interface
     name: override_when_level4_driving
     timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/t4_vcu_version_check
+    type: diag
+    node: j6_interface
+    name: t4_vcu_version_check
+    timeout: 2.0
     latch: 0.0

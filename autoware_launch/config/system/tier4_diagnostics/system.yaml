@@ -29,11 +29,6 @@ units:
       - { type: link, link: /system/emergency_stop }
       - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
 
-  - path: /system/sub_ecu_in_lane_moderate_stop_available
-    type: and
-    list:
-      - { type: link, link: /system/emergency_stop }
-
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
@@ -50,6 +45,7 @@ units:
     type: and
     list:
       - { type: link, link: /system/006-vehicle_stuck_checker }
+      - { type: link, link: /system/command_mode_decider/ready-error }
 
   - path: /system/in_lane_emergency_stop
     type: and
@@ -68,6 +64,12 @@ units:
     item:
       type: link
       link: /system/002-latency/total-latency
+
+  - path: /system/command_mode_decider/ready-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/command_mode_decider/ready
 
   - path: /system/002-latency/total-latency
     type: diag
@@ -102,4 +104,11 @@ units:
     node: j6_interface
     name: vcu_not_authenticated
     timeout: 10.0
+    latch: 0.0
+
+  - path: /system/command_mode_decider/ready
+    type: diag
+    node: command_mode_decider
+    name: ready
+    timeout: 3.0
     latch: 0.0

@@ -29,11 +29,6 @@ units:
       - { type: link, link: /sensing/emergency_stop }
       - { type: link, link: /sensing/sub_ecu_in_lane_moderate_stop }
 
-  - path: /sensing/sub_ecu_in_lane_moderate_stop_available
-    type: and
-    list:
-      - { type: link, link: /sensing/emergency_stop }
-
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
