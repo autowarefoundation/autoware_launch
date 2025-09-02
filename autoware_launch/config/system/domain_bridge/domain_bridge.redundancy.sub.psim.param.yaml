@@ -1,0 +1,89 @@
+name: sub_ecu_domain_bridge
+from_domain: 1
+to_domain: 2
+topics:
+  # main
+  /to_mrm/planning/scenario_planning/trajectory:
+    type: autoware_planning_msgs/msg/Trajectory
+    remap: /main/planning/scenario_planning/trajectory
+  /system/command_mode/status:
+    type: tier4_system_msgs/msg/CommandModeStatus
+    remap: /sub/system/command_mode/status
+  # localization is not working on the planning simulator
+  /localization/kinematic_state:
+    type: nav_msgs/msg/Odometry
+  /localization/acceleration:
+    type: geometry_msgs/msg/AccelWithCovarianceStamped
+  # for control_cmd_switcher at domain 1
+  /control/command/control_cmd:
+    type: autoware_control_msgs/msg/Control
+    reversed: True
+    remap: /sub/control/command/control_cmd
+  /system/election/status:
+    type: redundancy_msgs/msg/ElectionStatus
+    reversed: True
+    remap: /sub/system/election/status
+  # to pass the vehicle status from the domain 1 simulator to domain 2
+  /vehicle/status/steering_status:
+    type: autoware_vehicle_msgs/msg/SteeringReport
+  /vehicle/status/control_mode:
+    type: autoware_vehicle_msgs/msg/ControlModeReport
+  /vehicle/status/velocity_status:
+    type: autoware_vehicle_msgs/msg/VelocityReport
+  # to pass availability to the domain 1
+  /sub/system/command_mode/status:
+    type: tier4_system_msgs/msg/CommandModeStatus
+    reversed: True
+    remap: /system/command_mode/status
+  # for logging at domain 1
+  /system/fail_safe/mrm_state:
+    type: autoware_adapi_v1_msgs/msg/MrmState
+    reversed: True
+    remap: /sub/system/fail_safe/mrm_state
+  /diagnostics:
+    type: diagnostic_msgs/msg/DiagnosticArray
+    reversed: True
+    remap: /sub/diagnostics
+  /system/operation_mode/availability:
+    type: tier4_system_msgs/msg/OperationModeAvailability
+    reversed: True
+    remap: /sub/system/operation_mode/availability
+  /system/command_mode/availability:
+    type: tier4_system_msgs/msg/CommandModeAvailability
+    reversed: True
+    remap: /sub/system/command_mode/availability
+  /system/command_mode/request:
+    type: tier4_system_msgs/msg/CommandModeRequest
+    reversed: True
+    remap: /sub/system/command_mode/request
+  /system/operation_mode/state:
+    type: autoware_adapi_v1_msgs/msg/OperationModeState
+    reversed: True
+    remap: /sub/system/operation_mode/state
+  /planning/topic_relay_controller/trajectory:
+    type: autoware_planning_msgs/msg/Trajectory
+    reversed: True
+    remap: /sub/planning/topic_relay_controller/trajectory
+  /control/trajectory_follower/lateral/diagnostic:
+    type: autoware_internal_debug_msgs/msg/Float32MultiArrayStamped
+    reversed: True
+    remap: /sub/control/trajectory_follower/lateral/diagnostic
+  /control/trajectory_follower/longitudinal/diagnostic:
+    type: autoware_internal_debug_msgs/msg/Float32MultiArrayStamped
+    reversed: True
+    remap: /sub/control/trajectory_follower/longitudinal/diagnostic
+  /control/trajectory_follower/control_cmd:
+    type: autoware_control_msgs/msg/Control
+    reversed: True
+    remap: /sub/control/trajectory_follower/control_cmd
+  /control/control_command_gate/inputs/in_lane_stop/control:
+    type: autoware_control_msgs/msg/Control
+    reversed: True
+    remap: /sub/control/control_command_gate/inputs/in_lane_stop/control
+  /control/control_command_gate/source/status:
+    type: tier4_system_msgs/msg/CommandSourceStatus
+    reversed: True
+    remap: /sub/control/control_command_gate/source/status
+  /control/jerk_constant_deceleration_trigger:
+    type: jerk_constant_deceleration_controller_msgs/msg/JerkConstantDecelerationTrigger
+    remap: /sub/control/jerk_constant_deceleration_trigger

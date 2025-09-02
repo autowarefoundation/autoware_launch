@@ -8,8 +8,8 @@
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
 
   <!-- launch module preset -->
-  <arg name="planning_module_preset" default="default" description="planning module preset"/>
-  <arg name="control_module_preset" default="default" description="control module preset"/>
+  <arg name="planning_module_preset" default="x2" description="planning module preset"/>
+  <arg name="control_module_preset" default="x2" description="control module preset"/>
 
   <!-- Optional parameters -->
   <!-- Modules to be launched -->
@@ -23,9 +23,13 @@
   <arg name="launch_planning" default="true" description="launch planning"/>
   <arg name="launch_control" default="true" description="launch control"/>
   <arg name="launch_api" default="true" description="launch api"/>
-  <arg name="launch_v2x" default="false" description="launch V2X"/>
+  <arg name="launch_v2x" default="true" description="launch V2X"/>
+  <arg name="launch_l4_toolkit" default="true" description="launch L4 Toolkit"/>
   <!-- Global parameters -->
   <arg name="use_sim_time" default="false" description="use_sim_time"/>
+  <!-- Redundant system parameters-->
+  <arg name="is_redundant" default="false" description="is_redundant"/>
+  <arg name="is_main_ecu" default="true" description="is_main_ecu"/>
   <!-- Vehicle -->
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
   <arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"/>
@@ -38,18 +42,32 @@
   <arg name="system_run_mode" default="online" description="run mode in system"/>
   <arg name="launch_system_monitor" default="true" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
-  <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml" description="diagnostic graph config"/>
   <!-- Tools -->
-  <arg name="rviz" default="true" description="launch rviz"/>
-  <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
+  <arg name="rviz" default="false" description="launch rviz"/>
+  <arg name="rviz_config_name" default="autoware_x2.rviz" description="rviz config name"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/$(var rviz_config_name)" description="rviz config path"/>
   <arg name="rviz_respawn" default="true"/>
   <!-- Perception -->
-  <arg name="perception_mode" default="lidar" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
+  <arg name="perception_mode" default="camera_lidar_radar_fusion" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
   <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="enable to use high accuracy detection for traffic light recognition"/>
+  <arg name="centerpoint_model_path" default="/opt/autoware/mlmodels/centerpoint" description="path of centerpoint model file"/>
   <!-- Auto mode setting-->
   <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
   <arg name="is_simulation" default="false" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
+  <!-- L4 tool kit-->
+  <arg name="daytime_monitor_param_file" default="$(find-pkg-share daytime_monitor)/config/daytime_monitor.param.yaml" description="daytime_monitor config"/>
+  <!-- Agnocast -->
+  <arg name="use_system_agnocast_heaphook" default="true" description="true: apt installed library, false: locally built"/>
+  <let name="agnocast_heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so" if="$(var use_system_agnocast_heaphook)"/>
+  <let name="agnocast_heaphook_path" value="$(env AGNOCAST_HEAPHOOK_PATH)" unless="$(var use_system_agnocast_heaphook)"/>
+  <!-- Scheduling settings -->
+  <arg name="enable_scheduling_settings" default="true" description="enable scheduling settings"/>
+  <arg name="scheduling_settings_script_file" default="/opt/autoware/services/scheduling-settings/scheduling_settings.py" description="python script that does scheduling settings"/>
+  <arg
+    name="scheduling_settings_autoware_yaml_file"
+    default="/opt/autoware/services/scheduling-settings/scheduling_settings_autoware.yaml"
+    description="yaml file for scheduling settings of autoware processes"
+  />
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -61,6 +79,7 @@
 
   <!-- Pointcloud container -->
   <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+    <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     <arg name="use_multithread" value="true"/>
     <arg name="container_name" value="$(var pointcloud_container_name)"/>
   </include>
@@ -70,6 +89,7 @@
     <include file="$(find-pkg-share tier4_vehicle_launch)/launch/vehicle.launch.xml">
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
       <arg name="sensor_model" value="$(var sensor_model)"/>
+      <arg name="is_redundant" value="$(var is_redundant)"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
       <arg name="config_dir" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)"/>
@@ -91,6 +111,7 @@
   <group if="$(var launch_sensing)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml">
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     </include>
   </group>
 
@@ -152,6 +173,13 @@
     </include>
   </group>
 
+  <!-- L4 Toolkit -->
+  <group if="$(var launch_l4_toolkit)">
+    <include file="$(find-pkg-share l4_toolkit_launch)/launch/l4_toolkit.launch.xml">
+      <arg name="daytime_monitor_param_file" value="$(var daytime_monitor_param_file)"/>
+    </include>
+  </group>
+
   <!-- Tools -->
   <group>
     <node
@@ -165,5 +193,11 @@
     >
       <env name="QT_QPA_PLATFORMTHEME" value="qt5ct"/>
     </node>
+  </group>
+  <group if="$(var enable_scheduling_settings)">
+    <include file="$(find-pkg-share autoware_launch)/launch/scheduling_settings.launch.py">
+      <arg name="scheduling_settings_script_file" value="$(var scheduling_settings_script_file)"/>
+      <arg name="scheduling_settings_autoware_yaml_file" value="$(var scheduling_settings_autoware_yaml_file)"/>
+    </include>
   </group>
 </launch>
