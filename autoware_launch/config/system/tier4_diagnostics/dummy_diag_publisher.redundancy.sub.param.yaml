@@ -1,0 +1,36 @@
+# Description:
+#   required_diags:
+#     <name>: {is_active: <is_active>, status: <status>}
+#   name: diag name
+#   is_active: Force update or not
+#   status: diag status set by dummy diag publisher "OK, Warn, Error, Stale"
+#
+# Note:
+#
+# default values are:
+#   is_active: "true"
+#   status: "OK"
+---
+/**:
+  ros__parameters:
+    required_diags:
+      ## /sub_ecu/localization/topic_status/pose
+      "topic_state_monitor_pose_with_covariance: topic_status": default
+
+      ## /sub_ecu/localization/topic_status/twist
+      "topic_state_monitor_twist_with_covariance: topic_status": default
+
+      ## /sub_ecu/vehicle/topic_status/actuation_command
+      "topic_state_monitor_control_command_actuation_cmd: topic_status": default
+
+      ## /sub_ecu/vehicle/topic_status/velocity
+      "topic_state_monitor_vehicle_status_velocity_status: topic_status": default
+
+      ## /sub_ecu/vehicle/topic_status/steering
+      "topic_state_monitor_vehicle_status_steering_status: topic_status": default
+
+      ## /sub_ecu/vehicle/vcu_not_authenticated
+      "j6_interface: vcu_not_authenticated": default
+
+      ## /sub_ecu/vehicle/t4_vcu_version_check
+      "j6_interface: t4_vcu_version_check": default

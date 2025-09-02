@@ -32,7 +32,7 @@
   <!-- Vehicle -->
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
   <!-- Auto mode setting-->
-  <arg name="is_simulation" default="false" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
+  <arg name="is_simulation" default="true" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -40,51 +40,6 @@
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
     </include>
-  </group>
-
-  <!-- Localization -->
-  <group if="$(var launch_localization)">
-    <push-ros-namespace namespace="localization"/>
-    <!-- Localization args-->
-    <let name="loc_config_path" value="$(find-pkg-share autoware_launch)/config/localization"/>
-    <arg name="ekf_localizer_param_path" default="$(var loc_config_path)/ekf_localizer.param.yaml"/>
-
-    <!-- ekf localizer -->
-    <group>
-      <include file="$(find-pkg-share autoware_ekf_localizer)/launch/ekf_localizer.launch.xml">
-        <arg name="input_initial_pose_name" value="/main/initialpose3d"/>
-        <arg name="input_pose_with_cov_name" value="/main/localization/pose_with_covariance"/>
-        <arg name="input_twist_with_cov_name" value="/main/localization/twist_estimator/twist_with_covariance"/>
-        <arg name="output_odom_name" value="/localization/pose_twist_fusion_filter/kinematic_state"/>
-        <arg name="output_pose_name" value="/localization/pose_twist_fusion_filter/pose"/>
-        <arg name="output_pose_with_covariance_name" value="/localization/pose_with_covariance"/>
-        <arg name="output_biased_pose_name" value="/localization/pose_twist_fusion_filter/biased_pose"/>
-        <arg name="output_biased_pose_with_covariance_name" value="/localization/pose_twist_fusion_filter/biased_pose_with_covariance"/>
-        <arg name="output_twist_name" value="/localization/pose_twist_fusion_filter/twist"/>
-        <arg name="output_twist_with_covariance_name" value="/localization/pose_twist_fusion_filter/twist_with_covariance"/>
-        <arg name="param_file" value="$(var ekf_localizer_param_path)"/>
-      </include>
-    </group>
-
-    <!-- stop filter -->
-    <group>
-      <include file="$(find-pkg-share autoware_stop_filter)/launch/stop_filter.launch.xml">
-        <arg name="use_twist_with_covariance" value="True"/>
-        <arg name="input_odom_name" value="/localization/pose_twist_fusion_filter/kinematic_state"/>
-        <arg name="input_twist_with_covariance_name" value="/localization/pose_twist_fusion_filter/twist_with_covariance"/>
-        <arg name="output_odom_name" value="/localization/kinematic_state"/>
-      </include>
-    </group>
-
-    <!-- twist2accel -->
-    <group>
-      <include file="$(find-pkg-share autoware_twist2accel)/launch/twist2accel.launch.xml">
-        <arg name="use_odom" value="true"/>
-        <arg name="in_odom" value="/localization/kinematic_state"/>
-        <arg name="in_twist" value="/localization/twist_estimator/twist_with_covariance"/>
-        <arg name="out_accel" value="/localization/acceleration"/>
-      </include>
-    </group>
   </group>
 
   <!-- Planning -->
@@ -173,7 +128,7 @@
     </include>
 
     <!-- topic_state_monitor -->
-    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+    <!-- <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
       <arg name="node_name_suffix" value="pose_with_covariance_mrm_domain"/>
       <arg name="topic" value="/main/localization/pose_with_covariance"/>
       <arg name="topic_type" value="geometry_msgs/msg/PoseWithCovarianceStamped"/>
@@ -183,9 +138,9 @@
       <arg name="timeout" value="3.0"/>
       <arg name="window_size" value="30"/>
       <arg name="pub_topic_name" value="/in_lane_stop/diagnostics"/>
-    </include>
+    </include> -->
 
-    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+    <!-- <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
       <arg name="node_name_suffix" value="twist_with_covariance_mrm_domain"/>
       <arg name="topic" value="/main/localization/twist_estimator/twist_with_covariance"/>
       <arg name="topic_type" value="geometry_msgs/msg/TwistWithCovarianceStamped"/>
@@ -194,7 +149,7 @@
       <arg name="error_rate" value="1.0"/>
       <arg name="timeout" value="1.0"/>
       <arg name="pub_topic_name" value="/mrm_domain/diagnostics"/>
-    </include>
+    </include> -->
 
     <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
       <arg name="node_name_suffix" value="trajectory_mrm_domain"/>
@@ -214,8 +169,5 @@
       <arg name="output_diagnostics" value="/mrm_domain/diagnostics"/>
       <arg name="input_command_mode_request" value="/main/system/command_mode/request"/>
     </include>
-
-    <!-- ekf_localizer_auto_activator -->
-    <include file="$(find-pkg-share autoware_ekf_localizer_auto_activator)/launch/ekf_localizer_auto_activator.launch.xml"/>
   </group>
 </launch>

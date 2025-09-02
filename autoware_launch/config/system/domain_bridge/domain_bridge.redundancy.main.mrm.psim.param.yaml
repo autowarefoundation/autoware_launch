@@ -22,6 +22,9 @@ topics:
   /vehicle/status/steering_status:
     type: autoware_vehicle_msgs/msg/SteeringReport
     remap: /main/vehicle/status/steering_status
+  /system/command_mode/request:
+    type: tier4_system_msgs/msg/CommandModeRequest
+    remap: /main/system/command_mode/request
   # mrm -> main
   /control/control_command_gate/inputs/in_lane_stop/control:
     type: autoware_control_msgs/msg/Control
@@ -35,6 +38,10 @@ topics:
   /control/control_command_gate/inputs/in_lane_stop/turn_indicators:
     type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
     reversed: True
+  /mrm_domain/diagnostics:
+    type: diagnostic_msgs/msg/DiagnosticArray
+    reversed: True
+    remap: /diagnostics
   # mrm -> main for logging
   /diagnostics:
     type: diagnostic_msgs/msg/DiagnosticArray
