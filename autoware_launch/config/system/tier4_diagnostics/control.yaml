@@ -44,50 +44,53 @@ units:
   - path: /control/in_lane_emergency_stop
     type: and
     list:
-      - { type: link, link: /control/009-aeb_emergency_stop }
-      - { type: link, link: /control/rolling_back }
-      - { type: link, link: /control/overrun_stop_point }
-      - { type: link, link: /control/will_overrun_stop_point }
+      - { type: link, link: /control/006-boundary_departure-error }
+      - { type: link, link: /control/007-aeb_emergency_stop-error }
+      - { type: link, link: /control/011-rolling_back-error }
+      - { type: link, link: /control/012-overrun_stop_point-error }
+      - { type: link, link: /control/011-rolling_back-error }
 
   - path: /control/in_lane_moderate_stop
     type: and
     list:
-      - { type: link, link: /control/001-topic_status/control_command-error }
-      - { type: link, link: /control/010-max_distance_deviation-error }
-      - { type: link, link: /control/over_velocity }
-      - { type: link, link: /control/011-slip_detection }
-      - { type: link, link: /control/collision_detector }
+      - { type: link, link: /control/002-topic_status/control_command-error }
+      - { type: link, link: /control/003-max_distance_deviation-error }
+      - { type: link, link: /control/004-over_velocity-error }
+      - { type: link, link: /control/009-slip_detection-error }
       - { type: link, link: /control/control_command_gate/timeout_main-error }
 
   - path: /control/comfortable_stop
     type: and
     list:
-      - { type: link, link: /control/yaw_deviation-error }
+      - { type: link, link: /control/005-yaw_deviation-error }
       - { type: link, link: /control/control_command_gate/timeout_stop-error }
+      - { type: link, link: /control/010-collision_detector-error }
 
   - path: /control/none
     type: and
     list:
-      - { type: link, link: /control/acceleration_error }
+      - { type: link, link: /control/013-will_overrun_stop_point-error }
+      - { type: link, link: /control/014-acceleration_error-error }
+      - { type: link, link: /control/016-sudden_deceleration_monitor-error }
 
   # Intermediate paths
-  - path: /control/001-topic_status/control_command-error
+  - path: /control/002-topic_status/control_command-error
     type: warn-to-ok
     item:
       type: link
-      link: /control/001-topic_status/control_command
+      link: /control/002-topic_status/control_command
 
-  - path: /control/010-max_distance_deviation-error
+  - path: /control/003-max_distance_deviation-error
     type: warn-to-ok
     item:
       type: link
-      link: /control/010-max_distance_deviation
+      link: /control/003-max_distance_deviation
 
-  - path: /control/yaw_deviation-error
+  - path: /control/004-over_velocity-error
     type: warn-to-ok
     item:
       type: link
-      link: /control/yaw_deviation
+      link: /control/004-over_velocity
 
   - path: /control/control_command_gate/timeout_stop-error
     type: warn-to-ok
@@ -113,80 +116,147 @@ units:
       type: link
       link: /control/control_command_gate/timeout_output
 
-  - path: /control/001-topic_status/control_command
+  - path: /control/005-yaw_deviation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/005-yaw_deviation
+
+  - path: /control/006-boundary_departure-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/006-boundary_departure
+
+  - path: /control/007-aeb_emergency_stop-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/007-aeb_emergency_stop
+
+  - path: /control/009-slip_detection-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/009-slip_detection
+
+  - path: /control/010-collision_detector-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/010-collision_detector
+
+  - path: /control/011-rolling_back-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/011-rolling_back
+
+  - path: /control/012-overrun_stop_point-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/012-overrun_stop_point
+
+  - path: /control/013-will_overrun_stop_point-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/013-will_overrun_stop_point
+
+  - path: /control/014-acceleration_error-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/014-acceleration_error
+
+  - path: /control/016-sudden_deceleration_monitor-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /control/016-sudden_deceleration_monitor
+
+  - path: /control/002-topic_status/control_command
     type: diag
     node: topic_state_monitor_control_command_control_cmd
     name: control_topic_status
     timeout: 1.0
     latch: 0.0
 
-  - path: /control/009-aeb_emergency_stop
-    type: diag
-    node: autonomous_emergency_braking
-    name: aeb_emergency_stop
-    timeout: 1.0
-    latch: 0.0
-
-  - path: /control/010-max_distance_deviation
+  - path: /control/003-max_distance_deviation
     type: diag
     node: control_validator
     name: control_validation_max_distance_deviation
     timeout: 1.0
     latch: 0.0
 
-  - path: /control/011-slip_detection
-    type: diag
-    node: slip_detector
-    name: slip_status
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /control/collision_detector
-    type: diag
-    node: collision_detector
-    name: collision_detect
-    timeout: 1.0
-    latch: 0.0
-
-  - path: /control/acceleration_error
-    type: diag
-    node: control_validator
-    name: control_validation_acceleration_error
-    timeout: 1.0
-    latch: 0.0
-
-  - path: /control/rolling_back
-    type: diag
-    node: control_validator
-    name: control_validation_rolling_back
-    timeout: 1.0
-    latch: 0.0
-
-  - path: /control/over_velocity
+  - path: /control/004-over_velocity
     type: diag
     node: control_validator
     name: control_validation_over_velocity
     timeout: 1.0
     latch: 0.0
 
-  - path: /control/overrun_stop_point
+  - path: /control/005-yaw_deviation
+    type: diag
+    node: control_validator
+    name: control_validation_yaw_deviation
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /control/006-boundary_departure
+    type: diag
+    node: motion_velocity_planner
+    name: boundary_departure
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /control/007-aeb_emergency_stop
+    type: diag
+    node: autonomous_emergency_braking
+    name: aeb_emergency_stop
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /control/009-slip_detection
+    type: diag
+    node: slip_detector
+    name: slip_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /control/010-collision_detector
+    type: diag
+    node: collision_detector
+    name: collision_detect
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /control/011-rolling_back
+    type: diag
+    node: control_validator
+    name: control_validation_rolling_back
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /control/012-overrun_stop_point
     type: diag
     node: control_validator
     name: control_validation_overrun_stop_point
     timeout: 1.0
     latch: 0.0
 
-  - path: /control/will_overrun_stop_point
+  - path: /control/013-will_overrun_stop_point
     type: diag
     node: control_validator
     name: control_validation_will_overrun_stop_point
     timeout: 1.0
     latch: 0.0
 
-  - path: /control/yaw_deviation
+  - path: /control/014-acceleration_error
     type: diag
     node: control_validator
-    name: control_validation_yaw_deviation
+    name: control_validation_acceleration_error
     timeout: 1.0
     latch: 0.0
 
@@ -215,5 +285,11 @@ units:
     type: diag
     node: control_command_gate
     name: timeout_output
+    timeout: 1.0
+    latch: 0.0
+  - path: /control/016-sudden_deceleration_monitor
+    type: diag
+    node: sudden_deceleration_monitor
+    name: sudden_deceleration_monitor
     timeout: 1.0
     latch: 0.0

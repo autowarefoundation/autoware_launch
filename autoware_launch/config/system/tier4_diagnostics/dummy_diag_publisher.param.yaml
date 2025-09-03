@@ -200,6 +200,8 @@
       # system
       ## /system/003-bagpacker_status
       rosbag_status: default
+      "dssad_packer: dssad_record_status": default
+      "bagkeeper: event_record_status": default
 
       ## /system/004-bagpacker_disk_space
       disk1_status: default
@@ -207,6 +209,30 @@
 
       ## /system/005-fms_connection
       edge_core_internet_connection: default
+
+      ## clock
+      "main_sys": default
+      "main_ptp0": default
+      "sensor@rear_upper/lidar": default
+      "sensor@left_upper/lidar": default
+      "sensor@rear_lower/lidar": default
+      "sensor@left_lower/lidar": default
+      "TE-2000_sys": default
+      "sensor@front_center/radar_link": default
+      "sensor@rear_center/radar_link": default
+      "main_ptp1": default
+      "sub_sys": default
+      "sub_ptp0": default
+      "sensor@front_upper/lidar": default
+      "sensor@right_upper/lidar": default
+      "sensor@front_lower/lidar": default
+      "sensor@right_lower/lidar": default
+      "perception1_ptp0": default
+      "perception1_sys": default
+      "perception2_ptp0": default
+      "addon_sys": default
+      "logging_ptp0": default
+      "logging_sys": default
 
       # vehicle
       ## /vehicle/001-topic_status/velocity
@@ -220,6 +246,21 @@
 
       ## /vehicle/006-vehicle_errors
       "j6_interface: vehicle_errors": default
+      "j6_interface: brake_external_request_error": default
+      "j6_interface: brake_system_error": default
+      "j6_interface: brake_system_can_error": default
+      "j6_interface: parking_system_error": default
+      "j6_interface: parking_system_can_error": default
+      "j6_interface: parking_external_request_error": default
+      "j6_interface: steering_system_1_error": default
+      "j6_interface: steering_system_2_error": default
+      "j6_interface: steering_system_error": default
+      "j6_interface: steering_angle_initialization_error": default
+      "j6_interface: steering_system_can_error": default
+      "j6_interface: drive_system_error": default
+      "j6_interface: drive_system_can_error": default
+      "j6_interface: steering_system_over_heat_error": default
+      "j6_interface: steering_angle_sensor_error": default
 
       ## /vehicle/007-vehicle-emergency-button
       "j6_interface: vehicle_emergency_button": default
@@ -229,6 +270,9 @@
 
       ## /vehicle/override_when_level4_driving
       "j6_interface: override_when_level4_driving": default
+
+      ## /vehicle/t4_vcu_version_check
+      "j6_interface: t4_vcu_version_check": default
 
       # sensing
       ## /sensing/lidar/preprocessor
@@ -288,3 +332,10 @@
       "autoware_diagnostics_bridge_node_main: main_autoware_system_node_alive": default
       "autoware_diagnostics_bridge_node_perception1: perception1_recognition_node_alive": default
       "autoware_diagnostics_bridge_node_perception2: perception2_recognition_node_alive": default
+
+      ## control_command_gate
+      "control_command_gate: timeout_stop": default
+      "control_command_gate: timeout_main": default
+      "control_command_gate: timeout_in_lane_stop": default
+      "control_command_gate: timeout_output": default
+      "command_mode_decider: ready": default

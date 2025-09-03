@@ -67,6 +67,7 @@ units:
       - { type: link, link: /perception/006-no_detection/traffic_light }
       - { type: link, link: /perception/007-missing_input/object_merger_alpha }
       - { type: link, link: /perception/007-missing_input/object_merger_beta }
+      - { type: link, link: /perception/008-decorative_tracker_merger }
 
   - path: /perception/001-topic_status/traffic_signals-error
     type: warn-to-ok
@@ -187,6 +188,13 @@ units:
     type: diag
     node: object_association_merger_beta
     name: object_association_merger
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /perception/008-decorative_tracker_merger
+    type: diag
+    node: decorative_tracker_merger
+    name: decorative_object_merger_node
     timeout: 1.0
     latch: 0.0
 

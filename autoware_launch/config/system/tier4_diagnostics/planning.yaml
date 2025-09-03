@@ -57,15 +57,15 @@ units:
       - { type: link, link: /planning/011-trajectory_steering_rate_validation-error }
       - { type: link, link: /planning/012-trajectory_velocity_deviation_validation-error }
       - { type: link, link: /planning/013-trajectory_shift_validation-error }
-      - { type: link, link: /planning/016-path_optimizer_emergency_stop-error }
-      - { type: link, link: /planning/018-trajectory_yaw_deviation_validation-error }
+      - { type: link, link: /planning/014-trajectory_validation_yaw_deviation-error }
+      - { type: link, link: /planning/016-trajectory_validation_distance_deviation-error }
 
   - path: /planning/in_lane_emergency_stop
     type: and
     list:
-      - { type: link, link: /planning/014-intersection_collision_checker-error }
-      - { type: link, link: /planning/017-rear_collision_checker-error }
-      - { type: link, link: /planning/019-trajectory_distance_deviation_validation-error }
+      - { type: link, link: /planning/015-intersection_collision_checker-error }
+      - { type: link, link: /planning/018-rear_collision_checker-error }
+      - { type: link, link: /planning/017-trajectory_distance_deviation_validation-error }
 
   - path: /planning/sub_ecu_in_lane_moderate_stop
     type: and
@@ -151,41 +151,35 @@ units:
       type: link
       link: /planning/013-trajectory_shift_validation
 
-  - path: /planning/014-intersection_collision_checker-error
+  - path: /planning/014-trajectory_validation_yaw_deviation-error
     type: warn-to-ok
     item:
       type: link
-      link: /planning/014-intersection_collision_checker
+      link: /planning/014-trajectory_validation_yaw_deviation
 
-  - path: /planning/016-path_optimizer_emergency_stop-error
+  - path: /planning/015-intersection_collision_checker-error
     type: warn-to-ok
     item:
       type: link
-      link: /planning/016-path_optimizer_emergency_stop
+      link: /planning/015-intersection_collision_checker
 
-  - path: /planning/017-rear_collision_checker-error
+  - path: /planning/016-trajectory_validation_distance_deviation-error
     type: warn-to-ok
     item:
       type: link
-      link: /planning/017-rear_collision_checker
+      link: /planning/016-trajectory_validation_distance_deviation
 
-  - path: /planning/018-trajectory_yaw_deviation_validation-error
+  - path: /planning/017-trajectory_distance_deviation_validation-error
     type: warn-to-ok
     item:
       type: link
-      link: /planning/018-trajectory_yaw_deviation_validation
+      link: /planning/017-trajectory_distance_deviation_validation
 
-  - path: /planning/019-trajectory_distance_deviation_validation-error
+  - path: /planning/018-rear_collision_checker-error
     type: warn-to-ok
     item:
       type: link
-      link: /planning/019-trajectory_distance_deviation_validation
-
-  - path: /planning/020-boundary_departure-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /planning/020-boundary_departure
+      link: /planning/018-rear_collision_checker
 
   - path: /planning/001-topic_status/route
     type: diag
@@ -278,44 +272,37 @@ units:
     timeout: 1.0
     latch: 0.0
 
-  - path: /planning/014-intersection_collision_checker
-    type: diag
-    node: planning_validator
-    name: intersection_validation_collision_check
-    timeout: 1.0
-    latch: 0.0
-
-  - path: /planning/016-path_optimizer_emergency_stop
-    type: diag
-    node: path_optimizer
-    name: path_optimizer_emergency_stop
-    timeout: 1.0
-    latch: 0.0
-
-  - path: /planning/017-rear_collision_checker
-    type: diag
-    node: planning_validator
-    name: rear_collision_check
-    timeout: 1.0
-    latch: 0.0
-
-  - path: /planning/018-trajectory_yaw_deviation_validation
+  - path: /planning/014-trajectory_validation_yaw_deviation
     type: diag
     node: planning_validator
     name: trajectory_validation_yaw_deviation
     timeout: 1.0
     latch: 0.0
 
-  - path: /planning/019-trajectory_distance_deviation_validation
+  - path: /planning/015-intersection_collision_checker
+    type: diag
+    node: planning_validator
+    name: intersection_validation_collision_check
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /planning/016-trajectory_validation_distance_deviation
     type: diag
     node: planning_validator
     name: trajectory_validation_distance_deviation
     timeout: 1.0
     latch: 0.0
 
-  - path: /planning/020-boundary_departure
-    type: ok
-    node: motion_velocity_planner
-    name: boundary_departure
+  - path: /planning/017-trajectory_distance_deviation_validation
+    type: diag
+    node: planning_validator
+    name: trajectory_validation_longitudinal_distance_deviation
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /planning/018-rear_collision_checker
+    type: diag
+    node: planning_validator
+    name: rear_collision_check
     timeout: 1.0
     latch: 0.0
