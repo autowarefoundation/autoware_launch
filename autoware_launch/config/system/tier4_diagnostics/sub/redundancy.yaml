@@ -3,6 +3,7 @@ units:
     type: and
     list:
       - { type: link, link: /sub_ecu/redundancy/redundancy_switcher_status/warn-to-ok }
+      - { type: link, link: /sub_ecu/redundancy/topic_status/election_status/warn-to-ok }
 
   - path: /sub_ecu/redundancy/notification
     type: and
@@ -23,6 +24,12 @@ units:
     item:
       type: link
       link: /sub_ecu/redundancy/redundancy_switcher_status
+
+  - path: /sub_ecu/redundancy/topic_status/election_status/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/redundancy/topic_status/election_status
 
   - path: /sub_ecu/redundancy/redundancy_switcher_status
     type: diag
@@ -90,3 +97,10 @@ units:
     node: sub_ecu_redundancy_switcher_interface
     name: main_vcu_to_sub_vcu_link_fault
     timeout: 3.0
+
+  - path: /sub_ecu/redundancy/topic_status/election_status
+    type: diag
+    node: topic_state_monitor_election_status
+    name: topic_status
+    timeout: 3.0
+    latch: 0.0

@@ -3,6 +3,7 @@ units:
     type: and
     list:
       - { type: link, link: /redundancy/redundancy_switcher }
+      - { type: link, link: /redundancy/topic_status/election_status-error }
 
   - path: /redundancy/comfortable_stop_available
     type: and
@@ -32,6 +33,12 @@ units:
       - { type: link, link: /redundancy/main_ecu/sub_ecu_to_main_vcu_link_fault }
       - { type: link, link: /redundancy/main_ecu/sub_ecu_to_sub_vcu_link_fault }
       - { type: link, link: /redundancy/main_ecu/main_vcu_to_sub_vcu_link_fault }
+
+  - path: /redundancy/topic_status/election_status-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /redundancy/topic_status/election_status
 
   # diag
   - path: /redundancy/redundancy_switcher
@@ -99,6 +106,13 @@ units:
     node: main_ecu_redundancy_switcher_interface
     name: main_vcu_to_sub_vcu_link_fault
     timeout: 3.0
+
+  - path: /redundancy/topic_status/election_status
+    type: diag
+    node: topic_state_monitor_election_status
+    name: topic_status
+    timeout: 3.0
+    latch: 0.0
 
   # - path: /redundancy/pub_pose_with_covariance_to_sub_ecu
   #   type: diag

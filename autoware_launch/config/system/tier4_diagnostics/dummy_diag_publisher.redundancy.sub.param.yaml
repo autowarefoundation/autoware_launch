@@ -20,6 +20,12 @@
       ## /sub_ecu/localization/topic_status/twist
       "topic_state_monitor_twist_with_covariance: topic_status": default
 
+      ##/sub_ecu/sensing/imu/gyro_bias_validation
+      "gyro_bias_validator: gyro_bias_validator": default
+
+      ##/sub_ecu/sensing/imu/rate_bound_check
+      "/sensing/imu/tamagawa/tag_can_driver: rate bound check": default
+
       ## /sub_ecu/vehicle/topic_status/actuation_command
       "topic_state_monitor_control_command_actuation_cmd: topic_status": default
 
