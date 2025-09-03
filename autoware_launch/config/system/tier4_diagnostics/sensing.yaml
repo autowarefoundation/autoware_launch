@@ -59,6 +59,7 @@ units:
       - { type: link, link: /sensing/lidar/002-status-error }
       - { type: link, link: /sensing/lidar/003-ptp-error }
       - { type: link, link: /sensing/lidar/004-blockage-error }
+      - { type: link, link: /sensing/visibility_validation-error }
 
   - path: /sensing/in_lane_emergency_stop
     type: and
@@ -196,6 +197,12 @@ units:
     item:
       type: link
       link: /sensing/radar/006-detections-rate
+
+  - path: /sensing/visibility_validation-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/visibility_validation
   # Diagnostics paths
   # imu
   - path: /sensing/imu/008-monitor
@@ -1009,5 +1016,12 @@ units:
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Detections rate bound status
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /sensing/visibility_validation
+    type: diag
+    node: "polar_voxel_outlier_filter: polar_voxel_outlier_filter"
+    name: "/sensing/lidar/right_upper: visibility_validation"
     timeout: 1.0
     latch: 0.0
