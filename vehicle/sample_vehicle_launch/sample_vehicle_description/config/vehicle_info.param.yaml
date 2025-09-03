@@ -2,7 +2,7 @@
   ros__parameters:
     wheel_radius: 0.383 # The radius of the wheel, primarily used for dead reckoning.
     wheel_width: 0.235 # The lateral width of a wheel tire, primarily used for dead reckoning.
-    wheel_base: 2.79 # between front wheel center and rear wheel center
+    wheel_base: 5.0 #2.79 # between front wheel center and rear wheel center
     wheel_tread: 1.64 # between left wheel center and right wheel center
     front_overhang: 1.0 # between front wheel center and vehicle front
     rear_overhang: 1.1 # between rear wheel center and vehicle rear
