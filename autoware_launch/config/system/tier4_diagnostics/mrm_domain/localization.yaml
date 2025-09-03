@@ -1,4 +1,13 @@
 units:
+  - path: /mrm_domain/localization/autonomous_available
+    type: and
+    list:
+      # Although not strictly necessary, it is added due to notification issues.
+      - { type: link, link: /mrm_domain/localization/in_lane_moderate_stop_available }
+
+  - path: /mrm_domain/localization/comfortable_stop_available
+    type: ok
+
   - path: /mrm_domain/localization/in_lane_moderate_stop_available
     type: and
     list:

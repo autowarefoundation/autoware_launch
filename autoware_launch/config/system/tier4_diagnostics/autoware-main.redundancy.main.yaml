@@ -39,6 +39,8 @@ units:
       - { type: link, link: /vehicle/autonomous_available }
       - { type: link, link: /foolproof/autonomous_available }
       - { type: link, link: /redundancy/autonomous_available }
+      - { type: link, link: /mrm_domain/localization/autonomous_available }
+      - { type: link, link: /mrm_domain/planning/autonomous_available }
 
   - path: /autoware/modes/comfortable_stop
     type: and
@@ -55,6 +57,8 @@ units:
       - { type: link, link: /vehicle/comfortable_stop_available }
       - { type: link, link: /foolproof/autonomous_available }
       - { type: link, link: /redundancy/comfortable_stop_available }
+      - { type: link, link: /mrm_domain/localization/comfortable_stop_available }
+      - { type: link, link: /mrm_domain/planning/comfortable_stop_available }
 
   - path: /autoware/modes/in_lane_moderate_stop
     type: and
