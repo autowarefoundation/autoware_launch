@@ -37,9 +37,6 @@ units:
 
   - path: /planning/comfortable_stop
     type: and
-    # list:
-    # TODO(azu): should verify that false positives are eliminated by August 15, 2025, and then uncomment following line
-    # - { type: link, link: /planning/020-boundary_departure-error }
 
   - path: /planning/in_lane_moderate_stop
     type: and
@@ -66,6 +63,7 @@ units:
       - { type: link, link: /planning/015-intersection_collision_checker-error }
       - { type: link, link: /planning/018-rear_collision_checker-error }
       - { type: link, link: /planning/017-trajectory_distance_deviation_validation-error }
+      - { type: link, link: /planning/020-boundary_departure-error }
 
   - path: /planning/sub_ecu_in_lane_moderate_stop
     type: and
@@ -180,6 +178,12 @@ units:
     item:
       type: link
       link: /planning/018-rear_collision_checker
+
+  - path: /planning/020-boundary_departure-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/020-boundary_departure
 
   - path: /planning/001-topic_status/route
     type: diag
@@ -304,5 +308,12 @@ units:
     type: diag
     node: planning_validator
     name: rear_collision_check
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /planning/020-boundary_departure
+    type: diag
+    node: motion_velocity_planner
+    name: boundary_departure
     timeout: 1.0
     latch: 0.0

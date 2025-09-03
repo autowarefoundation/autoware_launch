@@ -44,7 +44,6 @@ units:
   - path: /control/in_lane_emergency_stop
     type: and
     list:
-      - { type: link, link: /control/006-boundary_departure-error }
       - { type: link, link: /control/007-aeb_emergency_stop-error }
       - { type: link, link: /control/011-rolling_back-error }
       - { type: link, link: /control/012-overrun_stop_point-error }
@@ -122,12 +121,6 @@ units:
       type: link
       link: /control/005-yaw_deviation
 
-  - path: /control/006-boundary_departure-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /control/006-boundary_departure
-
   - path: /control/007-aeb_emergency_stop-error
     type: warn-to-ok
     item:
@@ -201,13 +194,6 @@ units:
     type: diag
     node: control_validator
     name: control_validation_yaw_deviation
-    timeout: 1.0
-    latch: 0.0
-
-  - path: /control/006-boundary_departure
-    type: diag
-    node: motion_velocity_planner
-    name: boundary_departure
     timeout: 1.0
     latch: 0.0
 
