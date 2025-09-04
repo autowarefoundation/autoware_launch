@@ -6,7 +6,7 @@
     initialize_source: "INITIAL_POSE_TOPIC" #  options: ORIGIN / INITIAL_POSE_TOPIC
     timer_sampling_time_ms: 25
     add_measurement_noise: False # the Gaussian noise is added to the simulated results
-    vel_lim: 50.0 # limit of velocity
+    vel_lim: 10.0 # limit of velocity
     vel_rate_lim: 7.0 # limit of acceleration
     steer_lim: 1.0 # limit of steering angle
     steer_rate_lim: 5.0 # limit of steering angle change rate
