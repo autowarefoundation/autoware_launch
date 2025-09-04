@@ -1,5 +1,5 @@
 units:
-  - path: /mrm_comain/planning/autonomous_available
+  - path: /mrm_domain/planning/autonomous_available
     type: and
     list:
       # Although not strictly necessary, it is added due to notification issues.

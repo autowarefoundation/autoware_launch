@@ -207,6 +207,16 @@
       <arg name="timeout" value="1.0"/>
     </include> -->
 
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="election_status"/>
+      <arg name="topic" value="/system/election/status"/>
+      <arg name="topic_type" value="tier4_external_api_msgs/msg/ElectionStatus"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include>
+
     <!-- mrm diagnocstic overrider -->
     <include file="$(find-pkg-share mrm_diagnostic_overrider)/launch/mrm_diagnostic_overrider.launch.xml"/>
 
