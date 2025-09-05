@@ -293,7 +293,7 @@
     <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
       <arg name="node_name_suffix" value="control_command_actuation_cmd"/>
       <arg name="topic" value="/control/command/actuation_cmd"/>
-      <arg name="topic_type" value="autoware_control_msgs/msg/Control"/>
+      <arg name="topic_type" value="tier4_vehicle_msgs/msg/ActuationCommandStamped"/>
       <arg name="diag_name" value="topic_status"/>
       <arg name="warn_rate" value="5.0"/>
       <arg name="error_rate" value="1.0"/>
@@ -329,6 +329,9 @@
       <arg name="error_rate" value="1.0"/>
       <arg name="timeout" value="1.0"/>
     </include>
+
+    <!-- mrm diagnocstic overrider -->
+    <include file="$(find-pkg-share mrm_diagnostic_overrider)/launch/mrm_diagnostic_overrider.launch.xml"/>
 
     <!-- redundancy_switcher_interface -->
     <include file="$(find-pkg-share redundancy_switcher_interface)/launch/redundancy_switcher_interface.launch.xml">
