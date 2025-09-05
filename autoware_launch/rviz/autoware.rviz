@@ -2456,6 +2456,7 @@ Visualization Manager:
                           DynamicObstacleAvoidance: true
                           GoalPlanner: true
                           Intersection: true
+                          Roundabout: true
                           LaneFollowing: true
                           LeftLaneChange: true
                           NoDrivableLane: true
@@ -3475,6 +3476,18 @@ Visualization Manager:
                     Value: true
                   - Class: rviz_default_plugins/MarkerArray
                     Enabled: true
+                    Name: Roundabout
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/debug/objects_of_interest/roundabout
+                    Value: true
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
                     Name: BlindSpot
                     Namespaces:
                       {}
@@ -3682,6 +3695,18 @@ Visualization Manager:
                       History Policy: Keep Last
                       Reliability Policy: Reliable
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/intersection
+                    Value: false
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
+                    Name: Roundabout
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/roundabout
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
                     Enabled: true
