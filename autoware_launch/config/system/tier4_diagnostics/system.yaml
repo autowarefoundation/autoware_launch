@@ -158,7 +158,7 @@ units:
     type: diag
     node: dssad_packer
     name: dssad_record_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /system/010-v2x_jpn_signal
