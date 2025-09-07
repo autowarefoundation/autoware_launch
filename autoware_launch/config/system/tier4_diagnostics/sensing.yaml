@@ -225,8 +225,8 @@ units:
     latch: 0.0
   - path: /sensing/imu/003-gyro_bias
     type: diag
-    node: gyro_bias_validator
-    name: gyro_bias_validator
+    node: gyro_bias_scale_validator
+    name: gyro_bias_scale_validator
     timeout: 1.0
     latch: 0.0
   # gnss
