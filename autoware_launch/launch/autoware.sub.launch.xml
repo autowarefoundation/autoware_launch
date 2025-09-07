@@ -188,6 +188,7 @@
     <arg name="raw_vehicle_cmd_converter_param_path" default="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/config/raw_vehicle_cmd_converter.param.yaml"/>
     <arg name="initial_engage_state" default="false" description="/vehicle/engage state after starting Autoware"/>
     <arg name="config_dir" default="$(find-pkg-share $(var sensor_model)_description)/config" description="path to dir where sensors_calibration.yaml, etc. are located"/>
+    <arg name="csv_accel_brake_map_path" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/vehicle"/>
 
     <arg name="can_device" default="fintekcan0"/>
     <arg name="brake_can_device" default="peakcan1"/>
