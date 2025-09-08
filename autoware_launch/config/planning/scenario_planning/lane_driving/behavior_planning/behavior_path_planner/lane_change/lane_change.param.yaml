@@ -51,7 +51,7 @@
       safety_check:
         allow_loose_check_for_cancel: true
         enable_target_lane_bound_check: true
-        stopped_object_velocity_threshold: 1.0 # [m/s]
+        stopped_object_velocity_threshold: 0.3          # [m/s] Object whose velocity is less than the threshold is treated as static object.
         prepare:                                        # RSS parameters used during the prepare phase, regardless of whether the ego is searching for a safe path, canceling, or transitioning to another state.
           expected_front_deceleration: -1.0             # [m/s2]
           expected_rear_deceleration: -1.0              # [m/s2]
