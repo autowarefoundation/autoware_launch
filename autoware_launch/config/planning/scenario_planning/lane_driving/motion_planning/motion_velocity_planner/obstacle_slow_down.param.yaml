@@ -57,44 +57,44 @@
                 min_ego_velocity: 0.278
                 max_ego_velocity: 9.72
           pedestrian.right.moving:
-                min_lat_margin: 1.0
-                max_lat_margin: 2.5
-                min_ego_velocity: 2.78
+                min_lat_margin: 0.9
+                max_lat_margin: 2.8
+                min_ego_velocity: 0.925
                 max_ego_velocity: 9.72
           pedestrian.left.moving:
-                min_lat_margin: 1.0
-                max_lat_margin: 2.5
-                min_ego_velocity: 2.78
+                min_lat_margin: 0.9
+                max_lat_margin: 2.8
+                min_ego_velocity: 0.925
                 max_ego_velocity: 9.72
           pedestrian.right.static:
-                min_lat_margin: 1.0
+                min_lat_margin: 0.6
                 max_lat_margin: 2.5
-                min_ego_velocity: 2.78
+                min_ego_velocity: 0.925
                 max_ego_velocity: 9.72
           pedestrian.left.static:
-                min_lat_margin: 1.0
+                min_lat_margin: 0.6
                 max_lat_margin: 2.5
-                min_ego_velocity: 2.78
+                min_ego_velocity: 0.925
                 max_ego_velocity: 9.72
           bicycle.right.moving:
-                min_lat_margin: 1.0
-                max_lat_margin: 2.5
-                min_ego_velocity: 2.78
+                min_lat_margin: 0.9
+                max_lat_margin: 2.8
+                min_ego_velocity: 0.925
                 max_ego_velocity: 9.72
           bicycle.left.moving:
-                min_lat_margin: 1.0
-                max_lat_margin: 2.5
-                min_ego_velocity: 2.78
+                min_lat_margin: 0.9
+                max_lat_margin: 2.8
+                min_ego_velocity: 0.925
                 max_ego_velocity: 9.72
           bicycle.right.static:
-                min_lat_margin: 1.0
+                min_lat_margin: 0.6
                 max_lat_margin: 2.5
-                min_ego_velocity: 2.78
+                min_ego_velocity: 0.925
                 max_ego_velocity: 9.72
           bicycle.left.static:
-                min_lat_margin: 1.0
+                min_lat_margin: 0.6
                 max_lat_margin: 2.5
-                min_ego_velocity: 2.78
+                min_ego_velocity: 0.925
                 max_ego_velocity: 9.72
           # car.left.moving.min_ego_velocity: 3.0  # example specific override
 
