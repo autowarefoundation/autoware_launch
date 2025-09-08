@@ -144,7 +144,7 @@ units:
     type: diag
     node: daytime_monitor
     name: daytime_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /system/006-vehicle_stuck_checker
