@@ -45,16 +45,16 @@ units:
   - path: /notification/main/faults
     type: and
     list:
-      - { type: link, link: /redundancy/main_ecu_fault }
-      - { type: link, link: /redundancy/sub_ecu_fault }
-      - { type: link, link: /redundancy/main_vcu_fault }
-      - { type: link, link: /redundancy/sub_vcu_fault }
-      - { type: link, link: /redundancy/main_ecu_to_sub_ecu_link_fault }
-      - { type: link, link: /redundancy/main_ecu_to_main_vcu_link_fault }
-      - { type: link, link: /redundancy/main_ecu_to_sub_vcu_link_fault }
-      - { type: link, link: /redundancy/sub_ecu_to_main_vcu_link_fault }
-      - { type: link, link: /redundancy/sub_ecu_to_sub_vcu_link_fault }
-      - { type: link, link: /redundancy/main_vcu_to_sub_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/main_ecu_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_ecu_fault }
+      - { type: link, link: /redundancy/main_ecu/main_vcu_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_vcu_fault }
+      - { type: link, link: /redundancy/main_ecu/main_ecu_to_sub_ecu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/main_ecu_to_main_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/main_ecu_to_sub_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_ecu_to_main_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_ecu_to_sub_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/main_vcu_to_sub_vcu_link_fault }
 
   # diag
   - path: /debug/injection/local_available
@@ -112,65 +112,65 @@ units:
     name: redundancy_switcher_status
     timeout: 3.0
 
-  - path: /redundancy/main_ecu_fault
+  - path: /redundancy/main_ecu/main_ecu_fault
     type: diag
     node: main_ecu_redundancy_switcher_interface
     name: main_ecu_fault
-    timeout: 2.0
+    timeout: 3.0
 
-  - path: /redundancy/sub_ecu_fault
+  - path: /redundancy/main_ecu/sub_ecu_fault
     type: diag
     node: main_ecu_redundancy_switcher_interface
     name: sub_ecu_fault
-    timeout: 2.0
+    timeout: 3.0
 
-  - path: /redundancy/main_vcu_fault
+  - path: /redundancy/main_ecu/main_vcu_fault
     type: diag
     node: main_ecu_redundancy_switcher_interface
     name: main_vcu_fault
-    timeout: 2.0
+    timeout: 3.0
 
-  - path: /redundancy/sub_vcu_fault
+  - path: /redundancy/main_ecu/sub_vcu_fault
     type: diag
     node: main_ecu_redundancy_switcher_interface
     name: sub_vcu_fault
-    timeout: 2.0
+    timeout: 3.0
 
-  - path: /redundancy/main_ecu_to_sub_ecu_link_fault
+  - path: /redundancy/main_ecu/main_ecu_to_sub_ecu_link_fault
     type: diag
     node: main_ecu_redundancy_switcher_interface
     name: main_ecu_to_sub_ecu_link_fault
-    timeout: 2.0
+    timeout: 3.0
 
-  - path: /redundancy/main_ecu_to_main_vcu_link_fault
+  - path: /redundancy/main_ecu/main_ecu_to_main_vcu_link_fault
     type: diag
     node: main_ecu_redundancy_switcher_interface
     name: main_ecu_to_main_vcu_link_fault
-    timeout: 2.0
+    timeout: 3.0
 
-  - path: /redundancy/main_ecu_to_sub_vcu_link_fault
+  - path: /redundancy/main_ecu/main_ecu_to_sub_vcu_link_fault
     type: diag
     node: main_ecu_redundancy_switcher_interface
     name: main_ecu_to_sub_vcu_link_fault
-    timeout: 2.0
+    timeout: 3.0
 
-  - path: /redundancy/sub_ecu_to_main_vcu_link_fault
+  - path: /redundancy/main_ecu/sub_ecu_to_main_vcu_link_fault
     type: diag
     node: main_ecu_redundancy_switcher_interface
     name: sub_ecu_to_main_vcu_link_fault
-    timeout: 2.0
+    timeout: 3.0
 
-  - path: /redundancy/sub_ecu_to_sub_vcu_link_fault
+  - path: /redundancy/main_ecu/sub_ecu_to_sub_vcu_link_fault
     type: diag
     node: main_ecu_redundancy_switcher_interface
     name: sub_ecu_to_sub_vcu_link_fault
-    timeout: 2.0
+    timeout: 3.0
 
-  - path: /redundancy/main_vcu_to_sub_vcu_link_fault
+  - path: /redundancy/main_ecu/main_vcu_to_sub_vcu_link_fault
     type: diag
     node: main_ecu_redundancy_switcher_interface
     name: main_vcu_to_sub_vcu_link_fault
-    timeout: 2.0
+    timeout: 3.0
 
   - path: /adapi/mrm_request/delegate
     type: diag
