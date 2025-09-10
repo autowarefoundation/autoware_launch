@@ -320,7 +320,7 @@ units:
   - path: /vehicle/t4_vcu_version_check
     type: diag
     node: j6_interface
-    name: t4_vcu_version_check
+    name: t4-vcu_version_check
     timeout: 2.0
     latch: 0.0
 
