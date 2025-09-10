@@ -272,7 +272,7 @@
       "j6_interface: override_when_level4_driving": default
 
       ## /vehicle/t4_vcu_version_check
-      "j6_interface: t4_vcu_version_check": default
+      "j6_interface: t4-vcu_version_check": default
 
       # sensing
       ## /sensing/lidar/preprocessor

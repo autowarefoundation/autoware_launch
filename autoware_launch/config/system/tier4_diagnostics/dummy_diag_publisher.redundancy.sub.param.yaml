@@ -39,4 +39,4 @@
       "j6_interface: vcu_not_authenticated": default
 
       ## /sub_ecu/vehicle/t4_vcu_version_check
-      "j6_interface: t4_vcu_version_check": default
+      "j6_interface: t4-vcu_version_check": default
