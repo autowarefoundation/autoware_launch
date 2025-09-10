@@ -9,7 +9,7 @@
       surround_check_side_distance: 0.5
       surround_check_back_distance: 0.5
     unknown:
-      enable_check: false
+      enable_check: true
       surround_check_front_distance: 0.5
       surround_check_side_distance: 0.5
       surround_check_back_distance: 0.5
