@@ -151,7 +151,7 @@ units:
     type: diag
     node: ndt_scan_matcher
     name: map_update_status
-    timeout: 1.0
+    timeout: 10.0
     latch: 0.0
 
   - path: /localization/005-accuracy
