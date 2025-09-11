@@ -68,13 +68,13 @@
           minimum_default_velocity: 1.388
         fully_prioritized:
           collision_start_margin_time: 2.0
-          collision_end_margin_time: 0.0
+          collision_end_margin_time: 10.0
         partially_prioritized:
           collision_start_margin_time: 3.0
-          collision_end_margin_time: 2.0
+          collision_end_margin_time: 10.0
         not_prioritized:
           collision_start_margin_time: 4.0
-          collision_end_margin_time: 3.0
+          collision_end_margin_time: 10.0
         yield_on_green_traffic_light:
           distance_to_assigned_lanelet_start: 10.0
           duration: 8.0
