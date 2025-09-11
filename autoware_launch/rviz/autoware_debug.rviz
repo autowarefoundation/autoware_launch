@@ -347,7 +347,7 @@ Visualization Manager:
               Light Traffic Color: 255; 153; 153
               Name: SignalDisplay
               Primary Color: 174; 174; 174
-              Signal Blinking Mode: Static
+              Signal Blinking Mode: Blinking
               Signal Color: 0; 230; 120
               Speed Limit Topic: /planning/scenario_planning/current_max_velocity
               Speed Topic: /vehicle/status/velocity_status
