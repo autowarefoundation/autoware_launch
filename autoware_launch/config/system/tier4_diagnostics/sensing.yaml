@@ -219,7 +219,7 @@ units:
     latch: 0.0
   - path: /sensing/imu/002-rate
     type: diag
-    node: tamagawa_imu_driver
+    node: /sensing/imu/tamagawa/tag_can_driver
     name: rate bound check
     timeout: 1.0
     latch: 0.0
@@ -1021,7 +1021,7 @@ units:
 
   - path: /sensing/visibility_validation
     type: diag
-    node: "polar_voxel_outlier_filter: polar_voxel_outlier_filter"
+    node: polar_voxel_outlier_filter
     name: "/sensing/lidar/right_upper: visibility_validation"
     timeout: 1.0
     latch: 0.0

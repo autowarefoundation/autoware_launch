@@ -114,7 +114,7 @@ units:
     timeout: 3.0
     latch: 0.0
 
-  # - path: /redundancy/pub_pose_with_covariance_to_sub_ecu
+  #   - path: /redundancy/pub_pose_with_covariance_to_sub_ecu
   #   type: diag
   #   node: topic_state_monitor_pose_estimator_pose_with_covariance
   #   name: publish_to_sub_status
