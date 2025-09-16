@@ -254,7 +254,7 @@ units:
     node: concatenate_data
     name: /sensing/lidar/concatenate_data
     timeout: 1.0
-    latch: 0.0
+    latch: 0.3
 
   - path: /sensing/lidar/preprocessor
     type: and
@@ -269,49 +269,49 @@ units:
       - { type: link, link: /sensing/lidar/rear_upper/preprocessor }
 
   - path: /sensing/lidar/front_lower/preprocessor
-    type: diag
+    type: ok
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/front_lower/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/front_upper/preprocessor
-    type: diag
+    type: ok
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/front_upper/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/left_lower/preprocessor
-    type: diag
+    type: ok
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/left_lower/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/left_upper/preprocessor
-    type: diag
+    type: ok
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/left_upper/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/right_lower/preprocessor
-    type: diag
+    type: ok
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/right_lower/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/right_upper/preprocessor
-    type: diag
+    type: ok
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/right_upper/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/rear_lower/preprocessor
-    type: diag
+    type: ok
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/rear_lower/cuda_pointcloud_preprocessor_node
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/rear_upper/preprocessor
-    type: diag
+    type: ok
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/rear_upper/cuda_pointcloud_preprocessor_node
     timeout: 1.0
@@ -329,49 +329,49 @@ units:
       - { type: link, link: /sensing/lidar/rear_lower/connection }
       - { type: link, link: /sensing/lidar/rear_upper/connection }
   - path: /sensing/lidar/front_lower/connection
-    type: diag
+    type: ok
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: hesai_status
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/front_upper/connection
-    type: diag
+    type: ok
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: hesai_status
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/left_lower/connection
-    type: diag
+    type: ok
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: hesai_status
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/left_upper/connection
-    type: diag
+    type: ok
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: hesai_status
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/right_lower/connection
-    type: diag
+    type: ok
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: hesai_status
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/right_upper/connection
-    type: diag
+    type: ok
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: hesai_status
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/rear_lower/connection
-    type: diag
+    type: ok
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: hesai_status
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/rear_upper/connection
-    type: diag
+    type: ok
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: hesai_status
     timeout: 1.0
@@ -406,168 +406,168 @@ units:
       - { type: link, link: /sensing/lidar/right_upper/rate }
 
   - path: /sensing/lidar/front_lower/functional-safety
-    type: diag
+    type: ok
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/front_upper/functional-safety
-    type: diag
+    type: ok
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/left_lower/functional-safety
-    type: diag
+    type: ok
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/left_upper/functional-safety
-    type: diag
+    type: ok
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/rear_lower/functional-safety
-    type: diag
+    type: ok
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/rear_upper/functional-safety
-    type: diag
+    type: ok
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/right_lower/functional-safety
-    type: diag
+    type: ok
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/right_upper/functional-safety
-    type: diag
+    type: ok
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/front_lower/packet-loss
-    type: diag
+    type: ok
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: Packet loss status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/front_upper/packet-loss
-    type: diag
+    type: ok
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: Packet loss status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/left_lower/packet-loss
-    type: diag
+    type: ok
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: Packet loss status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/left_upper/packet-loss
-    type: diag
+    type: ok
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: Packet loss status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/rear_lower/packet-loss
-    type: diag
+    type: ok
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: Packet loss status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/rear_upper/packet-loss
-    type: diag
+    type: ok
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: Packet loss status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/right_lower/packet-loss
-    type: diag
+    type: ok
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: Packet loss status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/right_upper/packet-loss
-    type: diag
+    type: ok
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: Packet loss status
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/front_lower/rate
-    type: diag
+    type: ok
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: rate bound check
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/front_upper/rate
-    type: diag
+    type: ok
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: rate bound check
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/left_lower/rate
-    type: diag
+    type: ok
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: rate bound check
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/left_upper/rate
-    type: diag
+    type: ok
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: rate bound check
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/rear_lower/rate
-    type: diag
+    type: ok
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: rate bound check
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/rear_upper/rate
-    type: diag
+    type: ok
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: rate bound check
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/right_lower/rate
-    type: diag
+    type: ok
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: rate bound check
     timeout: 1.0
     latch: 0.0
 
   - path: /sensing/lidar/right_upper/rate
-    type: diag
+    type: ok
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: rate bound check
     timeout: 1.0
@@ -585,49 +585,49 @@ units:
       - { type: link, link: /sensing/lidar/rear_lower/ptp }
       - { type: link, link: /sensing/lidar/rear_upper/ptp }
   - path: /sensing/lidar/front_lower/ptp
-    type: diag
+    type: ok
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: hesai_ptp
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/front_upper/ptp
-    type: diag
+    type: ok
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: hesai_ptp
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/left_lower/ptp
-    type: diag
+    type: ok
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: hesai_ptp
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/left_upper/ptp
-    type: diag
+    type: ok
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: hesai_ptp
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/right_lower/ptp
-    type: diag
+    type: ok
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: hesai_ptp
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/rear_lower/ptp
-    type: diag
+    type: ok
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: hesai_ptp
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/right_upper/ptp
-    type: diag
+    type: ok
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: hesai_ptp
     timeout: 1.0
     latch: 0.0
   - path: /sensing/lidar/rear_upper/ptp
-    type: diag
+    type: ok
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: hesai_ptp
     timeout: 1.0
@@ -917,13 +917,13 @@ units:
       - { type: link, link: /sensing/radar/front_center/connection }
       - { type: link, link: /sensing/radar/rear_center/connection }
   - path: /sensing/radar/front_center/connection
-    type: diag
+    type: ok
     node: /sensing/radar/front_center/nebula_continental_ars548
     name: Liveness
     timeout: 1.0
     latch: 0.0
   - path: /sensing/radar/rear_center/connection
-    type: diag
+    type: ok
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Liveness
     timeout: 1.0
@@ -989,13 +989,13 @@ units:
       - { type: link, link: /sensing/radar/front_center/object_rate }
       - { type: link, link: /sensing/radar/rear_center/object_rate }
   - path: /sensing/radar/front_center/object_rate
-    type: diag
+    type: ok
     node: /sensing/radar/front_center/nebula_continental_ars548
     name: Objects rate bound status
     timeout: 1.0
     latch: 0.0
   - path: /sensing/radar/rear_center/object_rate
-    type: diag
+    type: ok
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Objects rate bound status
     timeout: 1.0
@@ -1007,13 +1007,13 @@ units:
       - { type: link, link: /sensing/radar/front_center/detections_rate }
       - { type: link, link: /sensing/radar/rear_center/detections_rate }
   - path: /sensing/radar/front_center/detections_rate
-    type: diag
+    type: ok
     node: /sensing/radar/front_center/nebula_continental_ars548
     name: Detections rate bound status
     timeout: 1.0
     latch: 0.0
   - path: /sensing/radar/rear_center/detections_rate
-    type: diag
+    type: ok
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Detections rate bound status
     timeout: 1.0
