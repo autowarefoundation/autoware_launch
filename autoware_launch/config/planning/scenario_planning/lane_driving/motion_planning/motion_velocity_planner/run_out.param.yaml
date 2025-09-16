@@ -43,7 +43,7 @@
         # for each target labels we can specify the following parameters
         DEFAULT:
           ignore:  # options to ignore some objects
-            if_stopped: false # if true, object with a velocity bellow the threshold are ignored
+            if_stopped: true # if true, object with a velocity less than the threshold are ignored
             stopped_velocity_threshold: 0.25  # [m/s]
             if_on_ego_trajectory: true  # if true, object located on the ego trajectory footprint are ignored
             if_behind_ego: true  # if true, objects located behind the ego vehicles are ignored
@@ -70,7 +70,6 @@
           standstill_duration_after_cut: 2.0  # [s] after cutting a predicted path, assume the object stands still at the last point for this duration
         PEDESTRIAN:
           ignore:
-            if_stopped: true
             lanelet_subtypes: ["crosswalk", "walkway"]
           cut_predicted_paths:
             lanelet_subtypes: ["crosswalk", "walkway"]
