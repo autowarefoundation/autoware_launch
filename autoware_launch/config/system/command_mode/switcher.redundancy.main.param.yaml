@@ -1,0 +1,25 @@
+/**:
+  ros__parameters:
+    update_rate: 10.0
+    multiple_ecu_enabled: true
+    multiple_ecu_identifier: 0 # redundancy switcher node id
+    plugins:
+      - autoware::command_mode_switcher::StopSwitcher
+      - autoware::command_mode_switcher::AutonomousSwitcher
+      - autoware::command_mode_switcher::LocalSwitcher
+      - autoware::command_mode_switcher::RemoteSwitcher
+      - autoware::command_mode_switcher::ComfortableStopSwitcher
+      - x2_command_mode_switcher::MainEcuInLaneModerateStopSwitcher
+      - x2_command_mode_switcher::MainEcuInLaneEmergencyStopSwitcher
+    plugin_parameters:
+      autoware::command_mode_switcher::ComfortableStopSwitcher:
+        hazard_lights_hz: 20
+        min_acceleration: -1.0
+        max_jerk: 0.6
+        min_jerk: -0.6
+      x2_command_mode_switcher::MainEcuInLaneModerateStopSwitcher:
+        target_acceleration: -3.0
+        target_jerk: -5.0
+      x2_command_mode_switcher::MainEcuInLaneEmergencyStopSwitcher:
+        target_acceleration: -6.0
+        target_jerk: -20.0

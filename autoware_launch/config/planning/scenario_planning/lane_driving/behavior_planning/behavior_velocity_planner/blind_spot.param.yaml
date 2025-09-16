@@ -5,7 +5,7 @@
       ttc_start_margin: 2.0 # [s]
       ttc_end_margin: 1.0 # [s]
       minimum_default_velocity: 1.388 # [m/s]
-      collision_judge_debounce: 0.5 # [s]
+      collision_judge_debounce: 1.0 # [s]
       critical_stopline_margin: 1.0 # [m]
       detect_non_vru:
         car: false
@@ -15,7 +15,7 @@
       brake:
         critical:
           deceleration: -6.0 # [m/ss]
-          jerk: -5.0 # [m/sss]
+          jerk: -100.0 # [m/sss]
         semi_critical:
           deceleration: -4.0 # [m/ss]
           jerk: -5.0 # [m/sss]
