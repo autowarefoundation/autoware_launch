@@ -1817,20 +1817,6 @@ Visualization Manager:
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
-                          Name: PlanningFactor(RunOut)
-                          Namespaces:
-                            {}
-                          Topic:
-                            Depth: 5
-                            Durability Policy: Volatile
-                            History Policy: Keep Last
-                            Reliability Policy: Reliable
-                            Value: /planning/planning_factors/run_out
-                          Show Safety Factors: true
-                          show_safety_factors: true
-                          Value: true
-                        - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
-                          Enabled: true
                           Name: PlanningFactor(SpeedBump)
                           Namespaces:
                             {}
@@ -2056,7 +2042,7 @@ Visualization Manager:
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
-                          Name: PlanningFactor(MvpRunOut)
+                          Name: PlanningFactor(RunOut)
                           Namespaces:
                             {}
                           Topic:
@@ -2064,7 +2050,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/planning_factors/mvp_run_out
+                            Value: /planning/planning_factors/run_out
                           Show Safety Factors: true
                           show_safety_factors: true
                           Value: true
@@ -2619,7 +2605,7 @@ Visualization Manager:
                           PlanningFactor (ObstacleCruise): true
                           PlanningFactor (OutOfLane): true
                           PlanningFactor (DynamicObstacleStop): true
-                          PlanningFactor (MvpRunOut): true
+                          PlanningFactor (RunOut): true
                           PlanningFactor (RoadUserStop): true
                       Value: true
                     ModifiedGoal: true
@@ -3828,18 +3814,6 @@ Visualization Manager:
                       History Policy: Keep Last
                       Reliability Policy: Reliable
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/no_stopping_area
-                    Value: false
-                  - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
-                    Name: RunOut
-                    Namespaces:
-                      {}
-                    Topic:
-                      Depth: 5
-                      Durability Policy: Volatile
-                      History Policy: Keep Last
-                      Reliability Policy: Reliable
-                      Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/run_out
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
                     Enabled: true
