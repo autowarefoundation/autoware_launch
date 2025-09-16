@@ -314,6 +314,7 @@
 
       # fool proof
       ## Heartbeat
+      "autoware_diagnostics_bridge_node_sub: heartbeat": default
       "autoware_diagnostics_bridge_node_logging: heartbeat": default
       "autoware_diagnostics_bridge_node_perception1: heartbeat": default
       "autoware_diagnostics_bridge_node_perception2: heartbeat": default
@@ -330,6 +331,7 @@
       ## letterbox_monitor
       "autoware_diagnostics_bridge_node_main: main_autoware_node_alive": default
       "autoware_diagnostics_bridge_node_main: main_autoware_system_node_alive": default
+      "autoware_diagnostics_bridge_node_sub: sub_autoware_node_alive": default
       "autoware_diagnostics_bridge_node_perception1: perception1_recognition_node_alive": default
       "autoware_diagnostics_bridge_node_perception2: perception2_recognition_node_alive": default
 
