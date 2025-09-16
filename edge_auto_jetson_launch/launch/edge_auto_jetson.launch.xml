@@ -13,7 +13,7 @@ the corresponding edge_auto_jetson launch file.
 
 
   <arg name="live_sensor" default="True"
-       description="If true, camera drivers will be booted. Otherwise, image decompressor will be."/>
+       description="If true, camera drivers will be booted. Otherwise, image decompressor will be launched."/>
   <arg name="perception" default="True"
        description="If true, series of perception stack will be booted."/>
 
