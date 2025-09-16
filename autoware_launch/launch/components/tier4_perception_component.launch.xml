@@ -58,6 +58,7 @@
     description="options `yolox-sPlus-T4-960x960-pseudo-finetune.onnx` if only detection is needed, `yolox-sPlus-opt-pseudoV2-T4-960x960-T4-seg16cls.onnx` if sematic segmentation is also needed"
   />
   <arg name="camera_2d_detector/label_path" default="$(var data_path)/tensorrt_yolox/label.txt" description="label path"/>
+  <arg name="camera_2d_detector/color_map_path" default="$(var data_path)/tensorrt_yolox/semseg_color_map.csv" description="color map path"/>
 
   <arg name="traffic_light_recognition/camera_namespaces" default="[camera6, camera7]" description="choose camera which use for traffic light recognition"/>
   <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="select whether to use high accuracy detector for traffic light recognition"/>
@@ -99,6 +100,8 @@
 
     <arg name="camera_2d_detector/model_path" value="$(var camera_2d_detector/model_path)"/>
     <arg name="camera_2d_detector/label_path" value="$(var camera_2d_detector/label_path)"/>
+    <arg name="camera_2d_detector/color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+
 
     <!-- traffic light recognition options to switch launch function/module -->
     <arg name="use_traffic_light_recognition" value="$(var use_traffic_light_recognition)"/>
