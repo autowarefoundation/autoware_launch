@@ -63,8 +63,12 @@ topics:
   /to_mrm/system/operation_mode/autoware_control_command:
     type: autoware_adapi_v1_msgs/msg/OperationModeState
     remap: /main/system/operation_mode/autoware_control_command
-  /main/diagnostics_graph/reset_command:
+  /to_mrm/diagnostics_graph/reset_command:
     type: builtin_interfaces/msg/Time
+    remap: /main/diagnostics_graph/reset_command
+  /to_mrm/system/election/reset_command:
+    type: std_msgs/msg/Bool
+    remap: /main/system/election/reset_command
   # to merge diag graph each other
   /in_main/diagnostics_graph/status:
     type: tier4_system_msgs/msg/DiagGraphStatus
