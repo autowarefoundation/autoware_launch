@@ -1,0 +1,341 @@
+# Description:
+#   required_diags:
+#     <name>: {is_active: <is_active>, status: <status>}
+#   name: diag name
+#   is_active: Force update or not
+#   status: diag status set by dummy diag publisher "OK, Warn, Error, Stale"
+#
+# Note:
+#
+# default values are:
+#   is_active: "true"
+#   status: "OK"
+---
+/**:
+  ros__parameters:
+    required_diags:
+      # hardware
+
+      ## /hardware/cpu/001-temperature
+      "cpu_monitor: CPU Temperature": default
+
+      ## /hardware/cpu/002-usage
+      "cpu_monitor: CPU Usage": default
+
+      ## /hardware/cpu/003-load_average
+      "cpu_monitor: CPU Load Average": default
+
+      ## /hardware/cpu/004-throttling
+      "cpu_monitor: CPU Thermal Throttling": default
+
+      ## /hardware/cpu/005-frequency
+      "cpu_monitor: CPU Frequency": default
+
+      ## /hardware/hdd/001-temperature
+      "hdd_monitor: HDD Temperature": default
+
+      ## /hardware/hdd/002-usage
+      "hdd_monitor: HDD Usage": default
+
+      ## /hardware/hdd/003-connection
+      "hdd_monitor: HDD Connection": default
+
+      ## /hardware/hdd/004-total_written
+      "hdd_monitor: HDD TotalDataWritten": default
+
+      ## /hardware/hdd/005-warranty_period
+      "hdd_monitor: HDD PowerOnHours": default
+
+      ## /hardware/hdd/006-soft_error
+      "hdd_monitor: HDD RecoveredError": default
+
+      ## /hardware/hdd/007-load
+      "hdd_monitor: HDD ReadDataRate": default
+      "hdd_monitor: HDD WriteDataRate": default
+      "hdd_monitor: HDD ReadIOPS": default
+      "hdd_monitor: HDD WriteIOPS": default
+
+      ## /hardware/memory/001-usage
+      "mem_monitor: Memory Usage": default
+
+      ## /hardware/memory/002-ecc
+      "mem_monitor: Memory ECC": default
+
+      ## /hardware/network/001-usage
+      "net_monitor: Network Usage": default
+
+      ## /hardware/network/002-traffic
+      "net_monitor: Network Traffic": default
+
+      ## /hardware/network/003-crc
+      "net_monitor: Network CRC Error": default
+
+      ## /hardware/network/004-packet_reassembles
+      "net_monitor: IP Packet Reassembles Failed": default
+
+      ## /hardware/ntp/001-sync
+      "ntp_monitor: NTP Offset": default
+
+      ## /hardware/process/001-summary
+      "process_monitor: Tasks Summary": default
+
+      ## /hardware/process/002-load
+      "process_monitor: High-load Proc[0]": default
+      "process_monitor: High-load Proc[1]": default
+      "process_monitor: High-load Proc[2]": default
+      "process_monitor: High-load Proc[3]": default
+      "process_monitor: High-load Proc[4]": default
+
+      ## /hardware/process/003-memory
+      "process_monitor: High-mem Proc[0]": default
+      "process_monitor: High-mem Proc[1]": default
+      "process_monitor: High-mem Proc[2]": default
+      "process_monitor: High-mem Proc[3]": default
+      "process_monitor: High-mem Proc[4]": default
+
+      ## /hardware/bios/001-battery
+      "voltage_monitor: CMOS Battery Status": default
+
+      ## /hardware/gpu/001-temperature
+      "gpu_monitor: GPU Temperature": default
+
+      ## /hardware/gpu/002-usage
+      "gpu_monitor: GPU Usage": default
+
+      ## /hardware/gpu/003-memory
+      "gpu_monitor: GPU Memory Usage": default
+
+      ## /hardware/gpu/004-throttling
+      "gpu_monitor: GPU Thermal Throttling": default
+
+      ##  /hardware/gpu/005-frequency
+      "gpu_monitor: GPU Frequency": default
+
+      ## /hardware/mot/001-connection
+      "mot: /system/mot_connection : mot heartbeat": default
+
+      ## /hardware/signage/001-connection
+      "signage: /system/signage_connection : signage heartbeat": default
+
+      ## /hardware/voice/001-connection
+      "vehicle_voice_alert_system: /system/voice_alert_system_connection : voice alert system heartbeat": default
+
+      # localization
+      ## /localization/001-topic_status/initialpose
+      "topic_state_monitor_initialpose3d: localization_topic_status": default
+
+      ## /localization/001-topic_status/pose_twist_fusion_filter
+      "topic_state_monitor_pose_twist_fusion_filter_pose: localization_topic_status": default
+
+      ## /localization/001-topic_status/tf
+      "topic_state_monitor_transform_map_to_base_link: localization_topic_status": default
+
+      ## /localization/002-timeout/gyro_odometer
+      "gyro_odometer: gyro_odometer_status": default
+
+      ## /localization/003-matching_score
+      "ndt_scan_matcher: scan_matching_status": default
+
+      ## /localization/004-map-update
+      "ndt_scan_matcher: map_update_status": default
+
+      ## /localization/005-accuracy
+      "localization_error_monitor: ellipse_error_status": default
+
+      ## /localization/006-ekf_localizer
+      "localization: ekf_localizer": default
+
+      ## /localization/007-pose_instability_detector
+      "localization: pose_instability_detector": default
+
+      ## /localization/008-pose_initializer_status
+      "localization: pose_initializer_status": default
+
+      # map
+      ## /map/001-topic_status/pointcloud_map
+      "topic_state_monitor_pointcloud_map: map_topic_status": default
+
+      # perception
+      ## /perception/001-topic_status/traffic_signals
+      "topic_state_monitor_traffic_light_recognition_traffic_signals: perception_topic_status": default
+
+      ## /perception/001-topic_status/objects
+      "topic_state_monitor_object_recognition_objects: perception_topic_status": default
+
+      ## /perception/001-topic_status/pointcloud
+      "topic_state_monitor_obstacle_segmentation_pointcloud: perception_topic_status": default
+
+      ## /perception/002-detection_delay
+      "multi_object_tracker: Tracker Timing Diagnostics": default
+
+      ## /perception/003-timeout/lidar_centerpoint
+      "lidar_centerpoint: processing_time_status": default
+
+      ## /perception/003-timeout/occupancy_grid_map
+      "occupancy_grid_map_node: pointcloud_based_probabilistic_occupancy_grid_map": default
+
+      ## /perception/004-spec_limit/lidar_centerpoint
+      "lidar_centerpoint: centerpoint_trt": default
+
+      ## /perception/005-invalid_input/roi_detected_object_fusion
+      "roi_detected_object_fusion: roi_detected_object_fusion_status": default
+
+      ## /perception/005-invalid_input/roi_cluster_fusion
+      "roi_cluster_fusion: roi_cluster_fusion_status": default
+
+      ## /perception/005-invalid_input/roi_pointcloud_fusion
+      "roi_pointcloud_fusion: roi_pointcloud_fusion_status": default
+
+      ## /perception/006-no_detection/traffic_light
+      "car_traffic_light_classifier: traffic_light_classifier": default
+
+      ## /perception/007-missing_input/object_merger_alpha
+      "object_association_merger_alpha: object_association_merger": default
+
+      ## /perception/007-missing_input/object_merger_beta
+      "object_association_merger_beta: object_association_merger": default
+
+      ## /perception/009-spec_limit/voxel_based_compare_map_filter
+      "voxel_based_compare_map_filter: Compare map filter status": default
+      # system
+      ## /system/003-bagpacker_status
+      rosbag_status: default
+      "dssad_packer: dssad_record_status": default
+      "bagkeeper: event_record_status": default
+
+      ## /system/004-bagpacker_disk_space
+      disk1_status: default
+      disk2_status: default
+
+      ## /system/005-fms_connection
+      edge_core_internet_connection: default
+
+      ## clock
+      "main_sys": default
+      "main_ptp0": default
+      "sensor@rear_upper/lidar": default
+      "sensor@left_upper/lidar": default
+      "sensor@rear_lower/lidar": default
+      "sensor@left_lower/lidar": default
+      "TE-2000_sys": default
+      "sensor@front_center/radar_link": default
+      "sensor@rear_center/radar_link": default
+      "main_ptp1": default
+      "sub_sys": default
+      "sub_ptp0": default
+      "sensor@front_upper/lidar": default
+      "sensor@right_upper/lidar": default
+      "sensor@front_lower/lidar": default
+      "sensor@right_lower/lidar": default
+      "perception1_ptp0": default
+      "perception1_sys": default
+      "perception2_ptp0": default
+      "addon_sys": default
+      "logging_ptp0": default
+      "logging_sys": default
+
+      # vehicle
+      ## /vehicle/001-topic_status/velocity
+      "topic_state_monitor_vehicle_status_velocity_status: vehicle_topic_status": default
+
+      ## /vehicle/001-topic_status/steering
+      "topic_state_monitor_vehicle_status_steering_status: vehicle_topic_status": default
+
+      ## /vehicle/005-vehicle_heartbeat
+      "j6_interface: vehicle_heartbeat_errors": default
+
+      ## /vehicle/006-vehicle_errors
+      "j6_interface: vehicle_errors": default
+      "j6_interface: brake_external_request_error": default
+      "j6_interface: brake_system_error": default
+      "j6_interface: brake_system_can_error": default
+      "j6_interface: parking_system_error": default
+      "j6_interface: parking_system_can_error": default
+      "j6_interface: parking_external_request_error": default
+      "j6_interface: steering_system_1_error": default
+      "j6_interface: steering_system_2_error": default
+      "j6_interface: steering_system_error": default
+      "j6_interface: steering_angle_initialization_error": default
+      "j6_interface: steering_system_can_error": default
+      "j6_interface: drive_system_error": default
+      "j6_interface: drive_system_can_error": default
+      "j6_interface: steering_system_over_heat_error": default
+      "j6_interface: steering_angle_sensor_error": default
+
+      ## /vehicle/007-vehicle-emergency-button
+      "j6_interface: vehicle_emergency_button": default
+
+      ## /vehicle/008-vcu-not-authenticated
+      "j6_interface: vcu_not_authenticated": default
+
+      ## /vehicle/override_when_level4_driving
+      "j6_interface: override_when_level4_driving": default
+
+      ## /vehicle/t4_vcu_version_check
+      "j6_interface: t4-vcu_version_check": default
+
+      # sensing
+      ## /sensing/lidar/preprocessor
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/front_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/front_upper/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/left_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/left_upper/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/right_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/right_upper/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/rear_lower/cuda_pointcloud_preprocessor_node": default
+      "cuda_pointcloud_preprocessor_node: /sensing/lidar/rear_upper/cuda_pointcloud_preprocessor_node": default
+
+      ##/sensing/lidar/004-blockage
+      "blockage_return_diag: /sensing/lidar/front_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/front_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/left_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/left_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/right_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/right_upper: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/rear_lower: blockage_validation": default
+      "blockage_return_diag: /sensing/lidar/rear_upper: blockage_validation": default
+      "dust_validation: /sensing/lidar/front_lower: dust_diag": default
+      "dust_validation: /sensing/lidar/front_upper: dust_diag": default
+      "dust_validation: /sensing/lidar/left_lower: dust_diag": default
+      "dust_validation: /sensing/lidar/left_upper: dust_diag": default
+      "dust_validation: /sensing/lidar/right_lower: dust_diag": default
+      "dust_validation: /sensing/lidar/right_upper: dust_diag": default
+      "dust_validation: /sensing/lidar/rear_lower: dust_diag": default
+      "dust_validation: /sensing/lidar/rear_upper: dust_diag": default
+
+      ## /others/005-visibility_validation/rear_upper
+      "dual_return_filter: /sensing/lidar/rear_upper: visibility_validation": default
+
+      ## /others/005-visibility_validation/right_upper
+      "dual_return_filter: /sensing/lidar/right_upper: visibility_validation": default
+
+      ## /others/010-emergency_vehicle
+      "emergency_vehicle_detector_main: emergency_vehicle": default
+
+      # fool proof
+      ## Heartbeat
+      "autoware_diagnostics_bridge_node_logging: heartbeat": default
+      "autoware_diagnostics_bridge_node_perception1: heartbeat": default
+      "autoware_diagnostics_bridge_node_perception2: heartbeat": default
+
+      ## fool proof check
+      "autoware_diagnostics_bridge_node_logging: logging_ssd": default
+      "autoware_diagnostics_bridge_node_perception1: perception1_camera": default
+      "autoware_diagnostics_bridge_node_perception2: perception2_camera": default
+      "autoware_diagnostics_bridge_node_perception1: perception1_mgbe1-ready": default
+      "autoware_diagnostics_bridge_node_perception2: perception2_mgbe1-ready": default
+      "autoware_diagnostics_bridge_node_main: main_scheduling_settings_others": default
+      "autoware_diagnostics_bridge_node_main: main_scheduling_settings_autoware": default
+
+      ## letterbox_monitor
+      "autoware_diagnostics_bridge_node_main: main_autoware_node_alive": default
+      "autoware_diagnostics_bridge_node_main: main_autoware_system_node_alive": default
+      "autoware_diagnostics_bridge_node_perception1: perception1_recognition_node_alive": default
+      "autoware_diagnostics_bridge_node_perception2: perception2_recognition_node_alive": default
+
+      # MRM Domain
+      ## /mrm_domain/localization/topic_status/pose
+      "topic_state_monitor_pose_with_covariance_mrm_domain: topic_status": default
+
+      ## /mrm_domain/localization/topic_status/twist
+      "topic_state_monitor_twist_with_covariance_mrm_domain: topic_status": default
