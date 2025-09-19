@@ -1055,14 +1055,14 @@ units:
     name: Liveness
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.1
+    hysteresis: 0.125
   - path: /sensing/radar/rear_center/connection
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Liveness
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.1
+    hysteresis: 0.125
 
   - path: /sensing/radar/002-dynamics
     type: and
@@ -1095,14 +1095,14 @@ units:
     name: Internal
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.1
+    hysteresis: 0.125
   - path: /sensing/radar/rear_center/internal
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Internal
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.1
+    hysteresis: 0.125
 
   - path: /sensing/radar/004-blockage
     type: and
@@ -1115,14 +1115,14 @@ units:
     name: Blockage
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.1
+    hysteresis: 0.125
   - path: /sensing/radar/rear_center/blockage_validation
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Blockage
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.1
+    hysteresis: 0.125
 
   - path: /sensing/radar/005-object-rate
     type: and
