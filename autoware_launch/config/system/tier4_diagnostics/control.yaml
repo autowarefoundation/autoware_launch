@@ -44,7 +44,6 @@ units:
   - path: /control/in_lane_emergency_stop
     type: and
     list:
-      - { type: link, link: /control/007-aeb_emergency_stop-error }
       - { type: link, link: /control/011-rolling_back-error }
       - { type: link, link: /control/012-overrun_stop_point-error }
       - { type: link, link: /control/011-rolling_back-error }
