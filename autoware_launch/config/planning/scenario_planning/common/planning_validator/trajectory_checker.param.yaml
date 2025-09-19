@@ -30,7 +30,8 @@
         threshold: 10.0
       distance_deviation:
         enable: true
-        threshold: 100.0
+        threshold: 0.65 # (20% margin added to max value observed during Shiojiri driving on Aug 7)
+        is_critical: false
       lon_distance_deviation:
         enable: true
         threshold: 1.0
@@ -39,7 +40,7 @@
         threshold: 100.0
       yaw_deviation:
         enable: true
-        threshold: 1.5708 # (= 90 degrees)
+        threshold: 0.19  # (20% margin added to max value observed during Shiojiri driving on Aug 7)
         th_trajectory_yaw_shift: 0.1  # [rad] yaw deviation is only checked if the nearest yaw jumped by more than this value between the previous and current trajectory
       forward_trajectory_length:
         enable: true
