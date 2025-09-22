@@ -17,25 +17,25 @@
             left:
               moving:
                 min_lat_margin: 0.2
-                max_lat_margin: 1.0
+                max_lat_margin: 1.5
                 min_ego_velocity: 2.0
-                max_ego_velocity: 8.0
+                max_ego_velocity: 12.0
               static:
                 min_lat_margin: 0.2
-                max_lat_margin: 1.0
+                max_lat_margin: 1.8
                 min_ego_velocity: 4.0
-                max_ego_velocity: 8.0
+                max_ego_velocity: 12.0
             right:
               moving:
                 min_lat_margin: 0.2
-                max_lat_margin: 1.0
+                max_lat_margin: 1.5
                 min_ego_velocity: 2.0
-                max_ego_velocity: 8.0
+                max_ego_velocity: 12.0
               static:
                 min_lat_margin: 0.2
-                max_lat_margin: 1.0
+                max_lat_margin: 1.8
                 min_ego_velocity: 4.0
-                max_ego_velocity: 8.0
+                max_ego_velocity: 12.0
             wheel_off_track_scale: 0.0 # scale factor for additional stop margin against ego's wheel off-track. Even if this value is set to 0.0, the planner considers the nominal wheel off-track.
           car:
             left:
