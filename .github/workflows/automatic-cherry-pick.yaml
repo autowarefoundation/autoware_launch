@@ -5,13 +5,75 @@ on:
       - tier4/main # Branches where the original PRs will be merged
       - beta/v4.0
       - beta/v4.2
+      - beta/v4.3
     types:
+      - opened
+      - reopened
       - closed
       - labeled
 
 jobs:
+  auto-add-label:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' || github.event.action == 'reopened'
+    name: Auto-add cherry-pick label
+    steps:
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Create label if it doesn't exist
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            try {
+              await github.rest.issues.getLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: 'tag:enable-automatic-cherry-pick'
+              });
+              console.log('Label already exists');
+            } catch (error) {
+              if (error.status === 404) {
+                console.log('Label does not exist. Creating it...');
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: 'tag:enable-automatic-cherry-pick',
+                  color: '0E8A16',
+                  description: 'Enable automatic cherry-pick for this PR'
+                });
+                console.log('Label created successfully');
+              } else {
+                console.log('Error checking label:', error);
+                throw error;
+              }
+            }
+      - name: Add label to PR
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            // Wait for 10 seconds to avoid conflict with the base pr labeler, check https://github.com/actions/labeler/issues/763
+            console.log('Waiting for 10 seconds...');
+            await new Promise(resolve => setTimeout(resolve, 10000));
+            console.log('Wait completed');
+
+            await github.rest.issues.addLabels({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['tag:enable-automatic-cherry-pick']
+            });
+            console.log('Label added to PR');
+
   make-sure-label-is-present:
     uses: autowarefoundation/autoware-github-actions/.github/workflows/make-sure-label-is-present.yaml@v1
+    if: github.event.action == 'closed' || github.event.action == 'labeled'
     with:
       label: tag:enable-automatic-cherry-pick
 
@@ -27,6 +89,7 @@ jobs:
           - tier4/main
           - beta/v4.0
           - beta/v4.2
+          - beta/v4.3
 
     steps:
       - name: Checkout

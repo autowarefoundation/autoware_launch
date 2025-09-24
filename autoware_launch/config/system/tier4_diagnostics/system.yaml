@@ -155,7 +155,7 @@ units:
     latch: 0.0
 
   - path: /system/009-dssad
-    type: diag
+    type: ok
     node: dssad_packer
     name: dssad_record_status
     timeout: 3.0
@@ -211,7 +211,7 @@ units:
     latch: 0.0
 
   - path: /system/019-event_record_status
-    type: diag
+    type: ok
     node: bagkeeper
     name: event_record_status
     timeout: 3.0
