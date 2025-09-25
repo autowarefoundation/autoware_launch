@@ -11,5 +11,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Clone dependency packages
+        run: |
+          mkdir -p dependency_ws
+          vcs import dependency_ws < build_depends.repos
+        shell: bash
+
       - name: Run autoware-guideline-check
         uses: isamu-takagi/autoware-guideline-check@feat/param-check
+        with:
+          workspace: dependency_ws
