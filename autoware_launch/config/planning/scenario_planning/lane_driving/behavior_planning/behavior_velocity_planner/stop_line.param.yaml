@@ -2,5 +2,5 @@
   ros__parameters:
     stop_line:
       stop_margin: 0.5
-      stop_duration_sec: 1.0
+      stop_duration_sec: 0.1
       hold_stop_margin_distance: 2.0
