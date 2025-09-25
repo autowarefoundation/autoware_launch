@@ -7,8 +7,6 @@ on:
 jobs:
   autoware-guideline-check:
     runs-on: ubuntu-22.04
-    container:
-      image: ros:humble-ros-core-jammy
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
