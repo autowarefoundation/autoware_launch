@@ -7,12 +7,14 @@ on:
 jobs:
   autoware-guideline-check:
     runs-on: ubuntu-22.04
+    container: humble-ros-core-jammy
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
       - name: Clone dependency packages
         run: |
+          apt-get update && apt-get install -y python3-vcstool
           mkdir -p dependency_ws
           vcs import dependency_ws < build_depends.repos
         shell: bash
