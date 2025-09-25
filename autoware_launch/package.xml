@@ -28,10 +28,10 @@
   <exec_depend>tier4_vehicle_launch</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
-  <test_depend>autoware_cmake_interface_check</test_depend>
   <test_depend>autoware_lint_common</test_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
+    <autoware_guideline_check file="test/autoware_guideline_check.yaml"/>
   </export>
 </package>
