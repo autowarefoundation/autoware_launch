@@ -36,7 +36,7 @@ topics:
   /to_mrm/diagnostics_graph/reset_command:
     type: builtin_interfaces/msg/Time
     remap: /main/diagnostics_graph/reset_command
-  /to_mrm/system/election/reset:
+  /to_mrm/system/election/reset_command:
     type: std_msgs/msg/Bool
     remap: /main/system/election/reset_command
   # to merge diag graph each other
