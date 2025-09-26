@@ -15,7 +15,7 @@
         threshold: 9.8
       min_lon_accel:
         enable: true
-        threshold: -9.8
+        threshold: -98.0
       max_lon_accel:
         enable: true
         threshold: 9.8
