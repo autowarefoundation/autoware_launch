@@ -12,7 +12,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Clone dependency packages
+      - name: Check out dependency
         run: |
           apt-get update && apt-get install -y python3-vcstool git
           mkdir -p dependency_ws
