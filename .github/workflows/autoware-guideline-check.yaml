@@ -21,5 +21,3 @@ jobs:
 
       - name: Run autoware-guideline-check
         uses: isamu-takagi/autoware-guideline-check@feat/param-check
-        with:
-          workspace: dependency_ws
