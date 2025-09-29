@@ -68,6 +68,11 @@ Key Features:
     <arg name="use_multithread" value="$(var use_multithread)" />
   </include>
 
+  <!-- StreamPETR perception -->
+  <include file="$(find-pkg-share edge_auto_jetson_launch)/launch/camera_streampetr/tensorrt_stream_petr.x2.launch.xml">
+    <arg name="build_only" value="$(var build_engine_only)" />
+  </include>
+
   <!-- uevent diagnostics publisher -->
   <group if="$(var live_sensor)">
     <node pkg="uevent_diagnostics_publisher" exec="uevent_diagnostics_publisher_node"
