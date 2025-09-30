@@ -1,4 +1,10 @@
 launch:
+  - arg:
+      name: behavior_path_planner_type
+      default: behavior_path_planner
+      # option: behavior_path_planner
+      #         path_generator
+
   # behavior path modules
   - arg:
       name: launch_static_obstacle_avoidance
@@ -50,6 +56,9 @@ launch:
   - arg:
       name: launch_intersection_module
       default: "true"
+  - arg:
+      name: launch_roundabout_module
+      default: "false"
   - arg:
       name: launch_merge_from_private_module
       default: "false"
@@ -122,13 +131,6 @@ launch:
       default: "true"
 
   - arg:
-      name: motion_stop_planner_type
-      default: none
-      # option: obstacle_stop_planner
-      #         obstacle_cruise_planner
-      #         none
-
-  - arg:
       name: velocity_smoother_type
       default: JerkFiltered
       # option: JerkFiltered
@@ -143,4 +145,23 @@ launch:
   # parking modules
   - arg:
       name: launch_parking_module
+      default: "false"
+
+  # validator modules
+  - arg:
+      name: launch_latency_checker
+      default: "true"
+  - arg:
+      name: launch_trajectory_checker
+      default: "true"
+  - arg:
+      name: launch_intersection_collision_checker
+      default: "true"
+  - arg:
+      name: launch_rear_collision_checker
+      default: "true"
+
+  # other modules
+  - arg:
+      name: launch_remaining_distance_time_calculator
       default: "false"
