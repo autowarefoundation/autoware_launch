@@ -1804,20 +1804,6 @@ Visualization Manager:
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
-                          Name: PlanningFactor(RunOut)
-                          Namespaces:
-                            {}
-                          Topic:
-                            Depth: 5
-                            Durability Policy: Volatile
-                            History Policy: Keep Last
-                            Reliability Policy: Reliable
-                            Value: /planning/planning_factors/run_out
-                          Show Safety Factors: false
-                          show_safety_factors: false
-                          Value: true
-                        - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
-                          Enabled: true
                           Name: PlanningFactor(SpeedBump)
                           Namespaces:
                             {}
@@ -1928,6 +1914,42 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/velocity_smoother/virtual_wall
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (ObstacleCruise Stop)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop/virtual_walls
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (ObstacleCruise Cruise)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_cruise/virtual_walls
+                          Value: true
+                        - Class: rviz_default_plugins/MarkerArray
+                          Enabled: true
+                          Name: VirtualWall (ObstacleCruise SlowDown)
+                          Namespaces:
+                            {}
+                          Topic:
+                            Depth: 5
+                            Durability Policy: Volatile
+                            History Policy: Keep Last
+                            Reliability Policy: Reliable
+                            Value: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_slow_down/virtual_walls
                           Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: true
@@ -2043,7 +2065,7 @@ Visualization Manager:
                           Value: true
                         - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
                           Enabled: true
-                          Name: PlanningFactor(MvpRunOut)
+                          Name: PlanningFactor(RunOut)
                           Namespaces:
                             {}
                           Topic:
@@ -2051,7 +2073,7 @@ Visualization Manager:
                             Durability Policy: Volatile
                             History Policy: Keep Last
                             Reliability Policy: Reliable
-                            Value: /planning/planning_factors/mvp_run_out
+                            Value: /planning/planning_factors/run_out
                           Show Safety Factors: false
                           show_safety_factors: false
                           Value: true
@@ -2505,6 +2527,7 @@ Visualization Manager:
                           DynamicObstacleAvoidance: true
                           GoalPlanner: true
                           Intersection: true
+                          Roundabout: true
                           LaneFollowing: true
                           LeftLaneChange: true
                           NoDrivableLane: true
@@ -2606,7 +2629,7 @@ Visualization Manager:
                           PlanningFactor (ObstacleCruise): true
                           PlanningFactor (OutOfLane): true
                           PlanningFactor (DynamicObstacleStop): true
-                          PlanningFactor (MvpRunOut): true
+                          PlanningFactor (RunOut): true
                           PlanningFactor (RoadUserStop): true
                       Value: true
                     ModifiedGoal: true
@@ -3524,6 +3547,18 @@ Visualization Manager:
                     Value: true
                   - Class: rviz_default_plugins/MarkerArray
                     Enabled: true
+                    Name: Roundabout
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/debug/objects_of_interest/roundabout
+                    Value: true
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
                     Name: BlindSpot
                     Namespaces:
                       {}
@@ -3601,13 +3636,6 @@ Visualization Manager:
                   - Class: rviz_default_plugins/MarkerArray
                     Enabled: true
                     Name: Info (StaticObstacleAvoidance)
-                    Namespaces:
-                      avoidable_target_objects_info: false
-                      avoidable_target_objects_info_reason: false
-                      avoidable_target_objects_envelope_polygon: false
-                      unavoidable_target_objects_info: false
-                      unavoidable_target_objects_info_reason: false
-                      unavoidable_target_objects_envelope_polygon: false
                     Topic:
                       Depth: 5
                       Durability Policy: Volatile
@@ -3741,6 +3769,18 @@ Visualization Manager:
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
                     Enabled: true
+                    Name: Roundabout
+                    Namespaces:
+                      {}
+                    Topic:
+                      Depth: 5
+                      Durability Policy: Volatile
+                      History Policy: Keep Last
+                      Reliability Policy: Reliable
+                      Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/roundabout
+                    Value: false
+                  - Class: rviz_default_plugins/MarkerArray
+                    Enabled: true
                     Name: Blind Spot
                     Namespaces:
                       {}
@@ -3822,18 +3862,6 @@ Visualization Manager:
                       History Policy: Keep Last
                       Reliability Policy: Reliable
                       Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/no_stopping_area
-                    Value: false
-                  - Class: rviz_default_plugins/MarkerArray
-                    Enabled: false
-                    Name: RunOut
-                    Namespaces:
-                      {}
-                    Topic:
-                      Depth: 5
-                      Durability Policy: Volatile
-                      History Policy: Keep Last
-                      Reliability Policy: Reliable
-                      Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/run_out
                     Value: false
                   - Class: rviz_default_plugins/MarkerArray
                     Enabled: true
