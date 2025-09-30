@@ -56,6 +56,9 @@
   <!-- Scheduling settings -->
   <arg name="enable_scheduling_settings" default="false" description="enable scheduling settings"/>
 
+  <!-- Perception Filter Options -->
+  <arg name="use_perception_filter" default="false" description="launch perception filter for external approval"/>
+
   <group scoped="false">
     <!-- Vehicle -->
     <let name="launch_vehicle_interface" value="false" if="$(var vehicle_simulation)"/>
@@ -126,5 +129,14 @@
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="raw_vehicle_cmd_converter_param_path" value="$(find-pkg-share autoware_launch)/config/vehicle/raw_vehicle_cmd_converter/raw_vehicle_cmd_converter.param.yaml"/>
     </include>
+  </group>
+
+  <!-- diagnostic latch canceler for scenario simulator -->
+  <group unless="$(var is_redundant)">
+    <include file="$(find-pkg-share diagnostic_latch_canceler)/launch/diagnostic_latch_canceler.launch.xml"/>
+  </group>
+
+  <group>
+    <include file="$(find-pkg-share max_speed_selector)/launch/max_speed_selector.launch.xml"/>
   </group>
 </launch>

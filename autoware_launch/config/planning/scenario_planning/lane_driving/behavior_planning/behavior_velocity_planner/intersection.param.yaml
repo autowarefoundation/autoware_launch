@@ -110,8 +110,8 @@
         static_occlusion_with_traffic_light_timeout: 0.5
 
       conservative_merging:
-        enable_yield: false
-        minimum_lateral_distance_threshold: 0.2
+        enable_yield: true
+        minimum_lateral_distance_threshold: 0.5
         merging_judge_angle_threshold: 0.785
 
       debug:

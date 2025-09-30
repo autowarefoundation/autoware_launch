@@ -195,7 +195,7 @@
 
     <!-- command mode decider -->
     <include file="$(find-pkg-share autoware_command_mode_decider)/launch/decider.launch.xml">
-      <arg name="config" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.param.yaml"/>
+      <arg name="config" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.psim.param.yaml"/>
       <arg name="~/command_mode/status" value="/in_sub/system/command_mode/status"/>
       <arg name="~/command_mode/availability" value="/in_sub/system/command_mode/availability"/>
       <arg name="~/operation_mode/change_operation_mode" value="/sub/system/operation_mode/change_operation_mode"/>
@@ -231,9 +231,9 @@
       <arg name="input_diag_struct" value="/diagnostics_graph/struct/merge"/>
       <arg name="input_mrm_state" value="/in_sub/system/fail_safe/mrm_state"/>
       <arg name="input_election_status" value="/system/election/status"/>
-      <arg name="output_mrm_state" value="/to_mot/system/fail_safe/mrm_state"/>
-      <arg name="output_diag_status" value="/to_mot/diagnostics_graph/status"/>
-      <arg name="output_diag_struct" value="/to_mot/diagnostics_graph/struct"/>
+      <arg name="output_mrm_state" value="/system/fail_safe/mrm_state"/>
+      <arg name="output_diag_status" value="/diagnostics_graph/status"/>
+      <arg name="output_diag_struct" value="/diagnostics_graph/struct"/>
     </include>
   </group>
 
@@ -242,6 +242,8 @@
 
   <!-- API -->
   <group if="$(var launch_api)">
-    <include file="$(find-pkg-share default_adapi_custom_launch)/launch/default_adapi.launch.py"/>
+    <include file="$(find-pkg-share default_adapi_custom_launch)/launch/default_adapi.launch.py">
+      <arg name="config" value="$(find-pkg-share autoware_launch)/config/system/default_adapi_universe/default_adapi_universe.param.yaml"/>
+    </include>
   </group>
 </launch>

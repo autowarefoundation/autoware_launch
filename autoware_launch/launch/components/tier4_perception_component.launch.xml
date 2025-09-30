@@ -51,7 +51,7 @@
   <arg name="detected_objects_validation_method" default="obstacle_pointcloud" description="options: obstacle_pointcloud, occupancy_grid (must be used with laserscan_based_occupancy_grid_map)"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
   <arg name="lidar_detection_model" default="centerpoint" description="If the model name is not declared, the default model in perception.launch.xml will be used"/>
-  <arg name="ml_camera_lidar_merger_priority_mode" default="0" description="priority mode for ml and camera_lidar merger, options: `0: Object0`, `1: Object1`, `2: ConfidenceBased`, `3: ClassBased`"/>
+  <arg name="ml_camera_lidar_merger_priority_mode" default="3" description="priority mode for ml and camera_lidar merger, options: `0: Object0`, `1: Object1`, `2: ConfidenceBased`, `3: ClassBased`"/>
 
   <arg
     name="camera_2d_detector/model_path"
@@ -98,7 +98,7 @@
     <arg name="use_obstacle_segmentation_single_frame_filter" value="$(var use_obstacle_segmentation_single_frame_filter)"/>
     <arg name="use_obstacle_segmentation_time_series_filter" value="$(var use_obstacle_segmentation_time_series_filter)"/>
     <arg name="segmentation_pointcloud_fusion_camera_ids" value="$(var segmentation_pointcloud_fusion_camera_ids)"/>
-    <arg name="irregular_object_detector_fusion_camera_ids" value="[3,5]"/>
+    <arg name="irregular_object_detector_fusion_camera_ids" value="[3,4,5]"/>
 
     <arg name="camera_2d_detector/model_path" value="$(var camera_2d_detector/model_path)"/>
     <arg name="camera_2d_detector/label_path" value="$(var camera_2d_detector/label_path)"/>

@@ -3,120 +3,103 @@ units:
     type: and
     list:
       - { type: link, link: /system/emergency_stop }
-      - { type: link, link: /system/pull_over }
-      - { type: link, link: /system/comfortable_stop }
-
-  - path: /system/pull_over_available
-    type: and
-    list:
-      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /system/in_lane_emergency_stop }
+      - { type: link, link: /system/in_lane_moderate_stop }
       - { type: link, link: /system/comfortable_stop }
 
   - path: /system/comfortable_stop_available
     type: and
     list:
       - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /system/in_lane_emergency_stop }
+      - { type: link, link: /system/in_lane_moderate_stop }
 
-  - path: /system/fatal_error/autonomous_available
+  - path: /system/in_lane_moderate_stop_available
     type: and
     list:
-      - { type: link, link: /system/fatal_error/emergency_stop }
-      - { type: link, link: /system/fatal_error/pull_over }
-      - { type: link, link: /system/fatal_error/comfortable_stop }
+      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /system/in_lane_emergency_stop }
 
-  - path: /system/fatal_error/pull_over_available
+  - path: /system/in_lane_emergency_stop_available
     type: and
     list:
-      - { type: link, link: /system/fatal_error/emergency_stop }
-      - { type: link, link: /system/fatal_error/comfortable_stop }
+      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
 
-  - path: /system/fatal_error/comfortable_stop_available
+  - path: /system/sub_ecu_in_lane_moderate_stop_available
     type: and
     list:
-      - { type: link, link: /system/fatal_error/emergency_stop }
+      - { type: link, link: /system/emergency_stop }
 
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
   - path: /system/emergency_stop
     type: and
-    list:
-      - { type: link, link: /system/001-topic_status-error }
-
-  - path: /system/fatal_error/emergency_stop
-    type: and
-    list:
-      - { type: link, link: /system/002-emergency_stop_operation-error }
 
   - path: /system/comfortable_stop
     type: and
+    list:
+      - { type: link, link: /system/005-daytime_monitor }
+      - { type: link, link: /system/002-latency/total-latency-error }
 
-  - path: /system/fatal_error/comfortable_stop
+  - path: /system/in_lane_moderate_stop
+    type: and
+    list:
+      - { type: link, link: /system/006-vehicle_stuck_checker }
+
+  - path: /system/in_lane_emergency_stop
     type: and
 
-  - path: /system/pull_over
-    type: and
-
-  - path: /system/fatal_error/pull_over
+  - path: /system/sub_ecu_in_lane_moderate_stop
     type: and
 
   - path: /system/none
     type: and
     list:
-      - { type: link, link: /system/003-bagpacker_status }
-      - { type: link, link: /system/004-bagpacker_ROSBAG_space }
-      - { type: link, link: /system/006-bagpacker_LOG_space }
+      - { type: link, link: /system/012-fms_connection }
+      - { type: link, link: /system/013-vcu-not-authenticated }
 
-  - path: /system/001-topic_status-error
+  - path: /system/002-latency/total-latency-error
     type: warn-to-ok
     item:
       type: link
-      link: /system/001-topic_status
+      link: /system/002-latency/total-latency
 
-  - path: /system/002-emergency_stop_operation-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /system/002-emergency_stop_operation
-
-  - path: /system/005-fms_connection-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /system/005-fms_connection
-
-  - path: /system/001-topic_status
+  - path: /system/002-latency/total-latency
     type: diag
-    node: topic_state_monitor_system_emergency_control_cmd
-    name: system_topic_status
+    node: pipeline_latency_monitor
+    name: Total Latency
     timeout: 1.0
+    latch: 0.0
 
-  - path: /system/002-emergency_stop_operation
+  - path: /system/005-daytime_monitor
     type: diag
-    node: vehicle_cmd_gate
-    name: emergency_stop_operation
+    node: daytime_monitor
+    name: daytime_status
     timeout: 1.0
+    latch: 0.0
 
-  - path: /system/003-bagpacker_status
+  - path: /system/006-vehicle_stuck_checker
     type: diag
-    node: ""
-    name: rosbag_status
+    node: vehicle_stuck_checker
+    name: vehicle_stuck_check
     timeout: 3.0
+    latch: 0.0
 
-  - path: /system/004-bagpacker_ROSBAG_space
-    type: diag
-    node: ""
-    name: disk1_status
-    timeout: 3.0
-
-  - path: /system/005-fms_connection
+  - path: /system/012-fms_connection
     type: diag
     node: ""
     name: edge_core_internet_connection
     timeout: 10.0
+    latch: 0.0
 
-  - path: /system/006-bagpacker_LOG_space
+  - path: /system/013-vcu-not-authenticated
     type: diag
-    node: ""
-    name: disk2_status
-    timeout: 3.0
+    node: j6_interface
+    name: vcu_not_authenticated
+    timeout: 10.0
+    latch: 0.0

@@ -8,11 +8,15 @@
     value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/diagnostic_graph_aggregator.redundancy.main.param.yaml"
     if="$(var is_redundant)"
   />
-  <let name="diagnostic_graph_aggregator_param_path" value="$(find-pkg-share autoware_diagnostic_graph_aggregator)/config/default.param.yaml" unless="$(var is_redundant)"/>
-  <let name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.debug.main.yaml" if="$(var is_redundant)"/>
+  <let
+    name="diagnostic_graph_aggregator_param_path"
+    value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/diagnostic_graph_aggregator.param.yaml"
+    unless="$(var is_redundant)"
+  />
+  <let name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.main.yaml" if="$(var is_redundant)"/>
   <let name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml" unless="$(var is_redundant)"/>
 
-  <let name="dummy_diag_publisher_param_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/dummy_diag_publisher.redundancy.debug.main.param.yaml" if="$(var is_redundant)"/>
+  <let name="dummy_diag_publisher_param_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/dummy_diag_publisher.redundancy.main.param.yaml" if="$(var is_redundant)"/>
   <let name="dummy_diag_publisher_param_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/dummy_diag_publisher.param.yaml" unless="$(var is_redundant)"/>
 
   <let name="change_operation_mode_srv" value="/main/system/operation_mode/change_operation_mode" if="$(var is_redundant)"/>
@@ -22,7 +26,14 @@
 
   <let name="command_mode_switcher_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/switcher.redundancy.main.param.yaml" if="$(var is_redundant)"/>
   <let name="command_mode_switcher_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/switcher.param.yaml" unless="$(var is_redundant)"/>
-  <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.param.yaml" if="$(var is_redundant)"/>
+  <group scoped="false" if="$(eval &quot;'$(var system_run_mode)'=='planning_simulation'&quot;)">
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.psim.param.yaml" if="$(var is_redundant)"/>
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.param.yaml" unless="$(var is_redundant)"/>
+  </group>
+  <group scoped="false" unless="$(eval &quot;'$(var system_run_mode)'=='planning_simulation'&quot;)">
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.param.yaml" if="$(var is_redundant)"/>
+    <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.param.yaml" unless="$(var is_redundant)"/>
+  </group>
   <let name="command_mode_decider_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.param.yaml" unless="$(var is_redundant)"/>
   <let name="availability_converter_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/converter.redundancy.param.yaml" if="$(var is_redundant)"/>
   <let name="availability_converter_param_path" value="$(find-pkg-share autoware_launch)/config/system/command_mode/converter.param.yaml" unless="$(var is_redundant)"/>
@@ -75,7 +86,6 @@
     <arg name="command_mode_decider_param_path" value="$(var command_mode_decider_param_path)"/>
     <arg name="availability_converter_param_path" value="$(var availability_converter_param_path)"/>
     <arg name="diagnostic_graph_aggregator_planning_simulator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/autoware.yaml"/>
-    <arg name="launch_system_recover_operator" value="true"/>
   </include>
 
   <!-- For logging of diagnostics_graph error -->

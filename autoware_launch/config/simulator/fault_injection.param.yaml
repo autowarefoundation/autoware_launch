@@ -77,7 +77,7 @@
 
       # GNS
       GNS-001: "topic_state_monitor_gnss_pose: gnss_topic_status"
-      GNS-002: "septentrio_driver: Quality indicators"
+      GNS-002: "/sensing/gnss/septentrio: Quality indicators"
 
       # LiDAR
       PNDR-001/front_lower: "/sensing/lidar/front_lower/hesai_ros_wrapper_node: hesai_status"
@@ -106,14 +106,14 @@
       PNDR-003/rear_upper: "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: hesai_ptp"
 
       # CAMERA
-      LPD-001/camera0: "v4l2_camera_camera0: capture_status"
-      LPD-001/camera1: "v4l2_camera_camera1: capture_status"
-      LPD-001/camera2: "v4l2_camera_camera2: capture_status"
-      LPD-001/camera3: "v4l2_camera_camera3: capture_status"
-      LPD-001/camera4: "v4l2_camera_camera4: capture_status"
-      LPD-001/camera5: "v4l2_camera_camera5: capture_status"
-      LPD-001/camera6: "v4l2_camera_camera6: capture_status"
-      LPD-001/camera7: "v4l2_camera_camera7: capture_status"
+      LPD-001/camera0: "v4l2_camera_camera0: camera0_diagnostics"
+      LPD-001/camera1: "v4l2_camera_camera1: camera1_diagnostics"
+      LPD-001/camera2: "v4l2_camera_camera2: camera2_diagnostics"
+      LPD-001/camera3: "v4l2_camera_camera3: camera3_diagnostics"
+      LPD-001/camera4: "v4l2_camera_camera4: camera4_diagnostics"
+      LPD-001/camera5: "v4l2_camera_camera5: camera5_diagnostics"
+      LPD-001/camera6: "v4l2_camera_camera6: camera6_diagnostics"
+      LPD-001/camera7: "v4l2_camera_camera7: camera7_diagnostics"
 
       # RADAR
       SENSING-001/front_center: "topic_state_monitor_radar_front_center: radar_front_center_topic_status"

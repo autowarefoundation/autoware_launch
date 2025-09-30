@@ -17,26 +17,85 @@
             left:
               moving:
                 min_lat_margin: 0.2
-                max_lat_margin: 0.7
+                max_lat_margin: 1.0
                 min_ego_velocity: 2.0
-                max_ego_velocity: 5.56
+                max_ego_velocity: 8.0
               static:
                 min_lat_margin: 0.2
-                max_lat_margin: 0.7
-                min_ego_velocity: 2.0
-                max_ego_velocity: 5.56
+                max_lat_margin: 1.0
+                min_ego_velocity: 4.0
+                max_ego_velocity: 8.0
             right:
               moving:
                 min_lat_margin: 0.2
-                max_lat_margin: 0.7
+                max_lat_margin: 1.0
                 min_ego_velocity: 2.0
-                max_ego_velocity: 5.56
+                max_ego_velocity: 8.0
               static:
                 min_lat_margin: 0.2
-                max_lat_margin: 0.7
-                min_ego_velocity: 2.0
-                max_ego_velocity: 5.56
-            wheel_off_track_scale: 0.0 # scale factor for additional stop margin against ego's wheel off-track. Even if this value is set to 0.0, the planner considers the nominal wheel off-track.
+                max_lat_margin: 1.0
+                min_ego_velocity: 4.0
+                max_ego_velocity: 8.0
+          car.left.static:
+                min_lat_margin: 0.6
+                max_lat_margin: 4.0
+                min_ego_velocity: 0.278
+                max_ego_velocity: 9.72
+          bus.left.static:
+                min_lat_margin: 0.6
+                max_lat_margin: 4.0
+                min_ego_velocity: 0.278
+                max_ego_velocity: 9.72
+          truck.left.static:
+                min_lat_margin: 0.6
+                max_lat_margin: 4.0
+                min_ego_velocity: 0.278
+                max_ego_velocity: 9.72
+          trailer.left.static:
+                min_lat_margin: 0.6
+                max_lat_margin: 4.0
+                min_ego_velocity: 0.278
+                max_ego_velocity: 9.72
+          pedestrian.right.moving:
+                min_lat_margin: 1.0
+                max_lat_margin: 2.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
+          pedestrian.left.moving:
+                min_lat_margin: 1.0
+                max_lat_margin: 2.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
+          pedestrian.right.static:
+                min_lat_margin: 1.0
+                max_lat_margin: 2.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
+          pedestrian.left.static:
+                min_lat_margin: 1.0
+                max_lat_margin: 2.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
+          bicycle.right.moving:
+                min_lat_margin: 1.0
+                max_lat_margin: 2.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
+          bicycle.left.moving:
+                min_lat_margin: 1.0
+                max_lat_margin: 2.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
+          bicycle.right.static:
+                min_lat_margin: 1.0
+                max_lat_margin: 2.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
+          bicycle.left.static:
+                min_lat_margin: 1.0
+                max_lat_margin: 2.5
+                min_ego_velocity: 2.78
+                max_ego_velocity: 9.72
           # car.left.moving.min_ego_velocity: 3.0  # example specific override
 
         moving_object_speed_threshold: 0.5 # [m/s] how fast the object needs to move to be considered as "moving"

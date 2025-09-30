@@ -12,6 +12,8 @@
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
 
+  <arg name="use_perception_filter" default="true" description="use perception filter or not"/>
+
   <!-- Redundant system parameters-->
   <arg name="is_redundant" default="false" description="is_redundant"/>
   <arg name="is_main_ecu" default="true" description="is_main_ecu"/>
@@ -43,6 +45,8 @@
       <arg name="is_60kph" value="$(var is_60kph)"/>
       <!-- Control -->
       <arg name="use_control_command_gate" value="$(var use_control_command_gate)"/>
+      <!-- Perception Filter -->
+      <arg name="use_perception_filter" value="$(var use_perception_filter)"/>
     </include>
   </group>
 

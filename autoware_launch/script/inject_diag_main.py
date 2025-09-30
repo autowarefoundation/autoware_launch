@@ -2,6 +2,7 @@
 
 import threading
 
+from builtin_interfaces.msg import Time
 from diagnostic_msgs.msg import DiagnosticArray
 from diagnostic_msgs.msg import DiagnosticStatus
 import rclpy
@@ -12,7 +13,6 @@ class DiagnosticPublisher(Node):
     def __init__(self):
         super().__init__("multi_diagnostic_publisher")
 
-        # 診断名リスト
         self.diagnostic_names = [
             "injection_stop_available",
             "injection_local_available",
@@ -23,21 +23,36 @@ class DiagnosticPublisher(Node):
             "injection_main_ecu_in_lane_emergency_stop_available",
         ]
         self.status_states = {name: (DiagnosticStatus.OK, "OK") for name in self.diagnostic_names}
-        self.publisher_ = self.create_publisher(DiagnosticArray, "/diagnostics", 10)
+
+        # Time publisher map: diagnostic name → Publisher
+        self.time_publishers = {}
+        for name in self.diagnostic_names:
+            topic_suffix = name.replace("injection_", "").replace("_available", "")
+            topic_name = f"/system/debug/injection/{topic_suffix}"
+            self.time_publishers[name] = self.create_publisher(Time, topic_name, 10)
+        self.publish_time_flags = {name: None for name in self.diagnostic_names}
+
+        self.diagnostics_pub = self.create_publisher(DiagnosticArray, "/diagnostics", 10)
         self.timer_ = self.create_timer(0.1, self.timer_callback)
         threading.Thread(target=self.input_listener, daemon=True).start()
 
     def timer_callback(self):
         msg = DiagnosticArray()
         for name, (level, message) in self.status_states.items():
+            now = self.get_clock().now().to_msg()
             status = DiagnosticStatus()
             status.name = name
             status.level = level
             status.message = message
             status.hardware_id = "dummy_hardware"
-            msg.header.stamp = self.get_clock().now().to_msg()
+            msg.header.stamp = now
             msg.status.append(status)
-        self.publisher_.publish(msg)
+
+            if self.publish_time_flags[name]:
+                time_pub = self.time_publishers[name]
+                time_pub.publish(now)
+                self.publish_time_flags[name] = False  # reset flag
+        self.diagnostics_pub.publish(msg)
 
     def input_listener(self):
         while True:
@@ -57,6 +72,10 @@ class DiagnosticPublisher(Node):
                         else DiagnosticStatus.OK
                     )
                     new_message = "Error" if new_level == DiagnosticStatus.ERROR else "OK"
+
+                    if current_level == DiagnosticStatus.OK and new_level == DiagnosticStatus.ERROR:
+                        self.publish_time_flags[name] = True
+
                     self.status_states[name] = (new_level, new_message)
                     print(f"[Switched!] {name} → {new_message}")
                 else:

@@ -47,7 +47,7 @@
         ego_pass_later_additional_margin: 0.5 # [s] additional time margin for object pass first situation to suppress chattering
         ego_min_assumed_speed: 2.0 # [m/s] assumed speed to calculate the time to collision point
 
-        consider_obj_on_crosswalk_on_red_light: false # consider and do not ignore objects if they are on the crosswalk when the crosswalk pedestrian traffic light is red
+        consider_obj_on_crosswalk_on_red_light: true # consider and do not ignore objects if they are on the crosswalk when the crosswalk pedestrian traffic light is red
 
         no_stop_decision: # parameters to determine stop cancel. the distance f($min_acc, $min_jerk) is compared against min(distance to stop pose, 0.1).
           enable_no_stop_decision: true
@@ -73,9 +73,9 @@
         crosswalk_attention_range: 1.0 # [m] the detection area is defined as -X meters before the crosswalk to +X meters behind the crosswalk
         vehicle_object_cross_angle_threshold: 0.5 # [rad] threshold judging object is crossing walkway as a pedestrian or passing over as a vehicle
         target_object:
-          unknown: true # [-] whether to look and stop by UNKNOWN objects
+          unknown: false # [-] whether to look and stop by UNKNOWN objects
           bicycle: true # [-] whether to look and stop by BICYCLE objects
-          motorcycle: true # [-] whether to look and stop by MOTORCYCLE objects (tmp: currently it is difficult for perception modules to detect bicycles and motorcycles separately.)
+          motorcycle: false # [-] whether to look and stop by MOTORCYCLE objects (tmp: currently it is difficult for perception modules to detect bicycles and motorcycles separately.)
           pedestrian: true # [-] whether to look and stop by PEDESTRIAN objects
 
       # param for occlusions
@@ -97,7 +97,7 @@
 
       # param for parked vehicles stop
       parked_vehicles_stop:
-        enable: false # if true, ego will stop if there are parked vehicles before the crosswalk
+        enable: true # if true, ego will stop if there are parked vehicles before the crosswalk
         search_distance: 5.0  # [m] distance ahead of the crosswalk where to search for parked vehicles
         min_ego_stop_duration: 1.0  # [s] minimum duration ego should stop before it can continue
         vehicle_permanence_duration: 0.5  # [s] if an object disappears or is no longer classified as parked vehicle, its last state is still used for this duration
