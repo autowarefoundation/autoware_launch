@@ -29,11 +29,6 @@ units:
       - { type: link, link: /localization/emergency_stop }
       - { type: link, link: /localization/sub_ecu_in_lane_moderate_stop }
 
-  - path: /localization/sub_ecu_in_lane_moderate_stop_available
-    type: and
-    list:
-      - { type: link, link: /localization/emergency_stop }
-
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
@@ -156,7 +151,7 @@ units:
     type: diag
     node: ndt_scan_matcher
     name: map_update_status
-    timeout: 1.0
+    timeout: 10.0
     latch: 0.0
 
   - path: /localization/005-accuracy

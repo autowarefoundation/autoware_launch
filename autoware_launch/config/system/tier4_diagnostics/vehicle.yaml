@@ -29,11 +29,6 @@ units:
       - { type: link, link: /vehicle/emergency_stop }
       - { type: link, link: /vehicle/sub_ecu_in_lane_moderate_stop }
 
-  - path: /vehicle/sub_ecu_in_lane_moderate_stop_available
-    type: and
-    list:
-      - { type: link, link: /vehicle/emergency_stop }
-
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
@@ -43,15 +38,19 @@ units:
   - path: /vehicle/comfortable_stop
     type: and
     list:
+      - { type: link, link: /vehicle/006-a_brake_error }
+      - { type: link, link: /vehicle/006-b_parking_error }
       - { type: link, link: /vehicle/007-vehicle-emergency-button }
 
   - path: /vehicle/in_lane_moderate_stop
     type: and
     list:
-      - { type: link, link: /vehicle/001-topic_status/velocity-error }
-      - { type: link, link: /vehicle/001-topic_status/steering-error }
-      - { type: link, link: /vehicle/006-vehicle_errors-error }
+      - { type: link, link: /vehicle/006-c_steering-error }
+      - { type: link, link: /vehicle/006-d_drive_system-error }
+      - { type: link, link: /vehicle/006-e_steering-error }
       - { type: link, link: /vehicle/override_when_level4_driving }
+      - { type: link, link: /vehicle/t4_vcu_version_check-error }
+      - { type: link, link: /vehicle/vcu-not-authenticated-error }
 
   - path: /vehicle/in_lane_emergency_stop
     type: and
@@ -62,42 +61,245 @@ units:
   - path: /vehicle/none
     type: and
 
-  - path: /vehicle/001-topic_status/velocity-error
+  - path: /vehicle/006-a_brake_error
+    type: and
+    list:
+      - { type: link, link: /vehicle/006-a-00_brake_external_request-error }
+      - { type: link, link: /vehicle/006-a-01-02_ebs-error }
+      - { type: link, link: /vehicle/006-a-06-07_ebs_receive-error }
+
+  - path: /vehicle/006-b_parking_error
+    type: and
+    list:
+      - { type: link, link: /vehicle/006-b-00-01-02_epb-error }
+      - { type: link, link: /vehicle/006-b-03-04-05_parking_external_request-error }
+      - { type: link, link: /vehicle/006-b-07_epb_can_receive-error }
+
+  - path: /vehicle/006-c_steering-error
+    type: and
+    list:
+      - { type: link, link: /vehicle/006-c-01_eps1-error }
+      - { type: link, link: /vehicle/006-c-02_eps2-error }
+      - { type: link, link: /vehicle/006-c-03-04_steering_system-error }
+      - { type: link, link: /vehicle/006-c-05_steering_angle_initialization-error }
+      - { type: link, link: /vehicle/006-c-06-07_steering_system_can-error }
+
+  - path: /vehicle/006-d_drive_system-error
+    type: and
+    list:
+      - { type: link, link: /vehicle/006-d-00_drive_system-error }
+      - { type: link, link: /vehicle/006-d-06-07_drive_system_can-error }
+
+  - path: /vehicle/006-e_steering-error
+    type: and
+    list:
+      - { type: link, link: /vehicle/006-e-01_eps_overheat-error }
+      - { type: link, link: /vehicle/006-e-02_sas-error }
+
+  - path: /vehicle/vcu-not-authenticated-error
     type: warn-to-ok
     item:
       type: link
-      link: /vehicle/001-topic_status/velocity
+      link: /vehicle/vcu-not-authenticated
 
-  - path: /vehicle/001-topic_status/steering-error
+  - path: /vehicle/t4_vcu_version_check-error
     type: warn-to-ok
     item:
       type: link
-      link: /vehicle/001-topic_status/steering
+      link: /vehicle/t4_vcu_version_check
 
-  - path: /vehicle/006-vehicle_errors-error
+  - path: /vehicle/006-a-00_brake_external_request-error
     type: warn-to-ok
     item:
       type: link
-      link: /vehicle/006-vehicle_errors
+      link: /vehicle/006-a-00_brake_external_request
 
-  - path: /vehicle/001-topic_status/velocity
-    type: diag
-    node: topic_state_monitor_vehicle_status_velocity_status
-    name: vehicle_topic_status
-    timeout: 1.0
-    latch: 0.0
+  - path: /vehicle/006-a-01-02_ebs-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-a-01-02_ebs
 
-  - path: /vehicle/001-topic_status/steering
-    type: diag
-    node: topic_state_monitor_vehicle_status_steering_status
-    name: vehicle_topic_status
-    timeout: 1.0
-    latch: 0.0
+  - path: /vehicle/006-a-06-07_ebs_receive-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-a-06-07_ebs_receive
 
-  - path: /vehicle/006-vehicle_errors
+  - path: /vehicle/006-b-00-01-02_epb-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-b-00-01-02_epb
+
+  - path: /vehicle/006-b-03-04-05_parking_external_request-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-b-03-04-05_parking_external_request
+
+  - path: /vehicle/006-b-07_epb_can_receive-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-b-07_epb_can_receive
+
+  - path: /vehicle/006-c-01_eps1-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-c-01_eps1
+
+  - path: /vehicle/006-c-02_eps2-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-c-02_eps2
+
+  - path: /vehicle/006-c-03-04_steering_system-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-c-03-04_steering_system
+
+  - path: /vehicle/006-c-05_steering_angle_initialization-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-c-05_steering_angle_initialization
+
+  - path: /vehicle/006-c-06-07_steering_system_can-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-c-06-07_steering_system_can
+
+  - path: /vehicle/006-d-00_drive_system-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-d-00_drive_system
+
+  - path: /vehicle/006-d-06-07_drive_system_can-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-d-06-07_drive_system_can
+
+  - path: /vehicle/006-e-01_eps_overheat-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-e-01_eps_overheat
+
+  - path: /vehicle/006-e-02_sas-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-e-02_sas
+
+  - path: /vehicle/006-a-00_brake_external_request
     type: diag
     node: j6_interface
-    name: vehicle_errors
+    name: brake_external_request_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-a-01-02_ebs
+    type: diag
+    node: j6_interface
+    name: brake_system_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-a-06-07_ebs_receive
+    type: diag
+    node: j6_interface
+    name: brake_system_can_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-b-00-01-02_epb
+    type: diag
+    node: j6_interface
+    name: parking_system_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-b-03-04-05_parking_external_request
+    type: diag
+    node: j6_interface
+    name: parking_external_request_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-b-07_epb_can_receive
+    type: diag
+    node: j6_interface
+    name: parking_system_can_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-c-01_eps1
+    type: diag
+    node: j6_interface
+    name: steering_system_1_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-c-02_eps2
+    type: diag
+    node: j6_interface
+    name: steering_system_2_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-c-03-04_steering_system
+    type: diag
+    node: j6_interface
+    name: steering_system_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-c-05_steering_angle_initialization
+    type: diag
+    node: j6_interface
+    name: steering_angle_initialization_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-c-06-07_steering_system_can
+    type: diag
+    node: j6_interface
+    name: steering_system_can_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-d-00_drive_system
+    type: diag
+    node: j6_interface
+    name: drive_system_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-d-06-07_drive_system_can
+    type: diag
+    node: j6_interface
+    name: drive_system_can_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-e-01_eps_overheat
+    type: diag
+    node: j6_interface
+    name: steering_system_over_heat_error
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/006-e-02_sas
+    type: diag
+    node: j6_interface
+    name: steering_angle_sensor_error
     timeout: 1.0
     latch: 0.0
 
@@ -113,4 +315,18 @@ units:
     node: j6_interface
     name: override_when_level4_driving
     timeout: 1.0
+    latch: 0.0
+
+  - path: /vehicle/t4_vcu_version_check
+    type: diag
+    node: j6_interface
+    name: t4-vcu_version_check
+    timeout: 2.0
+    latch: 0.0
+
+  - path: /vehicle/vcu-not-authenticated
+    type: diag
+    node: j6_interface
+    name: vcu_not_authenticated
+    timeout: 10.0
     latch: 0.0

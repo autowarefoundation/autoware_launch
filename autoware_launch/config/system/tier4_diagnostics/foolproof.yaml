@@ -29,15 +29,13 @@ units:
       - { type: link, link: /foolproof/emergency_stop }
       - { type: link, link: /foolproof/sub_ecu_in_lane_moderate_stop }
 
-  - path: /foolproof/sub_ecu_in_lane_moderate_stop_available
-    type: ok
-
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
   - path: /foolproof/emergency_stop
     type: and
     list:
+      - { type: link, link: /foolproof/sub/heartbeat }
       - { type: link, link: /foolproof/logging/heartbeat }
       - { type: link, link: /foolproof/perception1/heartbeat }
       - { type: link, link: /foolproof/perception2/heartbeat }
@@ -116,6 +114,13 @@ units:
     timeout: 3.0
     latch: 0.0
 
+  - path: /foolproof/sub/heartbeat
+    type: diag
+    node: autoware_diagnostics_bridge_node_sub
+    name: heartbeat
+    timeout: 3.0
+    latch: 0.0
+
   - path: /foolproof/perception1/heartbeat
     type: diag
     node: autoware_diagnostics_bridge_node_perception1
@@ -172,6 +177,7 @@ units:
     list:
       - { type: link, link: /foolproof/main/autoware_node_alive }
       - { type: link, link: /foolproof/main/autoware_system_node_alive }
+      - { type: link, link: /foolproof/sub/autoware_node_alive }
       - { type: link, link: /foolproof/perception1/recognition_node_alive }
       - { type: link, link: /foolproof/perception2/recognition_node_alive }
       # - { type: link, link:  /foolproof/addon/recognition_node_alive }
@@ -188,6 +194,13 @@ units:
     type: diag
     node: autoware_diagnostics_bridge_node_main
     name: main_autoware_system_node_alive
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /foolproof/sub/autoware_node_alive
+    type: diag
+    node: autoware_diagnostics_bridge_node_sub
+    name: sub_autoware_node_alive
     timeout: 3.0
     latch: 0.0
 

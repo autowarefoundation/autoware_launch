@@ -188,6 +188,7 @@
     <arg name="raw_vehicle_cmd_converter_param_path" default="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/config/raw_vehicle_cmd_converter.param.yaml"/>
     <arg name="initial_engage_state" default="false" description="/vehicle/engage state after starting Autoware"/>
     <arg name="config_dir" default="$(find-pkg-share $(var sensor_model)_description)/config" description="path to dir where sensors_calibration.yaml, etc. are located"/>
+    <arg name="csv_accel_brake_map_path" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/vehicle"/>
 
     <arg name="can_device" default="fintekcan0"/>
     <arg name="brake_can_device" default="peakcan1"/>
@@ -247,34 +248,91 @@
 
     <!-- topic_state_monitor -->
     <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
-      <arg name="node_name_suffix" value="stop_filter"/>
-      <arg name="topic" value="/localization/kinematic_state"/>
-      <arg name="topic_type" value="nav_msgs/msg/Odometry"/>
-      <arg name="diag_name" value="planning_topic_status"/>
-      <arg name="warn_rate" value="20.0"/>
-      <arg name="error_rate" value="4.0"/>
-      <arg name="timeout" value="0.25"/>
-    </include>
-
-    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
-      <arg name="node_name_suffix" value="twist2accel"/>
-      <arg name="topic" value="/localization/acceleration"/>
-      <arg name="topic_type" value="geometry_msgs/msg/AccelWithCovarianceStamped"/>
-      <arg name="diag_name" value="planning_topic_status"/>
-      <arg name="warn_rate" value="20.0"/>
-      <arg name="error_rate" value="4.0"/>
-      <arg name="timeout" value="0.25"/>
-    </include>
-
-    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
-      <arg name="node_name_suffix" value="trajectory_follower"/>
-      <arg name="topic" value="/control/trajectory_follower/control_cmd"/>
+      <arg name="node_name_suffix" value="control_command_control_cmd"/>
+      <arg name="topic" value="/control/command/control_cmd"/>
       <arg name="topic_type" value="autoware_control_msgs/msg/Control"/>
-      <arg name="diag_name" value="control_topic_status"/>
-      <arg name="warn_rate" value="15.0"/>
-      <arg name="error_rate" value="3.0"/>
-      <arg name="timeout" value="0.3"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
     </include>
+
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="pose_with_covariance"/>
+      <arg name="topic" value="/main/localization/pose_with_covariance"/>
+      <arg name="topic_type" value="geometry_msgs/msg/PoseWithCovarianceStamped"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="1.5"/>
+      <arg name="error_rate" value="0.3"/>
+      <arg name="timeout" value="3.0"/>
+      <arg name="window_size" value="30"/>
+      <arg name="pub_topic_name" value="/in_lane_stop/diagnostics"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="twist_with_covariance"/>
+      <arg name="topic" value="/localization/twist_estimator/twist_with_covariance"/>
+      <arg name="topic_type" value="geometry_msgs/msg/TwistWithCovarianceStamped"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="trajectory"/>
+      <arg name="topic" value="/main/planning/scenario_planning/trajectory"/>
+      <arg name="topic_type" value="autoware_planning_msgs/msg/Trajectory"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="1.5"/>
+      <arg name="error_rate" value="0.3"/>
+      <arg name="timeout" value="3.0"/>
+      <arg name="window_size" value="30"/>
+      <arg name="pub_topic_name" value="/in_lane_stop/diagnostics"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="control_command_actuation_cmd"/>
+      <arg name="topic" value="/control/command/actuation_cmd"/>
+      <arg name="topic_type" value="tier4_vehicle_msgs/msg/ActuationCommandStamped"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="vehicle_status_velocity_status"/>
+      <arg name="topic" value="/vehicle/status/velocity_status"/>
+      <arg name="topic_type" value="autoware_vehicle_msgs/msg/VelocityReport"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="vehicle_status_steering_status"/>
+      <arg name="topic" value="/vehicle/status/steering_status"/>
+      <arg name="topic_type" value="autoware_vehicle_msgs/msg/SteeringReport"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="election_status"/>
+      <arg name="topic" value="/system/election/status"/>
+      <arg name="topic_type" value="tier4_external_api_msgs/msg/ElectionStatus"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include>
+
+    <!-- mrm diagnocstic overrider -->
+    <include file="$(find-pkg-share mrm_diagnostic_overrider)/launch/mrm_diagnostic_overrider.launch.xml"/>
 
     <!-- redundancy_switcher_interface -->
     <include file="$(find-pkg-share redundancy_switcher_interface)/launch/redundancy_switcher_interface.launch.xml">

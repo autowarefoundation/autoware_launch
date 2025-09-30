@@ -1,0 +1,18 @@
+units:
+  - path: /sub_ecu/system/sub_ecu_in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /sub_ecu/system/command_mode_decider/ready/warn-to-ok }
+
+  - path: /sub_ecu/system/command_mode_decider/ready/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/system/command_mode_decider/ready
+
+  - path: /sub_ecu/system/command_mode_decider/ready
+    type: diag
+    node: command_mode_decider
+    name: ready
+    timeout: 1.0
+    latch: 0.0
