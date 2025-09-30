@@ -6,12 +6,14 @@
     description="if true, launch pointcloud container. Please note that it is not intended to launch pointcloud_container_name with the same name in other launch files."
   />
   <arg name="pointcloud_container_name" description="name of pointcloud container"/>
+  <arg name="agnocast_heaphook_path" description="path to agnocast heaphook library"/>
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
 
   <!-- Pointcloud container -->
   <group if="$(var launch_pointcloud_container)">
     <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
       <arg name="use_multithread" value="true"/>
       <arg name="container_name" value="$(var pointcloud_container_name)"/>
     </include>
@@ -61,6 +63,7 @@
   />
 
   <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
+    <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     <arg name="data_path" value="$(var data_path)"/>
     <!-- general options to switch launch function/module -->
     <arg name="mode" value="$(var perception_mode)"/>
