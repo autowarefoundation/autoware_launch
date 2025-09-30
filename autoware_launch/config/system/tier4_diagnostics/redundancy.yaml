@@ -1,0 +1,67 @@
+units:
+  # /planning/scenario_planning/trajectory should be included in following tree,
+  # but it is already registered as /planning/001-topic_status/trajectory.
+  - path: /redundancy/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /redundancy/emergency_stop }
+      - { type: link, link: /redundancy/pull_over }
+      - { type: link, link: /redundancy/comfortable_stop }
+
+  - path: /redundancy/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /redundancy/emergency_stop }
+      - { type: link, link: /redundancy/comfortable_stop }
+
+  - path: /redundancy/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /redundancy/emergency_stop }
+
+  - path: /redundancy/fatal_error/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /redundancy/fatal_error/emergency_stop }
+      - { type: link, link: /redundancy/fatal_error/pull_over }
+      - { type: link, link: /redundancy/fatal_error/comfortable_stop }
+
+  - path: /redundancy/fatal_error/pull_over_available
+    type: and
+    list:
+      - { type: link, link: /redundancy/fatal_error/emergency_stop }
+      - { type: link, link: /redundancy/fatal_error/comfortable_stop }
+
+  - path: /redundancy/fatal_error/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /redundancy/fatal_error/emergency_stop }
+
+  - path: /redundancy/emergency_stop
+    type: and
+    list:
+      - { type: link, link: /redundancy/pub_pose_with_covariance_to_sub_ecu }
+
+  - path: /redundancy/fatal_error/emergency_stop
+    type: and
+
+  - path: /redundancy/comfortable_stop
+    type: and
+
+  - path: /redundancy/fatal_error/comfortable_stop
+    type: and
+
+  - path: /redundancy/pull_over
+    type: and
+
+  - path: /redundancy/fatal_error/pull_over
+    type: and
+
+  - path: /redundancy/none
+    type: and
+
+  - path: /redundancy/pub_pose_with_covariance_to_sub_ecu
+    type: diag
+    node: topic_state_monitor_pose_estimator_pose_with_covariance
+    name: publish_to_sub_status
+    timeout: 1.0

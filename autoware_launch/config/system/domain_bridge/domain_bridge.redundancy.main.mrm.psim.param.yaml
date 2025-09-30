@@ -1,0 +1,58 @@
+name: main_ecu_mrm_domain_bridge
+from_domain: 1
+to_domain: 3
+topics:
+  # main -> mrm
+  /to_mrm/planning/scenario_planning/trajectory:
+    type: autoware_planning_msgs/msg/Trajectory
+    remap: /main/planning/scenario_planning/trajectory
+  /localization/kinematic_state:
+    type: nav_msgs/msg/Odometry
+  /localization/acceleration:
+    type: geometry_msgs/msg/AccelWithCovarianceStamped
+  /control/jerk_constant_deceleration_trigger:
+    type: jerk_constant_deceleration_controller_msgs/msg/JerkConstantDecelerationTrigger
+    remap: /main/control/jerk_constant_deceleration_trigger
+  /control/command/control_cmd:
+    type: autoware_control_msgs/msg/Control
+    remap: /main/control/command/control_cmd
+  /system/operation_mode/state:
+    type: autoware_adapi_v1_msgs/msg/OperationModeState
+    remap: /main/system/operation_mode/state
+  /vehicle/status/steering_status:
+    type: autoware_vehicle_msgs/msg/SteeringReport
+    remap: /main/vehicle/status/steering_status
+  # mrm -> main
+  /control/control_command_gate/inputs/in_lane_stop/control:
+    type: autoware_control_msgs/msg/Control
+    reversed: True
+  /control/control_command_gate/inputs/in_lane_stop/gear:
+    type: autoware_vehicle_msgs/msg/GearCommand
+    reversed: True
+  /control/control_command_gate/inputs/in_lane_stop/hazard_lights:
+    type: autoware_vehicle_msgs/msg/HazardLightsCommand
+    reversed: True
+  /control/control_command_gate/inputs/in_lane_stop/turn_indicators:
+    type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
+    reversed: True
+  # mrm -> main for logging
+  /diagnostics:
+    type: diagnostic_msgs/msg/DiagnosticArray
+    reversed: True
+    remap: /mrm/diagnostics
+  /planning/topic_relay_controller/trajectory:
+    type: autoware_planning_msgs/msg/Trajectory
+    reversed: True
+    remap: /mrm/planning/topic_relay_controller/trajectory
+  /control/trajectory_follower/lateral/diagnostic:
+    type: autoware_internal_debug_msgs/msg/Float32MultiArrayStamped
+    reversed: True
+    remap: /mrm/control/trajectory_follower/lateral/diagnostic
+  /control/trajectory_follower/longitudinal/diagnostic:
+    type: autoware_internal_debug_msgs/msg/Float32MultiArrayStamped
+    reversed: True
+    remap: /mrm/control/trajectory_follower/longitudinal/diagnostic
+  /control/trajectory_follower/control_cmd:
+    type: autoware_control_msgs/msg/Control
+    reversed: True
+    remap: /mrm/control/trajectory_follower/control_cmd
