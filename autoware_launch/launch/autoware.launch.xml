@@ -69,6 +69,7 @@
 
   <!-- Pointcloud container -->
   <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+    <arg name="use_agnocast" value="$(var use_agnocast)"/>
     <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     <arg name="use_multithread" value="true"/>
     <arg name="container_name" value="$(var pointcloud_container_name)"/>
@@ -99,6 +100,7 @@
   <!-- Sensing -->
   <group if="$(var launch_sensing)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml">
+      <arg name="use_agnocast" value="$(var use_agnocast)"/>
       <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     </include>
@@ -107,6 +109,7 @@
   <!-- Localization -->
   <group if="$(var launch_localization)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_localization_component.launch.xml">
+      <arg name="use_agnocast" value="$(var use_agnocast)"/>
       <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     </include>
   </group>
@@ -114,6 +117,7 @@
   <!-- Perception -->
   <group if="$(var launch_perception)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_perception_component.launch.xml">
+      <arg name="use_agnocast" value="$(var use_agnocast)"/>
       <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
       <arg name="data_path" value="$(var data_path)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>

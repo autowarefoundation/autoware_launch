@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="agnocast_heaphook_path" default="/opt/ros/humble/lib/libagnocast_heaphook.so" description="path to agnocast heaphook library"/>
   <arg name="loc_config_path" default="$(find-pkg-share autoware_launch)/config/localization"/>
   <arg name="pose_source" default="ndt" description="select pose_estimator: ndt, yabloc, eagleye"/>
   <arg name="twist_source" default="gyro_odom" description="select twist_estimator. gyro_odom, eagleye"/>
@@ -13,9 +12,14 @@
     description="if true, launch pointcloud container. Please note that it is not intended to launch pointcloud_container_name with the same name in other launch files."
   />
 
+  <!-- Agnocast -->
+  <arg name="use_agnocast" default="false" description="enable Agnocast for planning containers"/>
+  <arg name="agnocast_heaphook_path" description="path to agnocast heaphook library"/>
+
   <!-- Pointcloud container -->
   <group if="$(var launch_pointcloud_container)">
     <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+      <arg name="use_agnocast" value="$(var use_agnocast)"/>
       <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
       <arg name="use_multithread" value="true"/>
       <arg name="container_name" value="$(var localization_pointcloud_container_name)"/>

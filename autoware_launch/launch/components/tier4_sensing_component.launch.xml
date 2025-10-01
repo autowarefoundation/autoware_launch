@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="agnocast_heaphook_path" default="/opt/ros/humble/lib/libagnocast_heaphook.so" description="path to agnocast heaphook library"/>
+  <!-- Agnocast -->
+  <arg name="use_agnocast" default="false" description="enable Agnocast for planning containers"/>
+  <arg name="agnocast_heaphook_path" description="path to agnocast heaphook library"/>
+
   <arg
     name="launch_pointcloud_container"
     default="false"
@@ -23,6 +26,7 @@
   <!-- Pointcloud container -->
   <group if="$(var launch_pointcloud_container)">
     <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+      <arg name="use_agnocast" value="$(var use_agnocast)"/>
       <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
       <arg name="use_multithread" value="true"/>
       <arg name="container_name" value="$(var pointcloud_container_name)"/>
