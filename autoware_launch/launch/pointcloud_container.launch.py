@@ -46,7 +46,7 @@ def launch_setup(context, *args, **kwargs):
         namespace="pointcloud_container",
     )
 
-    container_package = "agnocastlib" if use_agnocast else "rclcpp_components"
+    container_package = "rclcpp_components"
 
     pointcloud_container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
@@ -76,20 +76,15 @@ def generate_launch_description():
     def add_launch_arg(name: str, default_value=None):
         return DeclareLaunchArgument(name, default_value=default_value)
 
-    container_exec = "agnocast_component_container" if use_agnocast else "component_container"
-    container_exec_mt = (
-        "agnocast_component_container_mt" if use_agnocast else "component_container_mt"
-    )
-
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
-        container_exec,
+        "component_container",
         condition=UnlessCondition(LaunchConfiguration("use_multithread")),
     )
 
     set_container_mt_executable = SetLaunchConfiguration(
         "container_executable",
-        container_exec_mt,
+        "component_container_mt",
         condition=IfCondition(LaunchConfiguration("use_multithread")),
     )
 
