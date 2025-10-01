@@ -20,4 +20,4 @@ jobs:
         shell: bash
 
       - name: Run autoware-guideline-check
-        uses: isamu-takagi/autoware-guideline-check@feat/param-check
+        uses: autowarefoundation/autoware-guideline-check@0.2.0
