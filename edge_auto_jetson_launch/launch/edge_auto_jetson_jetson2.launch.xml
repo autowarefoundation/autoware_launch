@@ -37,6 +37,7 @@ Integrators are free to hard-code ECU-specific parameters in this launch file,
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" />
 
   <arg name="live_sensor" default="true" description="If true, camera driver will be booted. Otherwise image_transport_decompressor will be launched." />
+  <arg name="streampetr_enabled" default="false" description="If true, StreamPETR perception will be launched." />
 
   <arg name="container_name" default="object_recognition_container" />
 
