@@ -1,0 +1,38 @@
+files:
+  - { path: $(dirname)/sub/control.yaml }
+  # - { path: $(dirname)/hardware.yaml }
+  - { path: $(dirname)/sub/localization.yaml }
+  # - { path: $(dirname)/map.yaml }
+  # - { path: $(dirname)/perception.yaml }
+  - { path: $(dirname)/sub/planning.yaml }
+  # - { path: $(dirname)/others.yaml }
+  - { path: $(dirname)/sub/sensing.yaml }
+  - { path: $(dirname)/sub/system.yaml }
+  - { path: $(dirname)/sub/vehicle.yaml }
+  # - { path: $(dirname)/foolproof.yaml }
+  - { path: $(dirname)/sub/redundancy.yaml }
+
+units:
+  - path: /autoware/modes/sub_ecu_standby
+    type: ok
+
+  - path: /autoware/modes/sub_ecu_in_lane_moderate_stop
+    type: and
+    list:
+      - { type: link, link: /sub_ecu/control/sub_ecu_in_lane_moderate_stop_available }
+      # - { type: link, link: /hardware/sub_ecu_in_lane_moderate_stop_available }
+      - { type: link, link: /sub_ecu/localization/sub_ecu_in_lane_moderate_stop_available }
+      # - { type: link, link: /map/sub_ecu_in_lane_moderate_stop_available }
+      # - { type: link, link: /perception/sub_ecu_in_lane_moderate_stop_available }
+      - { type: link, link: /sub_ecu/planning/sub_ecu_in_lane_moderate_stop_available }
+      # - { type: link, link: /others/sub_ecu_in_lane_moderate_stop_available }
+      - { type: link, link: /sub_ecu/sensing/sub_ecu_in_lane_moderate_stop_available }
+      - { type: link, link: /sub_ecu/system/sub_ecu_in_lane_moderate_stop_available }
+      - { type: link, link: /sub_ecu/vehicle/sub_ecu_in_lane_moderate_stop_available }
+      # - { type: link, link: /foolproof/sub_ecu_in_lane_moderate_stop_available }
+      - { type: link, link: /sub_ecu/redundancy/sub_ecu_in_lane_moderate_stop_available }
+
+  - path: /notification/sub_ecu
+    type: and
+    list:
+      - { type: link, link: /sub_ecu/redundancy/notification }
