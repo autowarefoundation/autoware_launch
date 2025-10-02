@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- cspell: ignore semseg -->
   <arg
     name="launch_pointcloud_container"
     default="false"
@@ -35,6 +36,7 @@
   <arg name="use_low_intensity_cluster_filter" default="true" description="launch low_intensity_cluster_filter in clustering"/>
   <arg name="use_image_segmentation_based_filter" default="false" description="launch image_segmentation_based_filter in clustering"/>
   <arg name="use_perception_online_evaluator" default="false" description="launch perception online evaluator"/>
+  <arg name="use_perception_analytics_publisher" default="true" description="launch perception analytics publisher"/>
   <arg name="use_detection_by_tracker" default="true" description="launch detection_by_tracker function"/>
   <arg name="use_radar_tracking_fusion" default="true" description="if true, radar objects are merged in tracking module. Otherwise, radar objects are merged in detection module."/>
   <arg name="use_object_filter" default="true" description="launch object filter to filter-out detected object"/>
@@ -50,6 +52,14 @@
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
   <arg name="lidar_detection_model" default="centerpoint" description="If the model name is not declared, the default model in perception.launch.xml will be used"/>
   <arg name="ml_camera_lidar_merger_priority_mode" default="0" description="priority mode for ml and camera_lidar merger, options: `0: Object0`, `1: Object1`, `2: ConfidenceBased`, `3: ClassBased`"/>
+
+  <arg
+    name="camera_2d_detector/model_path"
+    default="$(var data_path)/tensorrt_yolox/yolox-sPlus-opt-pseudoV2-T4-960x960-T4-seg16cls.onnx"
+    description="options `yolox-sPlus-T4-960x960-pseudo-finetune.onnx` if only detection is needed, `yolox-sPlus-opt-pseudoV2-T4-960x960-T4-seg16cls.onnx` if sematic segmentation is also needed"
+  />
+  <arg name="camera_2d_detector/label_path" default="$(var data_path)/tensorrt_yolox/label.txt" description="label path"/>
+  <arg name="camera_2d_detector/color_map_path" default="$(var data_path)/tensorrt_yolox/semseg_color_map.csv" description="color map path"/>
 
   <arg name="traffic_light_recognition/camera_namespaces" default="[camera6, camera7]" description="choose camera which use for traffic light recognition"/>
   <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="select whether to use high accuracy detector for traffic light recognition"/>
@@ -79,6 +89,7 @@
     <arg name="use_low_intensity_cluster_filter" value="$(var use_low_intensity_cluster_filter)"/>
     <arg name="use_image_segmentation_based_filter" value="$(var use_image_segmentation_based_filter)"/>
     <arg name="use_perception_online_evaluator" value="$(var use_perception_online_evaluator)"/>
+    <arg name="use_perception_analytics_publisher" value="$(var use_perception_analytics_publisher)"/>
     <arg name="use_detection_by_tracker" value="$(var use_detection_by_tracker)"/>
     <arg name="use_radar_tracking_fusion" value="$(var use_radar_tracking_fusion)"/>
     <arg name="use_object_filter" value="$(var use_object_filter)"/>
@@ -87,6 +98,10 @@
     <arg name="use_obstacle_segmentation_single_frame_filter" value="$(var use_obstacle_segmentation_single_frame_filter)"/>
     <arg name="use_obstacle_segmentation_time_series_filter" value="$(var use_obstacle_segmentation_time_series_filter)"/>
     <arg name="segmentation_pointcloud_fusion_camera_ids" value="$(var segmentation_pointcloud_fusion_camera_ids)"/>
+
+    <arg name="camera_2d_detector/model_path" value="$(var camera_2d_detector/model_path)"/>
+    <arg name="camera_2d_detector/label_path" value="$(var camera_2d_detector/label_path)"/>
+    <arg name="camera_2d_detector/color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
 
     <!-- traffic light recognition options to switch launch function/module -->
     <arg name="use_traffic_light_recognition" value="$(var use_traffic_light_recognition)"/>
