@@ -128,6 +128,8 @@
       <arg name="is_simulation" value="$(var is_simulation)"/>
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="use_agnocast" value="$(var use_agnocast)"/>
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     </include>
 
     <!-- Relay node for trajectory topic -->
@@ -145,6 +147,8 @@
       <arg name="module_preset" value="$(var control_module_preset)"/>
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="use_agnocast" value="$(var use_agnocast)"/>
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     </include>
   </group>
 
