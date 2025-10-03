@@ -9,6 +9,7 @@
   <arg name="pointcloud_container_name" description="name of pointcloud container"/>
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
+  <arg name="is_simulation" default="false"/>
 
   <!-- Pointcloud container -->
   <group if="$(var launch_pointcloud_container)">
@@ -75,6 +76,7 @@
     <arg name="mode" value="$(var perception_mode)"/>
     <arg name="lidar_detection_model" value="$(var lidar_detection_model)"/>
     <arg name="use_multi_channel_tracker_merger" value="$(var use_multi_channel_tracker_merger)"/>
+    <arg name="is_simulation" value="$(var is_simulation)"/>
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
 
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
