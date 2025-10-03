@@ -82,6 +82,7 @@ units:
       - { type: link, link: /sensing/gnss/006-navsatfix-rate-bound-check }
       - { type: link, link: /sensing/gnss/007-poscovgeodetic-rate-bound-check }
       - { type: link, link: /sensing/gnss/008-pvtgeodetic-rate-bound-check }
+      - { type: link, link: /sensing/gnss/009-liveness }
 
   # Intermediate paths
   - path: /sensing/imu/001-connection-error
@@ -295,6 +296,13 @@ units:
     timeout: 5.0
     latch: 0.0
     hysteresis: 0.21
+  - path: /sensing/gnss/009-liveness
+    type: diag
+    node: /sensing/gnss/septentrio
+    name: Liveness
+    timeout: 5.0
+    latch: 0.0
+    hysteresis: 0.4
   # lidar
   - path: /sensing/lidar/concat_status
     type: diag
@@ -1170,4 +1178,4 @@ units:
     name: "/sensing/lidar/right_upper: visibility_validation"
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.0
+    hysteresis: 1.0
