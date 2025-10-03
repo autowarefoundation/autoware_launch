@@ -26,18 +26,11 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
 
-use_agnocast = os.getenv("ENABLE_AGNOCAST") == "1"
-
 
 def launch_setup(context, *args, **kwargs):
     agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
-
-    # Debug: Print current LD_PRELOAD value
-    import sys
-    current_ld_preload = os.getenv('LD_PRELOAD', 'NOT SET')
-    print(f"[pointcloud_container] Current LD_PRELOAD: {current_ld_preload}", file=sys.stderr)
-    print(f"[pointcloud_container] agnocast_heaphook_path: {agnocast_heaphook_path}", file=sys.stderr)
-    print(f"[pointcloud_container] use_agnocast: {use_agnocast}", file=sys.stderr)
+    use_agnocast_str = LaunchConfiguration("use_agnocast").perform(context)
+    use_agnocast = use_agnocast_str.lower() == "true"
 
     glog_component = ComposableNode(
         package="autoware_glog_component",
@@ -91,6 +84,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             add_launch_arg("agnocast_heaphook_path"),
+            add_launch_arg("use_agnocast", "false"),
             add_launch_arg("use_multithread", "false"),
             add_launch_arg("container_name", "pointcloud_container"),
             set_container_executable,

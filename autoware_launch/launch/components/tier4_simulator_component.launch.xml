@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="agnocast_heaphook_path" default="/opt/ros/humble/lib/libagnocast_heaphook.so" description="path to agnocast heaphook library"/>
   <arg name="launch_dummy_perception"/>
   <arg name="launch_dummy_vehicle"/>
   <arg name="localization_sim_mode"/>
