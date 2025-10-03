@@ -149,7 +149,7 @@
         max_lateral_jerk: 100.0             # [m/s3]
         overhang_tolerance: 0.0             # [m]
         unsafe_hysteresis_threshold: 5      # [/]
-        deceleration_sampling_num: 1 # [/]
+        deceleration_sampling_num: 1        # [/] Used to sample the approved lane change path, specifically for checking safety against leading objects.
 
       lane_change_finish_judge_buffer: 2.0      # [m]
       finish_judge_lateral_threshold: 0.1        # [m]
