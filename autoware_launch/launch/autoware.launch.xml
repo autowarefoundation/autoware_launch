@@ -109,7 +109,10 @@
 
   <!-- Localization -->
   <group if="$(var launch_localization)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_localization_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_localization_component.launch.xml">
+      <arg name="use_agnocast" value="$(var use_agnocast)"/>
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+    </include>
   </group>
 
   <!-- Perception -->
@@ -117,6 +120,8 @@
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_perception_component.launch.xml">
       <arg name="data_path" value="$(var data_path)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="use_agnocast" value="$(var use_agnocast)"/>
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     </include>
   </group>
 
