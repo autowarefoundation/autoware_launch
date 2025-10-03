@@ -52,12 +52,15 @@
 
   <!-- Agnocast -->
   <arg name="use_system_agnocast_heaphook" default="true" description="true: apt installed library, false: locally built"/>
-  <let name="agnocast_heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so" if="$(var use_system_agnocast_heaphook)"/>
-  <let name="agnocast_heaphook_path" value="$(env AGNOCAST_HEAPHOOK_PATH)" unless="$(var use_system_agnocast_heaphook)"/>
 
-  <!-- Check ENABLE_AGNOCAST environment variable -->
-  <let name="use_agnocast" value="true" if="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
-  <let name="use_agnocast" value="false" unless="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
+  <let name="use_agnocast_default" value="true" if="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
+  <let name="use_agnocast_default" value="false" unless="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
+
+  <let name="agnocast_heaphook_path_default" value="/opt/ros/humble/lib/libagnocast_heaphook.so" if="$(var use_system_agnocast_heaphook)"/>
+  <let name="agnocast_heaphook_path_default" value="$(env AGNOCAST_HEAPHOOK_PATH)" unless="$(var use_system_agnocast_heaphook)"/>
+
+  <arg name="use_agnocast" default="$(var use_agnocast_default)" description="enable Agnocast (overrides ENABLE_AGNOCAST env var)"/>
+  <arg name="agnocast_heaphook_path" default="$(var agnocast_heaphook_path_default)" description="path to agnocast heaphook library"/>
 
   <!-- Global parameters -->
   <group scoped="false">

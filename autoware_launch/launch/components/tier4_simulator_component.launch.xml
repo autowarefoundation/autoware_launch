@@ -18,7 +18,12 @@
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
   <arg name="use_pointcloud_container" default="true" description="use point cloud container for simulator perception modules"/>
 
+  <!-- Agnocast -->
+  <arg name="use_agnocast" default="false" description="enable Agnocast for planning containers"/>
+  <arg name="agnocast_heaphook_path" description="path to agnocast heaphook library"/>
+
   <include file="$(find-pkg-share tier4_simulator_launch)/launch/simulator.launch.xml">
+    <arg name="use_agnocast" value="$(var use_agnocast)"/>
     <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
     <arg name="launch_dummy_vehicle" value="$(var launch_dummy_vehicle)"/>
