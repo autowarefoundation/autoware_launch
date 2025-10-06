@@ -37,13 +37,10 @@
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
 
   <!-- Agnocast -->
-  <arg name="use_system_agnocast_heaphook" default="true" description="true: apt installed library, false: locally built"/>
-
   <let name="use_agnocast" value="true" if="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
   <let name="use_agnocast" value="false" unless="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
 
-  <let name="agnocast_heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so" if="$(var use_system_agnocast_heaphook)"/>
-  <let name="agnocast_heaphook_path" value="$(env AGNOCAST_HEAPHOOK_PATH)" unless="$(var use_system_agnocast_heaphook)"/>
+  <let name="agnocast_heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so"/>
 
   <group scoped="false">
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
