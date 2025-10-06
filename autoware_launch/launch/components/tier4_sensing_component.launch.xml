@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Agnocast -->
-  <arg name="use_agnocast" default="false" description="enable Agnocast for planning containers"/>
+  <arg name="use_agnocast" default="false"/>
   <arg name="agnocast_heaphook_path" description="path to agnocast heaphook library"/>
 
   <arg
