@@ -57,6 +57,9 @@ launch:
       name: launch_intersection_module
       default: "true"
   - arg:
+      name: launch_roundabout_module
+      default: "false"
+  - arg:
       name: launch_merge_from_private_module
       default: "false"
   - arg:
@@ -76,9 +79,6 @@ launch:
       default: "true"
   - arg:
       name: launch_occlusion_spot_module
-      default: "false"
-  - arg:
-      name: launch_run_out_module
       default: "false"
   - arg:
       name: launch_speed_bump_module
@@ -121,7 +121,7 @@ launch:
       name: launch_obstacle_velocity_limiter_module
       default: "true"
   - arg:
-      name: launch_mvp_run_out_module
+      name: launch_run_out_module
       default: "true"
   - arg:
       name: launch_boundary_departure_prevention_module

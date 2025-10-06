@@ -11,9 +11,9 @@
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
 
-  <!-- Agnocast -->
-  <arg name="use_agnocast" default="false" description="enable Agnocast for planning containers"/>
-  <arg name="agnocast_heaphook_path" description="path to agnocast heaphook library"/>
+  <!-- Input topic parameters for control modules -->
+  <arg name="control_input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="control_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -33,6 +33,10 @@
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     <arg name="vehicle_id" value="$(var vehicle_id)"/>
     <arg name="enable_obstacle_collision_checker" value="false"/>
+
+    <!-- Input topic parameters -->
+    <arg name="input_objects_topic_name" value="$(var control_input_objects_topic_name)"/>
+    <arg name="input_pointcloud_topic_name" value="$(var control_input_pointcloud_topic_name)"/>
     <arg name="trajectory_follower_node_param_path" value="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/trajectory_follower_node.param.yaml"/>
     <arg
       name="lat_controller_param_path"

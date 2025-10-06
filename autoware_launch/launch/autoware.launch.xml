@@ -106,6 +106,8 @@
       <arg name="use_agnocast" value="$(var use_agnocast)"/>
       <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="use_agnocast" value="$(var use_agnocast)"/>
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     </include>
   </group>
 

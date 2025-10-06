@@ -15,6 +15,10 @@
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
 
+  <!-- Agnocast -->
+  <arg name="use_agnocast" default="false" description="enable Agnocast for planning containers"/>
+  <arg name="agnocast_heaphook_path" description="path to agnocast heaphook library"/>
+
   <!-- Global parameters -->
   <group scoped="false">
     <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
@@ -39,5 +43,7 @@
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     <arg name="vehicle_mirror_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/mirror.param.yaml"/>
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+    <arg name="use_agnocast" value="$(var use_agnocast)"/>
+    <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
   </include>
 </launch>
