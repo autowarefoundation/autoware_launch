@@ -16,6 +16,8 @@
   <arg name="raw_vehicle_cmd_converter_param_path"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
   <arg name="use_pointcloud_container" default="true" description="use point cloud container for simulator perception modules"/>
+  <arg name="use_agnocast" default="false" description="enable Agnocast for planning containers"/>
+  <arg name="agnocast_heaphook_path" description="path to agnocast heaphook library"/>
 
   <include file="$(find-pkg-share tier4_simulator_launch)/launch/simulator.launch.xml">
     <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
@@ -100,6 +102,8 @@
       name="crosswalk_traffic_light_estimator_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml"
     />
+    <arg name="use_agnocast" value="$(var use_agnocast)"/>
+    <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
   </include>
   <group if="$(var scenario_simulation)">
     <include file="$(find-pkg-share autoware_dummy_infrastructure)/launch/dummy_infrastructure.launch.xml"/>
