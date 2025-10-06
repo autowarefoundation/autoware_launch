@@ -35,11 +35,9 @@
   <arg name="rviz" default="true" description="launch rviz"/>
   <!-- Scenario simulation -->
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
-
   <!-- Agnocast -->
   <let name="use_agnocast" value="true" if="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
   <let name="use_agnocast" value="false" unless="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
-
   <let name="agnocast_heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so"/>
 
   <group scoped="false">
