@@ -54,7 +54,7 @@
   <let name="use_agnocast_default" value="true" if="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
   <let name="use_agnocast_default" value="false" unless="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
 
-  <let name="agnocast_heaphook_path_default" value="/opt/ros/humble/lib/libagnocast_heaphook.so" />
+  <let name="agnocast_heaphook_path_default" value="/opt/ros/humble/lib/libagnocast_heaphook.so"/>
 
   <arg name="use_agnocast" default="$(var use_agnocast_default)" description="enable Agnocast (overrides ENABLE_AGNOCAST env var)"/>
   <arg name="agnocast_heaphook_path" default="$(var agnocast_heaphook_path_default)" description="path to agnocast heaphook library"/>
