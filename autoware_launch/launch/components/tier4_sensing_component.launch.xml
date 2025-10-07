@@ -11,7 +11,7 @@
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
   <!-- Agnocast -->
-  <arg name="use_agnocast" default="false"/>
+  <arg name="use_agnocast"/>
   <arg name="agnocast_heaphook_path" description="path to agnocast heaphook library"/>
 
   <!-- Global parameters -->
