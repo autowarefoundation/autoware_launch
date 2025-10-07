@@ -10,7 +10,30 @@ units:
           - { type: link, link: /autoware/localization/topic_rate_check/pose_twist_fusion }
           - { type: link, link: /autoware/localization/scan_matching_status }
           - { type: link, link: /autoware/localization/accuracy }
-          - { type: link, link: /autoware/localization/sensor_fusion_status }
+          - type: link
+            link: /autoware/localization/ekf_localizer_activation
+          - type: link
+            link: /autoware/localization/ekf_localizer_set_initial_pose
+          - type: link
+            link: /autoware/localization/ekf_localizer_pose_no_update_count
+          - type: link
+            link: /autoware/localization/ekf_localizer_pose_queue_size
+          - type: link
+            link: /autoware/localization/ekf_localizer_pose_delay_time
+          - type: link
+            link: /autoware/localization/ekf_localizer_pose_mahalanobis_distance
+          - type: link
+            link: /autoware/localization/ekf_localizer_twist_no_update_count
+          - type: link
+            link: /autoware/localization/ekf_localizer_twist_queue_size
+          - type: link
+            link: /autoware/localization/ekf_localizer_twist_delay_time
+          - type: link
+            link: /autoware/localization/ekf_localizer_twist_mahalanobis_distance
+          - type: link
+            link: /autoware/localization/ekf_localizer_cov_ellipse_long_axis_size
+          - type: link
+            link: /autoware/localization/ekf_localizer_cov_ellipse_lateral_direction_size
 
   - path: /autoware/localization/state
     type: diag
@@ -37,7 +60,62 @@ units:
     node: localization_error_monitor
     name: ellipse_error_status
 
-  - path: /autoware/localization/sensor_fusion_status
+  - path: /autoware/localization/ekf_localizer_activation
     type: diag
     node: localization
-    name: ekf_localizer
+    name: "ekf_localizer: is_activated"
+
+  - path: /autoware/localization/ekf_localizer_set_initial_pose
+    type: diag
+    node: localization
+    name: "ekf_localizer: is_set_initialpose"
+
+  - path: /autoware/localization/ekf_localizer_pose_no_update_count
+    type: diag
+    node: localization
+    name: "ekf_localizer: pose_no_update_count"
+
+  - path: /autoware/localization/ekf_localizer_pose_queue_size
+    type: diag
+    node: localization
+    name: "ekf_localizer: pose_queue_size"
+
+  - path: /autoware/localization/ekf_localizer_pose_delay_time
+    type: diag
+    node: localization
+    name: "ekf_localizer: pose_delay_time"
+
+  - path: /autoware/localization/ekf_localizer_pose_mahalanobis_distance
+    type: diag
+    node: localization
+    name: "ekf_localizer: pose_mahalanobis_distance"
+
+  - path: /autoware/localization/ekf_localizer_twist_no_update_count
+    type: diag
+    node: localization
+    name: "ekf_localizer: twist_no_update_count"
+
+  - path: /autoware/localization/ekf_localizer_twist_queue_size
+    type: diag
+    node: localization
+    name: "ekf_localizer: twist_queue_size"
+
+  - path: /autoware/localization/ekf_localizer_twist_delay_time
+    type: diag
+    node: localization
+    name: "ekf_localizer: twist_delay_time"
+
+  - path: /autoware/localization/ekf_localizer_twist_mahalanobis_distance
+    type: diag
+    node: localization
+    name: "ekf_localizer: twist_mahalanobis_distance"
+
+  - path: /autoware/localization/ekf_localizer_cov_ellipse_long_axis_size
+    type: diag
+    node: localization
+    name: "ekf_localizer: cov_ellipse_long_axis_size"
+
+  - path: /autoware/localization/ekf_localizer_cov_ellipse_lateral_direction_size
+    type: diag
+    node: localization
+    name: "ekf_localizer: cov_ellipse_lateral_direction_size"
