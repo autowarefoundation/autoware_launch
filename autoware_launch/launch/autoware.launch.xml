@@ -52,8 +52,8 @@
   <!-- Agnocast -->
   <let name="use_agnocast_default" value="true" if="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
   <let name="use_agnocast_default" value="false" unless="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
-  <arg name="use_agnocast" default="$(var use_agnocast_default)" description="enable Agnocast (overrides ENABLE_AGNOCAST env var)"/>
-  <arg name="agnocast_heaphook_path" default="/opt/ros/humble/lib/libagnocast_heaphook.so" description="path to agnocast heaphook library"/>
+  <arg name="use_agnocast" default="$(var use_agnocast_default)" description="enable Agnocast"/>
+  <include file="$(find-pkg-share autoware_launch)/config/agnocast/agnocast.yaml"/>
 
   <!-- Global parameters -->
   <group scoped="false">
