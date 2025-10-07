@@ -49,7 +49,7 @@
 
   <!-- Agnocast -->
   <let name="use_agnocast" value="true" if="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
-  <let name="use_agnocast" value="false" unless="$(eval &quot;'$(env ENABLE_AGNOCAST ')' == '1'&quot;)"/>
+  <let name="use_agnocast" value="false" unless="$(eval &quot;'$(env ENABLE_AGNOCAST '')' == '1'&quot;)"/>
   <include file="$(find-pkg-share autoware_launch)/config/agnocast/agnocast.yaml"/>
 
   <group scoped="false">

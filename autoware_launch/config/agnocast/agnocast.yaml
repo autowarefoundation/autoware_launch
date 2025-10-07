@@ -1,4 +1,4 @@
 launch:
   - arg:
       name: agnocast_heaphook_path
-      default: "/opt/ros/humble/lib/libagnocast_heaphook.so"
+      default: /opt/ros/humble/lib/libagnocast_heaphook.so
