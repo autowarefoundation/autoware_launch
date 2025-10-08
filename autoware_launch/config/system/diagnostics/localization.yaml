@@ -13,11 +13,11 @@ units:
           - { type: link, link: /autoware/localization/ekf_localizer_activation }
           - { type: link, link: /autoware/localization/ekf_localizer_set_initial_pose }
           - { type: link, link: /autoware/localization/ekf_localizer_pose_no_update_count }
-          - { type: link, link: /autoware/localization/ekf_localizer_pose_queue_size }
+          # - { type: link, link: /autoware/localization/ekf_localizer_pose_queue_size }
           - { type: link, link: /autoware/localization/ekf_localizer_pose_delay_time }
           - { type: link, link: /autoware/localization/ekf_localizer_pose_mahalanobis_distance }
           - { type: link, link: /autoware/localization/ekf_localizer_twist_no_update_count }
-          - { type: link, link: /autoware/localization/ekf_localizer_twist_queue_size }
+          # - { type: link, link: /autoware/localization/ekf_localizer_twist_queue_size }
           - { type: link, link: /autoware/localization/ekf_localizer_twist_delay_time }
           - { type: link, link: /autoware/localization/ekf_localizer_twist_mahalanobis_distance }
           - { type: link, link: /autoware/localization/ekf_localizer_cov_ellipse_long_axis_size }
@@ -63,10 +63,10 @@ units:
     node: localization
     name: "ekf_localizer: pose_no_update_count"
 
-  - path: /autoware/localization/ekf_localizer_pose_queue_size
-    type: diag
-    node: localization
-    name: "ekf_localizer: pose_queue_size"
+  # - path: /autoware/localization/ekf_localizer_pose_queue_size
+  #   type: diag
+  #   node: localization
+  #   name: "ekf_localizer: pose_queue_size"
 
   - path: /autoware/localization/ekf_localizer_pose_delay_time
     type: diag
@@ -83,10 +83,10 @@ units:
     node: localization
     name: "ekf_localizer: twist_no_update_count"
 
-  - path: /autoware/localization/ekf_localizer_twist_queue_size
-    type: diag
-    node: localization
-    name: "ekf_localizer: twist_queue_size"
+  # - path: /autoware/localization/ekf_localizer_twist_queue_size
+  #   type: diag
+  #   node: localization
+  #   name: "ekf_localizer: twist_queue_size"
 
   - path: /autoware/localization/ekf_localizer_twist_delay_time
     type: diag
