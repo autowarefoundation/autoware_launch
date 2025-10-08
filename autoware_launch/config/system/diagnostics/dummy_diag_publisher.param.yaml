@@ -35,7 +35,7 @@
       "localization: ekf_localizer: pose_no_update_count": default
 
       ## /autoware/localization/ekf_localizer_pose_queue_size
-      "localization: ekf_localizer: pose_queue_size": default
+      # "localization: ekf_localizer: pose_queue_size": default
 
       ## /autoware/localization/ekf_localizer_pose_delay_time
       "localization: ekf_localizer: pose_delay_time": default
@@ -47,7 +47,7 @@
       "localization: ekf_localizer: twist_no_update_count": default
 
       ## /autoware/localization/ekf_localizer_twist_queue_size
-      "localization: ekf_localizer: twist_queue_size": default
+      # "localization: ekf_localizer: twist_queue_size": default
 
       ## /autoware/localization/ekf_localizer_twist_delay_time
       "localization: ekf_localizer: twist_delay_time": default
