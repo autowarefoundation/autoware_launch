@@ -19,8 +19,10 @@
     <!-- Camera Driver -->
     <!-- Camera drivers not needed - CARLA already publishes camera_info and image_raw via autoware_carla_interface -->
 
-    <!-- IMU Driver -->
-    <!-- IMU driver not needed - CARLA publishes IMU data via autoware_carla_interface -->
+    <!-- IMU Processing -->
+    <!-- IMU driver not needed - CARLA publishes raw IMU data via autoware_carla_interface -->
+    <!-- But we need to process the raw IMU data using IMU corrector -->
+    <include file="$(find-pkg-share carla_sensor_kit_launch)/launch/imu.launch.xml"/>
 
     <!-- GNSS Driver -->
     <!-- GNSS driver not needed - CARLA publishes GNSS pose directly via autoware_carla_interface -->
