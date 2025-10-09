@@ -178,7 +178,7 @@
           # "auto"   : generate candidate path. if RTC is running as AUTO mode, the ego avoids it automatically.
           # "manual" : generate candidate path and wait operator approval even if RTC is running as AUTO mode.
           # "ignore" : never avoid it.
-          policy: "auto"    
+          policy: "auto"
 
         # params for filtering objects that are in intersection
         intersection:
