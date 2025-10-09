@@ -21,7 +21,10 @@ units:
           - { type: link, link: /autoware/localization/ekf_localizer_twist_delay_time }
           - { type: link, link: /autoware/localization/ekf_localizer_twist_mahalanobis_distance }
           - { type: link, link: /autoware/localization/ekf_localizer_cov_ellipse_long_axis_size }
-          - { type: link, link: /autoware/localization/ekf_localizer_cov_ellipse_lateral_direction_size }
+          - {
+              type: link,
+              link: /autoware/localization/ekf_localizer_cov_ellipse_lateral_direction_size,
+            }
 
   - path: /autoware/localization/state
     type: diag
