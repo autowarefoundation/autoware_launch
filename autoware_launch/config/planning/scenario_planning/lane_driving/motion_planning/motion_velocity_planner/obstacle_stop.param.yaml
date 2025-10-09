@@ -55,7 +55,7 @@
           default: true
           pointcloud: true
         check_outside: # If true, the planner checks if the obstacle is outside the ego's footprint. pointcloud obstacles are not supported.
-          default: true
+          default: false
           unknown: false
 
         trim_trajectory:
