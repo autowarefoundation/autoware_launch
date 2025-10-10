@@ -52,7 +52,7 @@
         # Special area filtering
         crosswalk:
           exclude: true
-          margin: 1.0 # [m]
+          margin: 2.0 # [m]
 
         # Temporal filtering
         min_detection_duration: 0.1 # [s]
