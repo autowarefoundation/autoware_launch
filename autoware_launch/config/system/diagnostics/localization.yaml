@@ -6,10 +6,14 @@ units:
         link: /autoware/localization/state
       - type: and
         list:
-          - { type: link, link: /autoware/localization/topic_rate_check/transform }
-          - { type: link, link: /autoware/localization/topic_rate_check/pose_twist_fusion }
-          - { type: link, link: /autoware/localization/scan_matching_status }
-          - { type: link, link: /autoware/localization/accuracy }
+          - type: link
+            link: /autoware/localization/topic_rate_check/transform
+          - type: link
+            link: /autoware/localization/topic_rate_check/pose_twist_fusion
+          - type: link
+            link: /autoware/localization/scan_matching_status
+          - type: link
+            link: /autoware/localization/accuracy
           - type: link
             link: /autoware/localization/ekf_localizer_activation
           - type: link
