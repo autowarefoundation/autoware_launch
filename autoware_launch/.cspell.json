@@ -2,7 +2,5 @@
   "version": "0.2",
   "language": "en",
   "allowCompoundWords": false,
-  "ignorePaths": [
-    "**/*.csv",
-  ]
+  "ignorePaths": ["**/*.csv"]
 }
