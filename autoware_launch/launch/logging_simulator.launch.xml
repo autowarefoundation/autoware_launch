@@ -31,8 +31,6 @@
   <!-- System -->
   <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
-  <!-- Perception -->
-  <arg name="tracker_publish_merged_objects" default="true" description="Enable to publish merged objects"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <!-- Scenario simulation -->
@@ -73,8 +71,6 @@
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
-      <!-- Perception -->
-      <arg name="tracker_publish_merged_objects" value="$(var tracker_publish_merged_objects)"/>
     </include>
   </group>
 </launch>
