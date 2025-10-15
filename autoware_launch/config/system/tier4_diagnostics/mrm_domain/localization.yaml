@@ -1,0 +1,46 @@
+units:
+  - path: /mrm_domain/localization/autonomous_available
+    type: and
+    list:
+      # Although not strictly necessary, it is added due to notification issues.
+      - { type: link, link: /mrm_domain/localization/in_lane_moderate_stop_available }
+
+  - path: /mrm_domain/localization/comfortable_stop_available
+    type: ok
+
+  - path: /mrm_domain/localization/in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /mrm_domain/localization/topic_status/pose/warn-to-ok }
+      - { type: link, link: /mrm_domain/localization/topic_status/twist/warn-to-ok }
+
+  - path: /mrm_domain/localization/in_lane_emergency_stop_available
+    type: and
+    list:
+      - { type: link, link: /mrm_domain/localization/in_lane_moderate_stop_available }
+
+  - path: /mrm_domain/localization/topic_status/pose/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /mrm_domain/localization/topic_status/pose
+
+  - path: /mrm_domain/localization/topic_status/twist/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /mrm_domain/localization/topic_status/twist
+
+  - path: /mrm_domain/localization/topic_status/pose
+    type: diag
+    node: topic_state_monitor_pose_with_covariance_mrm_domain
+    name: topic_status
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /mrm_domain/localization/topic_status/twist
+    type: diag
+    node: topic_state_monitor_twist_with_covariance_mrm_domain
+    name: topic_status
+    timeout: 1.0
+    latch: 0.0
