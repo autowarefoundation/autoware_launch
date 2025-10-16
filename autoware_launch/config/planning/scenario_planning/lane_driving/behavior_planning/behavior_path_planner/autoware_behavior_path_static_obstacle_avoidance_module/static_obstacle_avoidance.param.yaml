@@ -294,7 +294,7 @@
         #                but there is a possibility that the vehicle can't stop in front of the vehicle.
         # "reliable": insert stop or slow down point with ignoring decel/jerk constraints.
         #             make it possible to increase chance to avoid but uncomfortable deceleration maybe happen.
-        deceleration: "reliable"                        # [-]
+        deceleration: "best_effort"                        # [-]
         # policy for avoidance lateral margin. select "best_effort" or "reliable".
         # "best_effort": output avoidance path with shorten lateral margin when there is no enough longitudinal
         #                margin to avoid.
