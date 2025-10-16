@@ -3,40 +3,66 @@ units:
     type: and
     list:
       - { type: link, link: /localization/emergency_stop }
-      - { type: link, link: /localization/pull_over }
-      - { type: link, link: /localization/comfortable_stop }
-
-  - path: /localization/pull_over_available
-    type: and
-    list:
-      - { type: link, link: /localization/emergency_stop }
+      - { type: link, link: /localization/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /localization/in_lane_emergency_stop }
+      - { type: link, link: /localization/in_lane_moderate_stop }
       - { type: link, link: /localization/comfortable_stop }
 
   - path: /localization/comfortable_stop_available
     type: and
     list:
       - { type: link, link: /localization/emergency_stop }
+      - { type: link, link: /localization/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /localization/in_lane_emergency_stop }
+      - { type: link, link: /localization/in_lane_moderate_stop }
+
+  - path: /localization/in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /localization/emergency_stop }
+      - { type: link, link: /localization/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /localization/in_lane_emergency_stop }
+
+  - path: /localization/in_lane_emergency_stop_available
+    type: and
+    list:
+      - { type: link, link: /localization/emergency_stop }
+      - { type: link, link: /localization/sub_ecu_in_lane_moderate_stop }
 
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
   - path: /localization/emergency_stop
     type: and
-    list:
-      - { type: link, link: /localization/001-topic_status/initialpose-error }
-      - { type: link, link: /localization/001-topic_status/pose_twist_fusion_filter-error }
-      - { type: link, link: /localization/002-tf-error }
-      - { type: link, link: /localization/003-matching_score-error }
-      - { type: link, link: /localization/004-accuracy-error }
 
   - path: /localization/comfortable_stop
     type: and
+    list:
+      - { type: link, link: /localization/004-map-update-error }
+      - { type: link, link: /localization/007-pose_instability_detector-error }
 
-  - path: /localization/pull_over
+  - path: /localization/in_lane_moderate_stop
     type: and
+    list:
+      - { type: link, link: /localization/001-topic_status/pose_twist_fusion_filter-error }
+      - { type: link, link: /localization/001-topic_status/tf-error }
+      - { type: link, link: /localization/003-matching_score-error }
+      - { type: link, link: /localization/005-accuracy-error }
+      - { type: link, link: /localization/006-ekf_localizer-error }
+
+  - path: /localization/in_lane_emergency_stop
+    type: and
+
+  - path: /localization/sub_ecu_in_lane_moderate_stop
+    type: and
+    list:
+      - { type: link, link: /localization/002-timeout/gyro_odometer }
 
   - path: /localization/none
     type: and
+    list:
+      - { type: link, link: /localization/001-topic_status/initialpose-error }
+      - { type: link, link: /localization/008-pose_initializer_status }
 
   - path: /localization/001-topic_status/initialpose-error
     type: warn-to-ok
@@ -50,11 +76,11 @@ units:
       type: link
       link: /localization/001-topic_status/pose_twist_fusion_filter
 
-  - path: /localization/002-tf-error
+  - path: /localization/001-topic_status/tf-error
     type: warn-to-ok
     item:
       type: link
-      link: /localization/002-tf
+      link: /localization/001-topic_status/tf
 
   - path: /localization/003-matching_score-error
     type: warn-to-ok
@@ -62,38 +88,96 @@ units:
       type: link
       link: /localization/003-matching_score
 
-  - path: /localization/004-accuracy-error
+  - path: /localization/004-map-update-error
     type: warn-to-ok
     item:
       type: link
-      link: /localization/004-accuracy
+      link: /localization/004-map-update
+
+  - path: /localization/005-accuracy-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /localization/005-accuracy
+
+  - path: /localization/006-ekf_localizer-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /localization/006-ekf_localizer
+
+  - path: /localization/007-pose_instability_detector-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /localization/007-pose_instability_detector
 
   - path: /localization/001-topic_status/initialpose
     type: diag
     node: topic_state_monitor_initialpose3d
     name: localization_topic_status
     timeout: 1.0
+    latch: 0.0
 
   - path: /localization/001-topic_status/pose_twist_fusion_filter
     type: diag
     node: topic_state_monitor_pose_twist_fusion_filter_pose
     name: localization_topic_status
     timeout: 1.0
+    latch: 0.0
 
-  - path: /localization/002-tf
+  - path: /localization/001-topic_status/tf
     type: diag
     node: topic_state_monitor_transform_map_to_base_link
     name: localization_topic_status
     timeout: 1.0
+    latch: 0.0
+
+  - path: /localization/002-timeout/gyro_odometer
+    type: diag
+    node: gyro_odometer
+    name: gyro_odometer_status
+    timeout: 1.0
+    latch: 0.0
 
   - path: /localization/003-matching_score
     type: diag
     node: ndt_scan_matcher
     name: scan_matching_status
     timeout: 1.0
+    latch: 0.0
 
-  - path: /localization/004-accuracy
+  - path: /localization/004-map-update
+    type: diag
+    node: ndt_scan_matcher
+    name: map_update_status
+    timeout: 10.0
+    latch: 0.0
+
+  - path: /localization/005-accuracy
     type: diag
     node: localization_error_monitor
     name: ellipse_error_status
     timeout: 1.0
+    latch: 0.0
+
+  - path: /localization/006-ekf_localizer
+    type: diag
+    node: localization
+    name: ekf_localizer
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /localization/007-pose_instability_detector
+    type: diag
+    node: localization
+    name: pose_instability_detector
+    timeout: 1.0
+    latch: 0.0
+
+  - path: /localization/008-pose_initializer_status
+    type: diag
+    node: localization
+    name: pose_initializer_status
+    timeout: 1.0
+    latch: 0.0
