@@ -14,6 +14,9 @@
 
     <!-- Remap output topic -->
     <remap from="~/output/objects" to="camera_only/objects"/>
+    <remap from="~/latency/preprocess" to="camera_only/latency/preprocess"/>
+    <remap from="~/latency/total" to="camera_only/latency/total"/>
+    <remap from="~/latency/inference" to="camera_only/latency/inference"/>
 
     <!-- Image of ~/input/camerai will be the ith image in the model input -->
     <!-- ["CAM_FRONT", "CAM_FRONT_LEFT", "CAM_BACK_LEFT", "CAM_FRONT_RIGHT", "CAM_BACK_RIGHT"]  -->
