@@ -8,6 +8,10 @@
   <arg name="vehicle_model" default="sample_vehicle"/>
   <arg name="use_perception_filter" default="false" description="launch perception filter for external approval"/>
 
+  <!-- Input topic parameters for planning modules -->
+  <arg name="planning_input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="planning_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+
   <!-- Global parameters -->
   <group scoped="false">
     <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
@@ -24,6 +28,10 @@
     <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
     <arg name="is_simulation" value="$(var is_simulation)"/>
     <arg name="use_perception_filter" value="$(var use_perception_filter)"/>
+
+    <!-- Input topic parameters -->
+    <arg name="input_objects_topic_name" value="$(var planning_input_objects_topic_name)"/>
+    <arg name="input_pointcloud_topic_name" value="$(var planning_input_pointcloud_topic_name)"/>
 
     <!-- common -->
     <arg name="common_config_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common"/>
