@@ -55,7 +55,21 @@
   <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
   <arg name="is_simulation" default="false" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
   <!-- L4 tool kit-->
+  <arg name="launch_perception_filter" default="false" description="launch perception filter for external approval"/>
   <arg name="daytime_monitor_param_file" default="$(find-pkg-share daytime_monitor)/config/daytime_monitor.param.yaml" description="daytime_monitor config"/>
+
+  <!-- Planning input topic parameters based on perception filter -->
+  <let name="planning_input_objects_topic_name" value="/perception/object_recognition/objects" unless="$(var launch_perception_filter)"/>
+  <let name="planning_input_objects_topic_name" value="/perception/object_recognition/filtered_objects" if="$(var launch_perception_filter)"/>
+  <let name="planning_input_pointcloud_topic_name" value="/perception/obstacle_segmentation/pointcloud" unless="$(var launch_perception_filter)"/>
+  <let name="planning_input_pointcloud_topic_name" value="/perception/obstacle_segmentation/filtered_pointcloud" if="$(var launch_perception_filter)"/>
+
+  <!-- Control input topic parameters based on perception filter -->
+  <let name="control_input_objects_topic_name" value="/perception/object_recognition/objects" unless="$(var launch_perception_filter)"/>
+  <let name="control_input_objects_topic_name" value="/perception/object_recognition/filtered_objects" if="$(var launch_perception_filter)"/>
+  <let name="control_input_pointcloud_topic_name" value="/perception/obstacle_segmentation/pointcloud" unless="$(var launch_perception_filter)"/>
+  <let name="control_input_pointcloud_topic_name" value="/perception/obstacle_segmentation/filtered_pointcloud" if="$(var launch_perception_filter)"/>
+
   <!-- Agnocast -->
   <arg name="use_system_agnocast_heaphook" default="true" description="true: apt installed library, false: locally built"/>
   <let name="agnocast_heaphook_path" value="/opt/ros/humble/lib/libagnocast_heaphook.so" if="$(var use_system_agnocast_heaphook)"/>
@@ -134,6 +148,8 @@
       <arg name="is_simulation" value="$(var is_simulation)"/>
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="planning_input_objects_topic_name" value="$(var planning_input_objects_topic_name)"/>
+      <arg name="planning_input_pointcloud_topic_name" value="$(var planning_input_pointcloud_topic_name)"/>
     </include>
 
     <!-- Relay node for trajectory topic -->
@@ -151,6 +167,8 @@
       <arg name="module_preset" value="$(var control_module_preset)"/>
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="control_input_objects_topic_name" value="$(var control_input_objects_topic_name)"/>
+      <arg name="control_input_pointcloud_topic_name" value="$(var control_input_pointcloud_topic_name)"/>
     </include>
   </group>
 
@@ -174,6 +192,7 @@
   <!-- L4 Toolkit -->
   <group if="$(var launch_l4_toolkit)">
     <include file="$(find-pkg-share l4_toolkit_launch)/launch/l4_toolkit.launch.xml">
+      <arg name="launch_perception_filter" value="$(var launch_perception_filter)"/>
       <arg name="daytime_monitor_param_file" value="$(var daytime_monitor_param_file)"/>
     </include>
   </group>
