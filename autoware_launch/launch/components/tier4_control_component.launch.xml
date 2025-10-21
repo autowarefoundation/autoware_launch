@@ -10,7 +10,10 @@
   <arg name="use_aeb_autoware_state_check" default="true"/>
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
-  <arg name="use_perception_filter" default="false" description="launch perception filter for external approval"/>
+
+  <!-- Input topic parameters for control modules -->
+  <arg name="control_input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="control_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
 
   <!-- Input topic parameters for control modules -->
   <arg name="control_input_objects_topic_name" default="/perception/object_recognition/objects"/>
@@ -48,7 +51,6 @@
     <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
     <arg name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
     <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
-    <arg name="use_perception_filter" value="$(var use_perception_filter)"/>
     <!-- common param path -->
     <arg name="nearest_search_param_path" value="$(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml"/>
 
