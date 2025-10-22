@@ -46,7 +46,6 @@ units:
     list:
       - { type: link, link: /localization/001-topic_status/pose_twist_fusion_filter-error }
       - { type: link, link: /localization/001-topic_status/tf-error }
-      - { type: link, link: /localization/003-matching_score-error }
       - { type: link, link: /localization/005-accuracy-error }
       - { type: link, link: /localization/006-ekf_localizer-error }
 
@@ -62,6 +61,7 @@ units:
     type: and
     list:
       - { type: link, link: /localization/001-topic_status/initialpose-error }
+      - { type: link, link: /localization/003-matching_score-error }
       - { type: link, link: /localization/008-pose_initializer_status }
 
   - path: /localization/001-topic_status/initialpose-error
