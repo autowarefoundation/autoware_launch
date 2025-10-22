@@ -28,7 +28,7 @@
             hard_margin_for_parked_vehicle: 0.2         # [m]
           max_expand_ratio: 0.0                         # [-] FOR DEVELOPER
           envelope_buffer_margin: 0.1                   # [m] FOR DEVELOPER
-          th_error_eclipse_long_radius : 0.6            # [m]
+          th_error_eclipse_long_radius : 0.4            # [m]
         truck:
           th_moving_speed: 1.0
           th_moving_time: 2.0
@@ -39,7 +39,7 @@
             hard_margin_for_parked_vehicle: 0.2
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
-          th_error_eclipse_long_radius : 0.6
+          th_error_eclipse_long_radius : 0.4
         bus:
           th_moving_speed: 1.0
           th_moving_time: 2.0
@@ -50,7 +50,7 @@
             hard_margin_for_parked_vehicle: 0.2
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
-          th_error_eclipse_long_radius : 0.6
+          th_error_eclipse_long_radius : 0.4
         trailer:
           th_moving_speed: 1.0
           th_moving_time: 2.0
@@ -61,7 +61,7 @@
             hard_margin_for_parked_vehicle: 0.2
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
-          th_error_eclipse_long_radius : 0.6
+          th_error_eclipse_long_radius : 0.4
         unknown:
           th_moving_speed: 0.28
           th_moving_time: 1.0
