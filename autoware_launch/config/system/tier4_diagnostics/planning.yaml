@@ -60,8 +60,6 @@ units:
   - path: /planning/in_lane_emergency_stop
     type: and
     list:
-      - { type: link, link: /planning/015-intersection_collision_checker-error }
-      - { type: link, link: /planning/018-rear_collision_checker-error }
       - { type: link, link: /planning/020-boundary_departure-error }
 
   - path: /planning/sub_ecu_in_lane_moderate_stop
@@ -71,6 +69,8 @@ units:
     type: and
     list:
       - { type: link, link: /planning/001-topic_status/trajectory-error }
+      - { type: link, link: /planning/015-intersection_collision_checker-error }
+      - { type: link, link: /planning/018-rear_collision_checker-error }
 
   - path: /planning/001-topic_status/route-error
     type: warn-to-ok
