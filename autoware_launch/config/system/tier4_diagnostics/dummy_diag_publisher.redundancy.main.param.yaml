@@ -341,3 +341,193 @@
 
       ## /mrm_domain/localization/topic_status/twist
       "topic_state_monitor_twist_with_covariance_mrm_domain: topic_status": default
+
+      # Sub ECU - hardware
+
+      ## /hardware/sub/cpu/001-temperature
+      "cpu_monitor_sub: CPU Temperature": default
+
+      ## /hardware/sub/cpu/002-usage
+      "cpu_monitor_sub: CPU Usage": default
+
+      ## /hardware/sub/cpu/003-load_average
+      "cpu_monitor_sub: CPU Load Average": default
+
+      ## /hardware/sub/cpu/004-throttling
+      "cpu_monitor_sub: CPU Thermal Throttling": default
+
+      ## /hardware/sub/cpu/005-frequency
+      "cpu_monitor_sub: CPU Frequency": default
+
+      ## /hardware/sub/hdd/001-temperature
+      "hdd_monitor_sub: HDD Temperature": default
+
+      ## /hardware/sub/hdd/002-usage
+      "hdd_monitor_sub: HDD Usage": default
+
+      ## /hardware/sub/hdd/003-connection
+      "hdd_monitor_sub: HDD Connection": default
+
+      ## /hardware/sub/hdd/004-total_written
+      "hdd_monitor_sub: HDD TotalDataWritten": default
+
+      ## /hardware/sub/hdd/005-warranty_period
+      "hdd_monitor_sub: HDD PowerOnHours": default
+
+      ## /hardware/sub/hdd/006-soft_error
+      "hdd_monitor_sub: HDD RecoveredError": default
+
+      ## /hardware/sub/hdd/007-load
+      "hdd_monitor_sub: HDD ReadDataRate": default
+      "hdd_monitor_sub: HDD WriteDataRate": default
+      "hdd_monitor_sub: HDD ReadIOPS": default
+      "hdd_monitor_sub: HDD WriteIOPS": default
+
+      ## /hardware/sub/memory/001-usage
+      "mem_monitor_sub: Memory Usage": default
+
+      ## /hardware/sub/memory/002-ecc
+      "mem_monitor_sub: Memory ECC": default
+
+      ## /hardware/sub/network/001-usage
+      "net_monitor_sub: Network Usage": default
+
+      ## /hardware/sub/network/002-traffic
+      "net_monitor_sub: Network Traffic": default
+
+      ## /hardware/sub/network/003-crc
+      "net_monitor_sub: Network CRC Error": default
+
+      ## /hardware/sub/network/004-packet_reassembles
+      "net_monitor_sub: IP Packet Reassembles Failed": default
+
+      ## /hardware/sub/process/001-summary
+      "process_monitor_sub: Tasks Summary": default
+
+      ## /hardware/sub/process/002-load
+      "process_monitor_sub: High-load Proc[0]": default
+      "process_monitor_sub: High-load Proc[1]": default
+      "process_monitor_sub: High-load Proc[2]": default
+      "process_monitor_sub: High-load Proc[3]": default
+      "process_monitor_sub: High-load Proc[4]": default
+
+      ## /hardware/sub/process/003-memory
+      "process_monitor_sub: High-mem Proc[0]": default
+      "process_monitor_sub: High-mem Proc[1]": default
+      "process_monitor_sub: High-mem Proc[2]": default
+      "process_monitor_sub: High-mem Proc[3]": default
+      "process_monitor_sub: High-mem Proc[4]": default
+
+      ## /hardware/sub/bios/001-battery
+      "voltage_monitor_sub: CMOS Battery Status": default
+
+      ## /hardware/sub/gpu/001-temperature
+      "gpu_monitor_sub: GPU Temperature": default
+
+      ## /hardware/sub/gpu/002-usage
+      "gpu_monitor_sub: GPU Usage": default
+
+      ## /hardware/sub/gpu/003-memory
+      "gpu_monitor_sub: GPU Memory Usage": default
+
+      ## /hardware/sub/gpu/004-throttling
+      "gpu_monitor_sub: GPU Thermal Throttling": default
+
+      ##  /hardware/sub/gpu/005-frequency
+      "gpu_monitor_sub: GPU Frequency": default
+
+      # Perception1 ECU - hardware
+
+      ## /hardware/perception1/cpu/001-temperature
+      "cpu_monitor_perception1: CPU Temperature": default
+
+      ## /hardware/perception1/cpu/002-usage
+      "cpu_monitor_perception1: CPU Usage": default
+
+      ## /hardware/perception1/hdd/002-usage
+      "hdd_monitor_perception1: HDD Usage": default
+
+      ## /hardware/perception1/hdd/003-connection
+      "hdd_monitor_perception1: HDD Connection": default
+
+      ## /hardware/perception1/memory/001-usage
+      "mem_monitor_perception1: Memory Usage": default
+
+      ## /hardware/perception1/network/001-usage
+      "net_monitor_perception1: Network Usage": default
+
+      ## /hardware/perception1/network/003-crc
+      "net_monitor_perception1: Network CRC Error": default
+
+      ## /hardware/perception1/network/004-packet_reassembles
+      "net_monitor_perception1: IP Packet Reassembles Failed": default
+
+      ## /hardware/perception1/gpu/001-temperature
+      "gpu_monitor_perception1: GPU Temperature": default
+
+      ## /hardware/perception1/gpu/002-usage
+      "gpu_monitor_perception1: GPU Usage": default
+
+      # Perception2 ECU - hardware
+
+      ## /hardware/perception2/cpu/001-temperature
+      "cpu_monitor_perception2: CPU Temperature": default
+
+      ## /hardware/perception2/cpu/002-usage
+      "cpu_monitor_perception2: CPU Usage": default
+
+      ## /hardware/perception2/hdd/002-usage
+      "hdd_monitor_perception2: HDD Usage": default
+
+      ## /hardware/perception2/hdd/003-connection
+      "hdd_monitor_perception2: HDD Connection": default
+
+      ## /hardware/perception2/memory/001-usage
+      "mem_monitor_perception2: Memory Usage": default
+
+      ## /hardware/perception2/network/001-usage
+      "net_monitor_perception2: Network Usage": default
+
+      ## /hardware/perception2/network/003-crc
+      "net_monitor_perception2: Network CRC Error": default
+
+      ## /hardware/perception2/network/004-packet_reassembles
+      "net_monitor_perception2: IP Packet Reassembles Failed": default
+
+      ## /hardware/perception2/gpu/001-temperature
+      "gpu_monitor_perception2: GPU Temperature": default
+
+      ## /hardware/perception2/gpu/002-usage
+      "gpu_monitor_perception2: GPU Usage": default
+
+      # AddOnLite ECU - hardware
+
+      ## /hardware/addonlite/cpu/001-temperature
+      "cpu_monitor_addonlite: CPU Temperature": default
+
+      ## /hardware/addonlite/cpu/002-usage
+      "cpu_monitor_addonlite: CPU Usage": default
+
+      ## /hardware/addonlite/hdd/002-usage
+      "hdd_monitor_addonlite: HDD Usage": default
+
+      ## /hardware/addonlite/hdd/003-connection
+      "hdd_monitor_addonlite: HDD Connection": default
+
+      ## /hardware/addonlite/memory/001-usage
+      "mem_monitor_addonlite: Memory Usage": default
+
+      ## /hardware/addonlite/network/001-usage
+      "net_monitor_addonlite: Network Usage": default
+
+      ## /hardware/addonlite/network/003-crc
+      "net_monitor_addonlite: Network CRC Error": default
+
+      ## /hardware/addonlite/network/004-packet_reassembles
+      "net_monitor_addonlite: IP Packet Reassembles Failed": default
+
+      ## /hardware/addonlite/gpu/001-temperature
+      "gpu_monitor_addonlite: GPU Temperature": default
+
+      ## /hardware/addonlite/gpu/002-usage
+      "gpu_monitor_addonlite: GPU Usage": default
