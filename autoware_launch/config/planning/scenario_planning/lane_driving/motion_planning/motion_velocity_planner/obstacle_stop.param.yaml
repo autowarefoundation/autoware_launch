@@ -68,9 +68,6 @@
         lateral_margin: # lateral margin between the obstacles and ego's footprint
           nominal:
             default: 0.3
-            pedestrian: 0.6
-            bicycle: 0.6
-            motorcycle: 0.6
             unknown: -0.5
             pointcloud: 0.0
           additional: # additional stop margin to the obstacle.
@@ -79,15 +76,11 @@
             is_moving_threshold_velocity: 0.5 # [m/s] threshold to consider the obstacle as a moving obstacle. Pointcloud obstacles are always considered as stop obstacles.
             is_stop_obstacle: # [m] additional stop margin for stop obstacle
               default: 0.0
-              car: 0.2
-              truck: 0.2
-              bus: 0.2
-              trailer: 0.2
             is_moving_obstacle: # [m] additional stop margin for moving obstacle
               default: 0.0
-              pedestrian: 0.3
-              bicycle: 0.3
-              motorcycle: 0.3
+              pedestrian: 0.2
+              bicycle: 0.2
+              motorcycle: 0.2
 
         min_velocity_to_reach_collision_point: 2.0 # minimum velocity margin to calculate time to reach collision [m/s]
         stop_obstacle_hold_time_threshold : 1.0 # maximum time for holding closest stop obstacle
