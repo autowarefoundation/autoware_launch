@@ -211,7 +211,7 @@ units:
     latch: 0.0
 
   - path: /system/019-event_record_status
-    type: ok
+    type: diag
     node: bagkeeper
     name: event_record_status
     timeout: 3.0
