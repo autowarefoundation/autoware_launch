@@ -21,12 +21,12 @@ units:
     type: diag
     node: topic_state_monitor_pose_with_covariance
     name: topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /sub_ecu/localization/topic_status/twist
     type: diag
     node: topic_state_monitor_twist_with_covariance
     name: topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
