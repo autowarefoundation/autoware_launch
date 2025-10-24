@@ -98,13 +98,16 @@
     <remap from="output/accel" to="/localization/acceleration"/>
   </node>
 
-  <!-- Publish steady autonomous operation mode -->
-  <node pkg="autoware_tensorrt_vad" exec="carla_operation_mode_publisher" name="carla_operation_mode_publisher" output="screen">
-    <param name="use_sim_time" value="$(var use_sim_time)"/>
-    <param name="publish_rate_hz" value="10.0"/>
-    <param name="mode" value="AUTONOMOUS"/>
-    <remap from="~/output/state" to="/system/operation_mode/state"/>
-  </node>
+  <!-- Autoware API server for RViz button support -->
+  <include file="$(find-pkg-share autoware_default_adapi_universe)/launch/default_adapi.launch.py">
+    <arg name="config" value="$(find-pkg-share autoware_default_adapi_universe)/config/default_adapi.param.yaml"/>
+  </include>
+
+  <!-- Operation mode transition manager -->
+  <include file="$(find-pkg-share autoware_operation_mode_transition_manager)/launch/operation_mode_transition_manager.launch.xml">
+    <arg name="operation_mode_transition_manager_param" value="$(find-pkg-share autoware_launch)/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
+    <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+  </include>
 
   <!-- Launch VAD perception/planning -->
   <group>
