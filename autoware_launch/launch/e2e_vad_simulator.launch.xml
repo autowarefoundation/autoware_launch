@@ -157,9 +157,22 @@
   </node_container>
 
   <!-- Vehicle command gate for operation mode management -->
-  <include file="$(find-pkg-share autoware_vehicle_cmd_gate)/launch/vehicle_cmd_gate.launch.xml">
-    <arg name="config_file" value="$(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
-    <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-    <arg name="check_external_emergency_heartbeat" value="false"/>
-  </include>
+  <!-- Note: Emergency handling disabled for E2E VAD simulation (no MRM system) -->
+  <node pkg="autoware_vehicle_cmd_gate" exec="vehicle_cmd_gate_exe" name="vehicle_cmd_gate" output="screen">
+    <param name="use_emergency_handling" value="false"/>
+    <param name="check_external_emergency_heartbeat" value="false"/>
+    <param from="$(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
+    <param from="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+
+    <remap from="input/steering" to="/vehicle/status/steering_status"/>
+    <remap from="input/auto/control_cmd" to="/trajectory_follower/control_cmd"/>
+    <remap from="input/auto/turn_indicators_cmd" to="/planning/turn_indicators_cmd"/>
+    <remap from="input/auto/hazard_lights_cmd" to="/planning/hazard_lights_cmd"/>
+    <remap from="input/auto/gear_cmd" to="/control/shift_decider/gear_cmd"/>
+    <remap from="input/gate_mode" to="/control/gate_mode_cmd"/>
+    <remap from="output/control_cmd" to="/control/command/control_cmd"/>
+    <remap from="output/gear_cmd" to="/control/command/gear_cmd"/>
+    <remap from="output/turn_indicators_cmd" to="/control/command/turn_indicators_cmd"/>
+    <remap from="output/hazard_lights_cmd" to="/control/command/hazard_lights_cmd"/>
+  </node>
 </launch>
