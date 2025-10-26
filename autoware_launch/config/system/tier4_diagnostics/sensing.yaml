@@ -813,56 +813,56 @@ units:
     name: camera0_diagnostics
     timeout: 1.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 0.0
   - path: /sensing/camera/1/connection
     type: diag
     node: v4l2_camera_camera1
     name: camera1_diagnostics
     timeout: 1.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 0.0
   - path: /sensing/camera/2/connection
     type: diag
     node: v4l2_camera_camera2
     name: camera2_diagnostics
     timeout: 1.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 0.0
   - path: /sensing/camera/3/connection
     type: diag
     node: v4l2_camera_camera3
     name: camera3_diagnostics
     timeout: 1.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 0.0
   - path: /sensing/camera/4/connection
     type: diag
     node: v4l2_camera_camera4
     name: camera4_diagnostics
     timeout: 1.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 0.0
   - path: /sensing/camera/5/connection
     type: diag
     node: v4l2_camera_camera5
     name: camera5_diagnostics
     timeout: 1.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 0.0
   - path: /sensing/camera/6/connection
     type: diag
     node: v4l2_camera_camera6
     name: camera6_diagnostics
     timeout: 1.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 0.0
   - path: /sensing/camera/7/connection
     type: diag
     node: v4l2_camera_camera7
     name: camera7_diagnostics
     timeout: 1.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 0.0
 
   - path: /sensing/camera/003-sync
     type: and
