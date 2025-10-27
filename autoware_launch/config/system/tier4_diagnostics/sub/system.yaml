@@ -14,5 +14,5 @@ units:
     type: diag
     node: command_mode_decider
     name: ready
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
