@@ -23,7 +23,7 @@
         pointcloud_suppression_distance_margin: 0.2
 
         stop_on_curve:
-          enable_approaching: true
+          enable_approaching: false
           additional_stop_margin: 2.0 # [m]
           min_stop_margin: 3.5 # [m]
 
