@@ -499,35 +499,3 @@
 
       ## /hardware/perception2/gpu/002-usage
       "gpu_monitor_perception2: GPU Usage": default
-
-      # AddOnLite ECU - hardware
-
-      ## /hardware/addonlite/cpu/001-temperature
-      "cpu_monitor_addonlite: CPU Temperature": default
-
-      ## /hardware/addonlite/cpu/002-usage
-      "cpu_monitor_addonlite: CPU Usage": default
-
-      ## /hardware/addonlite/hdd/002-usage
-      "hdd_monitor_addonlite: HDD Usage": default
-
-      ## /hardware/addonlite/hdd/003-connection
-      "hdd_monitor_addonlite: HDD Connection": default
-
-      ## /hardware/addonlite/memory/001-usage
-      "mem_monitor_addonlite: Memory Usage": default
-
-      ## /hardware/addonlite/network/001-usage
-      "net_monitor_addonlite: Network Usage": default
-
-      ## /hardware/addonlite/network/003-crc
-      "net_monitor_addonlite: Network CRC Error": default
-
-      ## /hardware/addonlite/network/004-packet_reassembles
-      "net_monitor_addonlite: IP Packet Reassembles Failed": default
-
-      ## /hardware/addonlite/gpu/001-temperature
-      "gpu_monitor_addonlite: GPU Temperature": default
-
-      ## /hardware/addonlite/gpu/002-usage
-      "gpu_monitor_addonlite: GPU Usage": default

@@ -107,18 +107,6 @@ units:
       - { type: link, link: /hardware/perception2/network/004-packet_reassembles-error }
       - { type: link, link: /hardware/perception2/gpu/001-temperature-error }
 
-      # AddOnLite ECU
-      - { type: link, link: /hardware/addonlite/cpu/001-temperature }
-      - { type: link, link: /hardware/addonlite/cpu/002-usage-error }
-      - { type: link, link: /hardware/addonlite/hdd/002-usage-error }
-      - { type: link, link: /hardware/addonlite/hdd/003-connection-error }
-      - { type: link, link: /hardware/addonlite/memory/001-usage-error }
-      - { type: link, link: /hardware/addonlite/network/001-usage }
-      - { type: link, link: /hardware/addonlite/network/003-crc-error }
-      - { type: link, link: /hardware/addonlite/network/004-packet_reassembles-error }
-      - { type: link, link: /hardware/addonlite/gpu/001-temperature-error }
-      - { type: link, link: /hardware/addonlite/gpu/002-usage-error }
-
   - path: /hardware/in_lane_emergency_stop
     type: and
 
@@ -135,7 +123,6 @@ units:
       # Sub ECU - reserve
       # Perception1 ECU - reserve
       # Perception2 ECU - reserve
-      # AddonLite ECU - reserve
 
   - path: /hardware/none
     type: and
@@ -157,7 +144,6 @@ units:
 
       # Perception2 ECU
       - { type: link, link: /hardware/perception2/gpu/002-usage-error }
-      # AddOnLite ECU
 
   # Main ECU
   - path: /hardware/hdd/007-load
@@ -1166,121 +1152,6 @@ units:
   - path: /hardware/perception2/gpu/002-usage
     type: diag
     node: gpu_monitor_perception2
-    name: GPU Usage
-    timeout: 3.0
-    latch: 0.0
-
-  # AddOnLite ECU
-
-  # AddOnLite ECU (warn-to-ok)
-  - path: /hardware/addonlite/cpu/002-usage-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/addonlite/cpu/002-usage
-  - path: /hardware/addonlite/hdd/002-usage-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/addonlite/hdd/002-usage
-  - path: /hardware/addonlite/hdd/003-connection-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/addonlite/hdd/003-connection
-  - path: /hardware/addonlite/memory/001-usage-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/addonlite/memory/001-usage
-  - path: /hardware/addonlite/network/003-crc-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/addonlite/network/003-crc
-  - path: /hardware/addonlite/network/004-packet_reassembles-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/addonlite/network/004-packet_reassembles
-  - path: /hardware/addonlite/gpu/001-temperature-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/addonlite/gpu/001-temperature
-  - path: /hardware/addonlite/gpu/002-usage-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/addonlite/gpu/002-usage
-
-  # AddOnLite ECU (diagnostics detail)
-  - path: /hardware/addonlite/cpu/001-temperature
-    type: diag
-    node: cpu_monitor_addonlite
-    name: CPU Temperature
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/addonlite/cpu/002-usage
-    type: diag
-    node: cpu_monitor_addonlite
-    name: CPU Usage
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/addonlite/hdd/002-usage
-    type: diag
-    node: hdd_monitor_addonlite
-    name: HDD Usage
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/addonlite/hdd/003-connection
-    type: diag
-    node: hdd_monitor_addonlite
-    name: HDD Connection
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/addonlite/memory/001-usage
-    type: diag
-    node: mem_monitor_addonlite
-    name: Memory Usage
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/addonlite/network/001-usage
-    type: diag
-    node: net_monitor_addonlite
-    name: Network Usage
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/addonlite/network/003-crc
-    type: diag
-    node: net_monitor_addonlite
-    name: Network CRC Error
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/addonlite/network/004-packet_reassembles
-    type: diag
-    node: net_monitor_addonlite
-    name: IP Packet Reassembles Failed
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/addonlite/gpu/001-temperature
-    type: diag
-    node: gpu_monitor_addonlite
-    name: GPU Temperature
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/addonlite/gpu/002-usage
-    type: diag
-    node: gpu_monitor_addonlite
     name: GPU Usage
     timeout: 3.0
     latch: 0.0
