@@ -603,7 +603,7 @@ units:
     name: rate bound check
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.5
+    hysteresis: 0.0
 
   - path: /sensing/lidar/front_upper/rate
     type: diag
@@ -611,7 +611,7 @@ units:
     name: rate bound check
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.5
+    hysteresis: 0.0
 
   - path: /sensing/lidar/left_lower/rate
     type: diag
@@ -619,7 +619,7 @@ units:
     name: rate bound check
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.5
+    hysteresis: 0.0
 
   - path: /sensing/lidar/left_upper/rate
     type: diag
@@ -627,7 +627,7 @@ units:
     name: rate bound check
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.5
+    hysteresis: 0.0
 
   - path: /sensing/lidar/rear_lower/rate
     type: diag
@@ -635,7 +635,7 @@ units:
     name: rate bound check
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.5
+    hysteresis: 0.0
 
   - path: /sensing/lidar/rear_upper/rate
     type: diag
@@ -643,7 +643,7 @@ units:
     name: rate bound check
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.5
+    hysteresis: 0.0
 
   - path: /sensing/lidar/right_lower/rate
     type: diag
@@ -651,7 +651,7 @@ units:
     name: rate bound check
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.5
+    hysteresis: 0.0
 
   - path: /sensing/lidar/right_upper/rate
     type: diag
@@ -659,7 +659,7 @@ units:
     name: rate bound check
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.5
+    hysteresis: 0.0
 
   - path: /sensing/lidar/003-ptp
     type: and
