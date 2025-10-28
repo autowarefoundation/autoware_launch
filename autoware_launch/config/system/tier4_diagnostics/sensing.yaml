@@ -1095,14 +1095,14 @@ units:
     name: Internal
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.125
+    hysteresis: 0.0
   - path: /sensing/radar/rear_center/internal
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Internal
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.125
+    hysteresis: 0.0
 
   - path: /sensing/radar/004-blockage
     type: and
@@ -1115,14 +1115,14 @@ units:
     name: Blockage
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.125
+    hysteresis: 0.0
   - path: /sensing/radar/rear_center/blockage_validation
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Blockage
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.125
+    hysteresis: 0.0
 
   - path: /sensing/radar/005-object-rate
     type: and
@@ -1135,14 +1135,14 @@ units:
     name: Objects rate bound status
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.125
+    hysteresis: 0.0
   - path: /sensing/radar/rear_center/object_rate
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Objects rate bound status
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.125
+    hysteresis: 0.0
 
   - path: /sensing/radar/006-detections-rate
     type: and
@@ -1155,14 +1155,14 @@ units:
     name: Detections rate bound status
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.125
+    hysteresis: 0.0
   - path: /sensing/radar/rear_center/detections_rate
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Detections rate bound status
     timeout: 1.0
     latch: 0.0
-    hysteresis: 0.125
+    hysteresis: 0.0
 
   - path: /sensing/visibility_validation
     type: diag
