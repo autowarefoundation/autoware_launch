@@ -1,0 +1,51 @@
+/**:
+  ros__parameters:
+
+    enable_read_all_target_ids: true
+    target_ids: [
+                 "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+                 "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
+                 "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
+                 "31", "32", "33", "34", "35", "36", "37", "38", "39", "40",
+                 "41", "42", "43", "44", "45", "46", "47", "48", "49", "50",
+                 "51", "52", "53", "54", "55", "56", "57", "58", "59", "60",
+                 "61", "62", "63", "64", "65", "66", "67"
+                ]
+
+    # marker name
+    marker_name: "reflector"
+
+    # for marker detection algorithm
+    resolution: 0.04
+    # A sequence of high/low intensity to perform pattern matching.
+    # 1: high intensity (positive match), 0: not consider, -1: low intensity (negative match)
+    intensity_pattern: [1, 1, 1, 1, -1, -1, -1, -1, -1, 1, 1, 1, 1]
+    match_intensity_difference_threshold: 10
+    positive_match_num_threshold: 6
+    negative_match_num_threshold: 4
+    vote_threshold_for_detect_marker: 10
+    marker_to_vehicle_offset_y: -2.3
+    marker_height_from_ground: 0.8
+
+    # for interpolate algorithm
+    self_pose_timeout_sec: 1.0
+    self_pose_distance_tolerance_m: 1.0
+
+    # for validation
+    limit_distance_from_self_pose_to_nearest_marker: 12.0
+    limit_distance_from_self_pose_to_marker: 5.0
+
+    # base_covariance
+    # [TBD] This value is dynamically scaled according to the distance at which markers are detected.
+    base_covariance: [0.0001, 0.0,  0.0,  0.0,        0.0,        0.0,
+                      0.0,  1.0, 0.0,  0.0,        0.0,        0.0,
+                      0.0,  0.0,  1.0, 0.0,        0.0,        0.0,
+                      0.0,  0.0,  0.0,  0.00007569, 0.0,        0.0,
+                      0.0,  0.0,  0.0,  0.0,        0.00007569, 0.0,
+                      0.0,  0.0,  0.0,  0.0,        0.0,        0.00030625]
+
+    # for save log
+    enable_save_log: false
+    save_file_directory_path: detected_reflector_intensity_front_lower_right
+    save_file_name: detected_reflector_intensity
+    save_frame_id: pandar_40p_front
