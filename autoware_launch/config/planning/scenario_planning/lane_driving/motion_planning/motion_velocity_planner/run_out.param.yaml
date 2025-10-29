@@ -13,7 +13,7 @@
             margin: # margins to decide if we can ignore the collision. linearly interpolated based on the collision time and the provided mappings
               ego_enter_times: [0.0, 3.0]  # [s] predicted times when ego starts overlapping the path of the object
               time_margins: [0.0, 6.0] # [s] margin values used such that ego needs to enter the overlap before the object with this much margin to decide to ignore the collision
-            max_overlap_duration: 2.0  # [s] the collision is not ignored if ego is predicted to stay on the object's path for longer than this duration
+            max_overlap_duration: 9999.0  # [s] the collision is not ignored if ego is predicted to stay on the object's path for longer than this duration
           if_ego_arrives_first_and_cannot_stop: # collision where ego arrives first (margins not considered) and cannot stop before the collision
             enable: true
             deceleration_limit: 4.0 # [m/s²] deceleration used to determine if ego can stop before a collision
@@ -28,7 +28,7 @@
         on_time_buffer: 0.3   # [s] successive collision detection time required to start the stopping decision
         off_time_buffer: 1.0  # [s] successive non-collision detection time required to remove a stopping decision
         distance_buffer: 2.5  # [m] longitudinal safety distance to keep between ego and the collision position
-        deceleration_limit: 5.0  # [m/s²] if a stop causes a deceleration higher than this limit, an ERROR diagnostic is published
+        deceleration_limit: 6.0  # [m/s²] if a stop causes a deceleration higher than this limit, an ERROR diagnostic is published
         keep_condition:  # keep the stop decision if we still find any collision with the object within some time+distance range
           time: 5.0  # [s] time along the ego trajectory
           distance: 10.0  # [m] distance along the ego trajectory

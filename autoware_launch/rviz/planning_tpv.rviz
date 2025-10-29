@@ -58,8 +58,6 @@ Panels:
     Name: AutowareDateTimePanel
   - Class: rviz_plugins::AutowareStatePanel
     Name: AutowareStatePanel
-  - Class: AutowareScreenCapturePanel
-    Name: AutowareScreenCapturePanel
   - Class: multi_data_monitor::MultiDataMonitor
     Name: MultiDataMonitor
     Path: package://multi_data_monitor_config/data/debug_config.yaml
@@ -69,6 +67,8 @@ Panels:
     Name: RTCManagerPanel
   - Class: rviz_plugins::VelocitySteeringFactorsPanel
     Name: VelocitySteeringFactorsPanel
+  - Class: rviz_plugins/AutowareScreenCapturePanel
+    Name: AutowareScreenCapturePanel
 Visualization Manager:
   Class: ""
   Displays:
