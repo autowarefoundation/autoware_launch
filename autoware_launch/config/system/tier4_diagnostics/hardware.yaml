@@ -39,21 +39,21 @@ units:
     type: and
     list:
       # Main ECU
-      - { type: link, link: /hardware/cpu/001-temperature }
+      - { type: link, link: /hardware/cpu/001-temperature-error }
       - { type: link, link: /hardware/cpu/002-usage-error }
-      - { type: link, link: /hardware/cpu/003-load_average }
+      - { type: link, link: /hardware/cpu/003-load_average-error }
       - { type: link, link: /hardware/cpu/004-throttling-error }
-      - { type: link, link: /hardware/cpu/005-frequency }
+      - { type: link, link: /hardware/cpu/005-frequency-error }
       - { type: link, link: /hardware/hdd/001-temperature-error }
       - { type: link, link: /hardware/hdd/002-usage-error }
       - { type: link, link: /hardware/hdd/003-connection-error }
-      - { type: link, link: /hardware/hdd/004-total_written }
+      - { type: link, link: /hardware/hdd/004-total_written-error }
       - { type: link, link: /hardware/hdd/006-soft_error-error }
       - { type: link, link: /hardware/hdd/007-load-error }
       - { type: link, link: /hardware/memory/001-usage-error }
       - { type: link, link: /hardware/memory/002-ecc-error }
-      - { type: link, link: /hardware/network/001-usage }
-      - { type: link, link: /hardware/network/002-traffic }
+      - { type: link, link: /hardware/network/001-usage-error }
+      - { type: link, link: /hardware/network/002-traffic-error }
       - { type: link, link: /hardware/network/003-crc-error }
       - { type: link, link: /hardware/network/004-packet_reassembles-error }
       - { type: link, link: /hardware/gpu/001-temperature-error }
@@ -61,48 +61,26 @@ units:
       - { type: link, link: /hardware/gpu/003-memory-error }
       - { type: link, link: /hardware/gpu/004-throttling-error }
       - { type: link, link: /hardware/gpu/005-frequency-error }
-      # Sub ECU
-      - { type: link, link: /hardware/sub/cpu/001-temperature }
-      - { type: link, link: /hardware/sub/cpu/002-usage-error }
-      - { type: link, link: /hardware/sub/cpu/003-load_average }
-      - { type: link, link: /hardware/sub/cpu/004-throttling-error }
-      - { type: link, link: /hardware/sub/cpu/005-frequency }
-      - { type: link, link: /hardware/sub/hdd/001-temperature-error }
-      - { type: link, link: /hardware/sub/hdd/002-usage-error }
-      - { type: link, link: /hardware/sub/hdd/003-connection-error }
-      - { type: link, link: /hardware/sub/hdd/004-total_written }
-      - { type: link, link: /hardware/sub/hdd/006-soft_error-error }
-      - { type: link, link: /hardware/sub/hdd/007-load-error }
-      - { type: link, link: /hardware/sub/memory/001-usage-error }
-      - { type: link, link: /hardware/sub/memory/002-ecc-error }
-      - { type: link, link: /hardware/sub/network/001-usage }
-      - { type: link, link: /hardware/sub/network/002-traffic }
-      - { type: link, link: /hardware/sub/network/003-crc-error }
-      - { type: link, link: /hardware/sub/network/004-packet_reassembles-error }
-      - { type: link, link: /hardware/sub/gpu/001-temperature-error }
-      - { type: link, link: /hardware/sub/gpu/002-usage-error }
-      - { type: link, link: /hardware/sub/gpu/003-memory-error }
-      - { type: link, link: /hardware/sub/gpu/004-throttling-error }
-      - { type: link, link: /hardware/sub/gpu/005-frequency-error }
+
       # Perception1 ECU
-      - { type: link, link: /hardware/perception1/cpu/001-temperature }
+      - { type: link, link: /hardware/perception1/cpu/001-temperature-error }
       - { type: link, link: /hardware/perception1/cpu/002-usage-error }
       - { type: link, link: /hardware/perception1/hdd/002-usage-error }
       - { type: link, link: /hardware/perception1/hdd/003-connection-error }
       - { type: link, link: /hardware/perception1/memory/001-usage-error }
-      - { type: link, link: /hardware/perception1/network/001-usage }
+      - { type: link, link: /hardware/perception1/network/001-usage-error }
       - { type: link, link: /hardware/perception1/network/003-crc-error }
       - { type: link, link: /hardware/perception1/network/004-packet_reassembles-error }
       - { type: link, link: /hardware/perception1/gpu/001-temperature-error }
       - { type: link, link: /hardware/perception1/gpu/002-usage-error }
 
       # Perception2 ECU
-      - { type: link, link: /hardware/perception2/cpu/001-temperature }
+      - { type: link, link: /hardware/perception2/cpu/001-temperature-error }
       - { type: link, link: /hardware/perception2/cpu/002-usage-error }
       - { type: link, link: /hardware/perception2/hdd/002-usage-error }
       - { type: link, link: /hardware/perception2/hdd/003-connection-error }
       - { type: link, link: /hardware/perception2/memory/001-usage-error }
-      - { type: link, link: /hardware/perception2/network/001-usage }
+      - { type: link, link: /hardware/perception2/network/001-usage-error }
       - { type: link, link: /hardware/perception2/network/003-crc-error }
       - { type: link, link: /hardware/perception2/network/004-packet_reassembles-error }
       - { type: link, link: /hardware/perception2/gpu/001-temperature-error }
@@ -128,18 +106,12 @@ units:
     type: and
     list:
       # Main ECU
-      - { type: link, link: /hardware/hdd/005-warranty_period }
-      - { type: link, link: /hardware/ntp/001-sync }
-      - { type: link, link: /hardware/process/001-summary }
-      - { type: link, link: /hardware/process/002-load }
-      - { type: link, link: /hardware/process/003-memory }
-      - { type: link, link: /hardware/bios/001-battery }
-      # Sub ECU
-      - { type: link, link: /hardware/sub/hdd/005-warranty_period }
-      - { type: link, link: /hardware/sub/process/001-summary }
-      - { type: link, link: /hardware/sub/process/002-load }
-      - { type: link, link: /hardware/sub/process/003-memory }
-      - { type: link, link: /hardware/sub/bios/001-battery }
+      - { type: link, link: /hardware/hdd/005-warranty_period-error }
+      - { type: link, link: /hardware/ntp/001-sync-error }
+      - { type: link, link: /hardware/process/001-summary-error }
+      - { type: link, link: /hardware/process/002-load-error }
+      - { type: link, link: /hardware/process/003-memory-error }
+      - { type: link, link: /hardware/bios/001-battery-error }
       # Perception1 ECU
 
       # Perception2 ECU
@@ -173,16 +145,31 @@ units:
       - { type: link, link: /hardware/process/003-memory/proc-4 }
 
   # Main ECU (warn-to-ok)
+  - path: /hardware/cpu/001-temperature-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/cpu/001-temperature
   - path: /hardware/cpu/002-usage-error
     type: warn-to-ok
     item:
       type: link
       link: /hardware/cpu/002-usage
+  - path: /hardware/cpu/003-load_average-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/cpu/003-load_average
   - path: /hardware/cpu/004-throttling-error
     type: warn-to-ok
     item:
       type: link
       link: /hardware/cpu/004-throttling
+  - path: /hardware/cpu/005-frequency-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/cpu/005-frequency
   - path: /hardware/hdd/001-temperature-error
     type: warn-to-ok
     item:
@@ -198,6 +185,16 @@ units:
     item:
       type: link
       link: /hardware/hdd/003-connection
+  - path: /hardware/hdd/004-total_written-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/hdd/004-total_written
+  - path: /hardware/hdd/005-warranty_period-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/hdd/005-warranty_period
   - path: /hardware/hdd/006-soft_error-error
     type: warn-to-ok
     item:
@@ -218,6 +215,16 @@ units:
     item:
       type: link
       link: /hardware/memory/002-ecc
+  - path: /hardware/network/001-usage-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/network/001-usage
+  - path: /hardware/network/002-traffic-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/network/002-traffic
   - path: /hardware/network/003-crc-error
     type: warn-to-ok
     item:
@@ -228,6 +235,26 @@ units:
     item:
       type: link
       link: /hardware/network/004-packet_reassembles
+  - path: /hardware/ntp/001-sync-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/ntp/001-sync
+  - path: /hardware/process/001-summary-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/process/001-summary
+  - path: /hardware/process/002-load-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/process/002-load
+  - path: /hardware/process/003-memory-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/process/003-memory
   - path: /hardware/gpu/001-temperature-error
     type: warn-to-ok
     item:
@@ -253,6 +280,11 @@ units:
     item:
       type: link
       link: /hardware/gpu/005-frequency
+  - path: /hardware/bios/001-battery-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/bios/001-battery
 
   # Main ECU (diagnostics detail)
   - path: /hardware/cpu/001-temperature
@@ -550,385 +582,14 @@ units:
     timeout: 5.0
     latch: 0.0
 
-  # Sub ECU
-  - path: /hardware/sub/hdd/007-load
-    type: and
-    list:
-      - { type: link, link: /hardware/sub/hdd/007-load/read_rate }
-      - { type: link, link: /hardware/sub/hdd/007-load/read_iops }
-      - { type: link, link: /hardware/sub/hdd/007-load/write_rate }
-      - { type: link, link: /hardware/sub/hdd/007-load/write_iops }
-
-  - path: /hardware/sub/process/002-load
-    type: and
-    list:
-      - { type: link, link: /hardware/sub/process/002-load/proc-0 }
-      - { type: link, link: /hardware/sub/process/002-load/proc-1 }
-      - { type: link, link: /hardware/sub/process/002-load/proc-2 }
-      - { type: link, link: /hardware/sub/process/002-load/proc-3 }
-      - { type: link, link: /hardware/sub/process/002-load/proc-4 }
-
-  - path: /hardware/sub/process/003-memory
-    type: and
-    list:
-      - { type: link, link: /hardware/sub/process/003-memory/proc-0 }
-      - { type: link, link: /hardware/sub/process/003-memory/proc-1 }
-      - { type: link, link: /hardware/sub/process/003-memory/proc-2 }
-      - { type: link, link: /hardware/sub/process/003-memory/proc-3 }
-      - { type: link, link: /hardware/sub/process/003-memory/proc-4 }
-
-  # Sub ECU (warn-to-ok)
-  - path: /hardware/sub/cpu/002-usage-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/cpu/002-usage
-  - path: /hardware/sub/cpu/004-throttling-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/cpu/004-throttling
-  - path: /hardware/sub/hdd/001-temperature-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/hdd/001-temperature
-  - path: /hardware/sub/hdd/002-usage-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/hdd/002-usage
-  - path: /hardware/sub/hdd/003-connection-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/hdd/003-connection
-  - path: /hardware/sub/hdd/006-soft_error-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/hdd/006-soft_error
-  - path: /hardware/sub/hdd/007-load-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/hdd/007-load
-  - path: /hardware/sub/memory/001-usage-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/memory/001-usage
-  - path: /hardware/sub/memory/002-ecc-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/memory/002-ecc
-  - path: /hardware/sub/network/003-crc-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/network/003-crc
-  - path: /hardware/sub/network/004-packet_reassembles-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/network/004-packet_reassembles
-  - path: /hardware/sub/gpu/001-temperature-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/gpu/001-temperature
-  - path: /hardware/sub/gpu/002-usage-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/gpu/002-usage
-  - path: /hardware/sub/gpu/003-memory-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/gpu/003-memory
-  - path: /hardware/sub/gpu/004-throttling-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/gpu/004-throttling
-  - path: /hardware/sub/gpu/005-frequency-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /hardware/sub/gpu/005-frequency
-
-  # Sub ECU (diagnostics detail)
-  - path: /hardware/sub/cpu/001-temperature
-    type: diag
-    node: cpu_monitor_sub
-    name: CPU Temperature
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/cpu/002-usage
-    type: diag
-    node: cpu_monitor_sub
-    name: CPU Usage
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/cpu/003-load_average
-    type: diag
-    node: cpu_monitor_sub
-    name: CPU Load Average
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/cpu/004-throttling
-    type: diag
-    node: cpu_monitor_sub
-    name: CPU Thermal Throttling
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/cpu/005-frequency
-    type: diag
-    node: cpu_monitor_sub
-    name: CPU Frequency
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/hdd/001-temperature
-    type: diag
-    node: hdd_monitor_sub
-    name: HDD Temperature
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/hdd/002-usage
-    type: diag
-    node: hdd_monitor_sub
-    name: HDD Usage
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/hdd/003-connection
-    type: diag
-    node: hdd_monitor_sub
-    name: HDD Connection
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/hdd/004-total_written
-    type: diag
-    node: hdd_monitor_sub
-    name: HDD TotalDataWritten
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/hdd/005-warranty_period
-    type: diag
-    node: hdd_monitor_sub
-    name: HDD PowerOnHours
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/hdd/006-soft_error
-    type: diag
-    node: hdd_monitor_sub
-    name: HDD RecoveredError
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/hdd/007-load/read_rate
-    type: diag
-    node: hdd_monitor_sub
-    name: HDD ReadDataRate
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/hdd/007-load/write_rate
-    type: diag
-    node: hdd_monitor_sub
-    name: HDD WriteDataRate
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/hdd/007-load/read_iops
-    type: diag
-    node: hdd_monitor_sub
-    name: HDD ReadIOPS
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/hdd/007-load/write_iops
-    type: diag
-    node: hdd_monitor_sub
-    name: HDD WriteIOPS
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/memory/001-usage
-    type: diag
-    node: mem_monitor_sub
-    name: Memory Usage
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/memory/002-ecc
-    type: diag
-    node: mem_monitor_sub
-    name: Memory ECC
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/network/001-usage
-    type: diag
-    node: net_monitor_sub
-    name: Network Usage
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/network/002-traffic
-    type: diag
-    node: net_monitor_sub
-    name: Network Traffic
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/network/003-crc
-    type: diag
-    node: net_monitor_sub
-    name: Network CRC Error
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/network/004-packet_reassembles
-    type: diag
-    node: net_monitor_sub
-    name: IP Packet Reassembles Failed
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/process/001-summary
-    type: diag
-    node: process_monitor_sub
-    name: Tasks Summary
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/process/002-load/proc-0
-    type: diag
-    node: process_monitor_sub
-    name: High-load Proc[0]
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/process/002-load/proc-1
-    type: diag
-    node: process_monitor_sub
-    name: High-load Proc[1]
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/process/002-load/proc-2
-    type: diag
-    node: process_monitor_sub
-    name: High-load Proc[2]
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/process/002-load/proc-3
-    type: diag
-    node: process_monitor_sub
-    name: High-load Proc[3]
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/process/002-load/proc-4
-    type: diag
-    node: process_monitor_sub
-    name: High-load Proc[4]
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/process/003-memory/proc-0
-    type: diag
-    node: process_monitor_sub
-    name: High-mem Proc[0]
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/process/003-memory/proc-1
-    type: diag
-    node: process_monitor_sub
-    name: High-mem Proc[1]
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/process/003-memory/proc-2
-    type: diag
-    node: process_monitor_sub
-    name: High-mem Proc[2]
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/process/003-memory/proc-3
-    type: diag
-    node: process_monitor_sub
-    name: High-mem Proc[3]
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/process/003-memory/proc-4
-    type: diag
-    node: process_monitor_sub
-    name: High-mem Proc[4]
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/gpu/001-temperature
-    type: diag
-    node: gpu_monitor_sub
-    name: GPU Temperature
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/gpu/002-usage
-    type: diag
-    node: gpu_monitor_sub
-    name: GPU Usage
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/gpu/003-memory
-    type: diag
-    node: gpu_monitor_sub
-    name: GPU Memory Usage
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/gpu/004-throttling
-    type: diag
-    node: gpu_monitor_sub
-    name: GPU Thermal Throttling
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/gpu/005-frequency
-    type: diag
-    node: gpu_monitor_sub
-    name: GPU Frequency
-    timeout: 3.0
-    latch: 0.0
-
-  - path: /hardware/sub/bios/001-battery
-    type: diag
-    node: voltage_monitor_sub
-    name: CMOS Battery Status
-    timeout: 3.0
-    latch: 0.0
-
   # Perception1 ECU
 
   # Perception1 ECU (warn-to-ok)
+  - path: /hardware/perception1/cpu/001-temperature-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/perception1/cpu/001-temperature
   - path: /hardware/perception1/cpu/002-usage-error
     type: warn-to-ok
     item:
@@ -949,6 +610,11 @@ units:
     item:
       type: link
       link: /hardware/perception1/memory/001-usage
+  - path: /hardware/perception1/network/001-usage-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/perception1/network/001-usage
   - path: /hardware/perception1/network/003-crc-error
     type: warn-to-ok
     item:
@@ -1044,6 +710,11 @@ units:
   # Perception2 ECU
 
   # Perception2 ECU (warn-to-ok)
+  - path: /hardware/perception2/cpu/001-temperature-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/perception2/cpu/001-temperature
   - path: /hardware/perception2/cpu/002-usage-error
     type: warn-to-ok
     item:
@@ -1064,6 +735,11 @@ units:
     item:
       type: link
       link: /hardware/perception2/memory/001-usage
+  - path: /hardware/perception2/network/001-usage-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /hardware/perception2/network/001-usage
   - path: /hardware/perception2/network/003-crc-error
     type: warn-to-ok
     item:
