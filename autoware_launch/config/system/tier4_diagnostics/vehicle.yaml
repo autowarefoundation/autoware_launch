@@ -41,6 +41,7 @@ units:
       - { type: link, link: /vehicle/006-a_brake_error }
       - { type: link, link: /vehicle/006-b_parking_error }
       - { type: link, link: /vehicle/007-vehicle-emergency-button }
+      - { type: link, link: /vehicle/override_when_level4_driving }
 
   - path: /vehicle/in_lane_moderate_stop
     type: and
@@ -48,7 +49,6 @@ units:
       - { type: link, link: /vehicle/006-c_steering-error }
       - { type: link, link: /vehicle/006-d_drive_system-error }
       - { type: link, link: /vehicle/006-e_steering-error }
-      - { type: link, link: /vehicle/override_when_level4_driving }
       - { type: link, link: /vehicle/t4_vcu_version_check-error }
       - { type: link, link: /vehicle/vcu-not-authenticated-error }
 
