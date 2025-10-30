@@ -45,7 +45,6 @@ units:
     type: and
     list:
       - { type: link, link: /control/011-rolling_back-error }
-      - { type: link, link: /control/012-overrun_stop_point-error }
       - { type: link, link: /control/011-rolling_back-error }
 
   - path: /control/in_lane_moderate_stop
@@ -67,6 +66,7 @@ units:
   - path: /control/none
     type: and
     list:
+      - { type: link, link: /control/012-overrun_stop_point-error }
       - { type: link, link: /control/013-will_overrun_stop_point-error }
       - { type: link, link: /control/014-acceleration_error-error }
       - { type: link, link: /control/016-sudden_deceleration_monitor-error }
