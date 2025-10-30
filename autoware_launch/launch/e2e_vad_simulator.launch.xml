@@ -103,6 +103,26 @@
     <arg name="config" value="$(find-pkg-share autoware_default_adapi_universe)/config/default_adapi.param.yaml"/>
   </include>
 
+  <!-- Diagnostic graph aggregator to publish /system/operation_mode/availability -->
+  <include file="$(find-pkg-share autoware_diagnostic_graph_aggregator)/launch/aggregator.launch.xml">
+    <arg name="graph_file" value="$(find-pkg-share autoware_diagnostic_graph_aggregator)/example/graph/main.yaml"/>
+  </include>
+
+  <!-- Dummy diagnostics so operation mode availability remains true -->
+  <node pkg="autoware_dummy_diag_publisher" exec="autoware_dummy_diag_publisher_node" name="dummy_diag_publisher" output="screen">
+    <param name="update_rate" value="10.0"/>
+    <param name="required_diags.lidar_driver_top: status.is_active" value="true" type="str"/>
+    <param name="required_diags.lidar_driver_top: status.status" value="OK" type="str"/>
+    <param name="required_diags.lidar_driver_front: status.is_active" value="true" type="str"/>
+    <param name="required_diags.lidar_driver_front: status.status" value="OK" type="str"/>
+    <param name="required_diags.radar_driver_front: status.is_active" value="true" type="str"/>
+    <param name="required_diags.radar_driver_front: status.status" value="OK" type="str"/>
+    <param name="required_diags.external_command_checker: joystick_command.is_active" value="true" type="str"/>
+    <param name="required_diags.external_command_checker: joystick_command.status" value="OK" type="str"/>
+    <param name="required_diags.external_command_checker: remote_command.is_active" value="true" type="str"/>
+    <param name="required_diags.external_command_checker: remote_command.status" value="OK" type="str"/>
+  </node>
+
   <!-- Operation mode transition manager -->
   <include file="$(find-pkg-share autoware_operation_mode_transition_manager)/launch/operation_mode_transition_manager.launch.xml">
     <arg name="operation_mode_transition_manager_param" value="$(find-pkg-share autoware_launch)/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
@@ -132,10 +152,7 @@
 
   <!-- Minimal control: trajectory follower only -->
   <node_container pkg="rclcpp_components" exec="component_container_mt" name="vad_control_container" namespace="" output="screen">
-    <composable_node
-      pkg="autoware_trajectory_follower_node"
-      plugin="autoware::motion::control::trajectory_follower_node::Controller"
-      name="trajectory_follower">
+    <composable_node pkg="autoware_trajectory_follower_node" plugin="autoware::motion::control::trajectory_follower_node::Controller" name="trajectory_follower">
       <param name="use_sim_time" value="$(var use_sim_time)"/>
       <param name="lateral_controller_mode" value="mpc"/>
       <param name="longitudinal_controller_mode" value="pid"/>
@@ -156,20 +173,51 @@
     </composable_node>
   </node_container>
 
+  <!-- Load shift decider as composable node -->
+  <load_composable_node target="/vad_control_container">
+    <composable_node pkg="autoware_shift_decider" plugin="autoware::shift_decider::ShiftDecider" name="autoware_shift_decider">
+      <param from="$(find-pkg-share autoware_launch)/config/control/shift_decider/shift_decider.param.yaml"/>
+      <remap from="input/control_cmd" to="/trajectory_follower/control_cmd"/>
+      <remap from="input/state" to="/autoware/state"/>
+      <remap from="input/current_gear" to="/vehicle/status/gear_status"/>
+      <remap from="output/gear_cmd" to="/control/shift_decider/gear_cmd"/>
+    </composable_node>
+  </load_composable_node>
+
+  <node pkg="topic_tools" exec="relay" name="trajectory_follower_control_cmd_relay" output="log" args="/trajectory_follower/control_cmd /trajectory_follower_control_cmd"/>
+
+  <!-- External command selector (required for engagement) -->
+  <include file="$(find-pkg-share autoware_external_cmd_selector)/launch/external_cmd_selector.launch.py">
+    <arg name="use_intra_process" value="false"/>
+    <arg name="target_container" value="/vad_control_container"/>
+    <arg name="external_cmd_selector_param_path" value="$(find-pkg-share autoware_launch)/config/control/external_cmd_selector/external_cmd_selector.param.yaml"/>
+    <arg name="output/current_selector_mode" value="/control/external_cmd_selector/current_selector_mode"/>
+  </include>
+
   <!-- Vehicle command gate for operation mode management -->
-  <!-- Note: Emergency handling disabled for E2E VAD simulation (no MRM system) -->
+  <let name="check_external_emergency_heartbeat" value="false"/>
   <node pkg="autoware_vehicle_cmd_gate" exec="vehicle_cmd_gate_exe" name="vehicle_cmd_gate" output="screen">
-    <param name="use_emergency_handling" value="false"/>
-    <param name="check_external_emergency_heartbeat" value="false"/>
     <param from="$(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
     <param from="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+    <param name="use_emergency_handling" value="false"/>
+    <param name="check_external_emergency_heartbeat" value="false"/>
 
     <remap from="input/steering" to="/vehicle/status/steering_status"/>
     <remap from="input/auto/control_cmd" to="/trajectory_follower/control_cmd"/>
     <remap from="input/auto/turn_indicators_cmd" to="/planning/turn_indicators_cmd"/>
     <remap from="input/auto/hazard_lights_cmd" to="/planning/hazard_lights_cmd"/>
     <remap from="input/auto/gear_cmd" to="/control/shift_decider/gear_cmd"/>
+
+    <remap from="input/external/control_cmd" to="/external/selected/control_cmd"/>
+    <remap from="input/external/turn_indicators_cmd" to="/external/selected/turn_indicators_cmd"/>
+    <remap from="input/external/hazard_lights_cmd" to="/external/selected/hazard_lights_cmd"/>
+    <remap from="input/external/gear_cmd" to="/external/selected/gear_cmd"/>
+    <remap from="input/external_emergency_stop_heartbeat" to="/external/selected/heartbeat"/>
+
+    <remap from="input/engage" to="/autoware/engage"/>
     <remap from="input/gate_mode" to="/control/gate_mode_cmd"/>
+    <remap from="output/gate_mode" to="/control/current_gate_mode"/>
+    <remap from="output/engage" to="/api/autoware/get/engage"/>
     <remap from="output/control_cmd" to="/control/command/control_cmd"/>
     <remap from="output/gear_cmd" to="/control/command/gear_cmd"/>
     <remap from="output/turn_indicators_cmd" to="/control/command/turn_indicators_cmd"/>
