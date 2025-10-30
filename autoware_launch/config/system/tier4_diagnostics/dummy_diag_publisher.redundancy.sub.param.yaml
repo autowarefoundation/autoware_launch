@@ -40,3 +40,6 @@
 
       ## /sub_ecu/vehicle/t4_vcu_version_check
       "j6_interface: t4-vcu_version_check": default
+
+      ## /sub_ecu/foolproof/sub/autoware_node_alive
+      "autoware_diagnostics_bridge_node_sub: sub_autoware_node_alive": default

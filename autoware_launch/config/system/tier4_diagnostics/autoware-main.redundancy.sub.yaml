@@ -9,7 +9,7 @@ files:
   - { path: $(dirname)/sub/sensing.yaml }
   - { path: $(dirname)/sub/system.yaml }
   - { path: $(dirname)/sub/vehicle.yaml }
-  # - { path: $(dirname)/foolproof.yaml }
+  - { path: $(dirname)/sub/foolproof.yaml }
   - { path: $(dirname)/sub/redundancy.yaml }
 
 units:
@@ -29,7 +29,7 @@ units:
       - { type: link, link: /sub_ecu/sensing/sub_ecu_in_lane_moderate_stop_available }
       - { type: link, link: /sub_ecu/system/sub_ecu_in_lane_moderate_stop_available }
       - { type: link, link: /sub_ecu/vehicle/sub_ecu_in_lane_moderate_stop_available }
-      # - { type: link, link: /foolproof/sub_ecu_in_lane_moderate_stop_available }
+      - { type: link, link: /sub_ecu/foolproof/sub_ecu_in_lane_moderate_stop_available }
       - { type: link, link: /sub_ecu/redundancy/sub_ecu_in_lane_moderate_stop_available }
 
   - path: /notification/sub_ecu
