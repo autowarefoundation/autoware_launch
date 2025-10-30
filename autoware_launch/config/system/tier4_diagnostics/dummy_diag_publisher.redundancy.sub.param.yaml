@@ -14,6 +14,80 @@
 /**:
   ros__parameters:
     required_diags:
+      # hardware
+
+      ## /sub_ecu/hardware/cpu/001-temperature
+      "cpu_monitor_sub: CPU Temperature": default
+
+      ## /sub_ecu/hardware/cpu/002-usage
+      "cpu_monitor_sub: CPU Usage": default
+
+      ## /sub_ecu/hardware/cpu/003-load_average
+      "cpu_monitor_sub: CPU Load Average": default
+
+      ## /sub_ecu/hardware/cpu/004-throttling
+      "cpu_monitor_sub: CPU Thermal Throttling": default
+
+      ## /sub_ecu/hardware/cpu/005-frequency
+      "cpu_monitor_sub: CPU Frequency": default
+
+      ## /sub_ecu/hardware/hdd/001-temperature
+      "hdd_monitor_sub: HDD Temperature": default
+
+      ## /sub_ecu/hardware/hdd/002-usage
+      "hdd_monitor_sub: HDD Usage": default
+
+      ## /sub_ecu/hardware/hdd/003-connection
+      "hdd_monitor_sub: HDD Connection": default
+
+      ## /sub_ecu/hardware/hdd/004-total_written
+      "hdd_monitor_sub: HDD TotalDataWritten": default
+
+      ## /sub_ecu/hardware/hdd/005-warranty_period
+      "hdd_monitor_sub: HDD PowerOnHours": default
+
+      ## /sub_ecu/hardware/hdd/006-soft_error
+      "hdd_monitor_sub: HDD RecoveredError": default
+
+      ## /sub_ecu/hardware/hdd/007-load
+      "hdd_monitor_sub: HDD ReadDataRate": default
+      "hdd_monitor_sub: HDD WriteDataRate": default
+      "hdd_monitor_sub: HDD ReadIOPS": default
+      "hdd_monitor_sub: HDD WriteIOPS": default
+
+      ## /sub_ecu/hardware/memory/001-usage
+      "mem_monitor_sub: Memory Usage": default
+
+      ## /sub_ecu/hardware/memory/002-ecc
+      "mem_monitor_sub: Memory ECC": default
+
+      ## /sub_ecu/hardware/network/001-usage
+      "net_monitor_sub: Network Usage": default
+
+      ## /sub_ecu/hardware/network/002-traffic
+      "net_monitor_sub: Network Traffic": default
+
+      ## /sub_ecu/hardware/network/003-crc
+      "net_monitor_sub: Network CRC Error": default
+
+      ## /sub_ecu/hardware/network/004-packet_reassembles
+      "net_monitor_sub: IP Packet Reassembles Failed": default
+
+      ## /sub_ecu/hardware/gpu/001-temperature
+      "gpu_monitor_sub: GPU Temperature": default
+
+      ## /sub_ecu/hardware/gpu/002-usage
+      "gpu_monitor_sub: GPU Usage": default
+
+      ## /sub_ecu/hardware/gpu/003-memory
+      "gpu_monitor_sub: GPU Memory Usage": default
+
+      ## /sub_ecu/hardware/gpu/004-throttling
+      "gpu_monitor_sub: GPU Thermal Throttling": default
+
+      ## /sub_ecu/hardware/gpu/005-frequency
+      "gpu_monitor_sub: GPU Frequency": default
+
       ## /sub_ecu/localization/topic_status/pose
       "topic_state_monitor_pose_with_covariance: topic_status": default
 

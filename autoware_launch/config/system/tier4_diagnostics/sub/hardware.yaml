@@ -1,0 +1,370 @@
+units:
+  - path: /sub_ecu/hardware/sub_ecu_in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /sub_ecu/hardware/cpu/001-temperature/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/cpu/002-usage/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/cpu/003-load_average/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/cpu/004-throttling/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/cpu/005-frequency/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/hdd/001-temperature/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/hdd/002-usage/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/hdd/003-connection/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/hdd/004-total_written/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/hdd/005-warranty_period/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/hdd/006-soft_error/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/hdd/007-load/read_rate/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/hdd/007-load/write_rate/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/hdd/007-load/read_iops/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/hdd/007-load/write_iops/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/memory/001-usage/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/memory/002-ecc/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/network/001-usage/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/network/002-traffic/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/network/003-crc/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/network/004-packet_reassembles/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/gpu/001-temperature/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/gpu/002-usage/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/gpu/003-memory/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/gpu/004-throttling/warn-to-ok }
+      - { type: link, link: /sub_ecu/hardware/gpu/005-frequency/warn-to-ok }
+
+  # warn-to-ok
+  - path: /sub_ecu/hardware/cpu/001-temperature/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/cpu/001-temperature
+
+  - path: /sub_ecu/hardware/cpu/002-usage/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/cpu/002-usage
+
+  - path: /sub_ecu/hardware/cpu/003-load_average/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/cpu/003-load_average
+
+  - path: /sub_ecu/hardware/cpu/004-throttling/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/cpu/004-throttling
+
+  - path: /sub_ecu/hardware/cpu/005-frequency/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/cpu/005-frequency
+
+  - path: /sub_ecu/hardware/hdd/001-temperature/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/hdd/001-temperature
+
+  - path: /sub_ecu/hardware/hdd/002-usage/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/hdd/002-usage
+
+  - path: /sub_ecu/hardware/hdd/003-connection/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/hdd/003-connection
+
+  - path: /sub_ecu/hardware/hdd/004-total_written/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/hdd/004-total_written
+
+  - path: /sub_ecu/hardware/hdd/005-warranty_period/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/hdd/005-warranty_period
+
+  - path: /sub_ecu/hardware/hdd/006-soft_error/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/hdd/006-soft_error
+
+  - path: /sub_ecu/hardware/hdd/007-load/read_rate/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/hdd/007-load/read_rate
+
+  - path: /sub_ecu/hardware/hdd/007-load/write_rate/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/hdd/007-load/write_rate
+
+  - path: /sub_ecu/hardware/hdd/007-load/read_iops/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/hdd/007-load/read_iops
+
+  - path: /sub_ecu/hardware/hdd/007-load/write_iops/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/hdd/007-load/write_iops
+
+  - path: /sub_ecu/hardware/memory/001-usage/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/memory/001-usage
+
+  - path: /sub_ecu/hardware/memory/002-ecc/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/memory/002-ecc
+
+  - path: /sub_ecu/hardware/network/001-usage/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/network/001-usage
+
+  - path: /sub_ecu/hardware/network/002-traffic/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/network/002-traffic
+
+  - path: /sub_ecu/hardware/network/003-crc/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/network/003-crc
+
+  - path: /sub_ecu/hardware/network/004-packet_reassembles/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/network/004-packet_reassembles
+
+  - path: /sub_ecu/hardware/gpu/001-temperature/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/gpu/001-temperature
+
+  - path: /sub_ecu/hardware/gpu/002-usage/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/gpu/002-usage
+
+  - path: /sub_ecu/hardware/gpu/003-memory/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/gpu/003-memory
+
+  - path: /sub_ecu/hardware/gpu/004-throttling/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/gpu/004-throttling
+
+  - path: /sub_ecu/hardware/gpu/005-frequency/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/hardware/gpu/005-frequency
+
+  # Sub ECU (diagnostics detail)
+  - path: /sub_ecu/hardware/cpu/001-temperature
+    type: diag
+    node: cpu_monitor_sub
+    name: CPU Temperature
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/cpu/002-usage
+    type: diag
+    node: cpu_monitor_sub
+    name: CPU Usage
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/cpu/003-load_average
+    type: diag
+    node: cpu_monitor_sub
+    name: CPU Load Average
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/cpu/004-throttling
+    type: diag
+    node: cpu_monitor_sub
+    name: CPU Thermal Throttling
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/cpu/005-frequency
+    type: diag
+    node: cpu_monitor_sub
+    name: CPU Frequency
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/hdd/001-temperature
+    type: diag
+    node: hdd_monitor_sub
+    name: HDD Temperature
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/hdd/002-usage
+    type: diag
+    node: hdd_monitor_sub
+    name: HDD Usage
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/hdd/003-connection
+    type: diag
+    node: hdd_monitor_sub
+    name: HDD Connection
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/hdd/004-total_written
+    type: diag
+    node: hdd_monitor_sub
+    name: HDD TotalDataWritten
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/hdd/005-warranty_period
+    type: diag
+    node: hdd_monitor_sub
+    name: HDD PowerOnHours
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/hdd/006-soft_error
+    type: diag
+    node: hdd_monitor_sub
+    name: HDD RecoveredError
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/hdd/007-load/read_rate
+    type: diag
+    node: hdd_monitor_sub
+    name: HDD ReadDataRate
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/hdd/007-load/write_rate
+    type: diag
+    node: hdd_monitor_sub
+    name: HDD WriteDataRate
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/hdd/007-load/read_iops
+    type: diag
+    node: hdd_monitor_sub
+    name: HDD ReadIOPS
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/hdd/007-load/write_iops
+    type: diag
+    node: hdd_monitor_sub
+    name: HDD WriteIOPS
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/memory/001-usage
+    type: diag
+    node: mem_monitor_sub
+    name: Memory Usage
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/memory/002-ecc
+    type: diag
+    node: mem_monitor_sub
+    name: Memory ECC
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/network/001-usage
+    type: diag
+    node: net_monitor_sub
+    name: Network Usage
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/network/002-traffic
+    type: diag
+    node: net_monitor_sub
+    name: Network Traffic
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/network/003-crc
+    type: diag
+    node: net_monitor_sub
+    name: Network CRC Error
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/network/004-packet_reassembles
+    type: diag
+    node: net_monitor_sub
+    name: IP Packet Reassembles Failed
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/gpu/001-temperature
+    type: diag
+    node: gpu_monitor_sub
+    name: GPU Temperature
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/gpu/002-usage
+    type: diag
+    node: gpu_monitor_sub
+    name: GPU Usage
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/gpu/003-memory
+    type: diag
+    node: gpu_monitor_sub
+    name: GPU Memory Usage
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/gpu/004-throttling
+    type: diag
+    node: gpu_monitor_sub
+    name: GPU Thermal Throttling
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/hardware/gpu/005-frequency
+    type: diag
+    node: gpu_monitor_sub
+    name: GPU Frequency
+    timeout: 3.0
+    latch: 0.0
