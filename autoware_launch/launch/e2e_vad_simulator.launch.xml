@@ -56,7 +56,7 @@
 
   <!-- CARLA interface -->
   <group scoped="false">
-    <include file="$(find-pkg-share autoware_carla_interface)/autoware_carla_interface.launch.xml">
+    <include file="$(find-pkg-share autoware_carla_interface)/launch/autoware_carla_interface.launch.xml">
       <arg name="host" value="$(var simulator_host)"/>
       <arg name="port" value="$(var simulator_port)"/>
       <arg name="sync_mode" value="$(var sync_mode)"/>
@@ -77,7 +77,7 @@
   </include>
 
   <!-- Publish Odometry (localization/kinematic_state) from CARLA pose + twist -->
-  <node pkg="autoware_tensorrt_vad" exec="carla_state_publisher" name="carla_state_publisher" output="screen">
+  <node pkg="autoware_carla_interface" exec="carla_state_publisher" name="carla_state_publisher" output="screen">
     <param name="use_sim_time" value="$(var use_sim_time)"/>
     <param name="frame_id" value="map"/>
     <param name="child_frame_id" value="base_link"/>
@@ -140,8 +140,11 @@
     <include file="$(find-pkg-share autoware_tensorrt_vad)/launch/vad_carla_tier4.launch.xml">
       <arg name="log_level" value="$(var vad_log_level)"/>
       <arg name="model_path" value="$(var vad_model_path)"/>
-      <arg name="output/trajectory" value="/planning/trajectory"/>
-      <arg name="rviz" value="false"/>
+      <!-- VAD output topics -->
+      <arg name="output_trajectory" value="/planning/trajectory"/>
+      <arg name="output_candidate_trajectories" value="/planning/vad/candidate_trajectories"/>
+      <arg name="output_objects" value="/perception/object_recognition/objects"/>
+      <arg name="output_map_points" value="/perception/vad/map_points"/>
     </include>
   </group>
 
