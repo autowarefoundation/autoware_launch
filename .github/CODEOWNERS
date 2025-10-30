@@ -5,6 +5,8 @@ sensor_kit/awsim_labs_sensor_kit_launch/awsim_labs_sensor_kit_launch/** piotr.ja
 sensor_kit/awsim_labs_sensor_kit_launch/common_awsim_labs_sensor_launch/** piotr.jaroszek@robotec.ai
 sensor_kit/awsim_sensor_kit_launch/awsim_sensor_kit_description/** piotr.jaroszek@robotec.ai
 sensor_kit/awsim_sensor_kit_launch/awsim_sensor_kit_launch/** piotr.jaroszek@robotec.ai
+sensor_kit/carla_sensor_kit_launch/carla_sensor_kit_description/** noreply@example.com
+sensor_kit/carla_sensor_kit_launch/carla_sensor_kit_launch/** noreply@example.com
 sensor_kit/sample_sensor_kit_launch/common_sensor_launch/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 sensor_kit/sample_sensor_kit_launch/sample_sensor_kit_description/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 sensor_kit/sample_sensor_kit_launch/sample_sensor_kit_launch/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
