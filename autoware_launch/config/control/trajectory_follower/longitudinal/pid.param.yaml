@@ -55,8 +55,8 @@
 
     # emergency state
     emergency_vel: 0.0
-    emergency_acc: -4.0 # denotes acceleration
-    emergency_jerk: -1.5
+    emergency_acc: -6.0 # denotes acceleration
+    emergency_jerk: -20.0
 
     # acceleration feedback
     lpf_acc_error_gain: 0.98
