@@ -137,7 +137,7 @@
 
   <!-- Launch VAD perception/planning -->
   <group>
-    <include file="$(find-pkg-share autoware_tensorrt_vad)/launch/vad_carla_tier4.launch.xml">
+    <include file="$(find-pkg-share autoware_tensorrt_vad)/launch/vad_carla_tiny.launch.xml">
       <arg name="log_level" value="$(var vad_log_level)"/>
       <arg name="model_path" value="$(var vad_model_path)"/>
       <!-- VAD output topics -->
