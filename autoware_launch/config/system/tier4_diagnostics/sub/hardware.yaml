@@ -19,10 +19,10 @@ units:
       - { type: link, link: /sub_ecu/hardware/hdd/007-load/write_iops/warn-to-ok }
       - { type: link, link: /sub_ecu/hardware/memory/001-usage/warn-to-ok }
       - { type: link, link: /sub_ecu/hardware/memory/002-ecc/warn-to-ok }
-      - { type: link, link: /sub_ecu/hardware/network/001-usage/warn-to-ok }
-      - { type: link, link: /sub_ecu/hardware/network/002-traffic/warn-to-ok }
-      - { type: link, link: /sub_ecu/hardware/network/003-crc/warn-to-ok }
-      - { type: link, link: /sub_ecu/hardware/network/004-packet_reassembles/warn-to-ok }
+      # - { type: link, link: /sub_ecu/hardware/network/001-usage/warn-to-ok }
+      # - { type: link, link: /sub_ecu/hardware/network/002-traffic/warn-to-ok }
+      # - { type: link, link: /sub_ecu/hardware/network/003-crc/warn-to-ok }
+      # - { type: link, link: /sub_ecu/hardware/network/004-packet_reassembles/warn-to-ok }
       - { type: link, link: /sub_ecu/hardware/gpu/001-temperature/warn-to-ok }
       - { type: link, link: /sub_ecu/hardware/gpu/002-usage/warn-to-ok }
       - { type: link, link: /sub_ecu/hardware/gpu/003-memory/warn-to-ok }

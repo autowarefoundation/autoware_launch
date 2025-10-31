@@ -52,10 +52,10 @@ units:
       - { type: link, link: /hardware/hdd/007-load-error }
       - { type: link, link: /hardware/memory/001-usage-error }
       - { type: link, link: /hardware/memory/002-ecc-error }
-      - { type: link, link: /hardware/network/001-usage-error }
-      - { type: link, link: /hardware/network/002-traffic-error }
-      - { type: link, link: /hardware/network/003-crc-error }
-      - { type: link, link: /hardware/network/004-packet_reassembles-error }
+      # - { type: link, link: /hardware/network/001-usage-error }
+      # - { type: link, link: /hardware/network/002-traffic-error }
+      # - { type: link, link: /hardware/network/003-crc-error }
+      # - { type: link, link: /hardware/network/004-packet_reassembles-error }
       - { type: link, link: /hardware/gpu/001-temperature-error }
       - { type: link, link: /hardware/gpu/002-usage-error }
       - { type: link, link: /hardware/gpu/003-memory-error }
@@ -68,9 +68,9 @@ units:
       - { type: link, link: /hardware/perception1/hdd/002-usage-error }
       - { type: link, link: /hardware/perception1/hdd/003-connection-error }
       - { type: link, link: /hardware/perception1/memory/001-usage-error }
-      - { type: link, link: /hardware/perception1/network/001-usage-error }
-      - { type: link, link: /hardware/perception1/network/003-crc-error }
-      - { type: link, link: /hardware/perception1/network/004-packet_reassembles-error }
+      # - { type: link, link: /hardware/perception1/network/001-usage-error }
+      # - { type: link, link: /hardware/perception1/network/003-crc-error }
+      # - { type: link, link: /hardware/perception1/network/004-packet_reassembles-error }
       - { type: link, link: /hardware/perception1/gpu/001-temperature-error }
       - { type: link, link: /hardware/perception1/gpu/002-usage-error }
 
@@ -80,9 +80,9 @@ units:
       - { type: link, link: /hardware/perception2/hdd/002-usage-error }
       - { type: link, link: /hardware/perception2/hdd/003-connection-error }
       - { type: link, link: /hardware/perception2/memory/001-usage-error }
-      - { type: link, link: /hardware/perception2/network/001-usage-error }
-      - { type: link, link: /hardware/perception2/network/003-crc-error }
-      - { type: link, link: /hardware/perception2/network/004-packet_reassembles-error }
+      # - { type: link, link: /hardware/perception2/network/001-usage-error }
+      # - { type: link, link: /hardware/perception2/network/003-crc-error }
+      # - { type: link, link: /hardware/perception2/network/004-packet_reassembles-error }
       - { type: link, link: /hardware/perception2/gpu/001-temperature-error }
 
   - path: /hardware/in_lane_emergency_stop
