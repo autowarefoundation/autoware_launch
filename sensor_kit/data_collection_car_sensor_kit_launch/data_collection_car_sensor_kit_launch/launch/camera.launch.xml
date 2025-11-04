@@ -1,0 +1,20 @@
+<launch>
+  <arg name="launch_driver" default="true"/>
+  <arg name="camera_name" default="camera0"/>
+
+  <group>
+    <node pkg="topic_tools" exec="relay" name="camera_info_relay" output="log" if="$(var launch_driver)">
+      <param name="input_topic" value="$(var camera_name)/camera_info"/>
+      <param name="output_topic" value="camera_info"/>
+      <param name="type" value="sensor_msgs/msg/CameraInfo"/>
+      <param name="reliability" value="best_effort"/>
+    </node>
+
+    <node pkg="topic_tools" exec="relay" name="compressed_image_relay" output="log" if="$(var launch_driver)">
+      <param name="input_topic" value="$(var camera_name)/image_raw/compressed"/>
+      <param name="output_topic" value="image_raw/compressed"/>
+      <param name="type" value="sensor_msgs/msg/CompressedImage"/>
+      <param name="reliability" value="best_effort"/>
+    </node>
+  </group>
+</launch>
