@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="robosense_m1_plus_macro" params="name parent x y z roll pitch yaw">
+    <link name="${name}_base_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.5"/>
+        <inertia
+          ixx="0.001"
+          ixy="0.0"
+          ixz="0.0"
+          iyy="0.001"
+          iyz="0.0"
+          izz="0.001"
+        />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0.05" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.1" radius="0.05"/>
+        </geometry>
+        <material name="Grey">
+          <color rgba="0.5 0.5 0.5 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.05" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.1" radius="0.05"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_base_link_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${name}_base_link"/>
+      <origin xyz="${x} ${y} ${z}" rpy="${roll} ${pitch} ${yaw}"/>
+    </joint>
+
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia
+          ixx="0.0001"
+          ixy="0.0"
+          ixz="0.0"
+          iyy="0.0001"
+          iyz="0.0"
+          izz="0.0001"
+        />
+      </inertial>
+    </link>
+
+    <joint name="${name}_joint" type="fixed">
+      <parent link="${name}_base_link"/>
+      <child link="${name}"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+</robot>
