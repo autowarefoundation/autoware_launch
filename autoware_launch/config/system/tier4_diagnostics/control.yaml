@@ -45,7 +45,6 @@ units:
     type: and
     list:
       - { type: link, link: /control/011-rolling_back-error }
-      - { type: link, link: /control/011-rolling_back-error }
 
   - path: /control/in_lane_moderate_stop
     type: and

@@ -34,19 +34,8 @@ units:
   # *******************************************************************************
   - path: /foolproof/emergency_stop
     type: and
-    list:
-      - { type: link, link: /foolproof/sub/heartbeat }
-      - { type: link, link: /foolproof/logging/heartbeat }
-      - { type: link, link: /foolproof/perception1/heartbeat }
-      - { type: link, link: /foolproof/perception2/heartbeat }
-      - { type: link, link: /foolproof/logging/ssd_not_found-error }
-      - { type: link, link: /foolproof/perception1/camera_not_found-error }
-      - { type: link, link: /foolproof/perception2/camera_not_found-error }
-      - { type: link, link: /foolproof/perception1/mgbe1_not_ready-error }
-      - { type: link, link: /foolproof/perception2/mgbe1_not_ready-error }
-      - { type: link, link: /foolproof/main/scheduling_settings_others }
-      - { type: link, link: /foolproof/main/scheduling_settings_autoware }
-      # - { type: link, link:  /foolproof/device_check }
+    # list:
+    # - { type: link, link:  /foolproof/device_check }
 
   - path: /foolproof/comfortable_stop
     type: and
@@ -58,12 +47,28 @@ units:
 
   - path: /foolproof/in_lane_moderate_stop
     type: and
-    # list:
+    list:
+      - { type: link, link: /foolproof/logging/heartbeat }
+      - { type: link, link: /foolproof/perception1/heartbeat }
+      - { type: link, link: /foolproof/perception2/heartbeat }
+      - { type: link, link: /foolproof/logging/ssd_not_found-error }
+      - { type: link, link: /foolproof/perception1/camera_not_found-error }
+      - { type: link, link: /foolproof/perception2/camera_not_found-error }
+      - { type: link, link: /foolproof/perception1/mgbe1_not_ready-error }
+      - { type: link, link: /foolproof/perception2/mgbe1_not_ready-error }
+      - { type: link, link: /foolproof/addon/heartbeat }
 
   - path: /foolproof/sub_ecu_in_lane_moderate_stop
     type: and
     list:
-      - { type: link, link: /foolproof/node_alive } # letterbox_monitor
+      - { type: link, link: /foolproof/main/scheduling_settings_others }
+      - { type: link, link: /foolproof/main/scheduling_settings_autoware }
+      - { type: link, link: /foolproof/main/autoware_node_alive }
+      - { type: link, link: /foolproof/main/autoware_system_node_alive }
+      - { type: link, link: /foolproof/perception1/recognition_node_alive }
+      - { type: link, link: /foolproof/perception2/recognition_node_alive }
+      - { type: link, link: /foolproof/addon/recognition_node_alive }
+      - { type: link, link: /foolproof/addon/camera_driver_node_alive }
 
   - path: /foolproof/none
     type: and
@@ -114,13 +119,6 @@ units:
     timeout: 3.0
     latch: 0.0
 
-  - path: /foolproof/sub/heartbeat
-    type: diag
-    node: autoware_diagnostics_bridge_node_sub
-    name: heartbeat
-    timeout: 3.0
-    latch: 0.0
-
   - path: /foolproof/perception1/heartbeat
     type: diag
     node: autoware_diagnostics_bridge_node_perception1
@@ -131,6 +129,13 @@ units:
   - path: /foolproof/perception2/heartbeat
     type: diag
     node: autoware_diagnostics_bridge_node_perception2
+    name: heartbeat
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /foolproof/addon/heartbeat
+    type: diag
+    node: autoware_diagnostics_bridge_node_addon
     name: heartbeat
     timeout: 3.0
     latch: 0.0
@@ -171,18 +176,7 @@ units:
     timeout: 10.0
     latch: 0.0
 
-  # letterbox_monitor aggregate
-  - path: /foolproof/node_alive
-    type: and
-    list:
-      - { type: link, link: /foolproof/main/autoware_node_alive }
-      - { type: link, link: /foolproof/main/autoware_system_node_alive }
-      # - { type: link, link: /foolproof/sub/autoware_node_alive }
-      - { type: link, link: /foolproof/perception1/recognition_node_alive }
-      - { type: link, link: /foolproof/perception2/recognition_node_alive }
-      # - { type: link, link:  /foolproof/addon/recognition_node_alive }
-
-  # letterbox_monitor individual
+  # letterbox_monitor
   - path: /foolproof/main/autoware_node_alive
     type: diag
     node: autoware_diagnostics_bridge_node_main
@@ -218,11 +212,20 @@ units:
     timeout: 3.0
     latch: 0.0
 
-  # - path: /foolproof/addon/recognition_node_alive
-  #   type: diag
-  #   node: autoware_diagnostics_bridge_node_addon
-  #   name: addon_recognition_node_alive
-  #   timeout: 3.0
+  - path: /foolproof/addon/recognition_node_alive
+    type: diag
+    node: autoware_diagnostics_bridge_node_addon
+    name: addon_recognition_node_alive
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /foolproof/addon/camera_driver_node_alive
+    type: diag
+    node: autoware_diagnostics_bridge_node_addon
+    name: addon_camera_driver_node_alive
+    timeout: 3.0
+    latch: 0.0
+
   # scheduling_settings
   - path: /foolproof/main/scheduling_settings_others
     type: diag

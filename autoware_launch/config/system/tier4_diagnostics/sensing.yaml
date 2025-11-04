@@ -883,6 +883,9 @@ units:
       - { type: link, link: /sensing/camera/5/sync }
       - { type: link, link: /sensing/camera/6/sync }
       - { type: link, link: /sensing/camera/7/sync }
+      # - { type: link, link: /sensing/camera/8/sync }
+      # - { type: link, link: /sensing/camera/9/sync }
+      # - { type: link, link: /sensing/camera/10/sync }
   - path: /sensing/camera/0/sync
     type: diag
     node: tier4_camera_sync_doctor0
@@ -936,6 +939,27 @@ units:
     type: diag
     node: tier4_camera_sync_doctor7
     name: camera7_sync_status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 1.0
+  - path: /sensing/camera/8/sync
+    type: diag
+    node: tier4_camera_sync_doctor8
+    name: camera8_sync_status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 1.0
+  - path: /sensing/camera/9/sync
+    type: diag
+    node: tier4_camera_sync_doctor9
+    name: camera9_sync_status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 1.0
+  - path: /sensing/camera/10/sync
+    type: diag
+    node: tier4_camera_sync_doctor10
+    name: camera10_sync_status
     timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
@@ -1056,10 +1080,28 @@ units:
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/connection }
+      # - { type: link, link: /sensing/radar/front_left/connection }
+      # - { type: link, link: /sensing/radar/front_right/connection }
       - { type: link, link: /sensing/radar/rear_center/connection }
+      # - { type: link, link: /sensing/radar/rear_left/connection }
+      # - { type: link, link: /sensing/radar/rear_right/connection }
   - path: /sensing/radar/front_center/connection
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
+    name: Liveness
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_left/connection
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Liveness
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_right/connection
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
     name: Liveness
     timeout: 3.0
     latch: 0.0
@@ -1071,15 +1113,47 @@ units:
     timeout: 3.0
     latch: 0.0
     hysteresis: 0.125
+  - path: /sensing/radar/rear_left/connection
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Liveness
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_right/connection
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
+    name: Liveness
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
 
   - path: /sensing/radar/002-dynamics
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/dynamics }
+      # - { type: link, link: /sensing/radar/front_left/dynamics }
+      # - { type: link, link: /sensing/radar/front_right/dynamics }
       - { type: link, link: /sensing/radar/rear_center/dynamics }
+      # - { type: link, link: /sensing/radar/rear_left/dynamics }
+      # - { type: link, link: /sensing/radar/rear_right/dynamics }
   - path: /sensing/radar/front_center/dynamics
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
+    name: Dynamics
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.0
+  - path: /sensing/radar/front_left/dynamics
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Dynamics
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.0
+  - path: /sensing/radar/front_right/dynamics
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
     name: Dynamics
     timeout: 3.0
     latch: 0.0
@@ -1091,15 +1165,47 @@ units:
     timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
+  - path: /sensing/radar/rear_left/dynamics
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Dynamics
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.0
+  - path: /sensing/radar/rear_right/dynamics
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
+    name: Dynamics
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.0
 
   - path: /sensing/radar/003-internal
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/internal }
+      # - { type: link, link: /sensing/radar/front_left/internal }
+      # - { type: link, link: /sensing/radar/front_right/internal }
       - { type: link, link: /sensing/radar/rear_center/internal }
+      # - { type: link, link: /sensing/radar/rear_left/internal }
+      # - { type: link, link: /sensing/radar/rear_right/internal }
   - path: /sensing/radar/front_center/internal
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
+    name: Internal
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_left/internal
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Internal
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_right/internal
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
     name: Internal
     timeout: 3.0
     latch: 0.0
@@ -1111,15 +1217,47 @@ units:
     timeout: 3.0
     latch: 0.0
     hysteresis: 0.125
+  - path: /sensing/radar/rear_left/internal
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Internal
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_right/internal
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
+    name: Internal
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
 
   - path: /sensing/radar/004-blockage
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/blockage_validation }
+      # - { type: link, link: /sensing/radar/front_left/blockage_validation }
+      # - { type: link, link: /sensing/radar/front_right/blockage_validation }
       - { type: link, link: /sensing/radar/rear_center/blockage_validation }
+      # - { type: link, link: /sensing/radar/rear_left/blockage_validation }
+      # - { type: link, link: /sensing/radar/rear_right/blockage_validation }
   - path: /sensing/radar/front_center/blockage_validation
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
+    name: Blockage
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_left/blockage_validation
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Blockage
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_right/blockage_validation
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
     name: Blockage
     timeout: 3.0
     latch: 0.0
@@ -1131,15 +1269,47 @@ units:
     timeout: 3.0
     latch: 0.0
     hysteresis: 0.125
+  - path: /sensing/radar/rear_left/blockage_validation
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Blockage
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_right/blockage_validation
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
+    name: Blockage
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
 
   - path: /sensing/radar/005-object-rate
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/object_rate }
+      # - { type: link, link: /sensing/radar/front_left/object_rate }
+      # - { type: link, link: /sensing/radar/front_right/object_rate }
       - { type: link, link: /sensing/radar/rear_center/object_rate }
+      # - { type: link, link: /sensing/radar/rear_left/object_rate }
+      # - { type: link, link: /sensing/radar/rear_right/object_rate }
   - path: /sensing/radar/front_center/object_rate
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
+    name: Objects rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_left/object_rate
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Objects rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_right/object_rate
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
     name: Objects rate bound status
     timeout: 3.0
     latch: 0.0
@@ -1151,12 +1321,30 @@ units:
     timeout: 3.0
     latch: 0.0
     hysteresis: 0.125
+  - path: /sensing/radar/rear_left/object_rate
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Objects rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_right/object_rate
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
+    name: Objects rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
 
   - path: /sensing/radar/006-detections-rate
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/detections_rate }
+      # - { type: link, link: /sensing/radar/front_left/detections_rate }
+      # - { type: link, link: /sensing/radar/front_right/detections_rate }
       - { type: link, link: /sensing/radar/rear_center/detections_rate }
+      # - { type: link, link: /sensing/radar/rear_left/detections_rate }
+      # - { type: link, link: /sensing/radar/rear_right/detections_rate }
   - path: /sensing/radar/front_center/detections_rate
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
@@ -1164,9 +1352,37 @@ units:
     timeout: 3.0
     latch: 0.0
     hysteresis: 0.125
+  - path: /sensing/radar/front_left/detections_rate
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Detections rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_right/detections_rate
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
+    name: Detections rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
   - path: /sensing/radar/rear_center/detections_rate
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
+    name: Detections rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_left/detections_rate
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Detections rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_right/detections_rate
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
     name: Detections rate bound status
     timeout: 3.0
     latch: 0.0

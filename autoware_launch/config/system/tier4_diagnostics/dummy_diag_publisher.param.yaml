@@ -318,6 +318,7 @@
       "autoware_diagnostics_bridge_node_logging: heartbeat": default
       "autoware_diagnostics_bridge_node_perception1: heartbeat": default
       "autoware_diagnostics_bridge_node_perception2: heartbeat": default
+      "autoware_diagnostics_bridge_node_addon: heartbeat": default
 
       ## fool proof check
       "autoware_diagnostics_bridge_node_logging: logging_ssd": default
@@ -334,6 +335,8 @@
       "autoware_diagnostics_bridge_node_sub: sub_autoware_node_alive": default
       "autoware_diagnostics_bridge_node_perception1: perception1_recognition_node_alive": default
       "autoware_diagnostics_bridge_node_perception2: perception2_recognition_node_alive": default
+      "autoware_diagnostics_bridge_node_addon: addon_recognition_node_alive": default
+      "autoware_diagnostics_bridge_node_addon: addon_camera_driver_node_alive": default
 
       ## control_command_gate
       "control_command_gate: timeout_stop": default
