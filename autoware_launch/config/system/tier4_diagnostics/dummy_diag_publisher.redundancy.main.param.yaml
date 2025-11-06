@@ -197,6 +197,31 @@
 
       ## /perception/009-spec_limit/voxel_based_compare_map_filter
       "voxel_based_compare_map_filter: Compare map filter status": default
+
+      ## /perception/topic_state_monitor/rois0
+      "topic_state_monitor_rois0: perception_topic_status": default
+
+      ## /perception/topic_state_monitor/rois1
+      "topic_state_monitor_rois1: perception_topic_status": default
+
+      ## /perception/topic_state_monitor/rois2
+      "topic_state_monitor_rois2: perception_topic_status": default
+
+      ## /perception/topic_state_monitor/rois3
+      "topic_state_monitor_rois3: perception_topic_status": default
+
+      ## /perception/topic_state_monitor/rois4
+      "topic_state_monitor_rois4: perception_topic_status": default
+
+      ## /perception/topic_state_monitor/rois5
+      "topic_state_monitor_rois5: perception_topic_status": default
+
+      ## /perception/topic_state_monitor/traffic_signals4
+      "topic_state_monitor_traffic_signals4: perception_topic_status": default
+
+      ## /perception/topic_state_monitor/traffic_signals5
+      "topic_state_monitor_traffic_signals5: perception_topic_status": default
+
       # system
       ## /system/003-bagpacker_status
       rosbag_status: default

@@ -46,6 +46,7 @@ units:
     list:
       - { type: link, link: /perception/001-topic_status/objects-error }
       - { type: link, link: /perception/001-topic_status/pointcloud-error }
+      - { type: link, link: /perception/topic_state_monitor/perception_ecu-error }
 
   - path: /perception/in_lane_emergency_stop
     type: and
@@ -202,5 +203,81 @@ units:
     type: diag
     node: voxel_based_compare_map_filter
     name: Compare map filter status
+    timeout: 3.0
+    latch: 0.0
+
+  # Topic State Monitor for Perception ECU monitoring
+
+  - path: /perception/topic_state_monitor/perception_ecu-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /perception/topic_state_monitor/perception_ecu
+
+  - path: /perception/topic_state_monitor/perception_ecu
+    type: and
+    list:
+      - { type: link, link: /perception/topic_state_monitor/rois0 }
+      - { type: link, link: /perception/topic_state_monitor/rois1 }
+      - { type: link, link: /perception/topic_state_monitor/rois2 }
+      - { type: link, link: /perception/topic_state_monitor/rois3 }
+      - { type: link, link: /perception/topic_state_monitor/rois4 }
+      - { type: link, link: /perception/topic_state_monitor/rois5 }
+      - { type: link, link: /perception/topic_state_monitor/traffic_signals4 }
+      - { type: link, link: /perception/topic_state_monitor/traffic_signals5 }
+
+  - path: /perception/topic_state_monitor/rois0
+    type: diag
+    node: topic_state_monitor_rois0
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/rois1
+    type: diag
+    node: topic_state_monitor_rois1
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/rois2
+    type: diag
+    node: topic_state_monitor_rois2
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/rois3
+    type: diag
+    node: topic_state_monitor_rois3
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/rois4
+    type: diag
+    node: topic_state_monitor_rois4
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/rois5
+    type: diag
+    node: topic_state_monitor_rois5
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/traffic_signals4
+    type: diag
+    node: topic_state_monitor_traffic_signals4
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/traffic_signals5
+    type: diag
+    node: topic_state_monitor_traffic_signals5
+    name: perception_topic_status
     timeout: 3.0
     latch: 0.0
