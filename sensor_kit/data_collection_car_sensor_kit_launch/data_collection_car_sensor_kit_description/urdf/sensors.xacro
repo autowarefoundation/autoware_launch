@@ -4,6 +4,7 @@
   <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/>
 
   <xacro:include filename="sensor_kit.xacro"/>
+  <link name="base_link"/>
   <xacro:sensor_kit_macro
     parent="base_link"
     x="${calibration['base_link']['sensor_kit_base_link']['x']}"
