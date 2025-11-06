@@ -7,6 +7,10 @@
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
 
+  <!-- Input topic parameters for planning modules -->
+  <arg name="planning_input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="planning_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+
   <!-- Global parameters -->
   <group scoped="false">
     <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
@@ -22,6 +26,10 @@
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
     <arg name="is_simulation" value="$(var is_simulation)"/>
+
+    <!-- Input topic parameters -->
+    <arg name="input_objects_topic_name" value="$(var planning_input_objects_topic_name)"/>
+    <arg name="input_pointcloud_topic_name" value="$(var planning_input_pointcloud_topic_name)"/>
 
     <!-- common -->
     <arg name="common_config_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common"/>
@@ -74,6 +82,7 @@
     <arg name="behavior_velocity_planner_virtual_traffic_light_module_param_path" value="$(var behavior_velocity_config_path)/virtual_traffic_light.param.yaml"/>
     <arg name="behavior_velocity_planner_occlusion_spot_module_param_path" value="$(var behavior_velocity_config_path)/occlusion_spot.param.yaml"/>
     <arg name="behavior_velocity_planner_no_stopping_area_module_param_path" value="$(var behavior_velocity_config_path)/no_stopping_area.param.yaml"/>
+    <arg name="behavior_velocity_planner_roundabout_module_param_path" value="$(var behavior_velocity_config_path)/roundabout.param.yaml"/>
     <arg name="behavior_velocity_planner_speed_bump_module_param_path" value="$(var behavior_velocity_config_path)/speed_bump.param.yaml"/>
     <arg name="behavior_velocity_planner_no_drivable_lane_module_param_path" value="$(var behavior_velocity_config_path)/no_drivable_lane.param.yaml"/>
     <arg name="compare_map_filter_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/pointcloud_filter/pointcloud_map_filter.param.yaml"/>
