@@ -41,4 +41,10 @@
 
   </node>
 
+  <include file="$(find-pkg-share autoware_object_sorter)/launch/detected_object_sorter.launch.xml">
+    <arg name="input/objects" value="/perception/object_recognition/detection/camera_only/objects"/>
+    <arg name="output/objects" value="/perception/object_recognition/camera_only/objects"/>
+    <arg name="param_path" value="$(find-pkg-share edge_auto_jetson_launch)/config/streampetr_object_sorter.yaml"/>
+  </include>
+
 </launch>
