@@ -38,7 +38,6 @@ units:
   - path: /sensing/comfortable_stop
     type: and
     list:
-      - { type: link, link: /sensing/gnss/001-connection-error }
       - { type: link, link: /sensing/camera/001-connection-error }
       - { type: link, link: /sensing/camera/003-sync-error }
       - { type: link, link: /sensing/camera/004-image-error }
@@ -75,6 +74,7 @@ units:
     type: and
     list:
       - { type: link, link: /sensing/imu/003-gyro_bias }
+      - { type: link, link: /sensing/gnss/001-connection-error }
       - { type: link, link: /sensing/gnss/002-quality }
       - { type: link, link: /sensing/gnss/003-receiver-status }
       - { type: link, link: /sensing/gnss/004-osnma }
@@ -82,6 +82,7 @@ units:
       - { type: link, link: /sensing/gnss/006-navsatfix-rate-bound-check }
       - { type: link, link: /sensing/gnss/007-poscovgeodetic-rate-bound-check }
       - { type: link, link: /sensing/gnss/008-pvtgeodetic-rate-bound-check }
+      - { type: link, link: /sensing/gnss/009-liveness }
 
   # Intermediate paths
   - path: /sensing/imu/001-connection-error
@@ -214,28 +215,28 @@ units:
     type: diag
     node: imu_monitor
     name: yaw_rate_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/imu/001-connection
     type: diag
     node: topic_state_monitor_imu_data
     name: imu_topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/imu/002-rate
     type: diag
     node: /sensing/imu/tamagawa/tag_can_driver
     name: rate bound check
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/imu/003-gyro_bias
     type: diag
     node: gyro_bias_scale_validator
     name: gyro_bias_scale_validator
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   # gnss
@@ -295,12 +296,19 @@ units:
     timeout: 5.0
     latch: 0.0
     hysteresis: 0.21
+  - path: /sensing/gnss/009-liveness
+    type: diag
+    node: /sensing/gnss/septentrio
+    name: Liveness
+    timeout: 5.0
+    latch: 0.0
+    hysteresis: 0.4
   # lidar
   - path: /sensing/lidar/concat_status
     type: diag
     node: concatenate_data
     name: /sensing/lidar/concatenate_data
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -320,56 +328,56 @@ units:
     type: diag
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/front_lower/cuda_pointcloud_preprocessor_node
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/front_upper/preprocessor
     type: diag
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/front_upper/cuda_pointcloud_preprocessor_node
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/left_lower/preprocessor
     type: diag
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/left_lower/cuda_pointcloud_preprocessor_node
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/left_upper/preprocessor
     type: diag
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/left_upper/cuda_pointcloud_preprocessor_node
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/right_lower/preprocessor
     type: diag
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/right_lower/cuda_pointcloud_preprocessor_node
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/right_upper/preprocessor
     type: diag
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/right_upper/cuda_pointcloud_preprocessor_node
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/rear_lower/preprocessor
     type: diag
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/rear_lower/cuda_pointcloud_preprocessor_node
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/rear_upper/preprocessor
     type: diag
     node: cuda_pointcloud_preprocessor_node
     name: /sensing/lidar/rear_upper/cuda_pointcloud_preprocessor_node
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -388,56 +396,56 @@ units:
     type: diag
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/front_upper/connection
     type: diag
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/left_lower/connection
     type: diag
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/left_upper/connection
     type: diag
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/right_lower/connection
     type: diag
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/right_upper/connection
     type: diag
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/rear_lower/connection
     type: diag
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/rear_upper/connection
     type: diag
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
 
@@ -473,7 +481,7 @@ units:
     type: ok
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: Functional safety status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -481,7 +489,7 @@ units:
     type: ok
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: Functional safety status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -489,7 +497,7 @@ units:
     type: ok
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: Functional safety status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -497,7 +505,7 @@ units:
     type: ok
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: Functional safety status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -505,7 +513,7 @@ units:
     type: ok
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: Functional safety status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -513,7 +521,7 @@ units:
     type: ok
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: Functional safety status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -521,7 +529,7 @@ units:
     type: ok
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: Functional safety status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -529,7 +537,7 @@ units:
     type: ok
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: Functional safety status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -537,7 +545,7 @@ units:
     type: diag
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: Packet loss status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -545,7 +553,7 @@ units:
     type: diag
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: Packet loss status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -553,7 +561,7 @@ units:
     type: diag
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: Packet loss status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -561,7 +569,7 @@ units:
     type: diag
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: Packet loss status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -569,7 +577,7 @@ units:
     type: diag
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: Packet loss status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -577,7 +585,7 @@ units:
     type: diag
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: Packet loss status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -585,7 +593,7 @@ units:
     type: diag
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: Packet loss status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -593,7 +601,7 @@ units:
     type: diag
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: Packet loss status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
 
@@ -601,7 +609,7 @@ units:
     type: diag
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: rate bound check
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -609,7 +617,7 @@ units:
     type: diag
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: rate bound check
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -617,7 +625,7 @@ units:
     type: diag
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: rate bound check
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -625,7 +633,7 @@ units:
     type: diag
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: rate bound check
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -633,7 +641,7 @@ units:
     type: diag
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: rate bound check
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -641,7 +649,7 @@ units:
     type: diag
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: rate bound check
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -649,7 +657,7 @@ units:
     type: diag
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: rate bound check
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -657,7 +665,7 @@ units:
     type: diag
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: rate bound check
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -676,56 +684,56 @@ units:
     type: diag
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/front_upper/ptp
     type: diag
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/left_lower/ptp
     type: diag
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/left_upper/ptp
     type: diag
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/right_lower/ptp
     type: diag
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/rear_lower/ptp
     type: diag
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/right_upper/ptp
     type: diag
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/lidar/rear_upper/ptp
     type: diag
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
 
@@ -744,56 +752,56 @@ units:
     type: diag
     node: "blockage_return_diag: /sensing/lidar/front_lower"
     name: blockage_validation
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/front_upper/blockage_validation
     type: diag
     node: "blockage_return_diag: /sensing/lidar/front_upper"
     name: blockage_validation
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/left_lower/blockage_validation
     type: diag
     node: "blockage_return_diag: /sensing/lidar/left_lower"
     name: blockage_validation
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/left_upper/blockage_validation
     type: diag
     node: "blockage_return_diag: /sensing/lidar/left_upper"
     name: blockage_validation
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/right_lower/blockage_validation
     type: diag
     node: "blockage_return_diag: /sensing/lidar/right_lower"
     name: blockage_validation
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/rear_lower/blockage_validation
     type: diag
     node: "blockage_return_diag: /sensing/lidar/rear_lower"
     name: blockage_validation
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/right_upper/blockage_validation
     type: diag
     node: "blockage_return_diag: /sensing/lidar/right_upper"
     name: blockage_validation
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/lidar/rear_upper/blockage_validation
     type: diag
     node: "blockage_return_diag: /sensing/lidar/rear_upper"
     name: blockage_validation
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.5
   - path: /sensing/camera/001-connection
@@ -811,56 +819,56 @@ units:
     type: diag
     node: v4l2_camera_camera0
     name: camera0_diagnostics
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/camera/1/connection
     type: diag
     node: v4l2_camera_camera1
     name: camera1_diagnostics
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/camera/2/connection
     type: diag
     node: v4l2_camera_camera2
     name: camera2_diagnostics
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/camera/3/connection
     type: diag
     node: v4l2_camera_camera3
     name: camera3_diagnostics
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/camera/4/connection
     type: diag
     node: v4l2_camera_camera4
     name: camera4_diagnostics
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/camera/5/connection
     type: diag
     node: v4l2_camera_camera5
     name: camera5_diagnostics
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/camera/6/connection
     type: diag
     node: v4l2_camera_camera6
     name: camera6_diagnostics
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/camera/7/connection
     type: diag
     node: v4l2_camera_camera7
     name: camera7_diagnostics
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -875,60 +883,84 @@ units:
       - { type: link, link: /sensing/camera/5/sync }
       - { type: link, link: /sensing/camera/6/sync }
       - { type: link, link: /sensing/camera/7/sync }
+      # - { type: link, link: /sensing/camera/8/sync }
+      # - { type: link, link: /sensing/camera/9/sync }
+      # - { type: link, link: /sensing/camera/10/sync }
   - path: /sensing/camera/0/sync
     type: diag
     node: tier4_camera_sync_doctor0
     name: camera0_sync_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/camera/1/sync
     type: diag
     node: tier4_camera_sync_doctor1
     name: camera1_sync_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/camera/2/sync
     type: diag
     node: tier4_camera_sync_doctor2
     name: camera2_sync_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/camera/3/sync
     type: diag
     node: tier4_camera_sync_doctor3
     name: camera3_sync_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/camera/4/sync
     type: diag
     node: tier4_camera_sync_doctor4
     name: camera4_sync_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/camera/5/sync
     type: diag
     node: tier4_camera_sync_doctor5
     name: camera5_sync_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/camera/6/sync
     type: diag
     node: tier4_camera_sync_doctor6
     name: camera6_sync_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/camera/7/sync
     type: diag
     node: tier4_camera_sync_doctor7
     name: camera7_sync_status
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 1.0
+  - path: /sensing/camera/8/sync
+    type: diag
+    node: tier4_camera_sync_doctor8
+    name: camera8_sync_status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 1.0
+  - path: /sensing/camera/9/sync
+    type: diag
+    node: tier4_camera_sync_doctor9
+    name: camera9_sync_status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 1.0
+  - path: /sensing/camera/10/sync
+    type: diag
+    node: tier4_camera_sync_doctor10
+    name: camera10_sync_status
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
 
@@ -941,14 +973,14 @@ units:
     type: diag
     node: image_diagnostics3
     name: camera3
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
   - path: /sensing/camera/5/image
     type: diag
     node: image_diagnostics5
     name: camera5
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 1.0
 
@@ -970,77 +1002,77 @@ units:
     type: diag
     node: uevent_diagnostics_publisher_0
     name: camera0_uevent_diag
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.1
   - path: /sensing/camera/1/hw-diag
     type: diag
     node: uevent_diagnostics_publisher_0
     name: camera1_uevent_diag
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.1
   - path: /sensing/camera/2/hw-diag
     type: diag
     node: uevent_diagnostics_publisher_0
     name: camera2_uevent_diag
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.1
   - path: /sensing/camera/3/hw-diag
     type: diag
     node: uevent_diagnostics_publisher_0
     name: camera3_uevent_diag
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.1
   - path: /sensing/camera/4/hw-diag
     type: diag
     node: uevent_diagnostics_publisher_1
     name: camera4_uevent_diag
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.1
   - path: /sensing/camera/5/hw-diag
     type: diag
     node: uevent_diagnostics_publisher_1
     name: camera5_uevent_diag
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.1
   - path: /sensing/camera/6/hw-diag
     type: diag
     node: uevent_diagnostics_publisher_1
     name: camera6_uevent_diag
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.1
   - path: /sensing/camera/7/hw-diag
     type: diag
     node: uevent_diagnostics_publisher_1
     name: camera7_uevent_diag
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.1
   - path: /sensing/camera/8/hw-diag
     type: diag
     node: uevent_diagnostics_publisher_addon
     name: camera8_uevent_diag
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.1
   - path: /sensing/camera/9/hw-diag
     type: diag
     node: uevent_diagnostics_publisher_addon
     name: camera9_uevent_diag
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.1
   - path: /sensing/camera/10/hw-diag
     type: diag
     node: uevent_diagnostics_publisher_addon
     name: camera10_uevent_diag
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.1
 
@@ -1048,19 +1080,51 @@ units:
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/connection }
+      # - { type: link, link: /sensing/radar/front_left/connection }
+      # - { type: link, link: /sensing/radar/front_right/connection }
       - { type: link, link: /sensing/radar/rear_center/connection }
+      # - { type: link, link: /sensing/radar/rear_left/connection }
+      # - { type: link, link: /sensing/radar/rear_right/connection }
   - path: /sensing/radar/front_center/connection
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
     name: Liveness
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_left/connection
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Liveness
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_right/connection
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
+    name: Liveness
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.125
   - path: /sensing/radar/rear_center/connection
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Liveness
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_left/connection
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Liveness
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_right/connection
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
+    name: Liveness
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.125
 
@@ -1068,19 +1132,51 @@ units:
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/dynamics }
+      # - { type: link, link: /sensing/radar/front_left/dynamics }
+      # - { type: link, link: /sensing/radar/front_right/dynamics }
       - { type: link, link: /sensing/radar/rear_center/dynamics }
+      # - { type: link, link: /sensing/radar/rear_left/dynamics }
+      # - { type: link, link: /sensing/radar/rear_right/dynamics }
   - path: /sensing/radar/front_center/dynamics
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
     name: Dynamics
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.0
+  - path: /sensing/radar/front_left/dynamics
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Dynamics
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.0
+  - path: /sensing/radar/front_right/dynamics
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
+    name: Dynamics
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/radar/rear_center/dynamics
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Dynamics
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.0
+  - path: /sensing/radar/rear_left/dynamics
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Dynamics
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.0
+  - path: /sensing/radar/rear_right/dynamics
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
+    name: Dynamics
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -1088,19 +1184,51 @@ units:
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/internal }
+      # - { type: link, link: /sensing/radar/front_left/internal }
+      # - { type: link, link: /sensing/radar/front_right/internal }
       - { type: link, link: /sensing/radar/rear_center/internal }
+      # - { type: link, link: /sensing/radar/rear_left/internal }
+      # - { type: link, link: /sensing/radar/rear_right/internal }
   - path: /sensing/radar/front_center/internal
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
     name: Internal
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_left/internal
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Internal
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_right/internal
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
+    name: Internal
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/radar/rear_center/internal
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Internal
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_left/internal
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Internal
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_right/internal
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
+    name: Internal
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -1108,19 +1236,51 @@ units:
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/blockage_validation }
+      # - { type: link, link: /sensing/radar/front_left/blockage_validation }
+      # - { type: link, link: /sensing/radar/front_right/blockage_validation }
       - { type: link, link: /sensing/radar/rear_center/blockage_validation }
+      # - { type: link, link: /sensing/radar/rear_left/blockage_validation }
+      # - { type: link, link: /sensing/radar/rear_right/blockage_validation }
   - path: /sensing/radar/front_center/blockage_validation
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
     name: Blockage
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_left/blockage_validation
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Blockage
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_right/blockage_validation
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
+    name: Blockage
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/radar/rear_center/blockage_validation
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Blockage
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_left/blockage_validation
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Blockage
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_right/blockage_validation
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
+    name: Blockage
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -1128,19 +1288,51 @@ units:
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/object_rate }
+      # - { type: link, link: /sensing/radar/front_left/object_rate }
+      # - { type: link, link: /sensing/radar/front_right/object_rate }
       - { type: link, link: /sensing/radar/rear_center/object_rate }
+      # - { type: link, link: /sensing/radar/rear_left/object_rate }
+      # - { type: link, link: /sensing/radar/rear_right/object_rate }
   - path: /sensing/radar/front_center/object_rate
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
     name: Objects rate bound status
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_left/object_rate
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Objects rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_right/object_rate
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
+    name: Objects rate bound status
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/radar/rear_center/object_rate
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Objects rate bound status
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_left/object_rate
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Objects rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_right/object_rate
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
+    name: Objects rate bound status
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -1148,19 +1340,51 @@ units:
     type: and
     list:
       - { type: link, link: /sensing/radar/front_center/detections_rate }
+      # - { type: link, link: /sensing/radar/front_left/detections_rate }
+      # - { type: link, link: /sensing/radar/front_right/detections_rate }
       - { type: link, link: /sensing/radar/rear_center/detections_rate }
+      # - { type: link, link: /sensing/radar/rear_left/detections_rate }
+      # - { type: link, link: /sensing/radar/rear_right/detections_rate }
   - path: /sensing/radar/front_center/detections_rate
     type: diag
     node: /sensing/radar/front_center/nebula_continental_ars548
     name: Detections rate bound status
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_left/detections_rate
+    type: diag
+    node: /sensing/radar/front_left/nebula_continental_ars548
+    name: Detections rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/front_right/detections_rate
+    type: diag
+    node: /sensing/radar/front_right/nebula_continental_ars548
+    name: Detections rate bound status
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
   - path: /sensing/radar/rear_center/detections_rate
     type: diag
     node: /sensing/radar/rear_center/nebula_continental_ars548
     name: Detections rate bound status
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_left/detections_rate
+    type: diag
+    node: /sensing/radar/rear_left/nebula_continental_ars548
+    name: Detections rate bound status
+    timeout: 3.0
+    latch: 0.0
+    hysteresis: 0.125
+  - path: /sensing/radar/rear_right/detections_rate
+    type: diag
+    node: /sensing/radar/rear_right/nebula_continental_ars548
+    name: Detections rate bound status
+    timeout: 3.0
     latch: 0.0
     hysteresis: 0.0
 
@@ -1168,6 +1392,6 @@ units:
     type: diag
     node: polar_voxel_outlier_filter
     name: "/sensing/lidar/right_upper: visibility_validation"
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
-    hysteresis: 0.0
+    hysteresis: 1.0

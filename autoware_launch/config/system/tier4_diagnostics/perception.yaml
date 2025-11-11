@@ -46,6 +46,7 @@ units:
     list:
       - { type: link, link: /perception/001-topic_status/objects-error }
       - { type: link, link: /perception/001-topic_status/pointcloud-error }
+      - { type: link, link: /perception/topic_state_monitor/perception_ecu-error }
 
   - path: /perception/in_lane_emergency_stop
     type: and
@@ -97,110 +98,186 @@ units:
     type: diag
     node: topic_state_monitor_traffic_light_recognition_traffic_signals
     name: perception_topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/001-topic_status/objects
     type: diag
     node: topic_state_monitor_object_recognition_objects
     name: perception_topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/001-topic_status/pointcloud
     type: diag
     node: topic_state_monitor_obstacle_segmentation_pointcloud
     name: perception_topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/002-detection_delay/tracker
     type: diag
     node: multi_object_tracker
     name: Tracker Timing Diagnostics
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/003-timeout/map_based_prediction
     type: diag
     node: map_based_prediction
     name: map_based_prediction
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/003-timeout/lidar_centerpoint
     type: diag
     node: lidar_centerpoint
     name: processing_time_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/003-timeout/occupancy_grid_map
     type: diag
     node: occupancy_grid_map_node
     name: pointcloud_based_probabilistic_occupancy_grid_map
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/004-spec_limit/lidar_centerpoint
     type: diag
     node: lidar_centerpoint
     name: centerpoint_trt
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/005-invalid_input/roi_detected_object_fusion
     type: diag
     node: roi_detected_object_fusion
     name: roi_detected_object_fusion_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/005-invalid_input/roi_cluster_fusion
     type: diag
     node: roi_cluster_fusion
     name: roi_cluster_fusion_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/005-invalid_input/roi_pointcloud_fusion
     type: diag
     node: roi_pointcloud_fusion
     name: roi_pointcloud_fusion_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/006-no_detection/traffic_light
     type: diag
     node: car_traffic_light_classifier
     name: traffic_light_classifier
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/007-missing_input/object_merger_alpha
     type: diag
     node: object_association_merger_alpha
     name: object_association_merger
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/007-missing_input/object_merger_beta
     type: diag
     node: object_association_merger_beta
     name: object_association_merger
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/008-decorative_tracker_merger
     type: diag
     node: decorative_tracker_merger
     name: decorative_object_merger_node
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /perception/009-spec_limit/voxel_based_compare_map_filter
     type: diag
     node: voxel_based_compare_map_filter
     name: Compare map filter status
-    timeout: 1.0
+    timeout: 3.0
+    latch: 0.0
+
+  # Topic State Monitor for Perception ECU monitoring
+
+  - path: /perception/topic_state_monitor/perception_ecu-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /perception/topic_state_monitor/perception_ecu
+
+  - path: /perception/topic_state_monitor/perception_ecu
+    type: and
+    list:
+      - { type: link, link: /perception/topic_state_monitor/rois0 }
+      - { type: link, link: /perception/topic_state_monitor/rois1 }
+      - { type: link, link: /perception/topic_state_monitor/rois2 }
+      - { type: link, link: /perception/topic_state_monitor/rois3 }
+      - { type: link, link: /perception/topic_state_monitor/rois4 }
+      - { type: link, link: /perception/topic_state_monitor/rois5 }
+      - { type: link, link: /perception/topic_state_monitor/traffic_signals4 }
+      - { type: link, link: /perception/topic_state_monitor/traffic_signals5 }
+
+  - path: /perception/topic_state_monitor/rois0
+    type: diag
+    node: topic_state_monitor_rois0
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/rois1
+    type: diag
+    node: topic_state_monitor_rois1
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/rois2
+    type: diag
+    node: topic_state_monitor_rois2
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/rois3
+    type: diag
+    node: topic_state_monitor_rois3
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/rois4
+    type: diag
+    node: topic_state_monitor_rois4
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/rois5
+    type: diag
+    node: topic_state_monitor_rois5
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/traffic_signals4
+    type: diag
+    node: topic_state_monitor_traffic_signals4
+    name: perception_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /perception/topic_state_monitor/traffic_signals5
+    type: diag
+    node: topic_state_monitor_traffic_signals5
+    name: perception_topic_status
+    timeout: 3.0
     latch: 0.0

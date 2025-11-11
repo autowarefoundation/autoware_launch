@@ -42,33 +42,33 @@ units:
     type: diag
     node: topic_state_monitor_control_command_actuation_cmd
     name: topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /sub_ecu/vehicle/topic_status/velocity
     type: diag
     node: topic_state_monitor_vehicle_status_velocity_status
     name: topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /sub_ecu/vehicle/topic_status/steering
     type: diag
     node: topic_state_monitor_vehicle_status_steering_status
     name: topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /sub_ecu/vehicle/vcu_not_authenticated
     type: diag
     node: j6_interface
     name: vcu_not_authenticated
-    timeout: 2.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /sub_ecu/vehicle/t4_vcu_version_check
     type: diag
     node: j6_interface
     name: t4-vcu_version_check
-    timeout: 2.0
+    timeout: 3.0
     latch: 0.0
