@@ -1,0 +1,23 @@
+name: autoware-guideline-check
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  autoware-guideline-check:
+    runs-on: ubuntu-22.04
+    container: ros:humble-ros-core-jammy
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check out dependency
+        run: |
+          apt-get update && apt-get install -y python3-vcstool git
+          mkdir -p dependency_ws
+          vcs import dependency_ws < param_depends.repos
+        shell: bash
+
+      - name: Run autoware-guideline-check
+        uses: autowarefoundation/autoware-guideline-check@0.2.0
