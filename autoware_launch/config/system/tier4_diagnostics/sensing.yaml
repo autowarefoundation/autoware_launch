@@ -883,9 +883,9 @@ units:
       - { type: link, link: /sensing/camera/5/sync }
       - { type: link, link: /sensing/camera/6/sync }
       - { type: link, link: /sensing/camera/7/sync }
-      # - { type: link, link: /sensing/camera/8/sync }
-      # - { type: link, link: /sensing/camera/9/sync }
-      # - { type: link, link: /sensing/camera/10/sync }
+      - { type: link, link: /sensing/camera/8/sync }
+      - { type: link, link: /sensing/camera/9/sync }
+      - { type: link, link: /sensing/camera/10/sync }
   - path: /sensing/camera/0/sync
     type: diag
     node: tier4_camera_sync_doctor0
