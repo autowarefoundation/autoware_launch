@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>sample_sensor_kit_description</name>
-  <version>0.47.0</version>
-  <description>The sample_sensor_kit_description package</description>
-  <maintainer email="ryohsuke.mitsudome@tier4.jp">Ryohsuke Mitsudome</maintainer>
-  <maintainer email="yukihiro.saito@tier4.jp">Yukihiro Saito</maintainer>
+  <name>carla_sensor_kit_description</name>
+  <version>1.0.0</version>
+  <description>The carla_sensor_kit_description package - Sensor kit calibration for CARLA simulator</description>
+  <maintainer email="noreply@example.com">Autoware Maintainer</maintainer>
   <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
@@ -13,7 +12,6 @@
   <exec_depend>camera_description</exec_depend>
   <exec_depend>imu_description</exec_depend>
   <exec_depend>velodyne_description</exec_depend>
-  <exec_depend>vls_description</exec_depend>
   <exec_depend>xacro</exec_depend>
 
   <export>
