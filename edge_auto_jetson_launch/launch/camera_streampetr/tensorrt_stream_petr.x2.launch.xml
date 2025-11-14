@@ -13,10 +13,10 @@
     <param name="model_params.position_embedding_path" value="$(var model_path)/simplify_position_embedding.onnx"/>
 
     <!-- Remap output topic -->
-    <remap from="~/output/objects" to="camera_only/objects"/>
-    <remap from="~/latency/preprocess" to="camera_only/latency/preprocess"/>
-    <remap from="~/latency/total" to="camera_only/latency/total"/>
-    <remap from="~/latency/inference" to="camera_only/latency/inference"/>
+    <remap from="~/output/objects" to="streampetr/objects"/>
+    <remap from="~/latency/preprocess" to="streampetr/latency/preprocess"/>
+    <remap from="~/latency/total" to="streampetr/latency/total"/>
+    <remap from="~/latency/inference" to="streampetr/latency/inference"/>
 
     <!-- Image of ~/input/camerai will be the ith image in the model input -->
     <!-- ["CAM_FRONT", "CAM_FRONT_LEFT", "CAM_BACK_LEFT", "CAM_FRONT_RIGHT", "CAM_BACK_RIGHT"]  -->
@@ -40,5 +40,11 @@
     <param name="max_camera_time_diff" value="0.2"/>
 
   </node>
+
+  <include file="$(find-pkg-share autoware_object_sorter)/launch/detected_object_sorter.launch.xml">
+    <arg name="input/objects" value="/perception/object_recognition/detection/streampetr/objects"/>
+    <arg name="output/objects" value="/perception/object_recognition/detection/camera_only/objects"/>
+    <arg name="param_path" value="$(find-pkg-share edge_auto_jetson_launch)/config/streampetr_object_sorter.yaml"/>
+  </include>
 
 </launch>

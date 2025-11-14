@@ -1,0 +1,113 @@
+/**:
+  ros__parameters:
+    range_calc_frame_id: "base_link"
+    range_calc_offset:
+      x: 5.0 # [m]
+      y: 0.0 # [m]
+
+    range_thresholding_mode: "area" # [distance, area]
+
+    sort_target:
+      UNKNOWN:
+        publish: false
+        min_velocity_threshold: 0.0 # [m/s]
+        range_threshold:
+          # when range_thresholding_mode = distance
+          max_distance: 300.0 # [m]
+          min_distance: 70.0 # [m]
+          # when range_thresholding_mode = area
+          max_x: 100.0 # [m]
+          min_x: -100.0 # [m]
+          max_y: 100.0 # [m]
+          min_y: -100.0 # [m]
+
+      CAR:
+        publish: false
+        min_velocity_threshold: 0.0 # [m/s]
+        range_threshold:
+          # when range_thresholding_mode = distance
+          max_distance: 300.0 # [m]
+          min_distance: 70.0 # [m]
+          # when range_thresholding_mode = area
+          max_x: 100.0 # [m]
+          min_x: -100.0 # [m]
+          max_y: 30.0 # [m]
+          min_y: -30.0 # [m]
+
+      TRUCK:
+        publish: false
+        min_velocity_threshold: 0.0 # [m/s]
+        range_threshold:
+          # when range_thresholding_mode = distance
+          max_distance: 300.0 # [m]
+          min_distance: 70.0 # [m]
+          # when range_thresholding_mode = area
+          max_x: 100.0 # [m]
+          min_x: -100.0 # [m]
+          max_y: 100.0 # [m]
+          min_y: -100.0 # [m]
+
+      BUS:
+        publish: false
+        min_velocity_threshold: 0.0 # [m/s]
+        range_threshold:
+          # when range_thresholding_mode = distance
+          max_distance: 300.0 # [m]
+          min_distance: 70.0 # [m]
+          # when range_thresholding_mode = area
+          max_x: 100.0 # [m]
+          min_x: -100.0 # [m]
+          max_y: 100.0 # [m]
+          min_y: -100.0 # [m]
+
+      TRAILER:
+        publish: false
+        min_velocity_threshold: 0.0 # [m/s]
+        range_threshold:
+          # when range_thresholding_mode = distance
+          max_distance: 300.0 # [m]
+          min_distance: 70.0 # [m]
+          # when range_thresholding_mode = area
+          max_x: 100.0 # [m]
+          min_x: -100.0 # [m]
+          max_y: 100.0 # [m]
+          min_y: -100.0 # [m]
+
+      MOTORCYCLE:
+        publish: true
+        min_velocity_threshold: 0.0 # [m/s]
+        range_threshold:
+          # when range_thresholding_mode = distance
+          max_distance: 300.0 # [m]
+          min_distance: 70.0 # [m]
+          # when range_thresholding_mode = area
+          max_x: 20.0 # [m]
+          min_x: -20.0 # [m]
+          max_y: 20.0 # [m]
+          min_y: -20.0 # [m]
+
+      BICYCLE:
+        publish: true
+        min_velocity_threshold: 0.0 # [m/s]
+        range_threshold:
+         # when range_thresholding_mode = distance
+          max_distance: 300.0 # [m]
+          min_distance: 70.0 # [m]
+          # when range_thresholding_mode = area
+          max_x: 20.0 # [m]
+          min_x: -20.0 # [m]
+          max_y: 20.0 # [m]
+          min_y: -20.0 # [m]
+
+      PEDESTRIAN:
+        publish: true
+        min_velocity_threshold: 0.0 # [m/s]
+        range_threshold:
+          # when range_thresholding_mode = distance
+          max_distance: 300.0 # [m]
+          min_distance: 70.0 # [m]
+          # when range_thresholding_mode = area
+          max_x: 20.0 # [m]
+          min_x: -20.0 # [m]
+          max_y: 20.0 # [m]
+          min_y: -20.0 # [m]
