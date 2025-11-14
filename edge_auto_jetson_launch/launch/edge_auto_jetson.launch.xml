@@ -16,7 +16,7 @@ the corresponding edge_auto_jetson launch file.
        description="If true, camera drivers will be booted. Otherwise, image decompressor will be launched."/>
   <arg name="perception" default="True"
        description="If true, series of perception stack will be booted."/>
-  <arg name="streampetr_enabled" default="false" description="If true, StreamPETR perception will be launched." />
+  <arg name="streampetr_enabled" default="true" description="If true, StreamPETR perception will be launched." />
 
   <include file="$(find-pkg-share edge_auto_jetson_launch)/launch/edge_auto_jetson_$(var ecu_name).launch.xml">
     <arg name="vehicle_id" value="$(var vehicle_id)" />
