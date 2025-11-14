@@ -343,6 +343,7 @@
       "autoware_diagnostics_bridge_node_logging: heartbeat": default
       "autoware_diagnostics_bridge_node_perception1: heartbeat": default
       "autoware_diagnostics_bridge_node_perception2: heartbeat": default
+      "autoware_diagnostics_bridge_node_addon: heartbeat": default
 
       ## fool proof check
       "autoware_diagnostics_bridge_node_logging: logging_ssd": default
@@ -352,6 +353,8 @@
       "autoware_diagnostics_bridge_node_perception2: perception2_mgbe1-ready": default
       "autoware_diagnostics_bridge_node_main: main_scheduling_settings_others": default
       "autoware_diagnostics_bridge_node_main: main_scheduling_settings_autoware": default
+      "autoware_diagnostics_bridge_node_addon: addon_recognition_node_alive": default
+      "autoware_diagnostics_bridge_node_addon: addon_camera_driver_node_alive": default
 
       ## letterbox_monitor
       "autoware_diagnostics_bridge_node_main: main_autoware_node_alive": default
