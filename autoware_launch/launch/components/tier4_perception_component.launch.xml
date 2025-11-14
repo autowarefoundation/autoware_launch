@@ -45,6 +45,8 @@
   <arg name="segmentation_pointcloud_fusion_camera_ids" default="[0,2,4]" description="list of camera ids used for segmentation_pointcloud_fusion node, mainly using front camera"/>
   <arg name="use_multi_channel_tracker_merger" default="true" description="if true, multi channel tracker merger is used. Otherwise, merged object is used."/>
   <arg name="tracker_publish_merged_objects" default="false"/>
+  <arg name="use_camera_vru_detector" default="false" description="enable pipeline for camera VRU object detection"/>
+  <arg name="camera_vru_detector_rois_ids" default="[0]" description="list of ROIs ids used for detecting VRU."/>
 
   <arg name="occupancy_grid_map_method" default="pointcloud_based" description="options: pointcloud_based, laserscan_based, multi_lidar_pointcloud_based"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
@@ -100,6 +102,8 @@
     <arg name="use_obstacle_segmentation_single_frame_filter" value="$(var use_obstacle_segmentation_single_frame_filter)"/>
     <arg name="use_obstacle_segmentation_time_series_filter" value="$(var use_obstacle_segmentation_time_series_filter)"/>
     <arg name="segmentation_pointcloud_fusion_camera_ids" value="$(var segmentation_pointcloud_fusion_camera_ids)"/>
+    <arg name="use_camera_vru_detector" value="$(var use_camera_vru_detector)"/>
+    <arg name="camera_vru_detector_rois_ids" value="$(var camera_vru_detector_rois_ids)"/>
 
     <arg name="camera_2d_detector/model_path" value="$(var camera_2d_detector/model_path)"/>
     <arg name="camera_2d_detector/label_path" value="$(var camera_2d_detector/label_path)"/>
@@ -149,6 +153,10 @@
     <arg
       name="object_recognition_detection_roi_detected_object_fusion_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml"
+    />
+    <arg
+      name="object_recognition_detection_near_range_camera_vru_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/camera_vru_detection/near_range_camera_vru_detector.param.yaml"
     />
     <arg
       name="object_recognition_detection_pointpainting_fusion_common_param_path"
