@@ -20,7 +20,10 @@
     <include file="$(find-pkg-share awsim_sensor_kit_launch)/launch/imu.launch.xml"/>
 
     <!-- GNSS Driver -->
-    <!-- GNSS Drives in not needed because the AWSIM already publishes both gnss pose and pose with covariance topics -->
+    <include file="$(find-pkg-share autoware_gnss_poser)/launch/gnss_poser.launch.xml">
+      <arg name="input_topic_fix" value="/sensing/gnss/ublox/nav_sat_fix"/>
+      <arg name="output_topic_gnss_pose_cov" value="/sensing/gnss/pose_with_covariance"/>
+    </include>
 
     <!-- Vehicle Velocity Converter  -->
     <include file="$(find-pkg-share autoware_vehicle_velocity_converter)/launch/vehicle_velocity_converter.launch.xml">

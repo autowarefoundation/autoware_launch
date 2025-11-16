@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>autoware_launch</name>
-  <version>0.47.0</version>
+  <version>0.48.0</version>
   <description>The autoware_launch package</description>
 
   <maintainer email="yukihiro.saito@tier4.jp">Yukihiro Saito</maintainer>
@@ -32,5 +32,6 @@
 
   <export>
     <build_type>ament_cmake</build_type>
+    <autoware_guideline_check file="test/autoware_guideline_check.yaml"/>
   </export>
 </package>
