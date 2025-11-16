@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.48.0 (2025-11-16)
+-------------------
 * Merge remote-tracking branch 'origin/main' into release-humble-0.48.0
 * feat(image_object_locator): add near range camera VRU detector to perception pipeline (`#1697 <https://github.com/autowarefoundation/autoware_launch/issues/1697>`_)
   add near range camera VRU detector to perception pipeline

@@ -2,8 +2,8 @@
 Changelog for package awsim_sensor_kit_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.48.0 (2025-11-16)
+-------------------
 * Merge remote-tracking branch 'origin/main' into release-humble-0.48.0
 * fix(awsim_sensor_kit_description): add missing dependencies (`#1679 <https://github.com/autowarefoundation/autoware_launch/issues/1679>`_)
 * Contributors: Takagi, Isamu, mitsudome-r

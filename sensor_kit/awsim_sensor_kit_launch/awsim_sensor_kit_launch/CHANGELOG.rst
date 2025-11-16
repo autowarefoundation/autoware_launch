@@ -2,8 +2,8 @@
 Changelog for package awsim_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.48.0 (2025-11-16)
+-------------------
 * Merge remote-tracking branch 'origin/main' into release-humble-0.48.0
 * feat: change AWSIM GNSS format to NavSatFix (`#1640 <https://github.com/autowarefoundation/autoware_launch/issues/1640>`_)
 * chore: necessary mod to run with latest gyro scale estimation changes (`#1633 <https://github.com/autowarefoundation/autoware_launch/issues/1633>`_)
