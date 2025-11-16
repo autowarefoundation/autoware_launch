@@ -2,6 +2,16 @@
 Changelog for package sample_sensor_kit_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge remote-tracking branch 'origin/main' into release-humble-0.48.0
+* fix: add missing exec_depends for sensor description (`#1699 <https://github.com/autowarefoundation/autoware_launch/issues/1699>`_)
+  * fix: add missing exec_depends for sensor description
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* Contributors: Ryohsuke Mitsudome, mitsudome-r
+
 0.47.0 (2025-08-11)
 -------------------
 
