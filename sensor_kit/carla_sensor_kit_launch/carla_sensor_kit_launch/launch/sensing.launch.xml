@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Launch driver argument is not used since CARLA doesn't need any hardware drivers. -->
+  <arg name="vehicle_mirror_param_file" description="path to the file of vehicle mirror position yaml"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+
+  <group>
+    <!-- LiDAR preprocessing - CARLA provides raw pointcloud via autoware_carla_interface -->
+    <group>
+      <push-ros-namespace namespace="lidar"/>
+      <include file="$(find-pkg-share carla_sensor_kit_launch)/launch/pointcloud_preprocessor.launch.py">
+        <arg name="use_intra_process" value="true"/>
+        <arg name="use_multithread" value="true"/>
+        <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+      </include>
+    </group>
+
+    <!-- Camera Driver -->
+    <!-- Camera drivers not needed - CARLA already publishes camera_info and image_raw via autoware_carla_interface -->
+
+    <!-- IMU Processing -->
+    <!-- IMU driver not needed - CARLA publishes raw IMU data via autoware_carla_interface -->
+    <!-- But we need to process the raw IMU data using IMU corrector -->
+    <include file="$(find-pkg-share carla_sensor_kit_launch)/launch/imu.launch.xml"/>
+
+    <!-- GNSS Driver -->
+    <!-- GNSS driver not needed - CARLA publishes GNSS pose directly via autoware_carla_interface -->
+
+    <!-- Vehicle Velocity Converter -->
+    <include file="$(find-pkg-share autoware_vehicle_velocity_converter)/launch/vehicle_velocity_converter.launch.xml">
+      <arg name="input_vehicle_velocity_topic" value="/vehicle/status/velocity_status"/>
+      <arg name="output_twist_with_covariance" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
+    </include>
+  </group>
+</launch>

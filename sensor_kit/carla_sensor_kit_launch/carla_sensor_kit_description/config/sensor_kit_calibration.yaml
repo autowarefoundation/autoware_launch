@@ -1,0 +1,84 @@
+# CARLA sensor kit calibration (in base_link frame)
+# Frames: base_link at rear axle center on ground (x forward, y right, z up).
+# Conversion from CARLA vehicle origin ("car center") to base_link:
+#   x_base = x_car_center + 1.425  (WB=2.850 m)
+#   y_base = y_car_center
+#   z_base = z_car_center
+#   rpy unchanged
+
+sensor_kit_base_link:
+  # Cameras (6 cams, 360°)
+  CAM_FRONT/camera_link:
+    x: 2.225 # 0.800 + 1.425
+    y: 0.000
+    z: 1.600
+    roll: 0.000
+    pitch: 0.000
+    yaw: 0.000
+
+  CAM_FRONT_LEFT/camera_link:
+    x: 1.695 # 0.270 + 1.425
+    y: -0.550
+    z: 1.600
+    roll: 0.000
+    pitch: 0.000
+    yaw: -0.959931 # -55 deg
+
+  CAM_FRONT_RIGHT/camera_link:
+    x: 1.695 # 0.270 + 1.425
+    y: 0.550
+    z: 1.600
+    roll: 0.000
+    pitch: 0.000
+    yaw: 0.959931 # +55 deg
+
+  CAM_BACK/camera_link:
+    x: -0.575 # -2.000 + 1.425
+    y: 0.000
+    z: 1.600
+    roll: 0.000
+    pitch: 0.000
+    yaw: 3.141593 # 180 deg
+
+  CAM_BACK_LEFT/camera_link:
+    x: 1.105 # -0.320 + 1.425
+    y: -0.550
+    z: 1.600
+    roll: 0.000
+    pitch: 0.000
+    yaw: -1.919862 # -110 deg
+
+  CAM_BACK_RIGHT/camera_link:
+    x: 1.105 # -0.320 + 1.425
+    y: 0.550
+    z: 1.600
+    roll: 0.000
+    pitch: 0.000
+    yaw: 1.919862 # +110 deg
+
+  # LiDAR (roof)
+  velodyne_top_base_link:
+    x: 1.035 # -0.390 + 1.425
+    y: 0.000
+    z: 1.840
+    roll: 0.000
+    pitch: 0.000
+    yaw: 0.000
+
+  # GNSS (z = 0 aligns with the IMU/GNSS script assumption; adjust z to move it onto the roof)
+  gnss_link:
+    x: 0.025 # -1.400 + 1.425
+    y: 0.000
+    z: 0.000
+    roll: 0.000
+    pitch: 0.000
+    yaw: 0.000
+
+  # IMU (same placement rationale as GNSS)
+  tamagawa/imu_link:
+    x: 0.025 # -1.400 + 1.425
+    y: 0.000
+    z: 0.000
+    roll: 0.000
+    pitch: 0.000
+    yaw: 0.000
