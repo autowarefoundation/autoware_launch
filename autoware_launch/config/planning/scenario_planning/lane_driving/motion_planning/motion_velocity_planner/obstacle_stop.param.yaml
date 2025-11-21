@@ -114,4 +114,4 @@
           lpf_gain: 0.9
         height_margin:
           margin_from_top: -1.0 # [m] margin from the top of the ego vehicle
-          margin_from_bottom: 0.0 # [m] margin from the bottom of the ego vehicle
+          margin_from_bottom: -0.2 # [m] margin from the bottom of the ego vehicle
