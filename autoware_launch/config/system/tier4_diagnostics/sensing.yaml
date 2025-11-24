@@ -68,12 +68,12 @@ units:
     list:
       - { type: link, link: /sensing/imu/001-connection-error }
       - { type: link, link: /sensing/imu/002-rate-error }
+      - { type: link, link: /sensing/imu/003-gyro_bias }
       - { type: link, link: /sensing/imu/008-monitor-error }
 
   - path: /sensing/none
     type: and
     list:
-      - { type: link, link: /sensing/imu/003-gyro_bias }
       - { type: link, link: /sensing/gnss/001-connection-error }
       - { type: link, link: /sensing/gnss/002-quality }
       - { type: link, link: /sensing/gnss/003-receiver-status }
@@ -478,7 +478,7 @@ units:
       - { type: link, link: /sensing/lidar/right_upper/rate }
 
   - path: /sensing/lidar/front_lower/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -486,7 +486,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/front_upper/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -494,7 +494,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/left_lower/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -502,7 +502,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/left_upper/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -510,7 +510,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/rear_lower/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -518,7 +518,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/rear_upper/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -526,7 +526,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/right_lower/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -534,7 +534,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/right_upper/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0

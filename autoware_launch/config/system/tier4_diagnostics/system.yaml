@@ -155,7 +155,7 @@ units:
     latch: 0.0
 
   - path: /system/009-dssad
-    type: ok
+    type: diag
     node: dssad_packer
     name: dssad_record_status
     timeout: 3.0
