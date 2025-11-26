@@ -5,7 +5,6 @@ files:
   - { path: $(dirname)/map.yaml }
   - { path: $(dirname)/perception.yaml }
   - { path: $(dirname)/planning.yaml }
-  # - { path: $(dirname)/others.yaml }
   - { path: $(dirname)/sensing.yaml }
   - { path: $(dirname)/system.yaml }
   - { path: $(dirname)/vehicle.yaml }
@@ -33,7 +32,6 @@ units:
       - { type: link, link: /map/autonomous_available }
       - { type: link, link: /perception/autonomous_available }
       - { type: link, link: /planning/autonomous_available }
-      # - { type: link, link: /others/autonomous_available }
       - { type: link, link: /sensing/autonomous_available }
       - { type: link, link: /system/autonomous_available }
       - { type: link, link: /vehicle/autonomous_available }
@@ -51,7 +49,6 @@ units:
       - { type: link, link: /map/comfortable_stop_available }
       - { type: link, link: /perception/comfortable_stop_available }
       - { type: link, link: /planning/comfortable_stop_available }
-      # - { type: link, link: /others/comfortable_stop_available }
       - { type: link, link: /sensing/comfortable_stop_available }
       - { type: link, link: /system/comfortable_stop_available }
       - { type: link, link: /vehicle/comfortable_stop_available }
@@ -69,7 +66,6 @@ units:
       - { type: link, link: /map/in_lane_moderate_stop_available }
       - { type: link, link: /perception/in_lane_moderate_stop_available }
       - { type: link, link: /planning/in_lane_moderate_stop_available }
-      # - { type: link, link: /others/in_lane_moderate_stop_available }
       - { type: link, link: /sensing/in_lane_moderate_stop_available }
       - { type: link, link: /system/in_lane_moderate_stop_available }
       - { type: link, link: /vehicle/in_lane_moderate_stop_available }
@@ -87,7 +83,6 @@ units:
       - { type: link, link: /map/in_lane_emergency_stop_available }
       - { type: link, link: /perception/in_lane_emergency_stop_available }
       - { type: link, link: /planning/in_lane_emergency_stop_available }
-      # - { type: link, link: /others/in_lane_emergency_stop_available }
       - { type: link, link: /sensing/in_lane_emergency_stop_available }
       - { type: link, link: /system/in_lane_emergency_stop_available }
       - { type: link, link: /vehicle/in_lane_emergency_stop_available }

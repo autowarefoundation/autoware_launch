@@ -5,7 +5,6 @@ files:
   # - { path: $(dirname)/map.yaml }
   # - { path: $(dirname)/perception.yaml }
   - { path: $(dirname)/sub/planning.yaml }
-  # - { path: $(dirname)/others.yaml }
   - { path: $(dirname)/sub/sensing.yaml }
   - { path: $(dirname)/sub/system.yaml }
   - { path: $(dirname)/sub/vehicle.yaml }
@@ -25,7 +24,6 @@ units:
       # - { type: link, link: /map/sub_ecu_in_lane_moderate_stop_available }
       # - { type: link, link: /perception/sub_ecu_in_lane_moderate_stop_available }
       - { type: link, link: /sub_ecu/planning/sub_ecu_in_lane_moderate_stop_available }
-      # - { type: link, link: /others/sub_ecu_in_lane_moderate_stop_available }
       - { type: link, link: /sub_ecu/sensing/sub_ecu_in_lane_moderate_stop_available }
       - { type: link, link: /sub_ecu/system/sub_ecu_in_lane_moderate_stop_available }
       - { type: link, link: /sub_ecu/vehicle/sub_ecu_in_lane_moderate_stop_available }
