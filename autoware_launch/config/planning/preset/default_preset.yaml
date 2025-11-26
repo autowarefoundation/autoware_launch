@@ -2,8 +2,8 @@ launch:
   - arg:
       name: behavior_path_planner_type
       default: behavior_path_planner
-    # option: behavior_path_planner
-    #         path_generator
+      # option: behavior_path_planner
+      #         path_generator
 
   # behavior path modules
   - arg:

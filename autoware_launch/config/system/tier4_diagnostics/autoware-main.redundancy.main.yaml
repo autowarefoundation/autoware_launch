@@ -1,0 +1,105 @@
+files:
+  - { path: $(dirname)/control.yaml }
+  - { path: $(dirname)/hardware.yaml }
+  - { path: $(dirname)/localization.yaml }
+  - { path: $(dirname)/map.yaml }
+  - { path: $(dirname)/perception.yaml }
+  - { path: $(dirname)/planning.yaml }
+  # - { path: $(dirname)/others.yaml }
+  - { path: $(dirname)/sensing.yaml }
+  - { path: $(dirname)/system.yaml }
+  - { path: $(dirname)/vehicle.yaml }
+  - { path: $(dirname)/foolproof.yaml }
+  - { path: $(dirname)/redundancy.yaml }
+  - { path: $(dirname)/mrm_domain/localization.yaml }
+  - { path: $(dirname)/mrm_domain/planning.yaml }
+
+units:
+  - path: /autoware/modes/local
+    type: stale
+
+  - path: /autoware/modes/remote
+    type: stale
+
+  - path: /autoware/modes/stop
+    type: ok
+
+  - path: /autoware/modes/autonomous
+    type: and
+    list:
+      - { type: link, link: /control/autonomous_available }
+      - { type: link, link: /hardware/autonomous_available }
+      - { type: link, link: /localization/autonomous_available }
+      - { type: link, link: /map/autonomous_available }
+      - { type: link, link: /perception/autonomous_available }
+      - { type: link, link: /planning/autonomous_available }
+      # - { type: link, link: /others/autonomous_available }
+      - { type: link, link: /sensing/autonomous_available }
+      - { type: link, link: /system/autonomous_available }
+      - { type: link, link: /vehicle/autonomous_available }
+      - { type: link, link: /foolproof/autonomous_available }
+      - { type: link, link: /redundancy/autonomous_available }
+      - { type: link, link: /mrm_domain/localization/autonomous_available }
+      - { type: link, link: /mrm_domain/planning/autonomous_available }
+
+  - path: /autoware/modes/comfortable_stop
+    type: and
+    list:
+      - { type: link, link: /control/comfortable_stop_available }
+      - { type: link, link: /hardware/comfortable_stop_available }
+      - { type: link, link: /localization/comfortable_stop_available }
+      - { type: link, link: /map/comfortable_stop_available }
+      - { type: link, link: /perception/comfortable_stop_available }
+      - { type: link, link: /planning/comfortable_stop_available }
+      # - { type: link, link: /others/comfortable_stop_available }
+      - { type: link, link: /sensing/comfortable_stop_available }
+      - { type: link, link: /system/comfortable_stop_available }
+      - { type: link, link: /vehicle/comfortable_stop_available }
+      - { type: link, link: /foolproof/comfortable_stop_available }
+      - { type: link, link: /redundancy/comfortable_stop_available }
+      - { type: link, link: /mrm_domain/localization/comfortable_stop_available }
+      - { type: link, link: /mrm_domain/planning/comfortable_stop_available }
+
+  - path: /autoware/modes/in_lane_moderate_stop
+    type: and
+    list:
+      - { type: link, link: /control/in_lane_moderate_stop_available }
+      - { type: link, link: /hardware/in_lane_moderate_stop_available }
+      - { type: link, link: /localization/in_lane_moderate_stop_available }
+      - { type: link, link: /map/in_lane_moderate_stop_available }
+      - { type: link, link: /perception/in_lane_moderate_stop_available }
+      - { type: link, link: /planning/in_lane_moderate_stop_available }
+      # - { type: link, link: /others/in_lane_moderate_stop_available }
+      - { type: link, link: /sensing/in_lane_moderate_stop_available }
+      - { type: link, link: /system/in_lane_moderate_stop_available }
+      - { type: link, link: /vehicle/in_lane_moderate_stop_available }
+      - { type: link, link: /foolproof/in_lane_moderate_stop_available }
+      - { type: link, link: /redundancy/in_lane_moderate_stop_available }
+      - { type: link, link: /mrm_domain/localization/in_lane_moderate_stop_available }
+      - { type: link, link: /mrm_domain/planning/in_lane_moderate_stop_available }
+
+  - path: /autoware/modes/in_lane_emergency_stop
+    type: and
+    list:
+      - { type: link, link: /control/in_lane_emergency_stop_available }
+      - { type: link, link: /hardware/in_lane_emergency_stop_available }
+      - { type: link, link: /localization/in_lane_emergency_stop_available }
+      - { type: link, link: /map/in_lane_emergency_stop_available }
+      - { type: link, link: /perception/in_lane_emergency_stop_available }
+      - { type: link, link: /planning/in_lane_emergency_stop_available }
+      # - { type: link, link: /others/in_lane_emergency_stop_available }
+      - { type: link, link: /sensing/in_lane_emergency_stop_available }
+      - { type: link, link: /system/in_lane_emergency_stop_available }
+      - { type: link, link: /vehicle/in_lane_emergency_stop_available }
+      - { type: link, link: /foolproof/in_lane_emergency_stop_available }
+      - { type: link, link: /redundancy/in_lane_emergency_stop_available }
+      - { type: link, link: /mrm_domain/localization/in_lane_emergency_stop_available }
+      - { type: link, link: /mrm_domain/planning/in_lane_emergency_stop_available }
+
+  - path: /autoware/modes/emergency_stop
+    type: ok
+
+  - path: /notification/main_ecu
+    type: and
+    list:
+      - { type: link, link: /redundancy/main_ecu/notification }

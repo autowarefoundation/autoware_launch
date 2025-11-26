@@ -1,4 +1,4 @@
 /**:
   ros__parameters:
-    message_lifespan: 0.09
+    message_lifespan: 0.2
     approximate_sync: false
