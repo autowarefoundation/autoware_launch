@@ -68,7 +68,7 @@ units:
     list:
       - { type: link, link: /sensing/imu/001-connection-error }
       - { type: link, link: /sensing/imu/002-rate-error }
-      - { type: link, link: /sensing/imu/003-gyro_bias }
+      - { type: link, link: /sensing/imu/003-gyro_bias-error }
       - { type: link, link: /sensing/imu/008-monitor-error }
 
   - path: /sensing/none
@@ -96,6 +96,12 @@ units:
     item:
       type: link
       link: /sensing/imu/002-rate
+
+  - path: /sensing/imu/003-gyro_bias-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/imu/003-gyro_bias
 
   - path: /sensing/imu/008-monitor-error
     type: warn-to-ok
