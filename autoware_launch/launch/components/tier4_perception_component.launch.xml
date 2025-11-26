@@ -17,6 +17,7 @@
   <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
   <arg name="segmentation_pointcloud_fusion_camera_ids" default="[0,2,4]" description="list of camera ids used for segmentation_pointcloud_fusion node, mainly using front camera"/>
   <arg name="use_multi_channel_tracker_merger" default="false" description="if true, multi channel tracker merger is used. Otherwise, merged object is used."/>
+  <arg name="tracker_publish_merged_objects" default="false"/>
   <arg name="use_obstacle_segmentation_time_series_filter" default="false" description="use time series filter at the ground segmentation"/>
   <arg name="use_camera_vru_detector" default="false" description="enable pipeline for camera VRU object detection"/>
   <arg name="camera_vru_detector_rois_ids" default="[0]" description="list of ROIs ids used for detecting VRU."/>
