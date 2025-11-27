@@ -6,12 +6,12 @@
       disk0:
         name: /
         temp_attribute_id: 0xC2
-        temp_warn: 55.0
-        temp_error: 70.0
+        temp_warn: 70.0
+        temp_error: 85.0
         power_on_hours_attribute_id: 0x09
         power_on_hours_warn: 3000000
         total_data_written_attribute_id: 0xF1
-        total_data_written_warn: 4915200   # =150TB (1unit=32MB)
+        total_data_written_warn: 1386217472   # =661TB (1unit=512KB)
         total_data_written_safety_factor: 0.05
         recovered_error_attribute_id: 0xC3
         recovered_error_warn: 1

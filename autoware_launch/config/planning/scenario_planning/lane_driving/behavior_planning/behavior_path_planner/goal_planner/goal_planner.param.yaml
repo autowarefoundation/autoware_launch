@@ -14,7 +14,7 @@
           lateral_weight: 40.0
         prioritize_goals_before_objects: true
         parking_policy: "left_side" # "left_side" or "right_side"
-        forward_goal_search_length: 40.0
+        forward_goal_search_length: 0.5
         backward_goal_search_length: 20.0
         goal_search_interval: 2.0
         longitudinal_margin: 3.0
@@ -24,13 +24,13 @@
         margin_from_boundary: 0.75
         high_curvature_threshold: 0.1
         bus_stop_area:
-          use_bus_stop_area: false
+          use_bus_stop_area: true
           goal_search_interval: 0.75
           lateral_offset_interval: 0.3
 
       # occupancy grid map
       occupancy_grid:
-        use_occupancy_grid_for_goal_search: true
+        use_occupancy_grid_for_goal_search: false
         use_occupancy_grid_for_goal_longitudinal_margin: false
         use_occupancy_grid_for_path_collision_check: false
         occupancy_grid_collision_check_margin: 0.0
@@ -40,9 +40,9 @@
       # object recognition
       object_recognition:
         collision_check_soft_margins: [5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0]  # the maximum margin when ego and objects are oriented.
-        collision_check_hard_margins: [0.6]  # this should be larger than `surround_check_distance` of surround_obstacle_checker
-        object_recognition_collision_check_max_extra_stopping_margin: 1.0
-        collision_check_outer_margin_factor: 2.0
+        collision_check_hard_margins: [0.4]  # this should be larger than `surround_check_distance` of surround_obstacle_checker
+        object_recognition_collision_check_max_extra_stopping_margin: 0.3
+        collision_check_outer_margin_factor: 1.0
         th_moving_object_velocity: 1.0
         detection_bound_offset: 15.0
         outer_road_detection_offset: 1.0
@@ -62,15 +62,15 @@
         maximum_deceleration: 1.0
         maximum_jerk: 1.0
         path_priority: "efficient_path" # "efficient_path" or "close_goal"
-        efficient_path_order: ["SHIFT", "ARC_FORWARD", "ARC_BACKWARD"] # only lane based pull over(exclude freespace parking)
+        efficient_path_order: ["SHIFT", "ARC_FORWARD"] # only lane based pull over(exclude freespace parking)
         lane_departure_check_expansion_margin: 0.2
 
         # shift parking
         shift_parking:
           enable_shift_parking: true
           shift_sampling_num: 4
-          maximum_lateral_jerk: 2.0
-          minimum_lateral_jerk: 0.5
+          maximum_lateral_jerk: 0.5
+          minimum_lateral_jerk: 0.1
           deceleration_interval: 15.0
           after_shift_straight_distance: 1.5
 
@@ -84,7 +84,7 @@
             forward_parking_lane_departure_margin: 0.0
             forward_parking_path_interval: 1.0
           backward:
-            enable_arc_backward_parking: true
+            enable_arc_backward_parking: false
             after_backward_parking_straight_distance: 2.0
             backward_parking_velocity: -1.38
             backward_parking_lane_departure_margin: 0.0
@@ -92,7 +92,7 @@
 
         # freespace parking
         freespace_parking:
-          enable_freespace_parking: true
+          enable_freespace_parking: false
           freespace_parking_algorithm: "astar"  # options: astar, rrtstar
           velocity: 1.0
           vehicle_shape_margin: 1.0

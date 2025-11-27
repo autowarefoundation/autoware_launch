@@ -1,0 +1,185 @@
+units:
+  - path: /autoware/modes/local
+    type: and
+    list:
+      - { type: link, link: /debug/injection/local_available }
+
+  - path: /autoware/modes/remote
+    type: and
+    list:
+      - { type: link, link: /debug/injection/remote_available }
+
+  - path: /autoware/modes/stop
+    type: and
+    list:
+      - { type: link, link: /debug/injection/stop_available }
+
+  - path: /autoware/modes/autonomous
+    type: and
+    list:
+      - { type: link, link: /debug/injection/autonomous_available }
+      - { type: link, link: /redundancy/redundancy_switcher }
+      - { type: link, link: /adapi/mrm_request/delegate }
+      - { type: link, link: /vehicle/override_when_level4_driving }
+
+  - path: /autoware/modes/comfortable_stop
+    type: and
+    list:
+      - { type: link, link: /debug/injection/comfortable_stop_available }
+      - { type: link, link: /redundancy/redundancy_switcher }
+      - { type: link, link: /adapi/mrm_request/delegate }
+      - { type: link, link: /vehicle/override_when_level4_driving }
+
+  - path: /autoware/modes/in_lane_moderate_stop
+    type: and
+    list:
+      - { type: link, link: /debug/injection/main_ecu_in_lane_moderate_stop_available }
+      - { type: link, link: /redundancy/redundancy_switcher }
+
+  - path: /autoware/modes/in_lane_emergency_stop
+    type: and
+    list:
+      - { type: link, link: /debug/injection/main_ecu_in_lane_emergency_stop_available }
+      - { type: link, link: /redundancy/redundancy_switcher }
+
+  - path: /notification/main/faults
+    type: and
+    list:
+      - { type: link, link: /redundancy/main_ecu/main_ecu_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_ecu_fault }
+      - { type: link, link: /redundancy/main_ecu/main_vcu_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_vcu_fault }
+      - { type: link, link: /redundancy/main_ecu/main_ecu_to_sub_ecu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/main_ecu_to_main_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/main_ecu_to_sub_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_ecu_to_main_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_ecu_to_sub_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/main_vcu_to_sub_vcu_link_fault }
+
+  # diag
+  - path: /debug/injection/local_available
+    type: diag
+    node: ""
+    name: injection_local_available
+    timeout: 1.0
+    # latch: 0.0
+
+  - path: /debug/injection/remote_available
+    type: diag
+    node: ""
+    name: injection_remote_available
+    timeout: 1.0
+    # latch: 0.0
+
+  - path: /debug/injection/stop_available
+    type: diag
+    node: ""
+    name: injection_stop_available
+    timeout: 1.0
+    # latch: 0.0
+
+  - path: /debug/injection/autonomous_available
+    type: diag
+    node: ""
+    name: injection_autonomous_available
+    timeout: 1.0
+    # latch: 0.0
+
+  - path: /debug/injection/comfortable_stop_available
+    type: diag
+    node: ""
+    name: injection_comfortable_stop_available
+    timeout: 1.0
+    # latch: 0.0
+
+  - path: /debug/injection/main_ecu_in_lane_moderate_stop_available
+    type: diag
+    node: ""
+    name: injection_main_ecu_in_lane_moderate_stop_available
+    timeout: 1.0
+    # latch: 0.0
+
+  - path: /debug/injection/main_ecu_in_lane_emergency_stop_available
+    type: diag
+    node: ""
+    name: injection_main_ecu_in_lane_emergency_stop_available
+    timeout: 1.0
+    # latch: 0.0
+
+  - path: /redundancy/redundancy_switcher
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: redundancy_switcher_status
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_ecu_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_ecu_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/sub_ecu_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: sub_ecu_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_vcu_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_vcu_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/sub_vcu_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: sub_vcu_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_ecu_to_sub_ecu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_ecu_to_sub_ecu_link_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_ecu_to_main_vcu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_ecu_to_main_vcu_link_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_ecu_to_sub_vcu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_ecu_to_sub_vcu_link_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/sub_ecu_to_main_vcu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: sub_ecu_to_main_vcu_link_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/sub_ecu_to_sub_vcu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: sub_ecu_to_sub_vcu_link_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_vcu_to_sub_vcu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_vcu_to_sub_vcu_link_fault
+    timeout: 3.0
+
+  - path: /adapi/mrm_request/delegate
+    type: diag
+    node: /adapi/node/mrm_request
+    name: delegate
+    timeout: 3.0
+
+  - path: /vehicle/override_when_level4_driving
+    type: diag
+    node: j6_interface
+    name: override_when_level4_driving
+    timeout: 2.0

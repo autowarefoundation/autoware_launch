@@ -1,0 +1,12 @@
+/**:
+  ros__parameters:
+    update_rate: 10.0
+    multiple_ecu_enabled: true
+    multiple_ecu_identifier: 1 # redundancy switcher node id
+    plugins:
+      - x2_command_mode_switcher::SubEcuStandbySwitcher
+      - x2_command_mode_switcher::SubEcuInLaneModerateStopSwitcher
+    plugin_parameters:
+      x2_command_mode_switcher::SubEcuInLaneModerateStopSwitcher:
+        target_acceleration: -3.0
+        target_jerk: -5.0
