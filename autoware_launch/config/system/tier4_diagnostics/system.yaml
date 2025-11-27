@@ -49,7 +49,6 @@ units:
   - path: /system/in_lane_moderate_stop
     type: and
     list:
-      - { type: link, link: /system/command_mode_decider/ready-error }
       - { type: link, link: /system/015-velocity-status-error }
       - { type: link, link: /system/016-steering-status-error }
 
@@ -66,6 +65,7 @@ units:
       - { type: link, link: /system/010-v2x_jpn_signal }
       - { type: link, link: /system/011-v2x_omron }
       - { type: link, link: /system/012-fms_connection }
+      - { type: link, link: /system/command_mode_decider/ready-error }
 
   - path: /system/002-latency/total-latency-error
     type: warn-to-ok
