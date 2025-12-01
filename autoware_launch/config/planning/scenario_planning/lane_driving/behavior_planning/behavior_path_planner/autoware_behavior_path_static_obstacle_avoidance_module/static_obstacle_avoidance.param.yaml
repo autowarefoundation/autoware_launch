@@ -28,7 +28,7 @@
             hard_margin_for_parked_vehicle: 0.2         # [m]
           max_expand_ratio: 0.0                         # [-] FOR DEVELOPER
           envelope_buffer_margin: 0.1                   # [m] FOR DEVELOPER
-          th_error_eclipse_long_radius : 0.6            # [m]
+          th_error_eclipse_long_radius : 0.4            # [m]
         truck:
           th_moving_speed: 1.0
           th_moving_time: 2.0
@@ -39,7 +39,7 @@
             hard_margin_for_parked_vehicle: 0.2
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
-          th_error_eclipse_long_radius : 0.6
+          th_error_eclipse_long_radius : 0.4
         bus:
           th_moving_speed: 1.0
           th_moving_time: 2.0
@@ -50,7 +50,7 @@
             hard_margin_for_parked_vehicle: 0.2
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
-          th_error_eclipse_long_radius : 0.6
+          th_error_eclipse_long_radius : 0.4
         trailer:
           th_moving_speed: 1.0
           th_moving_time: 2.0
@@ -61,7 +61,7 @@
             hard_margin_for_parked_vehicle: 0.2
           max_expand_ratio: 0.0
           envelope_buffer_margin: 0.1
-          th_error_eclipse_long_radius : 0.6
+          th_error_eclipse_long_radius : 0.4
         unknown:
           th_moving_speed: 0.28
           th_moving_time: 1.0
@@ -171,7 +171,7 @@
           # "auto"   : generate candidate path. if RTC is running as AUTO mode, the ego avoids it automatically.
           # "manual" : generate candidate path and wait operator approval even if RTC is running as AUTO mode.
           # "ignore" : never avoid it.
-          policy: "ignore"                                # [-]
+          policy: "manual"                                # [-]
           condition:
             th_road_border_distance: 0.8                  # [m] threshold distance from road border to parking vehicle side
 
@@ -180,7 +180,7 @@
           # "auto"   : generate candidate path. if RTC is running as AUTO mode, the ego avoids it automatically.
           # "manual" : generate candidate path and wait operator approval even if RTC is running as AUTO mode.
           # "ignore" : never avoid it.
-          policy: "auto"
+          policy: "ignore"
 
         # params for filtering objects that are in intersection
         intersection:
@@ -296,7 +296,7 @@
         #                but there is a possibility that the vehicle can't stop in front of the vehicle.
         # "reliable": insert stop or slow down point with ignoring decel/jerk constraints.
         #             make it possible to increase chance to avoid but uncomfortable deceleration maybe happen.
-        deceleration: "reliable"                        # [-]
+        deceleration: "best_effort"                        # [-]
         # policy for avoidance lateral margin. select "best_effort" or "reliable".
         # "best_effort": output avoidance path with shorten lateral margin when there is no enough longitudinal
         #                margin to avoid.

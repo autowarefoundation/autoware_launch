@@ -45,8 +45,6 @@ units:
     type: and
     list:
       - { type: link, link: /control/011-rolling_back-error }
-      - { type: link, link: /control/012-overrun_stop_point-error }
-      - { type: link, link: /control/011-rolling_back-error }
 
   - path: /control/in_lane_moderate_stop
     type: and
@@ -67,6 +65,7 @@ units:
   - path: /control/none
     type: and
     list:
+      - { type: link, link: /control/012-overrun_stop_point-error }
       - { type: link, link: /control/013-will_overrun_stop_point-error }
       - { type: link, link: /control/014-acceleration_error-error }
       - { type: link, link: /control/016-sudden_deceleration_monitor-error }
@@ -172,35 +171,35 @@ units:
     type: diag
     node: topic_state_monitor_control_command_control_cmd
     name: control_topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/003-max_distance_deviation
     type: diag
     node: control_validator
     name: control_validation_max_distance_deviation
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/004-over_velocity
     type: diag
     node: control_validator
     name: control_validation_over_velocity
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/005-yaw_deviation
     type: diag
     node: control_validator
     name: control_validation_yaw_deviation
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/007-aeb_emergency_stop
     type: diag
     node: autonomous_emergency_braking
     name: aeb_emergency_stop
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/009-slip_detection
@@ -214,67 +213,67 @@ units:
     type: diag
     node: collision_detector
     name: collision_detect
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/011-rolling_back
     type: diag
     node: control_validator
     name: control_validation_rolling_back
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/012-overrun_stop_point
     type: diag
     node: control_validator
     name: control_validation_overrun_stop_point
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/013-will_overrun_stop_point
     type: diag
     node: control_validator
     name: control_validation_will_overrun_stop_point
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/014-acceleration_error
     type: diag
     node: control_validator
     name: control_validation_acceleration_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/control_command_gate/timeout_stop
     type: diag
     node: control_command_gate
     name: timeout_stop
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/control_command_gate/timeout_main
     type: diag
     node: control_command_gate
     name: timeout_main
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/control_command_gate/timeout_in_lane_stop
     type: diag
     node: control_command_gate
     name: timeout_in_lane_stop
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /control/control_command_gate/timeout_output
     type: diag
     node: control_command_gate
     name: timeout_output
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
   - path: /control/016-sudden_deceleration_monitor
     type: diag
     node: sudden_deceleration_monitor
     name: sudden_deceleration_monitor
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0

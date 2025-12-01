@@ -7,7 +7,7 @@
 
       stop_planning:
         stop_margin : 6.0 # longitudinal margin to obstacle [m]
-        terminal_stop_margin : 3.0 # Stop margin at the goal. This value cannot exceed stop margin. [m]
+        terminal_stop_margin : 2.0 # Stop margin at the goal. This value cannot exceed stop margin. [m]
         min_behavior_stop_margin: 3.0 # [m]
         behavior_stop_margin_hold_time: 2.0 # [s] time to hold the min_behavior_stop_margin after disappearing the behavior stop point
 
@@ -24,7 +24,7 @@
         pointcloud_suppression_distance_margin: 0.2
 
         stop_on_curve:
-          enable_approaching: true
+          enable_approaching: false
           additional_stop_margin: 2.0 # [m]
           min_stop_margin: 3.5 # [m]
 
@@ -56,7 +56,7 @@
           default: true
           pointcloud: true
         check_outside: # If true, the planner checks if the obstacle is outside the ego's footprint. pointcloud obstacles are not supported.
-          default: true
+          default: false
           unknown: false
 
         trim_trajectory:
@@ -69,31 +69,19 @@
         lateral_margin: # lateral margin between the obstacles and ego's footprint
           nominal:
             default: 0.3
-            pedestrian: 0.6
-            bicycle: 0.6
-            motorcycle: 0.6
             unknown: -0.5
             pointcloud: 0.0
           additional: # additional stop margin to the obstacle.
             wheel_off_track_scale: # scale factor for additional stop margin against ego's wheel off-track. Even if this value is set to 0.0, the planner considers the nominal wheel off-track.
-              default: 0.3
-              pedestrian: 0.6
-              bicycle: 0.6
-              motorcycle: 0.6
-              unknown: 0.0
-              pointcloud: 0.1
+              default: 0.0
             is_moving_threshold_velocity: 0.5 # [m/s] threshold to consider the obstacle as a moving obstacle. Pointcloud obstacles are always considered as stop obstacles.
             is_stop_obstacle: # [m] additional stop margin for stop obstacle
               default: 0.0
-              car: 0.2
-              truck: 0.2
-              bus: 0.2
-              trailer: 0.2
             is_moving_obstacle: # [m] additional stop margin for moving obstacle
               default: 0.0
-              pedestrian: 0.3
-              bicycle: 0.3
-              motorcycle: 0.3
+              pedestrian: 0.2
+              bicycle: 0.2
+              motorcycle: 0.2
 
         min_velocity_to_reach_collision_point: 2.0 # minimum velocity margin to calculate time to reach collision [m/s]
         stop_obstacle_hold_time_threshold : 1.0 # maximum time for holding closest stop obstacle

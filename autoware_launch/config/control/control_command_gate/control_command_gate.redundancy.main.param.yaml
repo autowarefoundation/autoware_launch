@@ -12,8 +12,8 @@
     stop_hold_acceleration: -1.5
     emergency_acceleration: -4.0
     moderate_stop_acceleration: -1.5
-    diag_timeout_warn_duration: 1.0
-    diag_timeout_error_duration: 2.0
+    diag_timeout_warn_duration: 0.15
+    diag_timeout_error_duration: 0.30
     stop_check_duration: 1.0
     enable_command_limit_filter: true
     nominal_filter:

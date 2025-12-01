@@ -57,7 +57,7 @@
   <arg name="enable_scheduling_settings" default="false" description="enable scheduling settings"/>
 
   <!-- Perception Filter Options -->
-  <arg name="use_perception_filter" default="false" description="launch perception filter for external approval"/>
+  <arg name="launch_perception_filter" default="false" description="launch perception filter for external approval"/>
 
   <group scoped="false">
     <!-- Vehicle -->
@@ -100,6 +100,8 @@
       <arg name="is_simulation" value="true"/>
       <!-- L4 tool kit-->
       <arg name="daytime_monitor_param_file" value="$(var daytime_monitor_param_file)"/>
+      <!-- Perception Filter -->
+      <arg name="launch_perception_filter" value="$(var launch_perception_filter)"/>
       <!-- Scheduling settings -->
       <arg name="enable_scheduling_settings" value="$(var enable_scheduling_settings)"/>
     </include>

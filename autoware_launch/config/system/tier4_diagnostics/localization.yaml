@@ -46,7 +46,6 @@ units:
     list:
       - { type: link, link: /localization/001-topic_status/pose_twist_fusion_filter-error }
       - { type: link, link: /localization/001-topic_status/tf-error }
-      - { type: link, link: /localization/003-matching_score-error }
       - { type: link, link: /localization/005-accuracy-error }
       - { type: link, link: /localization/006-ekf_localizer-error }
 
@@ -62,6 +61,7 @@ units:
     type: and
     list:
       - { type: link, link: /localization/001-topic_status/initialpose-error }
+      - { type: link, link: /localization/003-matching_score-error }
       - { type: link, link: /localization/008-pose_initializer_status }
 
   - path: /localization/001-topic_status/initialpose-error
@@ -116,35 +116,35 @@ units:
     type: diag
     node: topic_state_monitor_initialpose3d
     name: localization_topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /localization/001-topic_status/pose_twist_fusion_filter
     type: diag
     node: topic_state_monitor_pose_twist_fusion_filter_pose
     name: localization_topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /localization/001-topic_status/tf
     type: diag
     node: topic_state_monitor_transform_map_to_base_link
     name: localization_topic_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /localization/002-timeout/gyro_odometer
     type: diag
     node: gyro_odometer
     name: gyro_odometer_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /localization/003-matching_score
     type: diag
     node: ndt_scan_matcher
     name: scan_matching_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /localization/004-map-update
@@ -158,26 +158,26 @@ units:
     type: diag
     node: localization_error_monitor
     name: ellipse_error_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /localization/006-ekf_localizer
     type: diag
     node: localization
     name: ekf_localizer
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /localization/007-pose_instability_detector
     type: diag
     node: localization
     name: pose_instability_detector
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /localization/008-pose_initializer_status
     type: diag
     node: localization
     name: pose_initializer_status
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0

@@ -41,6 +41,7 @@ units:
       - { type: link, link: /vehicle/006-a_brake_error }
       - { type: link, link: /vehicle/006-b_parking_error }
       - { type: link, link: /vehicle/007-vehicle-emergency-button }
+      - { type: link, link: /vehicle/override_when_level4_driving }
 
   - path: /vehicle/in_lane_moderate_stop
     type: and
@@ -48,7 +49,6 @@ units:
       - { type: link, link: /vehicle/006-c_steering-error }
       - { type: link, link: /vehicle/006-d_drive_system-error }
       - { type: link, link: /vehicle/006-e_steering-error }
-      - { type: link, link: /vehicle/override_when_level4_driving }
       - { type: link, link: /vehicle/t4_vcu_version_check-error }
       - { type: link, link: /vehicle/vcu-not-authenticated-error }
 
@@ -202,131 +202,131 @@ units:
     type: diag
     node: j6_interface
     name: brake_external_request_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-a-01-02_ebs
     type: diag
     node: j6_interface
     name: brake_system_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-a-06-07_ebs_receive
     type: diag
     node: j6_interface
     name: brake_system_can_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-b-00-01-02_epb
     type: diag
     node: j6_interface
     name: parking_system_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-b-03-04-05_parking_external_request
     type: diag
     node: j6_interface
     name: parking_external_request_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-b-07_epb_can_receive
     type: diag
     node: j6_interface
     name: parking_system_can_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-c-01_eps1
     type: diag
     node: j6_interface
     name: steering_system_1_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-c-02_eps2
     type: diag
     node: j6_interface
     name: steering_system_2_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-c-03-04_steering_system
     type: diag
     node: j6_interface
     name: steering_system_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-c-05_steering_angle_initialization
     type: diag
     node: j6_interface
     name: steering_angle_initialization_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-c-06-07_steering_system_can
     type: diag
     node: j6_interface
     name: steering_system_can_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-d-00_drive_system
     type: diag
     node: j6_interface
     name: drive_system_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-d-06-07_drive_system_can
     type: diag
     node: j6_interface
     name: drive_system_can_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-e-01_eps_overheat
     type: diag
     node: j6_interface
     name: steering_system_over_heat_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/006-e-02_sas
     type: diag
     node: j6_interface
     name: steering_angle_sensor_error
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/007-vehicle-emergency-button
     type: diag
     node: j6_interface
     name: vehicle_emergency_button
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/override_when_level4_driving
     type: diag
     node: j6_interface
     name: override_when_level4_driving
-    timeout: 1.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/t4_vcu_version_check
     type: diag
     node: j6_interface
     name: t4-vcu_version_check
-    timeout: 2.0
+    timeout: 3.0
     latch: 0.0
 
   - path: /vehicle/vcu-not-authenticated
     type: diag
     node: j6_interface
     name: vcu_not_authenticated
-    timeout: 10.0
+    timeout: 3.0
     latch: 0.0
