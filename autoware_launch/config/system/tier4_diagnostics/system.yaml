@@ -49,8 +49,6 @@ units:
   - path: /system/in_lane_moderate_stop
     type: and
     list:
-      - { type: link, link: /system/006-vehicle_stuck_checker }
-      - { type: link, link: /system/command_mode_decider/ready-error }
       - { type: link, link: /system/015-velocity-status-error }
       - { type: link, link: /system/016-steering-status-error }
 
@@ -63,9 +61,11 @@ units:
   - path: /system/none
     type: and
     list:
+      - { type: link, link: /system/006-vehicle_stuck_checker }
       - { type: link, link: /system/010-v2x_jpn_signal }
       - { type: link, link: /system/011-v2x_omron }
       - { type: link, link: /system/012-fms_connection }
+      - { type: link, link: /system/command_mode_decider/ready-error }
 
   - path: /system/002-latency/total-latency-error
     type: warn-to-ok
@@ -155,7 +155,7 @@ units:
     latch: 0.0
 
   - path: /system/009-dssad
-    type: ok
+    type: diag
     node: dssad_packer
     name: dssad_record_status
     timeout: 3.0

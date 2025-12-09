@@ -67,7 +67,7 @@ launch:
       default: "true"
   - arg:
       name: launch_detection_area_module
-      default: "false"
+      default: "true"
   - arg:
       name: launch_virtual_traffic_light_module
       default: "false"

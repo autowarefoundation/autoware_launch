@@ -71,7 +71,8 @@ units:
   - path: /vehicle/006-b_parking_error
     type: and
     list:
-      - { type: link, link: /vehicle/006-b-00-01-02_epb-error }
+      - { type: link, link: /vehicle/006-b-00_parking_air_pressure-error }
+      - { type: link, link: /vehicle/006-b-01-02_epb-error }
       - { type: link, link: /vehicle/006-b-03-04-05_parking_external_request-error }
       - { type: link, link: /vehicle/006-b-07_epb_can_receive-error }
 
@@ -126,11 +127,17 @@ units:
       type: link
       link: /vehicle/006-a-06-07_ebs_receive
 
-  - path: /vehicle/006-b-00-01-02_epb-error
+  - path: /vehicle/006-b-00_parking_air_pressure-error
     type: warn-to-ok
     item:
       type: link
-      link: /vehicle/006-b-00-01-02_epb
+      link: /vehicle/006-b-00_parking_air_pressure
+
+  - path: /vehicle/006-b-01-02_epb-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/006-b-01-02_epb
 
   - path: /vehicle/006-b-03-04-05_parking_external_request-error
     type: warn-to-ok
@@ -219,7 +226,14 @@ units:
     timeout: 3.0
     latch: 0.0
 
-  - path: /vehicle/006-b-00-01-02_epb
+  - path: /vehicle/006-b-00_parking_air_pressure
+    type: diag
+    node: j6_interface
+    name: parking_air_pressure_error
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /vehicle/006-b-01-02_epb
     type: diag
     node: j6_interface
     name: parking_system_error

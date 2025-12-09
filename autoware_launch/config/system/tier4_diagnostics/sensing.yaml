@@ -68,12 +68,12 @@ units:
     list:
       - { type: link, link: /sensing/imu/001-connection-error }
       - { type: link, link: /sensing/imu/002-rate-error }
+      - { type: link, link: /sensing/imu/003-gyro_bias-error }
       - { type: link, link: /sensing/imu/008-monitor-error }
 
   - path: /sensing/none
     type: and
     list:
-      - { type: link, link: /sensing/imu/003-gyro_bias }
       - { type: link, link: /sensing/gnss/001-connection-error }
       - { type: link, link: /sensing/gnss/002-quality }
       - { type: link, link: /sensing/gnss/003-receiver-status }
@@ -96,6 +96,12 @@ units:
     item:
       type: link
       link: /sensing/imu/002-rate
+
+  - path: /sensing/imu/003-gyro_bias-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sensing/imu/003-gyro_bias
 
   - path: /sensing/imu/008-monitor-error
     type: warn-to-ok
@@ -396,58 +402,58 @@ units:
     type: diag
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/front_upper/connection
     type: diag
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/left_lower/connection
     type: diag
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/left_upper/connection
     type: diag
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/right_lower/connection
     type: diag
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/right_upper/connection
     type: diag
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/rear_lower/connection
     type: diag
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/rear_upper/connection
     type: diag
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: hesai_status
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
 
   - path: /sensing/lidar/002-status
     type: and
@@ -478,7 +484,7 @@ units:
       - { type: link, link: /sensing/lidar/right_upper/rate }
 
   - path: /sensing/lidar/front_lower/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -486,7 +492,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/front_upper/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -494,7 +500,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/left_lower/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -502,7 +508,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/left_upper/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -510,7 +516,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/rear_lower/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -518,7 +524,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/rear_upper/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -526,7 +532,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/right_lower/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -534,7 +540,7 @@ units:
     hysteresis: 0.5
 
   - path: /sensing/lidar/right_upper/functional-safety
-    type: ok
+    type: diag
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: Functional safety status
     timeout: 3.0
@@ -684,58 +690,58 @@ units:
     type: diag
     node: /sensing/lidar/front_lower/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/front_upper/ptp
     type: diag
     node: /sensing/lidar/front_upper/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/left_lower/ptp
     type: diag
     node: /sensing/lidar/left_lower/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/left_upper/ptp
     type: diag
     node: /sensing/lidar/left_upper/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/right_lower/ptp
     type: diag
     node: /sensing/lidar/right_lower/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/rear_lower/ptp
     type: diag
     node: /sensing/lidar/rear_lower/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/right_upper/ptp
     type: diag
     node: /sensing/lidar/right_upper/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
   - path: /sensing/lidar/rear_upper/ptp
     type: diag
     node: /sensing/lidar/rear_upper/hesai_ros_wrapper_node
     name: hesai_ptp
-    timeout: 3.0
+    timeout: 10.0
     latch: 0.0
-    hysteresis: 1.0
+    hysteresis: 10.0
 
   - path: /sensing/lidar/004-blockage
     type: and
@@ -883,9 +889,9 @@ units:
       - { type: link, link: /sensing/camera/5/sync }
       - { type: link, link: /sensing/camera/6/sync }
       - { type: link, link: /sensing/camera/7/sync }
-      # - { type: link, link: /sensing/camera/8/sync }
-      # - { type: link, link: /sensing/camera/9/sync }
-      # - { type: link, link: /sensing/camera/10/sync }
+      - { type: link, link: /sensing/camera/8/sync }
+      - { type: link, link: /sensing/camera/9/sync }
+      - { type: link, link: /sensing/camera/10/sync }
   - path: /sensing/camera/0/sync
     type: diag
     node: tier4_camera_sync_doctor0

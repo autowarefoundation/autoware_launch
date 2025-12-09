@@ -274,6 +274,7 @@
       "j6_interface: brake_external_request_error": default
       "j6_interface: brake_system_error": default
       "j6_interface: brake_system_can_error": default
+      "j6_interface: parking_air_pressure_error": default
       "j6_interface: parking_system_error": default
       "j6_interface: parking_system_can_error": default
       "j6_interface: parking_external_request_error": default

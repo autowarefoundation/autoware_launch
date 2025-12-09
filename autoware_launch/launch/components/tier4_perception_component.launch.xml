@@ -41,10 +41,10 @@
   <arg name="use_radar_tracking_fusion" default="true" description="if true, radar objects are merged in tracking module. Otherwise, radar objects are merged in detection module."/>
   <arg name="use_object_filter" default="true" description="launch object filter to filter-out detected object"/>
   <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
-  <arg name="use_obstacle_segmentation_time_series_filter" default="false" description="use time series filter at the ground segmentation"/>
   <arg name="segmentation_pointcloud_fusion_camera_ids" default="[0,2,4]" description="list of camera ids used for segmentation_pointcloud_fusion node, mainly using front camera"/>
-  <arg name="use_multi_channel_tracker_merger" default="true" description="if true, multi channel tracker merger is used. Otherwise, merged object is used."/>
+  <arg name="use_multi_channel_tracker_merger" default="false" description="if true, multi channel tracker merger is used. Otherwise, merged object is used."/>
   <arg name="tracker_publish_merged_objects" default="false"/>
+  <arg name="use_obstacle_segmentation_time_series_filter" default="false" description="use time series filter at the ground segmentation"/>
   <arg name="use_camera_vru_detector" default="false" description="enable pipeline for camera VRU object detection"/>
   <arg name="camera_vru_detector_rois_ids" default="[0]" description="list of ROIs ids used for detecting VRU."/>
 
@@ -105,6 +105,12 @@
     <arg name="use_camera_vru_detector" value="$(var use_camera_vru_detector)"/>
     <arg name="camera_vru_detector_rois_ids" value="$(var camera_vru_detector_rois_ids)"/>
     <arg name="irregular_object_detector_fusion_camera_ids" value="[3,4,5]"/>
+    <arg name="use_camera_vru_detector" value="$(var use_camera_vru_detector)"/>
+    <arg name="camera_vru_detector_rois_ids" value="$(var camera_vru_detector_rois_ids)"/>
+
+    <arg name="camera_2d_detector/model_path" value="$(var camera_2d_detector/model_path)"/>
+    <arg name="camera_2d_detector/label_path" value="$(var camera_2d_detector/label_path)"/>
+    <arg name="camera_2d_detector/color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
 
     <arg name="camera_2d_detector/model_path" value="$(var camera_2d_detector/model_path)"/>
     <arg name="camera_2d_detector/label_path" value="$(var camera_2d_detector/label_path)"/>
