@@ -21,6 +21,7 @@
       - "external_request_lane_change_left"
       - "external_request_lane_change_right"
       - "bidirectional_traffic"
+      - "dry_steering_avoidance"
     slot3:
       - "goal_planner"
     slot4:
@@ -86,3 +87,8 @@
       enable_rtc: false
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: true
+
+    dry_steering_avoidance:
+      enable_rtc: false
+      enable_simultaneous_execution_as_approved_module: false
+      enable_simultaneous_execution_as_candidate_module: false
