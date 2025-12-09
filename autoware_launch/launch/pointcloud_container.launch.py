@@ -36,7 +36,7 @@ def launch_setup(context, *args, **kwargs):
         package="autoware_glog_component",
         plugin="autoware::glog_component::GlogComponent",
         name="glog_component",
-        namespace="pointcloud_container",
+        namespace=["/", LaunchConfiguration("container_name")],
     )
 
     container_package = "agnocastlib" if use_agnocast else "rclcpp_components"

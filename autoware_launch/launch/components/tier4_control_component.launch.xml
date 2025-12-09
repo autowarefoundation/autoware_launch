@@ -19,6 +19,10 @@
   <arg name="control_input_objects_topic_name" default="/perception/object_recognition/objects"/>
   <arg name="control_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
 
+  <!-- Input topic parameters for control modules -->
+  <arg name="control_input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="control_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+
   <!-- Global parameters -->
   <group scoped="false">
     <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
