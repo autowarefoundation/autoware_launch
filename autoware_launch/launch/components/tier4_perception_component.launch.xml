@@ -38,6 +38,7 @@
   <arg name="camera_2d_detector/label_path" default="$(var data_path)/tensorrt_yolox/label.txt" description="label path"/>
   <arg name="camera_2d_detector/color_map_path" default="$(var data_path)/tensorrt_yolox/semseg_color_map.csv" description="color map path"/>
 
+  <arg name="traffic_light_recognition/fusion_only" default="true" description="if true, the node which is launched in perception ECU is not launched"/>
   <arg name="traffic_light_recognition/camera_namespaces" default="[camera4, camera5]" description="choose camera which use for traffic light recognition"/>
   <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="select whether to use high accuracy detector for traffic light recognition"/>
   <arg
@@ -86,7 +87,7 @@
 
     <!-- traffic light recognition options to switch launch function/module -->
     <arg name="use_traffic_light_recognition" value="$(var use_traffic_light_recognition)"/>
-    <arg name="traffic_light_recognition/fusion_only" value="true"/>
+    <arg name="traffic_light_recognition/fusion_only" value="$(var traffic_light_recognition/fusion_only)"/>
     <arg name="traffic_light_recognition/camera_namespaces" value="$(var traffic_light_recognition/camera_namespaces)"/>
     <arg name="traffic_light_recognition/use_high_accuracy_detection" value="$(var traffic_light_recognition/use_high_accuracy_detection)"/>
     <arg name="traffic_light_recognition/high_accuracy_detection_type" value="$(var traffic_light_recognition/high_accuracy_detection_type)"/>
