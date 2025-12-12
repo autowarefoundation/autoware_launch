@@ -49,6 +49,10 @@
   <!-- Auto mode setting-->
   <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
   <arg name="is_simulation" default="false" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
+  <!-- Agnocast -->
+  <let name="use_agnocast" value="true" if="$(eval &quot;'$(env ENABLE_AGNOCAST 0)' == '1'&quot;)"/>
+  <let name="use_agnocast" value="false" unless="$(eval &quot;'$(env ENABLE_AGNOCAST 0)' == '1'&quot;)"/>
+  <include file="$(find-pkg-share autoware_launch)/config/agnocast/agnocast.yaml"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -62,6 +66,8 @@
   <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
     <arg name="use_multithread" value="true"/>
     <arg name="container_name" value="$(var pointcloud_container_name)"/>
+    <arg name="use_agnocast" value="$(var use_agnocast)"/>
+    <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
   </include>
 
   <!-- Vehicle -->
@@ -90,6 +96,8 @@
   <group if="$(var launch_sensing)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml">
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="use_agnocast" value="$(var use_agnocast)"/>
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
     </include>
   </group>
 
