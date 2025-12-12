@@ -14,5 +14,7 @@
     </include>
   </group>
 
-  <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml"/>
+  <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml">
+    <arg name="launch_deprecated_api" value="$(var launch_deprecated_api)"/>
+  </include>
 </launch>
