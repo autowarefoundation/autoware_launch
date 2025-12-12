@@ -14,6 +14,8 @@
     slot1:
       - "start_planner"
     slot2:
+      - "dry_steering_avoidance"
+    slot3:
       - "side_shift"
       - "avoidance_by_lane_change"
       - "static_obstacle_avoidance"
@@ -22,8 +24,6 @@
       - "external_request_lane_change_left"
       - "external_request_lane_change_right"
       - "bidirectional_traffic"
-    slot3:
-      - "dry_steering_avoidance"
     slot4:
       - "goal_planner"
     slot5:

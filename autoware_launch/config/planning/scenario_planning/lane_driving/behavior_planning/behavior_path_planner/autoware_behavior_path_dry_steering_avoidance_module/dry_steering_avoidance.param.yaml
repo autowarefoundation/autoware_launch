@@ -26,6 +26,7 @@
       arc_path_interval: 1.0
       geometric_pull_out_max_steer_angle_margin_scale: 0.72
       geometric_collision_check_distance_from_end: 0.0
+      center_line_path_interval: 1.0
 
       # debug end pose offset parameters
       debug_end_pose_longitudinal_offset: 5.0  # [m] longitudinal offset from start pose
