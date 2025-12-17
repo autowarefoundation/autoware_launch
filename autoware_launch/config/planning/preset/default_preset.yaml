@@ -8,7 +8,7 @@ launch:
   # behavior path modules
   - arg:
       name: launch_static_obstacle_avoidance
-      default: "true"
+      default: "false"
   - arg:
       name: launch_avoidance_by_lane_change_module
       default: "true"
@@ -35,7 +35,7 @@ launch:
       default: "true"
   - arg:
       name: launch_start_planner_module
-      default: "true"
+      default: "false"
   - arg:
       name: launch_side_shift_module
       default: "true"
@@ -99,7 +99,7 @@ launch:
 
   - arg:
       name: motion_path_planner_type
-      default: path_optimizer
+      default: none
       # option: path_optimizer
       #         path_sampler
       #         none
