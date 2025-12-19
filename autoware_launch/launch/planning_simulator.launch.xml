@@ -28,7 +28,11 @@
   <arg name="perception/use_base_link_z" default="true" description="dummy perception uses base_link z axis coordinate if it is true"/>
   <arg name="sensing/visible_range" default="300.0" description="visible range when using dummy perception"/>
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
-  <arg name="diagnostic_config_file" default="$(find-pkg-share autoware_scenario_simulator_v2_adapter)/config/diagnostic_config_file.param.yaml" description="path to diagnostic configuration file for scenario simulator v2 adapter"/>
+  <arg
+    name="diagnostic_config_file"
+    default="$(find-pkg-share autoware_scenario_simulator_v2_adapter)/config/diagnostic_config_file.param.yaml"
+    description="path to diagnostic configuration file for scenario simulator v2 adapter"
+  />
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
