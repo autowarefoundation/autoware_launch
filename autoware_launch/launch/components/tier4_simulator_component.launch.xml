@@ -102,8 +102,6 @@
       name="crosswalk_traffic_light_estimator_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml"
     />
-    <!-- <arg name="parameter_file_path" value="$(find-pkg-share autoware_launch)/../../simulation/config/scenario_test_parameters.yaml"/> -->
-    <!-- <arg name="diagnostic_config_file" value="$(find-pkg-share autoware_launch)/../../simulation/config/ssv2_adaptor_diagnostic_config_file.yaml"/> -->
   </include>
   <group if="$(var scenario_simulation)">
     <include file="$(find-pkg-share autoware_dummy_infrastructure)/launch/dummy_infrastructure.launch.xml"/>
