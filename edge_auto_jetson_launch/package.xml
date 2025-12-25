@@ -33,6 +33,7 @@
   <exec_depend>autoware_object_sorter</exec_depend>
   <exec_depend>autoware_camera_streampetr</exec_depend>
 
+  <exec_depend>autoware_glog_component</exec_depend>
   <exec_depend>c2_readout_delay_setter</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
