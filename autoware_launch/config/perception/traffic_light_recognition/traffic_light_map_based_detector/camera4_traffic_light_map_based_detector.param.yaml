@@ -6,7 +6,7 @@
     max_vibration_width: 0.5             # -0.25 ~ 0.25 m in camera optical frame
     max_vibration_depth: 0.5             # -0.25 ~ 0.25 m in camera optical frame
     max_detection_range: 200.0
-    min_timestamp_offset: -0.3
+    min_timestamp_offset: -0.04
     max_timestamp_offset: 0.0
     timestamp_sample_len: 0.02
     car_traffic_light_max_angle_range: 40.0
