@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.49.0 (2025-12-30)
+-------------------
 * Merge remote-tracking branch 'origin/main' into prepare-changelog-0.49.0
 * refactor(ground_segmentation): remove grid_mode_switch_radius (`#1720 <https://github.com/autowarefoundation/autoware_launch/issues/1720>`_)
 * feat: allow the latest frame from each tlr camera to stay for a little longer (`#1718 <https://github.com/autowarefoundation/autoware_launch/issues/1718>`_)
