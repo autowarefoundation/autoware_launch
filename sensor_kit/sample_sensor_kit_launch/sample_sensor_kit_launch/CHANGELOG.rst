@@ -2,6 +2,9 @@
 Changelog for package sample_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.48.0 (2025-11-16)
 -------------------
 * Merge remote-tracking branch 'origin/main' into release-humble-0.48.0

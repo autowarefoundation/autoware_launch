@@ -2,6 +2,12 @@
 Changelog for package single_lidar_sensor_kit_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge remote-tracking branch 'origin/main' into prepare-changelog-0.49.0
+* feat: remove sensor component dependency (`#1722 <https://github.com/autowarefoundation/autoware_launch/issues/1722>`_)
+* Contributors: Ryohsuke Mitsudome, Takagi, Isamu
+
 0.48.0 (2025-11-16)
 -------------------
 
