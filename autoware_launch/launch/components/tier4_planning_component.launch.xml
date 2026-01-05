@@ -11,6 +11,10 @@
   <arg name="planning_input_objects_topic_name" default="/perception/object_recognition/objects"/>
   <arg name="planning_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
 
+  <!-- Agnocast -->
+  <arg name="use_agnocast" default="false" description="enable Agnocast for planning containers"/>
+  <arg name="agnocast_heaphook_path" description="path to agnocast heaphook library"/>
+
   <!-- Global parameters -->
   <group scoped="false">
     <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
@@ -121,5 +125,9 @@
     <arg name="planning_validator_trajectory_checker_param_path" value="$(var common_config_path)/planning_validator/trajectory_checker.param.yaml"/>
     <arg name="planning_validator_intersection_collision_checker_param_path" value="$(var common_config_path)/planning_validator/intersection_collision_checker.param.yaml"/>
     <arg name="planning_validator_rear_collision_checker_param_path" value="$(var common_config_path)/planning_validator/rear_collision_checker.param.yaml"/>
+
+    <!-- Agnocast -->
+    <arg name="use_agnocast" value="$(var use_agnocast)"/>
+    <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
   </include>
 </launch>
