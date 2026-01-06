@@ -49,8 +49,8 @@
 
     # for save log
     enable_save_log: false
-    save_file_directory_path: detected_reflector_intensity_front_lower_right
+    save_file_directory_path: detected_reflector_intensity_top_right
     save_file_name: detected_reflector_intensity
-    save_frame_id: pandar_40p_front
+    save_frame_id: velodyne_top
     radius_for_extracting_marker_pointcloud: 0.4 # [m] within
     queue_size_for_debug_pub_msg: 10 # Queue size for debug publishers
