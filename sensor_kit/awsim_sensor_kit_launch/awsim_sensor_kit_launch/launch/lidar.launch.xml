@@ -1,10 +1,10 @@
 <launch>
   <arg name="launch_driver" default="true"/>
   <arg name="host_ip" default="255.255.255.255"/>
-  <arg name="use_concat_filter" default="true"/>
   <arg name="vehicle_mirror_param_file"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name="use_distortion_corrector" default="true"/>
+  <arg name="output_as_sensor_frame" default="false"/>
 
   <group>
     <push-ros-namespace namespace="lidar"/>
@@ -25,47 +25,18 @@
       </include>
     </group>
 
-    <group>
-      <push-ros-namespace namespace="left"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
-        <arg name="max_range" value="5.0"/>
-        <arg name="sensor_frame" value="velodyne_left"/>
-        <arg name="sensor_ip" value="127.0.0.1"/>
-        <arg name="host_ip" value="$(var host_ip)"/>
-        <arg name="data_port" value="2369"/>
-        <arg name="scan_phase" value="180.0"/>
-        <arg name="cloud_min_angle" value="300"/>
-        <arg name="cloud_max_angle" value="60"/>
-        <arg name="launch_driver" value="$(var launch_driver)"/>
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="container_name" value="pointcloud_container"/>
-        <arg name="udp_only" value="true"/>
-      </include>
-    </group>
+    <load_composable_node target="$(var pointcloud_container_name)">
+      <composable_node pkg="topic_tools"
+                       plugin="topic_tools::RelayNode"
+                       name="pointcloud_relay_ring_to_concat"
+                       namespace="concatenated">
+        <param name="input_topic" value="/sensing/lidar/top/pointcloud_before_sync"/>
+        <param name="output_topic" value="/sensing/lidar/concatenated/pointcloud"/>
+        <param name="type" value="sensor_msgs/msg/PointCloud2"/>
+        <param name="reliability" value="best_effort"/>
+      </composable_node>
+    </load_composable_node>
 
-    <group>
-      <push-ros-namespace namespace="right"/>
-      <include file="$(find-pkg-share common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
-        <arg name="max_range" value="5.0"/>
-        <arg name="sensor_frame" value="velodyne_right"/>
-        <arg name="sensor_ip" value="127.0.0.1"/>
-        <arg name="host_ip" value="$(var host_ip)"/>
-        <arg name="data_port" value="2370"/>
-        <arg name="scan_phase" value="180.0"/>
-        <arg name="cloud_min_angle" value="300"/>
-        <arg name="cloud_max_angle" value="60"/>
-        <arg name="launch_driver" value="$(var launch_driver)"/>
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="container_name" value="pointcloud_container"/>
-        <arg name="udp_only" value="true"/>
-      </include>
-    </group>
-
-    <include file="$(find-pkg-share awsim_sensor_kit_launch)/launch/pointcloud_preprocessor.launch.py">
-      <arg name="base_frame" value="base_link"/>
-      <arg name="use_intra_process" value="true"/>
-      <arg name="use_multithread" value="true"/>
-      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
-    </include>
   </group>
+
 </launch>
