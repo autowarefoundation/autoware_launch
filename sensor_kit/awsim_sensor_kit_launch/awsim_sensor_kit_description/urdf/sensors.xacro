@@ -14,5 +14,4 @@
     pitch="${calibration['base_link']['sensor_kit_base_link']['pitch']}"
     yaw="${calibration['base_link']['sensor_kit_base_link']['yaw']}"
   />
-
 </robot>

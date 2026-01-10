@@ -26,17 +26,12 @@
     </group>
 
     <load_composable_node target="$(var pointcloud_container_name)">
-      <composable_node pkg="topic_tools"
-                       plugin="topic_tools::RelayNode"
-                       name="pointcloud_relay_ring_to_concat"
-                       namespace="concatenated">
+      <composable_node pkg="topic_tools" plugin="topic_tools::RelayNode" name="pointcloud_relay_ring_to_concat" namespace="concatenated">
         <param name="input_topic" value="/sensing/lidar/top/pointcloud_before_sync"/>
         <param name="output_topic" value="/sensing/lidar/concatenated/pointcloud"/>
         <param name="type" value="sensor_msgs/msg/PointCloud2"/>
         <param name="reliability" value="best_effort"/>
       </composable_node>
     </load_composable_node>
-
   </group>
-
 </launch>
