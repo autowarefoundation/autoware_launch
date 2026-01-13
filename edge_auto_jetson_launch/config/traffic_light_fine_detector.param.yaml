@@ -1,7 +1,7 @@
 /**:
   ros__parameters:
-    label_path: "/opt/autoware/mlmodels/traffic_light_fine_detector/tlr_labels.txt"
-    model_path: "/opt/autoware/mlmodels/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx"
+    label_path: /opt/autoware/mlmodels/traffic_light_fine_detector/tlr_labels.txt
+    model_path: /opt/autoware/mlmodels/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx
     precision: fp16
     score_thresh: 0.3
     nms_thresh: 0.65

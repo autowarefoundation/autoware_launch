@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
-from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import SetLaunchConfiguration
@@ -118,7 +115,9 @@ def generate_launch_description():
                     allow_substs=True,
                 ),
                 {
-                    "use_high_accuracy_detection": LaunchConfiguration("use_high_accuracy_detection"),
+                    "use_high_accuracy_detection": LaunchConfiguration(
+                        "use_high_accuracy_detection"
+                    ),
                 },
             ],
             remappings=[
@@ -171,11 +170,13 @@ def generate_launch_description():
         condition=IfCondition(
             PythonExpression(
                 [
-                    "'", LaunchConfiguration("high_accuracy_detection_type"), "'",
-                    " == 'fine_detection'"
+                    "'",
+                    LaunchConfiguration("high_accuracy_detection_type"),
+                    "'",
+                    " == 'fine_detection'",
                 ]
             )
-        )
+        ),
     )
 
     internal_node_name = "traffic_light_whole_image_detector"
@@ -250,7 +251,9 @@ def generate_launch_description():
         condition=IfCondition(
             PythonExpression(
                 [
-                    "'", LaunchConfiguration("high_accuracy_detection_type"), "'",
+                    "'",
+                    LaunchConfiguration("high_accuracy_detection_type"),
+                    "'",
                     " == 'whole_image_detection' ",
                 ]
             )

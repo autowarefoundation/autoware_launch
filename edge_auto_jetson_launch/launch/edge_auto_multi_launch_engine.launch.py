@@ -13,6 +13,10 @@
 # limitations under the License.
 
 
+from distutils.util import strtobool
+import json
+import os
+
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
@@ -20,16 +24,11 @@ from launch.actions import OpaqueFunction
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
-import json
-from distutils.util import strtobool
-import os
 
 
 def create_camera_container(camera_id, container_name, use_multithread):
     package = FindPackageShare("edge_auto_jetson_launch")
-    include = PathJoinSubstitution(
-        [package, f"launch/camera_common/camera_container.launch.py"]
-    )
+    include = PathJoinSubstitution([package, "launch/camera_common/camera_container.launch.py"])
     local_container_name = container_name + str(camera_id)
     arguments = [
         ("camera_id", str(camera_id)),
@@ -44,7 +43,7 @@ def create_object_recognition(
 ):
     package = FindPackageShare("edge_auto_jetson_launch")
     include = PathJoinSubstitution(
-        [package, f"launch/object_recognition/object_recognition.launch.xml"]
+        [package, "launch/object_recognition/object_recognition.launch.xml"]
     )
     container_name += str(camera_id)
     arguments = [
@@ -63,7 +62,7 @@ def create_traffic_light_recognition(camera_id, container_name, build_engine_onl
     include = PathJoinSubstitution(
         [
             package,
-            f"launch/traffic_light_recognition/traffic_light_recognition.launch.xml",
+            "launch/traffic_light_recognition/traffic_light_recognition.launch.xml",
         ]
     )
     container_name += str(camera_id)
@@ -89,22 +88,25 @@ def create_camera_driver(camera_id, container_name):
                 version_suffix = "_bsp_r36"
     except Exception:
         pass
-    
+
     individual_param_package = FindPackageShare("individual_params")
     individual_param_dir = PathJoinSubstitution(
-        [individual_param_package, "config", os.environ.get("VEHICLE_ID", "default"),
-         os.environ.get("SENSOR_MODEL", "aip_x2_gen2"), "tier4-c2/"]
+        [
+            individual_param_package,
+            "config",
+            os.environ.get("VEHICLE_ID", "default"),
+            os.environ.get("SENSOR_MODEL", "aip_x2_gen2"),
+            "tier4-c2/",
+        ]
     )
     readout_delay_param_path = PathJoinSubstitution(
-            [individual_param_dir, f"readout_delay_{camera_id}{version_suffix}.param.yaml"]
+        [individual_param_dir, f"readout_delay_{camera_id}{version_suffix}.param.yaml"]
     )
 
     package = FindPackageShare("edge_auto_jetson_launch")
-    include = PathJoinSubstitution(
-        [package, f"launch/camera_common/v4l2_camera.launch.xml"]
-    )
+    include = PathJoinSubstitution([package, "launch/camera_common/v4l2_camera.launch.xml"])
     container_name += str(camera_id)
-    
+
     arguments = [
         ("camera_id", str(camera_id)),
         ("readout_delay_setter_param_path", readout_delay_param_path),
@@ -116,37 +118,44 @@ def create_camera_driver(camera_id, container_name):
 def create_image_decompressor(camera_id, container_name):
     package = FindPackageShare("edge_auto_jetson_launch")
     include = PathJoinSubstitution(
-        [package, f"launch/camera_common/image_transport_decompressor.launch.xml"]
+        [package, "launch/camera_common/image_transport_decompressor.launch.xml"]
     )
     container_name += str(camera_id)
     arguments = [("camera_id", str(camera_id)), ("container_name", container_name)]
     return IncludeLaunchDescription(include, launch_arguments=arguments)
+
 
 def create_image_diagnostics(camera_id, container_name):
     package = FindPackageShare("edge_auto_jetson_launch")
-    include = PathJoinSubstitution(
-        [package, f"launch/camera_common/image_diagnostics.launch.xml"]
-    )
+    include = PathJoinSubstitution([package, "launch/camera_common/image_diagnostics.launch.xml"])
     container_name += str(camera_id)
     arguments = [("camera_id", str(camera_id)), ("container_name", container_name)]
     return IncludeLaunchDescription(include, launch_arguments=arguments)
 
+
 def create_camera_sync_doctor(
-        camera_id, container_name, use_sxpf,
-        trigger_id, trigger_time_tolerance_ns, camera_time_tolerance_ns
+    camera_id,
+    container_name,
+    use_sxpf,
+    trigger_id,
+    trigger_time_tolerance_ns,
+    camera_time_tolerance_ns,
 ):
     package = FindPackageShare("edge_auto_jetson_launch")
-    include = PathJoinSubstitution(
-        [package, f"launch/camera_common/camera_sync_doctor.launch.xml"]
-    )
+    include = PathJoinSubstitution([package, "launch/camera_common/camera_sync_doctor.launch.xml"])
     container_name = "" if container_name == "" else container_name + str(camera_id)
 
     individual_param_package = FindPackageShare("individual_params")
     individual_param_dir = PathJoinSubstitution(
-        [individual_param_package, "config", os.environ.get("VEHICLE_ID", "default"),
-         os.environ.get("SENSOR_MODEL", "aip_x2_gen2"), "tier4-c2/"]
+        [
+            individual_param_package,
+            "config",
+            os.environ.get("VEHICLE_ID", "default"),
+            os.environ.get("SENSOR_MODEL", "aip_x2_gen2"),
+            "tier4-c2/",
+        ]
     )
-    if (use_sxpf):
+    if use_sxpf:
         camera_driver_param_path = PathJoinSubstitution(
             [individual_param_dir, f"camera{camera_id}_sxpf.param.yaml"]
         )
@@ -176,28 +185,26 @@ def create_camera_sync_doctor(
         trigger_topic = f"/sensing/camera/camera{trigger_id}/trigger_time"
 
     arguments = [
-        ("camera_id", str(camera_id)), ("container_name", container_name),
+        ("camera_id", str(camera_id)),
+        ("container_name", container_name),
         ("trigger_id", trigger_id),
         ("trigger_topic", trigger_topic),
         ("camera_driver_param_path", camera_driver_param_path),
         ("readout_delay_param_path", readout_delay_param_path),
         ("trigger_time_tolerance_ns", trigger_time_tolerance_ns),
-        ("camera_time_tolerance_ns", camera_time_tolerance_ns)
+        ("camera_time_tolerance_ns", camera_time_tolerance_ns),
     ]
     return IncludeLaunchDescription(include, launch_arguments=arguments)
+
 
 def launch_setup(context, *args, **kwargs):
 
     # Load all camera ids
-    object_recognition_camera_ids = LaunchConfiguration(
-        "object_recognition_camera_ids"
-    ).perform(context)
-    traffic_light_camera_ids = LaunchConfiguration("traffic_light_camera_ids").perform(
+    object_recognition_camera_ids = LaunchConfiguration("object_recognition_camera_ids").perform(
         context
     )
-    camera_driver_camera_ids = LaunchConfiguration("camera_driver_camera_ids").perform(
-        context
-    )
+    traffic_light_camera_ids = LaunchConfiguration("traffic_light_camera_ids").perform(context)
+    camera_driver_camera_ids = LaunchConfiguration("camera_driver_camera_ids").perform(context)
     image_diagnostics_camera_ids = LaunchConfiguration("image_diagnostics_camera_ids").perform(
         context
     )
@@ -263,12 +270,16 @@ def launch_setup(context, *args, **kwargs):
         # If IDs for camera driver are not specified at all,
         # that implies the camera drivers are executed outside of this launch package,
         # i.e., the SXPF case
-        use_sxpf = (len(camera_driver_camera_ids) == 0)
+        use_sxpf = len(camera_driver_camera_ids) == 0
         container_name_sync_doc = "" if use_sxpf else container_name
         camera_sync_doctors = [
             create_camera_sync_doctor(
-                camera_id, container_name_sync_doc, use_sxpf, trigger_id,
-                trigger_time_tolerance_ns, camera_time_tolerance_ns
+                camera_id,
+                container_name_sync_doc,
+                use_sxpf,
+                trigger_id,
+                trigger_time_tolerance_ns,
+                camera_time_tolerance_ns,
             )
             for camera_id in camera_sync_doctor_camera_ids
         ]
@@ -311,32 +322,28 @@ def generate_launch_description():
                 default_value="[]",
                 description="camera index list for image blockage diagnostics",
             ),
-            DeclareLaunchArgument(
-                "live_sensor", description="live camera driver or not"
-            ),
+            DeclareLaunchArgument("live_sensor", description="live camera driver or not"),
             DeclareLaunchArgument(
                 "container_name", description="container name for object recognition"
             ),
             DeclareLaunchArgument(
                 "use_multithread", description="use multithread container or not"
             ),
-            DeclareLaunchArgument(
-                "build_engine_only", description="build engine only or not"
-            ),
+            DeclareLaunchArgument("build_engine_only", description="build engine only or not"),
             DeclareLaunchArgument(
                 "trigger_id",
                 default_value="0",
-                description="camera id under which trigger_time is published "
+                description="camera id under which trigger_time is published ",
             ),
             DeclareLaunchArgument(
                 "trigger_time_tolerance_ns",
                 default_value="1000000",
-                description="tolerance time in nanoseconds for trigger sync diagnostic"
+                description="tolerance time in nanoseconds for trigger sync diagnostic",
             ),
             DeclareLaunchArgument(
                 "camera_time_tolerance_ns",
                 default_value="10000000",
-                description="tolerance time in nanoseconds for camera sync diagnostic"
+                description="tolerance time in nanoseconds for camera sync diagnostic",
             ),
             OpaqueFunction(function=launch_setup),
         ]

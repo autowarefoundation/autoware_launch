@@ -1,7 +1,6 @@
 # cspell: ignore semseg
 /**:
   ros__parameters:
-
     # refine segmentation mask by overlay roi class
     # disable when sematic segmentation accuracy is good enough
     is_roi_overlap_segment: true
@@ -13,13 +12,13 @@
     is_publish_color_mask: false
 
     roi_overlay_segment_label:
-      UNKNOWN : true
-      CAR : false
-      TRUCK : false
-      BUS : false
-      MOTORCYCLE : true
-      BICYCLE : true
-      PEDESTRIAN : true
+      UNKNOWN: true
+      CAR: false
+      TRUCK: false
+      BUS: false
+      MOTORCYCLE: true
+      BICYCLE: true
+      PEDESTRIAN: true
       ANIMAL: true
 
     model_path: "/opt/autoware/mlmodels/yolox/yolox-sPlus-T4-960x960-debris.onnx"

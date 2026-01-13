@@ -1,4 +1,4 @@
-```
+```mermaid
 flowchart TD
  subgraph subGraph0["Camera Container Creation"]
         F1["create_camera_container()"]
@@ -35,7 +35,7 @@ flowchart TD
     B1 --> D["edge_auto_multi_launch_engine.launch.py"]
     B2 --> D
     B3 --> D
-    D -- For each camera in either object_recognition_camera_ids or tlr_ids --> F1 
+    D -- For each camera in either object_recognition_camera_ids or tlr_ids --> F1
     D -- For each camera in either object_recognition_camera_ids --> G1
     F1 --> F1a
     F1a -- "use_multithread=true" --> F1b

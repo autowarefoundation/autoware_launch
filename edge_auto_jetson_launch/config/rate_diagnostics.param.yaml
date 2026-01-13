@@ -5,4 +5,4 @@
     observed_frames_transition: 10
     immediate_error_report: false
     immediate_relax_state: false
-    diag_publish_rate: 10.0  # This value is expected to be aligned to the ideal camera frame rate
+    diag_publish_rate: 10.0 # This value is expected to be aligned to the ideal camera frame rate

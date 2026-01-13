@@ -1,33 +1,33 @@
-uevent_description:
-  hardware_type: "proframe_camera"
-  devpath: "/dev/sxpf0"
-  identifier_key: "CHANNEL"
+uevent_description_camera8:
+  hardware_type: proframe_camera
+  devpath: /dev/sxpf0
+  identifier_key: CHANNEL
   key_is: "0"
-  hardware_id: "camera8"
-  value_key: "FUSA_HW_FAULT"
-  value_type: "error_flag"
+  hardware_id: camera8
+  value_key: FUSA_HW_FAULT
+  value_type: error_flag
   criteria:
     status_ok: 0
     status_error: 1
-uevent_description:
-  hardware_type: "proframe_camera"
-  devpath: "/dev/sxpf0"
-  identifier_key: "CHANNEL"
+uevent_description_camera9:
+  hardware_type: proframe_camera
+  devpath: /dev/sxpf0
+  identifier_key: CHANNEL
   key_is: "2"
-  hardware_id: "camera9"
-  value_key: "FUSA_HW_FAULT"
-  value_type: "error_flag"
+  hardware_id: camera9
+  value_key: FUSA_HW_FAULT
+  value_type: error_flag
   criteria:
     status_ok: 0
     status_error: 1
-uevent_description:
-  hardware_type: "proframe_camera"
-  devpath: "/dev/sxpf0"
-  identifier_key: "CHANNEL"
+uevent_description_camera10:
+  hardware_type: proframe_camera
+  devpath: /dev/sxpf0
+  identifier_key: CHANNEL
   key_is: "4"
-  hardware_id: "camera10"
-  value_key: "FUSA_HW_FAULT"
-  value_type: "error_flag"
+  hardware_id: camera10
+  value_key: FUSA_HW_FAULT
+  value_type: error_flag
   criteria:
     status_ok: 0
     status_error: 1

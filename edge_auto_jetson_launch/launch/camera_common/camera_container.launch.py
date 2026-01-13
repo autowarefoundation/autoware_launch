@@ -46,7 +46,7 @@ def generate_launch_description():
     glog_component = ComposableNode(
         package="autoware_glog_component",
         plugin="autoware::glog_component::GlogComponent",
-        name="glog_component"
+        name="glog_component",
     )
 
     object_recognition_container = ComposableNodeContainer(

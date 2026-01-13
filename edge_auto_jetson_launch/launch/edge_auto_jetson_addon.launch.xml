@@ -32,19 +32,19 @@ Key Features:
 - Build engine only option for building TensorRT engines only
 -->
 <launch>
-  <arg name="object_recognition_camera_ids" default="[8, 9, 10]" />
-  <arg name="camera_driver_camera_ids" default="[]" />
-  <arg name="traffic_light_camera_ids" default="[]" />
-  <arg name="image_diagnostics_camera_ids" default="[]" />
-  <arg name="yolox_precision" default="int8" />
-  <arg name="build_engine_only" default="false" />
-  <arg name="use_multithread" default="true" />
-  <arg name="vehicle_id" default="$(env VEHICLE_ID default)" />
+  <arg name="object_recognition_camera_ids" default="[8, 9, 10]"/>
+  <arg name="camera_driver_camera_ids" default="[]"/>
+  <arg name="traffic_light_camera_ids" default="[]"/>
+  <arg name="image_diagnostics_camera_ids" default="[]"/>
+  <arg name="yolox_precision" default="int8"/>
+  <arg name="build_engine_only" default="false"/>
+  <arg name="use_multithread" default="true"/>
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
 
-  <arg name="live_sensor" default="true" description="If true, camera driver will be booted. Otherwise image_transport_decompressor will be launched." />
-  <arg name="streampetr_enabled" default="true" description="If true, StreamPETR perception will be launched." />
+  <arg name="live_sensor" default="true" description="If true, camera driver will be booted. Otherwise image_transport_decompressor will be launched."/>
+  <arg name="streampetr_enabled" default="true" description="If true, StreamPETR perception will be launched."/>
 
-  <arg name="container_name" default="object_recognition_container" />
+  <arg name="container_name" default="object_recognition_container"/>
 
   <!-- path to the yaml file that contains parameters for sensor_trigger node -->
   <arg name="launch_sensor_trigger" default="false"/>
@@ -53,47 +53,45 @@ Key Features:
   <!-- Since external trigger is fired using `ros2 launch sensor_trigger` directly (without
        param file), temporary specify the file with the same configuration as the trigger-->
   <let name="trigger_id" value="0"/>
-  <let name="sensor_trigger_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/perception1_trigger.param.yaml" />
+  <let name="sensor_trigger_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(env SENSOR_MODEL aip_x2_gen2)/tier4-c2/perception1_trigger.param.yaml"/>
 
-  <let name="trigger_time_tolerance_ns" value="1000000" />
-  <let name="camera_time_tolerance_ns"  value="10000000" />
+  <let name="trigger_time_tolerance_ns" value="1000000"/>
+  <let name="camera_time_tolerance_ns" value="10000000"/>
 
   <!-- object recognition -->
   <include file="$(find-pkg-share edge_auto_jetson_launch)/launch/edge_auto_multi_launch_engine.launch.py">
-    <arg name="object_recognition_camera_ids" value="$(var object_recognition_camera_ids)" />
-    <arg name="traffic_light_camera_ids" value="$(var traffic_light_camera_ids)" />
-    <arg name="camera_driver_camera_ids" value="$(var camera_driver_camera_ids)" />
-    <arg name="image_diagnostics_camera_ids" value="$(var image_diagnostics_camera_ids)" />
-    <arg name="live_sensor" value="$(var live_sensor)" />
-    <arg name="container_name" value="$(var container_name)" />
-    <arg name="yolox_precision" value="$(var yolox_precision)" />
-    <arg name="build_engine_only" value="$(var build_engine_only)" />
-    <arg name="trigger_id" value="$(var trigger_id)" />
-    <arg name="trigger_time_tolerance_ns" value="$(var trigger_time_tolerance_ns)" />
-    <arg name="camera_time_tolerance_ns" value="$(var camera_time_tolerance_ns)" />
-    <arg name="use_multithread" value="$(var use_multithread)" />
+    <arg name="object_recognition_camera_ids" value="$(var object_recognition_camera_ids)"/>
+    <arg name="traffic_light_camera_ids" value="$(var traffic_light_camera_ids)"/>
+    <arg name="camera_driver_camera_ids" value="$(var camera_driver_camera_ids)"/>
+    <arg name="image_diagnostics_camera_ids" value="$(var image_diagnostics_camera_ids)"/>
+    <arg name="live_sensor" value="$(var live_sensor)"/>
+    <arg name="container_name" value="$(var container_name)"/>
+    <arg name="yolox_precision" value="$(var yolox_precision)"/>
+    <arg name="build_engine_only" value="$(var build_engine_only)"/>
+    <arg name="trigger_id" value="$(var trigger_id)"/>
+    <arg name="trigger_time_tolerance_ns" value="$(var trigger_time_tolerance_ns)"/>
+    <arg name="camera_time_tolerance_ns" value="$(var camera_time_tolerance_ns)"/>
+    <arg name="use_multithread" value="$(var use_multithread)"/>
   </include>
 
   <!-- StreamPETR perception -->
   <group if="$(var streampetr_enabled)">
     <include file="$(find-pkg-share edge_auto_jetson_launch)/launch/camera_streampetr/tensorrt_stream_petr.x2.launch.xml">
-      <arg name="build_only" value="$(var build_engine_only)" />
+      <arg name="build_only" value="$(var build_engine_only)"/>
     </include>
   </group>
 
   <!-- uevent diagnostics publisher -->
   <group if="$(var live_sensor)">
-    <node pkg="uevent_diagnostics_publisher" exec="uevent_diagnostics_publisher_node"
-          name="uevent_diagnostics_publisher_$(env JETSON_ID addon)">
-      <param name="config_yaml_path"
-             value="$(find-pkg-share edge_auto_jetson_launch)/config/uevent_diagnostics_publisher_addon.config.yaml"/>
+    <node pkg="uevent_diagnostics_publisher" exec="uevent_diagnostics_publisher_node" name="uevent_diagnostics_publisher_$(env JETSON_ID addon)">
+      <param name="config_yaml_path" value="$(find-pkg-share edge_auto_jetson_launch)/config/uevent_diagnostics_publisher_addon.config.yaml"/>
     </node>
   </group>
 
   <!-- Run a trigger node as individual process to keep time interval accuracy -->
   <group if="$(var launch_sensor_trigger)">
-  <node pkg="sensor_trigger" exec="sensor_trigger_exe" name="sensor_trigger_$(env JETSON_ID)">
-    <param from="$(var sensor_trigger_param_path)"/>
-  </node>
+    <node pkg="sensor_trigger" exec="sensor_trigger_exe" name="sensor_trigger_$(env JETSON_ID)">
+      <param from="$(var sensor_trigger_param_path)"/>
+    </node>
   </group>
 </launch>
