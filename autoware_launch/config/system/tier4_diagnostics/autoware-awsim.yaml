@@ -1,2 +1,0 @@
-files:
-  - { path: $(dirname)/autoware-main.yaml }

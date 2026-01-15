@@ -1,0 +1,15 @@
+<launch>
+  <arg name="vehicle_model" default="default" description="Vehicle model"/>
+  <arg name="rviz" default="true"/>
+  <arg name="rviz_respawn" default="true"/>
+  <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/autoware_x2.rviz)"/>
+  <!-- Global parameters -->
+  <group scoped="false">
+    <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="false"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+  <!-- RViz -->
+  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png" if="$(var rviz)" respawn="$(var rviz_respawn)"/>
+</launch>
