@@ -1,0 +1,30 @@
+autoware_system_design_format: v0.1.0
+
+name: UbloxGpsDriver.node
+
+launch:
+  package: ublox_gps
+  executable: ublox_gps_node
+  respawn: true
+  respawn_delay: 1.0
+
+inputs: []
+
+outputs:
+  - name: nav_sat_fix
+    message_type: sensor_msgs/msg/NavSatFix
+    remap_target: "~/fix"
+
+parameters: []
+
+parameter_files:
+  - name: param_file
+    default: config/c94_f9p_rover.param.yaml
+
+processes:
+  - name: run
+    trigger_conditions:
+      - periodic: 100 # Hz
+    outcomes:
+      - to_output: nav_sat_fix
+

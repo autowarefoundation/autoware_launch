@@ -1,0 +1,30 @@
+autoware_system_design_format: v0.1.0
+
+name: RadarDriver_decode.module
+
+base: RadarDriver.module
+
+override:
+  instances:
+  - name: radar_driver
+    entity: NebulaArs548_decode.node
+  external_interfaces:
+    input:
+    - name: nebula_packets
+  connections:
+  - from: input.nebula_packets
+    to: radar_driver.input.nebula_packets
+
+remove:
+  external_interfaces:
+    input:
+    - name: odometry
+    - name: acceleration
+    - name: steering_angle
+  connections:
+  - from: input.odometry
+    to: radar_driver.input.odometry_input
+  - from: input.acceleration
+    to: radar_driver.input.acceleration_input
+  - from: input.steering_angle
+    to: radar_driver.input.steering_angle_input
