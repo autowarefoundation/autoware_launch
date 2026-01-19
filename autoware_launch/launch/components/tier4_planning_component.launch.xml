@@ -11,6 +11,14 @@
   <arg name="planning_input_objects_topic_name" default="/perception/object_recognition/objects"/>
   <arg name="planning_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
 
+  <!-- Input topic parameters for planning modules -->
+  <arg name="planning_input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="planning_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+
+  <!-- Input topic parameters for planning modules -->
+  <arg name="planning_input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="planning_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+
   <!-- Global parameters -->
   <group scoped="false">
     <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
@@ -19,7 +27,11 @@
     </include>
   </group>
 
+  <arg name="is_60kph" default="false"/>
   <include file="$(find-pkg-share autoware_launch)/config/planning/preset/$(var module_preset)_preset.yaml"/>
+
+  <let name="60kph_param_option" value="60kph." if="$(var is_60kph)"/>
+  <let name="60kph_param_option" value="" unless="$(var is_60kph)"/>
 
   <include file="$(find-pkg-share tier4_planning_launch)/launch/planning.launch.xml">
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
@@ -31,9 +43,17 @@
     <arg name="input_objects_topic_name" value="$(var planning_input_objects_topic_name)"/>
     <arg name="input_pointcloud_topic_name" value="$(var planning_input_pointcloud_topic_name)"/>
 
+    <!-- Input topic parameters -->
+    <arg name="input_objects_topic_name" value="$(var planning_input_objects_topic_name)"/>
+    <arg name="input_pointcloud_topic_name" value="$(var planning_input_pointcloud_topic_name)"/>
+
+    <!-- Input topic parameters -->
+    <arg name="input_objects_topic_name" value="$(var planning_input_objects_topic_name)"/>
+    <arg name="input_pointcloud_topic_name" value="$(var planning_input_pointcloud_topic_name)"/>
+
     <!-- common -->
     <arg name="common_config_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common"/>
-    <arg name="common_param_path" value="$(var common_config_path)/common.param.yaml"/>
+    <arg name="common_param_path" value="$(var common_config_path)/common.$(var 60kph_param_option)param.yaml"/>
     <arg name="nearest_search_param_path" value="$(var common_config_path)/nearest_search.param.yaml"/>
     <arg name="costmap_generator_param_path" value="$(var common_config_path)/costmap_generator.param.yaml"/>
 
@@ -112,7 +132,7 @@
     />
 
     <!-- motion velocity smoother -->
-    <arg name="velocity_smoother_param_path" value="$(var common_config_path)/autoware_velocity_smoother/velocity_smoother.param.yaml"/>
+    <arg name="velocity_smoother_param_path" value="$(var common_config_path)/autoware_velocity_smoother/velocity_smoother.$(var 60kph_param_option)param.yaml"/>
     <arg name="velocity_smoother_type_param_path" value="$(var common_config_path)/autoware_velocity_smoother/$(var velocity_smoother_type).param.yaml"/>
 
     <!-- planning validator -->

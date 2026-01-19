@@ -1,0 +1,51 @@
+/**:
+  ros__parameters:
+    diagnostic_updater:
+      period: 1.0
+      use_fqn: true
+
+/adapi/node/autoware_state:
+  ros__parameters:
+    update_rate: 10.0
+
+/adapi/node/motion:
+  ros__parameters:
+    require_accept_start: false
+    stop_check_duration: 1.0
+
+/adapi/node/routing:
+  ros__parameters:
+    stop_check_duration: 1.0
+
+/adapi/node/vehicle_metrics:
+  ros__parameters:
+    update_rate: 0.1
+    max_energy_level: 1.0
+
+/adapi/node/vehicle_door:
+  ros__parameters:
+    check_autoware_control: true
+
+/adapi/node/manual/local:
+  ros__parameters:
+    mode: local
+
+/adapi/node/manual/remote:
+  ros__parameters:
+    mode: remote
+
+/adapi/node/fail_safe:
+  ros__parameters:
+    mrm_descriptions:
+      comfortable_stop:
+        behavior: 3
+        description: "Comfortable stop"
+      main_ecu_in_lane_moderate_stop:
+        behavior: 11
+        description: "Main ECU in lane moderate stop"
+      main_ecu_in_lane_emergency_stop:
+        behavior: 12
+        description: "Main ECU in lane emergency stop"
+      sub_ecu_in_lane_moderate_stop:
+        behavior: 21
+        description: "Sub ECU in lane moderate stop"

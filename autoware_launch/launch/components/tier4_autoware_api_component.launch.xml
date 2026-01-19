@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="default_adapi_param_path" default="$(find-pkg-share autoware_launch)/config/system/default_adapi_universe/default_adapi_universe.param.yaml"/>
+
   <!-- Fork the repository and add the parameters here if needed. -->
   <arg name="launch_deprecated_api" default="true"/>
   <arg name="rosbridge_enabled" default="true"/>
@@ -19,6 +21,6 @@
     <arg name="launch_deprecated_api" value="$(var launch_deprecated_api)"/>
     <arg name="rosbridge_enabled" value="$(var rosbridge_enabled)"/>
     <arg name="rosbridge_max_message_size" value="$(var rosbridge_max_message_size)"/>
-    <arg name="default_adapi_param_path" value="$(find-pkg-share autoware_launch)/config/system/default_adapi/default_adapi.param.yaml"/>
+    <arg name="default_adapi_param_path" value="$(var default_adapi_param_path)"/>
   </include>
 </launch>

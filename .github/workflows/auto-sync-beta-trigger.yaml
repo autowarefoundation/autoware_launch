@@ -1,0 +1,70 @@
+name: auto-sync-beta-trigger
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - beta/v*
+
+jobs:
+  check-if-merged:
+    runs-on: ubuntu-22.04
+    if: github.event.pull_request.merged == true
+    outputs:
+      beta_version: ${{ steps.extract-version.outputs.beta_version }}
+    steps:
+      - name: Extract beta version
+        id: extract-version
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.base.ref }}"
+          echo "beta_version=${BRANCH_NAME}" >> $GITHUB_OUTPUT
+
+  sync-beta:
+    needs: check-if-merged
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        product: [x2]
+    steps:
+      - name: Generate token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - name: Trigger sync-beta-branches workflow in tier4/autoware-release-scripts
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          repo: tier4/autoware-release-scripts
+          workflow: branch-manager-runner.yaml
+          ref: main
+          inputs: |
+            {
+              "script_type": "sync_branches",
+              "version": "${{ needs.check-if-merged.outputs.beta_version }}",
+              "product": "${{ matrix.product }}"
+            }
+
+      - name: Comment on PR
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            const prAuthor = context.payload.pull_request.user.login;
+            const betaVersion = "${{ needs.check-if-merged.outputs.beta_version }}";
+            const product = "${{ matrix.product }}";
+
+            github.rest.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `@${prAuthor} - Your PR has been merged to \`${betaVersion}\`.
+
+              The sync-beta-branches workflow has been triggered in the tier4/autoware-release-scripts repository to synchronize the beta branches with version \`${betaVersion}\` for product \`${product}\`.
+
+              Please wait and check.`
+            });
