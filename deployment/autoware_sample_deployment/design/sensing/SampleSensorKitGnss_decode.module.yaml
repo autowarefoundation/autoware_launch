@@ -1,0 +1,20 @@
+autoware_system_design_format: v0.1.0
+
+name: SampleSensorKitGnss_decode.module
+
+base: SampleSensorKitGnss.module
+
+override:
+  external_interfaces:
+    input:
+      - name: nav_sat_fix
+  connections:
+  - from: input.nav_sat_fix
+    to: gnss_poser.input.fix
+
+remove:
+  instances:
+  - name: ublox
+  connections:
+  - from: ublox.output.nav_sat_fix
+    to: gnss_poser.input.fix

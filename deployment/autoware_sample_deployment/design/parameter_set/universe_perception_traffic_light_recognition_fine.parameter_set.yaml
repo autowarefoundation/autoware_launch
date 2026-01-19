@@ -1,0 +1,96 @@
+autoware_system_design_format: v0.1.0
+
+name: universe_perception_traffic_light_recognition_fine.parameter_set
+parameters:
+  - node: /perception/traffic_light_recognition/camera1/map_based_detector
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_map_based_detector/traffic_light_traffic_light_map_based_detector.param.yaml
+    parameters: 
+      - name: min_timestamp_offset
+        value: -0.3
+  - node: /perception/traffic_light_recognition/camera1/detection
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml
+    parameters:
+      - name: model_path
+        value: $(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_fine_detector/tlr_labels.txt
+      - name: build_only
+        value: False
+  - node: /perception/traffic_light_recognition/camera1/classifier_car
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml
+    parameters:
+      - name: model_path
+        value: $(var data_path)/traffic_light_classifier/traffic_light_classifier_mobilenetv2_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_classifier/lamp_labels.txt
+      - name: build_only
+        value: False
+  - node: /perception/traffic_light_recognition/camera1/classifier_pedestrian
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml
+    parameters:
+      - name: model_path
+        value: $(var data_path)/traffic_light_classifier/ped_traffic_light_classifier_mobilenetv2_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_classifier/lamp_labels_ped.txt
+      - name: build_only
+        value: False
+  - node: /perception/traffic_light_recognition/camera1/occlusion_predictor
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml
+    parameters: []
+  - node: /perception/traffic_light_recognition/camera2/map_based_detector
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_map_based_detector/traffic_light_traffic_light_map_based_detector.param.yaml
+    parameters: 
+      - name: min_timestamp_offset
+        value: -0.04
+  - node: /perception/traffic_light_recognition/camera2/detection
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml
+    parameters:
+      - name: model_path
+        value: $(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_fine_detector/tlr_labels.txt
+      - name: build_only
+        value: False
+  - node: /perception/traffic_light_recognition/camera2/classifier_car
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml
+    parameters:
+      - name: model_path
+        value: $(var data_path)/traffic_light_classifier/traffic_light_classifier_mobilenetv2_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_classifier/lamp_labels.txt
+      - name: build_only
+        value: False
+  - node: /perception/traffic_light_recognition/camera2/classifier_pedestrian
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml
+    parameters:
+      - name: model_path
+        value: $(var data_path)/traffic_light_classifier/ped_traffic_light_classifier_mobilenetv2_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_classifier/lamp_labels_ped.txt
+      - name: build_only
+        value: False
+  - node: /perception/traffic_light_recognition/camera2/occlusion_predictor
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml
+    parameters: []
+  - node: /perception/traffic_light_recognition/multi_camera_fusion
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml
+    parameters: []
+  - node: /perception/traffic_light_recognition/traffic_light_arbiter
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_arbiter/traffic_light_arbiter.param.yaml
+    parameters: []
+  - node: /perception/traffic_light_recognition/traffic_light_crosswalk_estimator
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml
+    parameters: []

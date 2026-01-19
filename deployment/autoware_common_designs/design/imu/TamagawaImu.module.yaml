@@ -1,0 +1,20 @@
+autoware_system_design_format: v0.1.0
+
+name: TamagawaImu.module
+
+instances: 
+  - name: socket_can_receiver
+    entity: Ros2SocketCanReceiverNode.node
+  - name: tag_can_driver
+    entity: TamagawaImuCanDriver.node
+
+external_interfaces:
+  input: []
+  output: 
+    - name: imu_raw
+
+connections: 
+  - from: socket_can_receiver.output.from_can_bus
+    to: tag_can_driver.input.can_imu
+  - from: tag_can_driver.output.data_raw
+    to: output.imu_raw

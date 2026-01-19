@@ -1,0 +1,26 @@
+autoware_system_design_format: v0.1.0
+
+name: SampleSensorKitGnss.module
+
+instances:
+  - name: ublox
+    entity: UbloxGpsDriver.node
+  - name: gnss_poser
+    entity: GnssPoser.node
+
+external_interfaces:
+  input:
+    - name: orientation
+  output:
+    - name: pose
+    - name: pose_with_covariance
+
+connections:
+  - from: input.orientation
+    to: gnss_poser.input.autoware_orientation
+  - from: ublox.output.nav_sat_fix
+    to: gnss_poser.input.fix
+  - from: gnss_poser.output.gnss_pose
+    to: output.pose
+  - from: gnss_poser.output.gnss_pose_cov
+    to: output.pose_with_covariance

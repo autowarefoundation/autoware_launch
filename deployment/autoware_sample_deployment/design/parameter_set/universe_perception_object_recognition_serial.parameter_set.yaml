@@ -1,0 +1,94 @@
+autoware_system_design_format: v0.1.0
+
+name: universe_perception_object_recognition_serial.parameter_set
+parameters:
+  - node: /perception/object_recognition/detection/pointcloud_map_filter/voxel_grid_downsample_filter
+    parameter_files: []
+    parameters:
+      - name: input_frame
+        value: base_link
+      - name: output_frame
+        value: base_link
+      - name: use_intra_process_comms
+        value: true
+  - node: /perception/object_recognition/detection/pointcloud_map_filter/voxel_based_compare_map_filter
+    parameter_files:
+      - voxel_based_compare_map_filter_param_file: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/pointcloud_filter/pointcloud_map_filter.param.yaml
+    parameters:
+      - name: input_frame
+        value: map
+      - name: output_frame
+        value: map
+      - name: use_intra_process_comms
+        value: false
+  - node: /perception/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster
+    parameter_files:
+      - voxel_grid_based_euclidean_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml
+    parameters: []
+  - node: /perception/object_recognition/detection/clustering/shape_estimation
+    parameter_files: []
+    parameters: []
+  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/roi_cluster_fusion
+    parameter_files:
+      - sync_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_cluster_fusion.param.yaml
+    parameters:
+      - name: rois_number
+        value: $(var number_of_cameras)
+  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/low_intensity_cluster_filter
+    parameter_files: []
+    parameters: []
+  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/shape_estimation
+    parameter_files: []
+    parameters: []
+  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/detected_object_feature_remover
+    parameter_files: []
+    parameters: []
+  - node: /perception/object_recognition/detection/detection_by_tracker
+    parameter_files:
+      - detection_by_tracker_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml
+    parameters: []
+  - node: /perception/object_recognition/detection/roi_detected_object_fusion
+    parameter_files:
+      - sync_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml
+    parameters: 
+      - name: rois_number
+        value: $(var number_of_cameras)
+  - node: /perception/object_recognition/detection/object_association_merger_alpha
+    parameter_files:
+      - data_association_matrix_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/data_association_matrix.param.yaml
+      - distance_threshold_list_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/overlapped_judge.param.yaml
+      - object_association_merger_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/ml_camera_lidar_object_association_merger.param.yaml
+    parameters: 
+      - name: priority_mode
+        value: 0
+  - node: /perception/object_recognition/detection/object_association_merger_beta
+    parameter_files:
+      - data_association_matrix_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/data_association_matrix.param.yaml
+      - distance_threshold_list_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/overlapped_judge.param.yaml
+    parameters:
+      - name: priority_mode
+        value: 0
+  - node: /perception/object_recognition/detection/object_lanelet_filter
+    parameter_files: []
+    parameters: []
+  - node: /perception/object_recognition/tracking/multi_object_tracker
+    parameter_files:
+      - tracker_setting_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml
+      - data_association_matrix_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml
+      - input_channels_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml
+    parameters:
+      - name: input/detection01/channel
+        value: detected_objects
+      - name: publish_merged_objects
+        value: False
+  - node: /perception/object_recognition/tracking/radar_object_filter
+    parameter_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/tracked_object_sorter.param.yaml
+    parameters: []
+  - node: /perception/object_recognition/tracking/decorative_tracker_merger
+    parameter_files:
+      - data_association_matrix_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/data_association_matrix.param.yaml
+      - node_param_file_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml
+    parameters: []

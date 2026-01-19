@@ -1,0 +1,27 @@
+autoware_system_design_format: v0.1.0
+
+name: universe_perception_centerpoint_vanilla.parameter_set
+parameters:
+  - node: /perception/object_recognition/detection/centerpoint/lidar_centerpoint
+    parameter_files:
+      - model_param_path: $(var config_path)/perception/object_recognition/detection/centerpoint.param.yaml
+      - common_param_path: $(find-pkg-share autoware_lidar_centerpoint)/config/centerpoint_common.param.yaml
+      - ml_package_param_path: $(var data_path)/lidar_centerpoint/centerpoint_ml_package.param.yaml
+      - class_remapper_param_path: $(var data_path)/lidar_centerpoint/detection_class_remapper.param.yaml
+    parameters:
+      - name: build_only
+        value: False
+      - name: logger_name
+        value: lidar_centerpoint
+      - name: encoder_onnx_path
+        value: $(var data_path)/lidar_centerpoint/pts_voxel_encoder_centerpoint.onnx
+      - name: encoder_engine_path
+        value: $(var data_path)/lidar_centerpoint/pts_voxel_encoder_centerpoint.engine
+      - name: head_onnx_path
+        value: $(var data_path)/lidar_centerpoint/pts_backbone_neck_head_centerpoint.onnx
+      - name: head_engine_path
+        value: $(var data_path)/lidar_centerpoint/pts_backbone_neck_head_centerpoint.engine
+  - node: /perception/object_recognition/detection/centerpoint/validation
+    parameter_files:
+      - obstacle_pointcloud_based_validator_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detected_object_validation/obstacle_pointcloud_based_validator.param.yaml
+    parameters: []
