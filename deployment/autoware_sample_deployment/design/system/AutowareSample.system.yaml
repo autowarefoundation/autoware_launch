@@ -1,0 +1,231 @@
+autoware_system_design_format: v0.1.0
+
+name: AutowareSample.system
+
+variables:
+  # common variables
+  - name: config_path
+    value: $(find-pkg-share autoware_sample_deployment)/config
+  - name: vehicle_model
+    value: sample_vehicle
+  - name: data_path
+    value: $(env HOME)/autoware_data
+  - name: lanelet2_map_file
+    value: lanelet2_map.osm
+  - name: pointcloud_map_file
+    value: pointcloud_map.pcd
+  # vehicle-specific variables
+  - name: config_dir
+    value: $(find-pkg-share sample_sensor_kit_description)/config
+  # environment variables
+  - name: map_path
+    value: $(env HOME)/autoware_map/sample-map-rosbag
+
+variable_files:
+  - name: vehicle_info
+    value: $(find-pkg-share sample_vehicle_description)/config/vehicle_info.param.yaml
+
+modes:
+  - name: Runtime
+    description: on-vehicle runtime mode
+    default: true
+  - name: LoggingSimulation
+    description: Logged data replay simulation mode
+  - name: PlanningSimulation
+    description: Planning simulation mode
+  - name: E2ESimulation
+    description: E2E simulation mode using AWSIM
+
+parameter_sets:
+  # - runtime.parameter_set
+  []
+
+components:
+  # ROS2 SYSTEM
+  - name: global_parameter_loader
+    entity: GlobalParameterLoader.node
+    namespace: ros2_system/global_parameter_loader
+    compute_unit: main_ecu
+    parameter_set: sample_system_global_parameter_loader.parameter_set
+  - name: pointcloud_container
+    entity: PointcloudContainer.node
+    namespace: ros2_system/pointcloud_container
+    compute_unit: main_ecu
+  - name: robot_state_publisher
+    entity: SampleSystemRobotStatePublisher.node
+    namespace: ros2_system/robot_state_publisher
+    compute_unit: main_ecu
+
+  # ADAPI
+  - name: adapi
+    entity: SampleSensorKitADAPIWrapper.node
+    namespace: api
+    compute_unit: main_ecu
+
+  # SENSING
+  # - name: camera
+  #   entity: CameraDummy.module
+  #   namespace: sensing/camera
+  #   compute_unit: perception_ecu_1
+  - name: sensing
+    entity: SampleSensorKit.module
+    namespace: sensing
+    compute_unit: main_ecu
+    parameter_set: sample_system_sensing.parameter_set
+
+  # MAP/LOCALIZATION
+  - name: map
+    entity: Tier4MapWrapper.node
+    namespace: map
+    compute_unit: main_ecu
+  - name: localization
+    entity: Tier4LocalizationWrapper.node
+    namespace: localization
+    compute_unit: main_ecu
+
+  # PERCEPTION
+  - name: centerpoint
+    entity: LidarCenterpoint.module
+    namespace: perception/object_recognition/detection/centerpoint
+    compute_unit: main_ecu
+    parameter_set: universe_perception_centerpoint_vanilla.parameter_set
+  - name: obstacle_segmentation
+    entity: ObstacleSegmentation.module
+    namespace: perception/obstacle_segmentation
+    compute_unit: main_ecu
+    parameter_set: universe_perception_obstacle_segmentation_single.parameter_set
+  - name: object_recognition
+    entity: ObjectRecognitionLidar.module
+    namespace: perception/object_recognition
+    compute_unit: main_ecu
+    parameter_set: universe_perception_object_recognition_serial.parameter_set
+  - name: occupancy_grid_map
+    entity: OccupancyGridMapPointcloudBased.module
+    namespace: perception/occupancy_grid_map
+    compute_unit: main_ecu
+    parameter_set: universe_perception_occupancy_grid_map_pointcloud.parameter_set
+  # - name: traffic_light_recognition
+  #   entity: TrafficLightRecognitionRefine.module
+  #   namespace: perception/traffic_light_recognition
+  #   compute_unit: main_ecu
+  #   parameter_set: universe_perception_traffic_light_recognition_fine.parameter_set
+
+  # PLANNING/CONTROL
+  - name: planning
+    entity: Tier4PlanningWrapper.node
+    namespace: planning
+    compute_unit: dummy_ecu
+  - name: control
+    entity: Tier4ControlWrapper.node
+    namespace: control
+    compute_unit: dummy_ecu
+
+  # VEHICLE
+
+connections:
+  - from: localization.output.acceleration
+    to: sensing.input.acceleration
+  - from: localization.output.kinematic_state
+    to: sensing.input.odometry
+  - from: localization.output.pose_estimator/pose_with_covariance
+    to: sensing.input.pose_ndt
+
+  - from: localization.output.initialization_state
+    to: adapi.input.localization/initialization_state
+  - from: localization.output.kinematic_state
+    to: adapi.input.localization/kinematic_state
+
+  - from: sensing.output.lidar/concatenated/pointcloud
+    to: obstacle_segmentation.input.concatenated_pointcloud
+
+  - from: sensing.output.lidar/concatenated/pointcloud
+    to: centerpoint.input.pointcloud
+  - from: object_recognition.output.map_filtered_obstacle_pointcloud
+    to: centerpoint.input.obstacle_pointcloud
+
+  - from: obstacle_segmentation.output.pointcloud
+    to: object_recognition.input.obstacle_pointcloud
+
+  - from: centerpoint.output.detected_objects
+    to: object_recognition.input.lidar_ml_objects
+  - from: map.output.vector_map
+    to: object_recognition.input.vector_map
+  - from: map.output.pointcloud_map
+    to: object_recognition.input.pointcloud_map
+  - from: map.output.get_differential_pointcloud_map
+    to: object_recognition.input.service_pointcloud_map_diff
+  - from: localization.output.kinematic_state
+    to: object_recognition.input.kinematic_state
+
+  - from: sensing.output.lidar/concatenated/pointcloud
+    to: occupancy_grid_map.input.raw_pointcloud
+  - from: obstacle_segmentation.output.pointcloud
+    to: occupancy_grid_map.input.obstacle_pointcloud
+
+  # - from: map.output.vector_map
+  #   to: traffic_light_recognition.input.vector_map
+  # - from: planning.output.mission_planning/route
+  #   to: traffic_light_recognition.input.route
+  # - from: camera.output.camera6/image
+  #   to: traffic_light_recognition.input.camera1/image
+  # - from: camera.output.camera6/camera_info
+  #   to: traffic_light_recognition.input.camera1/camera_info
+  # - from: camera.output.camera7/image
+  #   to: traffic_light_recognition.input.camera2/image
+  # - from: camera.output.camera7/camera_info
+  #   to: traffic_light_recognition.input.camera2/camera_info
+  # - from: sensing.output.lidar/concatenated/pointcloud
+  #   to: traffic_light_recognition.input.pointcloud
+
+  - from: map.output.vector_map
+    to: localization.input.lanelet_map
+  - from: map.output.pointcloud_map
+    to: localization.input.pointcloud_map
+  - from: sensing.output.lidar/concatenated/pointcloud
+    to: localization.input.pointcloud
+  - from: sensing.output.imu_data
+    to: localization.input.imu
+  - from: sensing.output.vehicle_velocity_converter/twist_with_covariance
+    to: localization.input.twist
+  - from: sensing.output.gnss/pose_with_covariance
+    to: localization.input.gnss_pose_with_covariance
+  - from: adapi.output.localization/initialization_state
+    to: localization.input.initialization_state
+
+  - from: occupancy_grid_map.output.map
+    to: planning.input.occupancy_grid_map
+  - from: map.output.vector_map
+    to: planning.input.lanelet_map
+  - from: object_recognition.output.objects
+    to: planning.input.predicted_objects
+  # - from: traffic_light_recognition.output.traffic_signals
+  #   to: planning.input.traffic_signals
+  - from: obstacle_segmentation.output.pointcloud
+    to: planning.input.obstacle_pointcloud
+  
+  - from: planning.output.mission_planning/route
+    to: control.input.mission_planning/route  
+  - from: localization.output.kinematic_state
+    to: control.input.kinematics
+  - from: localization.output.acceleration
+    to: control.input.acceleration
+
+# mode configurations
+LoggingSimulation:
+  override:
+    parameter_sets:
+      - logging_simulation.parameter_set
+    components:
+      - name: sensing
+        entity: SampleSensorKit_sim.module
+        # entity: SampleSystemSensingWrapper.node # original ros launch wrapper
+        namespace: sensing
+        compute_unit: main_ecu
+        parameter_set: sample_system_sensing.parameter_set
+      - name: rosbag_replay
+        entity: SampleRosbagReplay.node
+        namespace: ''
+        compute_unit: dummy_ecu
+    connections:
+    - from: rosbag_replay.output.sensing/^
+      to: sensing.input.^

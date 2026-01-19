@@ -1,0 +1,67 @@
+autoware_system_design_format: v0.1.0
+
+name: SampleSystemSensingWrapper.node
+
+launch:
+  package: autoware_sample_deployment
+  ros2_launch_file: sample_system_sensing_wrapper.launch.xml
+
+# interfaces
+inputs:
+  - name: velocity_status
+    message_type: autoware_vehicle_msgs/msg/VelocityReport
+  - name: odometry
+    message_type: nav_msgs/msg/Odometry
+  - name: twist
+    message_type: geometry_msgs/msg/TwistWithCovarianceStamped
+  - name: pose_ndt
+    message_type: geometry_msgs/msg/PoseWithCovarianceStamped
+  - name: acceleration
+    message_type: geometry_msgs/msg/AccelWithCovarianceStamped
+  - name: steering_angle
+    message_type: std_msgs/msg/Float32
+
+outputs:
+# lidar
+  - name: lidar/top/pointcloud
+    message_type: sensor_msgs/msg/PointCloud2
+  - name: lidar/left/pointcloud
+    message_type: sensor_msgs/msg/PointCloud2
+  - name: lidar/right/pointcloud
+    message_type: sensor_msgs/msg/PointCloud2
+  - name: lidar/concatenated/pointcloud
+    message_type: sensor_msgs/msg/PointCloud2
+  - name: lidar/concatenated/pointcloud_info
+    message_type: autoware_sensing_msgs/msg/ConcatenatedPointCloudInfo
+# imu
+  - name: imu_data
+    message_type: sensor_msgs/msg/Imu
+  - name: vehicle_velocity_converter/twist_with_covariance
+    message_type: geometry_msgs/msg/TwistWithCovarianceStamped
+# gnss
+  - name: gnss/pose
+    message_type: geometry_msgs/msg/PoseStamped
+  - name: gnss/pose_with_covariance
+    message_type: geometry_msgs/msg/PoseWithCovarianceStamped
+
+# parameters
+parameter_files: []
+
+parameters:
+  - name: pointcloud_container_name
+    default: pointcloud_container
+  - name: launch_driver
+    default: true
+
+  - name: vehicle_param_file
+    default: $(find-pkg-share sample_vehicle_description)/config/vehicle_info.param.yaml
+  - name: vehicle_mirror_param_file
+    default: $(find-pkg-share sample_vehicle_description)/config/mirror.param.yaml
+
+# processes
+processes:
+  - name: export
+    trigger_conditions:
+      - periodic: 10.0
+    outcomes:
+      - to_output: lidar/concatenated/pointcloud
