@@ -1,0 +1,39 @@
+autoware_system_design_format: v0.1.0
+
+name: SampleSystemRobotStatePublisher.node
+
+launch:
+  package: robot_state_publisher
+  executable: robot_state_publisher
+  node_output: screen
+
+# interface
+inputs:
+  - name: robot_description
+    message_type: std_msgs/msg/String
+  - name: joint_states
+    message_type: sensor_msgs/msg/JointState
+outputs: 
+  - name: robot_description
+    message_type: std_msgs/msg/String
+    global: /robot_description
+  - name: tf
+    message_type: tf2_msgs/msg/TFMessage
+    global: /tf
+  - name: tf_static
+    message_type: tf2_msgs/msg/TFMessage
+    global: /tf_static
+
+# parameters
+parameter_files: []
+parameters:
+  - name: robot_description
+    type: str
+    default: "$(command 'xacro $(find-pkg-share autoware_sample_deployment)/urdf/vehicle.xacro config_dir:=$(var config_dir)' 'warn')"
+
+# processes
+processes:
+  - name: run
+    trigger_conditions: []
+    outcomes: []
+
