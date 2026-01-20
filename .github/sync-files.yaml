@@ -1,10 +1,6 @@
 - repository: autowarefoundation/sync-file-templates
   source-dir: sources
   files:
-    - source: CODE_OF_CONDUCT.md
-    - source: CONTRIBUTING.md
-    - source: DISCLAIMER.md
-    - source: LICENSE
     - source: .github/ISSUE_TEMPLATE/bug.yaml
     - source: .github/ISSUE_TEMPLATE/config.yml
     - source: .github/ISSUE_TEMPLATE/task.yaml
@@ -12,6 +8,9 @@
     - source: .github/dependabot.yaml
     - source: .github/stale.yml
     - source: .github/workflows/comment-on-pr.yaml
+    - source: .github/workflows/backport.yaml
+    - source: .github/workflows/build-and-test.yaml
+    - source: .github/workflows/build-and-test-differential.yaml
     - source: .github/workflows/pre-commit.yaml
     - source: .github/workflows/pre-commit-optional.yaml
     - source: .github/workflows/semantic-pull-request.yaml
@@ -27,10 +26,8 @@
         sd "rviz\n" "rviz\n**/diagnostic_graph_aggregator/\n" {source}
     - source: .prettierrc.yaml
     - source: .yamllint.yaml
+    - source: CODE_OF_CONDUCT.md
+    - source: CONTRIBUTING.md
+    - source: DISCLAIMER.md
+    - source: LICENSE
     - source: setup.cfg
-    - source: .github/workflows/build-and-test.yaml
-    - source: .github/workflows/build-and-test-differential.yaml
-    - source: .github/workflows/cancel-previous-workflows.yaml
-- repository: autowarefoundation/autoware
-  files:
-    - source: .github/workflows/backport.yaml

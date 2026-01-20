@@ -2,6 +2,9 @@
 Changelog for package awsim_labs_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.49.0 (2025-12-30)
+-------------------
+
 0.48.0 (2025-11-16)
 -------------------
 * Merge remote-tracking branch 'origin/main' into release-humble-0.48.0

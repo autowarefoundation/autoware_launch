@@ -2,6 +2,51 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.49.0 (2025-12-30)
+-------------------
+* Merge remote-tracking branch 'origin/main' into prepare-changelog-0.49.0
+* refactor(ground_segmentation): remove grid_mode_switch_radius (`#1720 <https://github.com/autowarefoundation/autoware_launch/issues/1720>`_)
+* feat: allow the latest frame from each tlr camera to stay for a little longer (`#1718 <https://github.com/autowarefoundation/autoware_launch/issues/1718>`_)
+  * feat: allow the latest frame from each tlr camera to stay for a little longer
+  * chore: change name to message_lifespan_latest
+  * fix: instead of adding new parameters, tune the parameter to get the 10Hz system to be stable
+  ---------
+* feat(multi_object_tracker): improve shape unstable object tracking (`#1511 <https://github.com/autowarefoundation/autoware_launch/issues/1511>`_)
+  * chore: remove unused max_rad_matrix and replace min_iou_matrix with min_giou_matrix
+  * style(pre-commit): autofix
+  * perf: tune distance gate for association of significant shape changed objects
+  * perf: use tighter association threshold on unknown object
+  * perf: relax unknown object association threshold to improve robustness
+  * perf: relax giou threshold for MOTORBIKE
+  chore: rename giou back to iou in config
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: Jian Kang <jian.kang@tier4.jp>
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat(autoware_launch): specify api launch args explicitly (`#1719 <https://github.com/autowarefoundation/autoware_launch/issues/1719>`_)
+  * feat(autoware_launch): specify api launch args explicitly
+  * style(pre-commit): autofix
+  * fix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat(goal_planner): fiter bezier path with high curvature near start pose (`#1712 <https://github.com/autowarefoundation/autoware_launch/issues/1712>`_)
+* feat(intersection): add pass_judge_line_margin parameter to behavior_velocity_planner configuration (`#1710 <https://github.com/autowarefoundation/autoware_launch/issues/1710>`_)
+* fix(run_out): reuse the previous stop pose when possible (`#1711 <https://github.com/autowarefoundation/autoware_launch/issues/1711>`_)
+* feat(stop_line): add vehicle_stopped_duration_threshold parameter (`#1707 <https://github.com/autowarefoundation/autoware_launch/issues/1707>`_)
+* chore(processing_time_checker): add two subscriptions (`#1709 <https://github.com/autowarefoundation/autoware_launch/issues/1709>`_)
+  add two processing time subscriptions
+* feat(control_validator): add filtering parameters for vehicle and target velocity (`#1694 <https://github.com/autowarefoundation/autoware_launch/issues/1694>`_)
+  * feat(control_validator): add filtering parameters for vehicle and target velocity
+  * fix(control_validator): update LPF gain values for vehicle and target velocity filtering
+  * fix(control_validator): rename velocity_validator to over_velocity_validator for clarity
+  * feat(control_validator): update over_velocity parameters for clarity and consistency
+  ---------
+* feat(multi_object_tracker): add camera_streampetr to input channels (`#1708 <https://github.com/autowarefoundation/autoware_launch/issues/1708>`_)
+  add camera_streampetr
+* feat(detection_area): increase max_deceleration from 1.0 to 2.5 (`#1705 <https://github.com/autowarefoundation/autoware_launch/issues/1705>`_)
+* fix(lane_change): extended polygon policy along_path (`#1706 <https://github.com/autowarefoundation/autoware_launch/issues/1706>`_)
+* Contributors: Kang, Kem (TiankuiXian), Kosuke Takeuchi, Kyoichi Sugahara, Masaki Baba, Maxime CLEMENT, Ryohsuke Mitsudome, Takagi, Isamu, Yukinari Hisaki, Yuxuan Liu, Zulfaqar Azmi, badai nguyen
+
 0.48.0 (2025-11-16)
 -------------------
 * Merge remote-tracking branch 'origin/main' into release-humble-0.48.0

@@ -18,6 +18,9 @@
   </group>
 
   <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml">
+    <arg name="launch_deprecated_api" value="$(var launch_deprecated_api)"/>
+    <arg name="rosbridge_enabled" value="$(var rosbridge_enabled)"/>
+    <arg name="rosbridge_max_message_size" value="$(var rosbridge_max_message_size)"/>
     <arg name="default_adapi_param_path" value="$(var default_adapi_param_path)"/>
   </include>
 </launch>
