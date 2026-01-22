@@ -1,13 +1,13 @@
 autoware_system_design_format: v0.1.0
 
-name: VelodyneLidar_decode.module
+name: LidarVelodyneVLP16_decode.module
 
-base: VelodyneLidar.module
+base: LidarVelodyneVLP16.module
 
 override:
   instances:
   - name: lidar
-    entity: NebulaVelodyneVLS128_decode.node
+    entity: NebulaVelodyneVLP16_decode.node
 
   external_interfaces:
     input:
