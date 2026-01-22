@@ -1,10 +1,10 @@
 autoware_system_design_format: v0.1.0
 
-name: VelodyneLidar.module
+name: LidarVelodyneVLP16.module
 
 instances: 
   - name: lidar
-    entity: NebulaVelodyneVLS128.node
+    entity: NebulaVelodyneVLP16.node
   - name: crop_box_filter_self
     entity: CropBoxFilter.node
   - name: crop_box_filter_wheels

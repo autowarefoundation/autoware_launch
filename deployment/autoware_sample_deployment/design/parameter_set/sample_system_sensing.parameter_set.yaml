@@ -170,6 +170,8 @@ parameters:
         value: False
       - name: use_sim_time
         value: False
+      - name: calibration_file
+        value: $(find-pkg-share nebula_velodyne_decoders)/calibration/VLP16.yaml
   - node: /sensing/lidar/left/crop_box_filter_self
     parameter_files: []
     parameters:
@@ -259,6 +261,8 @@ parameters:
         value: False
       - name: use_sim_time
         value: False
+      - name: calibration_file
+        value: $(find-pkg-share nebula_velodyne_decoders)/calibration/VLP16.yaml
   - node: /sensing/lidar/right/crop_box_filter_self
     parameter_files: []
     parameters:

@@ -4,11 +4,11 @@ name: SampleSensorKitLidar.module
 
 instances:
   - name: top
-    entity: VelodyneLidar.module
+    entity: LidarVelodyneVLS128.module
   - name: left
-    entity: VelodyneLidar.module
+    entity: LidarVelodyneVLP16.module
   - name: right
-    entity: VelodyneLidar.module
+    entity: LidarVelodyneVLP16.module
   - name: concatenate_and_time_sync
     entity: ConcatenateAndTimeSync_3_inputs.node
 

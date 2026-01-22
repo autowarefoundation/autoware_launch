@@ -7,11 +7,11 @@ base: SampleSensorKitLidar.module
 override:
   instances:
   - name: top
-    entity: VelodyneLidar_decode.module
+    entity: LidarVelodyneVLS128_decode.module
   - name: left
-    entity: VelodyneLidar_decode.module
+    entity: LidarVelodyneVLP16_decode.module
   - name: right
-    entity: VelodyneLidar_decode.module
+    entity: LidarVelodyneVLP16_decode.module
 
   external_interfaces:
     input:

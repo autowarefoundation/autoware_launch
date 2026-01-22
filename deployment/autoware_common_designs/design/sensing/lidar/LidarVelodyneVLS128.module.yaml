@@ -1,0 +1,35 @@
+autoware_system_design_format: v0.1.0
+
+name: LidarVelodyneVLS128.module
+
+instances: 
+  - name: lidar
+    entity: NebulaVelodyneVLS128.node
+  - name: crop_box_filter_self
+    entity: CropBoxFilter.node
+  - name: crop_box_filter_wheels
+    entity: CropBoxFilter.node
+  - name: distortion_corrector_node
+    entity: DistortionCorrector.node
+
+external_interfaces:
+  input: 
+    - name: twist
+    - name: imu
+  output: 
+    - name: pointcloud
+
+
+connections: 
+  - from: lidar.output.velodyne_points
+    to: crop_box_filter_self.input.input
+  - from: crop_box_filter_self.output.output
+    to: crop_box_filter_wheels.input.input
+  - from: crop_box_filter_wheels.output.output
+    to: distortion_corrector_node.input.pointcloud
+  - from: input.twist
+    to: distortion_corrector_node.input.twist
+  - from: input.imu
+    to: distortion_corrector_node.input.imu
+  - from: distortion_corrector_node.output.pointcloud
+    to: output.pointcloud
