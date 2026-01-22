@@ -27,11 +27,13 @@ connections:
   - from: input.twist
     to: ^.input.twist
 
-  - from: top.output.pointcloud
-    to: concatenate_and_time_sync.input.input1
-  - from: left.output.pointcloud
-    to: concatenate_and_time_sync.input.input2
+  # the order is important. the order need to be aligned with parameter of 
+  # matching_strategy in concatenate_and_time_sync_node.param.yaml
   - from: right.output.pointcloud
+    to: concatenate_and_time_sync.input.input1
+  - from: top.output.pointcloud
+    to: concatenate_and_time_sync.input.input2
+  - from: left.output.pointcloud
     to: concatenate_and_time_sync.input.input3
 
   - from: input.odometry
