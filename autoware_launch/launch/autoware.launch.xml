@@ -6,6 +6,7 @@
   <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
+  <arg name="location" default="komatsu" description="location for v2x (e.g. komatsu, shiojiri)"/>
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
@@ -148,7 +149,8 @@
     <include file="$(find-pkg-share traffic_signal_launcher)/launch/traffic_signal.launch.xml">
       <arg name="map_path" value="$(var map_path)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
-      <arg name="vehicle_id" value="1"/>
+      <arg name="vehicle_id" value="$(var vehicle_id)"/>
+      <arg name="location" value="$(var location)"/>
     </include>
   </group>
 
