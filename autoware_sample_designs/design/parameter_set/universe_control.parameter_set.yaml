@@ -1,0 +1,49 @@
+autoware_system_design_format: 0.3.0
+
+name: universe_control.parameter_set
+parameters:
+  - node: /control/trajectory_follower
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/control/trajectory_follower/trajectory_follower_node.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/control/trajectory_follower/lateral/mpc.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/control/trajectory_follower/longitudinal/pid.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
+    param_values:
+      - name: lateral_controller_mode
+        type: string
+        value: mpc
+      - name: longitudinal_controller_mode
+        type: string
+        value: pid
+  - node: /control/shift_decider
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/control/shift_decider/shift_decider.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
+  - node: /control/vehicle_cmd_gate
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
+  - node: /control/operation_mode_transition_manager
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
+  - node: /control/external_cmd_selector
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/control/external_cmd_selector/external_cmd_selector.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
+  - node: /control/lane_departure_checker
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/control/lane_departure_checker/lane_departure_checker.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
+  - node: /control/control_validator
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/control/control_validator/control_validator.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
+  - node: /control/autonomous_emergency_braking
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/control/autoware_autonomous_emergency_braking/autonomous_emergency_braking.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
+  - node: /control/collision_detector
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/control/autoware_collision_detector/collision_detector.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
