@@ -214,18 +214,33 @@ connections:
 LoggingSimulation:
   override:
     parameter_sets:
-      - logging_simulation.parameter_set
+    - logging_simulation.parameter_set
     components:
-      - name: sensing
-        entity: SampleSensorKit_sim.module
-        # entity: SampleSystemSensingWrapper.node # original ros launch wrapper
-        namespace: sensing
-        compute_unit: main_ecu
-        parameter_set: sample_system_sensing.parameter_set
-      - name: rosbag_replay
-        entity: SampleRosbagReplay.node
-        namespace: ''
-        compute_unit: dummy_ecu
+    - name: sensing
+      entity: SampleSensorKit_sim.module
+      namespace: sensing
+      compute_unit: main_ecu
+      parameter_set: sample_system_sensing.parameter_set
+    - name: rosbag_replay
+      entity: SampleRosbagReplay.node
+      namespace: ''
+      compute_unit: dummy_ecu
     connections:
     - from: rosbag_replay.output.sensing/^
       to: sensing.input.^
+
+E2ESimulation:
+  override:
+    components:
+    - name: AWSIM_in
+      entity: SampleAWSIM_in.node
+      namespace: ''
+      compute_unit: dummy_ecu
+    - name: AWSIM_out
+      entity: SampleAWSIM_out.node
+      namespace: ''
+      compute_unit: dummy_ecu
+    connections: []
+  remove:
+    components:
+    - name: sensing
