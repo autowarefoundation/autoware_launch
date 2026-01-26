@@ -228,8 +228,8 @@ E2ESimulation:
       entity: SampleAWSIM_out.node
       namespace: ''
       compute_unit: dummy_ecu
-    - name: vehicle_velocity_converter
-      entity: VehicleVelocityConverter.node
+    - name: sensing
+      entity: SampleSensorKitAWSIM.module
       namespace: sensing
       compute_unit: main_ecu
     - name: traffic_light_recognition
@@ -238,32 +238,31 @@ E2ESimulation:
       compute_unit: main_ecu
       parameter_set: universe_perception_traffic_light_recognition_fine.parameter_set
     connections:
-      - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw
-        to: centerpoint.input.pointcloud
-      - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw
-        to: obstacle_segmentation.input.concatenated_pointcloud
-      - from: AWSIM_out.output.vehicle/status/velocity_status
-        to: vehicle_velocity_converter.input.velocity_status
-      # occupancy grid map
+      # SENSING
       - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw_ex
+        to: sensing.input.lidar/top/pointcloud_raw_ex
+      - from: AWSIM_out.output.sensing/imu/tamagawa/imu_raw
+        to: sensing.input.imu/tamagawa/imu_raw
+      - from: AWSIM_out.output.vehicle/status/velocity_status
+        to: sensing.input.velocity_status
+      - from: sensing.output.lidar/concatenated/pointcloud
+        to: obstacle_segmentation.input.concatenated_pointcloud
+      # occupancy grid map
+      - from: sensing.output.lidar/concatenated/pointcloud
         to: occupancy_grid_map.input.raw_pointcloud
       # Traffic light
       - from: AWSIM_out.output.sensing/camera/traffic_light/image_raw
         to: traffic_light_recognition.input.camera1/image
       - from: AWSIM_out.output.sensing/camera/traffic_light/camera_info
         to: traffic_light_recognition.input.camera1/camera_info
-      - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw
+      - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw_ex
         to: traffic_light_recognition.input.pointcloud
-      - from: AWSIM_out.output.sensing/external_traffic_signals
-        to: traffic_light_recognition.input.external_traffic_signals
       - from: traffic_light_recognition.output.traffic_signals
         to: planning.input.traffic_signals
       # localization
-      - from: AWSIM_out.output.lidar/lidar/top/pointcloud_raw
-        to: localization.input.pointcloud
       - from: AWSIM_out.output.sensing/imu/tamagawa/imu_raw
         to: localization.input.imu
-      - from: vehicle_velocity_converter.output.twist_with_covariance
+      - from: sensing.output.vehicle_velocity_converter/twist_with_covariance
         to: localization.input.twist
       - from: AWSIM_out.output.sensing/gnss/pose_with_covariance
         to: localization.input.gnss_pose_with_covariance
