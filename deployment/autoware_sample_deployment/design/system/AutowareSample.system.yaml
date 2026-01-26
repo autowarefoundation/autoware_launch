@@ -110,7 +110,7 @@ components:
   - name: control
     entity: Tier4ControlWrapper.node
     namespace: control
-    compute_unit: dummy_ecu
+    compute_unit: main_ecu
 
   # VEHICLE
 
