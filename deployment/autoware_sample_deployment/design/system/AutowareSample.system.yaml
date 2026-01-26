@@ -214,6 +214,11 @@ E2ESimulation:
     components:
     - name: sensing
   override:
+    variables:
+    - name: map_path
+      value: $(env HOME)/autoware_map/nishishinjuku_autoware_map
+    parameter_sets:
+    - e2e_simulation.parameter_set
     components:
     - name: AWSIM_in
       entity: SampleAWSIM_in.node
