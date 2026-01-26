@@ -13,11 +13,13 @@ instances:
 external_interfaces:
   input:
     - name: lidar/top/pointcloud_raw_ex
-    - name: velocity_status
     - name: imu/tamagawa/imu_raw
+    - name: velocity_status
+    - name: pose_ndt
   output:
     - name: vehicle_velocity_converter/twist_with_covariance
     - name: lidar/concatenated/pointcloud
+    - name: imu_data
 
 
 connections: 
@@ -28,6 +30,10 @@ connections:
   # IMU
   - from: input.imu/tamagawa/imu_raw
     to: imu.input.imu_raw
+  - from: input.pose_ndt
+    to: imu.input.pose_ndt
+  - from: imu.output.imu_data
+    to: output.imu_data
   # LIDAR
   - from: input.lidar/top/pointcloud_raw_ex
     to: lidar/top.input.pointcloud_raw_ex
