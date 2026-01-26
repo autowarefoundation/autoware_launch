@@ -1,0 +1,39 @@
+autoware_system_design_format: v0.1.0
+
+name: SampleAWSIM_in.node
+
+launch:
+  package: AWSIM
+  executable: AWSIM_in
+  node_output: screen
+
+# interfaces
+inputs:
+  - name: awsim/awsim_rviz_plugins/npc_spawner/npc_name
+    message_type: std_msgs/msg/String
+  - name: awsim/awsim_rviz_plugins/npc_spawner/npc_velocity
+    message_type: std_msgs/msg/Float32
+  - name: awsim/awsim_rviz_plugins/npc_spawner/pose_with_covariance
+    message_type: geometry_msgs/msg/PoseWithCovarianceStamped
+  - name: awsim/awsim_rviz_plugins/pose_teleport/pose_with_covariance
+    message_type: geometry_msgs/msg/PoseWithCovarianceStamped
+  # CONTROL
+  - name: control/command/control_cmd
+    message_type: autoware_control_msgs/msg/Control
+  - name: control/command/emergency_cmd
+    message_type: tier4_vehicle_msgs/msg/VehicleEmergencyStamped
+  - name: control/command/gear_cmd
+    message_type: autoware_vehicle_msgs/msg/GearCommand
+  - name: control/command/hazard_lights_cmd
+    message_type: autoware_vehicle_msgs/msg/HazardLightsCommand
+  - name: control/command/turn_indicators_cmd
+    message_type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
+outputs: []
+
+# parameters
+parameters: []
+
+parameter_files: []
+
+# processes
+processes: []
