@@ -106,7 +106,7 @@ components:
   - name: planning
     entity: Tier4PlanningWrapper.node
     namespace: planning
-    compute_unit: dummy_ecu
+    compute_unit: main_ecu
   - name: control
     entity: Tier4ControlWrapper.node
     namespace: control
@@ -154,20 +154,6 @@ connections:
   - from: obstacle_segmentation.output.pointcloud
     to: occupancy_grid_map.input.obstacle_pointcloud
 
-  # - from: map.output.vector_map
-  #   to: traffic_light_recognition.input.vector_map
-  # - from: planning.output.mission_planning/route
-  #   to: traffic_light_recognition.input.route
-  # - from: camera.output.camera6/image
-  #   to: traffic_light_recognition.input.camera1/image
-  # - from: camera.output.camera6/camera_info
-  #   to: traffic_light_recognition.input.camera1/camera_info
-  # - from: camera.output.camera7/image
-  #   to: traffic_light_recognition.input.camera2/image
-  # - from: camera.output.camera7/camera_info
-  #   to: traffic_light_recognition.input.camera2/camera_info
-  # - from: sensing.output.lidar/concatenated/pointcloud
-  #   to: traffic_light_recognition.input.pointcloud
 
   - from: map.output.vector_map
     to: localization.input.lanelet_map
@@ -189,18 +175,20 @@ connections:
   - from: map.output.vector_map
     to: planning.input.lanelet_map
   - from: object_recognition.output.objects
-    to: planning.input.predicted_objects
-  # - from: traffic_light_recognition.output.traffic_signals
-  #   to: planning.input.traffic_signals
+    to: planning.input.objects
   - from: obstacle_segmentation.output.pointcloud
     to: planning.input.obstacle_pointcloud
-  
+
   - from: planning.output.mission_planning/route
     to: control.input.mission_planning/route  
   - from: localization.output.kinematic_state
     to: control.input.kinematics
   - from: localization.output.acceleration
     to: control.input.acceleration
+  - from: object_recognition.output.objects
+    to: control.input.objects
+  - from: obstacle_segmentation.output.pointcloud
+    to: control.input.obstacle_pointcloud
 
 # mode configurations
 LoggingSimulation:
@@ -240,7 +228,7 @@ E2ESimulation:
       namespace: sensing
       compute_unit: main_ecu
     - name: traffic_light_recognition
-      entity: TrafficLightRecognitionRefine.module
+      entity: TrafficLightRecognitionRefine_1.module
       namespace: perception/traffic_light_recognition
       compute_unit: main_ecu
       parameter_set: universe_perception_traffic_light_recognition_fine.parameter_set
@@ -251,15 +239,14 @@ E2ESimulation:
         to: obstacle_segmentation.input.concatenated_pointcloud
       - from: AWSIM_out.output.vehicle/status/velocity_status
         to: vehicle_velocity_converter.input.velocity_status
+      # occupancy grid map
+      - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw_ex
+        to: occupancy_grid_map.input.raw_pointcloud
       # Traffic light
       - from: AWSIM_out.output.sensing/camera/traffic_light/image_raw
         to: traffic_light_recognition.input.camera1/image
       - from: AWSIM_out.output.sensing/camera/traffic_light/camera_info
         to: traffic_light_recognition.input.camera1/camera_info
-      - from: AWSIM_out.output.sensing/camera/traffic_light/image_raw
-        to: traffic_light_recognition.input.camera2/image
-      - from: AWSIM_out.output.sensing/camera/traffic_light/camera_info
-        to: traffic_light_recognition.input.camera2/camera_info
       - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw
         to: traffic_light_recognition.input.pointcloud
       - from: AWSIM_out.output.sensing/external_traffic_signals
