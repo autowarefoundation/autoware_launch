@@ -1,0 +1,9 @@
+autoware_system_design_format: v0.1.0
+
+name: TrafficLightRecognitionRefine_1.module
+
+base: TrafficLightRecognitionRefine.module
+
+remove:
+  instances:
+  - name: camera2
