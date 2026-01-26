@@ -63,10 +63,6 @@ components:
     compute_unit: main_ecu
 
   # SENSING
-  # - name: camera
-  #   entity: CameraDummy.module
-  #   namespace: sensing/camera
-  #   compute_unit: perception_ecu_1
   - name: sensing
     entity: SampleSensorKit.module
     namespace: sensing
@@ -104,11 +100,7 @@ components:
     namespace: perception/occupancy_grid_map
     compute_unit: main_ecu
     parameter_set: universe_perception_occupancy_grid_map_pointcloud.parameter_set
-  # - name: traffic_light_recognition
-  #   entity: TrafficLightRecognitionRefine.module
-  #   namespace: perception/traffic_light_recognition
-  #   compute_unit: main_ecu
-  #   parameter_set: universe_perception_traffic_light_recognition_fine.parameter_set
+
 
   # PLANNING/CONTROL
   - name: planning
@@ -230,6 +222,9 @@ LoggingSimulation:
       to: sensing.input.^
 
 E2ESimulation:
+  remove:
+    components:
+    - name: sensing
   override:
     components:
     - name: AWSIM_in
@@ -240,7 +235,52 @@ E2ESimulation:
       entity: SampleAWSIM_out.node
       namespace: ''
       compute_unit: dummy_ecu
-    connections: []
-  remove:
-    components:
-    - name: sensing
+    - name: vehicle_velocity_converter
+      entity: VehicleVelocityConverter.node
+      namespace: sensing
+      compute_unit: main_ecu
+    - name: traffic_light_recognition
+      entity: TrafficLightRecognitionRefine.module
+      namespace: perception/traffic_light_recognition
+      compute_unit: main_ecu
+      parameter_set: universe_perception_traffic_light_recognition_fine.parameter_set
+    connections:
+      - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw
+        to: centerpoint.input.pointcloud
+      - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw
+        to: obstacle_segmentation.input.concatenated_pointcloud
+      - from: AWSIM_out.output.vehicle/status/velocity_status
+        to: vehicle_velocity_converter.input.velocity_status
+      # Traffic light
+      - from: AWSIM_out.output.sensing/camera/traffic_light/image_raw
+        to: traffic_light_recognition.input.camera1/image
+      - from: AWSIM_out.output.sensing/camera/traffic_light/camera_info
+        to: traffic_light_recognition.input.camera1/camera_info
+      - from: AWSIM_out.output.sensing/camera/traffic_light/image_raw
+        to: traffic_light_recognition.input.camera2/image
+      - from: AWSIM_out.output.sensing/camera/traffic_light/camera_info
+        to: traffic_light_recognition.input.camera2/camera_info
+      - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw
+        to: traffic_light_recognition.input.pointcloud
+      - from: AWSIM_out.output.sensing/external_traffic_signals
+        to: traffic_light_recognition.input.external_traffic_signals
+      - from: traffic_light_recognition.output.traffic_signals
+        to: planning.input.traffic_signals
+      # localization
+      - from: AWSIM_out.output.lidar/lidar/top/pointcloud_raw
+        to: localization.input.pointcloud
+      - from: AWSIM_out.output.sensing/imu/tamagawa/imu_raw
+        to: localization.input.imu
+      - from: vehicle_velocity_converter.output.twist_with_covariance
+        to: localization.input.twist
+      - from: AWSIM_out.output.sensing/gnss/pose_with_covariance
+        to: localization.input.gnss_pose_with_covariance
+      # control
+      - from: control.output.command/control_cmd
+        to: AWSIM_in.input.control/command/control_cmd
+      - from: control.output.command/gear_cmd
+        to: AWSIM_in.input.control/command/gear_cmd
+      - from: control.output.command/hazard_lights_cmd
+        to: AWSIM_in.input.control/command/hazard_lights_cmd
+      - from: control.output.command/turn_indicators_cmd
+        to: AWSIM_in.input.control/command/turn_indicators_cmd
