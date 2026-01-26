@@ -247,6 +247,8 @@ E2ESimulation:
         to: sensing.input.velocity_status
       - from: sensing.output.lidar/concatenated/pointcloud
         to: obstacle_segmentation.input.concatenated_pointcloud
+      - from: localization.output.pose_estimator/pose_with_covariance
+        to: sensing.input.pose_ndt
       # occupancy grid map
       - from: sensing.output.lidar/concatenated/pointcloud
         to: occupancy_grid_map.input.raw_pointcloud
@@ -260,7 +262,9 @@ E2ESimulation:
       - from: traffic_light_recognition.output.traffic_signals
         to: planning.input.traffic_signals
       # localization
-      - from: AWSIM_out.output.sensing/imu/tamagawa/imu_raw
+      - from: sensing.output.lidar/concatenated/pointcloud
+        to: localization.input.pointcloud
+      - from: sensing.output.imu_data
         to: localization.input.imu
       - from: sensing.output.vehicle_velocity_converter/twist_with_covariance
         to: localization.input.twist
