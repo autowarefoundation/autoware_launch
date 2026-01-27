@@ -112,7 +112,11 @@ components:
     namespace: control
     compute_unit: main_ecu
 
-  # VEHICLE
+  # SYSETM
+  - name: system
+    entity: Tier4SystemWrapper.node
+    namespace: system
+    compute_unit: main_ecu
 
 connections:
   - from: localization.output.acceleration
@@ -189,6 +193,9 @@ connections:
     to: control.input.objects
   - from: obstacle_segmentation.output.pointcloud
     to: control.input.obstacle_pointcloud
+
+  - from: system.output.system/fail_safe/mrm_state
+    to: adapi.input.system/fail_safe/mrm_state
 
 # mode configurations
 LoggingSimulation:
