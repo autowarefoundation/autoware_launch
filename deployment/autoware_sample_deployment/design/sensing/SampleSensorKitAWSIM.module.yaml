@@ -19,7 +19,7 @@ external_interfaces:
   output:
     - name: vehicle_velocity_converter/twist_with_covariance
     - name: lidar/concatenated/pointcloud
-    - name: imu_data
+    - name: imu/imu_data
 
 
 connections: 
@@ -33,7 +33,7 @@ connections:
   - from: input.pose_ndt
     to: imu.input.pose_ndt
   - from: imu.output.imu_data
-    to: output.imu_data
+    to: output.imu/imu_data
   # LIDAR
   - from: input.lidar/top/pointcloud_raw_ex
     to: lidar/top.input.pointcloud_raw_ex
