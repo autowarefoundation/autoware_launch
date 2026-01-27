@@ -17,3 +17,8 @@ parameters:
     parameters:
       - name: use_sim_time
         value: true
+  - node: /system
+    parameter_files: []
+    parameters:
+      - name: launch_system_monitor
+        value: false
