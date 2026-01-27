@@ -11,6 +11,8 @@ override:
   connections:
   - from: input.imu_raw
     to: gyro_bias_estimator.input.imu_raw
+  - from: input.imu_raw
+    to: imu_corrector.input.imu_raw
 
 remove:
   instances:
