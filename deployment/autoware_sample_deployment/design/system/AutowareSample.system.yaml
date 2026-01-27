@@ -250,6 +250,10 @@ E2ESimulation:
         to: traffic_light_recognition.input.camera1/camera_info
       - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw_ex
         to: traffic_light_recognition.input.pointcloud
+      - from: map.output.vector_map
+        to: traffic_light_recognition.input.vector_map
+      - from: planning.output.mission_planning/route
+        to: traffic_light_recognition.input.route
       - from: traffic_light_recognition.output.traffic_signals
         to: planning.input.traffic_signals
       # localization
