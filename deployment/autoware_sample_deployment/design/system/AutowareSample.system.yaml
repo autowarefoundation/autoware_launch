@@ -232,6 +232,7 @@ E2ESimulation:
       entity: SampleSensorKitAWSIM.module
       namespace: sensing
       compute_unit: main_ecu
+      parameter_set: sample_system_sensing.parameter_set
     - name: traffic_light_recognition
       entity: TrafficLightRecognitionRefine_1.module
       namespace: perception/traffic_light_recognition

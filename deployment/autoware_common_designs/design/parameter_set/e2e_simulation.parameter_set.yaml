@@ -6,7 +6,7 @@ parameters:
     parameter_files: []
     parameters:
       - name: use_sim_time
-        value: false
+        value: true
   - node: /localization
     parameter_files: []
     parameters:
@@ -16,4 +16,4 @@ parameters:
     parameter_files: []
     parameters:
       - name: use_sim_time
-        value: false
+        value: true
