@@ -210,9 +210,6 @@ LoggingSimulation:
       to: sensing.input.^
 
 E2ESimulation:
-  remove:
-    components:
-    - name: sensing
   override:
     variables:
     - name: map_path
@@ -246,13 +243,6 @@ E2ESimulation:
         to: sensing.input.imu/tamagawa/imu_raw
       - from: AWSIM_out.output.vehicle/status/velocity_status
         to: sensing.input.velocity_status
-      - from: sensing.output.lidar/concatenated/pointcloud
-        to: obstacle_segmentation.input.concatenated_pointcloud
-      - from: localization.output.pose_estimator/pose_with_covariance
-        to: sensing.input.pose_ndt
-      # occupancy grid map
-      - from: sensing.output.lidar/concatenated/pointcloud
-        to: occupancy_grid_map.input.raw_pointcloud
       # Traffic light
       - from: AWSIM_out.output.sensing/camera/traffic_light/image_raw
         to: traffic_light_recognition.input.camera1/image
@@ -263,12 +253,6 @@ E2ESimulation:
       - from: traffic_light_recognition.output.traffic_signals
         to: planning.input.traffic_signals
       # localization
-      - from: sensing.output.lidar/concatenated/pointcloud
-        to: localization.input.pointcloud
-      - from: sensing.output.imu_data
-        to: localization.input.imu
-      - from: sensing.output.vehicle_velocity_converter/twist_with_covariance
-        to: localization.input.twist
       - from: AWSIM_out.output.sensing/gnss/pose_with_covariance
         to: localization.input.gnss_pose_with_covariance
       # control
@@ -280,3 +264,7 @@ E2ESimulation:
         to: AWSIM_in.input.control/command/hazard_lights_cmd
       - from: control.output.command/turn_indicators_cmd
         to: AWSIM_in.input.control/command/turn_indicators_cmd
+  remove:
+    connections:
+      - from: sensing.output.gnss
+        to: localization.input.gnss_pose_with_covariance
