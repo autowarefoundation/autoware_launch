@@ -16,6 +16,7 @@ external_interfaces:
     - name: imu/tamagawa/imu_raw
     - name: velocity_status
     - name: pose_ndt
+    - name: odometry
   output:
     - name: vehicle_velocity_converter/twist_with_covariance
     - name: lidar/concatenated/pointcloud
@@ -28,6 +29,8 @@ connections:
   - from: vehicle_velocity_converter.output.twist_with_covariance
     to: output.vehicle_velocity_converter/twist_with_covariance
   # IMU
+  - from: input.odometry
+    to: imu.input.odom
   - from: input.imu/tamagawa/imu_raw
     to: imu.input.imu_raw
   - from: input.pose_ndt
