@@ -165,7 +165,7 @@ connections:
     to: localization.input.pointcloud_map
   - from: sensing.output.lidar/concatenated/pointcloud
     to: localization.input.pointcloud
-  - from: sensing.output.imu_data
+  - from: sensing.output.imu/imu_data
     to: localization.input.imu
   - from: sensing.output.vehicle_velocity_converter/twist_with_covariance
     to: localization.input.twist
@@ -193,6 +193,8 @@ connections:
     to: control.input.objects
   - from: obstacle_segmentation.output.pointcloud
     to: control.input.obstacle_pointcloud
+  - from: sensing.output.imu/imu_data
+    to: control.input.imu
 
   - from: system.output.system/fail_safe/mrm_state
     to: adapi.input.system/fail_safe/mrm_state
@@ -267,6 +269,8 @@ E2ESimulation:
       - from: AWSIM_out.output.sensing/gnss/pose_with_covariance
         to: localization.input.gnss_pose_with_covariance
       # control
+      - from: AWSIM_out.output.vehicle/status/velocity_status
+        to: control.input.velocity_status
       - from: control.output.command/control_cmd
         to: AWSIM_in.input.control/command/control_cmd
       - from: control.output.command/gear_cmd

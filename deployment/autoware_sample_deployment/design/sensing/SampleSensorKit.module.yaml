@@ -20,7 +20,7 @@ external_interfaces:
     - name: pose_ndt
 
   output:
-    - name: imu_data
+    - name: imu/imu_data
     - name: vehicle_velocity_converter/twist_with_covariance
     - name: gnss/pose
     - name: gnss/pose_with_covariance
@@ -38,7 +38,7 @@ connections:
   - from: input.pose_ndt
     to: imu.input.pose_ndt
   - from: imu.output.imu_data
-    to: output.imu_data
+    to: output.imu/imu_data
   # GNSS
   - from: gnss.output.pose
     to: output.gnss/pose
