@@ -119,8 +119,6 @@ components:
     compute_unit: main_ecu
 
 connections:
-  - from: localization.output.acceleration
-    to: sensing.input.acceleration
   - from: localization.output.kinematic_state
     to: sensing.input.odometry
   - from: localization.output.pose_estimator/pose_with_covariance
@@ -282,4 +280,6 @@ E2ESimulation:
   remove:
     connections:
       - from: sensing.output.gnss
+        to: localization.input.gnss_pose_with_covariance
+      - from: sensing.output.gnss/pose_with_covariance
         to: localization.input.gnss_pose_with_covariance
