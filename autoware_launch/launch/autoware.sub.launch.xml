@@ -181,13 +181,14 @@
     </group>
   </group>
 
+  <!-- cspell: ignore peakcan fintekcan -->
   <!-- Vehicle -->
   <group if="$(var launch_vehicle)">
     <!-- Vehicle args -->
     <let name="vehicle_launch_pkg" value="$(find-pkg-share $(var vehicle_model)_launch)"/>
     <arg name="raw_vehicle_cmd_converter_param_path" default="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/config/raw_vehicle_cmd_converter.param.yaml"/>
     <arg name="initial_engage_state" default="false" description="/vehicle/engage state after starting Autoware"/>
-    <arg name="config_dir" default="$(find-pkg-share $(var sensor_model)_description)/config" description="path to dir where sensors_calibration.yaml, etc. are located"/>
+    <arg name="config_dir" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)" description="path to dir where sensors_calibration.yaml, etc. are located"/>
     <arg name="csv_accel_brake_map_path" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/vehicle"/>
 
     <arg name="can_device" default="fintekcan0"/>
@@ -331,7 +332,8 @@
       <arg name="timeout" value="1.0"/>
     </include>
 
-    <!-- mrm diagnocstic overrider -->
+    <!-- cspell: ignore overrider -->
+    <!-- mrm diagnostic overrider -->
     <include file="$(find-pkg-share mrm_diagnostic_overrider)/launch/mrm_diagnostic_overrider.launch.xml"/>
 
     <!-- redundancy_switcher_interface -->

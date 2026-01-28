@@ -208,6 +208,7 @@
       <arg name="pub_topic_name" value="/in_lane_stop/diagnostics"/>
     </include>
 
+    <!-- cspell: ignore overrider -->
     <!-- mrm diagnostic_overrider -->
     <include file="$(find-pkg-share mrm_diagnostic_overrider)/launch/mrm_diagnostic_overrider.launch.xml">
       <arg name="input_diagnostics" value="/in_lane_stop/diagnostics"/>

@@ -217,7 +217,8 @@
       <arg name="timeout" value="1.0"/>
     </include>
 
-    <!-- mrm diagnocstic overrider -->
+    <!-- cspell: ignore overrider -->
+    <!-- mrm diagnostic overrider -->
     <include file="$(find-pkg-share mrm_diagnostic_overrider)/launch/mrm_diagnostic_overrider.launch.xml"/>
 
     <!-- redundancy_switcher_interface -->
