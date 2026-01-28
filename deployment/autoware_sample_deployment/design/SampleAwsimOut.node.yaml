@@ -1,6 +1,6 @@
 autoware_system_design_format: v0.1.0
 
-name: SampleAWSIM_out.node
+name: SampleAwsimOut.node
 
 launch:
   package: AWSIM

@@ -227,11 +227,11 @@ E2ESimulation:
     - e2e_simulation.parameter_set
     components:
     - name: AWSIM_in
-      entity: SampleAWSIM_in.node
+      entity: SampleAwsimIn.node
       namespace: ''
       compute_unit: dummy_ecu
     - name: AWSIM_out
-      entity: SampleAWSIM_out.node
+      entity: SampleAwsimOut.node
       namespace: ''
       compute_unit: dummy_ecu
     - name: sensing
