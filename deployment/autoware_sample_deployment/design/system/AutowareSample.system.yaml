@@ -310,6 +310,10 @@ PlanningSimulation:
       entity: PoseInitializer.node
       namespace: localization/pose_initializer
       compute_unit: main_ecu
+    - name: simulator
+      entity: SimplePlanningSimulator.node
+      namespace: ''
+      compute_unit: main_ecu
     connections:
     - from: rviz_plugin_dummy_object.output.object
       to: perception.input.dummy_object_info
@@ -321,3 +325,18 @@ PlanningSimulation:
       to: perception.input.vector_map
     - from: localization.output.initialization_state
       to: adapi.input.localization/initialization_state
+    # SIMULATOR
+    - from: map.output.vector_map
+      to: simulator.input.map/vector_map
+    - from: localization.output.initialpose3d
+      to: simulator.input.initialpose3d
+    - from: planning.output.trajectory
+      to: simulator.input.planning/trajectory
+    - from: control.output.command/control_cmd
+      to: simulator.input.control/command/control_cmd
+    - from: control.output.command/gear_cmd
+      to: simulator.input.control/command/gear_cmd
+    - from: control.output.command/turn_indicators_cmd
+      to: simulator.input.control/command/turn_indicators_cmd
+    - from: control.output.command/hazard_lights_cmd
+      to: simulator.input.control/command/hazard_lights_cmd
