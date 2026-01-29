@@ -11,6 +11,8 @@ instances:
     entity: CropBoxFilter.node
   - name: distortion_corrector_node
     entity: DistortionCorrector.node
+  - name: ring_outlier_filter
+    entity: RingOutlierFilter.node
 
 external_interfaces:
   input: 
@@ -32,4 +34,6 @@ connections:
   - from: input.imu
     to: distortion_corrector_node.input.imu
   - from: distortion_corrector_node.output.pointcloud
+    to: ring_outlier_filter.input.input
+  - from: ring_outlier_filter.output.output
     to: output.pointcloud
