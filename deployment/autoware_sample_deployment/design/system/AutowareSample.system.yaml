@@ -314,6 +314,10 @@ PlanningSimulation:
       entity: SimplePlanningSimulator.node
       namespace: ''
       compute_unit: main_ecu
+    - name: vehicle_cmd_converter
+      entity: RawVehicleCmdConverter.node
+      namespace: ''
+      compute_unit: main_ecu
     connections:
     - from: rviz_plugin_dummy_object.output.object
       to: perception.input.dummy_object_info
@@ -334,6 +338,20 @@ PlanningSimulation:
       to: simulator.input.planning/trajectory
     - from: control.output.command/control_cmd
       to: simulator.input.control/command/control_cmd
+    - from: control.output.command/control_cmd
+      to: vehicle_cmd_converter.input.control_cmd
+    - from: simulator.output.localization/kinematic_state
+      to: vehicle_cmd_converter.input.odometry
+    - from: simulator.output.localization/acceleration
+      to: vehicle_cmd_converter.input.accel
+    - from: simulator.output.vehicle/status/steering_status
+      to: vehicle_cmd_converter.input.steering
+    - from: simulator.output.vehicle/status/actuation_status
+      to: vehicle_cmd_converter.input.actuation_status
+    - from: system.output.system/operation_mode/state
+      to: vehicle_cmd_converter.input.operation_mode_state
+    - from: vehicle_cmd_converter.output.actuation_cmd
+      to: simulator.input.control/command/actuation_cmd
     - from: control.output.command/gear_cmd
       to: simulator.input.control/command/gear_cmd
     - from: control.output.command/turn_indicators_cmd
