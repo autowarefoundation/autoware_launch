@@ -1,0 +1,42 @@
+autoware_system_design_format: v0.1.0
+
+name: DummyObjectRecognition.module
+
+instances:
+  - name: object_recognition/detection
+    entity: DummyPerceptionPublisher.module
+  - name: object_recognition/tracking
+    entity: ObjectTrackingSingleChannel.module
+  - name: object_recognition/prediction
+    entity: ObjectPredictionMapBased.module
+
+external_interfaces:
+  input:
+    - name: dummy_object_info
+    - name: vector_map
+    - name: traffic_lights
+  output:
+    - name: object_recognition/objects
+    - name: obstacle_segmentation/pointcloud
+connections:
+  # detection
+  - from: input.dummy_object_info
+    to: object_recognition/detection.input.object_info
+  - from: object_recognition/detection.output.obstacle_segmentation/pointcloud
+    to: output.obstacle_segmentation/pointcloud
+
+  # tracking
+  - from: object_recognition/detection.output.detected_objects
+    to: object_recognition/tracking.input.detected_objects
+
+  # prediction
+  - from: object_recognition/tracking.output.objects
+    to: object_recognition/prediction.input.tracked_objects
+  - from: input.vector_map
+    to: object_recognition/prediction.input.vector_map
+  - from: input.traffic_lights
+    to: object_recognition/prediction.input.traffic_lights
+  - from: object_recognition/prediction.output.objects
+    to: output.object_recognition/objects
+  - from: object_recognition/prediction.output.objects
+    to: object_recognition/detection.input.predicted_objects
