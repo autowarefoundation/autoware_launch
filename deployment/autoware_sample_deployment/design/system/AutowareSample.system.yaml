@@ -323,8 +323,12 @@ PlanningSimulation:
       to: perception.input.dummy_object_info
     - from: perception.output.object_recognition/objects
       to: planning.input.objects
+    - from: perception.output.object_recognition/objects
+      to: control.input.objects
     - from: perception.output.obstacle_segmentation/pointcloud
       to: occupancy_grid_map.input.obstacle_pointcloud
+    - from: perception.output.obstacle_segmentation/pointcloud
+      to: control.input.obstacle_pointcloud
     - from: map.output.vector_map
       to: perception.input.vector_map
     - from: localization.output.initialization_state
@@ -358,3 +362,11 @@ PlanningSimulation:
       to: simulator.input.control/command/turn_indicators_cmd
     - from: control.output.command/hazard_lights_cmd
       to: simulator.input.control/command/hazard_lights_cmd
+    - from: simulator.output.^
+      to: adapi.input.^
+    - from: simulator.output.vehicle/status/velocity_status
+      to: control.input.velocity_status
+    - from: simulator.output.localization/kinematic_state
+      to: control.input.kinematics
+    - from: simulator.output.localization/acceleration
+      to: control.input.acceleration
