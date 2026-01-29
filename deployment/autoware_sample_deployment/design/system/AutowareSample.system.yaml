@@ -302,14 +302,16 @@ PlanningSimulation:
       entity: RvizPluginDummyObject.node
       namespace: rviz_plugin_dummy_object
       compute_unit: dummy_ecu
-    - name: dummy_perception_publisher
-      entity: DummyPerceptionPublisher.module
+    - name: perception
+      entity: DummyObjectRecognition.module
       namespace: perception
       compute_unit: main_ecu
     connections:
     - from: rviz_plugin_dummy_object.output.object
-      to: dummy_perception_publisher.input.object_info
-    # - from: dummy_perception_publisher.output.object_recognition/detection/objects
-    #   to: planning.input.objects
-    - from: dummy_perception_publisher.output.obstacle_segmentation/pointcloud
+      to: perception.input.dummy_object_info
+    - from: perception.output.object_recognition/objects
+      to: planning.input.objects
+    - from: perception.output.obstacle_segmentation/pointcloud
       to: occupancy_grid_map.input.obstacle_pointcloud
+    - from: map.output.vector_map
+      to: perception.input.vector_map
