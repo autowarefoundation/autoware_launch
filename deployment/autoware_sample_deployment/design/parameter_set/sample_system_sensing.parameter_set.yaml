@@ -141,6 +141,9 @@ parameters:
         value: base_link
       - name: use_sim_time
         value: False
+  - node: /sensing/lidar/top/ring_outlier_filter
+    parameter_files:
+      - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
   - node: /sensing/lidar/left/lidar
     parameter_files: []
     parameters:
@@ -232,6 +235,9 @@ parameters:
         value: base_link
       - name: use_sim_time
         value: False
+  - node: /sensing/lidar/left/ring_outlier_filter
+    parameter_files:
+      - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
   - node: /sensing/lidar/right/lidar
     parameter_files: []
     parameters:
@@ -323,6 +329,9 @@ parameters:
         value: base_link
       - name: use_sim_time
         value: False
+  - node: /sensing/lidar/right/ring_outlier_filter
+    parameter_files:
+      - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
   - node: /sensing/lidar/concatenate_and_time_sync
     parameter_files:
       - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/concatenate_and_time_sync_node.param.yaml
