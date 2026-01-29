@@ -283,3 +283,33 @@ E2ESimulation:
         to: localization.input.gnss_pose_with_covariance
       - from: sensing.output.gnss/pose_with_covariance
         to: localization.input.gnss_pose_with_covariance
+
+PlanningSimulation:
+  remove:
+    components:
+      - name: sensing
+      - name: centerpoint
+      - name: obstacle_segmentation
+      - name: object_recognition
+      - name: localization
+  override:
+    components:
+    - name: occupancy_grid_map
+      entity: LaserscanBasedOccupancyGridMap.module
+      namespace: perception/occupancy_grid_map
+      compute_unit: main_ecu
+    - name: rviz_plugin_dummy_object
+      entity: RvizPluginDummyObject.node
+      namespace: rviz_plugin_dummy_object
+      compute_unit: dummy_ecu
+    - name: dummy_perception_publisher
+      entity: DummyPerceptionPublisher.module
+      namespace: perception
+      compute_unit: main_ecu
+    connections:
+    - from: rviz_plugin_dummy_object.output.object
+      to: dummy_perception_publisher.input.object_info
+    # - from: dummy_perception_publisher.output.object_recognition/detection/objects
+    #   to: planning.input.objects
+    - from: dummy_perception_publisher.output.obstacle_segmentation/pointcloud
+      to: occupancy_grid_map.input.obstacle_pointcloud
