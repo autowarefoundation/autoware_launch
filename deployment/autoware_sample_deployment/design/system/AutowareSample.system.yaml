@@ -306,6 +306,10 @@ PlanningSimulation:
       entity: DummyObjectRecognition.module
       namespace: perception
       compute_unit: main_ecu
+    - name: localization
+      entity: PoseInitializer.node
+      namespace: localization/pose_initializer
+      compute_unit: main_ecu
     connections:
     - from: rviz_plugin_dummy_object.output.object
       to: perception.input.dummy_object_info
@@ -315,3 +319,5 @@ PlanningSimulation:
       to: occupancy_grid_map.input.obstacle_pointcloud
     - from: map.output.vector_map
       to: perception.input.vector_map
+    - from: localization.output.initialization_state
+      to: adapi.input.localization/initialization_state
