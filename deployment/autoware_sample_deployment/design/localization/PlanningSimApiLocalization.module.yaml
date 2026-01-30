@@ -17,7 +17,7 @@ external_interfaces:
 connections:
   - from: vehicle_velocity_converter.output.pose_reset
     to: output.initialpose3d
-  - from: vehicle_velocity_converter.output.pose_reset
+  - from: vehicle_velocity_converter.output.initialize
     to: output.localization/initialize
   - from: vehicle_velocity_converter.output.pub_state
     to: output.localization/initialization_state
