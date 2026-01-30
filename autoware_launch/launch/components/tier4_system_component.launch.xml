@@ -7,7 +7,10 @@
   <set_parameter name="use_sim_time" value="$(var use_sim_time)"/>
 
   <!-- Use CARLA-specific config when sensor_model is carla_sensor_kit, otherwise use standard -->
-  <let name="component_state_monitor_config" value="$(eval &quot;'$(find-pkg-share autoware_launch)/config/simulator/carla/component_state_monitor/topics.yaml' if 'carla' in '$(var sensor_model)' else '$(find-pkg-share autoware_launch)/config/system/component_state_monitor/topics.yaml'&quot;)"/>
+  <let
+    name="component_state_monitor_config"
+    value="$(eval &quot;'$(find-pkg-share autoware_launch)/config/simulator/carla/component_state_monitor/topics.yaml' if 'carla' in '$(var sensor_model)' else '$(find-pkg-share autoware_launch)/config/system/component_state_monitor/topics.yaml'&quot;)"
+  />
 
   <include file="$(find-pkg-share tier4_system_launch)/launch/system.launch.xml">
     <arg name="run_mode" value="$(var system_run_mode)"/>

@@ -119,12 +119,12 @@
     <group unless="$(var use_e2e_planner)">
       <group if="$(var launch_planning)">
         <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_planning_component.launch.xml">
-        <arg name="module_preset" value="$(var planning_module_preset)"/>
-        <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
-        <arg name="is_simulation" value="$(var is_simulation)"/>
-        <arg name="use_sim_time" value="$(var use_sim_time)"/>
-        <arg name="vehicle_model" value="$(var vehicle_model)"/>
-      </include>
+          <arg name="module_preset" value="$(var planning_module_preset)"/>
+          <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
+          <arg name="is_simulation" value="$(var is_simulation)"/>
+          <arg name="use_sim_time" value="$(var use_sim_time)"/>
+          <arg name="vehicle_model" value="$(var vehicle_model)"/>
+        </include>
 
         <!-- Relay node for trajectory topic -->
         <!-- This is a temporary addition for migration purposes. -->
