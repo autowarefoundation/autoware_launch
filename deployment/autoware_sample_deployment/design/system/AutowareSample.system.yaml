@@ -300,9 +300,9 @@ PlanningSimulation:
       entity: LaserscanBasedOccupancyGridMap.module
       namespace: perception/occupancy_grid_map
       compute_unit: main_ecu
-    - name: rviz_plugin_dummy_object
-      entity: RvizPluginDummyObject.node
-      namespace: rviz_plugin_dummy_object
+    - name: planning_sim_rviz_plugin
+      entity: PlanningSimRvizPlungins.module
+      namespace: ""
       compute_unit: dummy_ecu
     - name: perception
       entity: DummyObjectRecognition.module
@@ -321,7 +321,7 @@ PlanningSimulation:
       namespace: ''
       compute_unit: main_ecu
     connections:
-    - from: rviz_plugin_dummy_object.output.object
+    - from: planning_sim_rviz_plugin.output.simulation/dummy_perception_publisher/object_info
       to: perception.input.dummy_object_info
     - from: perception.output.object_recognition/objects
       to: planning.input.objects

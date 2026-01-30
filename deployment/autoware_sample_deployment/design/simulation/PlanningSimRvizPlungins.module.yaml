@@ -1,0 +1,17 @@
+autoware_system_design_format: v0.1.0
+
+name: PlanningSimRvizPlungins.module
+
+instances:
+  - name: dummy_object_publisher
+    entity: RvizPluginDummyObject.node
+
+external_interfaces:
+  input: []
+  output:
+    - name: simulation/dummy_perception_publisher/object_info
+
+connections:
+  - from: dummy_object_publisher.output.object
+    to: output.simulation/dummy_perception_publisher/object_info
+

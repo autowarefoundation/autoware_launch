@@ -12,3 +12,7 @@ parameters:
     parameters:
       - name: use_sim_time
         value: false
+  - node: /perception/object_recognition/tracking/multi_object_tracker
+    parameters:
+      - name: input/detection01/channel
+        value: detected_objects
