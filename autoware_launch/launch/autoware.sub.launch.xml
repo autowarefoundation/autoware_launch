@@ -186,9 +186,9 @@
   <group if="$(var launch_vehicle)">
     <!-- Vehicle args -->
     <let name="vehicle_launch_pkg" value="$(find-pkg-share $(var vehicle_model)_launch)"/>
+    <let name="config_dir" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)"/>
     <arg name="raw_vehicle_cmd_converter_param_path" default="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/config/raw_vehicle_cmd_converter.param.yaml"/>
     <arg name="initial_engage_state" default="false" description="/vehicle/engage state after starting Autoware"/>
-    <arg name="config_dir" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/$(var sensor_model)" description="path to dir where sensors_calibration.yaml, etc. are located"/>
     <arg name="csv_accel_brake_map_path" default="$(find-pkg-share individual_params)/config/$(var vehicle_id)/vehicle"/>
 
     <arg name="can_device" default="fintekcan0"/>
