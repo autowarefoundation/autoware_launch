@@ -53,7 +53,7 @@
   <arg name="detected_objects_filter_method" default="lanelet_filter" description="options: lanelet_filter, position_filter"/>
   <arg name="detected_objects_validation_method" default="obstacle_pointcloud" description="options: obstacle_pointcloud, occupancy_grid (must be used with laserscan_based_occupancy_grid_map)"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
-  <arg name="lidar_detection_model" default="centerpoint" description="If the model name is not declared, the default model in perception.launch.xml will be used"/>
+  <arg name="lidar_detection_model" default="centerpoint/centerpoint_x2" description="If the model name is not declared, the default model in perception.launch.xml will be used"/>
   <arg name="ml_camera_lidar_merger_priority_mode" default="3" description="priority mode for ml and camera_lidar merger, options: `0: Object0`, `1: Object1`, `2: ConfidenceBased`, `3: ClassBased`"/>
 
   <arg
@@ -125,7 +125,6 @@
     <arg name="traffic_light_recognition/high_accuracy_detection_type" value="$(var traffic_light_recognition/high_accuracy_detection_type)"/>
 
     <arg name="data_path" value="$(var data_path)"/>
-    <arg name="lidar_detection_model_name" value="centerpoint_x2"/>
     <arg name="object_recognition_detection_lidar_model_param_path" value="$(var centerpoint_model_path)"/>
     <arg name="external/traffic_signals" value="/v2x/traffic_signals"/>
     <arg name="image_number" value="6"/>
