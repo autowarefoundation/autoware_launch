@@ -10,6 +10,11 @@
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
   <arg name="control_module_preset" default="default" description="control module preset"/>
+  <arg name="e2e_planning_preset" default="default" description="E2E planning module preset"/>
+  <arg name="e2e_control_module_preset" default="e2e" description="Control preset used with E2E planner"/>
+  <arg name="use_e2e_planner" default="false" description="Use end-to-end planner instead of tier4 planning stack"/>
+  <arg name="use_e2e_planning" default="$(var use_e2e_planner)" description="DEPRECATED: Use use_e2e_planner instead."/>
+  <arg name="e2e_planner_mode" default="vad" description="E2E planner type (e.g., vad)"/>
 
   <!-- Optional parameters -->
   <!-- Modules to be launched -->
@@ -49,6 +54,9 @@
   <!-- Auto mode setting-->
   <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
   <arg name="is_simulation" default="false" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
+
+  <!-- Derived flags -->
+  <let name="e2e_enabled" value="$(eval &quot;'$(var use_e2e_planning)' == 'true' or '$(var use_e2e_planner)' == 'true'&quot;)"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -107,31 +115,52 @@
   </group>
 
   <!-- Planning -->
-  <group if="$(var launch_planning)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_planning_component.launch.xml">
-      <arg name="module_preset" value="$(var planning_module_preset)"/>
-      <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
-      <arg name="is_simulation" value="$(var is_simulation)"/>
-      <arg name="use_sim_time" value="$(var use_sim_time)"/>
-      <arg name="vehicle_model" value="$(var vehicle_model)"/>
-    </include>
+  <group>
+    <group unless="$(var use_e2e_planner)">
+      <group if="$(var launch_planning)">
+        <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_planning_component.launch.xml">
+        <arg name="module_preset" value="$(var planning_module_preset)"/>
+        <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
+        <arg name="is_simulation" value="$(var is_simulation)"/>
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+        <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      </include>
 
-    <!-- Relay node for trajectory topic -->
-    <!-- This is a temporary addition for migration purposes. -->
-    <!-- https://github.com/orgs/autowarefoundation/discussions/5033#discussioncomment-13704802 -->
-    <node pkg="topic_tools" exec="relay" name="trajectory_relay">
-      <param name="input_topic" value="/planning/trajectory"/>
-      <param name="output_topic" value="/planning/scenario_planning/trajectory"/>
-    </node>
+        <!-- Relay node for trajectory topic -->
+        <!-- This is a temporary addition for migration purposes. -->
+        <!-- https://github.com/orgs/autowarefoundation/discussions/5033#discussioncomment-13704802 -->
+        <node pkg="topic_tools" exec="relay" name="trajectory_relay">
+          <param name="input_topic" value="/planning/trajectory"/>
+          <param name="output_topic" value="/planning/scenario_planning/trajectory"/>
+        </node>
+      </group>
+    </group>
+
+    <group if="$(var use_e2e_planner)">
+      <group if="$(var launch_planning)">
+        <include file="$(find-pkg-share autoware_launch)/launch/components/e2e_planning_component.launch.xml">
+          <arg name="e2e_planner_mode" value="$(var e2e_planner_mode)"/>
+          <arg name="module_preset" value="$(var e2e_planning_preset)"/>
+          <arg name="use_sim_time" value="$(var use_sim_time)"/>
+          <arg name="vehicle_model" value="$(var vehicle_model)"/>
+          <arg name="sensor_model" value="$(var sensor_model)"/>
+          <arg name="data_path" value="$(var data_path)"/>
+          <arg name="launch_control" value="$(var launch_control)"/>
+          <arg name="control_module_preset" value="$(var e2e_control_module_preset)"/>
+        </include>
+      </group>
+    </group>
   </group>
 
   <!-- Control -->
-  <group if="$(var launch_control)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
-      <arg name="module_preset" value="$(var control_module_preset)"/>
-      <arg name="use_sim_time" value="$(var use_sim_time)"/>
-      <arg name="vehicle_model" value="$(var vehicle_model)"/>
-    </include>
+  <group unless="$(var use_e2e_planner)">
+    <group if="$(var launch_control)">
+      <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
+        <arg name="module_preset" value="$(var control_module_preset)"/>
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+        <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      </include>
+    </group>
   </group>
 
   <!-- API -->

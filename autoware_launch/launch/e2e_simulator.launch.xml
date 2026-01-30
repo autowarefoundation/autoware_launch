@@ -4,22 +4,18 @@
   <arg name="use_sim_time" default="true" description="use simulation time"/>
   <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
   <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
+  <arg name="simulator_type" default="awsim" description="select the simulator type ('awsim' or 'carla')"/>
   <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
-  <arg name="simulator_type" default="awsim" description="select the simulator type ('awsim' or 'carla')"/>
 
-  <!-- E2E Planning Mode -->
-  <arg name="use_e2e_planning" default="false" description="use end-to-end planning (VAD or similar)"/>
-  <arg name="e2e_planning_type" default="vad" description="type of E2E planning: vad, etc."/>
-  <arg name="vad_log_level" default="info"/>
-  <arg name="vad_model_path" default="$(var data_path)/vad"/>
+  <let name="effective_sensor_model" value="$(eval &quot;'carla_sensor_kit' if '$(var simulator_type)' == 'carla' else '$(var sensor_model)'&quot;)"/>
 
-  <!-- Validate that the selected simulator supports E2E planning -->
-  <let
-    name="validation_error"
-    if="$(eval '\'$(var use_e2e_planning)\' == \'true\' and \'$(var simulator_type)\' != \'carla\'')"
-    value='$(eval "__import__(\"builtins\").exec(\"raise RuntimeError(\\\"use_e2e_planning:=true requires simulator_type:=carla\\\")\")")'
-  />
+  <arg name="use_e2e_planner" default="false" description="Use end-to-end planner stack"/>
+  <arg name="use_e2e_planning" default="$(var use_e2e_planner)" description="DEPRECATED: use use_e2e_planner instead."/>
+  <arg name="e2e_planning_type" default="vad" description="DEPRECATED: use e2e_planner_mode instead."/>
+  <arg name="e2e_planner_mode" default="$(var e2e_planning_type)" description="E2E planner mode (e.g., vad)"/>
+  <arg name="e2e_planning_preset" default="default" description="E2E planning preset"/>
+  <arg name="e2e_control_module_preset" default="e2e" description="Control preset used with the E2E planner"/>
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
@@ -59,24 +55,26 @@
   <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/$(var rviz_config_name)" description="rviz config path"/>
 
-  <!-- Helper variables for toggling modules in E2E mode -->
-  <let name="e2e_carla_mode" value="$(eval &quot;'true' if ('$(var use_e2e_planning)' == 'true' and '$(var simulator_type)' == 'carla') else 'false'&quot;)"/>
-  <let name="launch_system_value" value="$(eval &quot;'false' if ('$(var e2e_carla_mode)' == 'true') else '$(var system)'&quot;)"/>
-
   <!-- CARLA specific parameters (only commonly changed ones) -->
   <arg name="carla_host" default="localhost" description="CARLA server host"/>
   <arg name="carla_port" default="2000" description="CARLA server port"/>
 
+  <let name="e2e_enabled" value="$(eval &quot;'$(var use_e2e_planning)' == 'true' or '$(var use_e2e_planner)' == 'true'&quot;)"/>
+
+  <!-- E2E planner bypasses sensing/localization/perception (simulator-agnostic) -->
+  <let name="launch_sensing_value" value="$(eval &quot;'false' if '$(var e2e_enabled)' == 'true' else '$(var sensing)'&quot;)"/>
+  <let name="launch_localization_value" value="$(eval &quot;'false' if '$(var e2e_enabled)' == 'true' else '$(var localization)'&quot;)"/>
+  <let name="launch_perception_value" value="$(eval &quot;'false' if '$(var e2e_enabled)' == 'true' else '$(var perception)'&quot;)"/>
+
   <!-- CARLA interface (when simulator_type is carla) -->
   <group scoped="false" if="$(eval '\'$(var simulator_type)\' == \'carla\'')">
-    <include file="$(find-pkg-share autoware_carla_interface)/launch/autoware_carla_interface.launch.xml">
+    <include file="$(find-pkg-share autoware_carla_interface)/autoware_carla_interface.launch.xml">
       <arg name="use_e2e_planning" value="$(var use_e2e_planning)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="host" value="$(var carla_host)"/>
       <arg name="port" value="$(var carla_port)"/>
       <arg name="map_path" value="$(var map_path)"/>
-      <!-- All other parameters use defaults from autoware_carla_interface.launch.xml -->
     </include>
   </group>
 
@@ -86,34 +84,44 @@
       <!-- Common -->
       <arg name="map_path" value="$(var map_path)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
-      <arg name="sensor_model" value="$(var sensor_model)"/>
+      <arg name="sensor_model" value="$(var effective_sensor_model)"/>
       <arg name="data_path" value="$(var data_path)"/>
+
       <!-- launch module preset -->
       <arg name="planning_module_preset" value="$(var planning_module_preset)"/>
       <arg name="control_module_preset" value="$(var control_module_preset)"/>
+      <arg name="e2e_planning_preset" value="$(var e2e_planning_preset)"/>
+      <arg name="e2e_control_module_preset" value="$(var e2e_control_module_preset)"/>
+
       <!-- Modules to be launched -->
       <arg name="launch_vehicle" value="$(var vehicle)"/>
-      <arg name="launch_system" value="$(var launch_system_value)"/>
+      <arg name="launch_system" value="$(var system)"/>
       <arg name="launch_map" value="$(var map)"/>
-      <arg name="launch_sensing" value="$(eval '\'false\' if (\'$(var use_e2e_planning)\' == \'true\' and \'$(var simulator_type)\' == \'carla\') else \'$(var sensing)\'')"/>
-      <arg name="launch_localization" value="$(eval '\'false\' if (\'$(var use_e2e_planning)\' == \'true\' and \'$(var simulator_type)\' == \'carla\') else \'$(var localization)\'')"/>
-      <arg name="launch_perception" value="$(eval '\'false\' if (\'$(var use_e2e_planning)\' == \'true\' and \'$(var simulator_type)\' == \'carla\') else \'$(var perception)\'')"/>
-      <arg name="launch_planning" value="$(eval '\'false\' if (\'$(var use_e2e_planning)\' == \'true\' and \'$(var simulator_type)\' == \'carla\') else \'$(var planning)\'')"/>
-      <arg name="launch_control" value="$(eval '\'false\' if (\'$(var use_e2e_planning)\' == \'true\' and \'$(var simulator_type)\' == \'carla\') else \'$(var control)\'')"/>
+      <arg name="launch_sensing" value="$(var launch_sensing_value)"/>
+      <arg name="launch_localization" value="$(var launch_localization_value)"/>
+      <arg name="launch_perception" value="$(var launch_perception_value)"/>
+      <arg name="launch_planning" value="$(var planning)"/>
+      <arg name="launch_control" value="$(var control)"/>
       <arg name="launch_api" value="$(var api)"/>
+
       <!-- Global parameters -->
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
+
       <!-- Vehicle -->
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
+
       <!-- Map -->
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
+
       <!-- System -->
       <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
       <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
       <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-$(var simulator_type).yaml"/>
+
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="$(var launch_sensing_driver)"/>
+
       <!-- Perception-->
       <arg name="traffic_light_recognition/use_high_accuracy_detection" value="false"/>
       <arg name="traffic_light_recognition/camera_namespaces" value="$(var traffic_light_namespace)"/>
@@ -121,131 +129,15 @@
         name="object_recognition_detection_near_range_camera_vru_param_path"
         value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/camera_vru_detection/near_range_camera_vru_detector.param.yaml"
       />
+
       <!-- Tools -->
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
+
+      <!-- E2E planner wiring -->
+      <arg name="use_e2e_planner" value="$(var use_e2e_planner)"/>
+      <arg name="use_e2e_planning" value="$(var use_e2e_planning)"/>
+      <arg name="e2e_planner_mode" value="$(var e2e_planner_mode)"/>
     </include>
-  </group>
-
-  <!-- E2E Planning Node -->
-  <group if="$(eval '\'$(var use_e2e_planning)\' == \'true\' and \'$(var e2e_planning_type)\' == \'vad\'')">
-    <include file="$(find-pkg-share autoware_tensorrt_vad)/launch/vad_carla_tiny.launch.xml">
-      <arg name="log_level" value="$(var vad_log_level)"/>
-      <arg name="model_path" value="$(var vad_model_path)"/>
-      <arg name="use_sim_time" value="$(var use_sim_time)"/>
-      <arg name="output_trajectory" value="/planning/trajectory"/>
-      <arg name="output_candidate_trajectories" value="/planning/vad/candidate_trajectories"/>
-      <arg name="output_objects" value="/perception/object_recognition/objects"/>
-      <arg name="output_map_points" value="/perception/vad/map_points"/>
-    </include>
-  </group>
-
-  <!-- E2E mode diagnostics and operation management -->
-  <group if="$(eval '\'$(var use_e2e_planning)\' == \'true\' and \'$(var simulator_type)\' == \'carla\'')">
-    <!-- Diagnostic graph aggregator to publish /system/operation_mode/availability -->
-    <include file="$(find-pkg-share autoware_diagnostic_graph_aggregator)/launch/aggregator.launch.xml">
-      <arg name="graph_file" value="$(find-pkg-share autoware_diagnostic_graph_aggregator)/example/graph/main.yaml"/>
-    </include>
-
-    <!-- Dummy diagnostics so operation mode availability remains true -->
-    <node pkg="autoware_dummy_diag_publisher" exec="autoware_dummy_diag_publisher_node" name="dummy_diag_publisher" output="screen">
-      <param name="update_rate" value="10.0"/>
-      <param name="required_diags.lidar_driver_top: status.is_active" value="true" type="str"/>
-      <param name="required_diags.lidar_driver_top: status.status" value="OK" type="str"/>
-      <param name="required_diags.lidar_driver_front: status.is_active" value="true" type="str"/>
-      <param name="required_diags.lidar_driver_front: status.status" value="OK" type="str"/>
-      <param name="required_diags.radar_driver_front: status.is_active" value="true" type="str"/>
-      <param name="required_diags.radar_driver_front: status.status" value="OK" type="str"/>
-      <param name="required_diags.external_command_checker: joystick_command.is_active" value="true" type="str"/>
-      <param name="required_diags.external_command_checker: joystick_command.status" value="OK" type="str"/>
-      <param name="required_diags.external_command_checker: remote_command.is_active" value="true" type="str"/>
-      <param name="required_diags.external_command_checker: remote_command.status" value="OK" type="str"/>
-    </node>
-
-    <!-- Operation mode transition manager -->
-    <include file="$(find-pkg-share autoware_operation_mode_transition_manager)/launch/operation_mode_transition_manager.launch.xml">
-      <arg name="operation_mode_transition_manager_param" value="$(find-pkg-share autoware_launch)/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
-      <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-    </include>
-
-    <!-- Autonomous mode availability checker -->
-    <include file="$(find-pkg-share autoware_operation_mode_transition_manager)/launch/autonomous_mode_transition_flag_node.launch.xml">
-      <arg name="operation_mode_transition_manager_param" value="$(find-pkg-share autoware_launch)/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
-      <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-    </include>
-
-    <!-- Minimal control stack for E2E planning -->
-    <node_container pkg="rclcpp_components" exec="component_container_mt" name="e2e_control_container" namespace="" output="screen">
-      <composable_node pkg="autoware_trajectory_follower_node" plugin="autoware::motion::control::trajectory_follower_node::Controller" name="trajectory_follower">
-        <param name="use_sim_time" value="$(var use_sim_time)"/>
-        <param name="lateral_controller_mode" value="mpc"/>
-        <param name="longitudinal_controller_mode" value="pid"/>
-        <param from="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/trajectory_follower_node.param.yaml"/>
-        <param from="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/lateral/mpc.param.yaml"/>
-        <param from="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/longitudinal/pid.param.yaml"/>
-        <param from="$(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml"/>
-        <param from="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-        <remap from="~/input/reference_trajectory" to="/planning/trajectory"/>
-        <remap from="~/input/current_odometry" to="/localization/kinematic_state"/>
-        <remap from="~/input/current_accel" to="/localization/acceleration"/>
-        <remap from="~/input/current_steering" to="/vehicle/status/steering_status"/>
-        <remap from="~/input/current_operation_mode" to="/system/operation_mode/state"/>
-        <remap from="~/output/control_cmd" to="/trajectory_follower/control_cmd"/>
-        <remap from="~/output/predicted_trajectory" to="/control/trajectory_follower/predicted_trajectory"/>
-        <remap from="~/output/lateral_diagnostic" to="/control/trajectory_follower/lateral/diagnostic"/>
-        <remap from="~/output/longitudinal_diagnostic" to="/control/trajectory_follower/longitudinal/diagnostic"/>
-      </composable_node>
-    </node_container>
-
-    <!-- Load shift decider as composable node -->
-    <load_composable_node target="/e2e_control_container">
-      <composable_node pkg="autoware_shift_decider" plugin="autoware::shift_decider::ShiftDecider" name="autoware_shift_decider">
-        <param from="$(find-pkg-share autoware_launch)/config/control/shift_decider/shift_decider.param.yaml"/>
-        <remap from="input/control_cmd" to="/trajectory_follower/control_cmd"/>
-        <remap from="input/state" to="/autoware/state"/>
-        <remap from="input/current_gear" to="/vehicle/status/gear_status"/>
-        <remap from="output/gear_cmd" to="/control/shift_decider/gear_cmd"/>
-      </composable_node>
-    </load_composable_node>
-
-    <node pkg="topic_tools" exec="relay" name="trajectory_follower_control_cmd_relay" output="log" args="/trajectory_follower/control_cmd /trajectory_follower_control_cmd"/>
-
-    <!-- External command selector (required for engagement) -->
-    <include file="$(find-pkg-share autoware_external_cmd_selector)/launch/external_cmd_selector.launch.py">
-      <arg name="use_intra_process" value="false"/>
-      <arg name="target_container" value="/e2e_control_container"/>
-      <arg name="external_cmd_selector_param_path" value="$(find-pkg-share autoware_launch)/config/control/external_cmd_selector/external_cmd_selector.param.yaml"/>
-      <arg name="output/current_selector_mode" value="/control/external_cmd_selector/current_selector_mode"/>
-    </include>
-
-    <!-- Vehicle command gate for operation mode management -->
-    <let name="check_external_emergency_heartbeat" value="false"/>
-    <node pkg="autoware_vehicle_cmd_gate" exec="vehicle_cmd_gate_exe" name="vehicle_cmd_gate" output="screen">
-      <param from="$(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
-      <param from="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-      <param name="use_emergency_handling" value="false"/>
-      <param name="check_external_emergency_heartbeat" value="false"/>
-
-      <remap from="input/steering" to="/vehicle/status/steering_status"/>
-      <remap from="input/auto/control_cmd" to="/trajectory_follower/control_cmd"/>
-      <remap from="input/auto/turn_indicators_cmd" to="/planning/turn_indicators_cmd"/>
-      <remap from="input/auto/hazard_lights_cmd" to="/planning/hazard_lights_cmd"/>
-      <remap from="input/auto/gear_cmd" to="/control/shift_decider/gear_cmd"/>
-
-      <remap from="input/external/control_cmd" to="/external/selected/control_cmd"/>
-      <remap from="input/external/turn_indicators_cmd" to="/external/selected/turn_indicators_cmd"/>
-      <remap from="input/external/hazard_lights_cmd" to="/external/selected/hazard_lights_cmd"/>
-      <remap from="input/external/gear_cmd" to="/external/selected/gear_cmd"/>
-      <remap from="input/external_emergency_stop_heartbeat" to="/external/selected/heartbeat"/>
-
-      <remap from="input/engage" to="/autoware/engage"/>
-      <remap from="input/gate_mode" to="/control/gate_mode_cmd"/>
-      <remap from="output/gate_mode" to="/control/current_gate_mode"/>
-      <remap from="output/engage" to="/api/autoware/get/engage"/>
-      <remap from="output/control_cmd" to="/control/command/control_cmd"/>
-      <remap from="output/gear_cmd" to="/control/command/gear_cmd"/>
-      <remap from="output/turn_indicators_cmd" to="/control/command/turn_indicators_cmd"/>
-      <remap from="output/hazard_lights_cmd" to="/control/command/hazard_lights_cmd"/>
-    </node>
   </group>
 </launch>

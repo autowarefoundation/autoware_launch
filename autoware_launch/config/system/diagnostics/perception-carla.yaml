@@ -1,0 +1,4 @@
+units:
+  # CARLA E2E mode - perception always OK, no checks needed for startup
+  - path: /autoware/perception
+    type: ok
