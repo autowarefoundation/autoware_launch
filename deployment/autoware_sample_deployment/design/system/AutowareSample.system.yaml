@@ -293,6 +293,8 @@ PlanningSimulation:
       - name: object_recognition
       - name: localization
   override:
+    parameter_sets:
+    - planning_simulation.parameter_set
     components:
     - name: occupancy_grid_map
       entity: LaserscanBasedOccupancyGridMap.module
@@ -307,8 +309,8 @@ PlanningSimulation:
       namespace: perception
       compute_unit: main_ecu
     - name: localization
-      entity: PoseInitializer.node
-      namespace: localization/pose_initializer
+      entity: PlanningSimApiLocalization.module
+      namespace: ''
       compute_unit: main_ecu
     - name: simulator
       entity: SimplePlanningSimulator.node
@@ -331,7 +333,7 @@ PlanningSimulation:
       to: control.input.obstacle_pointcloud
     - from: map.output.vector_map
       to: perception.input.vector_map
-    - from: localization.output.initialization_state
+    - from: localization.output.localization/initialization_state
       to: adapi.input.localization/initialization_state
     # SIMULATOR
     - from: map.output.vector_map

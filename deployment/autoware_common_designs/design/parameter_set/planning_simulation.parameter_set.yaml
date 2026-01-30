@@ -1,0 +1,14 @@
+autoware_system_design_format: v0.1.0
+
+name: planning_simulation.parameter_set
+parameters:
+  - node: /
+    parameter_files: []
+    parameters:
+      - name: use_sim_time
+        value: false
+  - node: /global_parameter_loader
+    parameter_files: []
+    parameters:
+      - name: use_sim_time
+        value: false
