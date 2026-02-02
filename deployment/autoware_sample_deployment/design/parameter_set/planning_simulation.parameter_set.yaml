@@ -32,3 +32,9 @@ parameters:
         value: false
       - name: v_ratio
         value: 10.0
+  - node: /planning
+    parameters:
+      - name: is_simulation
+        value: true
+      - name: enable_all_modules_auto_mode
+        value: false
