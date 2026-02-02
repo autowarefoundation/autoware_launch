@@ -16,3 +16,11 @@ parameters:
     parameters:
       - name: input/detection01/channel
         value: detected_objects
+  - node: /system
+    parameters:
+      - name: run_mode
+        value: planning_simulation
+      - name: launch_system_monitor
+        value: false
+      - name: launch_dummy_diag_publisher
+        value: true

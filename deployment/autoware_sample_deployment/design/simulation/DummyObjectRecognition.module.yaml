@@ -26,7 +26,7 @@ connections:
     to: output.obstacle_segmentation/pointcloud
 
   # tracking
-  - from: object_recognition/detection.output.detected_objects
+  - from: object_recognition/detection.output.objects
     to: object_recognition/tracking.input.detected_objects
 
   # prediction
