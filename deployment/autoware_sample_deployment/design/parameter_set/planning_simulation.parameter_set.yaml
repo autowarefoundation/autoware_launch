@@ -24,3 +24,11 @@ parameters:
         value: false
       - name: launch_dummy_diag_publisher
         value: true
+  - node: /perception/occupancy_grid_map/occupancy_grid_map
+    parameters:
+      - name: input_obstacle_pointcloud
+        value: true
+      - name: input_obstacle_and_raw_pointcloud
+        value: false
+      - name: v_ratio
+        value: 10.0
