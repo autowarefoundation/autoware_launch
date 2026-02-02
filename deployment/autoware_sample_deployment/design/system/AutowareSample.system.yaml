@@ -316,9 +316,9 @@ PlanningSimulation:
       entity: SimplePlanningSimulator.node
       namespace: ''
       compute_unit: main_ecu
-    - name: vehicle_cmd_converter
-      entity: RawVehicleCmdConverter.node
-      namespace: ''
+    - name: vehicle
+      entity: PlanningSimVehicle.module
+      namespace: vehicle
       compute_unit: main_ecu
     connections:
     - from: planning_sim_rviz_plugin.output.simulation/dummy_perception_publisher/object_info
@@ -347,18 +347,18 @@ PlanningSimulation:
     - from: control.output.command/control_cmd
       to: simulator.input.control/command/control_cmd
     - from: control.output.command/control_cmd
-      to: vehicle_cmd_converter.input.control_cmd
+      to: vehicle.input.control_cmd
     - from: simulator.output.localization/kinematic_state
-      to: vehicle_cmd_converter.input.odometry
+      to: vehicle.input.odometry
     - from: simulator.output.localization/acceleration
-      to: vehicle_cmd_converter.input.accel
+      to: vehicle.input.accel
     - from: simulator.output.vehicle/status/steering_status
-      to: vehicle_cmd_converter.input.steering
+      to: vehicle.input.steering
     - from: simulator.output.vehicle/status/actuation_status
-      to: vehicle_cmd_converter.input.actuation_status
+      to: vehicle.input.actuation_status
     - from: system.output.system/operation_mode/state
-      to: vehicle_cmd_converter.input.operation_mode_state
-    - from: vehicle_cmd_converter.output.actuation_cmd
+      to: vehicle.input.operation_mode_state
+    - from: vehicle.output.actuation_cmd
       to: simulator.input.control/command/actuation_cmd
     - from: control.output.command/gear_cmd
       to: simulator.input.control/command/gear_cmd
@@ -368,6 +368,8 @@ PlanningSimulation:
       to: simulator.input.control/command/hazard_lights_cmd
     - from: simulator.output.^
       to: adapi.input.^
+    - from: vehicle.output.doors/status
+      to: adapi.input.vehicle/doors/status
     - from: simulator.output.vehicle/status/velocity_status
       to: control.input.velocity_status
     - from: simulator.output.localization/kinematic_state

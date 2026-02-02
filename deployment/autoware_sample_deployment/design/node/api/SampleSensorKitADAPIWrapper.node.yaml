@@ -37,6 +37,8 @@ inputs:
     message_type: autoware_vehicle_msgs/msg/TurnIndicatorsReport
   - name: vehicle/status/hazard_lights_status
     message_type: autoware_vehicle_msgs/msg/HazardLightsReport
+  - name: vehicle/doors/status
+    message_type: autoware_adapi_v1_msgs/msg/DoorStatusArray
 
   # Perception inputs
   - name: perception/object_recognition/objects
