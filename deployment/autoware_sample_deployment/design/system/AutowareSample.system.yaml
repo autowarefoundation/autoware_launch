@@ -330,6 +330,8 @@ PlanningSimulation:
     - from: perception.output.obstacle_segmentation/pointcloud
       to: occupancy_grid_map.input.obstacle_pointcloud
     - from: perception.output.obstacle_segmentation/pointcloud
+      to: planning.input.obstacle_pointcloud
+    - from: perception.output.obstacle_segmentation/pointcloud
       to: control.input.obstacle_pointcloud
     - from: map.output.vector_map
       to: perception.input.vector_map
