@@ -181,8 +181,8 @@ connections:
   - from: obstacle_segmentation.output.pointcloud
     to: planning.input.obstacle_pointcloud
 
-  - from: planning.output.mission_planning/route
-    to: control.input.mission_planning/route  
+  - from: planning.output.^
+    to: control.input.^
   - from: localization.output.kinematic_state
     to: control.input.kinematics
   - from: localization.output.acceleration
