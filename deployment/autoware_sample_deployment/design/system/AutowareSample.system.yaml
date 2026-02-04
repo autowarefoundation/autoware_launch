@@ -241,7 +241,7 @@ E2ESimulation:
       entity: TrafficLightRecognitionRefine_1.module
       namespace: perception/traffic_light_recognition
       compute_unit: main_ecu
-      parameter_set: universe_perception_traffic_light_recognition_fine.parameter_set
+      parameter_set: sample_system_perception.parameter_set
     connections:
       # SENSING
       - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw_ex
