@@ -11,6 +11,9 @@
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <!-- V2X -->
+  <arg name="launch_v2x" default="true" description="launch V2X"/>
+  <arg name="v2x_location" default="invalid_location" description="location for v2x (e.g. komatsu, shiojiri)"/>
 
   <arg name="launch_perception_filter" default="true" description="launch perception filter or not"/>
 
@@ -47,6 +50,9 @@
       <arg name="use_control_command_gate" value="$(var use_control_command_gate)"/>
       <!-- Perception Filter -->
       <arg name="launch_perception_filter" value="$(var launch_perception_filter)"/>
+      <!-- V2X -->
+      <arg name="launch_v2x" value="$(var launch_v2x)"/>
+      <arg name="v2x_location" value="$(var v2x_location)"/>
     </include>
   </group>
 
