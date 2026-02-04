@@ -11,6 +11,8 @@
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
 
+  <arg name="agnocast_heaphook_path" default="/opt/ros/$(env ROS_DISTRO)/lib/libagnocast_heaphook.so" description="Path to the agnocast heaphook library"/>
+
   <!-- Global parameters -->
   <group scoped="false">
     <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
@@ -22,11 +24,11 @@
   <!-- Pointcloud container -->
   <group if="$(var launch_pointcloud_container)">
     <include file="$(find-pkg-share autoware_launch)/launch/pointcloud_container.launch.py">
+      <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
       <arg name="use_multithread" value="true"/>
       <arg name="container_name" value="$(var pointcloud_container_name)"/>
     </include>
   </group>
-  <arg name="agnocast_heaphook_path" default="/opt/ros/humble/lib/libagnocast_heaphook.so" description="Path to the agnocast heaphook library"/>
 
   <include file="$(find-pkg-share tier4_sensing_launch)/launch/sensing.launch.xml">
     <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
