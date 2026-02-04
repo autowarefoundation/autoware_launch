@@ -1,9 +1,0 @@
-autoware_system_design_format: v0.1.0
-
-name: universe_perception_occupancy_grid_map_pointcloud.parameter_set
-parameters:
-  - node: /perception/occupancy_grid_map/occupancy_grid_map_node
-    parameter_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/pointcloud_based_occupancy_grid_map.param.yaml
-      - updater_param_file: $(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/binary_bayes_filter_updater.param.yaml
-    parameters: []
