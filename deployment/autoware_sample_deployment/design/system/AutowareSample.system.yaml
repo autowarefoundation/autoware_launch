@@ -84,22 +84,22 @@ components:
     entity: LidarCenterpoint.module
     namespace: perception/object_recognition/detection/centerpoint
     compute_unit: main_ecu
-    parameter_set: universe_perception_centerpoint_vanilla.parameter_set
+    parameter_set: sample_system_perception.parameter_set
   - name: obstacle_segmentation
     entity: ObstacleSegmentation.module
     namespace: perception/obstacle_segmentation
     compute_unit: main_ecu
-    parameter_set: universe_perception_obstacle_segmentation_single.parameter_set
+    parameter_set: sample_system_perception.parameter_set
   - name: object_recognition
     entity: ObjectRecognitionLidar.module
     namespace: perception/object_recognition
     compute_unit: main_ecu
-    parameter_set: universe_perception_object_recognition_serial.parameter_set
+    parameter_set: sample_system_perception.parameter_set
   - name: occupancy_grid_map
     entity: OccupancyGridMapPointcloudBased.module
     namespace: perception/occupancy_grid_map
     compute_unit: main_ecu
-    parameter_set: universe_perception_occupancy_grid_map_pointcloud.parameter_set
+    parameter_set: sample_system_perception.parameter_set
 
 
   # PLANNING/CONTROL
