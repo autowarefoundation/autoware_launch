@@ -91,7 +91,7 @@ components:
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
   - name: object_recognition
-    entity: ObjectRecognitionLidar.module
+    entity: ObjectRecognition.module
     namespace: perception/object_recognition
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set

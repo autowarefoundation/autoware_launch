@@ -1,6 +1,6 @@
 autoware_system_design_format: v0.1.0
 
-name: ObjectDetectionLidar.module
+name: ObjectDetection.module
 
 instances:
   # compare map filter
