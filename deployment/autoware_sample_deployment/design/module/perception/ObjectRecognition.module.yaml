@@ -1,10 +1,10 @@
 autoware_system_design_format: v0.1.0
 
-name: ObjectRecognitionLidar.module
+name: ObjectRecognition.module
 
 instances:
   - name: detection
-    entity: ObjectDetectionLidar.module
+    entity: ObjectDetection.module
   - name: tracking
     entity: ObjectTrackingSingleChannel.module
   - name: prediction
