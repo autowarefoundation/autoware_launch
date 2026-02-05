@@ -1,15 +1,13 @@
 autoware_system_design_format: v0.1.0
 
-name: TrafficLightRecognitionWholeImage.module
+name: TrafficLightRecognition.module
 
 instances:
   - name: camera1
-    entity: TrafficLightRecognitionDetectorWholeImage.module
-  - name: camera2
-    entity: TrafficLightRecognitionDetectorWholeImage.module
+    entity: TrafficLightRecognitionDetectorFine.module
 
   - name: multi_camera_fusion
-    entity: TrafficLightMultiCameraFusion.node
+    entity: TrafficLightMultiCameraFusion_1_input.node
   - name: traffic_light_arbiter
     entity: TrafficLightArbiter.node
   - name: traffic_light_crosswalk_estimator
@@ -21,8 +19,7 @@ external_interfaces:
     - name: route
     - name: camera1/image
     - name: camera1/camera_info
-    - name: camera2/image
-    - name: camera2/camera_info
+    - name: pointcloud
     - name: external_traffic_signals
   output:
     - name: traffic_signals
@@ -36,6 +33,8 @@ connections:
     to: camera*.input.image
   - from: input.camera*/camera_info
     to: camera*.input.camera_info
+  - from: input.pointcloud
+    to: camera*.input.pointcloud
 
   - from: input.vector_map
     to: multi_camera_fusion.input.vector_map
