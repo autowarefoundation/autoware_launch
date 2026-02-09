@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: Ros2RobotStatePublisher.node
 
+package:
+  name: robot_state_publisher
+  provider: ros
+
 launch: 
-  package: robot_state_publisher
   plugin: robot_state_publisher::RobotStatePublisher
   executable: robot_state_publisher
   node_output: both

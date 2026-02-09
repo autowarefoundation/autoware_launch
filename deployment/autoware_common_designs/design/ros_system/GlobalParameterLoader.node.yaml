@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: GlobalParameterLoader.node
 
+package:
+  name: autoware_global_parameter_loader
+  provider: autoware
+
 launch:
-  package: autoware_global_parameter_loader
   ros2_launch_file: global_params.launch.py
 
 # interface

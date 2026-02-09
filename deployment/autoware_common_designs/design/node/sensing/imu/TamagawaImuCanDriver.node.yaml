@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: TamagawaImuCanDriver.node
 
+package:
+  name: tamagawa_imu_can_driver
+  provider: tier4
+
 launch:
-  package: tamagawa_imu_can_driver
   plugin: tamagawa::imu_can_driver::TamagawaImuCanDriver
   executable: tamagawa_imu_can_driver_node
   node_output: screen
