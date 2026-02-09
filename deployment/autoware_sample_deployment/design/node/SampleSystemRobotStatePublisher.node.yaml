@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: SampleSystemRobotStatePublisher.node
 
+package:
+  name: robot_state_publisher
+  provider: ros
+
 launch:
-  package: robot_state_publisher
   executable: robot_state_publisher
   node_output: screen
 
