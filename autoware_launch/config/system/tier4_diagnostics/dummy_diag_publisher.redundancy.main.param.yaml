@@ -357,6 +357,11 @@
       "autoware_diagnostics_bridge_node_addon: addon_recognition_node_alive": default
       "autoware_diagnostics_bridge_node_addon: addon_camera_driver_node_alive": default
 
+      ## update_status_checker
+      "autoware_diagnostics_bridge_node_main: main_update_status_checker_ota": default
+      "autoware_diagnostics_bridge_node_main: main_update_status_checker_map": default
+      "autoware_diagnostics_bridge_node_main: main_update_status_checker_unrecoverable": default
+
       ## letterbox_monitor
       "autoware_diagnostics_bridge_node_main: main_autoware_node_alive": default
       "autoware_diagnostics_bridge_node_main: main_autoware_system_node_alive": default
