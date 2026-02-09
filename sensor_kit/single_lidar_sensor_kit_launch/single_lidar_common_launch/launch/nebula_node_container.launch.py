@@ -71,7 +71,9 @@ def launch_setup(context, *args, **kwargs):
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
     sensor_make, sensor_extension = get_lidar_make(sensor_model)
-    nebula_decoders_share_dir = get_package_share_directory("nebula_" + sensor_make.lower() + "_decoders")
+    nebula_decoders_share_dir = get_package_share_directory(
+        "nebula_" + sensor_make.lower() + "_decoders"
+    )
 
     # Calibration file
     sensor_calib_fp = os.path.join(
@@ -105,7 +107,7 @@ def launch_setup(context, *args, **kwargs):
 
     nodes.append(
         ComposableNode(
-            package="nebula",
+            package="nebula_" + sensor_make.lower(),
             plugin=sensor_make + "RosWrapper",
             name=sensor_make.lower() + "_ros_wrapper_node",
             parameters=[
