@@ -63,6 +63,9 @@ topics:
   /api/system/heartbeat:
     type: autoware_adapi_v1_msgs/msg/Heartbeat
     reversed: True
+  /system/sub_ecu/initializing:
+    type: std_msgs/msg/Bool
+    reversed: True
   # for diagnostic status auto reset manager
   /api/localization/initialization_state:
     type: autoware_adapi_v1_msgs/msg/LocalizationInitializationState
