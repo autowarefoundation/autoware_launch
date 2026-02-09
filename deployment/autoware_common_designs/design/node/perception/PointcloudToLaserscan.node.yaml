@@ -1,10 +1,13 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 # node information
 name: PointcloudToLaserscan.node
 
+package:
+  name: pointcloud_to_laserscan
+  provider: socrob
+
 launch:
-  package: pointcloud_to_laserscan
   plugin: pointcloud_to_laserscan::PointCloudToLaserScanNode
   executable: pointcloud_to_laserscan_node
   node_output: screen

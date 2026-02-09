@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: SampleAwsimIn.node
 
+package:
+  name: AWSIM
+  provider: dummy
+
 launch:
-  package: AWSIM
   executable: AWSIM_in
   node_output: screen
 

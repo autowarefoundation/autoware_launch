@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: Tier4SystemWrapper.node
 
+package:
+  name: tier4_system_launch
+  provider: autoware
+
 launch:
-  package: tier4_system_launch
   ros2_launch_file: system.launch.xml
 
 # interfaces

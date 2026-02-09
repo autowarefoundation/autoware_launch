@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: TopicToolsThrottleMessageAccelWithCovarianceStamped.node
 
+package:
+  name: topic_tools
+  provider: ros-tooling
+
 launch: 
-  package: topic_tools
   executable: throttle
   node_output: screen
   args: messages ${input input_topic} ${parameter rate} ${output output_topic}

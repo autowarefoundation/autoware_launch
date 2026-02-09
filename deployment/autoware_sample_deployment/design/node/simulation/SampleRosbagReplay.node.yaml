@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: SampleRosbagReplay.node
 
+package:
+  name: rosbag2
+  provider: dummy
+
 launch:
-  package: rosbag2
   executable: rosbag2
   node_output: screen
 

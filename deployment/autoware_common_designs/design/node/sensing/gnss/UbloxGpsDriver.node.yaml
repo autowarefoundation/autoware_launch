@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: UbloxGpsDriver.node
 
+package:
+  name: ublox_gps
+  provider: KumarRobotics
+
 launch:
-  package: ublox_gps
   executable: ublox_gps_node
   respawn: true
   respawn_delay: 1.0

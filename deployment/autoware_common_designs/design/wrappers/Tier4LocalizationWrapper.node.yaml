@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: Tier4LocalizationWrapper.node
 
+package:
+  name: tier4_localization_launch
+  provider: autoware
+
 launch:
-  package: tier4_localization_launch
   ros2_launch_file: localization.launch.xml
 
 # interfaces
