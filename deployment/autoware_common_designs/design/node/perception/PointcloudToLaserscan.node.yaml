@@ -1,10 +1,13 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 # node information
 name: PointcloudToLaserscan.node
 
+package:
+  name: pointcloud_to_laserscan
+  provider: socrob
+
 launch:
-  package: pointcloud_to_laserscan
   plugin: pointcloud_to_laserscan::PointCloudToLaserScanNode
   executable: pointcloud_to_laserscan_node
   node_output: screen
@@ -13,21 +16,21 @@ launch:
 inputs:
   - name: pointcloud
     message_type: sensor_msgs/msg/PointCloud2
-    remap_target: "~/input/pointcloud"
+    remap_target: ~/input/pointcloud
 
 outputs:
   - name: laserscan
     message_type: sensor_msgs/msg/LaserScan
-    remap_target: "~/output/laserscan"
+    remap_target: ~/output/laserscan
   - name: pointcloud
     message_type: sensor_msgs/msg/PointCloud2
-    remap_target: "~/output/pointcloud"
+    remap_target: ~/output/pointcloud
   - name: ray
     message_type: visualization_msgs/msg/Marker
-    remap_target: "~/output/ray"
+    remap_target: ~/output/ray
   - name: stixel
     message_type: visualization_msgs/msg/MarkerArray
-    remap_target: "~/output/stixel"
+    remap_target: ~/output/stixel
 
 # parameters
 parameter_files: []

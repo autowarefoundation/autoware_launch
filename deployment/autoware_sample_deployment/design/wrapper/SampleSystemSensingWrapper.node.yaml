@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: SampleSystemSensingWrapper.node
 
+package:
+  name: autoware_sample_deployment
+  provider: autoware
+
 launch:
-  package: autoware_sample_deployment
   ros2_launch_file: sample_system_sensing_wrapper.launch.xml
 
 # interfaces
@@ -22,7 +25,7 @@ inputs:
     message_type: std_msgs/msg/Float32
 
 outputs:
-# lidar
+  # lidar
   - name: lidar/top/pointcloud
     message_type: sensor_msgs/msg/PointCloud2
   - name: lidar/left/pointcloud
@@ -33,12 +36,12 @@ outputs:
     message_type: sensor_msgs/msg/PointCloud2
   - name: lidar/concatenated/pointcloud_info
     message_type: autoware_sensing_msgs/msg/ConcatenatedPointCloudInfo
-# imu
+  # imu
   - name: imu_data
     message_type: sensor_msgs/msg/Imu
   - name: vehicle_velocity_converter/twist_with_covariance
     message_type: geometry_msgs/msg/TwistWithCovarianceStamped
-# gnss
+  # gnss
   - name: gnss/pose
     message_type: geometry_msgs/msg/PoseStamped
   - name: gnss/pose_with_covariance

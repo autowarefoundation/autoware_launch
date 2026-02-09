@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: SampleSensorKitADAPIWrapper.node
 
+package:
+  name: autoware_sample_deployment
+  provider: autoware
+
 launch:
-  package: autoware_sample_deployment
   ros2_launch_file: sample_system_adapi_wrapper.launch.xml
 
 # interfaces

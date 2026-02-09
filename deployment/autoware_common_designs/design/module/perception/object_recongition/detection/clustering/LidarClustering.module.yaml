@@ -21,7 +21,6 @@ connections:
   - from: input.pointcloud
     to: euclidean_cluster.input.input_pointcloud
 
-
   - from: euclidean_cluster.output.output_clusters
     to: shape_estimation.input.objects
   - from: shape_estimation.output.objects

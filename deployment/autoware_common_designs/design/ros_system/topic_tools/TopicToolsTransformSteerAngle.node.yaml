@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: TopicToolsTransformSteerAngle.node
 
-launch: 
-  package: topic_tools
+package:
+  name: topic_tools
+  provider: ros-tooling
+
+launch:
   executable: transform
   node_output: screen
   args: ${input steering_status} ${output steering_status_scalar} std_msgs/msg/Float32 'std_msgs.msg.Float32(data=m.steering_tire_angle)' --import autoware_vehicle_msgs std_msgs --wait-for-start
@@ -22,7 +25,7 @@ parameters: []
 parameter_files: []
 
 # processes
-processes: 
+processes:
   - name: throttle_message
     trigger_conditions:
       - periodic: $(var rate)

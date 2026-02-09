@@ -1,16 +1,19 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: Ros2SocketCanReceiverNode.node
 
-launch: 
-  package: ros2_socketcan
+package:
+  name: ros2_socketcan
+  provider: autowarefoundation
+
+launch:
   plugin: drivers::socketcan::SocketCanReceiverNode
   executable: socket_can_receiver_node_exe
   node_output: screen
 
 # interfaces
 inputs: []
-outputs: 
+outputs:
   - name: from_can_bus
     message_type: can_msgs/msg/Frame
 

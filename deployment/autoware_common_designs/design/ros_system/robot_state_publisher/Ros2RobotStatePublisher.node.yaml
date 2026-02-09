@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: Ros2RobotStatePublisher.node
 
-launch: 
-  package: robot_state_publisher
+package:
+  name: robot_state_publisher
+  provider: ros
+
+launch:
   plugin: robot_state_publisher::RobotStatePublisher
   executable: robot_state_publisher
   node_output: both
@@ -14,7 +17,7 @@ inputs:
     message_type: std_msgs/msg/String
   - name: joint_states
     message_type: sensor_msgs/msg/JointState
-outputs: 
+outputs:
   - name: robot_description
     message_type: std_msgs/msg/String
   - name: tf
@@ -32,7 +35,7 @@ parameters:
     default: false
   - name: robot_description
     type: string
-    default: ''
+    default: ""
   - name: publish_frequency
     type: double
     default: 20.0
@@ -41,7 +44,7 @@ parameters:
     default: false
   - name: frame_prefix
     type: string
-    default: ''
+    default: ""
 
 # processes
 processes:

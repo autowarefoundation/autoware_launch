@@ -1,9 +1,12 @@
-autoware_system_design_format: v0.1.0
+autoware_system_design_format: v0.2.0
 
 name: Tier4ControlWrapper.node
 
+package:
+  name: tier4_control_launch
+  provider: autoware
+
 launch:
-  package: tier4_control_launch
   ros2_launch_file: control.launch.xml
 
 inputs:
@@ -23,26 +26,6 @@ inputs:
     message_type: sensor_msgs/msg/Imu
   - name: velocity_status
     message_type: autoware_vehicle_msgs/msg/VelocityReport
-
-  # - name: steering_status
-  #   message_type: autoware_vehicle_msgs/msg/SteeringReport
-
-  # - name: turn_indicators_cmd
-  #   message_type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
-  # - name: hazard_lights_cmd
-  #   message_type: autoware_vehicle_msgs/msg/HazardLightsCommand
-  # - name: gear_cmd
-  #   message_type: autoware_vehicle_msgs/msg/GearCommand
-
-
-  # - name: emergency_control_cmd
-  #   message_type: autoware_control_msgs/msg/EmergencyControlCmd
-  # - name: emergency_turn_indicators_cmd
-  #   message_type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
-  # - name: emergency_hazard_lights_cmd
-  #   message_type: autoware_vehicle_msgs/msg/HazardLightsCommand
-  # - name: emergency_gear_cmd
-  #   message_type: autoware_vehicle_msgs/msg/GearCommand
 
 outputs:
   - name: command/control_cmd
