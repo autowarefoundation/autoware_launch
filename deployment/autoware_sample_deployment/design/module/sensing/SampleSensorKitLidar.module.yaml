@@ -27,7 +27,7 @@ connections:
   - from: input.twist
     to: ^.input.twist
 
-  # the order is important. the order need to be aligned with parameter of 
+  # the order is important. the order need to be aligned with parameter of
   # matching_strategy in concatenate_and_time_sync_node.param.yaml
   - from: right.output.pointcloud
     to: concatenate_and_time_sync.input.input1

@@ -7,18 +7,18 @@ base: SampleSensorKitImu.module
 override:
   external_interfaces:
     input:
-    - name: imu_raw
+      - name: imu_raw
   connections:
-  - from: input.imu_raw
-    to: gyro_bias_estimator.input.imu_raw
-  - from: input.imu_raw
-    to: imu_corrector.input.imu_raw
+    - from: input.imu_raw
+      to: gyro_bias_estimator.input.imu_raw
+    - from: input.imu_raw
+      to: imu_corrector.input.imu_raw
 
 remove:
   instances:
-  - name: tamagawa
+    - name: tamagawa
   connections:
-  - from: tamagawa.output.imu_raw
-    to: gyro_bias_estimator.input.imu_raw
-  - from: tamagawa.output.imu_raw
-    to: imu_corrector.input.imu_raw
+    - from: tamagawa.output.imu_raw
+      to: gyro_bias_estimator.input.imu_raw
+    - from: tamagawa.output.imu_raw
+      to: imu_corrector.input.imu_raw

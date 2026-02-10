@@ -9,12 +9,12 @@ override:
     input:
       - name: nav_sat_fix
   connections:
-  - from: input.nav_sat_fix
-    to: gnss_poser.input.fix
+    - from: input.nav_sat_fix
+      to: gnss_poser.input.fix
 
 remove:
   instances:
-  - name: ublox
+    - name: ublox
   connections:
-  - from: ublox.output.nav_sat_fix
-    to: gnss_poser.input.fix
+    - from: ublox.output.nav_sat_fix
+      to: gnss_poser.input.fix

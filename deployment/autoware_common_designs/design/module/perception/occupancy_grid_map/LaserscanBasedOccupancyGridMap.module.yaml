@@ -28,4 +28,3 @@ connections:
     to: occupancy_grid_map.input.laserscan
   - from: occupancy_grid_map.output.occupancy_grid_map
     to: output.map
-

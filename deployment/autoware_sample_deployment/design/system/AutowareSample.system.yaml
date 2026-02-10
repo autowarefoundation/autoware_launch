@@ -101,7 +101,6 @@ components:
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
 
-
   # PLANNING/CONTROL
   - name: planning
     entity: Tier4PlanningWrapper.node
@@ -156,7 +155,6 @@ connections:
   - from: obstacle_segmentation.output.pointcloud
     to: occupancy_grid_map.input.obstacle_pointcloud
 
-
   - from: map.output.vector_map
     to: localization.input.lanelet_map
   - from: map.output.pointcloud_map
@@ -201,47 +199,47 @@ connections:
 LoggingSimulation:
   override:
     parameter_sets:
-    - logging_simulation.parameter_set
+      - logging_simulation.parameter_set
     components:
-    - name: sensing
-      entity: SampleSensorKit_sim.module
-      namespace: sensing
-      compute_unit: main_ecu
-      parameter_set: sample_system_sensing.parameter_set
-    - name: rosbag_replay
-      entity: SampleRosbagReplay.node
-      namespace: ''
-      compute_unit: dummy_ecu
+      - name: sensing
+        entity: SampleSensorKit_sim.module
+        namespace: sensing
+        compute_unit: main_ecu
+        parameter_set: sample_system_sensing.parameter_set
+      - name: rosbag_replay
+        entity: SampleRosbagReplay.node
+        namespace: ""
+        compute_unit: dummy_ecu
     connections:
-    - from: rosbag_replay.output.sensing/^
-      to: sensing.input.^
+      - from: rosbag_replay.output.sensing/^
+        to: sensing.input.^
 
 E2ESimulation:
   override:
     variables:
-    - name: map_path
-      value: $(env HOME)/autoware_map/nishishinjuku_autoware_map
+      - name: map_path
+        value: $(env HOME)/autoware_map/nishishinjuku_autoware_map
     parameter_sets:
-    - e2e_simulation.parameter_set
+      - e2e_simulation.parameter_set
     components:
-    - name: AWSIM_in
-      entity: SampleAwsimIn.node
-      namespace: ''
-      compute_unit: dummy_ecu
-    - name: AWSIM_out
-      entity: SampleAwsimOut.node
-      namespace: ''
-      compute_unit: dummy_ecu
-    - name: sensing
-      entity: SampleSensorKitAWSIM.module
-      namespace: sensing
-      compute_unit: main_ecu
-      parameter_set: sample_system_sensing.parameter_set
-    - name: traffic_light_recognition
-      entity: TrafficLightRecognition.module
-      namespace: perception/traffic_light_recognition
-      compute_unit: main_ecu
-      parameter_set: sample_system_perception.parameter_set
+      - name: AWSIM_in
+        entity: SampleAwsimIn.node
+        namespace: ""
+        compute_unit: dummy_ecu
+      - name: AWSIM_out
+        entity: SampleAwsimOut.node
+        namespace: ""
+        compute_unit: dummy_ecu
+      - name: sensing
+        entity: SampleSensorKitAWSIM.module
+        namespace: sensing
+        compute_unit: main_ecu
+        parameter_set: sample_system_sensing.parameter_set
+      - name: traffic_light_recognition
+        entity: TrafficLightRecognition.module
+        namespace: perception/traffic_light_recognition
+        compute_unit: main_ecu
+        parameter_set: sample_system_perception.parameter_set
     connections:
       # SENSING
       - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw_ex
@@ -294,85 +292,85 @@ PlanningSimulation:
       - name: localization
   override:
     parameter_sets:
-    - planning_simulation.parameter_set
+      - planning_simulation.parameter_set
     components:
-    - name: occupancy_grid_map
-      entity: LaserscanBasedOccupancyGridMap.module
-      namespace: perception/occupancy_grid_map
-      compute_unit: main_ecu
-    - name: planning_sim_rviz_plugin
-      entity: PlanningSimRvizPlungins.module
-      namespace: ""
-      compute_unit: dummy_ecu
-    - name: perception
-      entity: DummyObjectRecognition.module
-      namespace: perception
-      compute_unit: main_ecu
-    - name: localization
-      entity: PlanningSimApiLocalization.module
-      namespace: ''
-      compute_unit: main_ecu
-    - name: simulator
-      entity: SimplePlanningSimulator.node
-      namespace: ''
-      compute_unit: main_ecu
-    - name: vehicle
-      entity: PlanningSimVehicle.module
-      namespace: vehicle
-      compute_unit: main_ecu
+      - name: occupancy_grid_map
+        entity: LaserscanBasedOccupancyGridMap.module
+        namespace: perception/occupancy_grid_map
+        compute_unit: main_ecu
+      - name: planning_sim_rviz_plugin
+        entity: PlanningSimRvizPlungins.module
+        namespace: ""
+        compute_unit: dummy_ecu
+      - name: perception
+        entity: DummyObjectRecognition.module
+        namespace: perception
+        compute_unit: main_ecu
+      - name: localization
+        entity: PlanningSimApiLocalization.module
+        namespace: ""
+        compute_unit: main_ecu
+      - name: simulator
+        entity: SimplePlanningSimulator.node
+        namespace: ""
+        compute_unit: main_ecu
+      - name: vehicle
+        entity: PlanningSimVehicle.module
+        namespace: vehicle
+        compute_unit: main_ecu
     connections:
-    - from: planning_sim_rviz_plugin.output.simulation/dummy_perception_publisher/object_info
-      to: perception.input.dummy_object_info
-    - from: perception.output.object_recognition/objects
-      to: planning.input.objects
-    - from: perception.output.object_recognition/objects
-      to: control.input.objects
-    - from: perception.output.obstacle_segmentation/pointcloud
-      to: occupancy_grid_map.input.obstacle_pointcloud
-    - from: perception.output.obstacle_segmentation/pointcloud
-      to: planning.input.obstacle_pointcloud
-    - from: perception.output.obstacle_segmentation/pointcloud
-      to: control.input.obstacle_pointcloud
-    - from: map.output.vector_map
-      to: perception.input.vector_map
-    - from: localization.output.localization/initialization_state
-      to: adapi.input.localization/initialization_state
-    # SIMULATOR
-    - from: map.output.vector_map
-      to: simulator.input.map/vector_map
-    - from: localization.output.initialpose3d
-      to: simulator.input.initialpose3d
-    - from: planning.output.trajectory
-      to: simulator.input.planning/trajectory
-    - from: control.output.command/control_cmd
-      to: simulator.input.control/command/control_cmd
-    - from: control.output.command/control_cmd
-      to: vehicle.input.control_cmd
-    - from: simulator.output.localization/kinematic_state
-      to: vehicle.input.odometry
-    - from: simulator.output.localization/acceleration
-      to: vehicle.input.accel
-    - from: simulator.output.vehicle/status/steering_status
-      to: vehicle.input.steering
-    - from: simulator.output.vehicle/status/actuation_status
-      to: vehicle.input.actuation_status
-    - from: system.output.system/operation_mode/state
-      to: vehicle.input.operation_mode_state
-    - from: vehicle.output.actuation_cmd
-      to: simulator.input.control/command/actuation_cmd
-    - from: control.output.command/gear_cmd
-      to: simulator.input.control/command/gear_cmd
-    - from: control.output.command/turn_indicators_cmd
-      to: simulator.input.control/command/turn_indicators_cmd
-    - from: control.output.command/hazard_lights_cmd
-      to: simulator.input.control/command/hazard_lights_cmd
-    - from: simulator.output.^
-      to: adapi.input.^
-    - from: vehicle.output.doors/status
-      to: adapi.input.vehicle/doors/status
-    - from: simulator.output.vehicle/status/velocity_status
-      to: control.input.velocity_status
-    - from: simulator.output.localization/kinematic_state
-      to: control.input.kinematics
-    - from: simulator.output.localization/acceleration
-      to: control.input.acceleration
+      - from: planning_sim_rviz_plugin.output.simulation/dummy_perception_publisher/object_info
+        to: perception.input.dummy_object_info
+      - from: perception.output.object_recognition/objects
+        to: planning.input.objects
+      - from: perception.output.object_recognition/objects
+        to: control.input.objects
+      - from: perception.output.obstacle_segmentation/pointcloud
+        to: occupancy_grid_map.input.obstacle_pointcloud
+      - from: perception.output.obstacle_segmentation/pointcloud
+        to: planning.input.obstacle_pointcloud
+      - from: perception.output.obstacle_segmentation/pointcloud
+        to: control.input.obstacle_pointcloud
+      - from: map.output.vector_map
+        to: perception.input.vector_map
+      - from: localization.output.localization/initialization_state
+        to: adapi.input.localization/initialization_state
+      # SIMULATOR
+      - from: map.output.vector_map
+        to: simulator.input.map/vector_map
+      - from: localization.output.initialpose3d
+        to: simulator.input.initialpose3d
+      - from: planning.output.trajectory
+        to: simulator.input.planning/trajectory
+      - from: control.output.command/control_cmd
+        to: simulator.input.control/command/control_cmd
+      - from: control.output.command/control_cmd
+        to: vehicle.input.control_cmd
+      - from: simulator.output.localization/kinematic_state
+        to: vehicle.input.odometry
+      - from: simulator.output.localization/acceleration
+        to: vehicle.input.accel
+      - from: simulator.output.vehicle/status/steering_status
+        to: vehicle.input.steering
+      - from: simulator.output.vehicle/status/actuation_status
+        to: vehicle.input.actuation_status
+      - from: system.output.system/operation_mode/state
+        to: vehicle.input.operation_mode_state
+      - from: vehicle.output.actuation_cmd
+        to: simulator.input.control/command/actuation_cmd
+      - from: control.output.command/gear_cmd
+        to: simulator.input.control/command/gear_cmd
+      - from: control.output.command/turn_indicators_cmd
+        to: simulator.input.control/command/turn_indicators_cmd
+      - from: control.output.command/hazard_lights_cmd
+        to: simulator.input.control/command/hazard_lights_cmd
+      - from: simulator.output.^
+        to: adapi.input.^
+      - from: vehicle.output.doors/status
+        to: adapi.input.vehicle/doors/status
+      - from: simulator.output.vehicle/status/velocity_status
+        to: control.input.velocity_status
+      - from: simulator.output.localization/kinematic_state
+        to: control.input.kinematics
+      - from: simulator.output.localization/acceleration
+        to: control.input.acceleration
