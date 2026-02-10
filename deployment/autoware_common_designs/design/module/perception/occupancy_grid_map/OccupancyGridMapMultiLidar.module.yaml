@@ -36,7 +36,7 @@ external_interfaces:
 connections:
   - from: input.obstacle_pointcloud
     to: obstacle_pc_downsample_filter.input.input
-  
+
   - from: input.pointcloud_*
     to: raw_pc_downsample_filter_*.input.input
 

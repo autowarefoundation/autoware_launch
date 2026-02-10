@@ -6,19 +6,19 @@ base: SampleSensorKitLidar.module
 
 override:
   instances:
-  - name: top
-    entity: LidarVelodyneVLS128_decode.module
-  - name: left
-    entity: LidarVelodyneVLP16_decode.module
-  - name: right
-    entity: LidarVelodyneVLP16_decode.module
+    - name: top
+      entity: LidarVelodyneVLS128_decode.module
+    - name: left
+      entity: LidarVelodyneVLP16_decode.module
+    - name: right
+      entity: LidarVelodyneVLP16_decode.module
 
   external_interfaces:
     input:
-    - name: top/velodyne_packets
-    - name: left/velodyne_packets
-    - name: right/velodyne_packets
+      - name: top/velodyne_packets
+      - name: left/velodyne_packets
+      - name: right/velodyne_packets
 
   connections:
-  - from: input.^/velodyne_packets
-    to: ^.input.velodyne_packets
+    - from: input.^/velodyne_packets
+      to: ^.input.velodyne_packets

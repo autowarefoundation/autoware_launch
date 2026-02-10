@@ -45,7 +45,6 @@ outputs:
   - name: vehicle/status/velocity_status
     message_type: autoware_vehicle_msgs/msg/VelocityReport
 
-
 # parameters
 parameters: []
 

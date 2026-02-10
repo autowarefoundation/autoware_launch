@@ -14,4 +14,3 @@ external_interfaces:
 connections:
   - from: dummy_object_publisher.output.object
     to: output.simulation/dummy_perception_publisher/object_info
-

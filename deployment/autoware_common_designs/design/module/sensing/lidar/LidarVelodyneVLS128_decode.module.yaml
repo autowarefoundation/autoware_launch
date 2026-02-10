@@ -6,13 +6,13 @@ base: LidarVelodyneVLS128.module
 
 override:
   instances:
-  - name: lidar
-    entity: NebulaVelodyneVLS128_decode.node
+    - name: lidar
+      entity: NebulaVelodyneVLS128_decode.node
 
   external_interfaces:
     input:
-    - name: velodyne_packets
+      - name: velodyne_packets
 
-  connections: 
-  - from: input.velodyne_packets
-    to: lidar.input.velodyne_packets
+  connections:
+    - from: input.velodyne_packets
+      to: lidar.input.velodyne_packets

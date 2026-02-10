@@ -280,6 +280,5 @@ processes:
       - and:
           - once: lanelet_map
           - on_input: objects
-    outcomes: 
+    outcomes:
       - to_output: mission_planning/route
-

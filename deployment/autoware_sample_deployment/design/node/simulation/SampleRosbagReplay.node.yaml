@@ -31,7 +31,6 @@ outputs:
   - name: sensing/lidar/top/velodyne_packets
     message_type: velodyne_msgs/msg/VelodyneScan
 
-
 # parameters
 parameters: []
 

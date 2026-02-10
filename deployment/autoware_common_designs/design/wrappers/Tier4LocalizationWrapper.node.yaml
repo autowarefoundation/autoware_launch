@@ -82,11 +82,11 @@ parameters:
   - name: localization_pointcloud_container_name
     default: /pointcloud_container
   - name: initial_pose
-    default: '[]'
+    default: "[]"
   - name: user_defined_initial_pose/enable
     default: false
   - name: user_defined_initial_pose/pose
-    default: '[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]'
+    default: "[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]"
 
   - name: localization_error_monitor_param_path
     default: $(find-pkg-share autoware_launch)/config/localization/localization_error_monitor.param.yaml
@@ -152,4 +152,3 @@ processes:
     outcomes:
       - to_output: ros_transform
       - to_output: pose_with_covariance
-

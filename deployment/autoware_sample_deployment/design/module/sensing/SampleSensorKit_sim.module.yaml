@@ -6,28 +6,28 @@ base: SampleSensorKit.module
 
 override:
   instances:
-  - name: lidar
-    entity: SampleSensorKitLidar_decode.module
-  - name: imu
-    entity: SampleSensorKitImu_decode.module
-  - name: gnss
-    entity: SampleSensorKitGnss_decode.module
+    - name: lidar
+      entity: SampleSensorKitLidar_decode.module
+    - name: imu
+      entity: SampleSensorKitImu_decode.module
+    - name: gnss
+      entity: SampleSensorKitGnss_decode.module
   external_interfaces:
     input:
-    - name: lidar/top/velodyne_packets
-    - name: lidar/left/velodyne_packets
-    - name: lidar/right/velodyne_packets
-    - name: imu/tamagawa/imu_raw
-    - name: gnss/ublox/nav_sat_fix
+      - name: lidar/top/velodyne_packets
+      - name: lidar/left/velodyne_packets
+      - name: lidar/right/velodyne_packets
+      - name: imu/tamagawa/imu_raw
+      - name: gnss/ublox/nav_sat_fix
     output: []
 
-  connections: 
-  # LIDAR
-  - from: input.lidar/+/velodyne_packets
-    to: lidar.input.+/velodyne_packets
-  # IMU
-  - from: input.imu/tamagawa/imu_raw
-    to: imu.input.imu_raw
-  # GNSS
-  - from: input.gnss/ublox/nav_sat_fix
-    to: gnss.input.nav_sat_fix
+  connections:
+    # LIDAR
+    - from: input.lidar/+/velodyne_packets
+      to: lidar.input.+/velodyne_packets
+    # IMU
+    - from: input.imu/tamagawa/imu_raw
+      to: imu.input.imu_raw
+    # GNSS
+    - from: input.gnss/ublox/nav_sat_fix
+      to: gnss.input.nav_sat_fix

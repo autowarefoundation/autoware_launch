@@ -13,9 +13,9 @@
 
   <depend>autoware_system_designer</depend>
 
-  <exec_depend>sample_vehicle_description</exec_depend>
   <exec_depend>sample_sensor_kit_description</exec_depend>
   <exec_depend>sample_sensor_kit_launch</exec_depend>
+  <exec_depend>sample_vehicle_description</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

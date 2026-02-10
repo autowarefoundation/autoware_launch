@@ -27,7 +27,7 @@ external_interfaces:
     - name: lidar/concatenated/pointcloud
     - name: lidar/concatenated/pointcloud_info
 
-connections: 
+connections:
   - from: input.velocity_status
     to: vehicle_velocity_converter.input.velocity_status
   - from: vehicle_velocity_converter.output.twist_with_covariance

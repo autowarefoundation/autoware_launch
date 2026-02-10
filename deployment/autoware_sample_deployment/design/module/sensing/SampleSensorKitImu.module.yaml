@@ -2,7 +2,7 @@ autoware_system_design_format: v0.1.0
 
 name: SampleSensorKitImu.module
 
-instances: 
+instances:
   - name: tamagawa
     entity: TamagawaImu.module
   - name: gyro_bias_estimator
@@ -17,7 +17,7 @@ external_interfaces:
   output:
     - name: imu_data
 
-connections: 
+connections:
   - from: tamagawa.output.imu_raw
     to: gyro_bias_estimator.input.imu_raw
   - from: input.odom

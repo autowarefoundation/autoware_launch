@@ -10,7 +10,7 @@ parameters:
       - class_remapper_param_path: $(var data_path)/lidar_centerpoint/detection_class_remapper.param.yaml
     parameters:
       - name: build_only
-        value: False
+        value: false
       - name: logger_name
         value: lidar_centerpoint
       - name: encoder_onnx_path
@@ -75,7 +75,7 @@ parameters:
     parameter_files:
       - sync_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml
-    parameters: 
+    parameters:
       - name: rois_number
         value: $(var number_of_cameras)
   - node: /perception/object_recognition/detection/object_association_merger_alpha
@@ -83,7 +83,7 @@ parameters:
       - data_association_matrix_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/data_association_matrix.param.yaml
       - distance_threshold_list_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/overlapped_judge.param.yaml
       - object_association_merger_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/ml_camera_lidar_object_association_merger.param.yaml
-    parameters: 
+    parameters:
       - name: priority_mode
         value: 0
   - node: /perception/object_recognition/detection/object_association_merger_beta
@@ -105,7 +105,7 @@ parameters:
       - name: input/detection01/channel
         value: detected_objects
       - name: publish_merged_objects
-        value: False
+        value: false
   - node: /perception/object_recognition/tracking/radar_object_filter
     parameter_files:
       - param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/tracked_object_sorter.param.yaml
@@ -139,7 +139,7 @@ parameters:
   - node: /perception/traffic_light_recognition/camera1/map_based_detector
     parameter_files:
       - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_map_based_detector/traffic_light_traffic_light_map_based_detector.param.yaml
-    parameters: 
+    parameters:
       - name: min_timestamp_offset
         value: -0.3
   - node: /perception/traffic_light_recognition/camera1/detection
@@ -151,7 +151,7 @@ parameters:
       - name: label_path
         value: $(var data_path)/traffic_light_fine_detector/tlr_labels.txt
       - name: build_only
-        value: False
+        value: false
   - node: /perception/traffic_light_recognition/camera1/classifier_car
     parameter_files:
       - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml
@@ -161,7 +161,7 @@ parameters:
       - name: label_path
         value: $(var data_path)/traffic_light_classifier/lamp_labels.txt
       - name: build_only
-        value: False
+        value: false
   - node: /perception/traffic_light_recognition/camera1/classifier_pedestrian
     parameter_files:
       - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml
@@ -171,7 +171,7 @@ parameters:
       - name: label_path
         value: $(var data_path)/traffic_light_classifier/lamp_labels_ped.txt
       - name: build_only
-        value: False
+        value: false
   - node: /perception/traffic_light_recognition/camera1/occlusion_predictor
     parameter_files:
       - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml
@@ -179,7 +179,7 @@ parameters:
   - node: /perception/traffic_light_recognition/camera2/map_based_detector
     parameter_files:
       - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_map_based_detector/traffic_light_traffic_light_map_based_detector.param.yaml
-    parameters: 
+    parameters:
       - name: min_timestamp_offset
         value: -0.04
   - node: /perception/traffic_light_recognition/camera2/detection
@@ -191,7 +191,7 @@ parameters:
       - name: label_path
         value: $(var data_path)/traffic_light_fine_detector/tlr_labels.txt
       - name: build_only
-        value: False
+        value: false
   - node: /perception/traffic_light_recognition/camera2/classifier_car
     parameter_files:
       - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml
@@ -201,7 +201,7 @@ parameters:
       - name: label_path
         value: $(var data_path)/traffic_light_classifier/lamp_labels.txt
       - name: build_only
-        value: False
+        value: false
   - node: /perception/traffic_light_recognition/camera2/classifier_pedestrian
     parameter_files:
       - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml
@@ -211,7 +211,7 @@ parameters:
       - name: label_path
         value: $(var data_path)/traffic_light_classifier/lamp_labels_ped.txt
       - name: build_only
-        value: False
+        value: false
   - node: /perception/traffic_light_recognition/camera2/occlusion_predictor
     parameter_files:
       - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml

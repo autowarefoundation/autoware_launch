@@ -6,7 +6,7 @@ package:
   name: topic_tools
   provider: ros-tooling
 
-launch: 
+launch:
   executable: throttle
   node_output: screen
   args: messages ${input input_topic} ${parameter rate} ${output output_topic}
@@ -21,14 +21,14 @@ outputs:
     message_type: std_msgs/msg/Float32
 
 # parameters
-parameters: 
+parameters:
   - name: rate
     type: double
     default: 10.0
 parameter_files: []
 
 # processes
-processes: 
+processes:
   - name: throttle_message
     trigger_conditions:
       - periodic: $(var rate)

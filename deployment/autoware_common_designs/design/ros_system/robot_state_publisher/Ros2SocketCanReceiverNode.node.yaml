@@ -6,14 +6,14 @@ package:
   name: ros2_socketcan
   provider: autowarefoundation
 
-launch: 
+launch:
   plugin: drivers::socketcan::SocketCanReceiverNode
   executable: socket_can_receiver_node_exe
   node_output: screen
 
 # interfaces
 inputs: []
-outputs: 
+outputs:
   - name: from_can_bus
     message_type: can_msgs/msg/Frame
 

@@ -11,7 +11,7 @@ instances:
     entity: DetectedObjectFeatureRemover.node
 
 external_interfaces:
-  input: 
+  input:
     - name: object_info
     - name: predicted_objects
   output:
