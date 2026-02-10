@@ -51,7 +51,7 @@ parameters:
     parameter_files: []
     parameters:
       - name: use_sim_time
-        value: False
+        value: false
   - node: /sensing/lidar/top/lidar
     parameter_files: []
     parameters:
@@ -78,9 +78,9 @@ parameters:
       - name: cloud_max_angle
         value: 360
       - name: udp_only
-        value: False
+        value: false
       - name: use_sim_time
-        value: False
+        value: false
   - node: /sensing/lidar/top/crop_box_filter_self
     parameter_files: []
     parameters:
@@ -89,9 +89,9 @@ parameters:
       - name: output_frame
         value: base_link
       - name: use_sim_time
-        value: False
+        value: false
       - name: negative
-        value: True
+        value: true
       - name: processing_time_threshold_sec
         value: 0.01
       - name: min_x
@@ -114,9 +114,9 @@ parameters:
       - name: output_frame
         value: base_link
       - name: use_sim_time
-        value: False
+        value: false
       - name: negative
-        value: True
+        value: true
       - name: processing_time_threshold_sec
         value: 0.01
       - name: min_x
@@ -140,7 +140,7 @@ parameters:
       - name: output_frame
         value: base_link
       - name: use_sim_time
-        value: False
+        value: false
   - node: /sensing/lidar/top/ring_outlier_filter
     parameter_files:
       - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
@@ -170,9 +170,9 @@ parameters:
       - name: cloud_max_angle
         value: 60
       - name: udp_only
-        value: False
+        value: false
       - name: use_sim_time
-        value: False
+        value: false
       - name: calibration_file
         value: $(find-pkg-share nebula_velodyne_decoders)/calibration/VLP16.yaml
   - node: /sensing/lidar/left/crop_box_filter_self
@@ -183,9 +183,9 @@ parameters:
       - name: output_frame
         value: base_link
       - name: use_sim_time
-        value: False
+        value: false
       - name: negative
-        value: True
+        value: true
       - name: processing_time_threshold_sec
         value: 0.01
       - name: min_x
@@ -208,9 +208,9 @@ parameters:
       - name: output_frame
         value: base_link
       - name: use_sim_time
-        value: False
+        value: false
       - name: negative
-        value: True
+        value: true
       - name: processing_time_threshold_sec
         value: 0.01
       - name: min_x
@@ -234,7 +234,7 @@ parameters:
       - name: output_frame
         value: base_link
       - name: use_sim_time
-        value: False
+        value: false
   - node: /sensing/lidar/left/ring_outlier_filter
     parameter_files:
       - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
@@ -264,9 +264,9 @@ parameters:
       - name: cloud_max_angle
         value: 60
       - name: udp_only
-        value: False
+        value: false
       - name: use_sim_time
-        value: False
+        value: false
       - name: calibration_file
         value: $(find-pkg-share nebula_velodyne_decoders)/calibration/VLP16.yaml
   - node: /sensing/lidar/right/crop_box_filter_self
@@ -277,9 +277,9 @@ parameters:
       - name: output_frame
         value: base_link
       - name: use_sim_time
-        value: False
+        value: false
       - name: negative
-        value: True
+        value: true
       - name: processing_time_threshold_sec
         value: 0.01
       - name: min_x
@@ -302,9 +302,9 @@ parameters:
       - name: output_frame
         value: base_link
       - name: use_sim_time
-        value: False
+        value: false
       - name: negative
-        value: True
+        value: true
       - name: processing_time_threshold_sec
         value: 0.01
       - name: min_x
@@ -328,7 +328,7 @@ parameters:
       - name: output_frame
         value: base_link
       - name: use_sim_time
-        value: False
+        value: false
   - node: /sensing/lidar/right/ring_outlier_filter
     parameter_files:
       - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
@@ -341,16 +341,16 @@ parameters:
       - name: input_frame
         value: base_link
       - name: use_sim_time
-        value: False
+        value: false
   - node: /sensing/imu/gyro_bias_estimator
     parameter_files:
       - imu_corrector_param_file: $(find-pkg-share sample_sensor_kit_description)/config/imu_corrector.param.yaml
     parameters:
       - name: use_sim_time
-        value: False
+        value: false
   - node: /sensing/imu/imu_corrector
     parameter_files:
       - param_file: $(find-pkg-share sample_sensor_kit_description)/config/imu_corrector.param.yaml
     parameters:
       - name: use_sim_time
-        value: False
+        value: false

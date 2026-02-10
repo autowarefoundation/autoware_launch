@@ -16,10 +16,10 @@ inputs:
     message_type: std_msgs/msg/String
   - name: joint_states
     message_type: sensor_msgs/msg/JointState
-outputs: 
+outputs:
   - name: robot_description
     message_type: std_msgs/msg/String
-    remap_target: 'robot_description'
+    remap_target: robot_description
     global: /robot_description
   - name: tf
     message_type: tf2_msgs/msg/TFMessage
@@ -33,11 +33,10 @@ parameter_files: []
 parameters:
   - name: robot_description
     type: str
-    default: "$(command 'xacro $(find-pkg-share autoware_sample_deployment)/urdf/vehicle.xacro config_dir:=$(var config_dir)' 'warn')"
+    default: $(command 'xacro $(find-pkg-share autoware_sample_deployment)/urdf/vehicle.xacro config_dir:=$(var config_dir)' 'warn')
 
 # processes
 processes:
   - name: run
     trigger_conditions: []
     outcomes: []
-

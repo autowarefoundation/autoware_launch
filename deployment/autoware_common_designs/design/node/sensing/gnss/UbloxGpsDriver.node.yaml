@@ -16,7 +16,7 @@ inputs: []
 outputs:
   - name: nav_sat_fix
     message_type: sensor_msgs/msg/NavSatFix
-    remap_target: "~/fix"
+    remap_target: ~/fix
 
 parameters: []
 
@@ -30,4 +30,3 @@ processes:
       - periodic: 100 # Hz
     outcomes:
       - to_output: nav_sat_fix
-

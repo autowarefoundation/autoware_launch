@@ -32,7 +32,7 @@ connections:
     to: map_based_detector.input.route
   - from: input.camera_info
     to: map_based_detector.input.camera_info
-  
+
   - from: input.image
     to: detection.input.image
   - from: map_based_detector.output.rough_rois

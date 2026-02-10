@@ -28,4 +28,3 @@ processes:
   - name: run
     trigger_conditions: []
     outcomes: []
-
