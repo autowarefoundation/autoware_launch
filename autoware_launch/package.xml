@@ -20,6 +20,7 @@
   <exec_depend>autoware_diagnostic_graph_aggregator</exec_depend>
   <exec_depend>autoware_diagnostic_graph_utils</exec_depend>
   <exec_depend>autoware_diagnostic_status_auto_reset_manager</exec_depend>
+  <exec_depend>autoware_diffusion_planner</exec_depend>
   <exec_depend>autoware_dummy_diag_publisher</exec_depend>
   <exec_depend>autoware_dummy_infrastructure</exec_depend>
   <exec_depend>autoware_ekf_localizer</exec_depend>
@@ -29,11 +30,13 @@
   <exec_depend>autoware_operation_mode_service_divider</exec_depend>
   <exec_depend>autoware_raw_vehicle_cmd_converter</exec_depend>
   <exec_depend>autoware_redundancy_relay_manager</exec_depend>
+  <exec_depend>autoware_remaining_distance_time_calculator</exec_depend>
   <exec_depend>autoware_reset_service_caller</exec_depend>
   <exec_depend>autoware_reset_service_divider</exec_depend>
   <exec_depend>autoware_stop_filter</exec_depend>
   <exec_depend>autoware_topic_relay_controller</exec_depend>
   <exec_depend>autoware_topic_state_monitor</exec_depend>
+  <exec_depend>autoware_trajectory_optimizer</exec_depend>
   <exec_depend>autoware_twist2accel</exec_depend>
   <exec_depend>autoware_vehicle_velocity_converter</exec_depend>
   <exec_depend>control_cmd_switcher</exec_depend>
@@ -55,6 +58,7 @@
   <exec_depend>python3-tornado</exec_depend>
   <exec_depend>redundancy_switcher_interface</exec_depend>
   <exec_depend>rviz2</exec_depend>
+  <exec_depend>tier4_autoware_api_extension_launch</exec_depend>
   <exec_depend>tier4_autoware_api_launch</exec_depend>
   <exec_depend>tier4_control_launch</exec_depend>
   <exec_depend>tier4_localization_launch</exec_depend>

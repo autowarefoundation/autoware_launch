@@ -41,6 +41,7 @@ units:
   - path: /planning/in_lane_moderate_stop
     type: and
     list:
+      - { type: link, link: /planning/000-component_status/route_state }
       - { type: link, link: /planning/001-topic_status/route-error }
       - { type: link, link: /planning/003-trajectory_finite_validation-error }
       - { type: link, link: /planning/004-trajectory_interval_validation-error }
@@ -71,6 +72,12 @@ units:
       - { type: link, link: /planning/001-topic_status/trajectory-error }
       - { type: link, link: /planning/015-intersection_collision_checker-error }
       - { type: link, link: /planning/018-rear_collision_checker-error }
+
+  - path: /planning/000-component_status/route_state
+    type: diag
+    node: /adapi/node/routing
+    name: state
+    timeout: 1.0
 
   - path: /planning/001-topic_status/route-error
     type: warn-to-ok

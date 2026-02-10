@@ -9,6 +9,7 @@
   <arg name="v2x_location" default="invalid_location" description="location for v2x (e.g. komatsu, shiojiri)"/>
 
   <!-- launch module preset -->
+  <arg name="planning_setting" default="rule_based" description="planning setting diffusion_planner / rule_based"/>
   <arg name="planning_module_preset" default="x2" description="planning module preset"/>
   <arg name="control_module_preset" default="x2" description="control module preset"/>
 
