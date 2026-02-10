@@ -13,7 +13,7 @@ launch:
   use_container: false
 
 # interfaces
-inputs: 
+inputs:
   - name: can_imu
     message_type: can_msgs/msg/Frame
 outputs:
@@ -22,7 +22,7 @@ outputs:
 
 # parameters
 parameter_files: []
-parameters: 
+parameters:
   - name: imu_frame_id
     type: string
     default: imu

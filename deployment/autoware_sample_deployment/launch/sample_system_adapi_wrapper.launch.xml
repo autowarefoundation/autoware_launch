@@ -25,5 +25,4 @@
       <composable_node pkg="autoware_iv_external_api_adaptor" plugin="external_api::RTCController" name="node"/>
     </node_container>
   </group>
-
 </launch>

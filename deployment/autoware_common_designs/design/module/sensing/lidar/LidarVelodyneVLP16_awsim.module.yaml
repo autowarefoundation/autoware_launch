@@ -6,13 +6,13 @@ base: LidarVelodyneVLP16.module
 
 remove:
   instances:
-  - name: lidar
+    - name: lidar
 
 override:
   external_interfaces:
     input:
-    - name: pointcloud_raw_ex
+      - name: pointcloud_raw_ex
 
-  connections: 
-  - from: input.pointcloud_raw_ex
-    to: crop_box_filter_self.input.input
+  connections:
+    - from: input.pointcloud_raw_ex
+      to: crop_box_filter_self.input.input
