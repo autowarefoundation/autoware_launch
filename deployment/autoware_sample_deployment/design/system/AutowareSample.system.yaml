@@ -41,7 +41,7 @@ parameter_sets:
   []
 
 components:
-  # ROS2 SYSTEM
+  # Middleware
   - name: global_parameter_loader
     entity: GlobalParameterLoader.node
     namespace: ros2_system/global_parameter_loader
@@ -111,7 +111,7 @@ components:
     namespace: control
     compute_unit: main_ecu
 
-  # SYSETM
+  # SYSTEM
   - name: system
     entity: Tier4SystemWrapper.node
     namespace: system
@@ -299,7 +299,7 @@ PlanningSimulation:
         namespace: perception/occupancy_grid_map
         compute_unit: main_ecu
       - name: planning_sim_rviz_plugin
-        entity: PlanningSimRvizPlungins.module
+        entity: PlanningSimRvizPlugins.module
         namespace: ""
         compute_unit: dummy_ecu
       - name: perception
