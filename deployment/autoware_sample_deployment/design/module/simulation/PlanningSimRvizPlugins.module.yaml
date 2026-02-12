@@ -1,6 +1,6 @@
 autoware_system_design_format: 0.1.0
 
-name: PlanningSimRvizPlungins.module
+name: PlanningSimRvizPlugins.module
 
 instances:
   - name: dummy_object_publisher
