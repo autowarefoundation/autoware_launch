@@ -1,8 +1,18 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="use_sim_time" default="false"/>
+  <arg name="planning_setting" default="rule_based" description="planning setting diffusion_planner / rule_based"/>
   <arg name="diagnostic_graph_aggregator_param_path" default="$(find-pkg-share autoware_diagnostic_graph_aggregator)/config/default.param.yaml"/>
-  <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml"/>
+  <arg
+    name="diagnostic_graph_aggregator_graph_path"
+    default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main-e2e.yaml"
+    if="$(eval &quot;'$(var planning_setting)'=='diffusion_planner'&quot;)"
+  />
+  <arg
+    name="diagnostic_graph_aggregator_graph_path"
+    default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml"
+    if="$(eval &quot;'$(var planning_setting)'=='rule_based'&quot;)"
+  />
 
   <set_parameter name="use_sim_time" value="$(var use_sim_time)"/>
 
