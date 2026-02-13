@@ -27,6 +27,8 @@ on:
       PRIVATE_KEY:
         required: true
 
+# cspell: ignore strenv
+
 jobs:
   validate-and-sync:
     runs-on: ubuntu-latest
@@ -49,6 +51,9 @@ jobs:
 
       - name: Validate and parse config
         id: parse-config
+        env:
+          INPUT_BASE_BRANCH: ${{ inputs.base-branch }}
+          INPUT_UPSTREAM_ID: ${{ inputs.upstream-id }}
         run: |
           CONFIG_FILE=".github/upstreams.yaml"
 
@@ -58,38 +63,48 @@ jobs:
             exit 1
           fi
 
-          BASE_REPO="${{ github.repository }}"
+          export BASE_REPO="${{ github.repository }}"
 
           # Validate repository entry exists
-          REPO_EXISTS=$(yq eval ".\"$BASE_REPO\"" "$CONFIG_FILE")
+          REPO_EXISTS=$(yq eval \
+            '.[strenv(BASE_REPO)]' \
+            "$CONFIG_FILE"
+          )
           if [ "$REPO_EXISTS" = "null" ] || [ -z "$REPO_EXISTS" ]; then
             echo "Error: base repo ($BASE_REPO) not found in $CONFIG_FILE"
             exit 1
           fi
 
           # Get default-upstream-id
-          DEFAULT_UPSTREAM=$(yq eval ".\"$BASE_REPO\".default-upstream-id" "$CONFIG_FILE")
+          DEFAULT_UPSTREAM=$(yq eval \
+            '.[strenv(BASE_REPO)].default-upstream-id' \
+            "$CONFIG_FILE"
+          )
           echo "default-upstream-id=$DEFAULT_UPSTREAM" >> "$GITHUB_OUTPUT"
 
           # Determine which upstream ID to use
-          if [ -z "${{ inputs.upstream-id }}" ]; then
+          if [ -z "$INPUT_UPSTREAM_ID" ]; then
             if [ "$DEFAULT_UPSTREAM" = "null" ] || [ -z "$DEFAULT_UPSTREAM" ]; then
               echo "Error: default-upstream-id is not set in $CONFIG_FILE and upstream-id was not provided"
               exit 1
             fi
             UPSTREAM_ID="$DEFAULT_UPSTREAM"
           else
-            UPSTREAM_ID="${{ inputs.upstream-id }}"
+            UPSTREAM_ID="$INPUT_UPSTREAM_ID"
             if ! [[ "$UPSTREAM_ID" =~ ^[A-Za-z0-9_-]+$ ]]; then
               echo "Error: upstream-id ($UPSTREAM_ID) contains invalid characters"
               exit 1
             fi
           fi
 
+          export UPSTREAM_ID="$UPSTREAM_ID"
           echo "upstream-id=$UPSTREAM_ID" >> "$GITHUB_OUTPUT"
 
           # Get upstream URL from config
-          UPSTREAM_URL=$(yq eval ".\"$BASE_REPO\".upstreams.\"$UPSTREAM_ID\".url" "$CONFIG_FILE")
+          UPSTREAM_URL=$(yq eval \
+            '.[strenv(BASE_REPO)].upstreams[strenv(UPSTREAM_ID)].url' \
+            "$CONFIG_FILE"
+          )
           if [ "$UPSTREAM_URL" = "null" ] || [ -z "$UPSTREAM_URL" ]; then
             echo "Error: URL for upstream ($UPSTREAM_ID) not found in $CONFIG_FILE"
             exit 1
@@ -97,26 +112,30 @@ jobs:
           echo "upstream-url=$UPSTREAM_URL" >> "$GITHUB_OUTPUT"
 
           # Determine base branch to use
-          if [ -z "${{ inputs.base-branch }}" ]; then
+          if [ -z "$INPUT_BASE_BRANCH" ]; then
             BASE_BRANCH="${{ github.event.repository.default_branch }}"
             if [ -z "$BASE_BRANCH" ]; then
               echo "Error: base-branch was not provided and repository default branch is unavailable"
               exit 1
             fi
           else
-            BASE_BRANCH="${{ inputs.base-branch }}"
+            BASE_BRANCH="$INPUT_BASE_BRANCH"
             if ! [[ "$BASE_BRANCH" =~ ^[A-Za-z0-9._/-]+$ ]]; then
               echo "Error: base-branch ($BASE_BRANCH) contains invalid characters"
               exit 1
             fi
           fi
+          export BASE_BRANCH="$BASE_BRANCH"
           echo "base-branch=$BASE_BRANCH" >> "$GITHUB_OUTPUT"
 
           # Determine upstream branch and reviewers from matching sync entry
-          MATCHING_SYNCS=$(yq eval -o=json "
-            .\"$BASE_REPO\".upstreams.\"$UPSTREAM_ID\".syncs // []
-            | map(select(.base == \"$BASE_BRANCH\"))
-          " "$CONFIG_FILE")
+          MATCHING_SYNCS=$(yq eval -o=json \
+            '
+              .[strenv(BASE_REPO)].upstreams[strenv(UPSTREAM_ID)].syncs // []
+              | map(select(.base == strenv(BASE_BRANCH)))
+            ' \
+            "$CONFIG_FILE"
+          )
           MATCH_COUNT=$(echo "$MATCHING_SYNCS" | jq 'length')
           if [ "$MATCH_COUNT" -eq 0 ]; then
             echo "Error: no syncs entry matches base-branch ($BASE_BRANCH) for upstream ($UPSTREAM_ID)"
