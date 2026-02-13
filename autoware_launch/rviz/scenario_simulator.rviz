@@ -2694,6 +2694,98 @@ Visualization Manager:
           Displays:
             - Class: rviz_default_plugins/MarkerArray
               Enabled: true
+              Name: DiffusionPlannerRouteMarker
+              Namespaces:
+                {}
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: ReliableExpand commentComment on line R2120
+                Value: /planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/debug/route_marker
+              Value: true
+            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+              Enabled: true
+              Name: PlanningFactor(NeuralNetworkPlanner)
+              Namespaces:
+                {}
+              Show Safety Factors: false
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: ReliableExpand commentComment on line R2133
+                Value: /planning/planning_factors/neural_network_planner
+              Value: true
+              show_safety_factors: false
+            - BUS:
+                Alpha: 0.9990000128746033
+                Color: 30; 144; 255
+              CAR:
+                Alpha: 0.9990000128746033
+                Color: 30; 144; 255
+              CYCLIST:
+                Alpha: 0.9990000128746033
+                Color: 119; 11; 32
+              Class: autoware_perception_rviz_plugin/PredictedObjects
+              Confidence Interval: 95%
+              Display Acceleration: true
+              Display Existence Probability: false
+              Display Label: true
+              Display Pose Covariance: true
+              Display Predicted Path Confidence: true
+              Display Predicted Paths: true
+              Display Twist: true
+              Display Twist Covariance: false
+              Display UUID: true
+              Display Velocity: true
+              Display Yaw Covariance: false
+              Display Yaw Rate: false
+              Display Yaw Rate Covariance: false
+              Enabled: true
+              Line Width: 0.10000000149011612
+              MOTORCYCLE:
+                Alpha: 0.9990000128746033
+                Color: 119; 11; 32
+              Name: PredictedObjects
+              Namespaces:
+                acceleration: true
+                label: true
+                path: true
+                path confidence: true
+                position covariance: true
+                shape: true
+                twist: true
+                uuid: true
+                velocity: true
+              Object Fill Type: Fill
+              PEDESTRIAN:
+                Alpha: 0.9990000128746033
+                Color: 255; 192; 203
+              Polygon Type: 3d
+              TRAILER:
+                Alpha: 0.9990000128746033
+                Color: 30; 144; 255
+              TRUCK:
+                Alpha: 0.9990000128746033
+                Color: 30; 144; 255
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Best Effort
+                Value: /planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/output/predicted_objects
+              UNKNOWN:
+                Alpha: 0.9990000128746033
+                Color: 255; 255; 255
+              Value: true
+              Visualization Type: Normal
+          Enabled: true
+          Name: NeuralNetworkBasedPlanner
+        - Class: rviz_common/Group
+          Displays:
+            - Class: rviz_default_plugins/MarkerArray
+              Enabled: true
               Name: PlanningErrorMarker
               Namespaces: {}
               Topic:
