@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.50.0 (2026-02-13)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(traffic_light_classifier): add under exposure threshold (`#1725 <https://github.com/autowarefoundation/autoware_launch/issues/1725>`_)
   * add under exposure threshold
