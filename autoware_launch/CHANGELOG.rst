@@ -2,6 +2,30 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(traffic_light_classifier): add under exposure threshold (`#1725 <https://github.com/autowarefoundation/autoware_launch/issues/1725>`_)
+  * add under exposure threshold
+  * change parameter
+  ---------
+* fix: add argument for traffic light (`#1748 <https://github.com/autowarefoundation/autoware_launch/issues/1748>`_)
+* feat(autoware_launch): remove tier4 api adapter (`#1745 <https://github.com/autowarefoundation/autoware_launch/issues/1745>`_)
+  update api option
+* feat(obstacle_stop): add height and size filter (`#1742 <https://github.com/autowarefoundation/autoware_launch/issues/1742>`_)
+* fix(dummy_perception_publisher): set default pedestrian z position to 0.0m (`#1739 <https://github.com/autowarefoundation/autoware_launch/issues/1739>`_)
+* feat(avoidance): add parameter for signalling during yield (`#1721 <https://github.com/autowarefoundation/autoware_launch/issues/1721>`_)
+* feat(behavior_path_planner): add turn_signal_path_backward_length parametor (`#1729 <https://github.com/autowarefoundation/autoware_launch/issues/1729>`_)
+  feat: add turn signal path backward length parameter
+* fix(roi_cluster_fusion): separate iou threshold for each class (`#1730 <https://github.com/autowarefoundation/autoware_launch/issues/1730>`_)
+  * fix(roi_cluster_fusion): separate iou threshold for each class
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* fix(ekf_localizer): change for queue pop on ekf_localizer (`#1690 <https://github.com/autowarefoundation/autoware_launch/issues/1690>`_)
+  fix: change for queue pop on ekf_localizer
+* Contributors: Masaki Baba, Mehmet Dogru, Motz, Sho Iwasawa, Takagi, Isamu, Yuki TAKAGI, badai nguyen, github-actions
+
 0.49.0 (2025-12-30)
 -------------------
 * Merge remote-tracking branch 'origin/main' into prepare-changelog-0.49.0
