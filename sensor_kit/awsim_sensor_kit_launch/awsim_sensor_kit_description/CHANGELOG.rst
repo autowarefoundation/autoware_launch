@@ -2,6 +2,12 @@
 Changelog for package awsim_sensor_kit_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.50.0 (2026-02-13)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(awsim_sensor_kit_launch): remove side lidar references (`#1733 <https://github.com/autowarefoundation/autoware_launch/issues/1733>`_)
+* Contributors: Mete Fatih Cırıt, github-actions
+
 0.49.0 (2025-12-30)
 -------------------
 * Merge remote-tracking branch 'origin/main' into prepare-changelog-0.49.0
