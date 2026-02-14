@@ -2,6 +2,12 @@
 Changelog for package single_lidar_sensor_kit_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.50.0 (2026-02-13)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* chore: reflect the move of the description packages (`#1737 <https://github.com/autowarefoundation/autoware_launch/issues/1737>`_)
+* Contributors: Takagi, Isamu, github-actions
+
 0.49.0 (2025-12-30)
 -------------------
 * Merge remote-tracking branch 'origin/main' into prepare-changelog-0.49.0
