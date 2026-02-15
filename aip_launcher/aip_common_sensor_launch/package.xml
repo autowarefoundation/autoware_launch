@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>aip_common_sensor_launch</name>
+  <version>0.1.0</version>
+  <description>The aip_common_sensor_launch package</description>
+
+  <maintainer email="david.wong@tier4.jp">David Wong</maintainer>
+  <maintainer email="kenzo.lobos@tier4.jp">Kenzo Lobos-Tsunekawa</maintainer>
+  <maintainer email="max.schmeller@tier4.jp">Max Schmeller</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+
+  <exec_depend>autoware_dummy_diag_publisher</exec_depend>
+  <exec_depend>autoware_radar_tracks_msgs_converter</exec_depend>
+  <exec_depend>autoware_radar_tracks_noise_filter</exec_depend>
+  <exec_depend>autoware_velodyne_monitor</exec_depend>
+  <exec_depend>individual_params</exec_depend>
+  <exec_depend>nebula_decoders</exec_depend>
+  <exec_depend>nebula_sensor_driver</exec_depend>
+  <exec_depend>pe_ars408_ros</exec_depend>
+  <exec_depend>ros2_socketcan</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>autoware_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

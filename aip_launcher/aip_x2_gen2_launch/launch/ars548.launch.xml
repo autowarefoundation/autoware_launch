@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="sensor_model" default="ARS548"/>
+  <arg name="launch_hw" default="true" description="Whether to connect to a real sensor (true) or to accept packet messages (false)."/>
+  <arg name="config_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/ARS548.param.yaml"/>
+  <arg name="frame_id"/>
+  <arg name="sensor_ip"/>
+  <arg name="odometry_topic"/>
+  <arg name="acceleration_topic"/>
+  <arg name="steering_angle_topic"/>
+
+  <node pkg="nebula_ros" exec="continental_ars548_ros_wrapper_node" name="nebula_continental_ars548" output="screen">
+    <param from="$(var config_file)" allow_substs="true"/>
+    <param name="launch_hw" value="$(var launch_hw)"/>
+    <param name="frame_id" value="$(var frame_id)"/>
+    <param name="sensor_ip" value="$(var sensor_ip)"/>
+    <remap from="odometry_input" to="$(var odometry_topic)"/>
+    <remap from="acceleration_input" to="$(var acceleration_topic)"/>
+    <remap from="steering_angle_input" to="$(var steering_angle_topic)"/>
+    <remap from="diagnostics" to="/diagnostics"/>
+  </node>
+</launch>

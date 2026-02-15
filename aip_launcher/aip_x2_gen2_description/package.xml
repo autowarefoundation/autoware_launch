@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>aip_x2_gen2_description</name>
+  <version>0.1.0</version>
+  <description>The aip_x2_gen2_description package</description>
+
+  <maintainer email="tomohito.ando@tier4.jp">Tomohito Ando</maintainer>
+  <license>Apache 2</license>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+
+  <depend>pandar_description</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
