@@ -1,0 +1,17 @@
+/**:
+  ros__parameters:
+    ptp_profile: automotive
+    ptp_domain: 0
+    ptp_transport_type: L2
+    ptp_switch_type: NON_TSN
+    ptp_lock_threshold: 100
+    enable_calibration_download: true
+    diagnostics:
+      pointcloud_publish_rate:
+        frequency_ok:
+          min_hz: 9.5
+        frequency_warn:
+          min_hz: 8.0
+        num_frame_transition: 5
+    sync_diagnostics:
+      topic: /sync_diag/graph_updates
