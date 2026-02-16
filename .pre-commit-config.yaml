@@ -102,6 +102,11 @@ repos:
         files: .svg$
         additional_dependencies: [prettier@2.7.1, "@prettier/plugin-xml@2.2.0"]
 
+  - repo: https://github.com/autowarefoundation/autoware_system_designer
+    rev: main
+    hooks:
+      - id: lint-system-design-format
+
   - repo: https://github.com/AleksaC/hadolint-py
     rev: v2.12.1b3
     hooks:
