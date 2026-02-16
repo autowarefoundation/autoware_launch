@@ -156,6 +156,10 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml"
     />
     <arg
+      name="object_recognition_detection_roi_detected_object_fusion_dbt_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion_dbt.param.yaml"
+    />
+    <arg
       name="object_recognition_detection_near_range_camera_vru_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/camera_vru_detection/near_range_camera_vru_detector.param.yaml"
     />
