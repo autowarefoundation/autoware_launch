@@ -21,11 +21,11 @@
       assumed_delay_time: 0.2
       nominal_latency: 0.01
       yaw_deviation_error: 1.0
-      yaw_deviation_warn: 0.5
+      yaw_deviation_warn: 0.15
 
     acc_lpf_gain: 0.97 # Time constant 1.11s
     vel_lpf_gain: 0.9 # Time constant 0.33
-    hold_velocity_error_until_stop: true
+    hold_velocity_error_until_stop: false
 
     over_velocity:
       # Longer time constant to avoid reacting to instantaneous velocity changes

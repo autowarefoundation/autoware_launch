@@ -2,8 +2,8 @@ launch:
   - arg:
       name: behavior_path_planner_type
       default: behavior_path_planner
-    # option: behavior_path_planner
-    #         path_generator
+      # option: behavior_path_planner
+      #         path_generator
 
   # behavior path modules
   - arg:
@@ -128,7 +128,7 @@ launch:
       default: "true"
   - arg:
       name: launch_road_user_stop_module
-      default: "true"
+      default: "false"
 
   - arg:
       name: velocity_smoother_type

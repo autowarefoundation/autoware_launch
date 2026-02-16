@@ -3,64 +3,403 @@ units:
     type: and
     list:
       - { type: link, link: /system/emergency_stop }
-      - { type: link, link: /system/pull_over }
-      - { type: link, link: /system/comfortable_stop }
-
-  - path: /system/pull_over_available
-    type: and
-    list:
-      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /system/in_lane_emergency_stop }
+      - { type: link, link: /system/in_lane_moderate_stop }
       - { type: link, link: /system/comfortable_stop }
 
   - path: /system/comfortable_stop_available
     type: and
     list:
       - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /system/in_lane_emergency_stop }
+      - { type: link, link: /system/in_lane_moderate_stop }
+
+  - path: /system/in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
+      - { type: link, link: /system/in_lane_emergency_stop }
+
+  - path: /system/in_lane_emergency_stop_available
+    type: and
+    list:
+      - { type: link, link: /system/emergency_stop }
+      - { type: link, link: /system/sub_ecu_in_lane_moderate_stop }
 
   # *******************************************************************************
   # NOTE: Please modify this section according to your environment and requirements.
   # *******************************************************************************
   - path: /system/emergency_stop
     type: and
-    list:
-      - { type: link, link: /system/001-topic_status-error }
-      - { type: link, link: /system/002-emergency_stop_operation-error }
-      - { type: link, link: /system/003-duplicated_node_checker }
 
   - path: /system/comfortable_stop
     type: and
+    list:
+      - { type: link, link: /system/002-latency/total-latency-error }
+      - { type: link, link: /system/005-daytime_monitor-error }
+      - { type: link, link: /system/009-dssad-error }
+      - { type: link, link: /system/018-emergency_vehicle_main-error }
+      - { type: link, link: /system/019-event_record_status-error }
+      - { type: link, link: /system/020-mrm-request-error }
+      # - { type: link, link: /system/clock-error }
 
-  - path: /system/pull_over
+  - path: /system/in_lane_moderate_stop
+    type: and
+    list:
+      - { type: link, link: /system/015-velocity-status-error }
+      - { type: link, link: /system/016-steering-status-error }
+
+  - path: /system/in_lane_emergency_stop
+    type: and
+
+  - path: /system/sub_ecu_in_lane_moderate_stop
     type: and
 
   - path: /system/none
     type: and
+    list:
+      - { type: link, link: /system/006-vehicle_stuck_checker }
+      - { type: link, link: /system/010-v2x_jpn_signal }
+      - { type: link, link: /system/011-v2x_omron }
+      - { type: link, link: /system/012-fms_connection }
+      - { type: link, link: /system/command_mode_decider/ready-error }
 
-  - path: /system/001-topic_status-error
+  - path: /system/002-latency/total-latency-error
     type: warn-to-ok
     item:
       type: link
-      link: /system/001-topic_status
+      link: /system/002-latency/total-latency
 
-  - path: /system/002-emergency_stop_operation-error
+  - path: /system/command_mode_decider/ready-error
     type: warn-to-ok
     item:
       type: link
-      link: /system/002-emergency_stop_operation
+      link: /system/command_mode_decider/ready
 
-  - path: /system/003-duplicated_node_checker
-    type: diag
-    node: duplicated_node_checker
-    name: duplicated_node_checker
+  - path: /system/005-daytime_monitor-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/005-daytime_monitor
 
-  - path: /system/001-topic_status
-    type: diag
-    node: topic_state_monitor_system_emergency_control_cmd
-    name: system_topic_status
-    timeout: 1.0
+  - path: /system/006-vehicle_stuck_checker-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/006-vehicle_stuck_checker
 
-  - path: /system/002-emergency_stop_operation
+  - path: /system/009-dssad-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/009-dssad
+
+  - path: /system/015-velocity-status-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/015-velocity-status
+
+  - path: /system/016-steering-status-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/016-steering-status
+
+  - path: /system/018-emergency_vehicle_main-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/018-emergency_vehicle_main
+
+  - path: /system/019-event_record_status-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/019-event_record_status
+
+  - path: /system/020-mrm-request-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/020-mrm-request
+
+  - path: /system/clock-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock
+
+  - path: /system/002-latency/total-latency
     type: diag
-    node: vehicle_cmd_gate
-    name: emergency_stop_operation
-    timeout: 1.0
+    node: pipeline_latency_monitor
+    name: Total Latency
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/005-daytime_monitor
+    type: diag
+    node: daytime_monitor
+    name: daytime_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/006-vehicle_stuck_checker
+    type: diag
+    node: vehicle_stuck_checker
+    name: vehicle_stuck_check
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/009-dssad
+    type: diag
+    node: dssad_packer
+    name: dssad_record_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/010-v2x_jpn_signal
+    type: diag
+    node: jpn_signal_mqtt_receiver
+    name: mqt_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/011-v2x_omron
+    type: diag
+    node: omron_signal_mqtt_receiver
+    name: mqt_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/012-fms_connection
+    type: diag
+    node: ""
+    name: edge_core_internet_connection
+    timeout: 10.0
+    latch: 0.0
+
+  - path: /system/command_mode_decider/ready
+    type: diag
+    node: command_mode_decider
+    name: ready
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/015-velocity-status
+    type: diag
+    node: topic_state_monitor_vehicle_status_velocity_status
+    name: vehicle_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/016-steering-status
+    type: diag
+    node: topic_state_monitor_vehicle_status_steering_status
+    name: vehicle_topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/018-emergency_vehicle_main
+    type: diag
+    node: emergency_vehicle_detector_main
+    name: emergency_vehicle
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/019-event_record_status
+    type: diag
+    node: bagkeeper
+    name: event_record_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/020-mrm-request
+    type: diag
+    node: /adapi/node/mrm_request
+    name: delegate
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock
+    type: and
+    list:
+      - { type: link, link: /system/clock-main_sys }
+      - { type: link, link: /system/clock-main_ptp0 }
+      - { type: link, link: /system/clock-sensor@rear_upper/lidar }
+      - { type: link, link: /system/clock-sensor@left_upper/lidar }
+      - { type: link, link: /system/clock-sensor@rear_lower/lidar }
+      - { type: link, link: /system/clock-sensor@left_lower/lidar }
+      - { type: link, link: /system/clock-TE-2000_sys }
+      - { type: link, link: /system/clock-sensor@front_center/radar_link }
+      - { type: link, link: /system/clock-sensor@rear_center/radar_link }
+      - { type: link, link: /system/clock-main_ptp1 }
+      - { type: link, link: /system/clock-sub_sys }
+      - { type: link, link: /system/clock-sub_ptp0 }
+      - { type: link, link: /system/clock-sensor@front_upper/lidar }
+      - { type: link, link: /system/clock-sensor@right_upper/lidar }
+      - { type: link, link: /system/clock-sensor@front_lower/lidar }
+      - { type: link, link: /system/clock-sensor@right_lower/lidar }
+      - { type: link, link: /system/clock-perception1_ptp0 }
+      - { type: link, link: /system/clock-perception1_sys }
+      - { type: link, link: /system/clock-perception2_ptp0 }
+      - { type: link, link: /system/clock-addon_sys }
+      - { type: link, link: /system/clock-logging_ptp0 }
+      - { type: link, link: /system/clock-logging_sys }
+
+  - path: /system/clock-main_sys
+    type: diag
+    node: ""
+    name: main_sys
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-main_ptp0
+    type: diag
+    node: ""
+    name: main_ptp0
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sensor@rear_upper/lidar
+    type: diag
+    node: ""
+    name: sensor@rear_upper/lidar
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sensor@left_upper/lidar
+    type: diag
+    node: ""
+    name: sensor@left_upper/lidar
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sensor@rear_lower/lidar
+    type: diag
+    node: ""
+    name: sensor@rear_lower/lidar
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sensor@left_lower/lidar
+    type: diag
+    node: ""
+    name: sensor@left_lower/lidar
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-TE-2000_sys
+    type: diag
+    node: ""
+    name: TE-2000_sys
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sensor@front_center/radar_link
+    type: diag
+    node: ""
+    name: sensor@front_center/radar_link
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sensor@rear_center/radar_link
+    type: diag
+    node: ""
+    name: sensor@rear_center/radar_link
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-main_ptp1
+    type: diag
+    node: ""
+    name: main_ptp1
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sub_sys
+    type: diag
+    node: ""
+    name: sub_sys
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sub_ptp0
+    type: diag
+    node: ""
+    name: sub_ptp0
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sensor@front_upper/lidar
+    type: diag
+    node: ""
+    name: sensor@front_upper/lidar
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sensor@right_upper/lidar
+    type: diag
+    node: ""
+    name: sensor@right_upper/lidar
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sensor@front_lower/lidar
+    type: diag
+    node: ""
+    name: sensor@front_lower/lidar
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-sensor@right_lower/lidar
+    type: diag
+    node: ""
+    name: sensor@right_lower/lidar
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-perception1_ptp0
+    type: diag
+    node: ""
+    name: perception1_ptp0
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-perception1_sys
+    type: diag
+    node: ""
+    name: perception1_sys
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-perception2_ptp0
+    type: diag
+    node: ""
+    name: perception2_ptp0
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-addon_sys
+    type: diag
+    node: ""
+    name: addon_sys
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-logging_ptp0
+    type: diag
+    node: ""
+    name: logging_ptp0
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /system/clock-logging_sys
+    type: diag
+    node: ""
+    name: logging_sys
+    timeout: 3.0
+    latch: 0.0

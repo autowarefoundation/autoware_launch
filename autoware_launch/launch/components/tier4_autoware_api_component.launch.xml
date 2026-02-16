@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="default_adapi_param_path" default="$(find-pkg-share autoware_launch)/config/system/default_adapi_universe/default_adapi_universe.param.yaml"/>
+
   <!-- Fork the repository and add the parameters here if needed. -->
   <arg name="scenario_simulation" default="false"/>
   <arg name="use_sim_time" default="false"/>
@@ -27,7 +29,7 @@
       <!-- The evaluation adapter is temporarily disabled because the interface name overlaps with TIER IV API.-->
       <!-- <arg name="launch_evaluation_adapter" value="$(var scenario_simulation)"/> -->
       <arg name="launch_evaluation_adapter" value="false"/>
-      <arg name="default_adapi_param_path" value="$(find-pkg-share autoware_launch)/config/system/default_adapi/default_adapi.param.yaml"/>
+      <arg name="default_adapi_param_path" value="$(var default_adapi_param_path)"/>
     </include>
   </group>
 
