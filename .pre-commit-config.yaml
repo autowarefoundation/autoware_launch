@@ -106,6 +106,7 @@ repos:
     rev: main
     hooks:
       - id: lint-system-design-format
+        args: [--format=github-actions]
 
   - repo: https://github.com/AleksaC/hadolint-py
     rev: v2.12.1b3
