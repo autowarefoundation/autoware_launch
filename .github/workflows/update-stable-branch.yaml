@@ -66,3 +66,18 @@ jobs:
           git checkout "$TARGET_TAG"
           git checkout -B stable
           git push origin stable --force-with-lease
+
+      - name: Run sync-branches
+        uses: autowarefoundation/autoware-github-actions/sync-branches@v1
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          base-branch: tier4/main
+          sync-pr-branch: stable-to-tier4-main-sync
+          sync-target-repository: ${{ github.server_url }}/${{ github.repository }}.git
+          sync-target-branch: stable
+          pr-title: "chore: sync branch stable (${{ steps.determine-tag.outputs.target_tag }}) with tier4/main"
+          pr-reviewers: rej55 # hard-coded for now; might want to assign a team instead of individuals in the future
+          pr-labels: |
+            bot
+            sync-latest-stable
+          auto-merge-method: merge
