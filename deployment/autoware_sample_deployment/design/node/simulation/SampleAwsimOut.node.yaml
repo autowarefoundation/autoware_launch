@@ -3,7 +3,7 @@ autoware_system_design_format: 0.2.0
 name: SampleAwsimOut.node
 
 package:
-  name: AWSIM
+  name: awsim
   provider: dummy
 
 launch:
