@@ -102,7 +102,7 @@
   <let name="camera_lidar_rule_detector/output/objects" value="$(var ns)/clustering/camera_lidar_fusion/objects"/>
   <let name="camera_lidar_rule_detector/output/cluster_objects" value="$(var ns)/clustering/objects_with_feature"/>
   <let name="tracker_based_detector/input/clusters" value="$(var ns)/clustering/objects_with_feature"/>
-  <let name="tracker_based_detector/output/objects_raw" value="$(var ns)/detection_by_tracker/unfiltered/objects"/>
+  <let name="tracker_based_detector/output/objects_raw" value="$(var ns)/detection_by_tracker/objects"/>
   <let name="tracker_based_detector/output/objects" value="$(var ns)/detection_by_tracker/objects"/>
   <let name="lidar_object_filter/output/objects" value="$(var ns)/$(var lidar_detection_model_type)/validation/objects"/>
   <let name="camera_lidar_object_filter/output/objects" value="$(var ns)/clustering/camera_lidar_fusion/filtered/objects"/>
@@ -142,6 +142,7 @@
   <group scoped="false" if="$(eval '&quot;$(var mode)&quot;==&quot;camera_lidar_radar_fusion&quot;')">
     <let name="switch/filter/pointcloud" value="true"/>
     <let name="switch/detector/camera_lidar" value="true"/>
+    <let name="tracker_based_detector/output/objects_raw" value="$(var ns)/detection_by_tracker/unfiltered/objects"/>
     <let name="switch/detector/lidar_dnn" value="true"/>
     <let name="switch/detector/radar" value="true" unless="$(var use_radar_tracking_fusion)"/>
     <let name="switch/merger/camera_lidar_radar" value="true" unless="$(var use_multi_channel_tracker_merger)"/>
@@ -156,6 +157,7 @@
   <group scoped="false" if="$(eval '&quot;$(var mode)&quot;==&quot;camera_lidar_fusion&quot;')">
     <let name="switch/filter/pointcloud" value="true"/>
     <let name="switch/detector/camera_lidar" value="true"/>
+    <let name="tracker_based_detector/output/objects_raw" value="$(var ns)/detection_by_tracker/unfiltered/objects"/>
     <let name="switch/detector/lidar_dnn" value="true"/>
     <let name="switch/merger/camera_lidar" value="true" unless="$(var use_multi_channel_tracker_merger)"/>
     <group scoped="false" if="$(var use_multi_channel_tracker_merger)">
@@ -345,6 +347,7 @@
 
   <!-- ROI filter for DetectionByTracker: cross-validate tracker-based detections against camera ROIs -->
   <group if="$(var switch/detector/tracker_based)">
+  <group if="$(var switch/detector/camera_lidar)">
     <push-ros-namespace namespace="detection_by_tracker"/>
     <include file="$(find-pkg-share autoware_image_projection_based_fusion)/launch/roi_detected_object_fusion.launch.xml">
       <arg name="input/rois_number" value="$(var number_of_cameras)"/>
@@ -380,6 +383,7 @@
       <arg name="output/objects" value="$(var tracker_based_detector/output/objects)"/>
       <arg name="param_path" value="$(var roi_detected_object_fusion_dbt_param_path)"/>
     </include>
+  </group>
   </group>
 
   <group if="$(var switch/detector/camera_vru_detector)">
