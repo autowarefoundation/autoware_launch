@@ -75,9 +75,7 @@ def launch_setup(context, *args, **kwargs):
     if sensor_extension is not None:
         sensor_calib_fp = PathJoinSubstitution(
             [
-                PathJoinSubstitution(
-                    [FindPackageShare("nebula_" + sensor_make.lower() + "_decoders")]
-                ),
+                FindPackageShare("nebula_" + sensor_make.lower() + "_decoders"),
                 "calibration",
                 sensor_model + sensor_extension,
             ]
