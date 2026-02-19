@@ -10,28 +10,27 @@ instances:
   - name: camera_lidar_fusion
     entity: CameraLidarFusion.module
 
-external_interfaces:
-  input:
-    - name: pointcloud
-    - name: rois0
-    - name: rois1
-    - name: rois2
-    - name: rois3
-    - name: rois4
-    - name: rois5
-    - name: rois6
-    - name: rois7
-    - name: camera_info0
-    - name: camera_info1
-    - name: camera_info2
-    - name: camera_info3
-    - name: camera_info4
-    - name: camera_info5
-    - name: camera_info6
-    - name: camera_info7
-  output:
-    - name: detected_objects
-    - name: cluster_objects
+inputs:
+  - name: pointcloud
+  - name: rois0
+  - name: rois1
+  - name: rois2
+  - name: rois3
+  - name: rois4
+  - name: rois5
+  - name: rois6
+  - name: rois7
+  - name: camera_info0
+  - name: camera_info1
+  - name: camera_info2
+  - name: camera_info3
+  - name: camera_info4
+  - name: camera_info5
+  - name: camera_info6
+  - name: camera_info7
+outputs:
+  - name: detected_objects
+  - name: cluster_objects
 
 connections:
   - from: input.pointcloud

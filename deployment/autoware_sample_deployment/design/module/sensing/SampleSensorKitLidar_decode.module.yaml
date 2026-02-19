@@ -13,11 +13,10 @@ override:
     - name: right
       entity: LidarVelodyneVLP16_decode.module
 
-  external_interfaces:
-    input:
-      - name: top/velodyne_packets
-      - name: left/velodyne_packets
-      - name: right/velodyne_packets
+  inputs:
+    - name: top/velodyne_packets
+    - name: left/velodyne_packets
+    - name: right/velodyne_packets
 
   connections:
     - from: input.^/velodyne_packets

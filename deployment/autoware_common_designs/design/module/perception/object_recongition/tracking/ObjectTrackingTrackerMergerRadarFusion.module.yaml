@@ -12,13 +12,12 @@ instances:
   - name: decorative_tracker_merger
     entity: DecorativeTrackerMerger.node
 
-external_interfaces:
-  input:
-    - name: vector_map
-    - name: detected_objects
-    - name: radar_objects
-  output:
-    - name: objects
+inputs:
+  - name: vector_map
+  - name: detected_objects
+  - name: radar_objects
+outputs:
+  - name: objects
 
 connections:
   - from: input.detected_objects

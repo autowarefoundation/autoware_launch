@@ -8,13 +8,12 @@ instances:
   - name: occupancy_grid_map
     entity: LaserscanBasedOccupancyGridMap.node
 
-external_interfaces:
-  input:
-    - name: obstacle_pointcloud
-    - name: raw_pointcloud
+inputs:
+  - name: obstacle_pointcloud
+  - name: raw_pointcloud
 
-  output:
-    - name: map
+outputs:
+  - name: map
 
 connections:
   - from: input.obstacle_pointcloud

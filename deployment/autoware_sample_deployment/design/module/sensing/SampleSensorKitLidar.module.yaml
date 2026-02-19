@@ -12,14 +12,13 @@ instances:
   - name: concatenate_and_time_sync
     entity: ConcatenateAndTimeSync_3_inputs.node
 
-external_interfaces:
-  input:
-    - name: twist
-    - name: odometry
-    - name: imu
-  output:
-    - name: concatenated/pointcloud
-    - name: concatenated/pointcloud_info
+inputs:
+  - name: twist
+  - name: odometry
+  - name: imu
+outputs:
+  - name: concatenated/pointcloud
+  - name: concatenated/pointcloud_info
 
 connections:
   - from: input.imu

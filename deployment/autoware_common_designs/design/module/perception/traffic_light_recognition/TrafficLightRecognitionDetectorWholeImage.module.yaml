@@ -19,15 +19,14 @@ instances:
   - name: merger
     entity: TrafficLightCategoryMerger.node
 
-external_interfaces:
-  input:
-    - name: vector_map
-    - name: image
-    - name: camera_info
-    - name: route
-  output:
-    - name: classification/traffic_signals
-    - name: detection/rois
+inputs:
+  - name: vector_map
+  - name: image
+  - name: camera_info
+  - name: route
+outputs:
+  - name: classification/traffic_signals
+  - name: detection/rois
 
 connections:
   - from: input.vector_map

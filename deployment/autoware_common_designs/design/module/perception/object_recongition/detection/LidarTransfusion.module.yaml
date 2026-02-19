@@ -8,12 +8,11 @@ instances:
   - name: validation
     entity: ObstaclePointCloudBasedValidator.node
 
-external_interfaces:
-  input:
-    - name: pointcloud
-    - name: obstacle_pointcloud
-  output:
-    - name: detected_objects
+inputs:
+  - name: pointcloud
+  - name: obstacle_pointcloud
+outputs:
+  - name: detected_objects
 
 connections:
   - from: input.pointcloud

@@ -12,12 +12,11 @@ instances:
   - name: distortion_corrector_node
     entity: DistortionCorrector.node
 
-external_interfaces:
-  input:
-    - name: twist
-    - name: imu
-  output:
-    - name: pointcloud
+inputs:
+  - name: twist
+  - name: imu
+outputs:
+  - name: pointcloud
 
 connections:
   - from: lidar.output.velodyne_points

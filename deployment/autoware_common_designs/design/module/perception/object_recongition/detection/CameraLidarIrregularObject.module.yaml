@@ -14,19 +14,18 @@ instances:
   - name: detected_object_feature_remover
     entity: DetectedObjectFeatureRemover.node
 
-external_interfaces:
-  input:
-    - name: pointcloud
-    - name: rois0
-    - name: rois1
-    - name: rois2
-    - name: rois3
-    - name: camera_info0
-    - name: camera_info1
-    - name: camera_info2
-    - name: camera_info3
-  output:
-    - name: objects
+inputs:
+  - name: pointcloud
+  - name: rois0
+  - name: rois1
+  - name: rois2
+  - name: rois3
+  - name: camera_info0
+  - name: camera_info1
+  - name: camera_info2
+  - name: camera_info3
+outputs:
+  - name: objects
 
 connections:
   - from: input.pointcloud

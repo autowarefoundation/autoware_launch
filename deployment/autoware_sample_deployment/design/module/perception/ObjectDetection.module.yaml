@@ -20,18 +20,17 @@ instances:
   - name: object_lanelet_filter
     entity: ObjectLaneletFilter.node
 
-external_interfaces:
-  input:
-    - name: pointcloud_map
-    - name: vector_map
-    - name: service_pointcloud_map_diff
-    - name: kinematic_state
-    - name: obstacle_pointcloud
-    - name: lidar_ml_objects
-    - name: tracked_objects
-  output:
-    - name: filtered_obstacle_pointcloud
-    - name: detected_objects
+inputs:
+  - name: pointcloud_map
+  - name: vector_map
+  - name: service_pointcloud_map_diff
+  - name: kinematic_state
+  - name: obstacle_pointcloud
+  - name: lidar_ml_objects
+  - name: tracked_objects
+outputs:
+  - name: filtered_obstacle_pointcloud
+  - name: detected_objects
 
 connections:
   # compare map filter
