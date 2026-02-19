@@ -8,12 +8,11 @@ instances:
   - name: common_ground_filter
     entity: ScanGroundFilter.node
 
-external_interfaces:
-  input:
-    # lidar
-    - name: concatenated_pointcloud
-  output:
-    - name: pointcloud
+inputs:
+  # lidar
+  - name: concatenated_pointcloud
+outputs:
+  - name: pointcloud
 
 connections:
   - from: input.concatenated_pointcloud

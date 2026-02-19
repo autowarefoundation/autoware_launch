@@ -6,13 +6,12 @@ instances:
   - name: vehicle_velocity_converter
     entity: PoseInitializer.node
 
-external_interfaces:
-  input: []
-  output:
-    - name: initialpose3d
-    - name: localization/initialize
-    - name: localization/initialization_state
-    - name: localization/kinematic_state
+inputs: []
+outputs:
+  - name: initialpose3d
+  - name: localization/initialize
+  - name: localization/initialization_state
+  - name: localization/kinematic_state
 
 connections:
   - from: vehicle_velocity_converter.output.pose_reset

@@ -14,16 +14,15 @@ instances:
   - name: occlusion_predictor
     entity: TrafficLightOcclusionPredictor.node
 
-external_interfaces:
-  input:
-    - name: vector_map
-    - name: image
-    - name: camera_info
-    - name: route
-    - name: pointcloud
-  output:
-    - name: classification/traffic_signals
-    - name: detection/rois
+inputs:
+  - name: vector_map
+  - name: image
+  - name: camera_info
+  - name: route
+  - name: pointcloud
+outputs:
+  - name: classification/traffic_signals
+  - name: detection/rois
 
 connections:
   - from: input.vector_map
