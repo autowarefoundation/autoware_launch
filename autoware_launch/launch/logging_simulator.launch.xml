@@ -33,6 +33,8 @@
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
+  <!-- V2X-->
+  <arg name="launch_v2x" default="false" description="launch v2x modules"/>
   <!-- Scenario simulation -->
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
 
@@ -65,12 +67,14 @@
       <arg name="system_run_mode" value="logging_simulation"/>
       <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
       <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
-      <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml"/>
+      <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml"/>
       <!-- Map -->
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
+      <!-- V2X -->
+      <arg name="launch_v2x" value="false"/>
     </include>
   </group>
 </launch>

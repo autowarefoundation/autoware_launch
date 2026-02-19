@@ -1,0 +1,21 @@
+files:
+  - { path: $(dirname)/autoware-main.yaml }
+
+edits:
+  - { type: remove, path: /planning/003-trajectory_finite_validation-error }
+  - { type: remove, path: /planning/004-trajectory_interval_validation-error }
+  - { type: remove, path: /planning/005-trajectory_curvature_validation-error }
+  - { type: remove, path: /planning/006-trajectory_relative_angle_validation-error }
+  - { type: remove, path: /planning/007-trajectory_lateral_acceleration_validation-error }
+  - { type: remove, path: /planning/008-trajectory_acceleration_validation-error }
+  - { type: remove, path: /planning/009-trajectory_deceleration_validation-error }
+  - { type: remove, path: /planning/010-trajectory_steering_validation-error }
+  - { type: remove, path: /planning/011-trajectory_steering_rate_validation-error }
+  - { type: remove, path: /planning/012-trajectory_velocity_deviation_validation-error }
+  - { type: remove, path: /planning/013-trajectory_shift_validation-error }
+  - { type: remove, path: /planning/014-trajectory_validation_yaw_deviation-error }
+  - { type: remove, path: /planning/015-intersection_collision_checker-error }
+  - { type: remove, path: /planning/016-trajectory_validation_distance_deviation-error }
+  - { type: remove, path: /planning/017-trajectory_distance_deviation_validation-error }
+  - { type: remove, path: /planning/018-rear_collision_checker-error }
+  - { type: remove, path: /planning/020-boundary_departure-error }

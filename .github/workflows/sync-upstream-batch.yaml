@@ -1,0 +1,77 @@
+name: sync-upstream-batch
+
+on:
+  workflow_dispatch:
+  workflow_call:
+  schedule:
+    - cron: 50 */1 * * * # every 1 hour (**:50)
+
+jobs:
+  validate-config:
+    runs-on: ubuntu-latest
+    outputs:
+      syncs: ${{ steps.validate-and-parse.outputs.syncs }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.49.2/yq_linux_amd64
+          echo "be2c0ddcf426b6a231648610ec5d1666ae50e9f6473e82f6486f9f4cb6e3e2f7  /usr/local/bin/yq" | sha256sum -c -
+          sudo chmod a+x /usr/local/bin/yq
+
+      - name: Validate config and parse syncs
+        id: validate-and-parse
+        run: |
+          CONFIG_FILE=".github/upstreams.yaml"
+
+          # Check if config file exists
+          if [ ! -f "$CONFIG_FILE" ]; then
+            echo "Error: Config file $CONFIG_FILE not found"
+            exit 1
+          fi
+
+          BASE_REPO="${{ github.repository }}"
+
+          # Validate repository entry exists
+          REPO_EXISTS=$(yq eval ".\"$BASE_REPO\"" "$CONFIG_FILE")
+          if [ "$REPO_EXISTS" = "null" ] || [ -z "$REPO_EXISTS" ]; then
+            echo "Error: base repo ($BASE_REPO) not found in $CONFIG_FILE"
+            exit 1
+          fi
+
+          # Extract all syncs with their upstream IDs
+          SYNCS_JSON=$(yq eval -o=json "
+            .\"$BASE_REPO\".upstreams
+            | to_entries
+            | [
+                .[]
+                | .key as \$upstream_id
+                | .value.syncs[]
+                | {
+                    \"upstream_id\": \$upstream_id,
+                    \"base_branch\": .base
+                  }
+              ]
+          " "$CONFIG_FILE")
+
+          echo "Syncs to process:"
+          echo "$SYNCS_JSON" | jq .
+
+          # Output as a single-line JSON for matrix
+          COMPACT_SYNCS=$(jq -c . <<< "$SYNCS_JSON")
+          echo "syncs=$COMPACT_SYNCS" >> "$GITHUB_OUTPUT"
+
+  sync-all:
+    needs: validate-config
+    if: ${{ needs.validate-config.outputs.syncs != '[]' }}
+    strategy:
+      matrix:
+        sync: ${{ fromJson(needs.validate-config.outputs.syncs) }}
+      fail-fast: false
+    uses: ./.github/workflows/sync-upstream.yaml
+    with:
+      base-branch: ${{ matrix.sync.base_branch }}
+      upstream-id: ${{ matrix.sync.upstream_id }}
+    secrets: inherit
