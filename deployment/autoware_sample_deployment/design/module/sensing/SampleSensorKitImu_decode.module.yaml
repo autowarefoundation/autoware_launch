@@ -1,13 +1,12 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: SampleSensorKitImu_decode.module
 
 base: SampleSensorKitImu.module
 
 override:
-  external_interfaces:
-    input:
-      - name: imu_raw
+  inputs:
+    - name: imu_raw
   connections:
     - from: input.imu_raw
       to: gyro_bias_estimator.input.imu_raw

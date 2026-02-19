@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: DummyPerceptionPublisher.module
 
@@ -10,13 +10,12 @@ instances:
   - name: detected_object_feature_remover
     entity: DetectedObjectFeatureRemover.node
 
-external_interfaces:
-  input:
-    - name: object_info
-    - name: predicted_objects
-  output:
-    - name: objects
-    - name: obstacle_segmentation/pointcloud
+inputs:
+  - name: object_info
+  - name: predicted_objects
+outputs:
+  - name: objects
+  - name: obstacle_segmentation/pointcloud
 
 connections:
   - from: input.object_info

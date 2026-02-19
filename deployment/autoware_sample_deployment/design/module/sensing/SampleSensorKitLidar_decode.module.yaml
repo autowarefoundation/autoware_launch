@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: SampleSensorKitLidar_decode.module
 
@@ -13,11 +13,10 @@ override:
     - name: right
       entity: LidarVelodyneVLP16_decode.module
 
-  external_interfaces:
-    input:
-      - name: top/velodyne_packets
-      - name: left/velodyne_packets
-      - name: right/velodyne_packets
+  inputs:
+    - name: top/velodyne_packets
+    - name: left/velodyne_packets
+    - name: right/velodyne_packets
 
   connections:
     - from: input.^/velodyne_packets

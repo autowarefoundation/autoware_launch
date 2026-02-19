@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: LidarVelodyneVLS128.module
 
@@ -12,12 +12,11 @@ instances:
   - name: distortion_corrector_node
     entity: DistortionCorrector.node
 
-external_interfaces:
-  input:
-    - name: twist
-    - name: imu
-  output:
-    - name: pointcloud
+inputs:
+  - name: twist
+  - name: imu
+outputs:
+  - name: pointcloud
 
 connections:
   - from: lidar.output.velodyne_points

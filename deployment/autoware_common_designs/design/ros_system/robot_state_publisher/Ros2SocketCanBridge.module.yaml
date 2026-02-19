@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: Ros2SocketCanBridge.module
 
@@ -8,11 +8,10 @@ instances:
   - name: socket_can_sender
     entity: Ros2SocketCanSenderNode.node
 
-external_interfaces:
-  input:
-    - name: to_can_bus
-  output:
-    - name: from_can_bus
+inputs:
+  - name: to_can_bus
+outputs:
+  - name: from_can_bus
 
 connections:
   - from: input.to_can_bus
