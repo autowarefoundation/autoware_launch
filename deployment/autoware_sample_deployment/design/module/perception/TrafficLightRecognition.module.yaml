@@ -13,16 +13,15 @@ instances:
   - name: traffic_light_crosswalk_estimator
     entity: CrosswalkTrafficLightEstimator.node
 
-external_interfaces:
-  input:
-    - name: vector_map
-    - name: route
-    - name: camera1/image
-    - name: camera1/camera_info
-    - name: pointcloud
-    - name: external_traffic_signals
-  output:
-    - name: traffic_signals
+inputs:
+  - name: vector_map
+  - name: route
+  - name: camera1/image
+  - name: camera1/camera_info
+  - name: pointcloud
+  - name: external_traffic_signals
+outputs:
+  - name: traffic_signals
 
 connections:
   - from: input.route

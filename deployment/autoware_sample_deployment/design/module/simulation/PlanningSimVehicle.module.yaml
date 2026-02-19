@@ -8,18 +8,17 @@ instances:
   - name: raw_vehicle_cmd_converter
     entity: RawVehicleCmdConverter.node
 
-external_interfaces:
-  input:
-    - name: control_cmd
-    - name: odometry
-    - name: accel
-    - name: steering
-    - name: actuation_status
-    - name: operation_mode_state
+inputs:
+  - name: control_cmd
+  - name: odometry
+  - name: accel
+  - name: steering
+  - name: actuation_status
+  - name: operation_mode_state
 
-  output:
-    - name: actuation_cmd
-    - name: doors/status
+outputs:
+  - name: actuation_cmd
+  - name: doors/status
 
 connections:
   - from: input.*

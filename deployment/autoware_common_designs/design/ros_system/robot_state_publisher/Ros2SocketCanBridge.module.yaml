@@ -8,11 +8,10 @@ instances:
   - name: socket_can_sender
     entity: Ros2SocketCanSenderNode.node
 
-external_interfaces:
-  input:
-    - name: to_can_bus
-  output:
-    - name: from_can_bus
+inputs:
+  - name: to_can_bus
+outputs:
+  - name: from_can_bus
 
 connections:
   - from: input.to_can_bus

@@ -5,9 +5,8 @@ name: SampleSensorKitImu_decode.module
 base: SampleSensorKitImu.module
 
 override:
-  external_interfaces:
-    input:
-      - name: imu_raw
+  inputs:
+    - name: imu_raw
   connections:
     - from: input.imu_raw
       to: gyro_bias_estimator.input.imu_raw

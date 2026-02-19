@@ -10,22 +10,21 @@ instances:
   - name: prediction
     entity: ObjectPredictionMapBased.module
 
-external_interfaces:
-  input:
-    # map
-    - name: pointcloud_map
-    - name: vector_map
-    - name: service_pointcloud_map_diff
-    # localization
-    - name: kinematic_state
-    # traffic lights
-    - name: traffic_lights
-    # lidar
-    - name: obstacle_pointcloud
-    - name: lidar_ml_objects
-  output:
-    - name: objects
-    - name: map_filtered_obstacle_pointcloud
+inputs:
+  # map
+  - name: pointcloud_map
+  - name: vector_map
+  - name: service_pointcloud_map_diff
+  # localization
+  - name: kinematic_state
+  # traffic lights
+  - name: traffic_lights
+  # lidar
+  - name: obstacle_pointcloud
+  - name: lidar_ml_objects
+outputs:
+  - name: objects
+  - name: map_filtered_obstacle_pointcloud
 
 connections:
   # detection

@@ -10,12 +10,11 @@ instances:
   - name: imu_corrector
     entity: ImuCorrector.node
 
-external_interfaces:
-  input:
-    - name: odom
-    - name: pose_ndt
-  output:
-    - name: imu_data
+inputs:
+  - name: odom
+  - name: pose_ndt
+outputs:
+  - name: imu_data
 
 connections:
   - from: tamagawa.output.imu_raw

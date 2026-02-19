@@ -8,12 +8,11 @@ instances:
   - name: gnss_poser
     entity: GnssPoser.node
 
-external_interfaces:
-  input:
-    - name: orientation
-  output:
-    - name: pose
-    - name: pose_with_covariance
+inputs:
+  - name: orientation
+outputs:
+  - name: pose
+  - name: pose_with_covariance
 
 connections:
   - from: input.orientation

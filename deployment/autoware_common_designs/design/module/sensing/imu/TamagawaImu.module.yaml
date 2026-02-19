@@ -8,10 +8,9 @@ instances:
   - name: tag_can_driver
     entity: TamagawaImuCanDriver.node
 
-external_interfaces:
-  input: []
-  output:
-    - name: imu_raw
+inputs: []
+outputs:
+  - name: imu_raw
 
 connections:
   - from: socket_can_receiver.output.from_can_bus

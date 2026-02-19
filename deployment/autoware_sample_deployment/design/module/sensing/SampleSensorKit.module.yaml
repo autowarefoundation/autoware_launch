@@ -12,20 +12,19 @@ instances:
   - name: gnss
     entity: SampleSensorKitGnss.module
 
-external_interfaces:
-  input:
-    - name: velocity_status
-    - name: odometry
-    - name: twist
-    - name: pose_ndt
+inputs:
+  - name: velocity_status
+  - name: odometry
+  - name: twist
+  - name: pose_ndt
 
-  output:
-    - name: imu/imu_data
-    - name: vehicle_velocity_converter/twist_with_covariance
-    - name: gnss/pose
-    - name: gnss/pose_with_covariance
-    - name: lidar/concatenated/pointcloud
-    - name: lidar/concatenated/pointcloud_info
+outputs:
+  - name: imu/imu_data
+  - name: vehicle_velocity_converter/twist_with_covariance
+  - name: gnss/pose
+  - name: gnss/pose_with_covariance
+  - name: lidar/concatenated/pointcloud
+  - name: lidar/concatenated/pointcloud_info
 
 connections:
   - from: input.velocity_status

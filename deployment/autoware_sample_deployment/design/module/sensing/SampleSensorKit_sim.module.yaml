@@ -12,14 +12,13 @@ override:
       entity: SampleSensorKitImu_decode.module
     - name: gnss
       entity: SampleSensorKitGnss_decode.module
-  external_interfaces:
-    input:
-      - name: lidar/top/velodyne_packets
-      - name: lidar/left/velodyne_packets
-      - name: lidar/right/velodyne_packets
-      - name: imu/tamagawa/imu_raw
-      - name: gnss/ublox/nav_sat_fix
-    output: []
+  inputs:
+    - name: lidar/top/velodyne_packets
+    - name: lidar/left/velodyne_packets
+    - name: lidar/right/velodyne_packets
+    - name: imu/tamagawa/imu_raw
+    - name: gnss/ublox/nav_sat_fix
+  outputs: []
 
   connections:
     # LIDAR

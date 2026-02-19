@@ -10,12 +10,11 @@ instances:
   - name: detected_object_feature_remover
     entity: DetectedObjectFeatureRemover.node
 
-external_interfaces:
-  input:
-    - name: pointcloud
-  output:
-    - name: detected_objects
-    - name: cluster_objects
+inputs:
+  - name: pointcloud
+outputs:
+  - name: detected_objects
+  - name: cluster_objects
 
 connections:
   - from: input.pointcloud

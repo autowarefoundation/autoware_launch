@@ -6,10 +6,9 @@ instances:
   - name: dummy_object_publisher
     entity: RvizPluginDummyObject.node
 
-external_interfaces:
-  input: []
-  output:
-    - name: simulation/dummy_perception_publisher/object_info
+inputs: []
+outputs:
+  - name: simulation/dummy_perception_publisher/object_info
 
 connections:
   - from: dummy_object_publisher.output.object

@@ -8,14 +8,13 @@ instances:
   - name: voxel_based_compare_map_filter
     entity: VoxelBasedCompareMapFilter.node
 
-external_interfaces:
-  input:
-    - name: pointcloud
-    - name: pointcloud_map
-    - name: service_pointcloud_map_diff
-    - name: kinematic_state
-  output:
-    - name: filtered_pointcloud
+inputs:
+  - name: pointcloud
+  - name: pointcloud_map
+  - name: service_pointcloud_map_diff
+  - name: kinematic_state
+outputs:
+  - name: filtered_pointcloud
 
 connections:
   - from: input.pointcloud

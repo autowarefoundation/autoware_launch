@@ -6,11 +6,10 @@ instances:
   - name: multi_object_tracker
     entity: MultiObjectTracker.node
 
-external_interfaces:
-  input:
-    - name: detected_objects
-  output:
-    - name: objects
+inputs:
+  - name: detected_objects
+outputs:
+  - name: objects
 
 connections:
   - from: input.detected_objects

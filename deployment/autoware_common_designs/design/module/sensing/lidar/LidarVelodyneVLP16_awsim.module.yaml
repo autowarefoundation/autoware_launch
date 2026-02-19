@@ -9,9 +9,8 @@ remove:
     - name: lidar
 
 override:
-  external_interfaces:
-    input:
-      - name: pointcloud_raw_ex
+  inputs:
+    - name: pointcloud_raw_ex
 
   connections:
     - from: input.pointcloud_raw_ex

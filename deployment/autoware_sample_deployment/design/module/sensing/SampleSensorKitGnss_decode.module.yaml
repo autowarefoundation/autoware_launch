@@ -5,9 +5,8 @@ name: SampleSensorKitGnss_decode.module
 base: SampleSensorKitGnss.module
 
 override:
-  external_interfaces:
-    input:
-      - name: nav_sat_fix
+  inputs:
+    - name: nav_sat_fix
   connections:
     - from: input.nav_sat_fix
       to: gnss_poser.input.fix

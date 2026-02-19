@@ -9,9 +9,8 @@ override:
     - name: lidar
       entity: NebulaVelodyneVLP16_decode.node
 
-  external_interfaces:
-    input:
-      - name: velodyne_packets
+  inputs:
+    - name: velodyne_packets
 
   connections:
     - from: input.velodyne_packets

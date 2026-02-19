@@ -20,25 +20,24 @@ instances:
   - name: tensorrt_yolox7
     entity: TensorrtYolox.node
 
-external_interfaces:
-  input:
-    - name: image_raw0
-    - name: image_raw1
-    - name: image_raw2
-    - name: image_raw3
-    - name: image_raw4
-    - name: image_raw5
-    - name: image_raw6
-    - name: image_raw7
-  output:
-    - name: rois0
-    - name: rois1
-    - name: rois2
-    - name: rois3
-    - name: rois4
-    - name: rois5
-    - name: rois6
-    - name: rois7
+inputs:
+  - name: image_raw0
+  - name: image_raw1
+  - name: image_raw2
+  - name: image_raw3
+  - name: image_raw4
+  - name: image_raw5
+  - name: image_raw6
+  - name: image_raw7
+outputs:
+  - name: rois0
+  - name: rois1
+  - name: rois2
+  - name: rois3
+  - name: rois4
+  - name: rois5
+  - name: rois6
+  - name: rois7
 
 connections:
   - from: input.image_raw0
