@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: RadarFilter.module
 
@@ -9,19 +9,14 @@ instances:
   - name: radar_object_filter
     entity: DetectedObjectSorter.node
 
-external_interfaces:
-  input:
-    - name: vector_map
-    - name: radar_objects
-  output:
-    - name: radar_filtered_objects
+inputs:
+  - name: vector_map
+  - name: radar_objects
+outputs:
+  - name: radar_filtered_objects
 
 connections:
-  - from: input.radar_objects
-    to: radar_object_filter.input.objects
-  - from: radar_object_filter.output.objects
-    to: object_lanelet_filter.input.object
-  - from: input.vector_map
-    to: object_lanelet_filter.input.vector_map
-  - from: object_lanelet_filter.output.object
-    to: output.radar_filtered_objects
+  - [subscriber.radar_objects, radar_object_filter.subscriber.objects]
+  - [radar_object_filter.publisher.objects, object_lanelet_filter.subscriber.object]
+  - [subscriber.vector_map, object_lanelet_filter.subscriber.vector_map]
+  - [object_lanelet_filter.publisher.object, publisher.radar_filtered_objects]

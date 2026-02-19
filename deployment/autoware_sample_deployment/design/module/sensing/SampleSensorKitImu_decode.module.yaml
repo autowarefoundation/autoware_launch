@@ -1,24 +1,19 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: SampleSensorKitImu_decode.module
 
 base: SampleSensorKitImu.module
 
 override:
-  external_interfaces:
-    input:
-      - name: imu_raw
+  inputs:
+    - name: imu_raw
   connections:
-    - from: input.imu_raw
-      to: gyro_bias_estimator.input.imu_raw
-    - from: input.imu_raw
-      to: imu_corrector.input.imu_raw
+    - [subscriber.imu_raw, gyro_bias_estimator.subscriber.imu_raw]
+    - [subscriber.imu_raw, imu_corrector.subscriber.imu_raw]
 
 remove:
   instances:
     - name: tamagawa
   connections:
-    - from: tamagawa.output.imu_raw
-      to: gyro_bias_estimator.input.imu_raw
-    - from: tamagawa.output.imu_raw
-      to: imu_corrector.input.imu_raw
+    - [tamagawa.publisher.imu_raw, gyro_bias_estimator.subscriber.imu_raw]
+    - [tamagawa.publisher.imu_raw, imu_corrector.subscriber.imu_raw]

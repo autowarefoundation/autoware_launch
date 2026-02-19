@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.2.0
+autoware_system_design_format: 0.3.0
 
 name: SampleSensorKitADAPIWrapper.node
 
@@ -93,9 +93,9 @@ outputs:
     message_type: autoware_adapi_v1_msgs/msg/VehicleMetrics
 
 # parameters
-parameter_files: []
+param_files: []
 
-parameters:
+param_values:
   - name: launch_deprecated_api
     default: false
   - name: launch_default_adapi

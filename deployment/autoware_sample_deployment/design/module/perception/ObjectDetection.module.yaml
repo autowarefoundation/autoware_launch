@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: ObjectDetection.module
 
@@ -20,55 +20,48 @@ instances:
   - name: object_lanelet_filter
     entity: ObjectLaneletFilter.node
 
-external_interfaces:
-  input:
-    - name: pointcloud_map
-    - name: vector_map
-    - name: service_pointcloud_map_diff
-    - name: kinematic_state
-    - name: obstacle_pointcloud
-    - name: lidar_ml_objects
-    - name: tracked_objects
-  output:
-    - name: filtered_obstacle_pointcloud
-    - name: detected_objects
+inputs:
+  - name: pointcloud_map
+  - name: vector_map
+  - name: service_pointcloud_map_diff
+  - name: kinematic_state
+  - name: obstacle_pointcloud
+  - name: lidar_ml_objects
+  - name: tracked_objects
+outputs:
+  - name: filtered_obstacle_pointcloud
+  - name: detected_objects
 
 connections:
   # compare map filter
-  - from: input.obstacle_pointcloud
-    to: pointcloud_map_filter.input.pointcloud
-  - from: input.pointcloud_map
-    to: pointcloud_map_filter.input.pointcloud_map
-  - from: input.service_pointcloud_map_diff
-    to: pointcloud_map_filter.input.service_pointcloud_map_diff
-  - from: input.kinematic_state
-    to: pointcloud_map_filter.input.kinematic_state
-  - from: pointcloud_map_filter.output.filtered_pointcloud
-    to: output.filtered_obstacle_pointcloud
+  - [subscriber.obstacle_pointcloud, pointcloud_map_filter.subscriber.pointcloud]
+  - [subscriber.pointcloud_map, pointcloud_map_filter.subscriber.pointcloud_map]
+  - [
+      client.service_pointcloud_map_diff,
+      pointcloud_map_filter.client.service_pointcloud_map_diff,
+    ]
+  - [subscriber.kinematic_state, pointcloud_map_filter.subscriber.kinematic_state]
+  - [pointcloud_map_filter.publisher.filtered_pointcloud, publisher.filtered_obstacle_pointcloud]
 
   # clustering
-  - from: pointcloud_map_filter.output.filtered_pointcloud
-    to: clustering.input.pointcloud
+  - [pointcloud_map_filter.publisher.filtered_pointcloud, clustering.subscriber.pointcloud]
 
   # detection by tracker
-  - from: input.tracked_objects
-    to: detection_by_tracker.input.tracked_objects
-  - from: clustering.output.cluster_objects
-    to: detection_by_tracker.input.initial_objects
+  - [subscriber.tracked_objects, detection_by_tracker.subscriber.tracked_objects]
+  - [clustering.publisher.cluster_objects, detection_by_tracker.subscriber.initial_objects]
 
   # merger
-  - from: input.lidar_ml_objects
-    to: object_association_merger_alpha.input.object0
-  - from: clustering.output.detected_objects
-    to: object_association_merger_alpha.input.object1
-  - from: object_association_merger_alpha.output.merged_object
-    to: object_association_merger_beta.input.object0
-  - from: detection_by_tracker.output.objects
-    to: object_association_merger_beta.input.object1
+  - [subscriber.lidar_ml_objects, object_association_merger_alpha.subscriber.object0]
+  - [clustering.publisher.detected_objects, object_association_merger_alpha.subscriber.object1]
+  - [
+      object_association_merger_alpha.publisher.merged_object,
+      object_association_merger_beta.subscriber.object0,
+    ]
+  - [detection_by_tracker.publisher.objects, object_association_merger_beta.subscriber.object1]
   # filter
-  - from: object_association_merger_beta.output.merged_object
-    to: object_lanelet_filter.input.object
-  - from: input.vector_map
-    to: object_lanelet_filter.input.vector_map
-  - from: object_lanelet_filter.output.object
-    to: output.detected_objects
+  - [
+      object_association_merger_beta.publisher.merged_object,
+      object_lanelet_filter.subscriber.object,
+    ]
+  - [subscriber.vector_map, object_lanelet_filter.subscriber.vector_map]
+  - [object_lanelet_filter.publisher.object, publisher.detected_objects]

@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: TamagawaImu.module
 
@@ -8,13 +8,10 @@ instances:
   - name: tag_can_driver
     entity: TamagawaImuCanDriver.node
 
-external_interfaces:
-  input: []
-  output:
-    - name: imu_raw
+inputs: []
+outputs:
+  - name: imu_raw
 
 connections:
-  - from: socket_can_receiver.output.from_can_bus
-    to: tag_can_driver.input.can_imu
-  - from: tag_can_driver.output.data_raw
-    to: output.imu_raw
+  - [socket_can_receiver.publisher.from_can_bus, tag_can_driver.subscriber.can_imu]
+  - [tag_can_driver.publisher.data_raw, publisher.imu_raw]

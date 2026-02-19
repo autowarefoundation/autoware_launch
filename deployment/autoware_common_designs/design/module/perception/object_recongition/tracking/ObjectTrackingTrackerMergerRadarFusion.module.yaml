@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: ObjectTrackingTrackerMergerRadarFusion.module
 
@@ -12,26 +12,21 @@ instances:
   - name: decorative_tracker_merger
     entity: DecorativeTrackerMerger.node
 
-external_interfaces:
-  input:
-    - name: vector_map
-    - name: detected_objects
-    - name: radar_objects
-  output:
-    - name: objects
+inputs:
+  - name: vector_map
+  - name: detected_objects
+  - name: radar_objects
+outputs:
+  - name: objects
 
 connections:
-  - from: input.detected_objects
-    to: multi_object_tracker.input.detection01/objects
-  - from: input.radar_objects
-    to: radar_object_filter.input.objects
-  - from: radar_object_filter.output.objects
-    to: tracked_object_lanelet_filter.input.object
-  - from: input.vector_map
-    to: tracked_object_lanelet_filter.input.vector_map
-  - from: tracked_object_lanelet_filter.output.object
-    to: decorative_tracker_merger.input.sub_object
-  - from: multi_object_tracker.output.objects
-    to: decorative_tracker_merger.input.main_object
-  - from: decorative_tracker_merger.output.merged_object
-    to: output.objects
+  - [subscriber.detected_objects, multi_object_tracker.subscriber.detection01/objects]
+  - [subscriber.radar_objects, radar_object_filter.subscriber.objects]
+  - [radar_object_filter.publisher.objects, tracked_object_lanelet_filter.subscriber.object]
+  - [subscriber.vector_map, tracked_object_lanelet_filter.subscriber.vector_map]
+  - [
+      tracked_object_lanelet_filter.publisher.object,
+      decorative_tracker_merger.subscriber.sub_object,
+    ]
+  - [multi_object_tracker.publisher.objects, decorative_tracker_merger.subscriber.main_object]
+  - [decorative_tracker_merger.publisher.merged_object, publisher.objects]
