@@ -2,6 +2,12 @@
 Changelog for package common_sensor_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.50.0 (2026-02-13)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat: change nebula function call style according to nebula v0.3.2 (`#1749 <https://github.com/autowarefoundation/autoware_launch/issues/1749>`_)
+* Contributors: github-actions, 心刚
+
 0.49.0 (2025-12-30)
 -------------------
 
@@ -22,6 +28,15 @@ Changelog for package common_sensor_launch
   * chore: add cropbox parameter
   ---------
 * Contributors: Yi-Hsiang Fang (Vivid), github-actions
+
+0.45.3 (2025-07-17)
+-------------------
+
+0.45.2 (2025-06-28)
+-------------------
+
+0.45.1 (2025-06-27)
+-------------------
 
 0.45.0 (2025-05-22)
 -------------------
