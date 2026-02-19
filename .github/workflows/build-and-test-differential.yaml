@@ -12,15 +12,19 @@ on:
       - reopened
       - labeled
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  make-sure-label-is-present:
-    uses: autowarefoundation/autoware-github-actions/.github/workflows/make-sure-label-is-present.yaml@v1
+  require-label:
+    uses: autowarefoundation/autoware-github-actions/.github/workflows/require-label.yaml@v1
     with:
       label: run:build-and-test-differential
 
   build-and-test-differential:
-    needs: make-sure-label-is-present
-    if: ${{ needs.make-sure-label-is-present.outputs.result == 'true' }}
+    needs: require-label
+    if: ${{ needs.require-label.outputs.result == 'true' }}
     runs-on: ubuntu-22.04
     container: ${{ matrix.container }}
     strategy:
@@ -28,9 +32,13 @@ jobs:
       matrix:
         rosdistro:
           - humble
+          - jazzy
         include:
           - rosdistro: humble
             container: ros:humble
+            build-depends-repos: build_depends.repos
+          - rosdistro: jazzy
+            container: ros:jazzy
             build-depends-repos: build_depends.repos
     steps:
       - name: Set PR fetch depth

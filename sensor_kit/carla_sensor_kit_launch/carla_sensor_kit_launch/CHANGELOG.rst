@@ -2,6 +2,12 @@
 Changelog for package carla_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.50.0 (2026-02-13)
+-------------------
+
+0.49.0 (2025-12-30)
+-------------------
+
 0.48.0 (2025-11-16)
 -------------------
 * fix(carla_sensor_kit_description): align package version
