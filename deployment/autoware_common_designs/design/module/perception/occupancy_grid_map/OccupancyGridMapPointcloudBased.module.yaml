@@ -6,13 +6,12 @@ instances:
   - name: occupancy_grid_map_node
     entity: PointcloudBasedOccupancyGridMap.node
 
-external_interfaces:
-  input:
-    # lidar
-    - name: obstacle_pointcloud
-    - name: raw_pointcloud
-  output:
-    - name: map
+inputs:
+  # lidar
+  - name: obstacle_pointcloud
+  - name: raw_pointcloud
+outputs:
+  - name: map
 
 connections:
   - from: input.raw_pointcloud

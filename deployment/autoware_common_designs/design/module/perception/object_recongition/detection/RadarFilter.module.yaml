@@ -9,12 +9,11 @@ instances:
   - name: radar_object_filter
     entity: DetectedObjectSorter.node
 
-external_interfaces:
-  input:
-    - name: vector_map
-    - name: radar_objects
-  output:
-    - name: radar_filtered_objects
+inputs:
+  - name: vector_map
+  - name: radar_objects
+outputs:
+  - name: radar_filtered_objects
 
 connections:
   - from: input.radar_objects
