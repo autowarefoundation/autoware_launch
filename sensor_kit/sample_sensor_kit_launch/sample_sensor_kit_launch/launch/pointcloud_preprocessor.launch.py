@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
-from ament_index_python.packages import get_package_share_directory
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
@@ -22,9 +19,11 @@ from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
+from launch_ros.substitutions import FindPackageShare
 
 
 def launch_setup(context, *args, **kwargs):
@@ -66,18 +65,18 @@ def generate_launch_description():
     def add_launch_arg(name: str, default_value=None):
         launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value))
 
-    sample_sensor_kit_launch_share_dir = get_package_share_directory("sample_sensor_kit_launch")
-
     add_launch_arg("base_frame", "base_link")
     add_launch_arg("use_multithread", "False")
     add_launch_arg("use_intra_process", "False")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
     add_launch_arg(
         "concatenate_and_time_sync_node_param_path",
-        os.path.join(
-            sample_sensor_kit_launch_share_dir,
-            "config",
-            "concatenate_and_time_sync_node.param.yaml",
+        PathJoinSubstitution(
+            [
+                FindPackageShare("sample_sensor_kit_launch"),
+                "config",
+                "concatenate_and_time_sync_node.param.yaml",
+            ]
         ),
     )
 
