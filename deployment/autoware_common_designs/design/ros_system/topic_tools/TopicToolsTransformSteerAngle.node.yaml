@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.2.0
+autoware_system_design_format: 0.3.0
 
 name: TopicToolsTransformSteerAngle.node
 
@@ -21,8 +21,8 @@ outputs:
     message_type: std_msgs/msg/Float32
 
 # parameters
-parameters: []
-parameter_files: []
+param_values: []
+param_files: []
 
 # processes
 processes:

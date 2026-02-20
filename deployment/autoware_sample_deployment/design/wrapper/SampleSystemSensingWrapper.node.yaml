@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.2.0
+autoware_system_design_format: 0.3.0
 
 name: SampleSystemSensingWrapper.node
 
@@ -48,9 +48,9 @@ outputs:
     message_type: geometry_msgs/msg/PoseWithCovarianceStamped
 
 # parameters
-parameter_files: []
+param_files: []
 
-parameters:
+param_values:
   - name: pointcloud_container_name
     default: pointcloud_container
   - name: launch_driver

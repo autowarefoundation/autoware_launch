@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.2.0
+autoware_system_design_format: 0.3.0
 
 name: SampleAwsimOut.node
 
@@ -46,9 +46,9 @@ outputs:
     message_type: autoware_vehicle_msgs/msg/VelocityReport
 
 # parameters
-parameters: []
+param_values: []
 
-parameter_files: []
+param_files: []
 
 # processes
 processes: []

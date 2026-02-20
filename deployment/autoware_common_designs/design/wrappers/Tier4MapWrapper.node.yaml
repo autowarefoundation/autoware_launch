@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.2.0
+autoware_system_design_format: 0.3.0
 
 name: Tier4MapWrapper.node
 
@@ -29,9 +29,9 @@ outputs:
     message_type: autoware_map_msgs/srv/GetPartialPointCloudMap
 
 # parameters
-parameter_files: []
+param_files: []
 
-parameters:
+param_values:
   - name: map_path
     default: $(find-pkg-share autoware_launch)/config/map
   - name: pointcloud_map_file
