@@ -1,0 +1,17 @@
+autoware_system_design_format: 0.3.0
+
+name: LidarVelodyneVLP16_decode.module
+
+base: LidarVelodyneVLP16.module
+
+override:
+  instances:
+    - name: lidar
+      entity: NebulaVelodyneVLP16_decode.node
+
+  inputs:
+    - name: velodyne_packets
+
+  connections:
+    - from: input.velodyne_packets
+      to: lidar.input.velodyne_packets

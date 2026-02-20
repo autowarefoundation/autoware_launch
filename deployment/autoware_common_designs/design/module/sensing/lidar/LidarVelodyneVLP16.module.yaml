@@ -1,0 +1,37 @@
+autoware_system_design_format: 0.3.0
+
+name: LidarVelodyneVLP16.module
+
+instances:
+  - name: lidar
+    entity: NebulaVelodyneVLP16.node
+  - name: crop_box_filter_self
+    entity: CropBoxFilter.node
+  - name: crop_box_filter_wheels
+    entity: CropBoxFilter.node
+  - name: distortion_corrector_node
+    entity: DistortionCorrector.node
+  - name: ring_outlier_filter
+    entity: RingOutlierFilter.node
+
+inputs:
+  - name: twist
+  - name: imu
+outputs:
+  - name: pointcloud
+
+connections:
+  - from: lidar.output.velodyne_points
+    to: crop_box_filter_self.input.input
+  - from: crop_box_filter_self.output.output
+    to: crop_box_filter_wheels.input.input
+  - from: crop_box_filter_wheels.output.output
+    to: distortion_corrector_node.input.pointcloud
+  - from: input.twist
+    to: distortion_corrector_node.input.twist
+  - from: input.imu
+    to: distortion_corrector_node.input.imu
+  - from: distortion_corrector_node.output.pointcloud
+    to: ring_outlier_filter.input.input
+  - from: ring_outlier_filter.output.output
+    to: output.pointcloud

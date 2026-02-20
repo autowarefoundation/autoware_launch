@@ -1,0 +1,37 @@
+autoware_system_design_format: 0.3.0
+
+name: TamagawaImuCanDriver.node
+
+package:
+  name: tamagawa_imu_can_driver
+  provider: tier4
+
+launch:
+  plugin: tamagawa::imu_can_driver::TamagawaImuCanDriver
+  executable: tamagawa_imu_can_driver_node
+  node_output: screen
+  use_container: false
+
+# interfaces
+inputs:
+  - name: can_imu
+    message_type: can_msgs/msg/Frame
+outputs:
+  - name: data_raw
+    message_type: sensor_msgs/msg/Imu
+
+# parameters
+param_files: []
+param_values:
+  - name: imu_frame_id
+    type: string
+    default: imu
+
+# processes
+processes:
+  - name: publish_from_can_bus
+    trigger_conditions:
+      - periodic: 100 # Hz
+      - on_input: can_imu
+    outcomes:
+      - to_output: data_raw

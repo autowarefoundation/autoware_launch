@@ -1,0 +1,29 @@
+autoware_system_design_format: 0.3.0
+
+name: PlanningSimVehicle.module
+
+instances:
+  - name: vehicle_door_simulator
+    entity: VehicleDoorSimulator.node
+  - name: raw_vehicle_cmd_converter
+    entity: RawVehicleCmdConverter.node
+
+inputs:
+  - name: control_cmd
+  - name: odometry
+  - name: accel
+  - name: steering
+  - name: actuation_status
+  - name: operation_mode_state
+
+outputs:
+  - name: actuation_cmd
+  - name: doors/status
+
+connections:
+  - from: input.*
+    to: raw_vehicle_cmd_converter.input.*
+  - from: raw_vehicle_cmd_converter.output.actuation_cmd
+    to: output.actuation_cmd
+  - from: vehicle_door_simulator.output.doors/status
+    to: output.doors/status

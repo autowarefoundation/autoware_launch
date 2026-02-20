@@ -1,0 +1,230 @@
+autoware_system_design_format: 0.3.0
+
+name: sample_system_perception.parameter_set
+parameters:
+  - node: /perception/object_recognition/detection/centerpoint/lidar_centerpoint
+    param_files:
+      - model_param_path: $(var config_path)/perception/object_recognition/detection/centerpoint.param.yaml
+      - common_param_path: $(find-pkg-share autoware_lidar_centerpoint)/config/centerpoint_common.param.yaml
+      - ml_package_param_path: $(var data_path)/lidar_centerpoint/centerpoint_ml_package.param.yaml
+      - class_remapper_param_path: $(var data_path)/lidar_centerpoint/detection_class_remapper.param.yaml
+    param_values:
+      - name: build_only
+        value: false
+      - name: logger_name
+        value: lidar_centerpoint
+      - name: encoder_onnx_path
+        value: $(var data_path)/lidar_centerpoint/pts_voxel_encoder_centerpoint.onnx
+      - name: encoder_engine_path
+        value: $(var data_path)/lidar_centerpoint/pts_voxel_encoder_centerpoint.engine
+      - name: head_onnx_path
+        value: $(var data_path)/lidar_centerpoint/pts_backbone_neck_head_centerpoint.onnx
+      - name: head_engine_path
+        value: $(var data_path)/lidar_centerpoint/pts_backbone_neck_head_centerpoint.engine
+  - node: /perception/object_recognition/detection/centerpoint/validation
+    param_files:
+      - obstacle_pointcloud_based_validator_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detected_object_validation/obstacle_pointcloud_based_validator.param.yaml
+    param_values: []
+  - node: /perception/object_recognition/detection/pointcloud_map_filter/voxel_grid_downsample_filter
+    param_files: []
+    param_values:
+      - name: input_frame
+        value: base_link
+      - name: output_frame
+        value: base_link
+      - name: use_intra_process_comms
+        value: true
+  - node: /perception/object_recognition/detection/pointcloud_map_filter/voxel_based_compare_map_filter
+    param_files:
+      - voxel_based_compare_map_filter_param_file: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/pointcloud_filter/pointcloud_map_filter.param.yaml
+    param_values:
+      - name: input_frame
+        value: map
+      - name: output_frame
+        value: map
+      - name: use_intra_process_comms
+        value: false
+  - node: /perception/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster
+    param_files:
+      - voxel_grid_based_euclidean_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml
+    param_values: []
+  - node: /perception/object_recognition/detection/clustering/shape_estimation
+    param_files: []
+    param_values: []
+  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/roi_cluster_fusion
+    param_files:
+      - sync_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_cluster_fusion.param.yaml
+    param_values:
+      - name: rois_number
+        value: $(var number_of_cameras)
+  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/low_intensity_cluster_filter
+    param_files: []
+    param_values: []
+  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/shape_estimation
+    param_files: []
+    param_values: []
+  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/detected_object_feature_remover
+    param_files: []
+    param_values: []
+  - node: /perception/object_recognition/detection/detection_by_tracker
+    param_files:
+      - detection_by_tracker_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml
+    param_values: []
+  - node: /perception/object_recognition/detection/roi_detected_object_fusion
+    param_files:
+      - sync_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml
+    param_values:
+      - name: rois_number
+        value: $(var number_of_cameras)
+  - node: /perception/object_recognition/detection/object_association_merger_alpha
+    param_files:
+      - data_association_matrix_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/data_association_matrix.param.yaml
+      - distance_threshold_list_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/overlapped_judge.param.yaml
+      - object_association_merger_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/ml_camera_lidar_object_association_merger.param.yaml
+    param_values:
+      - name: priority_mode
+        value: 0
+  - node: /perception/object_recognition/detection/object_association_merger_beta
+    param_files:
+      - data_association_matrix_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/data_association_matrix.param.yaml
+      - distance_threshold_list_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/overlapped_judge.param.yaml
+    param_values:
+      - name: priority_mode
+        value: 0
+  - node: /perception/object_recognition/detection/object_lanelet_filter
+    param_files: []
+    param_values: []
+  - node: /perception/object_recognition/tracking/multi_object_tracker
+    param_files:
+      - tracker_setting_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml
+      - data_association_matrix_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml
+      - input_channels_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml
+    param_values:
+      - name: input/detection01/channel
+        value: detected_objects
+      - name: publish_merged_objects
+        value: false
+  - node: /perception/object_recognition/tracking/radar_object_filter
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/radar_object_tracker/tracked_object_sorter.param.yaml
+    param_values: []
+  - node: /perception/object_recognition/tracking/decorative_tracker_merger
+    param_files:
+      - data_association_matrix_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/data_association_matrix.param.yaml
+      - node_param_file_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml
+    param_values: []
+
+  - node: /perception/obstacle_segmentation/crop_box_filter
+    param_files:
+      - crop_box_filter_param_file: $(var config_path)/perception/obstacle_segmentation/crop_box_filter.param.yaml
+    param_values: []
+
+  - node: /perception/obstacle_segmentation/common_ground_filter
+    param_files:
+      - ground_segmentation_param_file: $(var config_path)/perception/obstacle_segmentation/ground_segmentation.param.yaml
+      - vehicle_info_param_file: $(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml
+    param_values:
+      - name: max_z
+        value: 3.0
+      - name: min_z
+        value: -2.5
+  - node: /perception/occupancy_grid_map/occupancy_grid_map_node
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/pointcloud_based_occupancy_grid_map.param.yaml
+      - updater_param_file: $(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/binary_bayes_filter_updater.param.yaml
+    param_values: []
+
+  - node: /perception/traffic_light_recognition/camera1/map_based_detector
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_map_based_detector/traffic_light_traffic_light_map_based_detector.param.yaml
+    param_values:
+      - name: min_timestamp_offset
+        value: -0.3
+  - node: /perception/traffic_light_recognition/camera1/detection
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml
+    param_values:
+      - name: model_path
+        value: $(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_fine_detector/tlr_labels.txt
+      - name: build_only
+        value: false
+  - node: /perception/traffic_light_recognition/camera1/classifier_car
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml
+    param_values:
+      - name: model_path
+        value: $(var data_path)/traffic_light_classifier/traffic_light_classifier_mobilenetv2_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_classifier/lamp_labels.txt
+      - name: build_only
+        value: false
+  - node: /perception/traffic_light_recognition/camera1/classifier_pedestrian
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml
+    param_values:
+      - name: model_path
+        value: $(var data_path)/traffic_light_classifier/ped_traffic_light_classifier_mobilenetv2_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_classifier/lamp_labels_ped.txt
+      - name: build_only
+        value: false
+  - node: /perception/traffic_light_recognition/camera1/occlusion_predictor
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml
+    param_values: []
+  - node: /perception/traffic_light_recognition/camera2/map_based_detector
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_map_based_detector/traffic_light_traffic_light_map_based_detector.param.yaml
+    param_values:
+      - name: min_timestamp_offset
+        value: -0.04
+  - node: /perception/traffic_light_recognition/camera2/detection
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml
+    param_values:
+      - name: model_path
+        value: $(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_fine_detector/tlr_labels.txt
+      - name: build_only
+        value: false
+  - node: /perception/traffic_light_recognition/camera2/classifier_car
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml
+    param_values:
+      - name: model_path
+        value: $(var data_path)/traffic_light_classifier/traffic_light_classifier_mobilenetv2_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_classifier/lamp_labels.txt
+      - name: build_only
+        value: false
+  - node: /perception/traffic_light_recognition/camera2/classifier_pedestrian
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml
+    param_values:
+      - name: model_path
+        value: $(var data_path)/traffic_light_classifier/ped_traffic_light_classifier_mobilenetv2_batch_6.onnx
+      - name: label_path
+        value: $(var data_path)/traffic_light_classifier/lamp_labels_ped.txt
+      - name: build_only
+        value: false
+  - node: /perception/traffic_light_recognition/camera2/occlusion_predictor
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml
+    param_values: []
+  - node: /perception/traffic_light_recognition/multi_camera_fusion
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml
+    param_values: []
+  - node: /perception/traffic_light_recognition/traffic_light_arbiter
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_arbiter/traffic_light_arbiter.param.yaml
+    param_values: []
+  - node: /perception/traffic_light_recognition/traffic_light_crosswalk_estimator
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml
+    param_values: []

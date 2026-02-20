@@ -1,0 +1,24 @@
+autoware_system_design_format: 0.3.0
+
+name: e2e_simulation.parameter_set
+parameters:
+  - node: /
+    param_files: []
+    param_values:
+      - name: use_sim_time
+        value: true
+  - node: /localization
+    param_files: []
+    param_values:
+      - name: system_run_mode
+        value: online
+  - node: /global_parameter_loader
+    param_files: []
+    param_values:
+      - name: use_sim_time
+        value: true
+  - node: /system
+    param_files: []
+    param_values:
+      - name: launch_system_monitor
+        value: false
