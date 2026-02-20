@@ -171,4 +171,5 @@ jobs:
           pr-labels: |
             bot
             sync-upstream
+            run:build-and-test-differential
           auto-merge-method: merge
