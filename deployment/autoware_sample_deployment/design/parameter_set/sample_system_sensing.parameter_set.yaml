@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: sample_system_sensing.parameter_set
 
@@ -48,13 +48,13 @@ local_variables:
 
 parameters:
   - node: /sensing/vehicle_velocity_converter
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: use_sim_time
         value: false
   - node: /sensing/lidar/top/lidar
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: sensor_model
         value: VLS128
       - name: return_mode
@@ -82,8 +82,8 @@ parameters:
       - name: use_sim_time
         value: false
   - node: /sensing/lidar/top/crop_box_filter_self
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: input_frame
         value: base_link
       - name: output_frame
@@ -107,8 +107,8 @@ parameters:
       - name: max_z
         value: $(var max_height_offset)
   - node: /sensing/lidar/top/crop_box_filter_wheels
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: input_frame
         value: base_link
       - name: output_frame
@@ -132,9 +132,9 @@ parameters:
       - name: max_z
         value: $(var wheels_max_height_offset)
   - node: /sensing/lidar/top/distortion_corrector_node
-    parameter_files:
+    param_files:
       - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/distortion_corrector_node.param.yaml
-    parameters:
+    param_values:
       - name: input_frame
         value: base_link
       - name: output_frame
@@ -142,11 +142,11 @@ parameters:
       - name: use_sim_time
         value: false
   - node: /sensing/lidar/top/ring_outlier_filter
-    parameter_files:
+    param_files:
       - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
   - node: /sensing/lidar/left/lidar
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: sensor_model
         value: VLP16
       - name: return_mode
@@ -176,8 +176,8 @@ parameters:
       - name: calibration_file
         value: $(find-pkg-share nebula_velodyne_decoders)/calibration/VLP16.yaml
   - node: /sensing/lidar/left/crop_box_filter_self
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: input_frame
         value: base_link
       - name: output_frame
@@ -201,8 +201,8 @@ parameters:
       - name: max_z
         value: $(var max_height_offset)
   - node: /sensing/lidar/left/crop_box_filter_wheels
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: input_frame
         value: base_link
       - name: output_frame
@@ -226,9 +226,9 @@ parameters:
       - name: max_z
         value: $(var wheels_max_height_offset)
   - node: /sensing/lidar/left/distortion_corrector_node
-    parameter_files:
+    param_files:
       - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/distortion_corrector_node.param.yaml
-    parameters:
+    param_values:
       - name: input_frame
         value: base_link
       - name: output_frame
@@ -236,11 +236,11 @@ parameters:
       - name: use_sim_time
         value: false
   - node: /sensing/lidar/left/ring_outlier_filter
-    parameter_files:
+    param_files:
       - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
   - node: /sensing/lidar/right/lidar
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: sensor_model
         value: VLP16
       - name: return_mode
@@ -270,8 +270,8 @@ parameters:
       - name: calibration_file
         value: $(find-pkg-share nebula_velodyne_decoders)/calibration/VLP16.yaml
   - node: /sensing/lidar/right/crop_box_filter_self
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: input_frame
         value: base_link
       - name: output_frame
@@ -295,8 +295,8 @@ parameters:
       - name: max_z
         value: $(var max_height_offset)
   - node: /sensing/lidar/right/crop_box_filter_wheels
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: input_frame
         value: base_link
       - name: output_frame
@@ -320,9 +320,9 @@ parameters:
       - name: max_z
         value: $(var wheels_max_height_offset)
   - node: /sensing/lidar/right/distortion_corrector_node
-    parameter_files:
+    param_files:
       - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/distortion_corrector_node.param.yaml
-    parameters:
+    param_values:
       - name: input_frame
         value: base_link
       - name: output_frame
@@ -330,12 +330,12 @@ parameters:
       - name: use_sim_time
         value: false
   - node: /sensing/lidar/right/ring_outlier_filter
-    parameter_files:
+    param_files:
       - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
   - node: /sensing/lidar/concatenate_and_time_sync
-    parameter_files:
+    param_files:
       - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/concatenate_and_time_sync_node.param.yaml
-    parameters:
+    param_values:
       - name: output_frame
         value: base_link
       - name: input_frame
@@ -343,14 +343,14 @@ parameters:
       - name: use_sim_time
         value: false
   - node: /sensing/imu/gyro_bias_estimator
-    parameter_files:
+    param_files:
       - imu_corrector_param_file: $(find-pkg-share sample_sensor_kit_description)/config/imu_corrector.param.yaml
-    parameters:
+    param_values:
       - name: use_sim_time
         value: false
   - node: /sensing/imu/imu_corrector
-    parameter_files:
+    param_files:
       - param_file: $(find-pkg-share sample_sensor_kit_description)/config/imu_corrector.param.yaml
-    parameters:
+    param_values:
       - name: use_sim_time
         value: false
