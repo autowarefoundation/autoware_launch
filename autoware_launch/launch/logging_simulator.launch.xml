@@ -34,7 +34,8 @@
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <!-- V2X-->
-  <arg name="launch_v2x" default="false" description="launch v2x modules"/>
+  <arg name="launch_v2x" default="true" description="launch v2x modules"/>
+  <arg name="v2x_location" default="invalid_location" description="location for v2x (e.g. komatsu, shiojiri)"/>
   <!-- Scenario simulation -->
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
 
@@ -74,7 +75,8 @@
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
       <!-- V2X -->
-      <arg name="launch_v2x" value="false"/>
+      <arg name="launch_v2x" value="$(var launch_v2x)"/>
+      <arg name="v2x_location" value="$(var v2x_location)"/>
     </include>
   </group>
 </launch>

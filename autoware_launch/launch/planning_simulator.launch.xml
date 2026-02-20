@@ -35,7 +35,8 @@
   <let name="rviz_respawn" value="false" if="$(var scenario_simulation)"/>
   <let name="rviz_respawn" value="true" unless="$(var scenario_simulation)"/>
   <!-- V2X-->
-  <arg name="launch_v2x" default="false" description="launch v2x modules"/>
+  <arg name="launch_v2x" default="true" description="launch v2x modules"/>
+  <arg name="v2x_location" default="invalid_location" description="location for v2x (e.g. komatsu, shiojiri)"/>
   <!-- Vcu emulation -->
   <arg name="vehicle_simulation" default="true" description="use vehicle simulation"/>
   <!-- Auto mode setting-->
@@ -83,6 +84,7 @@
       <arg name="rviz_respawn" value="$(var rviz_respawn)"/>
       <!-- V2X -->
       <arg name="launch_v2x" value="$(var launch_v2x)"/>
+      <arg name="v2x_location" value="$(var v2x_location)"/>
       <!-- Auto mode setting-->
       <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
       <arg name="is_simulation" value="true"/>
