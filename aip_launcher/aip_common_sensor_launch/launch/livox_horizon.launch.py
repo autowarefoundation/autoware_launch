@@ -12,18 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
-from ament_index_python.packages import get_package_share_directory
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
 from launch.conditions import IfCondition
 from launch.substitutions import EnvironmentVariable
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
+from launch_ros.substitutions import FindPackageShare
 
 
 def get_vehicle_info(context):
@@ -93,12 +92,14 @@ def get_crop_box_min_range_component(ns, context):
 
 
 def launch_setup(context, *args, **kwargs):
-    livox_config_path = os.path.join(
-        get_package_share_directory("individual_params"),
-        "config",
-        EnvironmentVariable(name="VEHICLE_ID", default_value="default").perform(context),
-        "aip_x1",
-        "livox_lidar_config.json",
+    livox_config_path = PathJoinSubstitution(
+        [
+            FindPackageShare("individual_params"),
+            "config",
+            EnvironmentVariable(name="VEHICLE_ID", default_value="default").perform(context),
+            "aip_x1",
+            "livox_lidar_config.json",
+        ]
     )
 
     # livox driver
