@@ -1,23 +1,23 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: planning_simulation.parameter_set
 parameters:
   - node: /
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: use_sim_time
         value: false
   - node: /global_parameter_loader
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: use_sim_time
         value: false
   - node: /perception/object_recognition/tracking/multi_object_tracker
-    parameters:
+    param_values:
       - name: input/detection01/channel
         value: detected_objects
   - node: /system
-    parameters:
+    param_values:
       - name: run_mode
         value: planning_simulation
       - name: launch_system_monitor
@@ -25,7 +25,7 @@ parameters:
       - name: launch_dummy_diag_publisher
         value: true
   - node: /perception/occupancy_grid_map/occupancy_grid_map
-    parameters:
+    param_values:
       - name: input_obstacle_pointcloud
         value: true
       - name: input_obstacle_and_raw_pointcloud
@@ -33,7 +33,7 @@ parameters:
       - name: v_ratio
         value: 10.0
   - node: /planning
-    parameters:
+    param_values:
       - name: is_simulation
         value: true
       - name: enable_all_modules_auto_mode
