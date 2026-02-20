@@ -24,7 +24,7 @@ launch:
       default: "true"
   - arg:
       name: launch_autonomous_emergency_braking
-      default: "true"
+      default: "false"
   - arg:
       name: launch_collision_detector
       default: "true"
