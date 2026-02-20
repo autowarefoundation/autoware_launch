@@ -9,7 +9,7 @@
   <arg name="acceleration_topic"/>
   <arg name="steering_angle_topic"/>
 
-  <node pkg="nebula_ros" exec="continental_ars548_ros_wrapper_node" name="nebula_continental_ars548" output="screen">
+  <node pkg="nebula_continental" exec="continental_ars548_ros_wrapper_node" name="nebula_continental_ars548" output="screen">
     <param from="$(var config_file)" allow_substs="true"/>
     <param name="launch_hw" value="$(var launch_hw)"/>
     <param name="frame_id" value="$(var frame_id)"/>

@@ -147,7 +147,7 @@ def make_common_nodes(context):
 def make_nebula_node(context, as_composable_node, env=None):
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
-    sensor_make, sensor_extension = get_lidar_make(sensor_model)
+    sensor_make, _ = get_lidar_make(sensor_model)
 
     parameters = [
         ParameterFile(
@@ -199,7 +199,7 @@ def make_nebula_node(context, as_composable_node, env=None):
 
     if as_composable_node:
         return ComposableNode(
-            package="nebula_ros",
+            package="nebula_" + sensor_make.lower(),
             plugin=sensor_make + "RosWrapper",
             name=node_name,
             parameters=parameters,
@@ -209,8 +209,8 @@ def make_nebula_node(context, as_composable_node, env=None):
 
     else:
         return Node(
-            package="nebula_ros",
-            executable="hesai_ros_wrapper_node",
+            package="nebula_" + sensor_make.lower(),
+            executable=node_name,
             name=node_name,
             parameters=parameters,
             remappings=remappings,
