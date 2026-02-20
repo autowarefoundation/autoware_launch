@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.2.0
+autoware_system_design_format: 0.3.0
 
 name: SampleRosbagReplay.node
 
@@ -32,9 +32,9 @@ outputs:
     message_type: velodyne_msgs/msg/VelodyneScan
 
 # parameters
-parameters: []
+param_values: []
 
-parameter_files: []
+param_files: []
 
 # processes
 processes: []
