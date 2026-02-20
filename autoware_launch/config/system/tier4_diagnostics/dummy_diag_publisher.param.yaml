@@ -15,9 +15,6 @@
   ros__parameters:
     required_diags:
       # localization
-      ## /localization/001-topic_status/initialpose
-      "topic_state_monitor_initialpose3d: localization_topic_status": default
-
       ## /localization/001-topic_status/pose_twist_fusion_filter
       "topic_state_monitor_pose_twist_fusion_filter_pose: localization_topic_status": default
 
