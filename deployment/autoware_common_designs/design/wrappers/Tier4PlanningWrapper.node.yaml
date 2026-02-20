@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.2.0
+autoware_system_design_format: 0.3.0
 
 name: Tier4PlanningWrapper.node
 
@@ -29,9 +29,9 @@ outputs:
     message_type: autoware_planning_msgs/msg/Trajectory
 
 # parameters
-parameter_files: []
+param_files: []
 
-parameters:
+param_values:
   - name: enable_all_modules_auto_mode
     default: false
   - name: is_simulation

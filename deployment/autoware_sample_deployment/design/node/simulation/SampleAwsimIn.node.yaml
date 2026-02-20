@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.2.0
+autoware_system_design_format: 0.3.0
 
 name: SampleAwsimIn.node
 
@@ -34,9 +34,9 @@ inputs:
 outputs: []
 
 # parameters
-parameters: []
+param_values: []
 
-parameter_files: []
+param_files: []
 
 # processes
 processes: []

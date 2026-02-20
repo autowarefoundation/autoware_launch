@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.2.0
+autoware_system_design_format: 0.3.0
 
 name: Tier4SystemWrapper.node
 
@@ -41,9 +41,9 @@ outputs:
     message_type: autoware_system_msgs/msg/HazardStatusStamped
 
 # parameters
-parameter_files: []
+param_files: []
 
-parameters:
+param_values:
   - name: use_sim_time
     default: false
   - name: run_mode
