@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.2.0
+autoware_system_design_format: 0.3.0
 
 name: TopicToolsThrottleMessageAccelWithCovarianceStamped.node
 
@@ -21,11 +21,11 @@ outputs:
     message_type: geometry_msgs/msg/AccelWithCovarianceStamped
 
 # parameters
-parameters:
+param_values:
   - name: rate
     type: double
     default: 10.0
-parameter_files: []
+param_files: []
 
 # processes
 processes:

@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.2.0
+autoware_system_design_format: 0.3.0
 
 name: Ros2SocketCanReceiverNode.node
 
@@ -18,8 +18,8 @@ outputs:
     message_type: can_msgs/msg/Frame
 
 # parameters
-parameter_files: []
-parameters:
+param_files: []
+param_values:
   - name: interface
     type: string
     default: can0

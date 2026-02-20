@@ -1,23 +1,23 @@
-autoware_system_design_format: 0.1.0
+autoware_system_design_format: 0.3.0
 
 name: logging_simulation.parameter_set
 parameters:
   - node: /
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: use_sim_time
         value: true
   - node: /localization
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: system_run_mode
         value: logging_simulation
   - node: /global_parameter_loader
-    parameter_files: []
-    parameters:
+    param_files: []
+    param_values:
       - name: use_sim_time
         value: true
   - node: /sensing
-    parameters:
+    param_values:
       - name: launch_driver
         value: false
