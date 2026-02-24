@@ -41,9 +41,6 @@
             <arg name="input_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
             <arg name="output_traj" value="/planning/trajectory"/>
             <arg name="output_trajectories" value="/planning/generator/trajectory_optimizer/candidate_trajectories"/>
-            <arg name="jerk_filtered_smoother_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/JerkFiltered.param.yaml"/>
-            <arg name="velocity_smoother_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/velocity_smoother.param.yaml"/>
-            <arg name="common_smoother_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml"/>
             <arg
               name="elastic_band_param_path"
               value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/path_smoother/elastic_band_smoother.param.yaml"

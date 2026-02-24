@@ -17,8 +17,7 @@
   <exec_depend>autoware_radar_tracks_noise_filter</exec_depend>
   <exec_depend>autoware_velodyne_monitor</exec_depend>
   <exec_depend>individual_params</exec_depend>
-  <exec_depend>nebula_decoders</exec_depend>
-  <exec_depend>nebula_sensor_driver</exec_depend>
+  <exec_depend>nebula</exec_depend>
   <exec_depend>pe_ars408_ros</exec_depend>
   <exec_depend>ros2_socketcan</exec_depend>
 

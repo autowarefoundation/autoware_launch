@@ -2,6 +2,12 @@
 Changelog for package tier4_perception_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.50.0 (2026-02-13)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* chore: import tier4 launchers from universe (`#1740 <https://github.com/autowarefoundation/autoware_launch/issues/1740>`_)
+* Contributors: Taeseung Sohn, github-actions
+
 0.49.0 (2025-12-30)
 -------------------
 * Merge remote-tracking branch 'origin/main' into prepare-0.49.0-changelog

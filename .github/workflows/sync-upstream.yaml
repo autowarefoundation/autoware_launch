@@ -1,0 +1,174 @@
+name: sync-upstream
+
+on:
+  workflow_dispatch:
+    inputs:
+      base-branch:
+        description: Base branch to sync to (defaults to repository default branch if not provided)
+        required: false
+        type: string
+      upstream-id:
+        description: Upstream ID from config (defaults to default-upstream-id in .github/upstreams.yaml if not provided)
+        required: false
+        type: string
+  workflow_call:
+    inputs:
+      base-branch:
+        description: Base branch to sync to (defaults to repository default branch if not provided)
+        required: false
+        type: string
+      upstream-id:
+        description: Upstream ID from config (defaults to default-upstream-id in .github/upstreams.yaml if not provided)
+        required: false
+        type: string
+    secrets:
+      APP_ID:
+        required: true
+      PRIVATE_KEY:
+        required: true
+
+# cspell: ignore strenv
+
+jobs:
+  validate-and-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.49.2/yq_linux_amd64
+          echo "be2c0ddcf426b6a231648610ec5d1666ae50e9f6473e82f6486f9f4cb6e3e2f7  /usr/local/bin/yq" | sha256sum -c -
+          sudo chmod a+x /usr/local/bin/yq
+
+      - name: Validate and parse config
+        id: parse-config
+        env:
+          INPUT_BASE_BRANCH: ${{ inputs.base-branch }}
+          INPUT_UPSTREAM_ID: ${{ inputs.upstream-id }}
+        run: |
+          CONFIG_FILE=".github/upstreams.yaml"
+
+          # Check if config file exists
+          if [ ! -f "$CONFIG_FILE" ]; then
+            echo "Error: Config file $CONFIG_FILE not found"
+            exit 1
+          fi
+
+          export BASE_REPO="${{ github.repository }}"
+
+          # Validate repository entry exists
+          REPO_EXISTS=$(yq eval \
+            '.[strenv(BASE_REPO)]' \
+            "$CONFIG_FILE"
+          )
+          if [ "$REPO_EXISTS" = "null" ] || [ -z "$REPO_EXISTS" ]; then
+            echo "Error: base repo ($BASE_REPO) not found in $CONFIG_FILE"
+            exit 1
+          fi
+
+          # Get default-upstream-id
+          DEFAULT_UPSTREAM=$(yq eval \
+            '.[strenv(BASE_REPO)].default-upstream-id' \
+            "$CONFIG_FILE"
+          )
+          echo "default-upstream-id=$DEFAULT_UPSTREAM" >> "$GITHUB_OUTPUT"
+
+          # Determine which upstream ID to use
+          if [ -z "$INPUT_UPSTREAM_ID" ]; then
+            if [ "$DEFAULT_UPSTREAM" = "null" ] || [ -z "$DEFAULT_UPSTREAM" ]; then
+              echo "Error: default-upstream-id is not set in $CONFIG_FILE and upstream-id was not provided"
+              exit 1
+            fi
+            UPSTREAM_ID="$DEFAULT_UPSTREAM"
+          else
+            UPSTREAM_ID="$INPUT_UPSTREAM_ID"
+            if ! [[ "$UPSTREAM_ID" =~ ^[A-Za-z0-9_-]+$ ]]; then
+              echo "Error: upstream-id ($UPSTREAM_ID) contains invalid characters"
+              exit 1
+            fi
+          fi
+
+          export UPSTREAM_ID="$UPSTREAM_ID"
+          echo "upstream-id=$UPSTREAM_ID" >> "$GITHUB_OUTPUT"
+
+          # Get upstream URL from config
+          UPSTREAM_URL=$(yq eval \
+            '.[strenv(BASE_REPO)].upstreams[strenv(UPSTREAM_ID)].url' \
+            "$CONFIG_FILE"
+          )
+          if [ "$UPSTREAM_URL" = "null" ] || [ -z "$UPSTREAM_URL" ]; then
+            echo "Error: URL for upstream ($UPSTREAM_ID) not found in $CONFIG_FILE"
+            exit 1
+          fi
+          echo "upstream-url=$UPSTREAM_URL" >> "$GITHUB_OUTPUT"
+
+          # Determine base branch to use
+          if [ -z "$INPUT_BASE_BRANCH" ]; then
+            BASE_BRANCH="${{ github.event.repository.default_branch }}"
+            if [ -z "$BASE_BRANCH" ]; then
+              echo "Error: base-branch was not provided and repository default branch is unavailable"
+              exit 1
+            fi
+          else
+            BASE_BRANCH="$INPUT_BASE_BRANCH"
+            if ! [[ "$BASE_BRANCH" =~ ^[A-Za-z0-9._/-]+$ ]]; then
+              echo "Error: base-branch ($BASE_BRANCH) contains invalid characters"
+              exit 1
+            fi
+          fi
+          export BASE_BRANCH="$BASE_BRANCH"
+          echo "base-branch=$BASE_BRANCH" >> "$GITHUB_OUTPUT"
+
+          # Determine upstream branch and reviewers from matching sync entry
+          MATCHING_SYNCS=$(yq eval -o=json \
+            '
+              .[strenv(BASE_REPO)].upstreams[strenv(UPSTREAM_ID)].syncs // []
+              | map(select(.base == strenv(BASE_BRANCH)))
+            ' \
+            "$CONFIG_FILE"
+          )
+          MATCH_COUNT=$(echo "$MATCHING_SYNCS" | jq 'length')
+          if [ "$MATCH_COUNT" -eq 0 ]; then
+            echo "Error: no syncs entry matches base-branch ($BASE_BRANCH) for upstream ($UPSTREAM_ID)"
+            exit 1
+          fi
+          if [ "$MATCH_COUNT" -gt 1 ]; then
+            echo "Error: multiple syncs entries match base-branch ($BASE_BRANCH) for upstream ($UPSTREAM_ID)"
+            exit 1
+          fi
+          UPSTREAM_BRANCH=$(echo "$MATCHING_SYNCS" | jq -r '.[0].upstream')
+          echo "upstream-branch=$UPSTREAM_BRANCH" >> "$GITHUB_OUTPUT"
+
+          REVIEWERS=$(echo "$MATCHING_SYNCS" | jq -r '.[0].reviewers // [] | join(",")')
+          echo "reviewers=$REVIEWERS" >> "$GITHUB_OUTPUT"
+
+          # Create sanitized branch name by replacing slashes with underscores
+          BASE_BRANCH_CLEAN="${BASE_BRANCH//\//_}"
+          UPSTREAM_ID_CLEAN="${UPSTREAM_ID//\//_}"
+          UPSTREAM_BRANCH_CLEAN="${UPSTREAM_BRANCH//\//_}"
+          SYNC_PR_BRANCH="sync_${BASE_BRANCH_CLEAN}_from_${UPSTREAM_ID_CLEAN}_${UPSTREAM_BRANCH_CLEAN}"
+          echo "sync-pr-branch=$SYNC_PR_BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Run sync-branches
+        uses: autowarefoundation/autoware-github-actions/sync-branches@v1
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          base-branch: ${{ steps.parse-config.outputs.base-branch }}
+          sync-pr-branch: ${{ steps.parse-config.outputs.sync-pr-branch }}
+          sync-target-repository: ${{ steps.parse-config.outputs.upstream-url }}
+          sync-target-branch: ${{ steps.parse-config.outputs.upstream-branch }}
+          pr-title: "chore: sync ${{ steps.parse-config.outputs.base-branch }} from ${{ steps.parse-config.outputs.upstream-id }}:${{ steps.parse-config.outputs.upstream-branch }}"
+          pr-reviewers: ${{ steps.parse-config.outputs.reviewers }}
+          pr-labels: |
+            bot
+            sync-upstream
+          auto-merge-method: merge
