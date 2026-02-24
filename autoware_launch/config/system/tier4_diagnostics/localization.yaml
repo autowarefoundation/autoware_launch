@@ -60,15 +60,8 @@ units:
   - path: /localization/none
     type: and
     list:
-      - { type: link, link: /localization/001-topic_status/initialpose-error }
       - { type: link, link: /localization/003-matching_score-error }
       - { type: link, link: /localization/008-pose_initializer_status }
-
-  - path: /localization/001-topic_status/initialpose-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /localization/001-topic_status/initialpose
 
   - path: /localization/001-topic_status/pose_twist_fusion_filter-error
     type: warn-to-ok
@@ -111,13 +104,6 @@ units:
     item:
       type: link
       link: /localization/007-pose_instability_detector
-
-  - path: /localization/001-topic_status/initialpose
-    type: diag
-    node: topic_state_monitor_initialpose3d
-    name: localization_topic_status
-    timeout: 3.0
-    latch: 0.0
 
   - path: /localization/001-topic_status/pose_twist_fusion_filter
     type: diag
