@@ -2,6 +2,9 @@
 Changelog for package common_awsim_labs_sensor_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.50.0 (2026-02-13)
+-------------------
+
 0.49.0 (2025-12-30)
 -------------------
 
@@ -22,6 +25,15 @@ Changelog for package common_awsim_labs_sensor_launch
   * chore: add cropbox parameter
   ---------
 * Contributors: Yi-Hsiang Fang (Vivid), github-actions
+
+0.45.3 (2025-07-17)
+-------------------
+
+0.45.2 (2025-06-28)
+-------------------
+
+0.45.1 (2025-06-27)
+-------------------
 
 0.45.0 (2025-05-22)
 -------------------

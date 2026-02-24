@@ -2,6 +2,30 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.50.0 (2026-02-13)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(traffic_light_classifier): add under exposure threshold (`#1725 <https://github.com/autowarefoundation/autoware_launch/issues/1725>`_)
+  * add under exposure threshold
+  * change parameter
+  ---------
+* fix: add argument for traffic light (`#1748 <https://github.com/autowarefoundation/autoware_launch/issues/1748>`_)
+* feat(autoware_launch): remove tier4 api adapter (`#1745 <https://github.com/autowarefoundation/autoware_launch/issues/1745>`_)
+  update api option
+* feat(obstacle_stop): add height and size filter (`#1742 <https://github.com/autowarefoundation/autoware_launch/issues/1742>`_)
+* fix(dummy_perception_publisher): set default pedestrian z position to 0.0m (`#1739 <https://github.com/autowarefoundation/autoware_launch/issues/1739>`_)
+* feat(avoidance): add parameter for signalling during yield (`#1721 <https://github.com/autowarefoundation/autoware_launch/issues/1721>`_)
+* feat(behavior_path_planner): add turn_signal_path_backward_length parametor (`#1729 <https://github.com/autowarefoundation/autoware_launch/issues/1729>`_)
+  feat: add turn signal path backward length parameter
+* fix(roi_cluster_fusion): separate iou threshold for each class (`#1730 <https://github.com/autowarefoundation/autoware_launch/issues/1730>`_)
+  * fix(roi_cluster_fusion): separate iou threshold for each class
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* fix(ekf_localizer): change for queue pop on ekf_localizer (`#1690 <https://github.com/autowarefoundation/autoware_launch/issues/1690>`_)
+  fix: change for queue pop on ekf_localizer
+* Contributors: Masaki Baba, Mehmet Dogru, Motz, Sho Iwasawa, Takagi, Isamu, Yuki TAKAGI, badai nguyen, github-actions
+
 0.49.0 (2025-12-30)
 -------------------
 * Merge remote-tracking branch 'origin/main' into prepare-changelog-0.49.0
@@ -566,6 +590,27 @@ Changelog for package autoware_launch
   * fix: rename param
   ---------
 * Contributors: Arjun Jagdish Ram, Fumiya Watanabe, Kosuke Takeuchi, Kotakku, Kyoichi Sugahara, Makoto Kurihara, Mamoru Sobue, Masaki Baba, Masato Saeki, Maxime CLEMENT, Ryohsuke Mitsudome, Satoshi OTA, Taekjin LEE, Takayuki Murooka, Yi-Hsiang Fang (Vivid), Yuki TAKAGI, Yukinari Hisaki, Yuxuan Liu, Zulfaqar Azmi, badai nguyen, github-actions, lei.gu, mkquda
+
+0.45.3 (2025-07-17)
+-------------------
+* chore: back port 1527, 1528, 1529 to humble (`#1559 <https://github.com/autowarefoundation/autoware_launch/issues/1559>`_)
+* feat: add launch_pointcloud_container to tier4_localization_component.launch.xml (`#1529 <https://github.com/autowarefoundation/autoware_launch/issues/1529>`_)
+* feat: add global parameters to tier4_localization_component.launch.xml (`#1528 <https://github.com/autowarefoundation/autoware_launch/issues/1528>`_)
+* fix(perception): add `pointcloud_container_name` parameter to give (`#1527 <https://github.com/autowarefoundation/autoware_launch/issues/1527>`_)
+  add arg parameter to give
+* Contributors: Masato Saeki, Ryohsuke Mitsudome
+
+0.45.2 (2025-06-28)
+-------------------
+* fix:  `pointcloud_contaner` is launched on `autoware.launch.xml` by default (`#1523 <https://github.com/autowarefoundation/autoware_launch/issues/1523>`_) (`#1524 <https://github.com/autowarefoundation/autoware_launch/issues/1524>`_)
+* fix:  `pointcloud_contaner` is launched on `autoware.launch.xml` by default (`#1523 <https://github.com/autowarefoundation/autoware_launch/issues/1523>`_)
+* Contributors: Ryohsuke Mitsudome, Yutaka Kondo
+
+0.45.1 (2025-06-27)
+-------------------
+* feat(launch/components): launch `autoware_global_parameter_loader` in a component-wise manner (`#1512 <https://github.com/autowarefoundation/autoware_launch/issues/1512>`_)
+  add global parameters
+* Contributors: Yutaka Kondo
 
 0.45.0 (2025-05-22)
 -------------------
