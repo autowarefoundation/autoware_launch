@@ -61,7 +61,7 @@ units:
     type: and
     list:
       - { type: link, link: /localization/001-topic_status/
-      -error }
+            -error }
       - { type: link, link: /localization/003-matching_score-error }
       - { type: link, link: /localization/008-pose_initializer_status }
 
