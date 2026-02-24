@@ -1,0 +1,82 @@
+/**:
+  ros__parameters:
+    device: tcp://192.168.100.101:28784
+
+    frame_id: gnss_link
+    aux1_frame_id: aux1
+    get_spatial_config_from_tf: false
+    use_ros_axis_orientation: false
+    receiver_type: gnss
+    multi_antenna: false
+
+    datum: Default
+
+    att_offset:
+      heading: 0.0
+      pitch: 0.0
+
+    ant_type: Unknown
+    ant_serial_nr: Unknown
+    ant_aux1_type: Unknown
+    ant_aux1_serial_nr: Unknown
+
+    polling_period:
+      pvt: 200
+      rest: 200
+
+    use_gnss_time: false
+
+    rtk_settings:
+      ntrip_1:
+        id: ""
+        caster: ""
+        caster_port: 2101
+        username: ""
+        password: ""
+        mountpoint: ""
+        version: "v2"
+        tls: false
+        fingerprint: ""
+        rtk_standard: "auto"
+        send_gga: "auto"
+        keep_open: true
+      ip_server_1:
+        id: "IPS1"
+        port: 28785
+        rtk_standard: "RTCMv3"
+        send_gga: "auto"
+        keep_open: true
+      serial_1:
+        port: ""
+        baud_rate: 115200
+        rtk_standard: "auto"
+        send_gga: "auto"
+        keep_open: true
+
+    publish:
+      # For both GNSS and INS Rxs
+      navsatfix: true
+      gpsfix: false
+      gpgga: false
+      gprmc: false
+      gpst: false
+      measepoch: false
+      pvtcartesian: false
+      pvtgeodetic: true
+      basevectorcart: false
+      basevectorgeod: false
+      poscovcartesian: false
+      poscovgeodetic: true
+      velcovgeodetic: false
+      atteuler: false
+      attcoveuler: false
+      pose: false
+      twist: false
+      diagnostics: true
+      # For GNSS Rx only
+      gpgsa: false
+      gpgsv: false
+
+    # logger
+
+    activate_debug_log: false

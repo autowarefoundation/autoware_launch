@@ -1,0 +1,136 @@
+# Description:
+#   name: diag name
+#   is_active: Force update or not
+#   status: diag status set by dummy diag publisher "OK, Warn, Error, Stale"
+#
+# Note:
+#
+# default values are:
+#   is_active: "true"
+#   status: "OK"
+---
+/**:
+  ros__parameters:
+    required_diags:
+      # gnss
+      "topic_state_monitor_gnss_pose: gnss_topic_status": default
+      "septentrio_driver: Quality indicators": default
+
+      # imu
+      "imu_monitor: yaw_rate_status": default
+      "topic_state_monitor_imu_data: imu_topic_status": default
+      "gyro_bias_scale_validator: gyro_bias_scale_validator": default
+      "/sensing/imu/tamagawa/tag_can_driver: rate bound check": default
+
+      # lidar
+      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: hesai_status": default
+      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: hesai_status": default
+      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: hesai_status": default
+      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: hesai_status": default
+      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: hesai_status": default
+      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: hesai_status": default
+      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: hesai_status": default
+      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: hesai_status": default
+
+      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: hesai_ptp": default
+      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: hesai_ptp": default
+      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: hesai_ptp": default
+      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: hesai_ptp": default
+      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: hesai_ptp": default
+      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: hesai_ptp": default
+      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: hesai_ptp": default
+      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: hesai_ptp": default
+
+      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: hesai_temperature": default
+      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: hesai_temperature": default
+      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: hesai_temperature": default
+      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: hesai_temperature": default
+      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: hesai_temperature": default
+      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: hesai_temperature": default
+      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: hesai_temperature": default
+      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: hesai_temperature": default
+
+      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: Functional safety status": default
+      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: Functional safety status": default
+      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: Functional safety status": default
+      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: Functional safety status": default
+      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: Functional safety status": default
+      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: Functional safety status": default
+      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: Functional safety status": default
+      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: Functional safety status": default
+
+      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: Packet loss status": default
+      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: Packet loss status": default
+      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: Packet loss status": default
+      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: Packet loss status": default
+      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: Packet loss status": default
+      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: Packet loss status": default
+      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: Packet loss status": default
+      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: Packet loss status": default
+
+      "/sensing/lidar/front_lower/hesai_ros_wrapper_node: rate bound check": default
+      "/sensing/lidar/front_upper/hesai_ros_wrapper_node: rate bound check": default
+      "/sensing/lidar/left_lower/hesai_ros_wrapper_node: rate bound check": default
+      "/sensing/lidar/left_upper/hesai_ros_wrapper_node: rate bound check": default
+      "/sensing/lidar/rear_lower/hesai_ros_wrapper_node: rate bound check": default
+      "/sensing/lidar/rear_upper/hesai_ros_wrapper_node: rate bound check": default
+      "/sensing/lidar/right_lower/hesai_ros_wrapper_node: rate bound check": default
+      "/sensing/lidar/right_upper/hesai_ros_wrapper_node: rate bound check": default
+
+      "concatenate_data: /sensing/lidar/concatenate_data": default
+
+      "polar_voxel_outlier_filter: /sensing/lidar/right_upper: visibility_validation": default
+
+      # camera
+      "v4l2_camera_camera0: camera0_diagnostics": default
+      "v4l2_camera_camera1: camera1_diagnostics": default
+      "v4l2_camera_camera2: camera2_diagnostics": default
+      "v4l2_camera_camera3: camera3_diagnostics": default
+      "v4l2_camera_camera4: camera4_diagnostics": default
+      "v4l2_camera_camera5: camera5_diagnostics": default
+      "v4l2_camera_camera6: camera6_diagnostics": default
+      "v4l2_camera_camera7: camera7_diagnostics": default
+
+      ##  /sensing/camera/003-sync
+      "tier4_camera_sync_doctor0: camera0_sync_status": default
+      "tier4_camera_sync_doctor1: camera1_sync_status": default
+      "tier4_camera_sync_doctor2: camera2_sync_status": default
+      "tier4_camera_sync_doctor3: camera3_sync_status": default
+      "tier4_camera_sync_doctor4: camera4_sync_status": default
+      "tier4_camera_sync_doctor5: camera5_sync_status": default
+      "tier4_camera_sync_doctor6: camera6_sync_status": default
+      "tier4_camera_sync_doctor7: camera7_sync_status": default
+      "tier4_camera_sync_doctor8: camera8_sync_status": default
+      "tier4_camera_sync_doctor9: camera9_sync_status": default
+      "tier4_camera_sync_doctor10: camera10_sync_status": default
+
+      # /sensing/camera/004-image
+      "image_diagnostics3: camera3": default
+      "image_diagnostics5: camera5": default
+
+      # /sensing/camera/006-hw-diag
+      "uevent_diagnostics_publisher_0: camera0_uevent_diag": default
+      "uevent_diagnostics_publisher_0: camera1_uevent_diag": default
+      "uevent_diagnostics_publisher_0: camera2_uevent_diag": default
+      "uevent_diagnostics_publisher_0: camera3_uevent_diag": default
+      "uevent_diagnostics_publisher_1: camera4_uevent_diag": default
+      "uevent_diagnostics_publisher_1: camera5_uevent_diag": default
+      "uevent_diagnostics_publisher_1: camera6_uevent_diag": default
+      "uevent_diagnostics_publisher_1: camera7_uevent_diag": default
+      "uevent_diagnostics_publisher_addon: camera8_uevent_diag": default
+      "uevent_diagnostics_publisher_addon: camera9_uevent_diag": default
+      "uevent_diagnostics_publisher_addon: camera10_uevent_diag": default
+
+      # radar
+      "/sensing/radar/front_center/nebula_continental_ars548: Liveness": default
+      "/sensing/radar/rear_center/nebula_continental_ars548: Liveness": default
+      "/sensing/radar/front_center/nebula_continental_ars548: Dynamics": default
+      "/sensing/radar/rear_center/nebula_continental_ars548: Dynamics": default
+      "/sensing/radar/front_center/nebula_continental_ars548: Internal": default
+      "/sensing/radar/rear_center/nebula_continental_ars548: Internal": default
+      "/sensing/radar/front_center/nebula_continental_ars548: Blockage": default
+      "/sensing/radar/rear_center/nebula_continental_ars548: Blockage": default
+      "/sensing/radar/front_center/nebula_continental_ars548: Objects rate bound status": default
+      "/sensing/radar/rear_center/nebula_continental_ars548: Objects rate bound status": default
+      "/sensing/radar/front_center/nebula_continental_ars548: Detections rate bound status": default
+      "/sensing/radar/rear_center/nebula_continental_ars548: Detections rate bound status": default

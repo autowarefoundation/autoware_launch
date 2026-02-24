@@ -1,0 +1,136 @@
+name: Cherry pick release/candidate into develop
+on:
+  pull_request:
+    branches:
+      - tier4/main # Branches where the original PRs will be merged
+      - beta/v4.0
+      - beta/v4.2
+      - beta/v4.3
+    types:
+      - opened
+      - reopened
+      - closed
+      - labeled
+
+jobs:
+  auto-add-label:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' || github.event.action == 'reopened'
+    name: Auto-add cherry-pick label
+    steps:
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Create label if it doesn't exist
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            try {
+              await github.rest.issues.getLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: 'tag:enable-automatic-cherry-pick'
+              });
+              console.log('Label already exists');
+            } catch (error) {
+              if (error.status === 404) {
+                console.log('Label does not exist. Creating it...');
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: 'tag:enable-automatic-cherry-pick',
+                  color: '0E8A16',
+                  description: 'Enable automatic cherry-pick for this PR'
+                });
+                console.log('Label created successfully');
+              } else {
+                console.log('Error checking label:', error);
+                throw error;
+              }
+            }
+      - name: Add label to PR
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            // Wait for 10 seconds to avoid conflict with the base pr labeler, check https://github.com/actions/labeler/issues/763
+            console.log('Waiting for 10 seconds...');
+            await new Promise(resolve => setTimeout(resolve, 10000));
+            console.log('Wait completed');
+
+            await github.rest.issues.addLabels({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['tag:enable-automatic-cherry-pick']
+            });
+            console.log('Label added to PR');
+
+  make-sure-label-is-present:
+    uses: autowarefoundation/autoware-github-actions/.github/workflows/make-sure-label-is-present.yaml@v1
+    if: github.event.action == 'closed' || github.event.action == 'labeled'
+    with:
+      label: tag:enable-automatic-cherry-pick
+
+  cherry-pick:
+    needs: make-sure-label-is-present
+    if: github.event.pull_request.merged == true && needs.make-sure-label-is-present.outputs.result == 'true' && !contains(github.event.pull_request.title, '🍒') # only merged PRs without 'cherry-pick' in title will be cherry picked
+    runs-on: ubuntu-latest
+    name: Start the cherry-pick action
+    strategy:
+      fail-fast: false
+      matrix:
+        following-branch:
+          - tier4/main
+          - beta/v4.0
+          - beta/v4.2
+          - beta/v4.3
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive # If you need to operate on submodules
+
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Cherry pick
+        id: cherry-pick
+        uses: tier4/action-auto-cherry-pick@v1.0.5
+        if: ${{ matrix.following-branch != github.base_ref }}
+        with:
+          # Branch which will receive the automatic cherry-picks
+          target-branch: ${{ matrix.following-branch }}
+
+          # If you want the action to fast-forward the submodules to a specific branch
+          pr-title-suffix: 🍒${{ matrix.following-branch }}
+          pr-labels: bot,cherry-pick
+          pr-creator-token: ${{ steps.generate-token.outputs.token }}
+
+      - name: Get the output
+        if: ${{ matrix.following-branch != github.base_ref }}
+        run: echo "The created PR number is ${{steps.cherry-pick.outputs.pr-number }}"
+
+      - name: Publish result to the pull request
+        if: ${{ matrix.following-branch != github.base_ref }}
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "🤖: The created PR number is #${{steps.cherry-pick.outputs.pr-number }} for ${{ matrix.following-branch }}"
+            })

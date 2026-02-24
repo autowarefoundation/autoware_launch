@@ -1,0 +1,46 @@
+units:
+  - path: /sub_ecu/control/sub_ecu_in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /sub_ecu/control/topic_status/control_command/warn-to-ok }
+      - { type: link, link: /sub_ecu/control/control_command_gate/timeout_in_lane_stop/warn-to-ok }
+      - { type: link, link: /sub_ecu/control/control_command_gate/timeout_output/warn-to-ok }
+
+  - path: /sub_ecu/control/topic_status/control_command/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/control/topic_status/control_command
+
+  - path: /sub_ecu/control/control_command_gate/timeout_in_lane_stop/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/control/control_command_gate/timeout_in_lane_stop
+
+  - path: /sub_ecu/control/control_command_gate/timeout_output/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/control/control_command_gate/timeout_output
+
+  - path: /sub_ecu/control/topic_status/control_command
+    type: diag
+    node: topic_state_monitor_control_command_control_cmd
+    name: topic_status
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/control/control_command_gate/timeout_in_lane_stop
+    type: diag
+    node: control_command_gate
+    name: timeout_in_lane_stop
+    timeout: 3.0
+    latch: 0.0
+
+  - path: /sub_ecu/control/control_command_gate/timeout_output
+    type: diag
+    node: control_command_gate
+    name: timeout_output
+    timeout: 3.0
+    latch: 0.0
