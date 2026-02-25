@@ -22,8 +22,6 @@
   <!-- common param path -->
   <arg name="vehicle_param_file"/>
   <arg name="nearest_search_param_path"/>
-  <arg name="initial_steer_offset_param_path" default="$(find-pkg-share autoware_mpc_lateral_controller)/param/steer_offset.param.yaml"/>
-  <arg name="initial_steer_offset_param_name" default="steer_offset"/>
 
   <!-- package param path -->
   <arg name="trajectory_follower_node_param_path"/>
@@ -180,8 +178,6 @@
             <param from="$(var lon_controller_param_path)"/>
             <param from="$(var lat_controller_param_path)"/>
             <param from="$(var vehicle_param_file)"/>
-            <param from="$(var initial_steer_offset_param_path)"/>
-            <param name="steer_offset_param_name" value="$(var initial_steer_offset_param_name)"/>
             <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
           </composable_node>
         </load_composable_node>
