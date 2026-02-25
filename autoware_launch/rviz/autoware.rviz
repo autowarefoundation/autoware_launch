@@ -899,6 +899,7 @@ Visualization Manager:
                     Color: 119; 11; 32
                   Class: autoware_perception_rviz_plugin/PredictedObjects
                   Display 3d polygon: true
+                  Display Mesh: true
                   Display Label: true
                   Display PoseWithCovariance: false
                   Display Predicted Path Confidence: true
