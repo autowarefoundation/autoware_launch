@@ -21,6 +21,7 @@
       - "external_request_lane_change_left"
       - "external_request_lane_change_right"
       - "bidirectional_traffic"
+      - "direction_change"
     slot3:
       - "goal_planner"
     slot4:
@@ -83,6 +84,11 @@
       enable_simultaneous_execution_as_candidate_module: false
 
     bidirectional_traffic:
+      enable_rtc: false
+      enable_simultaneous_execution_as_approved_module: true
+      enable_simultaneous_execution_as_candidate_module: true
+
+    direction_change:
       enable_rtc: false
       enable_simultaneous_execution_as_approved_module: true
       enable_simultaneous_execution_as_candidate_module: true
