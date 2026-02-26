@@ -44,7 +44,7 @@ launch:
       default: "true"
   - arg:
       name: launch_direction_change_module
-      default: "true"
+      default: "false"
 
   # behavior velocity modules
   - arg:
