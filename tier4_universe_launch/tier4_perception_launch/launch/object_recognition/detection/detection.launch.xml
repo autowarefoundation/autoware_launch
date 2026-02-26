@@ -92,6 +92,7 @@
   <arg name="sync_param_path"/>
   <arg name="voxel_grid_based_euclidean_param_path"/>
   <arg name="irregular_object_detector_param_path"/>
+  <arg name="object_recognition_detection_object_sorter_radar_param_path"/>
 
   <!-- internal interfaces -->
   <let name="pointcloud_filter/output/pointcloud" value="$(var ns)/pointcloud_map_filtered/pointcloud"/>
@@ -295,8 +296,7 @@
       <arg name="input/radar" value="$(var input/radar)"/>
       <arg name="output/objects" value="$(var radar_pipeline/output/objects)"/>
       <arg name="radar_lanelet_filtering_range_param_path" value="$(var radar_lanelet_filtering_range_param_path)"/>
-      <arg name="object_velocity_splitter_param_path" value="$(var object_recognition_detection_object_velocity_splitter_radar_fusion_param_path)"/>
-      <arg name="object_range_splitter_param_path" value="$(var object_recognition_detection_object_range_splitter_radar_fusion_param_path)"/>
+      <arg name="object_sorter_param_path" value="$(var object_recognition_detection_object_sorter_radar_param_path)"/>
     </include>
   </group>
   <group if="$(var switch/detector/radar_only)">
@@ -305,8 +305,7 @@
       <arg name="input/radar" value="$(var input/radar)"/>
       <arg name="output/objects" value="objects"/>
       <arg name="radar_lanelet_filtering_range_param_path" value="$(var radar_lanelet_filtering_range_param_path)"/>
-      <arg name="object_velocity_splitter_param_path" value="$(var object_recognition_detection_object_velocity_splitter_radar_param_path)"/>
-      <arg name="object_range_splitter_param_path" value="$(var object_recognition_detection_object_range_splitter_radar_param_path)"/>
+      <arg name="object_sorter_param_path" value="$(var object_recognition_detection_object_sorter_radar_param_path)"/>
     </include>
   </group>
   <group scoped="false" if="$(eval '&quot;$(var mode)&quot;==&quot;camera&quot;')">
