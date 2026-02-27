@@ -2091,6 +2091,62 @@ Visualization Manager:
                   Value: true
               Enabled: true
               Name: Parking
+            - Class: rviz_common/Group
+              Displays:
+                    - Class: rviz_plugins/Path
+                      Color Border Vel Max: 3
+                      Enabled: true
+                      Name: Path
+                      Topic:
+                        Depth: 5
+                        Durability Policy: Volatile
+                        Filter size: 10
+                        History Policy: Keep Last
+                        Reliability Policy: Reliable
+                        Value: /planning/scenario_planning/waypoint_following/path_visualization
+                      Value: true
+                      View Drivable Area:
+                        Alpha: 0.9990000128746033
+                        Color: 0; 148; 205
+                        Value: false
+                        Width: 0.30000001192092896
+                      View Footprint:
+                        Alpha: 1
+                        Color: 230; 230; 50
+                        Offset from BaseLink: 0
+                        Rear Overhang: 1.0299999713897705
+                        Value: false
+                        Vehicle Length: 4.769999980926514
+                        Vehicle Width: 1.8300000429153442
+                      View Path:
+                        Alpha: 0.4000000059604645
+                        Constant Width: false
+                        Fade Out Distance: 0
+                        Max Velocity Color: 0; 230; 120
+                        Mid Velocity Color: 32; 138; 174
+                        Min Velocity Color: 63; 46; 227
+                        Value: true
+                        Width: 2
+                      View Point:
+                        Alpha: 1
+                        Color: 0; 60; 255
+                        Offset: 0
+                        Radius: 0.10000000149011612
+                        Value: false
+                      View Text Slope:
+                        Scale: 0.30000001192092896
+                        Value: false
+                      View Text Velocity:
+                        Scale: 0.30000001192092896
+                        Value: false
+                      View Velocity:
+                        Alpha: 0.4000000059604645
+                        Color: 0; 0; 0
+                        Constant Color: false
+                        Scale: 0.30000001192092896
+                        Value: true
+              Enabled: true
+              Name: WaypointFollowing
             - Class: rviz_plugins/PoseWithUuidStamped
               Enabled: true
               Length: 1.5
