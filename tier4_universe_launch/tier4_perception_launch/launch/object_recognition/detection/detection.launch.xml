@@ -102,6 +102,7 @@
   <let name="camera_lidar_rule_detector/output/objects" value="$(var ns)/clustering/camera_lidar_fusion/objects"/>
   <let name="camera_lidar_rule_detector/output/cluster_objects" value="$(var ns)/clustering/objects_with_feature"/>
   <let name="tracker_based_detector/input/clusters" value="$(var ns)/clustering/objects_with_feature"/>
+  <let name="tracker_based_detector/output/objects_raw" value="$(var ns)/detection_by_tracker/objects"/>
   <let name="tracker_based_detector/output/objects" value="$(var ns)/detection_by_tracker/objects"/>
   <let name="lidar_object_filter/output/objects" value="$(var ns)/$(var lidar_detection_model_type)/validation/objects"/>
   <let name="camera_lidar_object_filter/output/objects" value="$(var ns)/clustering/camera_lidar_fusion/filtered/objects"/>
@@ -141,6 +142,7 @@
   <group scoped="false" if="$(eval '&quot;$(var mode)&quot;==&quot;camera_lidar_radar_fusion&quot;')">
     <let name="switch/filter/pointcloud" value="true"/>
     <let name="switch/detector/camera_lidar" value="true"/>
+    <let name="tracker_based_detector/output/objects_raw" value="$(var ns)/detection_by_tracker/unfiltered/objects"/>
     <let name="switch/detector/lidar_dnn" value="true"/>
     <let name="switch/detector/radar" value="true" unless="$(var use_radar_tracking_fusion)"/>
     <let name="switch/merger/camera_lidar_radar" value="true" unless="$(var use_multi_channel_tracker_merger)"/>
@@ -155,6 +157,7 @@
   <group scoped="false" if="$(eval '&quot;$(var mode)&quot;==&quot;camera_lidar_fusion&quot;')">
     <let name="switch/filter/pointcloud" value="true"/>
     <let name="switch/detector/camera_lidar" value="true"/>
+    <let name="tracker_based_detector/output/objects_raw" value="$(var ns)/detection_by_tracker/unfiltered/objects"/>
     <let name="switch/detector/lidar_dnn" value="true"/>
     <let name="switch/merger/camera_lidar" value="true" unless="$(var use_multi_channel_tracker_merger)"/>
     <group scoped="false" if="$(var use_multi_channel_tracker_merger)">
@@ -337,9 +340,50 @@
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/tracker_based_detector.launch.xml">
       <arg name="input/clusters" value="$(var tracker_based_detector/input/clusters)"/>
       <arg name="input/tracked_objects" value="$(var input/tracked_objects)"/>
-      <arg name="output/objects" value="$(var tracker_based_detector/output/objects)"/>
+      <arg name="output/objects" value="$(var tracker_based_detector/output/objects_raw)"/>
       <arg name="detection_by_tracker_param_path" value="$(var object_recognition_detection_detection_by_tracker_param)"/>
     </include>
+  </group>
+
+  <!-- ROI filter for DetectionByTracker: cross-validate tracker-based detections against camera ROIs -->
+  <group if="$(var switch/detector/tracker_based)">
+    <group if="$(var switch/detector/camera_lidar)">
+      <push-ros-namespace namespace="detection_by_tracker"/>
+      <include file="$(find-pkg-share autoware_image_projection_based_fusion)/launch/roi_detected_object_fusion.launch.xml">
+        <arg name="input/rois_number" value="$(var number_of_cameras)"/>
+        <arg name="input/rois0" value="$(var input/camera0/rois)"/>
+        <arg name="input/rois1" value="$(var input/camera1/rois)"/>
+        <arg name="input/rois2" value="$(var input/camera2/rois)"/>
+        <arg name="input/rois3" value="$(var input/camera3/rois)"/>
+        <arg name="input/rois4" value="$(var input/camera4/rois)"/>
+        <arg name="input/rois5" value="$(var input/camera5/rois)"/>
+        <arg name="input/rois6" value="$(var input/camera6/rois)"/>
+        <arg name="input/rois7" value="$(var input/camera7/rois)"/>
+        <arg name="input/rois8" value="$(var input/camera8/rois)"/>
+        <arg name="input/camera_info0" value="$(var input/camera0/info)"/>
+        <arg name="input/camera_info1" value="$(var input/camera1/info)"/>
+        <arg name="input/camera_info2" value="$(var input/camera2/info)"/>
+        <arg name="input/camera_info3" value="$(var input/camera3/info)"/>
+        <arg name="input/camera_info4" value="$(var input/camera4/info)"/>
+        <arg name="input/camera_info5" value="$(var input/camera5/info)"/>
+        <arg name="input/camera_info6" value="$(var input/camera6/info)"/>
+        <arg name="input/camera_info7" value="$(var input/camera7/info)"/>
+        <arg name="input/camera_info8" value="$(var input/camera8/info)"/>
+        <arg name="input/image0" value="$(var input/camera0/image)"/>
+        <arg name="input/image1" value="$(var input/camera1/image)"/>
+        <arg name="input/image2" value="$(var input/camera2/image)"/>
+        <arg name="input/image3" value="$(var input/camera3/image)"/>
+        <arg name="input/image4" value="$(var input/camera4/image)"/>
+        <arg name="input/image5" value="$(var input/camera5/image)"/>
+        <arg name="input/image6" value="$(var input/camera6/image)"/>
+        <arg name="input/image7" value="$(var input/camera7/image)"/>
+        <arg name="input/image8" value="$(var input/camera8/image)"/>
+        <arg name="input/concatenation_info" value="$(var input/concatenation_info)"/>
+        <arg name="input/objects" value="$(var tracker_based_detector/output/objects_raw)"/>
+        <arg name="output/objects" value="$(var tracker_based_detector/output/objects)"/>
+        <arg name="param_path" value="$(var roi_detected_object_fusion_dbt_param_path)"/>
+      </include>
+    </group>
   </group>
 
   <group if="$(var switch/detector/camera_vru_detector)">
