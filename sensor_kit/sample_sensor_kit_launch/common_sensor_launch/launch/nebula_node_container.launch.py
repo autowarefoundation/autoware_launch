@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
-from ament_index_python.packages import get_package_share_directory
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
@@ -22,9 +19,11 @@ from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
+from launch_ros.substitutions import FindPackageShare
 import yaml
 
 
@@ -73,20 +72,16 @@ def launch_setup(context, *args, **kwargs):
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
     sensor_make, sensor_extension = get_lidar_make(sensor_model)
-    nebula_decoders_share_dir = get_package_share_directory(
-        "nebula_" + sensor_make.lower() + "_decoders"
-    )
 
     # Calibration file
     if sensor_extension is not None:  # Velodyne and Hesai
-        sensor_calib_fp = os.path.join(
-            nebula_decoders_share_dir,
-            "calibration",
-            sensor_model + sensor_extension,
+        sensor_calib_fp = PathJoinSubstitution(
+            [
+                FindPackageShare("nebula_" + sensor_make.lower() + "_decoders"),
+                "calibration",
+                sensor_model + sensor_extension,
+            ]
         )
-        assert os.path.exists(
-            sensor_calib_fp
-        ), "Sensor calib file under calibration/ was not found: {}".format(sensor_calib_fp)
     else:  # Robosense
         sensor_calib_fp = ""
 
@@ -256,8 +251,6 @@ def generate_launch_description():
             DeclareLaunchArgument(name, default_value=default_value, description=description)
         )
 
-    common_sensor_share_dir = get_package_share_directory("common_sensor_launch")
-
     add_launch_arg("sensor_model", description="sensor model name")
     add_launch_arg("config_file", "", description="sensor configuration file")
     add_launch_arg("launch_driver", "True", "do launch driver")
@@ -287,19 +280,23 @@ def generate_launch_description():
     )
     add_launch_arg(
         "distortion_correction_node_param_path",
-        os.path.join(
-            common_sensor_share_dir,
-            "config",
-            "distortion_corrector_node.param.yaml",
+        PathJoinSubstitution(
+            [
+                FindPackageShare("common_sensor_launch"),
+                "config",
+                "distortion_corrector_node.param.yaml",
+            ]
         ),
         description="path to parameter file of distortion correction node",
     )
     add_launch_arg(
         "ring_outlier_filter_node_param_path",
-        os.path.join(
-            common_sensor_share_dir,
-            "config",
-            "ring_outlier_filter_node.param.yaml",
+        PathJoinSubstitution(
+            [
+                FindPackageShare("common_sensor_launch"),
+                "config",
+                "ring_outlier_filter_node.param.yaml",
+            ]
         ),
         description="path to parameter file of ring outlier filter node",
     )
