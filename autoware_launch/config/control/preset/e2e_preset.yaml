@@ -1,0 +1,14 @@
+launch:
+  # E2E stack uses the minimal control checker set; override selected defaults.
+  - arg:
+      name: launch_lane_departure_checker
+      default: "false"
+  - arg:
+      name: launch_control_validator
+      default: "false"
+  - arg:
+      name: launch_autonomous_emergency_braking
+      default: "false"
+  - arg:
+      name: launch_predicted_path_checker
+      default: "false"

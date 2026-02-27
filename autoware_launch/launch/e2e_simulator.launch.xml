@@ -4,9 +4,18 @@
   <arg name="use_sim_time" default="true" description="use simulation time"/>
   <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
   <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
+  <arg name="simulator_type" default="awsim" description="select the simulator type ('awsim' or 'carla')"/>
   <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
-  <arg name="simulator_type" default="awsim" description="select the simulator type ('awsim' or 'carla')"/>
+
+  <let name="effective_sensor_model" value="$(eval &quot;'carla_sensor_kit' if '$(var simulator_type)' == 'carla' else '$(var sensor_model)'&quot;)"/>
+
+  <arg name="use_e2e_planner" default="false" description="Use end-to-end planner stack"/>
+  <arg name="use_e2e_planning" default="$(var use_e2e_planner)" description="DEPRECATED: use use_e2e_planner instead."/>
+  <arg name="e2e_planning_type" default="vad" description="DEPRECATED: use e2e_planner_mode instead."/>
+  <arg name="e2e_planner_mode" default="$(var e2e_planning_type)" description="E2E planner mode (e.g., vad)"/>
+  <arg name="e2e_planning_preset" default="default" description="E2E planning preset"/>
+  <arg name="e2e_control_module_preset" default="e2e" description="Control preset used with the E2E planner"/>
 
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
@@ -22,64 +31,113 @@
   <arg name="perception" default="true" description="launch perception"/>
   <arg name="planning" default="true" description="launch planning"/>
   <arg name="control" default="true" description="launch control"/>
+  <arg name="api" default="true" description="launch api"/>
+
   <!-- Map -->
   <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
   <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+
   <!-- Perception -->
   <arg name="traffic_light_namespace" default="[traffic_light]" description="traffic light recognition namespace"/>
-  <!-- Control -->
+
   <!-- Vehicle -->
   <arg name="launch_vehicle_interface" default="false"/>
+
   <!-- System -->
   <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
+
   <!-- Sensing -->
   <arg name="launch_sensing_driver" default="false"/>
+
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/$(var rviz_config_name)" description="rviz config path"/>
+
+  <!-- CARLA specific parameters (only commonly changed ones) -->
+  <arg name="carla_host" default="localhost" description="CARLA server host"/>
+  <arg name="carla_port" default="2000" description="CARLA server port"/>
+
+  <let name="e2e_enabled" value="$(eval &quot;'$(var use_e2e_planning)' == 'true' or '$(var use_e2e_planner)' == 'true'&quot;)"/>
+
+  <!-- E2E planner bypasses sensing/localization/perception (simulator-agnostic) -->
+  <let name="launch_sensing_value" value="$(eval &quot;'false' if '$(var e2e_enabled)' == 'true' else '$(var sensing)'&quot;)"/>
+  <let name="launch_localization_value" value="$(eval &quot;'false' if '$(var e2e_enabled)' == 'true' else '$(var localization)'&quot;)"/>
+  <let name="launch_perception_value" value="$(eval &quot;'false' if '$(var e2e_enabled)' == 'true' else '$(var perception)'&quot;)"/>
+
+  <!-- CARLA interface (when simulator_type is carla) -->
   <group scoped="false" if="$(eval '\'$(var simulator_type)\' == \'carla\'')">
-    <include file="$(find-pkg-share autoware_carla_interface)/autoware_carla_interface.launch.xml"/>
+    <include file="$(find-pkg-share autoware_carla_interface)/autoware_carla_interface.launch.xml">
+      <arg name="use_e2e_planning" value="$(var use_e2e_planning)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="host" value="$(var carla_host)"/>
+      <arg name="port" value="$(var carla_port)"/>
+      <arg name="map_path" value="$(var map_path)"/>
+    </include>
   </group>
 
+  <!-- Standard Autoware stack -->
   <group scoped="false">
     <include file="$(find-pkg-share autoware_launch)/launch/autoware.launch.xml">
       <!-- Common -->
       <arg name="map_path" value="$(var map_path)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
-      <arg name="sensor_model" value="$(var sensor_model)"/>
+      <arg name="sensor_model" value="$(var effective_sensor_model)"/>
       <arg name="data_path" value="$(var data_path)"/>
+
       <!-- launch module preset -->
       <arg name="planning_module_preset" value="$(var planning_module_preset)"/>
       <arg name="control_module_preset" value="$(var control_module_preset)"/>
+      <arg name="e2e_planning_preset" value="$(var e2e_planning_preset)"/>
+      <arg name="e2e_control_module_preset" value="$(var e2e_control_module_preset)"/>
+
       <!-- Modules to be launched -->
       <arg name="launch_vehicle" value="$(var vehicle)"/>
+      <arg name="launch_system" value="$(var system)"/>
       <arg name="launch_map" value="$(var map)"/>
-      <arg name="launch_sensing" value="$(var sensing)"/>
-      <arg name="launch_localization" value="$(var localization)"/>
-      <arg name="launch_perception" value="$(var perception)"/>
+      <arg name="launch_sensing" value="$(var launch_sensing_value)"/>
+      <arg name="launch_localization" value="$(var launch_localization_value)"/>
+      <arg name="launch_perception" value="$(var launch_perception_value)"/>
       <arg name="launch_planning" value="$(var planning)"/>
       <arg name="launch_control" value="$(var control)"/>
+      <arg name="launch_api" value="$(var api)"/>
+
       <!-- Global parameters -->
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
+
       <!-- Vehicle -->
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
+
       <!-- Map -->
       <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
+
       <!-- System -->
       <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
       <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
       <arg name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-$(var simulator_type).yaml"/>
+
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="$(var launch_sensing_driver)"/>
+
       <!-- Perception-->
       <arg name="traffic_light_recognition/use_high_accuracy_detection" value="false"/>
       <arg name="traffic_light_recognition/camera_namespaces" value="$(var traffic_light_namespace)"/>
+      <arg
+        name="object_recognition_detection_near_range_camera_vru_param_path"
+        value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/camera_vru_detection/near_range_camera_vru_detector.param.yaml"
+      />
+
       <!-- Tools -->
       <arg name="rviz" value="$(var rviz)"/>
       <arg name="rviz_config" value="$(var rviz_config)"/>
+
+      <!-- E2E planner wiring -->
+      <arg name="use_e2e_planner" value="$(var use_e2e_planner)"/>
+      <arg name="use_e2e_planning" value="$(var use_e2e_planning)"/>
+      <arg name="e2e_planner_mode" value="$(var e2e_planner_mode)"/>
     </include>
   </group>
 </launch>

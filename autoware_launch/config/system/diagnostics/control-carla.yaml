@@ -1,0 +1,52 @@
+units:
+  # CARLA E2E mode - control always OK, no checks needed for startup
+  - path: /autoware/control
+    type: ok
+
+  - path: /autoware/control/node_alive_monitoring/command_gate
+    type: or
+    list:
+      - { type: link, link: /autoware/control/node_alive_monitoring/vehicle_cmd_gate }
+      - { type: link, link: /autoware/control/node_alive_monitoring/control_command_gate }
+
+  - path: /autoware/control/local
+    type: and
+    list:
+      - { type: link, link: /autoware/control/topic_rate_check/external_cmd_selector }
+      - { type: link, link: /autoware/control/topic_rate_check/external_cmd_converter }
+
+  - path: /autoware/control/remote
+    type: and
+    list:
+      - { type: link, link: /autoware/control/topic_rate_check/external_cmd_selector }
+      - { type: link, link: /autoware/control/topic_rate_check/external_cmd_converter }
+
+  - path: /autoware/control/topic_rate_check/trajectory_follower
+    type: diag
+    node: topic_state_monitor_trajectory_follower_control_cmd
+    name: control_topic_status
+
+  - path: /autoware/control/node_alive_monitoring/vehicle_cmd_gate
+    type: diag
+    node: vehicle_cmd_gate
+    name: heartbeat
+
+  - path: /autoware/control/node_alive_monitoring/control_command_gate
+    type: diag
+    node: control_command_gate
+    name: timeout_output
+
+  - path: /autoware/control/performance_monitoring/control_state
+    type: diag
+    node: controller_node_exe
+    name: control_state
+
+  - path: /autoware/control/topic_rate_check/external_cmd_selector
+    type: diag
+    node: external_cmd_selector
+    name: heartbeat
+
+  - path: /autoware/control/topic_rate_check/external_cmd_converter
+    type: diag
+    node: external_cmd_converter
+    name: remote_control_topic_status
