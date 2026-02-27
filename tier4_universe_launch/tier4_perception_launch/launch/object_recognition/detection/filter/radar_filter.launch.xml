@@ -9,11 +9,11 @@
   <arg name="output/objects"/>
 
   <group>
-  <include file="$(find-pkg-share autoware_object_sorter)/launch/detected_object_sorter.launch.xml">
-    <arg name="input/objects" value="$(var input/radar)"/>
-    <arg name="output/objects" value="sorted_objects"/>
-    <arg name="param_path" value="$(var object_sorter_param_path)"/>
-  </include>
+    <include file="$(find-pkg-share autoware_object_sorter)/launch/detected_object_sorter.launch.xml">
+      <arg name="input/objects" value="$(var input/radar)"/>
+      <arg name="output/objects" value="sorted_objects"/>
+      <arg name="param_path" value="$(var object_sorter_param_path)"/>
+    </include>
   </group>
 
   <group>
