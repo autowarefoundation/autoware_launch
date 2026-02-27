@@ -73,7 +73,6 @@
     <choice value="camera_lidar_fusion"/>
     <choice value="lidar_radar_fusion"/>
     <choice value="lidar"/>
-    <choice value="radar"/>
   </arg>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
   <arg name="image_raw0" default="/sensing/camera/camera0/image_rect_color" description="image raw topic name"/>
