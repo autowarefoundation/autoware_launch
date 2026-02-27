@@ -184,6 +184,10 @@
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/overlapped_judge.param.yaml"
     />
     <arg
+      name="object_recognition_detection_object_merger_node_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_merger/object_association_merger.param.yaml"
+    />
+    <arg
       name="object_recognition_detection_detection_by_tracker_param"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml"
     />
