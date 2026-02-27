@@ -1,0 +1,40 @@
+autoware_system_design_format: 0.3.0
+
+name: SampleRosbagReplay.node
+
+package:
+  name: rosbag2
+  provider: dummy
+
+launch:
+  executable: rosbag2
+  node_output: screen
+
+# interfaces
+inputs: []
+outputs:
+  # GNSS
+  - name: sensing/gnss/ublox/fix_velocity
+    message_type: geometry_msgs/msg/TwistWithCovarianceStamped
+  - name: sensing/gnss/ublox/nav_sat_fix
+    message_type: sensor_msgs/msg/NavSatFix
+  - name: sensing/gnss/ublox/navpvt
+    message_type: ublox_msgs/msg/NavPVT
+  # IMU
+  - name: sensing/imu/tamagawa/imu_raw
+    message_type: sensor_msgs/msg/Imu
+  # LIDAR
+  - name: sensing/lidar/left/velodyne_packets
+    message_type: velodyne_msgs/msg/VelodyneScan
+  - name: sensing/lidar/right/velodyne_packets
+    message_type: velodyne_msgs/msg/VelodyneScan
+  - name: sensing/lidar/top/velodyne_packets
+    message_type: velodyne_msgs/msg/VelodyneScan
+
+# parameters
+param_values: []
+
+param_files: []
+
+# processes
+processes: []

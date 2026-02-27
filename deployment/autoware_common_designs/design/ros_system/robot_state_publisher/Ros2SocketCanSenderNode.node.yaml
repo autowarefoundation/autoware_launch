@@ -1,0 +1,36 @@
+autoware_system_design_format: 0.3.0
+
+name: Ros2SocketCanSenderNode.node
+
+package:
+  name: ros2_socketcan
+  provider: autowarefoundation
+
+launch:
+  plugin: drivers::socketcan::SocketCanSenderNode
+  executable: socket_can_sender_node_exe
+  node_output: screen
+
+# interfaces
+inputs:
+  - name: to_can_bus
+    message_type: can_msgs/msg/Frame
+outputs: []
+
+# parameters
+param_files: []
+param_values:
+  - name: interface
+    type: string
+    default: can0
+  - name: timeout_sec
+    type: double
+    default: 0.01
+
+# processes
+processes:
+  - name: send_to_can_bus
+    trigger_conditions:
+      - from_input: to_can_bus
+    outcomes:
+      - terminal:

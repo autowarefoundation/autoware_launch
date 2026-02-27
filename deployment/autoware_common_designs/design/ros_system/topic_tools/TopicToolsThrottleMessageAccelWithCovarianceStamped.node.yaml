@@ -1,0 +1,36 @@
+autoware_system_design_format: 0.3.0
+
+name: TopicToolsThrottleMessageAccelWithCovarianceStamped.node
+
+package:
+  name: topic_tools
+  provider: ros-tooling
+
+launch:
+  executable: throttle
+  node_output: screen
+  args: messages ${input input_topic} ${parameter rate} ${output output_topic}
+
+# interfaces
+inputs:
+  - name: input_topic
+    message_type: geometry_msgs/msg/AccelWithCovarianceStamped
+
+outputs:
+  - name: output_topic
+    message_type: geometry_msgs/msg/AccelWithCovarianceStamped
+
+# parameters
+param_values:
+  - name: rate
+    type: double
+    default: 10.0
+param_files: []
+
+# processes
+processes:
+  - name: throttle_message
+    trigger_conditions:
+      - periodic: $(var rate)
+    outcomes:
+      - to_output_topic: output_topic

@@ -1,0 +1,23 @@
+autoware_system_design_format: 0.3.0
+
+name: SampleSensorKitLidar_decode.module
+
+base: SampleSensorKitLidar.module
+
+override:
+  instances:
+    - name: top
+      entity: LidarVelodyneVLS128_decode.module
+    - name: left
+      entity: LidarVelodyneVLP16_decode.module
+    - name: right
+      entity: LidarVelodyneVLP16_decode.module
+
+  inputs:
+    - name: top/velodyne_packets
+    - name: left/velodyne_packets
+    - name: right/velodyne_packets
+
+  connections:
+    - from: input.^/velodyne_packets
+      to: ^.input.velodyne_packets

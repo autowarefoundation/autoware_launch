@@ -1,0 +1,130 @@
+autoware_system_design_format: 0.3.0
+
+name: SampleSensorKitADAPIWrapper.node
+
+package:
+  name: autoware_sample_deployment
+  provider: autoware
+
+launch:
+  ros2_launch_file: sample_system_adapi_wrapper.launch.xml
+
+# interfaces
+inputs:
+  # Localization inputs
+  - name: localization/initialization_state
+    message_type: autoware_adapi_v1_msgs/msg/LocalizationInitializationState
+  - name: localization/kinematic_state
+    message_type: nav_msgs/msg/Odometry
+
+  # Planning inputs
+  - name: planning/mission_planning/route
+    message_type: autoware_adapi_v1_msgs/msg/Route
+  - name: planning/mission_planning/route_state
+    message_type: autoware_adapi_v1_msgs/msg/RouteState
+
+  # Control inputs
+  - name: control/operation_mode_state
+    message_type: autoware_adapi_v1_msgs/msg/OperationModeState
+  - name: control/steering_status
+    message_type: autoware_vehicle_msgs/msg/SteeringReport
+  - name: control/velocity_status
+    message_type: autoware_vehicle_msgs/msg/VelocityReport
+
+  # Vehicle inputs
+  - name: vehicle/status/gear_status
+    message_type: autoware_vehicle_msgs/msg/GearReport
+  - name: vehicle/status/steering_status
+    message_type: autoware_vehicle_msgs/msg/SteeringReport
+  - name: vehicle/status/turn_indicators_status
+    message_type: autoware_vehicle_msgs/msg/TurnIndicatorsReport
+  - name: vehicle/status/hazard_lights_status
+    message_type: autoware_vehicle_msgs/msg/HazardLightsReport
+  - name: vehicle/doors/status
+    message_type: autoware_adapi_v1_msgs/msg/DoorStatusArray
+
+  # Perception inputs
+  - name: perception/object_recognition/objects
+    message_type: autoware_perception_msgs/msg/PredictedObjects
+
+  # System inputs
+  - name: system/fail_safe/mrm_state
+    message_type: autoware_adapi_v1_msgs/msg/MrmState
+
+outputs:
+  # Localization outputs
+  - name: localization/initialization_state
+    message_type: autoware_adapi_v1_msgs/msg/LocalizationInitializationState
+  - name: vehicle/kinematics
+    message_type: autoware_adapi_v1_msgs/msg/VehicleKinematics
+
+  # Planning outputs
+  - name: routing/state
+    message_type: autoware_adapi_v1_msgs/msg/RouteState
+
+  # Control outputs
+  - name: operation_mode/state
+    message_type: autoware_adapi_v1_msgs/msg/OperationModeState
+  - name: vehicle/status/steering_status
+    message_type: autoware_adapi_v1_msgs/msg/SteeringFactorArray
+  - name: vehicle/status/velocity_status
+    message_type: autoware_adapi_v1_msgs/msg/VelocityFactorArray
+
+  # Vehicle outputs
+  - name: vehicle/status/gear_status
+    message_type: autoware_adapi_v1_msgs/msg/Gear
+  - name: vehicle/status/turn_indicators_status
+    message_type: autoware_adapi_v1_msgs/msg/TurnIndicators
+  - name: vehicle/status/hazard_lights_status
+    message_type: autoware_adapi_v1_msgs/msg/HazardLights
+
+  # Perception outputs
+  - name: perception/objects
+    message_type: autoware_adapi_v1_msgs/msg/Objects
+
+  # System outputs
+  - name: fail_safe/status
+    message_type: autoware_adapi_v1_msgs/msg/FailSafeStatus
+  - name: autoware/state
+    message_type: autoware_system_msgs/msg/AutowareState
+  - name: system/heartbeat
+    message_type: autoware_adapi_v1_msgs/msg/Heartbeat
+  - name: vehicle/metrics
+    message_type: autoware_adapi_v1_msgs/msg/VehicleMetrics
+
+# parameters
+param_files: []
+
+param_values:
+  - name: launch_deprecated_api
+    default: false
+  - name: launch_default_adapi
+    default: true
+  - name: launch_rviz_adaptors
+    default: true
+  - name: rosbridge_enabled
+    default: false
+  - name: default_adapi_param_path
+    default: $(find-pkg-share autoware_default_adapi_universe)/config/default_adapi.param.yaml
+  - name: wheel_radius
+    default: $(var vehicle_info.wheel_radius)
+  - name: wheel_width
+    default: $(var vehicle_info.wheel_width)
+  - name: wheel_base
+    default: $(var vehicle_info.wheel_base)
+  - name: wheel_tread
+    default: $(var vehicle_info.wheel_tread)
+  - name: front_overhang
+    default: $(var vehicle_info.front_overhang)
+  - name: rear_overhang
+    default: $(var vehicle_info.rear_overhang)
+  - name: left_overhang
+    default: $(var vehicle_info.left_overhang)
+  - name: right_overhang
+    default: $(var vehicle_info.right_overhang)
+  - name: vehicle_height
+    default: $(var vehicle_info.vehicle_height)
+  - name: max_steer_angle
+    default: $(var vehicle_info.max_steer_angle)
+# processes
+processes: []

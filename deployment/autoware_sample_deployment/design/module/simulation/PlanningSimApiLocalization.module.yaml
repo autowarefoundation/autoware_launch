@@ -1,0 +1,22 @@
+autoware_system_design_format: 0.3.0
+
+name: PlanningSimApiLocalization.module
+
+instances:
+  - name: vehicle_velocity_converter
+    entity: PoseInitializer.node
+
+inputs: []
+outputs:
+  - name: initialpose3d
+  - name: localization/initialize
+  - name: localization/initialization_state
+  - name: localization/kinematic_state
+
+connections:
+  - from: vehicle_velocity_converter.output.pose_reset
+    to: output.initialpose3d
+  - from: vehicle_velocity_converter.output.initialize
+    to: output.localization/initialize
+  - from: vehicle_velocity_converter.output.pub_state
+    to: output.localization/initialization_state

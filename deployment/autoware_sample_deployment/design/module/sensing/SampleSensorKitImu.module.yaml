@@ -1,0 +1,34 @@
+autoware_system_design_format: 0.3.0
+
+name: SampleSensorKitImu.module
+
+instances:
+  - name: tamagawa
+    entity: TamagawaImu.module
+  - name: gyro_bias_estimator
+    entity: GyroBiasEstimator.node
+  - name: imu_corrector
+    entity: ImuCorrector.node
+
+inputs:
+  - name: odom
+  - name: pose_ndt
+outputs:
+  - name: imu_data
+
+connections:
+  - from: tamagawa.output.imu_raw
+    to: gyro_bias_estimator.input.imu_raw
+  - from: input.odom
+    to: gyro_bias_estimator.input.odom
+  - from: input.pose_ndt
+    to: gyro_bias_estimator.input.pose_ndt
+
+  - from: tamagawa.output.imu_raw
+    to: imu_corrector.input.imu_raw
+  - from: gyro_bias_estimator.output.gyro_bias
+    to: imu_corrector.input.gyro_bias
+  - from: gyro_bias_estimator.output.gyro_scale
+    to: imu_corrector.input.gyro_scale
+  - from: imu_corrector.output.imu_data
+    to: output.imu_data

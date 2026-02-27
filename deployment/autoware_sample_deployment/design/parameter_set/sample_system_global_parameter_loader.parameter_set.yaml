@@ -1,0 +1,11 @@
+autoware_system_design_format: 0.3.0
+
+name: sample_system_global_parameter_loader.parameter_set
+parameters:
+  - node: /global_parameter_loader
+    param_files: []
+    param_values:
+      - name: use_sim_time
+        value: false
+      - name: vehicle_model
+        value: sample_vehicle

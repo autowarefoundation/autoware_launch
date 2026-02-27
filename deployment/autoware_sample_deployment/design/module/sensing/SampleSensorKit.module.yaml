@@ -1,0 +1,56 @@
+autoware_system_design_format: 0.3.0
+
+name: SampleSensorKit.module
+
+instances:
+  - name: vehicle_velocity_converter
+    entity: VehicleVelocityConverter.node
+  - name: lidar
+    entity: SampleSensorKitLidar.module
+  - name: imu
+    entity: SampleSensorKitImu.module
+  - name: gnss
+    entity: SampleSensorKitGnss.module
+
+inputs:
+  - name: velocity_status
+  - name: odometry
+  - name: twist
+  - name: pose_ndt
+
+outputs:
+  - name: imu/imu_data
+  - name: vehicle_velocity_converter/twist_with_covariance
+  - name: gnss/pose
+  - name: gnss/pose_with_covariance
+  - name: lidar/concatenated/pointcloud
+  - name: lidar/concatenated/pointcloud_info
+
+connections:
+  - from: input.velocity_status
+    to: vehicle_velocity_converter.input.velocity_status
+  - from: vehicle_velocity_converter.output.twist_with_covariance
+    to: output.vehicle_velocity_converter/twist_with_covariance
+  # IMU
+  - from: input.odometry
+    to: imu.input.odom
+  - from: input.pose_ndt
+    to: imu.input.pose_ndt
+  - from: imu.output.imu_data
+    to: output.imu/imu_data
+  # GNSS
+  - from: gnss.output.pose
+    to: output.gnss/pose
+  - from: gnss.output.pose_with_covariance
+    to: output.gnss/pose_with_covariance
+  # LIDAR
+  - from: vehicle_velocity_converter.output.twist_with_covariance
+    to: lidar.input.twist
+  - from: input.odometry
+    to: lidar.input.odometry
+  - from: imu.output.imu_data
+    to: lidar.input.imu
+  - from: lidar.output.concatenated/pointcloud
+    to: output.lidar/concatenated/pointcloud
+  - from: lidar.output.concatenated/pointcloud_info
+    to: output.lidar/concatenated/pointcloud_info

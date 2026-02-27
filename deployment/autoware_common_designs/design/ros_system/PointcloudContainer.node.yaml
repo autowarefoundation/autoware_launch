@@ -1,0 +1,30 @@
+autoware_system_design_format: 0.3.0
+
+name: PointcloudContainer.node
+
+package:
+  name: autoware_launch
+  provider: autoware
+
+launch:
+  ros2_launch_file: pointcloud_container.launch.py
+
+# interface
+inputs: []
+outputs: []
+
+# parameters
+param_files: []
+param_values:
+  - name: use_multithread
+    type: bool
+    default: true
+  - name: container_name
+    type: string
+    default: pointcloud_container
+
+# processes
+processes:
+  - name: run
+    trigger_conditions: []
+    outcomes: []
