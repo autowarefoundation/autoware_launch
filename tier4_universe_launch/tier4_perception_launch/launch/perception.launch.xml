@@ -18,10 +18,7 @@
   <arg name="object_recognition_detection_pointpainting_fusion_common_param_path"/>
   <arg name="object_recognition_detection_lidar_model_param_path"/>
   <arg name="object_recognition_detection_radar_lanelet_filtering_range_param_path"/>
-  <arg name="object_recognition_detection_object_velocity_splitter_radar_param_path"/>
-  <arg name="object_recognition_detection_object_velocity_splitter_radar_fusion_param_path"/>
-  <arg name="object_recognition_detection_object_range_splitter_radar_param_path"/>
-  <arg name="object_recognition_detection_object_range_splitter_radar_fusion_param_path"/>
+  <arg name="object_recognition_detection_object_sorter_radar_param_path"/>
   <arg name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"/>
   <arg name="object_recognition_tracking_multi_object_tracker_input_channels_param_path"/>
   <arg name="object_recognition_tracking_multi_object_tracker_node_param_path"/>
@@ -76,7 +73,6 @@
     <choice value="camera_lidar_fusion"/>
     <choice value="lidar_radar_fusion"/>
     <choice value="lidar"/>
-    <choice value="radar"/>
   </arg>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
   <arg name="image_raw0" default="/sensing/camera/camera0/image_rect_color" description="image raw topic name"/>
@@ -315,6 +311,7 @@
           <arg name="outlier_param_path" value="$(var object_recognition_detection_outlier_param_path)"/>
           <arg name="voxel_grid_based_euclidean_param_path" value="$(var object_recognition_detection_voxel_grid_based_euclidean_cluster_param_path)"/>
           <arg name="radar_lanelet_filtering_range_param_path" value="$(var object_recognition_detection_radar_lanelet_filtering_range_param_path)"/>
+          <arg name="object_recognition_detection_object_sorter_radar_param_path" value="$(var object_recognition_detection_object_sorter_radar_param_path)"/>
           <arg name="detection_by_tracker_param_path" value="$(var object_recognition_detection_detection_by_tracker_param)"/>
           <arg name="near_range_camera_vru_param_path" value="$(var object_recognition_detection_near_range_camera_vru_param_path)"/>
 
