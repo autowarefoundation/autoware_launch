@@ -5,12 +5,24 @@ sensor_kit/awsim_labs_sensor_kit_launch/awsim_labs_sensor_kit_launch/** piotr.ja
 sensor_kit/awsim_labs_sensor_kit_launch/common_awsim_labs_sensor_launch/** piotr.jaroszek@robotec.ai
 sensor_kit/awsim_sensor_kit_launch/awsim_sensor_kit_description/** piotr.jaroszek@robotec.ai
 sensor_kit/awsim_sensor_kit_launch/awsim_sensor_kit_launch/** piotr.jaroszek@robotec.ai
+sensor_kit/carla_sensor_kit_launch/carla_sensor_kit_description/** noreply@example.com
+sensor_kit/carla_sensor_kit_launch/carla_sensor_kit_launch/** noreply@example.com
 sensor_kit/sample_sensor_kit_launch/common_sensor_launch/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 sensor_kit/sample_sensor_kit_launch/sample_sensor_kit_description/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 sensor_kit/sample_sensor_kit_launch/sample_sensor_kit_launch/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 sensor_kit/single_lidar_sensor_kit_launch/single_lidar_common_launch/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 sensor_kit/single_lidar_sensor_kit_launch/single_lidar_sensor_kit_description/** beginning.fan@autocore.ai
 sensor_kit/single_lidar_sensor_kit_launch/single_lidar_sensor_kit_launch/** beginning.fan@autocore.ai
+tier4_universe_launch/tier4_autoware_api_launch/** isamu.takagi@tier4.jp ryohsuke.mitsudome@tier4.jp
+tier4_universe_launch/tier4_control_launch/** kyoichi.sugahara@tier4.jp satoshi.ota@tier4.jp takamasa.horibe@tier4.jp takayuki.murooka@tier4.jp takumi.odashima@tier4.jp
+tier4_universe_launch/tier4_localization_launch/** anh.nguyen.2@tier4.jp masahiro.sakamoto@tier4.jp taiki.yamada@tier4.jp yamato.ando@tier4.jp
+tier4_universe_launch/tier4_map_launch/** anh.nguyen.2@tier4.jp masahiro.sakamoto@tier4.jp taiki.yamada@tier4.jp yamato.ando@tier4.jp
+tier4_universe_launch/tier4_perception_launch/** masato.saeki@tier4.jp taekjin.lee@tier4.jp yoshi.ri@tier4.jp yukihiro.saito@tier4.jp
+tier4_universe_launch/tier4_planning_launch/** fumiya.watanabe@tier4.jp kosuke.takeuchi@tier4.jp kyoichi.sugahara@tier4.jp makoto.kurihara@tier4.jp mamoru.sobue@tier4.jp satoshi.ota@tier4.jp shumpei.wakabayashi@tier4.jp taiki.tanaka@tier4.jp takamasa.horibe@tier4.jp takayuki.murooka@tier4.jp tomohito.ando@tier4.jp tomoya.kimura@tier4.jp zhe.shen@tier4.jp zulfaqar.azmi@tier4.jp
+tier4_universe_launch/tier4_sensing_launch/** yukihiro.saito@tier4.jp
+tier4_universe_launch/tier4_simulator_launch/** keisuke.shima@tier4.jp taiki.tanaka@tier4.jp takamasa.horibe@tier4.jp takayuki.murooka@tier4.jp tomoya.kimura@tier4.jp
+tier4_universe_launch/tier4_system_launch/** fumihito.ito@tier4.jp tetsuhiro.kawaguchi@tier4.jp
+tier4_universe_launch/tier4_vehicle_launch/** yukihiro.saito@tier4.jp
 vehicle/awsim_labs_vehicle_launch/awsim_labs_vehicle_description/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 vehicle/awsim_labs_vehicle_launch/awsim_labs_vehicle_launch/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 vehicle/sample_vehicle_launch/sample_vehicle_description/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp

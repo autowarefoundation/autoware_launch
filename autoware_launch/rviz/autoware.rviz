@@ -899,6 +899,7 @@ Visualization Manager:
                     Color: 119; 11; 32
                   Class: autoware_perception_rviz_plugin/PredictedObjects
                   Display 3d polygon: true
+                  Display Mesh: true
                   Display Label: true
                   Display PoseWithCovariance: false
                   Display Predicted Path Confidence: true
@@ -4204,7 +4205,7 @@ Visualization Manager:
       Velocity: 0
       X std deviation: 0.029999999329447746
       Y std deviation: 0.029999999329447746
-      Z position: 1
+      Z position: 0
       Z std deviation: 0.029999999329447746
     - Class: rviz_plugins/CarInitialPoseTool
       Pose Topic: /simulation/dummy_perception_publisher/object_info
