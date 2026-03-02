@@ -16,7 +16,6 @@
     <choice value="camera_lidar_fusion"/>
     <choice value="lidar_radar_fusion"/>
     <choice value="lidar"/>
-    <choice value="radar"/>
   </arg>
 
   <arg name="use_radar_tracking_fusion" default="false" description="use radar tracking fusion"/>
@@ -160,22 +159,6 @@
       <let name="input/detection04/channel" value="none"/>
       <!-- radar far object is not used -->
       <let name="input/detection06/channel" value="none"/>
-      <!-- camera vru is not used -->
-      <let name="input/detection07/channel" value="none"/>
-    </group>
-
-    <!-- radar -->
-    <group scoped="false" if="$(eval '&quot;$(var mode)&quot;==&quot;radar&quot;')">
-      <!-- lidar dnn detection is not used -->
-      <let name="input/detection01/channel" value="none"/>
-      <!-- camera lidar fusion is not used -->
-      <let name="input/detection03/channel" value="none"/>
-      <!-- irregular object detector is not used -->
-      <let name="input/detection04/channel" value="none"/>
-      <!-- detection by tracker is not used -->
-      <let name="input/detection05/channel" value="none"/>
-      <!-- normal radar object to be used-->
-      <let name="input/detection05/objects" value="$(var input/radar/objects)"/>
       <!-- camera vru is not used -->
       <let name="input/detection07/channel" value="none"/>
     </group>

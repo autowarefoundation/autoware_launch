@@ -193,20 +193,8 @@
     />
     <arg name="object_recognition_detection_lidar_model_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/lidar_model"/>
     <arg
-      name="object_recognition_detection_object_velocity_splitter_radar_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_velocity_splitter/object_velocity_splitter_radar.param.yaml"
-    />
-    <arg
-      name="object_recognition_detection_object_velocity_splitter_radar_fusion_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_velocity_splitter/object_velocity_splitter_radar_fusion.param.yaml"
-    />
-    <arg
-      name="object_recognition_detection_object_range_splitter_radar_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_range_splitter/object_range_splitter_radar.param.yaml"
-    />
-    <arg
-      name="object_recognition_detection_object_range_splitter_radar_fusion_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_range_splitter/object_range_splitter_radar_fusion.param.yaml"
+      name="object_recognition_detection_object_sorter_radar_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/radar_filter/detected_object_sorter.param.yaml"
     />
     <arg
       name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
