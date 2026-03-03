@@ -6,7 +6,8 @@
 files:
   - { path: $(dirname)/control.yaml }
   - { path: $(dirname)/map.yaml }
-  - { path: $(dirname)/perception.yaml }
+  # You can create the perception.yaml in the same way as other configuration files.
+  # - { path: $(dirname)/perception.yaml }
   - { path: $(dirname)/system.yaml }
   - { path: $(dirname)/vehicle.yaml }
 
@@ -40,7 +41,6 @@ units:
       - { type: link, link: /autoware/map }
       - { type: link, link: /autoware/localization }
       - { type: link, link: /autoware/planning }
-      - { type: link, link: /autoware/perception }
       - { type: link, link: /autoware/control }
       - { type: link, link: /autoware/vehicle }
       - { type: link, link: /autoware/system }
@@ -52,7 +52,6 @@ units:
       - { type: link, link: /autoware/map }
       - { type: link, link: /autoware/localization }
       - { type: link, link: /autoware/planning }
-      - { type: link, link: /autoware/perception }
       - { type: link, link: /autoware/control }
       - { type: link, link: /autoware/vehicle }
       - { type: link, link: /autoware/system }
