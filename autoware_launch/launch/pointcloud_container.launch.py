@@ -19,7 +19,6 @@ from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
-from launch_ros.descriptions import ComposableNode
 
 
 def generate_launch_description():
