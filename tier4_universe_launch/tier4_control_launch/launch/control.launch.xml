@@ -164,6 +164,7 @@
             <remap from="~/input/current_steering" to="/vehicle/status/steering_status"/>
             <remap from="~/input/current_accel" to="/localization/acceleration"/>
             <remap from="~/input/current_operation_mode" to="/system/operation_mode/state"/>
+            <remap from="~/input/steering_offset_update" to="/vehicle/calibration/steer_offset_estimator/steering_offset_update"/>
             <remap from="~/output/predicted_trajectory" to="lateral/predicted_trajectory"/>
             <remap from="~/output/lateral_diagnostic" to="lateral/diagnostic"/>
             <remap from="~/output/slope_angle" to="longitudinal/slope_angle"/>
