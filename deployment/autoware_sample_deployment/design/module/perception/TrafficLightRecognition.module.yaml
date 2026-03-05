@@ -24,38 +24,31 @@ outputs:
   - name: traffic_signals
 
 connections:
-  - from: input.route
-    to: camera*.input.route
-  - from: input.vector_map
-    to: camera*.input.vector_map
-  - from: input.camera*/image
-    to: camera*.input.image
-  - from: input.camera*/camera_info
-    to: camera*.input.camera_info
-  - from: input.pointcloud
-    to: camera*.input.pointcloud
+  - [subscriber.route, camera*.subscriber.route]
+  - [subscriber.vector_map, camera*.subscriber.vector_map]
+  - [subscriber.camera*/image, camera*.subscriber.image]
+  - [subscriber.camera*/camera_info, camera*.subscriber.camera_info]
+  - [subscriber.pointcloud, camera*.subscriber.pointcloud]
 
-  - from: input.vector_map
-    to: multi_camera_fusion.input.vector_map
-  - from: input.camera*/camera_info
-    to: multi_camera_fusion.input.camera*/camera_info
-  - from: camera*.output.classification/traffic_signals
-    to: multi_camera_fusion.input.camera*/classification/traffic_signals
-  - from: camera*.output.detection/rois
-    to: multi_camera_fusion.input.camera*/detection/rois
+  - [subscriber.vector_map, multi_camera_fusion.subscriber.vector_map]
+  - [subscriber.camera*/camera_info, multi_camera_fusion.subscriber.camera*/camera_info]
+  - [
+      camera*.publisher.classification/traffic_signals,
+      multi_camera_fusion.subscriber.camera*/classification/traffic_signals,
+    ]
+  - [camera*.publisher.detection/rois, multi_camera_fusion.subscriber.camera*/detection/rois]
 
-  - from: input.vector_map
-    to: traffic_light_arbiter.input.vector_map
-  - from: multi_camera_fusion.output.traffic_signals
-    to: traffic_light_arbiter.input.perception_traffic_signals
-  - from: input.external_traffic_signals
-    to: traffic_light_arbiter.input.external_traffic_signals
+  - [subscriber.vector_map, traffic_light_arbiter.subscriber.vector_map]
+  - [
+      multi_camera_fusion.publisher.traffic_signals,
+      traffic_light_arbiter.subscriber.perception_traffic_signals,
+    ]
+  - [subscriber.external_traffic_signals, traffic_light_arbiter.subscriber.external_traffic_signals]
 
-  - from: input.vector_map
-    to: traffic_light_crosswalk_estimator.input.vector_map
-  - from: input.route
-    to: traffic_light_crosswalk_estimator.input.route
-  - from: traffic_light_arbiter.output.traffic_signals
-    to: traffic_light_crosswalk_estimator.input.traffic_signals
-  - from: traffic_light_crosswalk_estimator.output.traffic_signals
-    to: output.traffic_signals
+  - [subscriber.vector_map, traffic_light_crosswalk_estimator.subscriber.vector_map]
+  - [subscriber.route, traffic_light_crosswalk_estimator.subscriber.route]
+  - [
+      traffic_light_arbiter.publisher.traffic_signals,
+      traffic_light_crosswalk_estimator.subscriber.traffic_signals,
+    ]
+  - [traffic_light_crosswalk_estimator.publisher.traffic_signals, publisher.traffic_signals]

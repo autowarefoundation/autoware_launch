@@ -25,43 +25,28 @@ outputs:
   - name: detection/rois
 
 connections:
-  - from: input.vector_map
-    to: map_based_detector.input.vector_map
-  - from: input.route
-    to: map_based_detector.input.route
-  - from: input.camera_info
-    to: map_based_detector.input.camera_info
+  - [subscriber.vector_map, map_based_detector.subscriber.vector_map]
+  - [subscriber.route, map_based_detector.subscriber.route]
+  - [subscriber.camera_info, map_based_detector.subscriber.camera_info]
 
-  - from: input.image
-    to: detection.input.image
-  - from: map_based_detector.output.rough_rois
-    to: detection.input.rough_rois
-  - from: map_based_detector.output.expected_rois
-    to: detection.input.expect_rois
-  - from: detection.output.rois
-    to: output.detection/rois
+  - [subscriber.image, detection.subscriber.image]
+  - [map_based_detector.publisher.rough_rois, detection.subscriber.rough_rois]
+  - [map_based_detector.publisher.expected_rois, detection.subscriber.expect_rois]
+  - [detection.publisher.rois, publisher.detection/rois]
 
-  - from: input.image
-    to: classifier_car.input.image
-  - from: detection.output.rois
-    to: classifier_car.input.rois
+  - [subscriber.image, classifier_car.subscriber.image]
+  - [detection.publisher.rois, classifier_car.subscriber.rois]
 
-  - from: input.image
-    to: classifier_pedestrian.input.image
-  - from: detection.output.rois
-    to: classifier_pedestrian.input.rois
+  - [subscriber.image, classifier_pedestrian.subscriber.image]
+  - [detection.publisher.rois, classifier_pedestrian.subscriber.rois]
 
-  - from: input.pointcloud
-    to: occlusion_predictor.input.cloud
-  - from: input.vector_map
-    to: occlusion_predictor.input.vector_map
-  - from: input.camera_info
-    to: occlusion_predictor.input.camera_info
-  - from: detection.output.rois
-    to: occlusion_predictor.input.rois
-  - from: classifier_car.output.traffic_signals
-    to: occlusion_predictor.input.car/traffic_signals
-  - from: classifier_pedestrian.output.traffic_signals
-    to: occlusion_predictor.input.pedestrian/traffic_signals
-  - from: occlusion_predictor.output.traffic_signals
-    to: output.classification/traffic_signals
+  - [subscriber.pointcloud, occlusion_predictor.subscriber.cloud]
+  - [subscriber.vector_map, occlusion_predictor.subscriber.vector_map]
+  - [subscriber.camera_info, occlusion_predictor.subscriber.camera_info]
+  - [detection.publisher.rois, occlusion_predictor.subscriber.rois]
+  - [classifier_car.publisher.traffic_signals, occlusion_predictor.subscriber.car/traffic_signals]
+  - [
+      classifier_pedestrian.publisher.traffic_signals,
+      occlusion_predictor.subscriber.pedestrian/traffic_signals,
+    ]
+  - [occlusion_predictor.publisher.traffic_signals, publisher.classification/traffic_signals]

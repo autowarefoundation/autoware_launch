@@ -14,9 +14,6 @@ outputs:
   - name: map
 
 connections:
-  - from: input.raw_pointcloud
-    to: occupancy_grid_map_node.input.raw_pointcloud
-  - from: input.obstacle_pointcloud
-    to: occupancy_grid_map_node.input.obstacle_pointcloud
-  - from: occupancy_grid_map_node.output.occupancy_grid_map
-    to: output.map
+  - [subscriber.raw_pointcloud, occupancy_grid_map_node.subscriber.raw_pointcloud]
+  - [subscriber.obstacle_pointcloud, occupancy_grid_map_node.subscriber.obstacle_pointcloud]
+  - [occupancy_grid_map_node.publisher.occupancy_grid_map, publisher.map]

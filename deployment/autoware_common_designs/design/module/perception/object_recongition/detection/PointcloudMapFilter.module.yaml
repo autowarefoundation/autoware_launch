@@ -17,15 +17,12 @@ outputs:
   - name: filtered_pointcloud
 
 connections:
-  - from: input.pointcloud
-    to: voxel_grid_downsample_filter.input.input
-  - from: voxel_grid_downsample_filter.output.output
-    to: voxel_based_compare_map_filter.input.input
-  - from: input.pointcloud_map
-    to: voxel_based_compare_map_filter.input.map
-  - from: input.service_pointcloud_map_diff
-    to: voxel_based_compare_map_filter.input.service_pointcloud_map_diff
-  - from: input.kinematic_state
-    to: voxel_based_compare_map_filter.input.kinematic_state
-  - from: voxel_based_compare_map_filter.output.output
-    to: output.filtered_pointcloud
+  - [subscriber.pointcloud, voxel_grid_downsample_filter.subscriber.input]
+  - [voxel_grid_downsample_filter.publisher.output, voxel_based_compare_map_filter.subscriber.input]
+  - [subscriber.pointcloud_map, voxel_based_compare_map_filter.subscriber.map]
+  - [
+      subscriber.service_pointcloud_map_diff,
+      voxel_based_compare_map_filter.subscriber.service_pointcloud_map_diff,
+    ]
+  - [subscriber.kinematic_state, voxel_based_compare_map_filter.subscriber.kinematic_state]
+  - [voxel_based_compare_map_filter.publisher.output, publisher.filtered_pointcloud]

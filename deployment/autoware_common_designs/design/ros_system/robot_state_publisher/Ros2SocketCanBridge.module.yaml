@@ -14,7 +14,5 @@ outputs:
   - name: from_can_bus
 
 connections:
-  - from: input.to_can_bus
-    to: socket_can_sender.input.to_can_bus
-  - from: socket_can_receiver.output.from_can_bus
-    to: output.from_can_bus
+  - [subscriber.to_can_bus, socket_can_sender.subscriber.to_can_bus]
+  - [socket_can_receiver.publisher.from_can_bus, publisher.from_can_bus]

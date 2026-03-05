@@ -14,11 +14,7 @@ outputs:
   - name: objects
 
 connections:
-  - from: input.vector_map
-    to: map_based_prediction.input.vector_map_topic
-  - from: input.tracked_objects
-    to: map_based_prediction.input.objects
-  - from: input.traffic_lights
-    to: map_based_prediction.input.traffic_signals_topic
-  - from: map_based_prediction.output.objects
-    to: output.objects
+  - [subscriber.vector_map, map_based_prediction.subscriber.vector_map_topic]
+  - [subscriber.tracked_objects, map_based_prediction.subscriber.objects]
+  - [subscriber.traffic_lights, map_based_prediction.subscriber.traffic_signals_topic]
+  - [map_based_prediction.publisher.objects, publisher.objects]

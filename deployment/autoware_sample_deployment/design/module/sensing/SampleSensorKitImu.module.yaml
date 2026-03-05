@@ -17,18 +17,11 @@ outputs:
   - name: imu_data
 
 connections:
-  - from: tamagawa.output.imu_raw
-    to: gyro_bias_estimator.input.imu_raw
-  - from: input.odom
-    to: gyro_bias_estimator.input.odom
-  - from: input.pose_ndt
-    to: gyro_bias_estimator.input.pose_ndt
+  - [tamagawa.publisher.imu_raw, gyro_bias_estimator.subscriber.imu_raw]
+  - [subscriber.odom, gyro_bias_estimator.subscriber.odom]
+  - [subscriber.pose_ndt, gyro_bias_estimator.subscriber.pose_ndt]
 
-  - from: tamagawa.output.imu_raw
-    to: imu_corrector.input.imu_raw
-  - from: gyro_bias_estimator.output.gyro_bias
-    to: imu_corrector.input.gyro_bias
-  - from: gyro_bias_estimator.output.gyro_scale
-    to: imu_corrector.input.gyro_scale
-  - from: imu_corrector.output.imu_data
-    to: output.imu_data
+  - [tamagawa.publisher.imu_raw, imu_corrector.subscriber.imu_raw]
+  - [gyro_bias_estimator.publisher.gyro_bias, imu_corrector.subscriber.gyro_bias]
+  - [gyro_bias_estimator.publisher.gyro_scale, imu_corrector.subscriber.gyro_scale]
+  - [imu_corrector.publisher.imu_data, publisher.imu_data]
