@@ -28,21 +28,13 @@ outputs:
   - name: objects
 
 connections:
-  - from: input.pointcloud
-    to: crop_box_filter.input.input
-  - from: crop_box_filter.output.output
-    to: ground_filter.input.pointcloud
-  - from: ground_filter.output.pointcloud
-    to: roi_pointcloud_fusion.input.pointcloud
+  - [subscriber.pointcloud, crop_box_filter.subscriber.input]
+  - [crop_box_filter.publisher.output, ground_filter.subscriber.pointcloud]
+  - [ground_filter.publisher.pointcloud, roi_pointcloud_fusion.subscriber.pointcloud]
 
-  - from: input.rois*
-    to: roi_pointcloud_fusion.input.rois*
-  - from: input.camera_info*
-    to: roi_pointcloud_fusion.input.camera_info*
+  - [subscriber.rois*, roi_pointcloud_fusion.subscriber.rois*]
+  - [subscriber.camera_info*, roi_pointcloud_fusion.subscriber.camera_info*]
 
-  - from: roi_pointcloud_fusion.output.clusters
-    to: shape_estimation.input.objects
-  - from: shape_estimation.output.objects
-    to: detected_object_feature_remover.input.input
-  - from: detected_object_feature_remover.output.output
-    to: output.objects
+  - [roi_pointcloud_fusion.publisher.clusters, shape_estimation.subscriber.objects]
+  - [shape_estimation.publisher.objects, detected_object_feature_remover.subscriber.input]
+  - [detected_object_feature_remover.publisher.output, publisher.objects]

@@ -31,15 +31,9 @@ outputs:
   - name: detected_objects
 
 connections:
-  - from: input.pointcloud
-    to: pointpainting_fusion.input.pointcloud
-  - from: input.rois*
-    to: pointpainting_fusion.input.rois*
-  - from: input.camera_info*
-    to: pointpainting_fusion.input.camera_info*
-  - from: pointpainting_fusion.output.objects
-    to: validation.input.detected_objects
-  - from: input.obstacle_pointcloud
-    to: validation.input.obstacle_pointcloud
-  - from: validation.output.objects
-    to: output.detected_objects
+  - [subscriber.pointcloud, pointpainting_fusion.subscriber.pointcloud]
+  - [subscriber.rois*, pointpainting_fusion.subscriber.rois*]
+  - [subscriber.camera_info*, pointpainting_fusion.subscriber.camera_info*]
+  - [pointpainting_fusion.publisher.objects, validation.subscriber.detected_objects]
+  - [subscriber.obstacle_pointcloud, validation.subscriber.obstacle_pointcloud]
+  - [validation.publisher.objects, publisher.detected_objects]

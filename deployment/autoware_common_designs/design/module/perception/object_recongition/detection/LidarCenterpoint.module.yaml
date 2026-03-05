@@ -15,11 +15,7 @@ outputs:
   - name: detected_objects
 
 connections:
-  - from: input.pointcloud
-    to: lidar_centerpoint.input.pointcloud
-  - from: lidar_centerpoint.output.objects
-    to: validation.input.detected_objects
-  - from: input.obstacle_pointcloud
-    to: validation.input.obstacle_pointcloud
-  - from: validation.output.objects
-    to: output.detected_objects
+  - [subscriber.pointcloud, lidar_centerpoint.subscriber.pointcloud]
+  - [lidar_centerpoint.publisher.objects, validation.subscriber.detected_objects]
+  - [subscriber.obstacle_pointcloud, validation.subscriber.obstacle_pointcloud]
+  - [validation.publisher.objects, publisher.detected_objects]

@@ -16,14 +16,9 @@ outputs:
   - name: map
 
 connections:
-  - from: input.obstacle_pointcloud
-    to: pointcloud_to_laserscan.input.pointcloud
+  - [subscriber.obstacle_pointcloud, pointcloud_to_laserscan.subscriber.pointcloud]
 
-  - from: input.obstacle_pointcloud
-    to: occupancy_grid_map.input.obstacle_pointcloud
-  - from: input.raw_pointcloud
-    to: occupancy_grid_map.input.raw_pointcloud
-  - from: pointcloud_to_laserscan.output.laserscan
-    to: occupancy_grid_map.input.laserscan
-  - from: occupancy_grid_map.output.occupancy_grid_map
-    to: output.map
+  - [subscriber.obstacle_pointcloud, occupancy_grid_map.subscriber.obstacle_pointcloud]
+  - [subscriber.raw_pointcloud, occupancy_grid_map.subscriber.raw_pointcloud]
+  - [pointcloud_to_laserscan.publisher.laserscan, occupancy_grid_map.subscriber.laserscan]
+  - [occupancy_grid_map.publisher.occupancy_grid_map, publisher.map]

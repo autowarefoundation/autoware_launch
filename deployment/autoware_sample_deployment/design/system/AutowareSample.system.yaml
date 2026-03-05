@@ -118,82 +118,67 @@ components:
     compute_unit: main_ecu
 
 connections:
-  - from: localization.output.kinematic_state
-    to: sensing.input.odometry
-  - from: localization.output.pose_estimator/pose_with_covariance
-    to: sensing.input.pose_ndt
+  - [localization.publisher.kinematic_state, sensing.subscriber.odometry]
+  - [localization.publisher.pose_estimator/pose_with_covariance, sensing.subscriber.pose_ndt]
 
-  - from: localization.output.initialization_state
-    to: adapi.input.localization/initialization_state
-  - from: localization.output.kinematic_state
-    to: adapi.input.localization/kinematic_state
+  - [
+      localization.publisher.initialization_state,
+      adapi.subscriber.localization/initialization_state,
+    ]
+  - [localization.publisher.kinematic_state, adapi.subscriber.localization/kinematic_state]
 
-  - from: sensing.output.lidar/concatenated/pointcloud
-    to: obstacle_segmentation.input.concatenated_pointcloud
+  - [
+      sensing.publisher.lidar/concatenated/pointcloud,
+      obstacle_segmentation.subscriber.concatenated_pointcloud,
+    ]
 
-  - from: sensing.output.lidar/concatenated/pointcloud
-    to: centerpoint.input.pointcloud
-  - from: object_recognition.output.map_filtered_obstacle_pointcloud
-    to: centerpoint.input.obstacle_pointcloud
+  - [sensing.publisher.lidar/concatenated/pointcloud, centerpoint.subscriber.pointcloud]
+  - [
+      object_recognition.publisher.map_filtered_obstacle_pointcloud,
+      centerpoint.subscriber.obstacle_pointcloud,
+    ]
 
-  - from: obstacle_segmentation.output.pointcloud
-    to: object_recognition.input.obstacle_pointcloud
+  - [obstacle_segmentation.publisher.pointcloud, object_recognition.subscriber.obstacle_pointcloud]
 
-  - from: centerpoint.output.detected_objects
-    to: object_recognition.input.lidar_ml_objects
-  - from: map.output.vector_map
-    to: object_recognition.input.vector_map
-  - from: map.output.pointcloud_map
-    to: object_recognition.input.pointcloud_map
-  - from: map.output.get_differential_pointcloud_map
-    to: object_recognition.input.service_pointcloud_map_diff
-  - from: localization.output.kinematic_state
-    to: object_recognition.input.kinematic_state
+  - [centerpoint.publisher.detected_objects, object_recognition.subscriber.lidar_ml_objects]
+  - [map.publisher.vector_map, object_recognition.subscriber.vector_map]
+  - [map.publisher.pointcloud_map, object_recognition.subscriber.pointcloud_map]
+  - [
+      map.publisher.get_differential_pointcloud_map,
+      object_recognition.subscriber.service_pointcloud_map_diff,
+    ]
+  - [localization.publisher.kinematic_state, object_recognition.subscriber.kinematic_state]
 
-  - from: sensing.output.lidar/concatenated/pointcloud
-    to: occupancy_grid_map.input.raw_pointcloud
-  - from: obstacle_segmentation.output.pointcloud
-    to: occupancy_grid_map.input.obstacle_pointcloud
+  - [sensing.publisher.lidar/concatenated/pointcloud, occupancy_grid_map.subscriber.raw_pointcloud]
+  - [obstacle_segmentation.publisher.pointcloud, occupancy_grid_map.subscriber.obstacle_pointcloud]
 
-  - from: map.output.vector_map
-    to: localization.input.lanelet_map
-  - from: map.output.pointcloud_map
-    to: localization.input.pointcloud_map
-  - from: sensing.output.lidar/concatenated/pointcloud
-    to: localization.input.pointcloud
-  - from: sensing.output.imu/imu_data
-    to: localization.input.imu
-  - from: sensing.output.vehicle_velocity_converter/twist_with_covariance
-    to: localization.input.twist
-  - from: sensing.output.gnss/pose_with_covariance
-    to: localization.input.gnss_pose_with_covariance
-  - from: adapi.output.localization/initialization_state
-    to: localization.input.initialization_state
+  - [map.publisher.vector_map, localization.subscriber.lanelet_map]
+  - [map.publisher.pointcloud_map, localization.subscriber.pointcloud_map]
+  - [sensing.publisher.lidar/concatenated/pointcloud, localization.subscriber.pointcloud]
+  - [sensing.publisher.imu/imu_data, localization.subscriber.imu]
+  - [
+      sensing.publisher.vehicle_velocity_converter/twist_with_covariance,
+      localization.subscriber.twist,
+    ]
+  - [sensing.publisher.gnss/pose_with_covariance, localization.subscriber.gnss_pose_with_covariance]
+  - [
+      adapi.publisher.localization/initialization_state,
+      localization.subscriber.initialization_state,
+    ]
 
-  - from: occupancy_grid_map.output.map
-    to: planning.input.occupancy_grid_map
-  - from: map.output.vector_map
-    to: planning.input.lanelet_map
-  - from: object_recognition.output.objects
-    to: planning.input.objects
-  - from: obstacle_segmentation.output.pointcloud
-    to: planning.input.obstacle_pointcloud
+  - [occupancy_grid_map.publisher.map, planning.subscriber.occupancy_grid_map]
+  - [map.publisher.vector_map, planning.subscriber.lanelet_map]
+  - [object_recognition.publisher.objects, planning.subscriber.objects]
+  - [obstacle_segmentation.publisher.pointcloud, planning.subscriber.obstacle_pointcloud]
 
-  - from: planning.output.^
-    to: control.input.^
-  - from: localization.output.kinematic_state
-    to: control.input.kinematics
-  - from: localization.output.acceleration
-    to: control.input.acceleration
-  - from: object_recognition.output.objects
-    to: control.input.objects
-  - from: obstacle_segmentation.output.pointcloud
-    to: control.input.obstacle_pointcloud
-  - from: sensing.output.imu/imu_data
-    to: control.input.imu
+  - [planning.publisher.^, control.subscriber.^]
+  - [localization.publisher.kinematic_state, control.subscriber.kinematics]
+  - [localization.publisher.acceleration, control.subscriber.acceleration]
+  - [object_recognition.publisher.objects, control.subscriber.objects]
+  - [obstacle_segmentation.publisher.pointcloud, control.subscriber.obstacle_pointcloud]
+  - [sensing.publisher.imu/imu_data, control.subscriber.imu]
 
-  - from: system.output.system/fail_safe/mrm_state
-    to: adapi.input.system/fail_safe/mrm_state
+  - [system.publisher.system/fail_safe/mrm_state, adapi.subscriber.system/fail_safe/mrm_state]
 
 # mode configurations
 LoggingSimulation:
@@ -211,8 +196,7 @@ LoggingSimulation:
         namespace: ""
         compute_unit: dummy_ecu
     connections:
-      - from: rosbag_replay.output.sensing/^
-        to: sensing.input.^
+      - [rosbag_replay.publisher.sensing/^, sensing.subscriber.^]
 
 E2ESimulation:
   override:
@@ -242,45 +226,52 @@ E2ESimulation:
         parameter_set: sample_system_perception.parameter_set
     connections:
       # SENSING
-      - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw_ex
-        to: sensing.input.lidar/top/pointcloud_raw_ex
-      - from: AWSIM_out.output.sensing/imu/tamagawa/imu_raw
-        to: sensing.input.imu/tamagawa/imu_raw
-      - from: AWSIM_out.output.vehicle/status/velocity_status
-        to: sensing.input.velocity_status
+      - [
+          AWSIM_out.publisher.sensing/lidar/top/pointcloud_raw_ex,
+          sensing.subscriber.lidar/top/pointcloud_raw_ex,
+        ]
+      - [AWSIM_out.publisher.sensing/imu/tamagawa/imu_raw, sensing.subscriber.imu/tamagawa/imu_raw]
+      - [AWSIM_out.publisher.vehicle/status/velocity_status, sensing.subscriber.velocity_status]
       # Traffic light
-      - from: AWSIM_out.output.sensing/camera/traffic_light/image_raw
-        to: traffic_light_recognition.input.camera1/image
-      - from: AWSIM_out.output.sensing/camera/traffic_light/camera_info
-        to: traffic_light_recognition.input.camera1/camera_info
-      - from: AWSIM_out.output.sensing/lidar/top/pointcloud_raw_ex
-        to: traffic_light_recognition.input.pointcloud
-      - from: map.output.vector_map
-        to: traffic_light_recognition.input.vector_map
-      - from: planning.output.mission_planning/route
-        to: traffic_light_recognition.input.route
-      - from: traffic_light_recognition.output.traffic_signals
-        to: planning.input.traffic_signals
+      - [
+          AWSIM_out.publisher.sensing/camera/traffic_light/image_raw,
+          traffic_light_recognition.subscriber.camera1/image,
+        ]
+      - [
+          AWSIM_out.publisher.sensing/camera/traffic_light/camera_info,
+          traffic_light_recognition.subscriber.camera1/camera_info,
+        ]
+      - [
+          AWSIM_out.publisher.sensing/lidar/top/pointcloud_raw_ex,
+          traffic_light_recognition.subscriber.pointcloud,
+        ]
+      - [map.publisher.vector_map, traffic_light_recognition.subscriber.vector_map]
+      - [planning.publisher.mission_planning/route, traffic_light_recognition.subscriber.route]
+      - [traffic_light_recognition.publisher.traffic_signals, planning.subscriber.traffic_signals]
       # localization
-      - from: AWSIM_out.output.sensing/gnss/pose_with_covariance
-        to: localization.input.gnss_pose_with_covariance
+      - [
+          AWSIM_out.publisher.sensing/gnss/pose_with_covariance,
+          localization.subscriber.gnss_pose_with_covariance,
+        ]
       # control
-      - from: AWSIM_out.output.vehicle/status/velocity_status
-        to: control.input.velocity_status
-      - from: control.output.command/control_cmd
-        to: AWSIM_in.input.control/command/control_cmd
-      - from: control.output.command/gear_cmd
-        to: AWSIM_in.input.control/command/gear_cmd
-      - from: control.output.command/hazard_lights_cmd
-        to: AWSIM_in.input.control/command/hazard_lights_cmd
-      - from: control.output.command/turn_indicators_cmd
-        to: AWSIM_in.input.control/command/turn_indicators_cmd
+      - [AWSIM_out.publisher.vehicle/status/velocity_status, control.subscriber.velocity_status]
+      - [control.publisher.command/control_cmd, AWSIM_in.subscriber.control/command/control_cmd]
+      - [control.publisher.command/gear_cmd, AWSIM_in.subscriber.control/command/gear_cmd]
+      - [
+          control.publisher.command/hazard_lights_cmd,
+          AWSIM_in.subscriber.control/command/hazard_lights_cmd,
+        ]
+      - [
+          control.publisher.command/turn_indicators_cmd,
+          AWSIM_in.subscriber.control/command/turn_indicators_cmd,
+        ]
   remove:
     connections:
-      - from: sensing.output.gnss
-        to: localization.input.gnss_pose_with_covariance
-      - from: sensing.output.gnss/pose_with_covariance
-        to: localization.input.gnss_pose_with_covariance
+      - [sensing.publisher.gnss, localization.subscriber.gnss_pose_with_covariance]
+      - [
+          sensing.publisher.gnss/pose_with_covariance,
+          localization.subscriber.gnss_pose_with_covariance,
+        ]
 
 PlanningSimulation:
   remove:
@@ -319,58 +310,54 @@ PlanningSimulation:
         namespace: vehicle
         compute_unit: main_ecu
     connections:
-      - from: planning_sim_rviz_plugin.output.simulation/dummy_perception_publisher/object_info
-        to: perception.input.dummy_object_info
-      - from: perception.output.object_recognition/objects
-        to: planning.input.objects
-      - from: perception.output.object_recognition/objects
-        to: control.input.objects
-      - from: perception.output.obstacle_segmentation/pointcloud
-        to: occupancy_grid_map.input.obstacle_pointcloud
-      - from: perception.output.obstacle_segmentation/pointcloud
-        to: planning.input.obstacle_pointcloud
-      - from: perception.output.obstacle_segmentation/pointcloud
-        to: control.input.obstacle_pointcloud
-      - from: map.output.vector_map
-        to: perception.input.vector_map
-      - from: localization.output.localization/initialization_state
-        to: adapi.input.localization/initialization_state
+      - [
+          planning_sim_rviz_plugin.publisher.simulation/dummy_perception_publisher/object_info,
+          perception.subscriber.dummy_object_info,
+        ]
+      - [perception.publisher.object_recognition/objects, planning.subscriber.objects]
+      - [perception.publisher.object_recognition/objects, control.subscriber.objects]
+      - [
+          perception.publisher.obstacle_segmentation/pointcloud,
+          occupancy_grid_map.subscriber.obstacle_pointcloud,
+        ]
+      - [
+          perception.publisher.obstacle_segmentation/pointcloud,
+          planning.subscriber.obstacle_pointcloud,
+        ]
+      - [
+          perception.publisher.obstacle_segmentation/pointcloud,
+          control.subscriber.obstacle_pointcloud,
+        ]
+      - [map.publisher.vector_map, perception.subscriber.vector_map]
+      - [
+          localization.publisher.localization/initialization_state,
+          adapi.subscriber.localization/initialization_state,
+        ]
       # SIMULATOR
-      - from: map.output.vector_map
-        to: simulator.input.map/vector_map
-      - from: localization.output.initialpose3d
-        to: simulator.input.initialpose3d
-      - from: planning.output.trajectory
-        to: simulator.input.planning/trajectory
-      - from: control.output.command/control_cmd
-        to: simulator.input.control/command/control_cmd
-      - from: control.output.command/control_cmd
-        to: vehicle.input.control_cmd
-      - from: simulator.output.localization/kinematic_state
-        to: vehicle.input.odometry
-      - from: simulator.output.localization/acceleration
-        to: vehicle.input.accel
-      - from: simulator.output.vehicle/status/steering_status
-        to: vehicle.input.steering
-      - from: simulator.output.vehicle/status/actuation_status
-        to: vehicle.input.actuation_status
-      - from: system.output.system/operation_mode/state
-        to: vehicle.input.operation_mode_state
-      - from: vehicle.output.actuation_cmd
-        to: simulator.input.control/command/actuation_cmd
-      - from: control.output.command/gear_cmd
-        to: simulator.input.control/command/gear_cmd
-      - from: control.output.command/turn_indicators_cmd
-        to: simulator.input.control/command/turn_indicators_cmd
-      - from: control.output.command/hazard_lights_cmd
-        to: simulator.input.control/command/hazard_lights_cmd
-      - from: simulator.output.^
-        to: adapi.input.^
-      - from: vehicle.output.doors/status
-        to: adapi.input.vehicle/doors/status
-      - from: simulator.output.vehicle/status/velocity_status
-        to: control.input.velocity_status
-      - from: simulator.output.localization/kinematic_state
-        to: control.input.kinematics
-      - from: simulator.output.localization/acceleration
-        to: control.input.acceleration
+      - [map.publisher.vector_map, simulator.subscriber.map/vector_map]
+      - [localization.publisher.initialpose3d, simulator.subscriber.initialpose3d]
+      - [planning.publisher.trajectory, simulator.subscriber.planning/trajectory]
+      - [control.publisher.command/control_cmd, simulator.subscriber.control/command/control_cmd]
+      - [control.publisher.command/control_cmd, vehicle.subscriber.control_cmd]
+      - [simulator.publisher.localization/kinematic_state, vehicle.subscriber.odometry]
+      - [simulator.publisher.localization/acceleration, vehicle.subscriber.accel]
+      - [simulator.publisher.vehicle/status/steering_status, vehicle.subscriber.steering]
+      - [simulator.publisher.vehicle/status/actuation_status, vehicle.subscriber.actuation_status]
+      - [system.publisher.system/operation_mode/state, vehicle.subscriber.operation_mode_state]
+      - [vehicle.publisher.actuation_cmd, simulator.subscriber.control/command/actuation_cmd]
+      - [control.publisher.command/gear_cmd, simulator.subscriber.control/command/gear_cmd]
+      - [
+          control.publisher.command/turn_indicators_cmd,
+          simulator.subscriber.control/command/turn_indicators_cmd,
+        ]
+      - [
+          control.publisher.command/hazard_lights_cmd,
+          simulator.subscriber.control/command/hazard_lights_cmd,
+        ]
+      - [simulator.publisher.^, adapi.subscriber.^]
+      - [vehicle.publisher.doors/status, adapi.subscriber.vehicle/doors/status]
+      - [simulator.publisher.vehicle/status/velocity_status, control.subscriber.velocity_status]
+      - [simulator.publisher.localization/kinematic_state, control.subscriber.kinematics]
+
+      #      - [simulator.publisher.localization/acceleration, control.subscriber.acceleration]
+      - [control.subscriber.acceleration, simulator.publisher.localization/acceleration]

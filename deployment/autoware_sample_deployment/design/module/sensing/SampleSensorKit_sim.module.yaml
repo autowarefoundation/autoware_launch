@@ -22,11 +22,8 @@ override:
 
   connections:
     # LIDAR
-    - from: input.lidar/+/velodyne_packets
-      to: lidar.input.+/velodyne_packets
+    - [subscriber.lidar/+/velodyne_packets, lidar.subscriber.+/velodyne_packets]
     # IMU
-    - from: input.imu/tamagawa/imu_raw
-      to: imu.input.imu_raw
+    - [subscriber.imu/tamagawa/imu_raw, imu.subscriber.imu_raw]
     # GNSS
-    - from: input.gnss/ublox/nav_sat_fix
-      to: gnss.input.nav_sat_fix
+    - [subscriber.gnss/ublox/nav_sat_fix, gnss.subscriber.nav_sat_fix]

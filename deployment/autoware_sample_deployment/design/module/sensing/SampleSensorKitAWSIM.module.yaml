@@ -22,25 +22,18 @@ outputs:
   - name: imu/imu_data
 
 connections:
-  - from: input.velocity_status
-    to: vehicle_velocity_converter.input.velocity_status
-  - from: vehicle_velocity_converter.output.twist_with_covariance
-    to: output.vehicle_velocity_converter/twist_with_covariance
+  - [subscriber.velocity_status, vehicle_velocity_converter.subscriber.velocity_status]
+  - [
+      vehicle_velocity_converter.publisher.twist_with_covariance,
+      publisher.vehicle_velocity_converter/twist_with_covariance,
+    ]
   # IMU
-  - from: input.odometry
-    to: imu.input.odom
-  - from: input.imu/tamagawa/imu_raw
-    to: imu.input.imu_raw
-  - from: input.pose_ndt
-    to: imu.input.pose_ndt
-  - from: imu.output.imu_data
-    to: output.imu/imu_data
+  - [subscriber.odometry, imu.subscriber.odom]
+  - [subscriber.imu/tamagawa/imu_raw, imu.subscriber.imu_raw]
+  - [subscriber.pose_ndt, imu.subscriber.pose_ndt]
+  - [imu.publisher.imu_data, publisher.imu/imu_data]
   # LIDAR
-  - from: input.lidar/top/pointcloud_raw_ex
-    to: lidar/top.input.pointcloud_raw_ex
-  - from: vehicle_velocity_converter.output.twist_with_covariance
-    to: lidar/top.input.twist
-  - from: imu.output.imu_data
-    to: lidar/top.input.imu
-  - from: lidar/top.output.pointcloud
-    to: output.lidar/concatenated/pointcloud
+  - [subscriber.lidar/top/pointcloud_raw_ex, lidar/top.subscriber.pointcloud_raw_ex]
+  - [vehicle_velocity_converter.publisher.twist_with_covariance, lidar/top.subscriber.twist]
+  - [imu.publisher.imu_data, lidar/top.subscriber.imu]
+  - [lidar/top.publisher.pointcloud, publisher.lidar/concatenated/pointcloud]

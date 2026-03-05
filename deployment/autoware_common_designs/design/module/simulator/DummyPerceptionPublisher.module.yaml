@@ -18,15 +18,9 @@ outputs:
   - name: obstacle_segmentation/pointcloud
 
 connections:
-  - from: input.object_info
-    to: dummy_perception_publisher.input.object
-  - from: input.predicted_objects
-    to: dummy_perception_publisher.input.predicted_objects
-  - from: dummy_perception_publisher.output.dynamic_object
-    to: shape_estimation.input.objects
-  - from: shape_estimation.output.objects
-    to: detected_object_feature_remover.input.input
-  - from: detected_object_feature_remover.output.output
-    to: output.objects
-  - from: dummy_perception_publisher.output.points_raw
-    to: output.obstacle_segmentation/pointcloud
+  - [subscriber.object_info, dummy_perception_publisher.subscriber.object]
+  - [subscriber.predicted_objects, dummy_perception_publisher.subscriber.predicted_objects]
+  - [dummy_perception_publisher.publisher.dynamic_object, shape_estimation.subscriber.objects]
+  - [shape_estimation.publisher.objects, detected_object_feature_remover.subscriber.input]
+  - [detected_object_feature_remover.publisher.output, publisher.objects]
+  - [dummy_perception_publisher.publisher.points_raw, publisher.obstacle_segmentation/pointcloud]

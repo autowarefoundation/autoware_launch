@@ -13,5 +13,4 @@ override:
     - name: velodyne_packets
 
   connections:
-    - from: input.velodyne_packets
-      to: lidar.input.velodyne_packets
+    - [subscriber.velodyne_packets, lidar.subscriber.velodyne_packets]

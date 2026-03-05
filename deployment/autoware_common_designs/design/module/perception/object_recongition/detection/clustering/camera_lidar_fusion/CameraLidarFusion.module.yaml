@@ -34,19 +34,12 @@ outputs:
   - name: objects
 
 connections:
-  - from: input.rois*
-    to: roi_cluster_fusion.input.rois*
-  - from: input.camera_info*
-    to: roi_cluster_fusion.input.camera_info*
-  - from: input.euclidean_clusters
-    to: roi_cluster_fusion.input.clusters
+  - [subscriber.rois*, roi_cluster_fusion.subscriber.rois*]
+  - [subscriber.camera_info*, roi_cluster_fusion.subscriber.camera_info*]
+  - [subscriber.euclidean_clusters, roi_cluster_fusion.subscriber.clusters]
 
-  - from: roi_cluster_fusion.output.clusters
-    to: low_intensity_cluster_filter_node.input.objects
+  - [roi_cluster_fusion.publisher.clusters, low_intensity_cluster_filter_node.subscriber.objects]
 
-  - from: low_intensity_cluster_filter_node.output.objects
-    to: shape_estimation.input.objects
-  - from: shape_estimation.output.objects
-    to: detected_object_feature_remover.input.input
-  - from: detected_object_feature_remover.output.output
-    to: output.objects
+  - [low_intensity_cluster_filter_node.publisher.objects, shape_estimation.subscriber.objects]
+  - [shape_estimation.publisher.objects, detected_object_feature_remover.subscriber.input]
+  - [detected_object_feature_remover.publisher.output, publisher.objects]

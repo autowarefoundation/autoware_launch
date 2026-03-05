@@ -17,15 +17,10 @@ outputs:
   - name: cluster_objects
 
 connections:
-  - from: input.pointcloud
-    to: euclidean_cluster.input.input_pointcloud
+  - [subscriber.pointcloud, euclidean_cluster.subscriber.input_pointcloud]
 
-  - from: euclidean_cluster.output.output_clusters
-    to: shape_estimation.input.objects
-  - from: shape_estimation.output.objects
-    to: output.cluster_objects
+  - [euclidean_cluster.publisher.output_clusters, shape_estimation.subscriber.objects]
+  - [shape_estimation.publisher.objects, publisher.cluster_objects]
 
-  - from: shape_estimation.output.objects
-    to: detected_object_feature_remover.input.input
-  - from: detected_object_feature_remover.output.output
-    to: output.detected_objects
+  - [shape_estimation.publisher.objects, detected_object_feature_remover.subscriber.input]
+  - [detected_object_feature_remover.publisher.output, publisher.detected_objects]

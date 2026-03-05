@@ -13,7 +13,5 @@ outputs:
   - name: imu_raw
 
 connections:
-  - from: socket_can_receiver.output.from_can_bus
-    to: tag_can_driver.input.can_imu
-  - from: tag_can_driver.output.data_raw
-    to: output.imu_raw
+  - [socket_can_receiver.publisher.from_can_bus, tag_can_driver.subscriber.can_imu]
+  - [tag_can_driver.publisher.data_raw, publisher.imu_raw]

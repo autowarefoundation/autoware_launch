@@ -29,40 +29,24 @@ outputs:
   - name: detection/rois
 
 connections:
-  - from: input.vector_map
-    to: map_based_detector.input.vector_map
-  - from: input.route
-    to: map_based_detector.input.route
-  - from: input.camera_info
-    to: map_based_detector.input.camera_info
+  - [subscriber.vector_map, map_based_detector.subscriber.vector_map]
+  - [subscriber.route, map_based_detector.subscriber.route]
+  - [subscriber.camera_info, map_based_detector.subscriber.camera_info]
 
-  - from: input.image
-    to: detection.input.image
+  - [subscriber.image, detection.subscriber.image]
 
-  - from: detection.output.objects
-    to: selector.input.detected_rois
-  - from: map_based_detector.output.expected_rois
-    to: selector.input.expect_rois
-  - from: map_based_detector.output.rough_rois
-    to: selector.input.rough_rois
-  - from: input.camera_info
-    to: selector.input.camera_info
-  - from: selector.output.traffic_rois
-    to: output.detection/rois
+  - [detection.publisher.objects, selector.subscriber.detected_rois]
+  - [map_based_detector.publisher.expected_rois, selector.subscriber.expect_rois]
+  - [map_based_detector.publisher.rough_rois, selector.subscriber.rough_rois]
+  - [subscriber.camera_info, selector.subscriber.camera_info]
+  - [selector.publisher.traffic_rois, publisher.detection/rois]
 
-  - from: input.image
-    to: classifier_car.input.image
-  - from: selector.output.traffic_rois
-    to: classifier_car.input.rois
+  - [subscriber.image, classifier_car.subscriber.image]
+  - [selector.publisher.traffic_rois, classifier_car.subscriber.rois]
 
-  - from: input.image
-    to: classifier_pedestrian.input.image
-  - from: selector.output.traffic_rois
-    to: classifier_pedestrian.input.rois
+  - [subscriber.image, classifier_pedestrian.subscriber.image]
+  - [selector.publisher.traffic_rois, classifier_pedestrian.subscriber.rois]
 
-  - from: classifier_car.output.traffic_signals
-    to: merger.input.car_signals
-  - from: classifier_pedestrian.output.traffic_signals
-    to: merger.input.pedestrian_signals
-  - from: merger.output.traffic_signals
-    to: output.classification/traffic_signals
+  - [classifier_car.publisher.traffic_signals, merger.subscriber.car_signals]
+  - [classifier_pedestrian.publisher.traffic_signals, merger.subscriber.pedestrian_signals]
+  - [merger.publisher.traffic_signals, publisher.classification/traffic_signals]
