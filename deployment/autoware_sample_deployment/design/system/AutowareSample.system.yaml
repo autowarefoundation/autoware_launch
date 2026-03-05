@@ -144,8 +144,8 @@ connections:
   - [map.publisher.vector_map, object_recognition.subscriber.vector_map]
   - [map.publisher.pointcloud_map, object_recognition.subscriber.pointcloud_map]
   - [
-      map.publisher.get_differential_pointcloud_map,
-      object_recognition.subscriber.service_pointcloud_map_diff,
+      map.server.get_differential_pointcloud_map,
+      object_recognition.client.service_pointcloud_map_diff,
     ]
   - [localization.publisher.kinematic_state, object_recognition.subscriber.kinematic_state]
 
@@ -359,5 +359,5 @@ PlanningSimulation:
       - [simulator.publisher.vehicle/status/velocity_status, control.subscriber.velocity_status]
       - [simulator.publisher.localization/kinematic_state, control.subscriber.kinematics]
 
-      #      - [simulator.publisher.localization/acceleration, control.subscriber.acceleration]
+      # [simulator.publisher.localization/acceleration, control.subscriber.acceleration]
       - [control.subscriber.acceleration, simulator.publisher.localization/acceleration]

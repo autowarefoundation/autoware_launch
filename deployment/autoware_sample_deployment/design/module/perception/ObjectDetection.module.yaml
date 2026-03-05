@@ -37,8 +37,8 @@ connections:
   - [subscriber.obstacle_pointcloud, pointcloud_map_filter.subscriber.pointcloud]
   - [subscriber.pointcloud_map, pointcloud_map_filter.subscriber.pointcloud_map]
   - [
-      subscriber.service_pointcloud_map_diff,
-      pointcloud_map_filter.subscriber.service_pointcloud_map_diff,
+      client.service_pointcloud_map_diff,
+      pointcloud_map_filter.client.service_pointcloud_map_diff,
     ]
   - [subscriber.kinematic_state, pointcloud_map_filter.subscriber.kinematic_state]
   - [pointcloud_map_filter.publisher.filtered_pointcloud, publisher.filtered_obstacle_pointcloud]
