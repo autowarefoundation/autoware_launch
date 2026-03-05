@@ -30,7 +30,7 @@ connections:
   # detection
   - [subscriber.pointcloud_map, detection.subscriber.pointcloud_map]
   - [subscriber.vector_map, detection.subscriber.vector_map]
-  - [subscriber.service_pointcloud_map_diff, detection.subscriber.service_pointcloud_map_diff]
+  - [client.service_pointcloud_map_diff, detection.client.service_pointcloud_map_diff]
   - [subscriber.kinematic_state, detection.subscriber.kinematic_state]
   - [subscriber.obstacle_pointcloud, detection.subscriber.obstacle_pointcloud]
   - [subscriber.lidar_ml_objects, detection.subscriber.lidar_ml_objects]
