@@ -1,0 +1,31 @@
+autoware_system_design_format: 0.3.0
+
+name: PointcloudMapFilter.module
+
+instances:
+  - name: voxel_grid_downsample_filter
+    entity: VoxelGridDownsampleFilter.node
+  - name: voxel_based_compare_map_filter
+    entity: VoxelBasedCompareMapFilter.node
+
+subscribers:
+  - name: pointcloud
+  - name: pointcloud_map
+  - name: service_pointcloud_map_diff
+  - name: kinematic_state
+publishers:
+  - name: filtered_pointcloud
+
+connections:
+  - - subscriber.pointcloud
+    - voxel_grid_downsample_filter.subscriber.input
+  - - voxel_grid_downsample_filter.publisher.output
+    - voxel_based_compare_map_filter.subscriber.input
+  - - subscriber.pointcloud_map
+    - voxel_based_compare_map_filter.subscriber.map
+  - - client.service_pointcloud_map_diff
+    - voxel_based_compare_map_filter.client.service_pointcloud_map_diff
+  - - subscriber.kinematic_state
+    - voxel_based_compare_map_filter.subscriber.kinematic_state
+  - - voxel_based_compare_map_filter.publisher.output
+    - publisher.filtered_pointcloud

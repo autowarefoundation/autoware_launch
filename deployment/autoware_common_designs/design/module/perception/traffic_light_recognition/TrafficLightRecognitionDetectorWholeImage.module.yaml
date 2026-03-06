@@ -1,0 +1,68 @@
+autoware_system_design_format: 0.3.0
+
+name: TrafficLightRecognitionDetectorWholeImage.module
+
+instances:
+  - name: map_based_detector
+    entity: TrafficLightMapBasedDetector.node
+
+  - name: detection
+    entity: TensorrtYolox.node
+  - name: selector
+    entity: TrafficLightSelector.node
+
+  - name: classifier_car
+    entity: TrafficLightClassifierCar.node
+  - name: classifier_pedestrian
+    entity: TrafficLightClassifierPedestrian.node
+
+  - name: merger
+    entity: TrafficLightCategoryMerger.node
+
+subscribers:
+  - name: vector_map
+  - name: image
+  - name: camera_info
+  - name: route
+publishers:
+  - name: classification/traffic_signals
+  - name: detection/rois
+
+connections:
+  - - subscriber.vector_map
+    - map_based_detector.subscriber.vector_map
+  - - subscriber.route
+    - map_based_detector.subscriber.route
+  - - subscriber.camera_info
+    - map_based_detector.subscriber.camera_info
+
+  - - subscriber.image
+    - detection.subscriber.image
+
+  - - detection.publisher.objects
+    - selector.subscriber.detected_rois
+  - - map_based_detector.publisher.expected_rois
+    - selector.subscriber.expect_rois
+  - - map_based_detector.publisher.rough_rois
+    - selector.subscriber.rough_rois
+  - - subscriber.camera_info
+    - selector.subscriber.camera_info
+  - - selector.publisher.traffic_rois
+    - publisher.detection/rois
+
+  - - subscriber.image
+    - classifier_car.subscriber.image
+  - - selector.publisher.traffic_rois
+    - classifier_car.subscriber.rois
+
+  - - subscriber.image
+    - classifier_pedestrian.subscriber.image
+  - - selector.publisher.traffic_rois
+    - classifier_pedestrian.subscriber.rois
+
+  - - classifier_car.publisher.traffic_signals
+    - merger.subscriber.car_signals
+  - - classifier_pedestrian.publisher.traffic_signals
+    - merger.subscriber.pedestrian_signals
+  - - merger.publisher.traffic_signals
+    - publisher.classification/traffic_signals

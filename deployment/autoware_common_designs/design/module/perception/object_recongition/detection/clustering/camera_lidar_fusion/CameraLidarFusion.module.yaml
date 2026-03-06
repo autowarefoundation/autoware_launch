@@ -1,0 +1,52 @@
+autoware_system_design_format: 0.3.0
+
+name: CameraLidarFusion.module
+
+instances:
+  - name: roi_cluster_fusion
+    entity: RoiClusterFusion.node
+  - name: low_intensity_cluster_filter_node
+    entity: LowIntensityClusterFilter.node
+  - name: shape_estimation
+    entity: ShapeEstimation.node
+  - name: detected_object_feature_remover
+    entity: DetectedObjectFeatureRemover.node
+
+subscribers:
+  - name: rois0
+  - name: rois1
+  - name: rois2
+  - name: rois3
+  - name: rois4
+  - name: rois5
+  - name: rois6
+  - name: rois7
+  - name: camera_info0
+  - name: camera_info1
+  - name: camera_info2
+  - name: camera_info3
+  - name: camera_info4
+  - name: camera_info5
+  - name: camera_info6
+  - name: camera_info7
+  - name: euclidean_clusters
+publishers:
+  - name: objects
+
+connections:
+  - - subscriber.rois*
+    - roi_cluster_fusion.subscriber.rois*
+  - - subscriber.camera_info*
+    - roi_cluster_fusion.subscriber.camera_info*
+  - - subscriber.euclidean_clusters
+    - roi_cluster_fusion.subscriber.clusters
+
+  - - roi_cluster_fusion.publisher.clusters
+    - low_intensity_cluster_filter_node.subscriber.objects
+
+  - - low_intensity_cluster_filter_node.publisher.objects
+    - shape_estimation.subscriber.objects
+  - - shape_estimation.publisher.objects
+    - detected_object_feature_remover.subscriber.input
+  - - detected_object_feature_remover.publisher.output
+    - publisher.objects

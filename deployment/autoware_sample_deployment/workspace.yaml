@@ -1,0 +1,13 @@
+workspace:
+  - provider: autoware
+    resolution: source
+  - provider: autowarefoundation
+    resolution: source
+  - provider: pilot-auto
+    resolution: source
+  - provider: ros
+    resolution: installed
+  - provider: ros2
+    resolution: installed
+  - provider: nebula
+    resolution: source

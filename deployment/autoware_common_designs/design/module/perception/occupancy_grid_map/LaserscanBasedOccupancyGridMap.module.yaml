@@ -1,0 +1,29 @@
+autoware_system_design_format: 0.3.0
+
+name: LaserscanBasedOccupancyGridMap.module
+
+instances:
+  - name: pointcloud_to_laserscan
+    entity: PointcloudToLaserscan.node
+  - name: occupancy_grid_map
+    entity: LaserscanBasedOccupancyGridMap.node
+
+subscribers:
+  - name: obstacle_pointcloud
+  - name: raw_pointcloud
+
+publishers:
+  - name: map
+
+connections:
+  - - subscriber.obstacle_pointcloud
+    - pointcloud_to_laserscan.subscriber.pointcloud
+
+  - - subscriber.obstacle_pointcloud
+    - occupancy_grid_map.subscriber.obstacle_pointcloud
+  - - subscriber.raw_pointcloud
+    - occupancy_grid_map.subscriber.raw_pointcloud
+  - - pointcloud_to_laserscan.publisher.laserscan
+    - occupancy_grid_map.subscriber.laserscan
+  - - occupancy_grid_map.publisher.occupancy_grid_map
+    - publisher.map
