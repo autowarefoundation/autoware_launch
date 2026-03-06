@@ -1,0 +1,58 @@
+<launch>
+  <!-- planning module -->
+
+  <!-- mission planner -->
+  <arg name="mission_planner_param_path"/>
+  <arg name="launch_remaining_distance_time_calculator" default="false"/>
+
+  <node pkg="demo_nodes_cpp" exec="parameter_blackboard" name="velocity_smoother" namespace="/planning/scenario_planning" output="screen">
+    <param name="max_velocity" value="16.6"/>
+  </node>
+
+  <group>
+    <push-ros-namespace namespace="planning"/>
+    <!-- mission planning module -->
+    <group>
+      <push-ros-namespace namespace="mission_planning"/>
+      <include file="$(find-pkg-share tier4_planning_launch)/launch/mission_planning/mission_planning.launch.xml">
+        <arg name="mission_planner_param_path" value="$(var mission_planner_param_path)"/>
+      </include>
+    </group>
+
+    <group>
+      <!-- trajectory generator -->
+      <group>
+        <push-ros-namespace namespace="trajectory_generator"/>
+        <!-- neural network based planning module -->
+        <group>
+          <push-ros-namespace namespace="neural_network_based_planner"/>
+          <include file="$(find-pkg-share autoware_diffusion_planner)/launch/diffusion_planner.launch.xml">
+            <arg name="input_odometry" value="/localization/kinematic_state"/>
+            <arg name="input_acceleration" value="/localization/acceleration"/>
+            <arg name="input_route" value="/planning/mission_planning/route"/>
+            <arg name="input_traffic_signals" value="/perception/traffic_light_recognition/traffic_signals"/>
+            <arg name="input_tracked_objects" value="/perception/object_recognition/tracking/objects"/>
+            <arg name="input_vector_map" value="/map/vector_map"/>
+            <arg name="input_turn_indicators" value="/vehicle/status/turn_indicators_status"/>
+            <arg name="output_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
+            <arg name="output_turn_indicators" value="/planning/turn_indicators_cmd"/>
+          </include>
+          <include file="$(find-pkg-share autoware_trajectory_optimizer)/launch/trajectory_optimizer.launch.xml">
+            <arg name="input_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
+            <arg name="output_traj" value="/planning/trajectory"/>
+            <arg name="output_trajectories" value="/planning/generator/trajectory_optimizer/candidate_trajectories"/>
+            <arg
+              name="elastic_band_param_path"
+              value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/path_smoother/elastic_band_smoother.param.yaml"
+            />
+          </include>
+        </group>
+      </group>
+    </group>
+
+    <!-- mission remaining distance and time calculator -->
+    <group if="$(var launch_remaining_distance_time_calculator)">
+      <include file="$(find-pkg-share autoware_remaining_distance_time_calculator)/launch/remaining_distance_time_calculator.launch.xml"/>
+    </group>
+  </group>
+</launch>
