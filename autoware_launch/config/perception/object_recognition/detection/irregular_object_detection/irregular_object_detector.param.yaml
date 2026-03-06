@@ -42,7 +42,7 @@
         cluster_2d_tolerance: 0.5
         roi_scale_factor: 2.0
         max_object_size: 2.0
-        enable_fusion_per_class:
+        fusion_enabled_classes:
           UNKNOWN: true
           CAR: false
           BUS: false
