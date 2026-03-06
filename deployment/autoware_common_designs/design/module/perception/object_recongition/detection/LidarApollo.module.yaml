@@ -12,19 +12,22 @@ instances:
   - name: validation
     entity: ObstaclePointCloudBasedValidator.node
 
-inputs:
+subscribers:
   - name: pointcloud
   - name: obstacle_pointcloud
-outputs:
+publishers:
   - name: detected_objects
 
 connections:
-  - [subscriber.pointcloud, lidar_apollo_instance_segmentation.subscriber.pointcloud]
-  - [
-      lidar_apollo_instance_segmentation.publisher.labeled_clusters,
-      shape_estimation.subscriber.objects,
-    ]
-  - [shape_estimation.publisher.objects, detected_object_feature_remover.subscriber.input]
-  - [detected_object_feature_remover.publisher.output, validation.subscriber.detected_objects]
-  - [subscriber.obstacle_pointcloud, validation.subscriber.obstacle_pointcloud]
-  - [validation.publisher.objects, publisher.detected_objects]
+  - - subscriber.pointcloud
+    - lidar_apollo_instance_segmentation.subscriber.pointcloud
+  - - lidar_apollo_instance_segmentation.publisher.labeled_clusters
+    - shape_estimation.subscriber.objects
+  - - shape_estimation.publisher.objects
+    - detected_object_feature_remover.subscriber.input
+  - - detected_object_feature_remover.publisher.output
+    - validation.subscriber.detected_objects
+  - - subscriber.obstacle_pointcloud
+    - validation.subscriber.obstacle_pointcloud
+  - - validation.publisher.objects
+    - publisher.detected_objects

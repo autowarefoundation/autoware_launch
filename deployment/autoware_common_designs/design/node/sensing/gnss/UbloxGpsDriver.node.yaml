@@ -11,9 +11,9 @@ launch:
   respawn: true
   respawn_delay: 1.0
 
-inputs: []
+subscribers: []
 
-outputs:
+publishers:
   - name: nav_sat_fix
     message_type: sensor_msgs/msg/NavSatFix
     remap_target: ~/fix

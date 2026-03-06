@@ -10,17 +10,22 @@ instances:
   - name: detected_object_feature_remover
     entity: DetectedObjectFeatureRemover.node
 
-inputs:
+subscribers:
   - name: pointcloud
-outputs:
+publishers:
   - name: detected_objects
   - name: cluster_objects
 
 connections:
-  - [subscriber.pointcloud, euclidean_cluster.subscriber.input_pointcloud]
+  - - subscriber.pointcloud
+    - euclidean_cluster.subscriber.input_pointcloud
 
-  - [euclidean_cluster.publisher.output_clusters, shape_estimation.subscriber.objects]
-  - [shape_estimation.publisher.objects, publisher.cluster_objects]
+  - - euclidean_cluster.publisher.output_clusters
+    - shape_estimation.subscriber.objects
+  - - shape_estimation.publisher.objects
+    - publisher.cluster_objects
 
-  - [shape_estimation.publisher.objects, detected_object_feature_remover.subscriber.input]
-  - [detected_object_feature_remover.publisher.output, publisher.detected_objects]
+  - - shape_estimation.publisher.objects
+    - detected_object_feature_remover.subscriber.input
+  - - detected_object_feature_remover.publisher.output
+    - publisher.detected_objects

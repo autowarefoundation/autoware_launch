@@ -11,8 +11,8 @@ launch:
   node_output: screen
 
 # interfaces
-inputs: []
-outputs:
+subscribers: []
+publishers:
   # GNSS
   - name: sensing/gnss/ublox/fix_velocity
     message_type: geometry_msgs/msg/TwistWithCovarianceStamped

@@ -12,10 +12,10 @@ launch:
   node_output: screen
 
 # interfaces
-inputs:
+subscribers:
   - name: to_can_bus
     message_type: can_msgs/msg/Frame
-outputs: []
+publishers: []
 
 # parameters
 param_files: []

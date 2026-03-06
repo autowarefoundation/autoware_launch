@@ -11,12 +11,12 @@ launch:
   node_output: screen
 
 # interface
-inputs:
+subscribers:
   - name: robot_description
     message_type: std_msgs/msg/String
   - name: joint_states
     message_type: sensor_msgs/msg/JointState
-outputs:
+publishers:
   - name: robot_description
     message_type: std_msgs/msg/String
     remap_target: robot_description

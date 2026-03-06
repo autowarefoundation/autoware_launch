@@ -9,7 +9,7 @@ package:
 launch:
   ros2_launch_file: control.launch.xml
 
-inputs:
+subscribers:
   - name: mission_planning/route
     message_type: autoware_planning_msgs/msg/LaneletRoute
   - name: kinematics
@@ -27,7 +27,7 @@ inputs:
   - name: velocity_status
     message_type: autoware_vehicle_msgs/msg/VelocityReport
 
-outputs:
+publishers:
   - name: command/control_cmd
     message_type: autoware_control_msgs/msg/Control
   - name: command/gear_cmd

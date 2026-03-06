@@ -10,36 +10,32 @@ instances:
   - name: object_recognition/prediction
     entity: ObjectPredictionMapBased.module
 
-inputs:
+subscribers:
   - name: dummy_object_info
   - name: vector_map
   - name: traffic_lights
-outputs:
+publishers:
   - name: object_recognition/objects
   - name: obstacle_segmentation/pointcloud
 connections:
   # detection
-  - [subscriber.dummy_object_info, object_recognition/detection.subscriber.object_info]
-  - [
-      object_recognition/detection.publisher.obstacle_segmentation/pointcloud,
-      publisher.obstacle_segmentation/pointcloud,
-    ]
+  - - subscriber.dummy_object_info
+    - object_recognition/detection.subscriber.object_info
+  - - object_recognition/detection.publisher.obstacle_segmentation/pointcloud
+    - publisher.obstacle_segmentation/pointcloud
 
   # tracking
-  - [
-      object_recognition/detection.publisher.objects,
-      object_recognition/tracking.subscriber.detected_objects,
-    ]
+  - - object_recognition/detection.publisher.objects
+    - object_recognition/tracking.subscriber.detected_objects
 
   # prediction
-  - [
-      object_recognition/tracking.publisher.objects,
-      object_recognition/prediction.subscriber.tracked_objects,
-    ]
-  - [subscriber.vector_map, object_recognition/prediction.subscriber.vector_map]
-  - [subscriber.traffic_lights, object_recognition/prediction.subscriber.traffic_lights]
-  - [object_recognition/prediction.publisher.objects, publisher.object_recognition/objects]
-  - [
-      object_recognition/prediction.publisher.objects,
-      object_recognition/detection.subscriber.predicted_objects,
-    ]
+  - - object_recognition/tracking.publisher.objects
+    - object_recognition/prediction.subscriber.tracked_objects
+  - - subscriber.vector_map
+    - object_recognition/prediction.subscriber.vector_map
+  - - subscriber.traffic_lights
+    - object_recognition/prediction.subscriber.traffic_lights
+  - - object_recognition/prediction.publisher.objects
+    - publisher.object_recognition/objects
+  - - object_recognition/prediction.publisher.objects
+    - object_recognition/detection.subscriber.predicted_objects

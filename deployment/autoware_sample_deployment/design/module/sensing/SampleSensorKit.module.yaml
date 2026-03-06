@@ -12,13 +12,13 @@ instances:
   - name: gnss
     entity: SampleSensorKitGnss.module
 
-inputs:
+subscribers:
   - name: velocity_status
   - name: odometry
   - name: twist
   - name: pose_ndt
 
-outputs:
+publishers:
   - name: imu/imu_data
   - name: vehicle_velocity_converter/twist_with_covariance
   - name: gnss/pose
@@ -27,21 +27,30 @@ outputs:
   - name: lidar/concatenated/pointcloud_info
 
 connections:
-  - [subscriber.velocity_status, vehicle_velocity_converter.subscriber.velocity_status]
-  - [
-      vehicle_velocity_converter.publisher.twist_with_covariance,
-      publisher.vehicle_velocity_converter/twist_with_covariance,
-    ]
+  - - subscriber.velocity_status
+    - vehicle_velocity_converter.subscriber.velocity_status
+  - - vehicle_velocity_converter.publisher.twist_with_covariance
+    - publisher.vehicle_velocity_converter/twist_with_covariance
   # IMU
-  - [subscriber.odometry, imu.subscriber.odom]
-  - [subscriber.pose_ndt, imu.subscriber.pose_ndt]
-  - [imu.publisher.imu_data, publisher.imu/imu_data]
+  - - subscriber.odometry
+    - imu.subscriber.odom
+  - - subscriber.pose_ndt
+    - imu.subscriber.pose_ndt
+  - - imu.publisher.imu_data
+    - publisher.imu/imu_data
   # GNSS
-  - [gnss.publisher.pose, publisher.gnss/pose]
-  - [gnss.publisher.pose_with_covariance, publisher.gnss/pose_with_covariance]
+  - - gnss.publisher.pose
+    - publisher.gnss/pose
+  - - gnss.publisher.pose_with_covariance
+    - publisher.gnss/pose_with_covariance
   # LIDAR
-  - [vehicle_velocity_converter.publisher.twist_with_covariance, lidar.subscriber.twist]
-  - [subscriber.odometry, lidar.subscriber.odometry]
-  - [imu.publisher.imu_data, lidar.subscriber.imu]
-  - [lidar.publisher.concatenated/pointcloud, publisher.lidar/concatenated/pointcloud]
-  - [lidar.publisher.concatenated/pointcloud_info, publisher.lidar/concatenated/pointcloud_info]
+  - - vehicle_velocity_converter.publisher.twist_with_covariance
+    - lidar.subscriber.twist
+  - - subscriber.odometry
+    - lidar.subscriber.odometry
+  - - imu.publisher.imu_data
+    - lidar.subscriber.imu
+  - - lidar.publisher.concatenated/pointcloud
+    - publisher.lidar/concatenated/pointcloud
+  - - lidar.publisher.concatenated/pointcloud_info
+    - publisher.lidar/concatenated/pointcloud_info

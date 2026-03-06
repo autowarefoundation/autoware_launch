@@ -8,11 +8,13 @@ instances:
   - name: socket_can_sender
     entity: Ros2SocketCanSenderNode.node
 
-inputs:
+subscribers:
   - name: to_can_bus
-outputs:
+publishers:
   - name: from_can_bus
 
 connections:
-  - [subscriber.to_can_bus, socket_can_sender.subscriber.to_can_bus]
-  - [socket_can_receiver.publisher.from_can_bus, publisher.from_can_bus]
+  - - subscriber.to_can_bus
+    - socket_can_sender.subscriber.to_can_bus
+  - - socket_can_receiver.publisher.from_can_bus
+    - publisher.from_can_bus

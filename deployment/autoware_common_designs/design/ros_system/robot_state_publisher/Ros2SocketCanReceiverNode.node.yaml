@@ -12,8 +12,8 @@ launch:
   node_output: screen
 
 # interfaces
-inputs: []
-outputs:
+subscribers: []
+publishers:
   - name: from_can_bus
     message_type: can_msgs/msg/Frame
 

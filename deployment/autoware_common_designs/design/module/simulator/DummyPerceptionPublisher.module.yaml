@@ -10,17 +10,23 @@ instances:
   - name: detected_object_feature_remover
     entity: DetectedObjectFeatureRemover.node
 
-inputs:
+subscribers:
   - name: object_info
   - name: predicted_objects
-outputs:
+publishers:
   - name: objects
   - name: obstacle_segmentation/pointcloud
 
 connections:
-  - [subscriber.object_info, dummy_perception_publisher.subscriber.object]
-  - [subscriber.predicted_objects, dummy_perception_publisher.subscriber.predicted_objects]
-  - [dummy_perception_publisher.publisher.dynamic_object, shape_estimation.subscriber.objects]
-  - [shape_estimation.publisher.objects, detected_object_feature_remover.subscriber.input]
-  - [detected_object_feature_remover.publisher.output, publisher.objects]
-  - [dummy_perception_publisher.publisher.points_raw, publisher.obstacle_segmentation/pointcloud]
+  - - subscriber.object_info
+    - dummy_perception_publisher.subscriber.object
+  - - subscriber.predicted_objects
+    - dummy_perception_publisher.subscriber.predicted_objects
+  - - dummy_perception_publisher.publisher.dynamic_object
+    - shape_estimation.subscriber.objects
+  - - shape_estimation.publisher.objects
+    - detected_object_feature_remover.subscriber.input
+  - - detected_object_feature_remover.publisher.output
+    - publisher.objects
+  - - dummy_perception_publisher.publisher.points_raw
+    - publisher.obstacle_segmentation/pointcloud

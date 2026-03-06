@@ -6,14 +6,17 @@ instances:
   - name: vehicle_velocity_converter
     entity: PoseInitializer.node
 
-inputs: []
-outputs:
+subscribers: []
+publishers:
   - name: initialpose3d
   - name: localization/initialize
   - name: localization/initialization_state
   - name: localization/kinematic_state
 
 connections:
-  - [vehicle_velocity_converter.publisher.pose_reset, publisher.initialpose3d]
-  - [vehicle_velocity_converter.server.initialize, server.localization/initialize]
-  - [vehicle_velocity_converter.publisher.pub_state, publisher.localization/initialization_state]
+  - - vehicle_velocity_converter.publisher.pose_reset
+    - publisher.initialpose3d
+  - - vehicle_velocity_converter.server.initialize
+    - server.localization/initialize
+  - - vehicle_velocity_converter.publisher.pub_state
+    - publisher.localization/initialization_state

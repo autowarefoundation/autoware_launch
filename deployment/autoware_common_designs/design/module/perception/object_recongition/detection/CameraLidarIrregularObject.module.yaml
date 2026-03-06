@@ -1,20 +1,24 @@
-autoware_system_design_format: 0.3.0
+autoware_system_design_format: 0.3.1
 
 name: CameraLidarIrregularObject.module
 
 instances:
   - name: crop_box_filter
     entity: CropBoxFilter.node
+    arguments:
+      use_container: true
   - name: ground_filter
     entity: ScanGroundFilter.node
   - name: roi_pointcloud_fusion
     entity: RoiPointCloudFusion.node
+    arguments:
+      use_container: true
   - name: shape_estimation
     entity: ShapeEstimation.node
   - name: detected_object_feature_remover
     entity: DetectedObjectFeatureRemover.node
 
-inputs:
+subscribers:
   - name: pointcloud
   - name: rois0
   - name: rois1
@@ -24,17 +28,25 @@ inputs:
   - name: camera_info1
   - name: camera_info2
   - name: camera_info3
-outputs:
+publishers:
   - name: objects
 
 connections:
-  - [subscriber.pointcloud, crop_box_filter.subscriber.input]
-  - [crop_box_filter.publisher.output, ground_filter.subscriber.pointcloud]
-  - [ground_filter.publisher.pointcloud, roi_pointcloud_fusion.subscriber.pointcloud]
+  - - subscriber.pointcloud
+    - crop_box_filter.subscriber.input
+  - - crop_box_filter.publisher.output
+    - ground_filter.subscriber.pointcloud
+  - - ground_filter.publisher.pointcloud
+    - roi_pointcloud_fusion.subscriber.pointcloud
 
-  - [subscriber.rois*, roi_pointcloud_fusion.subscriber.rois*]
-  - [subscriber.camera_info*, roi_pointcloud_fusion.subscriber.camera_info*]
+  - - subscriber.rois*
+    - roi_pointcloud_fusion.subscriber.rois*
+  - - subscriber.camera_info*
+    - roi_pointcloud_fusion.subscriber.camera_info*
 
-  - [roi_pointcloud_fusion.publisher.clusters, shape_estimation.subscriber.objects]
-  - [shape_estimation.publisher.objects, detected_object_feature_remover.subscriber.input]
-  - [detected_object_feature_remover.publisher.output, publisher.objects]
+  - - roi_pointcloud_fusion.publisher.clusters
+    - shape_estimation.subscriber.objects
+  - - shape_estimation.publisher.objects
+    - detected_object_feature_remover.subscriber.input
+  - - detected_object_feature_remover.publisher.output
+    - publisher.objects

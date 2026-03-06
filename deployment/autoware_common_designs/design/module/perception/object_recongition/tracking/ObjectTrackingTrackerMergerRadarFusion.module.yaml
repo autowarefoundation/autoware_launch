@@ -12,21 +12,25 @@ instances:
   - name: decorative_tracker_merger
     entity: DecorativeTrackerMerger.node
 
-inputs:
+subscribers:
   - name: vector_map
   - name: detected_objects
   - name: radar_objects
-outputs:
+publishers:
   - name: objects
 
 connections:
-  - [subscriber.detected_objects, multi_object_tracker.subscriber.detection01/objects]
-  - [subscriber.radar_objects, radar_object_filter.subscriber.objects]
-  - [radar_object_filter.publisher.objects, tracked_object_lanelet_filter.subscriber.object]
-  - [subscriber.vector_map, tracked_object_lanelet_filter.subscriber.vector_map]
-  - [
-      tracked_object_lanelet_filter.publisher.object,
-      decorative_tracker_merger.subscriber.sub_object,
-    ]
-  - [multi_object_tracker.publisher.objects, decorative_tracker_merger.subscriber.main_object]
-  - [decorative_tracker_merger.publisher.merged_object, publisher.objects]
+  - - subscriber.detected_objects
+    - multi_object_tracker.subscriber.detection01/objects
+  - - subscriber.radar_objects
+    - radar_object_filter.subscriber.objects
+  - - radar_object_filter.publisher.objects
+    - tracked_object_lanelet_filter.subscriber.object
+  - - subscriber.vector_map
+    - tracked_object_lanelet_filter.subscriber.vector_map
+  - - tracked_object_lanelet_filter.publisher.object
+    - decorative_tracker_merger.subscriber.sub_object
+  - - multi_object_tracker.publisher.objects
+    - decorative_tracker_merger.subscriber.main_object
+  - - decorative_tracker_merger.publisher.merged_object
+    - publisher.objects

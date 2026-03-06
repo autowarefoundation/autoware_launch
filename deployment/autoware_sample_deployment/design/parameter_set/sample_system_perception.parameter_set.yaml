@@ -66,7 +66,9 @@ parameters:
     param_values: []
   - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/detected_object_feature_remover
     param_files: []
-    param_values: []
+    param_values:
+      - name: run_convex_hull_conversion
+        value: true
   - node: /perception/object_recognition/detection/detection_by_tracker
     param_files:
       - detection_by_tracker_param_path: $(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml

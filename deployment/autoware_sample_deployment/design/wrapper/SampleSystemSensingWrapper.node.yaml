@@ -10,7 +10,7 @@ launch:
   ros2_launch_file: sample_system_sensing_wrapper.launch.xml
 
 # interfaces
-inputs:
+subscribers:
   - name: velocity_status
     message_type: autoware_vehicle_msgs/msg/VelocityReport
   - name: odometry
@@ -24,7 +24,7 @@ inputs:
   - name: steering_angle
     message_type: std_msgs/msg/Float32
 
-outputs:
+publishers:
   # lidar
   - name: lidar/top/pointcloud
     message_type: sensor_msgs/msg/PointCloud2

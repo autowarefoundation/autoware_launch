@@ -6,11 +6,13 @@ instances:
   - name: multi_object_tracker
     entity: MultiObjectTracker.node
 
-inputs:
+subscribers:
   - name: detected_objects
-outputs:
+publishers:
   - name: objects
 
 connections:
-  - [subscriber.detected_objects, multi_object_tracker.subscriber.detection01/objects]
-  - [multi_object_tracker.publisher.objects, publisher.objects]
+  - - subscriber.detected_objects
+    - multi_object_tracker.subscriber.detection01/objects
+  - - multi_object_tracker.publisher.objects
+    - publisher.objects

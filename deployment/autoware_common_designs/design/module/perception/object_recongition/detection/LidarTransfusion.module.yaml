@@ -8,14 +8,18 @@ instances:
   - name: validation
     entity: ObstaclePointCloudBasedValidator.node
 
-inputs:
+subscribers:
   - name: pointcloud
   - name: obstacle_pointcloud
-outputs:
+publishers:
   - name: detected_objects
 
 connections:
-  - [subscriber.pointcloud, lidar_transfusion.subscriber.pointcloud]
-  - [lidar_transfusion.publisher.objects, validation.subscriber.detected_objects]
-  - [subscriber.obstacle_pointcloud, validation.subscriber.obstacle_pointcloud]
-  - [validation.publisher.objects, publisher.detected_objects]
+  - - subscriber.pointcloud
+    - lidar_transfusion.subscriber.pointcloud
+  - - lidar_transfusion.publisher.objects
+    - validation.subscriber.detected_objects
+  - - subscriber.obstacle_pointcloud
+    - validation.subscriber.obstacle_pointcloud
+  - - validation.publisher.objects
+    - publisher.detected_objects

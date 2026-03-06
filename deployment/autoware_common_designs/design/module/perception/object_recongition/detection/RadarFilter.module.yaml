@@ -9,14 +9,18 @@ instances:
   - name: radar_object_filter
     entity: DetectedObjectSorter.node
 
-inputs:
+subscribers:
   - name: vector_map
   - name: radar_objects
-outputs:
+publishers:
   - name: radar_filtered_objects
 
 connections:
-  - [subscriber.radar_objects, radar_object_filter.subscriber.objects]
-  - [radar_object_filter.publisher.objects, object_lanelet_filter.subscriber.object]
-  - [subscriber.vector_map, object_lanelet_filter.subscriber.vector_map]
-  - [object_lanelet_filter.publisher.object, publisher.radar_filtered_objects]
+  - - subscriber.radar_objects
+    - radar_object_filter.subscriber.objects
+  - - radar_object_filter.publisher.objects
+    - object_lanelet_filter.subscriber.object
+  - - subscriber.vector_map
+    - object_lanelet_filter.subscriber.vector_map
+  - - object_lanelet_filter.publisher.object
+    - publisher.radar_filtered_objects

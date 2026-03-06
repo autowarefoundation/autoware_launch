@@ -10,7 +10,7 @@ instances:
   - name: camera_lidar_fusion
     entity: CameraLidarFusion.module
 
-inputs:
+subscribers:
   - name: pointcloud
   - name: rois0
   - name: rois1
@@ -28,17 +28,24 @@ inputs:
   - name: camera_info5
   - name: camera_info6
   - name: camera_info7
-outputs:
+publishers:
   - name: detected_objects
   - name: cluster_objects
 
 connections:
-  - [subscriber.pointcloud, euclidean_cluster.subscriber.input_pointcloud]
+  - - subscriber.pointcloud
+    - euclidean_cluster.subscriber.input_pointcloud
 
-  - [euclidean_cluster.publisher.output_clusters, shape_estimation.subscriber.objects]
-  - [shape_estimation.publisher.objects, publisher.cluster_objects]
+  - - euclidean_cluster.publisher.output_clusters
+    - shape_estimation.subscriber.objects
+  - - shape_estimation.publisher.objects
+    - publisher.cluster_objects
 
-  - [euclidean_cluster.publisher.output_clusters, camera_lidar_fusion.subscriber.euclidean_clusters]
-  - [subscriber.rois*, camera_lidar_fusion.subscriber.rois*]
-  - [subscriber.camera_info*, camera_lidar_fusion.subscriber.camera_info*]
-  - [camera_lidar_fusion.publisher.objects, publisher.detected_objects]
+  - - euclidean_cluster.publisher.output_clusters
+    - camera_lidar_fusion.subscriber.euclidean_clusters
+  - - subscriber.rois*
+    - camera_lidar_fusion.subscriber.rois*
+  - - subscriber.camera_info*
+    - camera_lidar_fusion.subscriber.camera_info*
+  - - camera_lidar_fusion.publisher.objects
+    - publisher.detected_objects

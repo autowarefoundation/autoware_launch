@@ -9,8 +9,9 @@ remove:
     - name: lidar
 
 override:
-  inputs:
+  subscribers:
     - name: pointcloud_raw_ex
 
   connections:
-    - [subscriber.pointcloud_raw_ex, crop_box_filter_self.subscriber.input]
+    - - subscriber.pointcloud_raw_ex
+      - crop_box_filter_self.subscriber.input
