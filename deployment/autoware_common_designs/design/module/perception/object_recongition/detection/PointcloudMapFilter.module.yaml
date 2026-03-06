@@ -17,12 +17,15 @@ publishers:
   - name: filtered_pointcloud
 
 connections:
-  - [subscriber.pointcloud, voxel_grid_downsample_filter.subscriber.input]
-  - [voxel_grid_downsample_filter.publisher.output, voxel_based_compare_map_filter.subscriber.input]
-  - [subscriber.pointcloud_map, voxel_based_compare_map_filter.subscriber.map]
-  - [
-      client.service_pointcloud_map_diff,
-      voxel_based_compare_map_filter.client.service_pointcloud_map_diff,
-    ]
-  - [subscriber.kinematic_state, voxel_based_compare_map_filter.subscriber.kinematic_state]
-  - [voxel_based_compare_map_filter.publisher.output, publisher.filtered_pointcloud]
+  - - subscriber.pointcloud
+    - voxel_grid_downsample_filter.subscriber.input
+  - - voxel_grid_downsample_filter.publisher.output
+    - voxel_based_compare_map_filter.subscriber.input
+  - - subscriber.pointcloud_map
+    - voxel_based_compare_map_filter.subscriber.map
+  - - client.service_pointcloud_map_diff
+    - voxel_based_compare_map_filter.client.service_pointcloud_map_diff
+  - - subscriber.kinematic_state
+    - voxel_based_compare_map_filter.subscriber.kinematic_state
+  - - voxel_based_compare_map_filter.publisher.output
+    - publisher.filtered_pointcloud

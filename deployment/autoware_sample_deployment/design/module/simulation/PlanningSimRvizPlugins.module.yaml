@@ -11,7 +11,5 @@ publishers:
   - name: simulation/dummy_perception_publisher/object_info
 
 connections:
-  - [
-      dummy_object_publisher.publisher.object,
-      publisher.simulation/dummy_perception_publisher/object_info,
-    ]
+  - - dummy_object_publisher.publisher.object
+    - publisher.simulation/dummy_perception_publisher/object_info

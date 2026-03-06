@@ -15,7 +15,11 @@ publishers:
   - name: pose_with_covariance
 
 connections:
-  - [subscriber.orientation, gnss_poser.subscriber.autoware_orientation]
-  - [ublox.publisher.nav_sat_fix, gnss_poser.subscriber.fix]
-  - [gnss_poser.publisher.gnss_pose, publisher.pose]
-  - [gnss_poser.publisher.gnss_pose_cov, publisher.pose_with_covariance]
+  - - subscriber.orientation
+    - gnss_poser.subscriber.autoware_orientation
+  - - ublox.publisher.nav_sat_fix
+    - gnss_poser.subscriber.fix
+  - - gnss_poser.publisher.gnss_pose
+    - publisher.pose
+  - - gnss_poser.publisher.gnss_pose_cov
+    - publisher.pose_with_covariance

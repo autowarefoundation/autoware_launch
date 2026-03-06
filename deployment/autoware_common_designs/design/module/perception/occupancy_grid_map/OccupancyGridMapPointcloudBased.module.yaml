@@ -14,6 +14,9 @@ publishers:
   - name: map
 
 connections:
-  - [subscriber.raw_pointcloud, occupancy_grid_map_node.subscriber.raw_pointcloud]
-  - [subscriber.obstacle_pointcloud, occupancy_grid_map_node.subscriber.obstacle_pointcloud]
-  - [occupancy_grid_map_node.publisher.occupancy_grid_map, publisher.map]
+  - - subscriber.raw_pointcloud
+    - occupancy_grid_map_node.subscriber.raw_pointcloud
+  - - subscriber.obstacle_pointcloud
+    - occupancy_grid_map_node.subscriber.obstacle_pointcloud
+  - - occupancy_grid_map_node.publisher.occupancy_grid_map
+    - publisher.map

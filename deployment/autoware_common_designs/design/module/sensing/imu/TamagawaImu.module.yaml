@@ -13,5 +13,7 @@ publishers:
   - name: imu_raw
 
 connections:
-  - [socket_can_receiver.publisher.from_can_bus, tag_can_driver.subscriber.can_imu]
-  - [tag_can_driver.publisher.data_raw, publisher.imu_raw]
+  - - socket_can_receiver.publisher.from_can_bus
+    - tag_can_driver.subscriber.can_imu
+  - - tag_can_driver.publisher.data_raw
+    - publisher.imu_raw

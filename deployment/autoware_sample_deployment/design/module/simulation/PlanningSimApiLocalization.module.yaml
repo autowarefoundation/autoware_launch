@@ -14,6 +14,9 @@ publishers:
   - name: localization/kinematic_state
 
 connections:
-  - [vehicle_velocity_converter.publisher.pose_reset, publisher.initialpose3d]
-  - [vehicle_velocity_converter.server.initialize, server.localization/initialize]
-  - [vehicle_velocity_converter.publisher.pub_state, publisher.localization/initialization_state]
+  - - vehicle_velocity_converter.publisher.pose_reset
+    - publisher.initialpose3d
+  - - vehicle_velocity_converter.server.initialize
+    - server.localization/initialize
+  - - vehicle_velocity_converter.publisher.pub_state
+    - publisher.localization/initialization_state

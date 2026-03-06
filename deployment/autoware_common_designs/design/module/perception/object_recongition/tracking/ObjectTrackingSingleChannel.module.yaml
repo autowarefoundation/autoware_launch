@@ -12,5 +12,7 @@ publishers:
   - name: objects
 
 connections:
-  - [subscriber.detected_objects, multi_object_tracker.subscriber.detection01/objects]
-  - [multi_object_tracker.publisher.objects, publisher.objects]
+  - - subscriber.detected_objects
+    - multi_object_tracker.subscriber.detection01/objects
+  - - multi_object_tracker.publisher.objects
+    - publisher.objects

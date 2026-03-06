@@ -21,15 +21,23 @@ publishers:
   - name: concatenated/pointcloud_info
 
 connections:
-  - [subscriber.imu, ^.subscriber.imu]
-  - [subscriber.twist, ^.subscriber.twist]
+  - - subscriber.imu
+    - ^.subscriber.imu
+  - - subscriber.twist
+    - ^.subscriber.twist
 
   # the order is important. the order need to be aligned with parameter of
   # matching_strategy in concatenate_and_time_sync_node.param.yaml
-  - [right.publisher.pointcloud, concatenate_and_time_sync.subscriber.input1]
-  - [top.publisher.pointcloud, concatenate_and_time_sync.subscriber.input2]
-  - [left.publisher.pointcloud, concatenate_and_time_sync.subscriber.input3]
+  - - right.publisher.pointcloud
+    - concatenate_and_time_sync.subscriber.input1
+  - - top.publisher.pointcloud
+    - concatenate_and_time_sync.subscriber.input2
+  - - left.publisher.pointcloud
+    - concatenate_and_time_sync.subscriber.input3
 
-  - [subscriber.odometry, concatenate_and_time_sync.subscriber.odometry]
-  - [concatenate_and_time_sync.publisher.output, publisher.concatenated/pointcloud]
-  - [concatenate_and_time_sync.publisher.output_info, publisher.concatenated/pointcloud_info]
+  - - subscriber.odometry
+    - concatenate_and_time_sync.subscriber.odometry
+  - - concatenate_and_time_sync.publisher.output
+    - publisher.concatenated/pointcloud
+  - - concatenate_and_time_sync.publisher.output_info
+    - publisher.concatenated/pointcloud_info

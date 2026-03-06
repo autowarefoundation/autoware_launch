@@ -28,13 +28,21 @@ publishers:
   - name: objects
 
 connections:
-  - [subscriber.pointcloud, crop_box_filter.subscriber.input]
-  - [crop_box_filter.publisher.output, ground_filter.subscriber.pointcloud]
-  - [ground_filter.publisher.pointcloud, roi_pointcloud_fusion.subscriber.pointcloud]
+  - - subscriber.pointcloud
+    - crop_box_filter.subscriber.input
+  - - crop_box_filter.publisher.output
+    - ground_filter.subscriber.pointcloud
+  - - ground_filter.publisher.pointcloud
+    - roi_pointcloud_fusion.subscriber.pointcloud
 
-  - [subscriber.rois*, roi_pointcloud_fusion.subscriber.rois*]
-  - [subscriber.camera_info*, roi_pointcloud_fusion.subscriber.camera_info*]
+  - - subscriber.rois*
+    - roi_pointcloud_fusion.subscriber.rois*
+  - - subscriber.camera_info*
+    - roi_pointcloud_fusion.subscriber.camera_info*
 
-  - [roi_pointcloud_fusion.publisher.clusters, shape_estimation.subscriber.objects]
-  - [shape_estimation.publisher.objects, detected_object_feature_remover.subscriber.input]
-  - [detected_object_feature_remover.publisher.output, publisher.objects]
+  - - roi_pointcloud_fusion.publisher.clusters
+    - shape_estimation.subscriber.objects
+  - - shape_estimation.publisher.objects
+    - detected_object_feature_remover.subscriber.input
+  - - detected_object_feature_remover.publisher.output
+    - publisher.objects

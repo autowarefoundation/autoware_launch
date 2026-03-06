@@ -21,6 +21,9 @@ publishers:
   - name: doors/status
 
 connections:
-  - [subscriber.*, raw_vehicle_cmd_converter.subscriber.*]
-  - [raw_vehicle_cmd_converter.publisher.actuation_cmd, publisher.actuation_cmd]
-  - [vehicle_door_simulator.publisher.doors/status, publisher.doors/status]
+  - - subscriber.*
+    - raw_vehicle_cmd_converter.subscriber.*
+  - - raw_vehicle_cmd_converter.publisher.actuation_cmd
+    - publisher.actuation_cmd
+  - - vehicle_door_simulator.publisher.doors/status
+    - publisher.doors/status

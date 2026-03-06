@@ -22,8 +22,11 @@ override:
 
   connections:
     # LIDAR
-    - [subscriber.lidar/+/velodyne_packets, lidar.subscriber.+/velodyne_packets]
+    - - subscriber.lidar/+/velodyne_packets
+      - lidar.subscriber.+/velodyne_packets
     # IMU
-    - [subscriber.imu/tamagawa/imu_raw, imu.subscriber.imu_raw]
+    - - subscriber.imu/tamagawa/imu_raw
+      - imu.subscriber.imu_raw
     # GNSS
-    - [subscriber.gnss/ublox/nav_sat_fix, gnss.subscriber.nav_sat_fix]
+    - - subscriber.gnss/ublox/nav_sat_fix
+      - gnss.subscriber.nav_sat_fix

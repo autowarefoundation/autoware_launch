@@ -19,9 +19,15 @@ publishers:
   - name: pointcloud
 
 connections:
-  - [lidar.publisher.velodyne_points, crop_box_filter_self.subscriber.input]
-  - [crop_box_filter_self.publisher.output, crop_box_filter_wheels.subscriber.input]
-  - [crop_box_filter_wheels.publisher.output, distortion_corrector_node.subscriber.pointcloud]
-  - [subscriber.twist, distortion_corrector_node.subscriber.twist]
-  - [subscriber.imu, distortion_corrector_node.subscriber.imu]
-  - [distortion_corrector_node.publisher.pointcloud, publisher.pointcloud]
+  - - lidar.publisher.velodyne_points
+    - crop_box_filter_self.subscriber.input
+  - - crop_box_filter_self.publisher.output
+    - crop_box_filter_wheels.subscriber.input
+  - - crop_box_filter_wheels.publisher.output
+    - distortion_corrector_node.subscriber.pointcloud
+  - - subscriber.twist
+    - distortion_corrector_node.subscriber.twist
+  - - subscriber.imu
+    - distortion_corrector_node.subscriber.imu
+  - - distortion_corrector_node.publisher.pointcloud
+    - publisher.pointcloud

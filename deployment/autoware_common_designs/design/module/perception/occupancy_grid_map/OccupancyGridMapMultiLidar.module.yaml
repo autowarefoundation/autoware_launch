@@ -33,31 +33,24 @@ publishers:
   - name: map
 
 connections:
-  - [subscriber.obstacle_pointcloud, obstacle_pc_downsample_filter.subscriber.input]
+  - - subscriber.obstacle_pointcloud
+    - obstacle_pc_downsample_filter.subscriber.input
 
-  - [subscriber.pointcloud_*, raw_pc_downsample_filter_*.subscriber.input]
+  - - subscriber.pointcloud_*
+    - raw_pc_downsample_filter_*.subscriber.input
 
-  - [
-      raw_pc_downsample_filter_*.publisher.output,
-      occupancy_grid_map_node_*.subscriber.raw_pointcloud,
-    ]
+  - - raw_pc_downsample_filter_*.publisher.output
+    - occupancy_grid_map_node_*.subscriber.raw_pointcloud
 
-  - [
-      obstacle_pc_downsample_filter.publisher.output,
-      occupancy_grid_map_node_1.subscriber.obstacle_pointcloud,
-    ]
-  - [
-      obstacle_pc_downsample_filter.publisher.output,
-      occupancy_grid_map_node_2.subscriber.obstacle_pointcloud,
-    ]
-  - [
-      obstacle_pc_downsample_filter.publisher.output,
-      occupancy_grid_map_node_3.subscriber.obstacle_pointcloud,
-    ]
+  - - obstacle_pc_downsample_filter.publisher.output
+    - occupancy_grid_map_node_1.subscriber.obstacle_pointcloud
+  - - obstacle_pc_downsample_filter.publisher.output
+    - occupancy_grid_map_node_2.subscriber.obstacle_pointcloud
+  - - obstacle_pc_downsample_filter.publisher.output
+    - occupancy_grid_map_node_3.subscriber.obstacle_pointcloud
 
-  - [
-      occupancy_grid_map_node_*.publisher.occupancy_grid_map,
-      occupancy_grid_map_fusion_node.subscriber.occupancy_grid_map_*,
-    ]
+  - - occupancy_grid_map_node_*.publisher.occupancy_grid_map
+    - occupancy_grid_map_fusion_node.subscriber.occupancy_grid_map_*
 
-  - [occupancy_grid_map_fusion_node.publisher.occupancy_grid_map, publisher.map]
+  - - occupancy_grid_map_fusion_node.publisher.occupancy_grid_map
+    - publisher.map

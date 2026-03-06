@@ -19,4 +19,5 @@ override:
     - name: right/velodyne_packets
 
   connections:
-    - [subscriber.^/velodyne_packets, ^.subscriber.velodyne_packets]
+    - - subscriber.^/velodyne_packets
+      - ^.subscriber.velodyne_packets
