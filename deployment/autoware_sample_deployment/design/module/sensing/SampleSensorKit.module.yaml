@@ -12,13 +12,13 @@ instances:
   - name: gnss
     entity: SampleSensorKitGnss.module
 
-inputs:
+subscribers:
   - name: velocity_status
   - name: odometry
   - name: twist
   - name: pose_ndt
 
-outputs:
+publishers:
   - name: imu/imu_data
   - name: vehicle_velocity_converter/twist_with_covariance
   - name: gnss/pose

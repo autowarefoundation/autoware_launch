@@ -9,10 +9,10 @@ instances:
   - name: radar_object_filter
     entity: DetectedObjectSorter.node
 
-inputs:
+subscribers:
   - name: vector_map
   - name: radar_objects
-outputs:
+publishers:
   - name: radar_filtered_objects
 
 connections:

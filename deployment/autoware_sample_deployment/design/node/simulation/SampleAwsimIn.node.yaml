@@ -11,7 +11,7 @@ launch:
   node_output: screen
 
 # interfaces
-inputs:
+subscribers:
   - name: awsim/awsim_rviz_plugins/npc_spawner/npc_name
     message_type: std_msgs/msg/String
   - name: awsim/awsim_rviz_plugins/npc_spawner/npc_velocity
@@ -31,7 +31,7 @@ inputs:
     message_type: autoware_vehicle_msgs/msg/HazardLightsCommand
   - name: control/command/turn_indicators_cmd
     message_type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
-outputs: []
+publishers: []
 
 # parameters
 param_values: []

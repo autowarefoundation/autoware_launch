@@ -6,14 +6,14 @@ instances:
   - name: multi_object_tracker
     entity: MultiObjectTracker.node
 
-inputs:
+subscribers:
   - name: lidar_ml_objects
   - name: lidar_ml_short_range_objects
   - name: camera_lidar_rule_detector_objects
   - name: camera_lidar_irregular_objects
   - name: tracker_based_detector_objects
   - name: radar_objects
-outputs:
+publishers:
   - name: objects
 
 connections:

@@ -9,7 +9,7 @@ remove:
     - name: lidar
 
 override:
-  inputs:
+  subscribers:
     - name: pointcloud_raw_ex
 
   connections:

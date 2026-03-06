@@ -10,8 +10,8 @@ launch:
   ros2_launch_file: global_params.launch.py
 
 # interface
-inputs: []
-outputs: []
+subscribers: []
+publishers: []
 
 # parameters
 param_files: []

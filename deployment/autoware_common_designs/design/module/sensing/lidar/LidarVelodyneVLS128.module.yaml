@@ -12,10 +12,10 @@ instances:
   - name: distortion_corrector_node
     entity: DistortionCorrector.node
 
-inputs:
+subscribers:
   - name: twist
   - name: imu
-outputs:
+publishers:
   - name: pointcloud
 
 connections:

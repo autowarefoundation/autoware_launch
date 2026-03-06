@@ -12,11 +12,11 @@ launch:
   args: messages ${input input_topic} ${parameter rate} ${output output_topic}
 
 # interfaces
-inputs:
+subscribers:
   - name: input_topic
     message_type: geometry_msgs/msg/AccelWithCovarianceStamped
 
-outputs:
+publishers:
   - name: output_topic
     message_type: geometry_msgs/msg/AccelWithCovarianceStamped
 

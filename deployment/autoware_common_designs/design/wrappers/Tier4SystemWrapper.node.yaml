@@ -10,12 +10,12 @@ launch:
   ros2_launch_file: system.launch.xml
 
 # interfaces
-inputs:
+subscribers:
   - name: diagnostics
     message_type: diagnostic_msgs/msg/DiagnosticArray
     global: /diagnostics
 
-outputs:
+publishers:
   - name: diagnostics_graph/struct
     message_type: tier4_system_msgs/msg/DiagGraphStruct
     qos:
@@ -23,22 +23,24 @@ outputs:
       durability: transient_local
   - name: diagnostics_graph/status
     message_type: tier4_system_msgs/msg/DiagGraphStatus
-  - name: diagnostics_graph/reset
-    message_type: tier4_system_msgs/srv/ResetDiagGraph
   - name: system/command_mode/availability
     message_type: tier4_system_msgs/msg/CommandModeAvailability
   - name: system/operation_mode/availability
     message_type: tier4_system_msgs/msg/OperationModeAvailability
   - name: system/operation_mode/state
     message_type: autoware_adapi_v1_msgs/msg/OperationModeState
-  - name: system/operation_mode/change_operation_mode
-    message_type: autoware_system_msgs/srv/ChangeOperationMode
-  - name: system/operation_mode/change_autoware_control
-    message_type: autoware_system_msgs/srv/ChangeAutowareControl
   - name: system/fail_safe/mrm_state
     message_type: autoware_adapi_v1_msgs/msg/MrmState
   - name: system/emergency/hazard_status
     message_type: autoware_system_msgs/msg/HazardStatusStamped
+
+servers:
+  - name: diagnostics_graph/reset
+    message_type: tier4_system_msgs/srv/ResetDiagGraph
+  - name: system/operation_mode/change_operation_mode
+    message_type: autoware_system_msgs/srv/ChangeOperationMode
+  - name: system/operation_mode/change_autoware_control
+    message_type: autoware_system_msgs/srv/ChangeAutowareControl
 
 # parameters
 param_files: []

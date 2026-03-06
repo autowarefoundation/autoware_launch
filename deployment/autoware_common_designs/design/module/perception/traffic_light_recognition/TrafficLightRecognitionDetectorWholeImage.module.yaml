@@ -19,12 +19,12 @@ instances:
   - name: merger
     entity: TrafficLightCategoryMerger.node
 
-inputs:
+subscribers:
   - name: vector_map
   - name: image
   - name: camera_info
   - name: route
-outputs:
+publishers:
   - name: classification/traffic_signals
   - name: detection/rois
 

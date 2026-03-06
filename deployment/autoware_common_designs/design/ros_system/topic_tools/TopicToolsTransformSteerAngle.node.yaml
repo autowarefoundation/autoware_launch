@@ -12,11 +12,11 @@ launch:
   args: ${input steering_status} ${output steering_status_scalar} std_msgs/msg/Float32 'std_msgs.msg.Float32(data=m.steering_tire_angle)' --import autoware_vehicle_msgs std_msgs --wait-for-start
 
 # interfaces
-inputs:
+subscribers:
   - name: steering_status
     message_type: autoware_vehicle_msgs/msg/SteeringReport
 
-outputs:
+publishers:
   - name: steering_status_scalar
     message_type: std_msgs/msg/Float32
 

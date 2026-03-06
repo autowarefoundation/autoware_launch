@@ -10,7 +10,7 @@ instances:
   - name: camera_lidar_fusion
     entity: CameraLidarFusion.module
 
-inputs:
+subscribers:
   - name: pointcloud
   - name: rois0
   - name: rois1
@@ -28,7 +28,7 @@ inputs:
   - name: camera_info5
   - name: camera_info6
   - name: camera_info7
-outputs:
+publishers:
   - name: detected_objects
   - name: cluster_objects
 

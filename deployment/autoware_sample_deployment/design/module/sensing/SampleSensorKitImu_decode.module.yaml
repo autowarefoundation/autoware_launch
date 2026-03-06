@@ -5,7 +5,7 @@ name: SampleSensorKitImu_decode.module
 base: SampleSensorKitImu.module
 
 override:
-  inputs:
+  subscribers:
     - name: imu_raw
   connections:
     - [subscriber.imu_raw, gyro_bias_estimator.subscriber.imu_raw]

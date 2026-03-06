@@ -10,9 +10,9 @@ launch:
   ros2_launch_file: map.launch.xml
 
 # interfaces
-inputs: []
+subscribers: []
 
-outputs:
+publishers:
   - name: vector_map
     message_type: autoware_map_msgs/msg/LaneletMapBin
     qos:
@@ -23,6 +23,8 @@ outputs:
     qos:
       reliability: reliable
       durability: transient_local
+
+servers:
   - name: get_differential_pointcloud_map
     message_type: autoware_map_msgs/srv/GetDifferentialPointCloudMap
   - name: get_partial_pointcloud_map
