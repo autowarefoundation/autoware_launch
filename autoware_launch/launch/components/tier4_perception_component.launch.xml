@@ -73,6 +73,8 @@
     description="select high accuracy detector type for traffic light recognition: fine_detection or whole_image_detection"
   />
 
+  <let name="occupancy_grid_map_method_full" value="$(var occupancy_grid_map_method)_occupancy_grid_map"/>
+
   <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
     <arg name="data_path" value="$(var data_path)"/>
     <!-- general options to switch launch function/module -->
@@ -83,7 +85,7 @@
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
 
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
-    <arg name="occupancy_grid_map_method" value="$(var occupancy_grid_map_method)_occupancy_grid_map"/>
+    <arg name="occupancy_grid_map_method" value="$(var occupancy_grid_map_method_full)"/>
     <arg name="occupancy_grid_map_updater" value="$(var occupancy_grid_map_updater)"/>
 
     <arg name="use_empty_dynamic_object_publisher" value="$(var use_empty_dynamic_object_publisher)"/>
@@ -193,20 +195,8 @@
     />
     <arg name="object_recognition_detection_lidar_model_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/lidar_model"/>
     <arg
-      name="object_recognition_detection_object_velocity_splitter_radar_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_velocity_splitter/object_velocity_splitter_radar.param.yaml"
-    />
-    <arg
-      name="object_recognition_detection_object_velocity_splitter_radar_fusion_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_velocity_splitter/object_velocity_splitter_radar_fusion.param.yaml"
-    />
-    <arg
-      name="object_recognition_detection_object_range_splitter_radar_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_range_splitter/object_range_splitter_radar.param.yaml"
-    />
-    <arg
-      name="object_recognition_detection_object_range_splitter_radar_fusion_param_path"
-      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/object_range_splitter/object_range_splitter_radar_fusion.param.yaml"
+      name="object_recognition_detection_object_sorter_radar_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/radar_filter/detected_object_sorter.param.yaml"
     />
     <arg
       name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
@@ -248,7 +238,7 @@
     />
 
     <!-- occupancy grid map parameters -->
-    <arg name="occupancy_grid_map_param_path" value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/$(var occupancy_grid_map_method).param.yaml"/>
+    <arg name="occupancy_grid_map_param_path" value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/$(var occupancy_grid_map_method_full).param.yaml"/>
     <arg name="occupancy_grid_map_updater_param_path" value="$(find-pkg-share autoware_launch)/config/perception/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"/>
 
     <!-- traffic light recognition parameters -->
