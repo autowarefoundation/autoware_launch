@@ -13,10 +13,10 @@ launch:
   use_container: false
 
 # interfaces
-inputs:
+subscribers:
   - name: can_imu
     message_type: can_msgs/msg/Frame
-outputs:
+publishers:
   - name: data_raw
     message_type: sensor_msgs/msg/Imu
 

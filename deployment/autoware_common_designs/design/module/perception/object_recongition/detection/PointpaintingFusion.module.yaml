@@ -8,7 +8,7 @@ instances:
   - name: validation
     entity: ObstaclePointCloudBasedValidator.node
 
-inputs:
+subscribers:
   - name: rois0
   - name: rois1
   - name: rois2
@@ -27,7 +27,7 @@ inputs:
   - name: camera_info7
   - name: pointcloud
   - name: obstacle_pointcloud
-outputs:
+publishers:
   - name: detected_objects
 
 connections:

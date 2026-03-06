@@ -11,8 +11,8 @@ launch:
   node_output: screen
 
 # interfaces
-inputs: []
-outputs:
+subscribers: []
+publishers:
   # GNSS
   - name: sensing/gnss/pose
     message_type: geometry_msgs/msg/PoseStamped

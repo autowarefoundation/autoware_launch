@@ -14,13 +14,13 @@ instances:
   - name: occlusion_predictor
     entity: TrafficLightOcclusionPredictor.node
 
-inputs:
+subscribers:
   - name: vector_map
   - name: image
   - name: camera_info
   - name: route
   - name: pointcloud
-outputs:
+publishers:
   - name: classification/traffic_signals
   - name: detection/rois
 

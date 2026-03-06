@@ -14,10 +14,10 @@ instances:
   - name: ring_outlier_filter
     entity: RingOutlierFilter.node
 
-inputs:
+subscribers:
   - name: twist
   - name: imu
-outputs:
+publishers:
   - name: pointcloud
 
 connections:

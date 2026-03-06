@@ -20,7 +20,7 @@ instances:
   - name: tensorrt_yolox7
     entity: TensorrtYolox.node
 
-inputs:
+subscribers:
   - name: image_raw0
   - name: image_raw1
   - name: image_raw2
@@ -29,7 +29,7 @@ inputs:
   - name: image_raw5
   - name: image_raw6
   - name: image_raw7
-outputs:
+publishers:
   - name: rois0
   - name: rois1
   - name: rois2

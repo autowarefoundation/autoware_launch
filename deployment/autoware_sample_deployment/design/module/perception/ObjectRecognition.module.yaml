@@ -10,7 +10,7 @@ instances:
   - name: prediction
     entity: ObjectPredictionMapBased.module
 
-inputs:
+subscribers:
   # map
   - name: pointcloud_map
   - name: vector_map
@@ -22,7 +22,7 @@ inputs:
   # lidar
   - name: obstacle_pointcloud
   - name: lidar_ml_objects
-outputs:
+publishers:
   - name: objects
   - name: map_filtered_obstacle_pointcloud
 

@@ -10,9 +10,9 @@ instances:
   - name: detected_object_feature_remover
     entity: DetectedObjectFeatureRemover.node
 
-inputs:
+subscribers:
   - name: pointcloud
-outputs:
+publishers:
   - name: detected_objects
   - name: cluster_objects
 

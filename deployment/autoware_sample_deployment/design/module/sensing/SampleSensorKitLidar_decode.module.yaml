@@ -13,7 +13,7 @@ override:
     - name: right
       entity: LidarVelodyneVLP16_decode.module
 
-  inputs:
+  subscribers:
     - name: top/velodyne_packets
     - name: left/velodyne_packets
     - name: right/velodyne_packets

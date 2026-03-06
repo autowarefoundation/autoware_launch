@@ -10,11 +10,11 @@ instances:
   - name: object_recognition/prediction
     entity: ObjectPredictionMapBased.module
 
-inputs:
+subscribers:
   - name: dummy_object_info
   - name: vector_map
   - name: traffic_lights
-outputs:
+publishers:
   - name: object_recognition/objects
   - name: obstacle_segmentation/pointcloud
 connections:

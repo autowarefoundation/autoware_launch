@@ -12,11 +12,11 @@ instances:
   - name: decorative_tracker_merger
     entity: DecorativeTrackerMerger.node
 
-inputs:
+subscribers:
   - name: vector_map
   - name: detected_objects
   - name: radar_objects
-outputs:
+publishers:
   - name: objects
 
 connections:

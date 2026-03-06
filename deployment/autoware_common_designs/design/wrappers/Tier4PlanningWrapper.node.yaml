@@ -10,7 +10,7 @@ launch:
   ros2_launch_file: planning.launch.xml
 
 # interfaces
-inputs:
+subscribers:
   - name: lanelet_map
     message_type: autoware_map_msgs/msg/LaneletMapBin
   - name: occupancy_grid_map
@@ -22,7 +22,7 @@ inputs:
   - name: obstacle_pointcloud
     message_type: sensor_msgs/msg/PointCloud2
 
-outputs:
+publishers:
   - name: mission_planning/route
     message_type: autoware_planning_msgs/msg/LaneletRoute
   - name: trajectory

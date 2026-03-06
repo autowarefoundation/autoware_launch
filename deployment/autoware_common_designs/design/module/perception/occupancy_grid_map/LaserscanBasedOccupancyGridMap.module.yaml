@@ -8,11 +8,11 @@ instances:
   - name: occupancy_grid_map
     entity: LaserscanBasedOccupancyGridMap.node
 
-inputs:
+subscribers:
   - name: obstacle_pointcloud
   - name: raw_pointcloud
 
-outputs:
+publishers:
   - name: map
 
 connections:

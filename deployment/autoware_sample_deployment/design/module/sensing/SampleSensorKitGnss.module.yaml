@@ -8,9 +8,9 @@ instances:
   - name: gnss_poser
     entity: GnssPoser.node
 
-inputs:
+subscribers:
   - name: orientation
-outputs:
+publishers:
   - name: pose
   - name: pose_with_covariance
 

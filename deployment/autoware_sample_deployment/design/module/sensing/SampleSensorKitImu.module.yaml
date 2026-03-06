@@ -10,10 +10,10 @@ instances:
   - name: imu_corrector
     entity: ImuCorrector.node
 
-inputs:
+subscribers:
   - name: odom
   - name: pose_ndt
-outputs:
+publishers:
   - name: imu_data
 
 connections:

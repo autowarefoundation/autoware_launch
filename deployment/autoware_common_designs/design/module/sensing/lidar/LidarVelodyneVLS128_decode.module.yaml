@@ -9,7 +9,7 @@ override:
     - name: lidar
       entity: NebulaVelodyneVLS128_decode.node
 
-  inputs:
+  subscribers:
     - name: velodyne_packets
 
   connections:

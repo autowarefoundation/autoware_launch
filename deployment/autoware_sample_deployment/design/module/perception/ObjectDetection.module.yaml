@@ -20,7 +20,7 @@ instances:
   - name: object_lanelet_filter
     entity: ObjectLaneletFilter.node
 
-inputs:
+subscribers:
   - name: pointcloud_map
   - name: vector_map
   - name: service_pointcloud_map_diff
@@ -28,7 +28,7 @@ inputs:
   - name: obstacle_pointcloud
   - name: lidar_ml_objects
   - name: tracked_objects
-outputs:
+publishers:
   - name: filtered_obstacle_pointcloud
   - name: detected_objects
 
@@ -36,10 +36,7 @@ connections:
   # compare map filter
   - [subscriber.obstacle_pointcloud, pointcloud_map_filter.subscriber.pointcloud]
   - [subscriber.pointcloud_map, pointcloud_map_filter.subscriber.pointcloud_map]
-  - [
-      client.service_pointcloud_map_diff,
-      pointcloud_map_filter.client.service_pointcloud_map_diff,
-    ]
+  - [client.service_pointcloud_map_diff, pointcloud_map_filter.client.service_pointcloud_map_diff]
   - [subscriber.kinematic_state, pointcloud_map_filter.subscriber.kinematic_state]
   - [pointcloud_map_filter.publisher.filtered_pointcloud, publisher.filtered_obstacle_pointcloud]
 

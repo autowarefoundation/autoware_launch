@@ -5,7 +5,7 @@ name: SampleSensorKitGnss_decode.module
 base: SampleSensorKitGnss.module
 
 override:
-  inputs:
+  subscribers:
     - name: nav_sat_fix
   connections:
     - [subscriber.nav_sat_fix, gnss_poser.subscriber.fix]

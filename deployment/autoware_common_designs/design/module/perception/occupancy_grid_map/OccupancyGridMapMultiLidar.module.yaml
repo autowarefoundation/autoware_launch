@@ -23,13 +23,13 @@ instances:
   - name: occupancy_grid_map_fusion_node
     entity: SynchronizedGridMapFusion.node
 
-inputs:
+subscribers:
   # lidar
   - name: obstacle_pointcloud
   - name: pointcloud_1
   - name: pointcloud_2
   - name: pointcloud_3
-outputs:
+publishers:
   - name: map
 
 connections:
