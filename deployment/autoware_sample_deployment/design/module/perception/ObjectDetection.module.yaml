@@ -34,31 +34,40 @@ publishers:
 
 connections:
   # compare map filter
-  - [subscriber.obstacle_pointcloud, pointcloud_map_filter.subscriber.pointcloud]
-  - [subscriber.pointcloud_map, pointcloud_map_filter.subscriber.pointcloud_map]
-  - [client.service_pointcloud_map_diff, pointcloud_map_filter.client.service_pointcloud_map_diff]
-  - [subscriber.kinematic_state, pointcloud_map_filter.subscriber.kinematic_state]
-  - [pointcloud_map_filter.publisher.filtered_pointcloud, publisher.filtered_obstacle_pointcloud]
+  - - subscriber.obstacle_pointcloud
+    - pointcloud_map_filter.subscriber.pointcloud
+  - - subscriber.pointcloud_map
+    - pointcloud_map_filter.subscriber.pointcloud_map
+  - - client.service_pointcloud_map_diff
+    - pointcloud_map_filter.client.service_pointcloud_map_diff
+  - - subscriber.kinematic_state
+    - pointcloud_map_filter.subscriber.kinematic_state
+  - - pointcloud_map_filter.publisher.filtered_pointcloud
+    - publisher.filtered_obstacle_pointcloud
 
   # clustering
-  - [pointcloud_map_filter.publisher.filtered_pointcloud, clustering.subscriber.pointcloud]
+  - - pointcloud_map_filter.publisher.filtered_pointcloud
+    - clustering.subscriber.pointcloud
 
   # detection by tracker
-  - [subscriber.tracked_objects, detection_by_tracker.subscriber.tracked_objects]
-  - [clustering.publisher.cluster_objects, detection_by_tracker.subscriber.initial_objects]
+  - - subscriber.tracked_objects
+    - detection_by_tracker.subscriber.tracked_objects
+  - - clustering.publisher.cluster_objects
+    - detection_by_tracker.subscriber.initial_objects
 
   # merger
-  - [subscriber.lidar_ml_objects, object_association_merger_alpha.subscriber.object0]
-  - [clustering.publisher.detected_objects, object_association_merger_alpha.subscriber.object1]
-  - [
-      object_association_merger_alpha.publisher.merged_object,
-      object_association_merger_beta.subscriber.object0,
-    ]
-  - [detection_by_tracker.publisher.objects, object_association_merger_beta.subscriber.object1]
+  - - subscriber.lidar_ml_objects
+    - object_association_merger_alpha.subscriber.object0
+  - - clustering.publisher.detected_objects
+    - object_association_merger_alpha.subscriber.object1
+  - - object_association_merger_alpha.publisher.merged_object
+    - object_association_merger_beta.subscriber.object0
+  - - detection_by_tracker.publisher.objects
+    - object_association_merger_beta.subscriber.object1
   # filter
-  - [
-      object_association_merger_beta.publisher.merged_object,
-      object_lanelet_filter.subscriber.object,
-    ]
-  - [subscriber.vector_map, object_lanelet_filter.subscriber.vector_map]
-  - [object_lanelet_filter.publisher.object, publisher.detected_objects]
+  - - object_association_merger_beta.publisher.merged_object
+    - object_lanelet_filter.subscriber.object
+  - - subscriber.vector_map
+    - object_lanelet_filter.subscriber.vector_map
+  - - object_lanelet_filter.publisher.object
+    - publisher.detected_objects

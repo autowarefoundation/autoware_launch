@@ -14,5 +14,7 @@ publishers:
   - name: from_can_bus
 
 connections:
-  - [subscriber.to_can_bus, socket_can_sender.subscriber.to_can_bus]
-  - [socket_can_receiver.publisher.from_can_bus, publisher.from_can_bus]
+  - - subscriber.to_can_bus
+    - socket_can_sender.subscriber.to_can_bus
+  - - socket_can_receiver.publisher.from_can_bus
+    - publisher.from_can_bus

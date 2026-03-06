@@ -17,13 +17,17 @@ publishers:
   - name: objects
 
 connections:
-  - [subscriber.lidar_ml_objects, multi_object_tracker.subscriber.detection01/objects]
-  - [subscriber.lidar_ml_short_range_objects, multi_object_tracker.subscriber.detection02/objects]
-  - [
-      subscriber.camera_lidar_rule_detector_objects,
-      multi_object_tracker.subscriber.detection03/objects,
-    ]
-  - [subscriber.camera_lidar_irregular_objects, multi_object_tracker.subscriber.detection04/objects]
-  - [subscriber.tracker_based_detector_objects, multi_object_tracker.subscriber.detection05/objects]
-  - [subscriber.radar_objects, multi_object_tracker.subscriber.detection06/objects]
-  - [multi_object_tracker.publisher.objects, publisher.objects]
+  - - subscriber.lidar_ml_objects
+    - multi_object_tracker.subscriber.detection01/objects
+  - - subscriber.lidar_ml_short_range_objects
+    - multi_object_tracker.subscriber.detection02/objects
+  - - subscriber.camera_lidar_rule_detector_objects
+    - multi_object_tracker.subscriber.detection03/objects
+  - - subscriber.camera_lidar_irregular_objects
+    - multi_object_tracker.subscriber.detection04/objects
+  - - subscriber.tracker_based_detector_objects
+    - multi_object_tracker.subscriber.detection05/objects
+  - - subscriber.radar_objects
+    - multi_object_tracker.subscriber.detection06/objects
+  - - multi_object_tracker.publisher.objects
+    - publisher.objects

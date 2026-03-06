@@ -8,12 +8,16 @@ override:
   subscribers:
     - name: imu_raw
   connections:
-    - [subscriber.imu_raw, gyro_bias_estimator.subscriber.imu_raw]
-    - [subscriber.imu_raw, imu_corrector.subscriber.imu_raw]
+    - - subscriber.imu_raw
+      - gyro_bias_estimator.subscriber.imu_raw
+    - - subscriber.imu_raw
+      - imu_corrector.subscriber.imu_raw
 
 remove:
   instances:
     - name: tamagawa
   connections:
-    - [tamagawa.publisher.imu_raw, gyro_bias_estimator.subscriber.imu_raw]
-    - [tamagawa.publisher.imu_raw, imu_corrector.subscriber.imu_raw]
+    - - tamagawa.publisher.imu_raw
+      - gyro_bias_estimator.subscriber.imu_raw
+    - - tamagawa.publisher.imu_raw
+      - imu_corrector.subscriber.imu_raw

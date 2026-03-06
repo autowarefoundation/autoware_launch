@@ -15,6 +15,9 @@ publishers:
   - name: pointcloud
 
 connections:
-  - [subscriber.concatenated_pointcloud, crop_box_filter.subscriber.input]
-  - [crop_box_filter.publisher.output, common_ground_filter.subscriber.pointcloud]
-  - [common_ground_filter.publisher.pointcloud, publisher.pointcloud]
+  - - subscriber.concatenated_pointcloud
+    - crop_box_filter.subscriber.input
+  - - crop_box_filter.publisher.output
+    - common_ground_filter.subscriber.pointcloud
+  - - common_ground_filter.publisher.pointcloud
+    - publisher.pointcloud

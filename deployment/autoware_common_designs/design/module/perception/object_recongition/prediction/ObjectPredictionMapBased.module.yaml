@@ -14,7 +14,11 @@ publishers:
   - name: objects
 
 connections:
-  - [subscriber.vector_map, map_based_prediction.subscriber.vector_map_topic]
-  - [subscriber.tracked_objects, map_based_prediction.subscriber.objects]
-  - [subscriber.traffic_lights, map_based_prediction.subscriber.traffic_signals_topic]
-  - [map_based_prediction.publisher.objects, publisher.objects]
+  - - subscriber.vector_map
+    - map_based_prediction.subscriber.vector_map_topic
+  - - subscriber.tracked_objects
+    - map_based_prediction.subscriber.objects
+  - - subscriber.traffic_lights
+    - map_based_prediction.subscriber.traffic_signals_topic
+  - - map_based_prediction.publisher.objects
+    - publisher.objects

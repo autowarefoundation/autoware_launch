@@ -28,20 +28,33 @@ publishers:
 
 connections:
   # detection
-  - [subscriber.pointcloud_map, detection.subscriber.pointcloud_map]
-  - [subscriber.vector_map, detection.subscriber.vector_map]
-  - [client.service_pointcloud_map_diff, detection.client.service_pointcloud_map_diff]
-  - [subscriber.kinematic_state, detection.subscriber.kinematic_state]
-  - [subscriber.obstacle_pointcloud, detection.subscriber.obstacle_pointcloud]
-  - [subscriber.lidar_ml_objects, detection.subscriber.lidar_ml_objects]
-  - [detection.publisher.filtered_obstacle_pointcloud, publisher.map_filtered_obstacle_pointcloud]
+  - - subscriber.pointcloud_map
+    - detection.subscriber.pointcloud_map
+  - - subscriber.vector_map
+    - detection.subscriber.vector_map
+  - - client.service_pointcloud_map_diff
+    - detection.client.service_pointcloud_map_diff
+  - - subscriber.kinematic_state
+    - detection.subscriber.kinematic_state
+  - - subscriber.obstacle_pointcloud
+    - detection.subscriber.obstacle_pointcloud
+  - - subscriber.lidar_ml_objects
+    - detection.subscriber.lidar_ml_objects
+  - - detection.publisher.filtered_obstacle_pointcloud
+    - publisher.map_filtered_obstacle_pointcloud
 
   # tracking
-  - [detection.publisher.detected_objects, tracking.subscriber.detected_objects]
-  - [tracking.publisher.objects, detection.subscriber.tracked_objects]
+  - - detection.publisher.detected_objects
+    - tracking.subscriber.detected_objects
+  - - tracking.publisher.objects
+    - detection.subscriber.tracked_objects
 
   # prediction
-  - [tracking.publisher.objects, prediction.subscriber.tracked_objects]
-  - [subscriber.vector_map, prediction.subscriber.vector_map]
-  - [subscriber.traffic_lights, prediction.subscriber.traffic_lights]
-  - [prediction.publisher.objects, publisher.objects]
+  - - tracking.publisher.objects
+    - prediction.subscriber.tracked_objects
+  - - subscriber.vector_map
+    - prediction.subscriber.vector_map
+  - - subscriber.traffic_lights
+    - prediction.subscriber.traffic_lights
+  - - prediction.publisher.objects
+    - publisher.objects
