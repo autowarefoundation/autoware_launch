@@ -45,7 +45,7 @@
   <arg name="launch_rqt_runtime_monitor_err" default="false"/>
 
   <!-- temporary: control_command_gate migration -->
-  <arg name="use_control_command_gate" default="false"/>
+  <arg name="use_control_command_gate" default="true"/>
 
   <group>
     <push-ros-namespace namespace="/system"/>
