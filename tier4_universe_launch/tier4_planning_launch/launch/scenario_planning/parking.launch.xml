@@ -34,8 +34,6 @@
         <param from="$(var freespace_planner_param_path)"/>
         <extra_arg name="use_intra_process_comms" value="false"/>
       </composable_node>
-
-      <composable_node pkg="autoware_glog_component" plugin="autoware::glog_component::GlogComponent" name="glog_component" namespace=""/>
     </node_container>
   </group>
 </launch>
