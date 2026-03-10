@@ -10,6 +10,8 @@ instances:
     entity: TensorrtYolox.node
   - name: selector
     entity: TrafficLightSelector.node
+    launch:
+      use_container: true
 
   - name: classifier_car
     entity: TrafficLightClassifierCar.node

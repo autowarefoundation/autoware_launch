@@ -5,23 +5,39 @@ name: OccupancyGridMapMultiLidar.module
 instances:
   - name: obstacle_pc_downsample_filter
     entity: PickupBasedVoxelGridDownsampleFilter.node
+    launch:
+      use_container: true
 
   - name: raw_pc_downsample_filter_1
     entity: PickupBasedVoxelGridDownsampleFilter.node
+    launch:
+      use_container: true
   - name: raw_pc_downsample_filter_2
     entity: PickupBasedVoxelGridDownsampleFilter.node
+    launch:
+      use_container: true
   - name: raw_pc_downsample_filter_3
     entity: PickupBasedVoxelGridDownsampleFilter.node
+    launch:
+      use_container: true
 
   - name: occupancy_grid_map_node_1
     entity: PointcloudBasedOccupancyGridMap.node
+    launch:
+      use_container: true
   - name: occupancy_grid_map_node_2
     entity: PointcloudBasedOccupancyGridMap.node
+    launch:
+      use_container: true
   - name: occupancy_grid_map_node_3
     entity: PointcloudBasedOccupancyGridMap.node
+    launch:
+      use_container: true
 
   - name: occupancy_grid_map_fusion_node
     entity: SynchronizedGridMapFusion.node
+    launch:
+      use_container: true
 
 subscribers:
   # lidar

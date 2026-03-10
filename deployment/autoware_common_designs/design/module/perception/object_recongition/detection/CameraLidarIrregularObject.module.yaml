@@ -5,10 +5,14 @@ name: CameraLidarIrregularObject.module
 instances:
   - name: crop_box_filter
     entity: CropBoxFilter.node
+    launch:
+      use_container: true
   - name: ground_filter
     entity: ScanGroundFilter.node
   - name: roi_pointcloud_fusion
     entity: RoiPointCloudFusion.node
+    launch:
+      use_container: true
   - name: shape_estimation
     entity: ShapeEstimation.node
   - name: detected_object_feature_remover

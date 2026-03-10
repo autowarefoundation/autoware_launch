@@ -5,8 +5,12 @@ name: PointcloudMapFilter.module
 instances:
   - name: voxel_grid_downsample_filter
     entity: VoxelGridDownsampleFilter.node
+    launch:
+      use_container: true
   - name: voxel_based_compare_map_filter
     entity: VoxelBasedCompareMapFilter.node
+    launch:
+      use_container: true
 
 subscribers:
   - name: pointcloud

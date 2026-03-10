@@ -13,6 +13,8 @@ instances:
     entity: TrafficLightClassifierPedestrian.node
   - name: occlusion_predictor
     entity: TrafficLightOcclusionPredictor.node
+    launch:
+      use_container: true
 
 subscribers:
   - name: vector_map
