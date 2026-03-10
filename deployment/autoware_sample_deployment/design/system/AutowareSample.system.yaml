@@ -211,6 +211,7 @@ LoggingSimulation:
         namespace: sensing
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
+        container_name: pointcloud_container
       - name: rosbag_replay
         entity: SampleRosbagReplay.node
         namespace: ""
@@ -240,6 +241,7 @@ E2ESimulation:
         namespace: sensing
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
+        container_name: pointcloud_container
       - name: traffic_light_recognition
         entity: TrafficLightRecognition.module
         namespace: perception/traffic_light_recognition
