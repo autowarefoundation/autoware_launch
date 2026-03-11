@@ -21,12 +21,11 @@
     </node>
   </group>
 
-  <!-- vehicle interface -->
-  <group if="$(var launch_vehicle_interface)">
-    <include file="$(var vehicle_launch_pkg)/launch/vehicle_interface.launch.xml">
-      <arg name="vehicle_id" value="$(var vehicle_id)"/>
-      <arg name="raw_vehicle_cmd_converter_param_path" value="$(var raw_vehicle_cmd_converter_param_path)"/>
-      <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
-    </include>
-  </group>
+  <!-- vehicle -->
+  <include file="$(var vehicle_launch_pkg)/launch/vehicle.launch.xml">
+    <arg name="vehicle_id" value="$(var vehicle_id)"/>
+    <arg name="raw_vehicle_cmd_converter_param_path" value="$(var raw_vehicle_cmd_converter_param_path)"/>
+    <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
+    <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
+  </include>
 </launch>
