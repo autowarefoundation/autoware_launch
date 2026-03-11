@@ -14,7 +14,6 @@
   <exec_depend>autoware_bytetrack</exec_depend>
   <exec_depend>autoware_camera_streampetr</exec_depend>
   <exec_depend>autoware_cmake</exec_depend>
-  <exec_depend>autoware_glog_component</exec_depend>
   <exec_depend>autoware_image_diagnostics</exec_depend>
   <exec_depend>autoware_image_transport_decompressor</exec_depend>
   <exec_depend>autoware_object_sorter</exec_depend>
