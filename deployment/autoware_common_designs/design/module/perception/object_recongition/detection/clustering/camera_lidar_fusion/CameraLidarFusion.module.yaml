@@ -11,8 +11,6 @@ instances:
     entity: LowIntensityClusterFilter.node
     arguments:
       use_container: true
-  - name: shape_estimation
-    entity: ShapeEstimation.node
   - name: detected_object_feature_remover
     entity: DetectedObjectFeatureRemover.node
 
@@ -49,8 +47,6 @@ connections:
     - low_intensity_cluster_filter_node.subscriber.objects
 
   - - low_intensity_cluster_filter_node.publisher.objects
-    - shape_estimation.subscriber.objects
-  - - shape_estimation.publisher.objects
     - detected_object_feature_remover.subscriber.input
   - - detected_object_feature_remover.publisher.output
     - publisher.objects
