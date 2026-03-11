@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!-- NOTE: If you edit this file, please also update example_config/sensors_calibration.yaml -->
+<!-- to keep the example configuration in sync with this xacro file. -->
+<robot name="vehicle" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find aip_x2_gen2_description)/urdf/radar.xacro"/>
+  <xacro:include filename="$(find aip_x2_gen2_description)/urdf/gnss.xacro"/>
+  <xacro:include filename="$(find imu_description)/urdf/imu.xacro"/>
+  <xacro:arg name="config_dir" default="$(find INVALID_SENSOR_KIT_description)/config"/>
+  <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/>
+
+  <!-- sensor kit -->
+  <xacro:include filename="sensor_kit.xacro"/>
+  <xacro:sensor_kit_macro
+    parent="base_link"
+    x="${calibration['base_link']['sensor_kit_base_link']['x']}"
+    y="${calibration['base_link']['sensor_kit_base_link']['y']}"
+    z="${calibration['base_link']['sensor_kit_base_link']['z']}"
+    roll="${calibration['base_link']['sensor_kit_base_link']['roll']}"
+    pitch="${calibration['base_link']['sensor_kit_base_link']['pitch']}"
+    yaw="${calibration['base_link']['sensor_kit_base_link']['yaw']}"
+  />
+
+  <!-- radar -->
+  <xacro:radar_macro
+    name="front_center/radar_link"
+    parent="base_link"
+    x="${calibration['base_link']['front_center/radar_link']['x']}"
+    y="${calibration['base_link']['front_center/radar_link']['y']}"
+    z="${calibration['base_link']['front_center/radar_link']['z']}"
+    roll="${calibration['base_link']['front_center/radar_link']['roll']}"
+    pitch="${calibration['base_link']['front_center/radar_link']['pitch']}"
+    yaw="${calibration['base_link']['front_center/radar_link']['yaw']}"
+  />
+
+  <xacro:radar_macro
+    name="front_left/radar_link"
+    parent="base_link"
+    x="${calibration['base_link']['front_left/radar_link']['x']}"
+    y="${calibration['base_link']['front_left/radar_link']['y']}"
+    z="${calibration['base_link']['front_left/radar_link']['z']}"
+    roll="${calibration['base_link']['front_left/radar_link']['roll']}"
+    pitch="${calibration['base_link']['front_left/radar_link']['pitch']}"
+    yaw="${calibration['base_link']['front_left/radar_link']['yaw']}"
+  />
+
+  <xacro:radar_macro
+    name="front_right/radar_link"
+    parent="base_link"
+    x="${calibration['base_link']['front_right/radar_link']['x']}"
+    y="${calibration['base_link']['front_right/radar_link']['y']}"
+    z="${calibration['base_link']['front_right/radar_link']['z']}"
+    roll="${calibration['base_link']['front_right/radar_link']['roll']}"
+    pitch="${calibration['base_link']['front_right/radar_link']['pitch']}"
+    yaw="${calibration['base_link']['front_right/radar_link']['yaw']}"
+  />
+
+  <xacro:radar_macro
+    name="rear_center/radar_link"
+    parent="base_link"
+    x="${calibration['base_link']['rear_center/radar_link']['x']}"
+    y="${calibration['base_link']['rear_center/radar_link']['y']}"
+    z="${calibration['base_link']['rear_center/radar_link']['z']}"
+    roll="${calibration['base_link']['rear_center/radar_link']['roll']}"
+    pitch="${calibration['base_link']['rear_center/radar_link']['pitch']}"
+    yaw="${calibration['base_link']['rear_center/radar_link']['yaw']}"
+  />
+
+  <xacro:radar_macro
+    name="rear_left/radar_link"
+    parent="base_link"
+    x="${calibration['base_link']['rear_left/radar_link']['x']}"
+    y="${calibration['base_link']['rear_left/radar_link']['y']}"
+    z="${calibration['base_link']['rear_left/radar_link']['z']}"
+    roll="${calibration['base_link']['rear_left/radar_link']['roll']}"
+    pitch="${calibration['base_link']['rear_left/radar_link']['pitch']}"
+    yaw="${calibration['base_link']['rear_left/radar_link']['yaw']}"
+  />
+
+  <xacro:radar_macro
+    name="rear_right/radar_link"
+    parent="base_link"
+    x="${calibration['base_link']['rear_right/radar_link']['x']}"
+    y="${calibration['base_link']['rear_right/radar_link']['y']}"
+    z="${calibration['base_link']['rear_right/radar_link']['z']}"
+    roll="${calibration['base_link']['rear_right/radar_link']['roll']}"
+    pitch="${calibration['base_link']['rear_right/radar_link']['pitch']}"
+    yaw="${calibration['base_link']['rear_right/radar_link']['yaw']}"
+  />
+
+  <xacro:gnss_macro
+    name="top_front/gnss"
+    parent="base_link"
+    x="${calibration['base_link']['top_front/gnss_link']['x']}"
+    y="${calibration['base_link']['top_front/gnss_link']['y']}"
+    z="${calibration['base_link']['top_front/gnss_link']['z']}"
+    roll="${calibration['base_link']['top_front/gnss_link']['roll']}"
+    pitch="${calibration['base_link']['top_front/gnss_link']['pitch']}"
+    yaw="${calibration['base_link']['top_front/gnss_link']['yaw']}"
+  />
+
+  <xacro:gnss_macro
+    name="top_rear/gnss"
+    parent="base_link"
+    x="${calibration['base_link']['top_rear/gnss_link']['x']}"
+    y="${calibration['base_link']['top_rear/gnss_link']['y']}"
+    z="${calibration['base_link']['top_rear/gnss_link']['z']}"
+    roll="${calibration['base_link']['top_rear/gnss_link']['roll']}"
+    pitch="${calibration['base_link']['top_rear/gnss_link']['pitch']}"
+    yaw="${calibration['base_link']['top_rear/gnss_link']['yaw']}"
+  />
+
+  <xacro:imu_macro
+    name="top_front_left/imu"
+    parent="base_link"
+    namespace=""
+    x="${calibration['base_link']['top_front_left/imu_link']['x']}"
+    y="${calibration['base_link']['top_front_left/imu_link']['y']}"
+    z="${calibration['base_link']['top_front_left/imu_link']['z']}"
+    roll="${calibration['base_link']['top_front_left/imu_link']['roll']}"
+    pitch="${calibration['base_link']['top_front_left/imu_link']['pitch']}"
+    yaw="${calibration['base_link']['top_front_left/imu_link']['yaw']}"
+    fps="100"
+  />
+
+  <xacro:imu_macro
+    name="top_front_right/imu"
+    parent="base_link"
+    namespace=""
+    x="${calibration['base_link']['top_front_right/imu_link']['x']}"
+    y="${calibration['base_link']['top_front_right/imu_link']['y']}"
+    z="${calibration['base_link']['top_front_right/imu_link']['z']}"
+    roll="${calibration['base_link']['top_front_right/imu_link']['roll']}"
+    pitch="${calibration['base_link']['top_front_right/imu_link']['pitch']}"
+    yaw="${calibration['base_link']['top_front_right/imu_link']['yaw']}"
+    fps="100"
+  />
+</robot>
