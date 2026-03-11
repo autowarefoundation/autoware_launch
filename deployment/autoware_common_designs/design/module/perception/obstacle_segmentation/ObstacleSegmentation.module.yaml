@@ -1,11 +1,11 @@
-autoware_system_design_format: 0.3.0
+autoware_system_design_format: 0.3.1
 
 name: ObstacleSegmentation.module
 
 instances:
   - name: crop_box_filter
     entity: CropBoxFilter.node
-    launch:
+    arguments:
       use_container: true
   - name: common_ground_filter
     entity: ScanGroundFilter.node

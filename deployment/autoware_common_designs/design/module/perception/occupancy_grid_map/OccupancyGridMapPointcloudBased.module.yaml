@@ -1,11 +1,11 @@
-autoware_system_design_format: 0.3.0
+autoware_system_design_format: 0.3.1
 
 name: OccupancyGridMapPointcloudBased.module
 
 instances:
   - name: occupancy_grid_map_node
     entity: PointcloudBasedOccupancyGridMap.node
-    launch:
+    arguments:
       use_container: true
 
 subscribers:

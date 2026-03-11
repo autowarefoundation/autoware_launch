@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.3.0
+autoware_system_design_format: 0.3.1
 
 name: LaserscanBasedOccupancyGridMap.module
 
@@ -7,7 +7,7 @@ instances:
     entity: PointcloudToLaserscan.node
   - name: occupancy_grid_map
     entity: LaserscanBasedOccupancyGridMap.node
-    launch:
+    arguments:
       use_container: true
 
 subscribers:

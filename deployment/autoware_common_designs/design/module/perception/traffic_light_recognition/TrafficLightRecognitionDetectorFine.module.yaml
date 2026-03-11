@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.3.0
+autoware_system_design_format: 0.3.1
 
 name: TrafficLightRecognitionDetectorFine.module
 
@@ -13,7 +13,7 @@ instances:
     entity: TrafficLightClassifierPedestrian.node
   - name: occlusion_predictor
     entity: TrafficLightOcclusionPredictor.node
-    launch:
+    arguments:
       use_container: true
 
 subscribers:

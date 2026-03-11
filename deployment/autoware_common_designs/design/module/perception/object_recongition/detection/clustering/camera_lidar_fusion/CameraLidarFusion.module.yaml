@@ -1,15 +1,15 @@
-autoware_system_design_format: 0.3.0
+autoware_system_design_format: 0.3.1
 
 name: CameraLidarFusion.module
 
 instances:
   - name: roi_cluster_fusion
     entity: RoiClusterFusion.node
-    launch:
+    arguments:
       use_container: true
   - name: low_intensity_cluster_filter_node
     entity: LowIntensityClusterFilter.node
-    launch:
+    arguments:
       use_container: true
   - name: shape_estimation
     entity: ShapeEstimation.node

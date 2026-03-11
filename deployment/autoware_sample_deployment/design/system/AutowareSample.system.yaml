@@ -68,7 +68,8 @@ components:
     namespace: sensing
     compute_unit: main_ecu
     parameter_set: sample_system_sensing.parameter_set
-    container_name: pointcloud_container
+    arguments:
+      container_name: pointcloud_container
 
   # MAP/LOCALIZATION
   - name: map
@@ -91,26 +92,30 @@ components:
     namespace: perception/obstacle_segmentation
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
-    container_name: pointcloud_container
+    arguments:
+      container_name: pointcloud_container
   - name: object_recognition
     entity: ObjectRecognition.module
     namespace: perception/object_recognition
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
-    container_name: pointcloud_container
+    arguments:
+      container_name: pointcloud_container
   - name: occupancy_grid_map
     entity: OccupancyGridMapPointcloudBased.module
     namespace: perception/occupancy_grid_map
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
-    container_name: pointcloud_container
+    arguments:
+      container_name: pointcloud_container
 
   # PLANNING/CONTROL
   - name: planning
     entity: Tier4PlanningWrapper.node
     namespace: planning
     compute_unit: main_ecu
-    container_name: pointcloud_container
+    arguments:
+      container_name: pointcloud_container
   - name: control
     entity: Tier4ControlWrapper.node
     namespace: control
@@ -211,7 +216,8 @@ LoggingSimulation:
         namespace: sensing
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
-        container_name: pointcloud_container
+        arguments:
+          container_name: pointcloud_container
       - name: rosbag_replay
         entity: SampleRosbagReplay.node
         namespace: ""
@@ -241,7 +247,8 @@ E2ESimulation:
         namespace: sensing
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
-        container_name: pointcloud_container
+        arguments:
+          container_name: pointcloud_container
       - name: traffic_light_recognition
         entity: TrafficLightRecognition.module
         namespace: perception/traffic_light_recognition

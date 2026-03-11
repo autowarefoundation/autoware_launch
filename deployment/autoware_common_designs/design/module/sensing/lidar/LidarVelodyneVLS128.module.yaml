@@ -1,23 +1,23 @@
-autoware_system_design_format: 0.3.0
+autoware_system_design_format: 0.3.1
 
 name: LidarVelodyneVLS128.module
 
 instances:
   - name: lidar
     entity: NebulaVelodyneVLS128.node
-    launch:
+    arguments:
       use_container: true
   - name: crop_box_filter_self
     entity: CropBoxFilter.node
-    launch:
+    arguments:
       use_container: true
   - name: crop_box_filter_wheels
     entity: CropBoxFilter.node
-    launch:
+    arguments:
       use_container: true
   - name: distortion_corrector_node
     entity: DistortionCorrector.node
-    launch:
+    arguments:
       use_container: true
 
 subscribers:
