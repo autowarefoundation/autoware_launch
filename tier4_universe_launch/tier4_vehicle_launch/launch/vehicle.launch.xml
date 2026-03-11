@@ -2,6 +2,7 @@
 <launch>
   <arg name="use_sim_time" default="false"/>
   <arg name="launch_vehicle_interface"/>
+  <arg name="vehicle_launch_mode" default="vehicle_interface" description="vehicle: delegate to vehicle package's vehicle.launch.xml. vehicle_interface: include vehicle_interface.launch.xml here (legacy)."/>
   <arg name="vehicle_model" description="vehicle model name"/>
   <arg name="sensor_model" description="sensor model name"/>
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
@@ -21,11 +22,23 @@
     </node>
   </group>
 
-  <!-- vehicle -->
-  <include file="$(var vehicle_launch_pkg)/launch/vehicle.launch.xml">
-    <arg name="vehicle_id" value="$(var vehicle_id)"/>
-    <arg name="raw_vehicle_cmd_converter_param_path" value="$(var raw_vehicle_cmd_converter_param_path)"/>
-    <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
-    <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
-  </include>
+  <!-- vehicle: delegate to vehicle package's vehicle.launch.xml -->
+  <group if="$(eval '&quot;$(var vehicle_launch_mode)&quot;==&quot;vehicle&quot;')">
+    <include file="$(var vehicle_launch_pkg)/launch/vehicle.launch.xml">
+      <arg name="vehicle_id" value="$(var vehicle_id)"/>
+      <arg name="raw_vehicle_cmd_converter_param_path" value="$(var raw_vehicle_cmd_converter_param_path)"/>
+      <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
+      <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
+    </include>
+  </group>
+  <!-- vehicle_interface: legacy behavior (include vehicle_interface.launch.xml here) -->
+  <group if="$(eval '&quot;$(var vehicle_launch_mode)&quot;==&quot;vehicle_interface&quot;')">
+    <group if="$(var launch_vehicle_interface)">
+      <include file="$(var vehicle_launch_pkg)/launch/vehicle_interface.launch.xml">
+        <arg name="vehicle_id" value="$(var vehicle_id)"/>
+        <arg name="raw_vehicle_cmd_converter_param_path" value="$(var raw_vehicle_cmd_converter_param_path)"/>
+        <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
+      </include>
+    </group>
+  </group>
 </launch>
