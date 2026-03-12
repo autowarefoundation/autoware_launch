@@ -48,9 +48,16 @@ components:
     compute_unit: main_ecu
     parameter_set: sample_system_global_parameter_loader.parameter_set
   - name: pointcloud_container
-    entity: PointcloudContainer.node
-    namespace: ros2_system/pointcloud_container
+    entity: Ros2Container.node
+    namespace: /
     compute_unit: main_ecu
+  - name: glog_component
+    entity: AutowareGlogComponent.node
+    namespace: ros2_system
+    compute_unit: main_ecu
+    arguments:
+      use_container: true
+      container_name: /pointcloud_container
   - name: robot_state_publisher
     entity: SampleSystemRobotStatePublisher.node
     namespace: ros2_system/robot_state_publisher

@@ -1,0 +1,26 @@
+autoware_system_design_format: 0.3.0
+
+name: Ros2Container.node
+
+package:
+  name: rclcpp_components
+  provider: ros2
+
+launch:
+  executable: component_container
+  node_output: both
+  type: node_container
+
+# interfaces
+subscribers: []
+publishers: []
+
+# parameters
+param_files: []
+param_values: []
+
+# processes
+processes:
+  - name: run
+    trigger_conditions: []
+    outcomes: []
