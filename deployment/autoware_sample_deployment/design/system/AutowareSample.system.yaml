@@ -48,7 +48,7 @@ components:
     compute_unit: main_ecu
     parameter_set: sample_system_global_parameter_loader.parameter_set
   - name: pointcloud_container
-    entity: Ros2Container.node
+    entity: Ros2ContainerMultiThread.node
     namespace: /
     compute_unit: main_ecu
   - name: glog_component
@@ -76,7 +76,7 @@ components:
     compute_unit: main_ecu
     parameter_set: sample_system_sensing.parameter_set
     arguments:
-      container_target: pointcloud_container
+      container_target: /pointcloud_container
 
   # MAP/LOCALIZATION
   - name: map
@@ -100,21 +100,21 @@ components:
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
     arguments:
-      container_target: pointcloud_container
+      container_target: /pointcloud_container
   - name: object_recognition
     entity: ObjectRecognition.module
     namespace: perception/object_recognition
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
     arguments:
-      container_target: pointcloud_container
+      container_target: /pointcloud_container
   - name: occupancy_grid_map
     entity: OccupancyGridMapPointcloudBased.module
     namespace: perception/occupancy_grid_map
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
     arguments:
-      container_target: pointcloud_container
+      container_target: /pointcloud_container
 
   # PLANNING/CONTROL
   - name: planning
@@ -122,7 +122,7 @@ components:
     namespace: planning
     compute_unit: main_ecu
     arguments:
-      container_target: pointcloud_container
+      container_target: /pointcloud_container
   - name: control
     entity: Tier4ControlWrapper.node
     namespace: control
@@ -224,7 +224,7 @@ LoggingSimulation:
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
         arguments:
-          container_target: pointcloud_container
+          container_target: /pointcloud_container
       - name: rosbag_replay
         entity: SampleRosbagReplay.node
         namespace: ""
@@ -255,7 +255,7 @@ E2ESimulation:
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
         arguments:
-          container_target: pointcloud_container
+          container_target: /pointcloud_container
       - name: traffic_light_recognition
         entity: TrafficLightRecognition.module
         namespace: perception/traffic_light_recognition
