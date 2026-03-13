@@ -94,7 +94,6 @@
         <remap from="~/input/current_operation_mode" to="/system/operation_mode/state"/>
         <remap from="~/output/control_cmd" to="control_cmd"/>
       </composable_node>
-      <composable_node pkg="autoware_glog_component" plugin="autoware::glog_component::GlogComponent" name="glog_component_trajectory_follower" namespace=""/>
     </node_container>
 
     <!-- jerk constant deceleration controller -->
