@@ -5,8 +5,6 @@ name: ObstacleSegmentation.module
 instances:
   - name: crop_box_filter
     entity: CropBoxFilter.node
-    arguments:
-      use_container: true
   - name: common_ground_filter
     entity: ScanGroundFilter.node
 

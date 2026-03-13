@@ -7,8 +7,6 @@ instances:
     entity: PointcloudToLaserscan.node
   - name: occupancy_grid_map
     entity: LaserscanBasedOccupancyGridMap.node
-    arguments:
-      use_container: true
 
 subscribers:
   - name: obstacle_pointcloud

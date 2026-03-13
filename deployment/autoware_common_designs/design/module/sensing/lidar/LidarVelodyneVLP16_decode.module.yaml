@@ -8,8 +8,6 @@ override:
   instances:
     - name: lidar
       entity: NebulaVelodyneVLP16_decode.node
-      arguments:
-        use_container: true
 
   subscribers:
     - name: velodyne_packets
