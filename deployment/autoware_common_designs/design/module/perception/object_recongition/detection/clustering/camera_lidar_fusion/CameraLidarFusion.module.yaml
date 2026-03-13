@@ -5,12 +5,8 @@ name: CameraLidarFusion.module
 instances:
   - name: roi_cluster_fusion
     entity: RoiClusterFusion.node
-    arguments:
-      use_container: true
   - name: low_intensity_cluster_filter_node
     entity: LowIntensityClusterFilter.node
-    arguments:
-      use_container: true
   - name: detected_object_feature_remover
     entity: DetectedObjectFeatureRemover.node
 

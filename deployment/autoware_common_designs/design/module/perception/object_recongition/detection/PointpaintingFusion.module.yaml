@@ -5,8 +5,6 @@ name: PointpaintingFusion.module
 instances:
   - name: pointpainting_fusion
     entity: PointPaintingFusion.node
-    arguments:
-      use_container: true
   - name: validation
     entity: ObstaclePointCloudBasedValidator.node
 

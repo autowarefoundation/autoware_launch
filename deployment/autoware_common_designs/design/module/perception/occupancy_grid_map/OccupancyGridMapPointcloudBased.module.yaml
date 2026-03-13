@@ -5,8 +5,6 @@ name: OccupancyGridMapPointcloudBased.module
 instances:
   - name: occupancy_grid_map_node
     entity: PointcloudBasedOccupancyGridMap.node
-    arguments:
-      use_container: true
 
 subscribers:
   # lidar

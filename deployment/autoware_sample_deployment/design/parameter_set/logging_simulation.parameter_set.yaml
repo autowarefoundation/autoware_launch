@@ -2,7 +2,7 @@ autoware_system_design_format: 0.3.0
 
 name: logging_simulation.parameter_set
 parameters:
-  - node: /
+  - node: /*
     param_files: []
     param_values:
       - name: use_sim_time

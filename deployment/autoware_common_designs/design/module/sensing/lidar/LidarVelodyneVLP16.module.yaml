@@ -5,24 +5,14 @@ name: LidarVelodyneVLP16.module
 instances:
   - name: lidar
     entity: NebulaVelodyneVLP16.node
-    arguments:
-      use_container: true
   - name: crop_box_filter_self
     entity: CropBoxFilter.node
-    arguments:
-      use_container: true
   - name: crop_box_filter_wheels
     entity: CropBoxFilter.node
-    arguments:
-      use_container: true
   - name: distortion_corrector_node
     entity: DistortionCorrector.node
-    arguments:
-      use_container: true
   - name: ring_outlier_filter
     entity: RingOutlierFilter.node
-    arguments:
-      use_container: true
 
 subscribers:
   - name: twist
