@@ -134,16 +134,6 @@ def create_parameter_dict(*args):
     return result
 
 
-def make_common_nodes(context):
-    return [
-        ComposableNode(
-            package="autoware_glog_component",
-            plugin="autoware::glog_component::GlogComponent",
-            name="glog_component",
-        )
-    ]
-
-
 def make_nebula_node(context, as_composable_node, env=None):
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
@@ -586,7 +576,6 @@ def launch_setup(context, *args, **kwargs):
     if lidar_specific_container_nodes:
         container_package = "agnocastlib" if use_agnocast else "rclcpp_components"
 
-        lidar_specific_container_nodes.extend(make_common_nodes(context))
         lidar_specific_container = ComposableNodeContainer(
             name=LaunchConfiguration("container_name"),
             namespace="pointcloud_preprocessor",
