@@ -1,0 +1,35 @@
+name: sync-branches
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_branch:
+        description: Target branch to merge **into** (base).
+        required: true
+      target_branch:
+        description: Source branch to merge **from** (target).
+        required: true
+
+jobs:
+  sync-tier4-upstream:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Run sync-branches
+        uses: autowarefoundation/autoware-github-actions/sync-branches@v1
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          base-branch: ${{ github.event.inputs.base_branch }}
+          sync-pr-branch: sync-${{ github.event.inputs.target_branch }}-to-${{ github.event.inputs.base_branch }}
+          sync-target-repository: https://github.com/${{ github.repository }}.git
+          sync-target-branch: ${{ github.event.inputs.target_branch }}
+          pr-title: "chore: sync ${{ github.event.inputs.target_branch }} to ${{ github.event.inputs.base_branch }}"
+          pr-labels: |
+            bot
+            sync-tier4-upstream

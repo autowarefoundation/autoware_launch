@@ -1,0 +1,94 @@
+# This is an example calibration file for sensors.xacro
+# This file serves as a template compatible with urdf/sensors.xacro
+# If there is any discrepancy between this file and the xacro file, the xacro file takes precedence.
+# This file is intended for reference and testing purposes.
+
+base_link:
+  sensor_kit_base_link:
+    x: 4.66244
+    y: 1.07589
+    z: 2.78926
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+
+  # radar
+  front_center/radar_link:
+    x: 5.69207
+    y: 0.0
+    z: 0.78894
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+
+  front_left/radar_link:
+    x: 5.37204
+    y: 1.08537
+    z: 0.73431
+    roll: 0.0
+    pitch: 0.0
+    yaw: 1.2211 # 70 [deg]
+
+  front_right/radar_link:
+    x: 5.37204
+    y: -1.06642
+    z: 0.73431
+    roll: 0.0
+    pitch: 0.0
+    yaw: -1.2211 # 70 [deg]
+
+  rear_center/radar_link:
+    x: -1.50704
+    y: 0.0
+    z: 0.78894
+    roll: 0.0
+    pitch: 0.0
+    yaw: 3.141592 # 180 [deg]
+
+  rear_left/radar_link:
+    x: -1.27564
+    y: 1.07767
+    z: 0.5487
+    roll: 0.0
+    pitch: 0.0
+    yaw: 1.9189 # 110 [deg]
+
+  rear_right/radar_link:
+    x: -1.27564
+    y: -1.07768
+    z: 0.5487
+    roll: 0.0
+    pitch: 0.0
+    yaw: -1.9189 # 110 [deg]
+
+  # gnss
+  top_rear/gnss_link:
+    x: -1.11273
+    y: 0.00
+    z: 2.81787
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  top_front/gnss_link:
+    x: 4.96377
+    y: 0.0
+    z: 2.81787
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+
+  # imu
+  top_front_left/imu_link:
+    x: 5.22444
+    y: 0.07615
+    z: 2.72762
+    roll: 3.141592
+    pitch: 0.0
+    yaw: 0.0
+  top_front_right/imu_link:
+    x: 5.22444
+    y: -0.06385
+    z: 2.72762
+    roll: 3.141592
+    pitch: 0.0
+    yaw: 0.0
