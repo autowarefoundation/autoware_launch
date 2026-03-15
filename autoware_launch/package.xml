@@ -25,6 +25,7 @@
   <exec_depend>tier4_sensing_launch</exec_depend>
   <exec_depend>tier4_simulator_launch</exec_depend>
   <exec_depend>tier4_system_launch</exec_depend>
+  <exec_depend>autoware_agnocast_wrapper</exec_depend>
   <exec_depend>tier4_vehicle_launch</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>

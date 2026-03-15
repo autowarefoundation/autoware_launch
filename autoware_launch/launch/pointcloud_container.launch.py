@@ -12,45 +12,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import GroupAction
+from launch.actions import IncludeLaunchDescription
 from launch.actions import OpaqueFunction
 from launch.actions import SetEnvironmentVariable
-from launch.actions import SetLaunchConfiguration
-from launch.conditions import IfCondition
-from launch.conditions import UnlessCondition
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 
-use_agnocast = os.getenv("ENABLE_AGNOCAST") == "1"
+from ament_index_python.packages import get_package_share_directory
 
 
 def launch_setup(context, *args, **kwargs):
-    agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
-
-    container_package = "agnocastlib" if use_agnocast else "rclcpp_components"
+    ld_preload_value = context.launch_configurations.get("ld_preload_value", "")
+    container_package = context.launch_configurations.get("container_package", "rclcpp_components")
+    container_executable = context.launch_configurations.get(
+        "container_executable", "component_container"
+    )
 
     pointcloud_container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
         namespace="/",
         package=container_package,
-        executable=LaunchConfiguration("container_executable"),
+        executable=container_executable,
         composable_node_descriptions=[],
         output="both",
     )
 
-    actions = (
-        []
-        if not use_agnocast
-        else [
-            SetEnvironmentVariable(
-                name="LD_PRELOAD", value=f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}"
-            ),
-        ]
-    )
+    actions = []
+    if ld_preload_value:
+        actions.append(SetEnvironmentVariable(name="LD_PRELOAD", value=ld_preload_value))
     actions.append(pointcloud_container)
 
     return [GroupAction(actions=actions)]
@@ -60,30 +53,21 @@ def generate_launch_description():
     def add_launch_arg(name: str, default_value=None):
         return DeclareLaunchArgument(name, default_value=default_value)
 
-    container_exec = "agnocast_component_container" if use_agnocast else "component_container"
-    container_exec_mt = (
-        "agnocast_component_container_cie" if use_agnocast else "component_container_mt"
-    )
-
-    set_container_executable = SetLaunchConfiguration(
-        "container_executable",
-        container_exec,
-        condition=UnlessCondition(LaunchConfiguration("use_multithread")),
-    )
-
-    set_container_mt_executable = SetLaunchConfiguration(
-        "container_executable",
-        container_exec_mt,
-        condition=IfCondition(LaunchConfiguration("use_multithread")),
+    agnocast_env_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            get_package_share_directory("autoware_agnocast_wrapper")
+            + "/launch/agnocast_env.launch.py"
+        ),
+        launch_arguments={
+            "use_multithread": LaunchConfiguration("use_multithread"),
+        }.items(),
     )
 
     return LaunchDescription(
         [
-            add_launch_arg("agnocast_heaphook_path", "/opt/ros/humble/lib/libagnocast_heaphook.so"),
             add_launch_arg("use_multithread", "false"),
             add_launch_arg("container_name", "pointcloud_container"),
-            set_container_executable,
-            set_container_mt_executable,
+            agnocast_env_launch,
             OpaqueFunction(function=launch_setup),
-        ]
+        ],
     )
