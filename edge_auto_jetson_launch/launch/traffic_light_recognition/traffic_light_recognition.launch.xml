@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="use_high_accuracy_detection" default="true" description="enable fine position adjustment of traffic light"/>
-  <arg name="high_accuracy_detection_type" default="fine_detection" description="select high accuracy detector type for traffic light recognition: fine_detection or whole_image_detection"/>
+  <arg name="high_accuracy_detection_type" default="whole_image_detection" description="select high accuracy detector type for traffic light recognition: fine_detection or whole_image_detection"/>
 
   <arg name="camera_name" default="camera7" description="camera name"/>
   <arg name="container" description="component container name"/>
