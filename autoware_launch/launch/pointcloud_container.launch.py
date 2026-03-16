@@ -16,37 +16,13 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import GroupAction
 from launch.actions import IncludeLaunchDescription
-from launch.actions import OpaqueFunction
 from launch.actions import SetEnvironmentVariable
+from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 
 from ament_index_python.packages import get_package_share_directory
-
-
-def launch_setup(context, *args, **kwargs):
-    ld_preload_value = context.launch_configurations.get("ld_preload_value", "")
-    container_package = context.launch_configurations.get("container_package", "rclcpp_components")
-    container_executable = context.launch_configurations.get(
-        "container_executable", "component_container"
-    )
-
-    pointcloud_container = ComposableNodeContainer(
-        name=LaunchConfiguration("container_name"),
-        namespace="/",
-        package=container_package,
-        executable=container_executable,
-        composable_node_descriptions=[],
-        output="both",
-    )
-
-    actions = []
-    if ld_preload_value:
-        actions.append(SetEnvironmentVariable(name="LD_PRELOAD", value=ld_preload_value))
-    actions.append(pointcloud_container)
-
-    return [GroupAction(actions=actions)]
 
 
 def generate_launch_description():
@@ -63,11 +39,27 @@ def generate_launch_description():
         }.items(),
     )
 
+    pointcloud_container = ComposableNodeContainer(
+        name=LaunchConfiguration("container_name"),
+        namespace="/",
+        package=LaunchConfiguration("container_package"),
+        executable=LaunchConfiguration("container_executable"),
+        composable_node_descriptions=[],
+        output="both",
+    )
+
     return LaunchDescription(
         [
             add_launch_arg("use_multithread", "false"),
             add_launch_arg("container_name", "pointcloud_container"),
             agnocast_env_launch,
-            OpaqueFunction(function=launch_setup),
+            GroupAction([
+                SetEnvironmentVariable(
+                    name="LD_PRELOAD",
+                    value=LaunchConfiguration("ld_preload_value"),
+                    condition=IfCondition(LaunchConfiguration("use_agnocast")),
+                ),
+                pointcloud_container,
+            ]),
         ],
     )
