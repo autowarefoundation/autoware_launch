@@ -52,13 +52,15 @@ def generate_launch_description():
             add_launch_arg("use_multithread", "false"),
             add_launch_arg("container_name", "pointcloud_container"),
             agnocast_env_launch,
-            GroupAction([
-                SetEnvironmentVariable(
-                    name="LD_PRELOAD",
-                    value=LaunchConfiguration("ld_preload_value"),
-                    condition=IfCondition(LaunchConfiguration("use_agnocast")),
-                ),
-                pointcloud_container,
-            ]),
+            GroupAction(
+                [
+                    SetEnvironmentVariable(
+                        name="LD_PRELOAD",
+                        value=LaunchConfiguration("ld_preload_value"),
+                        condition=IfCondition(LaunchConfiguration("use_agnocast")),
+                    ),
+                    pointcloud_container,
+                ]
+            ),
         ],
     )
