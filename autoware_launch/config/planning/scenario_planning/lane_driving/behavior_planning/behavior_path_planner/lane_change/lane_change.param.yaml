@@ -157,7 +157,7 @@
 
       # path miss detection
       path_miss:
-        enable_path_miss_detection: false  # enable/disable path miss detection
+        enable_path_miss_detection: true  # enable/disable path miss detection
         threshold_longitudinal: 1.0       # [m] - max longitudinal deviation from lc end allowed (fixed, no scaling)
 
         # path miss velocity scaling parameters
