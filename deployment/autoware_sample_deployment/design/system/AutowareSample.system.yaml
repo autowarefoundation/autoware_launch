@@ -47,10 +47,6 @@ components:
     namespace: ros2_system/global_parameter_loader
     compute_unit: main_ecu
     parameter_set: sample_system_global_parameter_loader.parameter_set
-  - name: glog_component
-    entity: AutowareGlogComponent.node
-    namespace: ros2_system
-    compute_unit: main_ecu
   - name: robot_state_publisher
     entity: SampleSystemRobotStatePublisher.node
     namespace: ros2_system/robot_state_publisher
@@ -121,7 +117,6 @@ node_groups:
   - name: pointcloud_container
     type: ros2_component_container_mt
     nodes:
-      - /ros2_system/glog_component
       - /sensing/lidar/*
       - /perception/obstacle_segmentation/crop_box_filter
       - /perception/object_recognition/detection/pointcloud_map_filter/voxel_grid_downsample_filter
