@@ -24,20 +24,12 @@ from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
-from launch_ros.descriptions import ComposableNode
 
 use_agnocast = os.getenv("ENABLE_AGNOCAST") == "1"
 
 
 def launch_setup(context, *args, **kwargs):
     agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
-
-    glog_component = ComposableNode(
-        package="autoware_glog_component",
-        plugin="autoware::glog_component::GlogComponent",
-        name="glog_component",
-        namespace=["/", LaunchConfiguration("container_name")],
-    )
 
     container_package = "agnocastlib" if use_agnocast else "rclcpp_components"
 
@@ -46,7 +38,7 @@ def launch_setup(context, *args, **kwargs):
         namespace="/",
         package=container_package,
         executable=LaunchConfiguration("container_executable"),
-        composable_node_descriptions=[glog_component],
+        composable_node_descriptions=[],
         output="both",
     )
 
