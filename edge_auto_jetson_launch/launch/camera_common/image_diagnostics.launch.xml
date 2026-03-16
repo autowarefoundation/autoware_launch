@@ -1,0 +1,44 @@
+<launch>
+  <arg name="camera_id" default=""/>
+
+  <arg name="disable_camera_driver" default="false" description="If true, this launcher runs image_transport_decompressor instead of camera driver"/>
+
+  <!-- image topic name to be published -->
+  <arg name="image_topic" default="image_raw"/>
+  <!-- frame id to be published -->
+  <!-- path to the yaml file that contains parameters for autoware_image_diagnostics node -->
+  <!-- <let name="image_diagnostics_param_path" value="$(find-pkg-share autoware_image_diagnostics)/config/image_diagnostics_node.param.yaml" /> -->
+  <let name="image_diagnostics_param_path" value="$(find-pkg-share edge_auto_jetson_launch)/config/image_diagnostics_node.param.yaml"/>
+
+  <!-- container name that this RPS node to be loaded -->
+  <arg name="container_name" default=""/>
+  <!-- flag to use intra process -->
+  <arg name="use_intra_process" default="True"/>
+
+  <group>
+    <push-ros-namespace namespace="sensing/camera/camera$(var camera_id)"/>
+    <let name="empty_container_is_specified" value="$(eval 'not &quot;$(var container_name)&quot;')"/>
+    <!-- If container name is not specified,
+       execute function as an individual node -->
+    <group if="$(var empty_container_is_specified)">
+      <node pkg="autoware_image_diagnostics" exec="image_diagnostics_node" name="image_diagnostics_node$(var camera_id)">
+        <remap from="input/image_raw" to="$(var image_topic)"/>
+        <param name="hardware_id" value="camera$(var camera_id)"/>
+        <param from="$(var image_diagnostics_param_path)"/>
+      </node>
+    </group>
+
+    <!-- If container name is specified,
+       execute function as a composable node and load it into the container -->
+    <group unless="$(var empty_container_is_specified)">
+      <load_composable_node target="$(var container_name)">
+        <composable_node pkg="autoware_image_diagnostics" plugin="autoware::image_diagnostics::ImageDiagNode" name="image_diagnostics$(var camera_id)">
+          <remap from="input/raw_image" to="$(var image_topic)"/>
+          <param name="hardware_id" value="camera$(var camera_id)"/>
+          <param from="$(var image_diagnostics_param_path)"/>
+          <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+        </composable_node>
+      </load_composable_node>
+    </group>
+  </group>
+</launch>

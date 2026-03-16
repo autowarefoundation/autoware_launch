@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>aip_x2_gen2_launch</name>
+  <version>0.1.0</version>
+  <description>The aip_x2_gen2_launch package</description>
+
+  <maintainer email="tomohito.ando@tier4.jp">Tomohito Ando</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+
+  <exec_depend>aip_common_sensor_launch</exec_depend>
+  <exec_depend>autoware_dummy_diag_publisher</exec_depend>
+  <exec_depend>autoware_gnss_poser</exec_depend>
+  <exec_depend>autoware_imu_corrector</exec_depend>
+  <exec_depend>autoware_pointcloud_preprocessor</exec_depend>
+  <exec_depend>autoware_radar_objects_adapter</exec_depend>
+  <exec_depend>autoware_simple_object_merger</exec_depend>
+  <exec_depend>autoware_topic_state_monitor</exec_depend>
+  <exec_depend>autoware_vehicle_velocity_converter</exec_depend>
+  <exec_depend>imu_monitor</exec_depend>
+  <exec_depend>individual_params</exec_depend>
+  <exec_depend>nebula</exec_depend>
+  <exec_depend>ros2_socketcan</exec_depend>
+  <exec_depend>septentrio_gnss_driver</exec_depend>
+  <exec_depend>tamagawa_imu_driver</exec_depend>
+  <exec_depend>topic_tools</exec_depend>
+  <exec_depend>ublox_gps</exec_depend>
+  <exec_depend>usb_cam</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>autoware_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
