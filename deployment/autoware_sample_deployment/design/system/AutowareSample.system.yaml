@@ -199,6 +199,18 @@ connections:
   - - system.publisher.system/fail_safe/mrm_state
     - adapi.subscriber.system/fail_safe/mrm_state
 
+node_groups:
+  - name: pointcloud_container
+    type: ros2_component_container_multi-thread
+    nodes:
+      - /ros2_system/glog_component
+      - /sensing/lidar/*
+      - /perception/obstacle_segmentation/crop_box_filter
+      - /perception/object_recognition/detection/pointcloud_map_filter/voxel_grid_downsample_filter
+      - /perception/object_recognition/detection/pointcloud_map_filter/voxel_based_compare_map_filter
+      - /perception/occupancy_grid_map/occupancy_grid_map
+      - /perception/traffic_light_recognition/camera1/occlusion_predictor
+
 # mode configurations
 LoggingSimulation:
   override:
