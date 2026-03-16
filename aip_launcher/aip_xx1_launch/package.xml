@@ -12,7 +12,6 @@
 
   <exec_depend>aip_common_sensor_launch</exec_depend>
   <exec_depend>autoware_cuda_pointcloud_preprocessor</exec_depend>
-  <exec_depend>autoware_glog_component</exec_depend>
   <exec_depend>autoware_gnss_poser</exec_depend>
   <exec_depend>autoware_imu_corrector</exec_depend>
   <exec_depend>autoware_pointcloud_preprocessor</exec_depend>

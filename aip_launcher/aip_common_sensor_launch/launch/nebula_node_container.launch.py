@@ -68,19 +68,6 @@ def create_parameter_dict(*args):
     return result
 
 
-def make_common_nodes(context):
-    if UnlessCondition(LaunchConfiguration("use_shared_container")).evaluate(context):
-        return [
-            ComposableNode(
-                package="autoware_glog_component",
-                plugin="autoware::glog_component::GlogComponent",
-                name="glog_component",
-            )
-        ]
-
-    return []
-
-
 def make_nebula_nodes(context):
     # Model and make
     sensor_model = LaunchConfiguration("sensor_model").perform(context)
@@ -357,7 +344,6 @@ def make_blockage_diag_nodes(context):
 def launch_setup(context, *args, **kwargs):
     nodes = []
 
-    nodes.extend(make_common_nodes(context))
     nodes.extend(make_nebula_nodes(context))
 
     if IfCondition(LaunchConfiguration("use_cuda_preprocessor")).evaluate(context):
