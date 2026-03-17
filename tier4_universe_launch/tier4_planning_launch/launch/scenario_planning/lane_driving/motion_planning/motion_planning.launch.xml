@@ -65,7 +65,13 @@
 
   <let name="motion_velocity_planner_launch_modules" value="$(eval &quot;'$(var motion_velocity_planner_launch_modules)' + '$(var launch_module_list_end)'&quot;)"/>
 
-  <node_container pkg="rclcpp_components" exec="$(var container_type)" name="motion_planning_container" namespace="" args="" output="screen"/>
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml">
+    <arg name="use_multithread" value="true"/>
+  </include>
+
+  <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="motion_planning_container" namespace="" args="" output="screen">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+  </node_container>
 
   <!-- path smoothing -->
   <group>
