@@ -69,10 +69,12 @@ jobs:
 
           entry = data["repositories"]["launcher/autoware_launch"]
           entry["url"] = "${{ github.event.pull_request.head.repo.clone_url }}"
-          entry["version"] = "${{ github.event.pull_request.head.ref }}"
+          entry["version"] = "${{ github.event.pull_request.head.sha }}"
 
           with open("checkout/ci_depends.repos", "w") as f:
               yaml.dump(data, f, default_flow_style=False)
+
+          print(f"Patched autoware_launch: {entry['url']} @ {entry['version']}")
 
       - name: Prepare workspace
         run: |
@@ -81,14 +83,15 @@ jobs:
 
       - name: Index
         working-directory: ws
-        run: launch-plus index ci_depends.repos
+        run: |
+          launch-plus index ci_depends.repos
+          cat manifest.lock.repos
 
       - name: Resolve (dry-run build)
         working-directory: ws
         shell: bash
         run: |
           source /opt/ros/jazzy/setup.bash
-          launch-plus build --help
           launch-plus build \
             autoware_launch autoware.launch.xml \
             sensor_model:=sample_sensor_kit \
