@@ -4,4 +4,3 @@
 
 *.param.yaml
 *.rviz
-**/diagnostic_graph_aggregator/
