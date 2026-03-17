@@ -1,5 +1,5 @@
 # excerpted from autowarefoundation/autoware:
-# `autoware.repos` + `autoware-nightly.repos`.
+# `repositories/autoware.repos` + `repositories/autoware-nightly.repos`.
 repositories:
   # core
   core/autoware_msgs:
