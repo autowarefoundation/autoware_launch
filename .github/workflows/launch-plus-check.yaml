@@ -88,6 +88,7 @@ jobs:
         shell: bash
         run: |
           source /opt/ros/jazzy/setup.bash
+          launch-plus build --help
           launch-plus build \
             autoware_launch autoware.launch.xml \
             sensor_model:=sample_sensor_kit \
