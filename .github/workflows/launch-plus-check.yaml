@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  LAUNCH_PLUS_VERSION: v0.1.1
+  LAUNCH_PLUS_VERSION: v0.1.2
 
 jobs:
   resolve:
