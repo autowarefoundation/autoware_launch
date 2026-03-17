@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.actions import SetLaunchConfiguration
+from launch.actions import GroupAction
+from launch.actions import IncludeLaunchDescription
+from launch.actions import SetEnvironmentVariable
 from launch.conditions import IfCondition
-from launch.conditions import UnlessCondition
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 
@@ -25,22 +28,20 @@ def generate_launch_description():
     def add_launch_arg(name: str, default_value=None):
         return DeclareLaunchArgument(name, default_value=default_value)
 
-    set_container_executable = SetLaunchConfiguration(
-        "container_executable",
-        "component_container",
-        condition=UnlessCondition(LaunchConfiguration("use_multithread")),
-    )
-
-    set_container_mt_executable = SetLaunchConfiguration(
-        "container_executable",
-        "component_container_mt",
-        condition=IfCondition(LaunchConfiguration("use_multithread")),
+    agnocast_env_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            get_package_share_directory("autoware_agnocast_wrapper")
+            + "/launch/agnocast_env.launch.py"
+        ),
+        launch_arguments={
+            "use_multithread": LaunchConfiguration("use_multithread"),
+        }.items(),
     )
 
     pointcloud_container = ComposableNodeContainer(
         name=LaunchConfiguration("container_name"),
         namespace="/",
-        package="rclcpp_components",
+        package=LaunchConfiguration("container_package"),
         executable=LaunchConfiguration("container_executable"),
         composable_node_descriptions=[],
         output="both",
@@ -50,8 +51,16 @@ def generate_launch_description():
         [
             add_launch_arg("use_multithread", "false"),
             add_launch_arg("container_name", "pointcloud_container"),
-            set_container_executable,
-            set_container_mt_executable,
-            pointcloud_container,
-        ]
+            agnocast_env_launch,
+            GroupAction(
+                [
+                    SetEnvironmentVariable(
+                        name="LD_PRELOAD",
+                        value=LaunchConfiguration("ld_preload_value"),
+                        condition=IfCondition(LaunchConfiguration("use_agnocast")),
+                    ),
+                    pointcloud_container,
+                ]
+            ),
+        ],
     )
