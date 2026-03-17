@@ -44,12 +44,17 @@ jobs:
           chmod +x /usr/local/bin/launch-plus
           launch-plus --version
 
-      # Checkout only ci_depends.repos from this repo.
+      # Checkout ci_depends.repos and ML param assets from this repo.
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: ci_depends.repos
+          sparse-checkout: |
+            ci_depends.repos
+            .github/assets/autoware_data
           sparse-checkout-cone-mode: false
           path: checkout
+
+      - name: Install Autoware ML param files
+        run: cp -r checkout/.github/assets/autoware_data "$HOME/autoware_data"
 
       # For PRs (including from forks): rewrite the autoware_launch entry
       # to point at the PR head repo/branch instead of main.
