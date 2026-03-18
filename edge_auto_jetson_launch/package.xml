@@ -18,9 +18,11 @@
   <exec_depend>autoware_image_transport_decompressor</exec_depend>
   <exec_depend>autoware_object_sorter</exec_depend>
   <exec_depend>autoware_tensorrt_yolox</exec_depend>
+  <exec_depend>autoware_traffic_light_category_merger</exec_depend>
   <exec_depend>autoware_traffic_light_classifier</exec_depend>
   <exec_depend>autoware_traffic_light_fine_detector</exec_depend>
   <exec_depend>autoware_traffic_light_map_based_detector</exec_depend>
+  <exec_depend>autoware_traffic_light_selector</exec_depend>
   <exec_depend>autoware_traffic_light_visualization</exec_depend>
   <exec_depend>c2_readout_delay_setter</exec_depend>
   <exec_depend>compressed_image_transport</exec_depend>
