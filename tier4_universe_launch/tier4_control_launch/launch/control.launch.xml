@@ -43,6 +43,8 @@
   <arg name="use_intra_process" default="false" description="use ROS 2 component container communication"/>
   <arg name="use_multithread" default="true" description="use multithread"/>
 
+  <!-- switch executor-->
+  <!-- output container_package and container_executable variants-->
   <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml">
     <arg name="use_multithread" value="$(var use_multithread)"/>
   </include>
