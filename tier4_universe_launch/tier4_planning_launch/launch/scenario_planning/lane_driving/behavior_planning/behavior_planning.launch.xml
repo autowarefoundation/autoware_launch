@@ -1,4 +1,10 @@
 <launch>
+  <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
+  <let name="container_package" value="rclcpp_components" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"/>
+  <let name="container_package" value="agnocast_components" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"/>
+  <let name="container_executable" value="$(var container_type)" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"/>
+  <let name="container_executable" value="agnocast_component_container_cie" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"/>
+
   <arg name="input_route_topic_name" default="/planning/mission_planning/route"/>
   <arg name="input_traffic_light_topic_name" default="/perception/traffic_light_recognition/traffic_signals"/>
   <arg name="input_virtual_traffic_light_topic_name" default="/awapi/tmp/virtual_traffic_light_states"/>
@@ -178,7 +184,7 @@
   />
   <let name="behavior_velocity_planner_launch_modules" value="$(eval &quot;'$(var behavior_velocity_planner_launch_modules)' + '$(var launch_module_list_end)'&quot;)"/>
 
-  <node_container pkg="rclcpp_components" exec="$(var container_type)" name="behavior_planning_container" namespace="" args="" output="both">
+  <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="behavior_planning_container" namespace="" args="" output="both">
     <composable_node pkg="autoware_behavior_velocity_planner" plugin="autoware::behavior_velocity_planner::experimental::BehaviorVelocityPlannerNode" name="behavior_velocity_planner" namespace="">
       <remap from="~/input/path_with_lane_id" to="path_with_lane_id"/>
       <remap from="~/input/vector_map" to="$(var input_vector_map_topic_name)"/>
