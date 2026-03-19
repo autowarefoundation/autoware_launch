@@ -2,12 +2,12 @@ autoware_system_design_format: 0.3.0
 
 name: planning_simulation.parameter_set
 parameters:
-  - node: /
+  - node: /*
     param_files: []
     param_values:
       - name: use_sim_time
         value: false
-  - node: /global_parameter_loader
+  - node: /ros2_system/global_parameter_loader
     param_files: []
     param_values:
       - name: use_sim_time
