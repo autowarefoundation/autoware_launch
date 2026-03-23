@@ -44,18 +44,18 @@ components:
   # Middleware
   - name: global_parameter_loader
     entity: GlobalParameterLoader.node
-    namespace: /ros2_system/
+    path: /ros2_system/global_parameter_loader
     compute_unit: main_ecu
     parameter_set: sample_system_global_parameter_loader.parameter_set
   - name: robot_state_publisher
     entity: SampleSystemRobotStatePublisher.node
-    namespace: /ros2_system/
+    path: /ros2_system/robot_state_publisher
     compute_unit: main_ecu
 
   # ADAPI
   - name: adapi
     entity: SampleSensorKitADAPIWrapper.node
-    namespace: /<api>
+    path: /api
     compute_unit: main_ecu
 
   # SENSING
@@ -75,22 +75,22 @@ components:
   # PERCEPTION
   - name: centerpoint
     entity: LidarCenterpoint.module
-    namespace: /perception/object_recognition/detection/
+    path: /perception/object_recognition/detection/centerpoint
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
   - name: obstacle_segmentation
     entity: ObstacleSegmentation.module
-    namespace: /perception/
+    path: /perception/obstacle_segmentation
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
   - name: object_recognition
     entity: ObjectRecognition.module
-    namespace: /perception/
+    path: /perception/object_recognition
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
   - name: occupancy_grid_map
     entity: OccupancyGridMapPointcloudBased.module
-    namespace: /perception/
+    path: /perception/occupancy_grid_map
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
 
@@ -209,7 +209,7 @@ LoggingSimulation:
         parameter_set: sample_system_sensing.parameter_set
       - name: rosbag_replay
         entity: SampleRosbagReplay.node
-        namespace: </>
+        path: /
         compute_unit: dummy_ecu
     connections:
       - - rosbag_replay.publisher.sensing/^
@@ -225,11 +225,11 @@ E2ESimulation:
     components:
       - name: AWSIM_in
         entity: SampleAwsimIn.node
-        namespace: </>
+        path: /
         compute_unit: dummy_ecu
       - name: AWSIM_out
         entity: SampleAwsimOut.node
-        namespace: </>
+        path: /
         compute_unit: dummy_ecu
       - name: sensing
         entity: SampleSensorKitAWSIM.module
@@ -237,7 +237,7 @@ E2ESimulation:
         parameter_set: sample_system_sensing.parameter_set
       - name: traffic_light_recognition
         entity: TrafficLightRecognition.module
-        namespace: /perception/
+        path: /perception/traffic_light_recognition
         compute_unit: main_ecu
         parameter_set: sample_system_perception.parameter_set
     connections:
@@ -296,23 +296,23 @@ PlanningSimulation:
     components:
       - name: occupancy_grid_map
         entity: LaserscanBasedOccupancyGridMap.module
-        namespace: /perception/
+        path: /perception/occupancy_grid_map
         compute_unit: main_ecu
       - name: planning_sim_rviz_plugin
         entity: PlanningSimRvizPlugins.module
-        namespace: </>
+        path: /
         compute_unit: dummy_ecu
       - name: perception
         entity: DummyObjectRecognition.module
-        namespace: /<perception>
+        path: /perception
         compute_unit: main_ecu
       - name: localization
         entity: PlanningSimApiLocalization.module
-        namespace: </>
+        path: /
         compute_unit: main_ecu
       - name: simulator
         entity: SimplePlanningSimulator.node
-        namespace: </>
+        path: /
         compute_unit: main_ecu
       - name: vehicle
         entity: PlanningSimVehicle.module
