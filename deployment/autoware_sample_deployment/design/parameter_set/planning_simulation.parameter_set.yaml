@@ -24,7 +24,7 @@ parameters:
         value: false
       - name: launch_dummy_diag_publisher
         value: true
-  - node: /perception/occupancy_grid_map/occupancy_grid_map
+  - node: /perception/occupancy_grid_map/occupancy_grid_map_node
     param_values:
       - name: input_obstacle_pointcloud
         value: true
