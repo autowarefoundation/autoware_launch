@@ -44,73 +44,67 @@ components:
   # Middleware
   - name: global_parameter_loader
     entity: GlobalParameterLoader.node
-    namespace: ros2_system/global_parameter_loader
+    namespace: /ros2_system/
     compute_unit: main_ecu
     parameter_set: sample_system_global_parameter_loader.parameter_set
   - name: robot_state_publisher
     entity: SampleSystemRobotStatePublisher.node
-    namespace: ros2_system/robot_state_publisher
+    namespace: /ros2_system/
     compute_unit: main_ecu
 
   # ADAPI
   - name: adapi
     entity: SampleSensorKitADAPIWrapper.node
-    namespace: api
+    namespace: /<api>
     compute_unit: main_ecu
 
   # SENSING
   - name: sensing
     entity: SampleSensorKit.module
-    namespace: sensing
     compute_unit: main_ecu
     parameter_set: sample_system_sensing.parameter_set
 
   # MAP/LOCALIZATION
   - name: map
     entity: Tier4MapWrapper.node
-    namespace: map
     compute_unit: main_ecu
   - name: localization
     entity: Tier4LocalizationWrapper.node
-    namespace: localization
     compute_unit: main_ecu
 
   # PERCEPTION
   - name: centerpoint
     entity: LidarCenterpoint.module
-    namespace: perception/object_recognition/detection/centerpoint
+    namespace: /perception/object_recognition/detection/
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
   - name: obstacle_segmentation
     entity: ObstacleSegmentation.module
-    namespace: perception/obstacle_segmentation
+    namespace: /perception/
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
   - name: object_recognition
     entity: ObjectRecognition.module
-    namespace: perception/object_recognition
+    namespace: /perception/
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
   - name: occupancy_grid_map
     entity: OccupancyGridMapPointcloudBased.module
-    namespace: perception/occupancy_grid_map
+    namespace: /perception/
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
 
   # PLANNING/CONTROL
   - name: planning
     entity: Tier4PlanningWrapper.node
-    namespace: planning
     compute_unit: main_ecu
   - name: control
     entity: Tier4ControlWrapper.node
-    namespace: control
     compute_unit: main_ecu
 
   # SYSTEM
   - name: system
     entity: Tier4SystemWrapper.node
-    namespace: system
     compute_unit: main_ecu
 
 node_groups:
@@ -211,12 +205,11 @@ LoggingSimulation:
     components:
       - name: sensing
         entity: SampleSensorKit_sim.module
-        namespace: sensing
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
       - name: rosbag_replay
         entity: SampleRosbagReplay.node
-        namespace: ""
+        namespace: </>
         compute_unit: dummy_ecu
     connections:
       - - rosbag_replay.publisher.sensing/^
@@ -232,20 +225,19 @@ E2ESimulation:
     components:
       - name: AWSIM_in
         entity: SampleAwsimIn.node
-        namespace: ""
+        namespace: </>
         compute_unit: dummy_ecu
       - name: AWSIM_out
         entity: SampleAwsimOut.node
-        namespace: ""
+        namespace: </>
         compute_unit: dummy_ecu
       - name: sensing
         entity: SampleSensorKitAWSIM.module
-        namespace: sensing
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
       - name: traffic_light_recognition
         entity: TrafficLightRecognition.module
-        namespace: perception/traffic_light_recognition
+        namespace: /perception/
         compute_unit: main_ecu
         parameter_set: sample_system_perception.parameter_set
     connections:
@@ -304,27 +296,26 @@ PlanningSimulation:
     components:
       - name: occupancy_grid_map
         entity: LaserscanBasedOccupancyGridMap.module
-        namespace: perception/occupancy_grid_map
+        namespace: /perception/
         compute_unit: main_ecu
       - name: planning_sim_rviz_plugin
         entity: PlanningSimRvizPlugins.module
-        namespace: ""
+        namespace: </>
         compute_unit: dummy_ecu
       - name: perception
         entity: DummyObjectRecognition.module
-        namespace: perception
+        namespace: /<perception>
         compute_unit: main_ecu
       - name: localization
         entity: PlanningSimApiLocalization.module
-        namespace: ""
+        namespace: </>
         compute_unit: main_ecu
       - name: simulator
         entity: SimplePlanningSimulator.node
-        namespace: ""
+        namespace: </>
         compute_unit: main_ecu
       - name: vehicle
         entity: PlanningSimVehicle.module
-        namespace: vehicle
         compute_unit: main_ecu
     connections:
       - - planning_sim_rviz_plugin.publisher.simulation/dummy_perception_publisher/object_info
@@ -381,8 +372,7 @@ PlanningSimulation:
       - - simulator.publisher.localization/kinematic_state
         - control.subscriber.kinematics
 
-      # -
-      #   - simulator.publisher.localization/acceleration
+      # - - simulator.publisher.localization/acceleration
       #   - control.subscriber.acceleration
       - - control.subscriber.acceleration
         - simulator.publisher.localization/acceleration
