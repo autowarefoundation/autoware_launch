@@ -1,0 +1,54 @@
+name: check-duplicate-param-sync
+
+on:
+  pull_request:
+
+jobs:
+  check-duplicate-param-sync:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Skip if edge_auto_jetson_launch directory does not exist
+        id: check-edge-auto-jetson-directory
+        run: |
+          if [ ! -d "edge_auto_jetson_launch" ]; then
+            echo "Directory edge_auto_jetson_launch does not exist. Skipping duplicate param sync check."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Directory edge_auto_jetson_launch exists. Proceeding with duplicate param sync check."
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Compare param files
+        if: steps.check-edge-auto-jetson-directory.outputs.skip != 'true'
+        run: |
+          has_diff=false
+
+          pairs=(
+            "autoware_launch/config/perception/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml edge_auto_jetson_launch/config/car_traffic_light_classifier.param.yaml"
+            "autoware_launch/config/perception/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml edge_auto_jetson_launch/config/pedestrian_traffic_light_classifier.param.yaml"
+            "autoware_launch/config/perception/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml edge_auto_jetson_launch/config/traffic_light_fine_detector.param.yaml"
+            "autoware_launch/config/perception/traffic_light_recognition/traffic_light_visualization/traffic_light_roi_visualizer.param.yaml edge_auto_jetson_launch/config/traffic_light_roi_visualizer.param.yaml"
+            "autoware_launch/config/perception/traffic_light_recognition/tensorrt_yolox/yolox_traffic_light_detector.param.yaml edge_auto_jetson_launch/config/yolox_traffic_light_detector.param.yaml"
+          )
+
+          for pair in "${pairs[@]}"; do
+            read -r file_a file_b <<< "$pair"
+            if ! diff -q "$file_a" "$file_b" > /dev/null 2>&1; then
+              echo "::error::Files differ: $file_a vs $file_b"
+              diff --unified "$file_a" "$file_b" || true
+              has_diff=true
+            else
+              echo "OK: $(basename "$file_a")"
+            fi
+          done
+
+          if [ "$has_diff" = true ]; then
+            echo ""
+            echo "The above param files are out of sync between autoware_launch and edge_auto_jetson_launch."
+            exit 1
+          fi
+
+          echo "All duplicate param files are in sync."

@@ -1,6 +1,9 @@
 # cspell: ignore semseg
 /**:
   ros__parameters:
+    model_path: "/opt/autoware/mlmodels/traffic_light_detector/yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"
+    label_path: "/opt/autoware/mlmodels/traffic_light_detector/car_ped_tl_detector_labels.txt"
+    color_map_path: "" # not used
 
     score_threshold: 0.35
     nms_threshold: 0.7
@@ -21,11 +24,11 @@
     overlap_roi_score_threshold: 0.3
     is_publish_color_mask: false
     roi_overlay_segment_label:
-      UNKNOWN : false
-      CAR : false
-      TRUCK : false
-      BUS : false
-      MOTORCYCLE : false
-      BICYCLE : false
-      PEDESTRIAN : false
+      UNKNOWN: false
+      CAR: false
+      TRUCK: false
+      BUS: false
+      MOTORCYCLE: false
+      BICYCLE: false
+      PEDESTRIAN: false
       ANIMAL: false
