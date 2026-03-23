@@ -5,7 +5,7 @@ name: LaserscanBasedOccupancyGridMap.module
 instances:
   - name: pointcloud_to_laserscan
     entity: PointcloudToLaserscan.node
-  - name: occupancy_grid_map
+  - name: occupancy_grid_map_node
     entity: LaserscanBasedOccupancyGridMap.node
 
 subscribers:
@@ -20,10 +20,10 @@ connections:
     - pointcloud_to_laserscan.subscriber.pointcloud
 
   - - subscriber.obstacle_pointcloud
-    - occupancy_grid_map.subscriber.obstacle_pointcloud
+    - occupancy_grid_map_node.subscriber.obstacle_pointcloud
   - - subscriber.raw_pointcloud
-    - occupancy_grid_map.subscriber.raw_pointcloud
+    - occupancy_grid_map_node.subscriber.raw_pointcloud
   - - pointcloud_to_laserscan.publisher.laserscan
-    - occupancy_grid_map.subscriber.laserscan
-  - - occupancy_grid_map.publisher.occupancy_grid_map
+    - occupancy_grid_map_node.subscriber.laserscan
+  - - occupancy_grid_map_node.publisher.occupancy_grid_map
     - publisher.map

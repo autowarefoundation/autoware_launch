@@ -115,7 +115,7 @@ node_groups:
       - /perception/obstacle_segmentation/crop_box_filter
       - /perception/object_recognition/detection/pointcloud_map_filter/voxel_grid_downsample_filter
       - /perception/object_recognition/detection/pointcloud_map_filter/voxel_based_compare_map_filter
-      - /perception/occupancy_grid_map/occupancy_grid_map
+      - /perception/occupancy_grid_map/occupancy_grid_map_node
       - /perception/traffic_light_recognition/camera1/occlusion_predictor
 
 connections:

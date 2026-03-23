@@ -3,7 +3,7 @@ autoware_system_design_format: 0.3.1
 name: OccupancyGridMapPointcloudBased.module
 
 instances:
-  - name: occupancy_grid_map
+  - name: occupancy_grid_map_node
     entity: PointcloudBasedOccupancyGridMap.node
 
 subscribers:
@@ -15,8 +15,8 @@ publishers:
 
 connections:
   - - subscriber.raw_pointcloud
-    - occupancy_grid_map.subscriber.raw_pointcloud
+    - occupancy_grid_map_node.subscriber.raw_pointcloud
   - - subscriber.obstacle_pointcloud
-    - occupancy_grid_map.subscriber.obstacle_pointcloud
-  - - occupancy_grid_map.publisher.occupancy_grid_map
+    - occupancy_grid_map_node.subscriber.obstacle_pointcloud
+  - - occupancy_grid_map_node.publisher.occupancy_grid_map
     - publisher.map
