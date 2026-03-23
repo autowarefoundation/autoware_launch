@@ -22,7 +22,7 @@ jobs:
           fi
 
       - name: Compare param files
-        if: steps.check-edge-auto-jetson-directory.outputs.skip != 'true'
+        if: steps.check-edge-auto-jetson-directory.outputs.skip == 'false'
         run: |
           has_diff=false
 
