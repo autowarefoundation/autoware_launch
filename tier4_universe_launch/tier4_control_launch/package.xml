@@ -15,6 +15,7 @@
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
   <buildtool_depend>autoware_cmake</buildtool_depend>
 
+  <exec_depend>autoware_agnocast_wrapper</exec_depend>
   <exec_depend>autoware_control_command_gate</exec_depend>
   <exec_depend>autoware_control_evaluator</exec_depend>
   <exec_depend>autoware_external_cmd_converter</exec_depend>
