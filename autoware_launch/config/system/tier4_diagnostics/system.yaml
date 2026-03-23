@@ -155,7 +155,7 @@ units:
     latch: 0.0
 
   - path: /system/009-dssad
-    type: diag
+    type: ok # disabled for no cyber security version
     node: dssad_packer
     name: dssad_record_status
     timeout: 3.0
