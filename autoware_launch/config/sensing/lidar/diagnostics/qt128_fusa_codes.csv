@@ -1,0 +1,60 @@
+Fault Code;Fault;Severity;Lidar State (for documentation only)
+0x81FF;BMB voltage error;OK;d-2: Warning
+0x82FF;BMB core supply voltage error;ERROR;d-4: Output Untrusted
+0x03FF;TMB voltage error;OK;d-2: Warning
+0x03FF;TMB core supply voltage error;ERROR;d-4: Output Untrusted
+0x87FF;BMB core clock error;ERROR;d-4: Output Untrusted
+0x09FF;TMB slave clock error;OK;d-2: Warning
+0x09FF;TMB master clock error;ERROR;d-4: Output Untrusted
+0x88FF;BMB master clock error;OK;d-2: Warning
+0x8DFF;BMB slave clock error;OK;d-2: Warning
+0x8CFF;BMB CPU error;ERROR;d-4: Output Untrusted
+0x10FF;TMB memory single-bit error/safety mechanism communication error;OK;d-2: Warning
+0x10FF;TMB memory multi-bit error;ERROR;d-4: Output Untrusted
+0x91FF;TMB memory single-bit error/safety mechanism communication error;OK;d-2: Warning
+0x91FF;TMB memory multi-bit error;ERROR;d-4: Output Untrusted
+0x14FF;TMB-PL internal TDC processing logic error;OK;d-2: Warning
+0x14FF;TMB-PL internal TDC processing logic error;ERROR;d-4: Output Untrusted
+0x15FF;TMB-PL internal pulse processing logic error;OK;d-2: Warning
+0x15FF;TMB-PL internal pulse processing logic error;ERROR;d-4: Output Untrusted
+0x96FF;BMB-PL timestamp processing logic error;OK;d-2: Warning
+0x97FF;BMB-PL coder signal processing logic error;OK;d-2: Warning
+0x2EFF;Emitter single-blind-channel error;OK;d-2: Warning
+0x2EFF;Emitter multi-blind-channel error;ERROR;d-4: Output Untrusted
+0x2FFF;Receiver single-blind-channel error;OK;d-2: Warning
+0x2FFF;Receiver multi-blind-channel/all-blind-channel error;ERROR;d-4: Output Untrusted
+0x30FF;TMB laser receiver driver error;OK;d-2: Warning
+0x30FF;TMB laser receiver driver loss error;ERROR;d-4: Output Untrusted
+0xB6FF;Motor overspeed/underspeed error;OK;d-2: Warning
+0xB6FF;Motor stall error;ERROR;d-4: Shutdown
+0xB7FF;Motor reverse error;ERROR;d-4: Output Untrusted
+0xB8FF;Motor overcurrent error;ERROR;d-4: Output Untrusted
+0xB9FF;Encoder or encoder disk error;OK;d-2: Warning
+0xBEFF;ADC error;OK;d-2: Warning
+0x9FFF;PTP sync request error;OK;d-2: Warning
+0xA0FF;gPTP master clock error;OK;d-2: Warning
+0x22FF;Internal wireless upward communication error;OK;d-2: Warning
+0xA3FF;Internal wireless downward communication error;OK;d-2: Warning
+0xC3FF;Angle loss in point cloud data error;OK;d-2: Warning
+0xC4FF;Ethernet loss connection;OK;d-2: Warning
+0xC5FF;Ethernet low SQI;OK;d-2: Warning
+0x47FF;TMB temperature plausibility error or over temperature error;OK;d-2: Warning
+0xC8FF;BMB temperature plausibility error or over temperature error;OK;d-2: Warning
+0xC9FF;Lidar over temperature shutdown;ERROR;d-4: Shutdown (automatic)
+0x4BFF;TMB humidity sensor plausibility error;OK;d-2: Warning
+0xD2FF;Failed self test against watch dog;ERROR;d-4: Output Untrusted
+0x4DFF;Failed self test against TMB voltage monitor component;ERROR;d-4: Output Untrusted
+0xCEFF;Failed self test against BMB voltage monitor component;ERROR;d-4: Output Untrusted
+0x4FFF;Failed self test against TMB BRAM;ERROR;d-4: Output Untrusted
+0xD0FF;Failed self test against BMB DDR;ERROR;d-4: Output Untrusted
+0x53FF;Failed self test against eye safety circuit;ERROR;d-4: Output Untrusted
+0xD1FF;Failed self test against booting;ERROR;d-4: Shutdown (automatic)
+0x3FFF;TMB CPU execution;OK;d-2: Warning
+0x40FF;TMB-PL timing engine logic error;OK;d-2: Warning
+0x8FFF;BMB task error;OK;d-2: Warning
+0x90FF;Diagnostic task operation error;ERROR;d-4: Shutdown (automatic)
+0x58FF;Failed handshake between TMB and BMB during start-up (failure detection by TMB);OK;d-2: Warning
+0xD8FF;Failed handshake between TMB and BMB during start-up (failure detection by BMB);ERROR;d-4: Output Untrusted
+0x59FF;Human eye safety: emitter kept stuck on;OK;d-2: Warning
+0x5AFF;Lidar blockage;OK;d-2: Warning
+0x5BFF;TMB stack overflow;OK;d-2: Warning

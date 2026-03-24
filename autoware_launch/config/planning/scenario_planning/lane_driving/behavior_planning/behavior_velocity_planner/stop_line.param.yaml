@@ -1,7 +1,7 @@
 /**:
   ros__parameters:
     stop_line:
-      stop_margin: 0.0
-      required_stop_duration_sec: 1.0
+      stop_margin: 0.5
+      required_stop_duration_sec: 0.1
       vehicle_stopped_duration_threshold: 0.0
       hold_stop_margin_distance: 2.0
