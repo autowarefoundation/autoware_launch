@@ -196,7 +196,6 @@ connections:
   - - system.publisher.system/fail_safe/mrm_state
     - adapi.subscriber.system/fail_safe/mrm_state
 
-
 # mode configurations
 LoggingSimulation:
   override:
