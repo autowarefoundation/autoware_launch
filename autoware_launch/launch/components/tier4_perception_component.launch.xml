@@ -290,7 +290,10 @@
     />
     <arg name="traffic_light_recognition/whole_image_detection/model_path" value="$(var data_path)/tensorrt_yolox/yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
     <arg name="traffic_light_recognition/whole_image_detection/label_path" value="$(var data_path)/tensorrt_yolox/car_ped_tl_detector_labels.txt"/>
-    <arg name="traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/tensorrt_yolox/traffic_light_roi_label_remap.csv"/>
+    <arg
+      name="traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/tensorrt_yolox/traffic_light_roi_label_remap.csv"
+    />
     <arg name="traffic_light_recognition/fine_detection/model_path" value="$(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx"/>
     <arg name="traffic_light_recognition/fine_detection/label_path" value="$(var data_path)/traffic_light_fine_detector/tlr_labels.txt"/>
     <arg name="traffic_light_recognition/classification/car/model_path" value="$(var data_path)/traffic_light_classifier/traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
