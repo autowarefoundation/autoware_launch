@@ -257,7 +257,9 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
                         "build_only": False,
                         "label_path": LaunchConfiguration("whole_image_detection/label_path"),
                         "model_path": LaunchConfiguration("whole_image_detection/model_path"),
-                        "color_map_path": "",  # not used
+                        "roi_remap_path": LaunchConfiguration("whole_image_detection/yolox_roi_label_remap_path"),
+                        "roi_to_semantic_segmentation_remap_path": "", # not used
+                        "semantic_segmentation_color_map_path": "" # not used
                     },
                 ],
                 remappings=[
@@ -342,6 +344,7 @@ def generate_launch_description():
     # whole image detector by yolox
     add_launch_arg("whole_image_detection/model_path")
     add_launch_arg("whole_image_detection/label_path")
+    add_launch_arg("whole_image_detection/yolox_roi_label_remap_path")
     add_launch_arg("yolox_traffic_light_detector_param_path")
 
     # traffic_light_fine_detector

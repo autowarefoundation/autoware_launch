@@ -64,6 +64,8 @@
   <arg name="camera_2d_detector/model_path"/>
   <arg name="camera_2d_detector/label_path"/>
   <arg name="camera_2d_detector/color_map_path"/>
+  <arg name="camera_2d_detector/roi_remap_path"/>
+  <arg name="camera_2d_detector/roi_to_semseg_remap_path"/>
 
   <!-- Common parameters -->
   <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud" description="The topic will be used in the detection module"/>
@@ -144,6 +146,7 @@
   <arg name="input_pointcloud_for_traffic_light_occlusion_predictor"/>
   <arg name="traffic_light_recognition/whole_image_detection/model_path"/>
   <arg name="traffic_light_recognition/whole_image_detection/label_path"/>
+  <arg name="traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path"/>
   <arg name="traffic_light_recognition/fine_detection/model_path"/>
   <arg name="traffic_light_recognition/fine_detection/label_path"/>
   <arg name="traffic_light_recognition/classification/car/model_path"/>
@@ -332,6 +335,8 @@
           <arg name="camera_2d_detector/model_path" value="$(var camera_2d_detector/model_path)"/>
           <arg name="camera_2d_detector/label_path" value="$(var camera_2d_detector/label_path)"/>
           <arg name="camera_2d_detector/color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+          <arg name="camera_2d_detector/roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+          <arg name="camera_2d_detector/roi_to_semseg_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
           <arg name="use_camera_vru_detector" value="$(var use_camera_vru_detector)"/>
           <arg name="camera_vru_detector_rois_ids" value="$(var camera_vru_detector_rois_ids)"/>
         </include>
@@ -395,6 +400,7 @@
         <arg name="crosswalk_traffic_light_estimator_param_path" value="$(var crosswalk_traffic_light_estimator_param_path)"/>
         <arg name="whole_image_detection/model_path" value="$(var traffic_light_recognition/whole_image_detection/model_path)"/>
         <arg name="whole_image_detection/label_path" value="$(var traffic_light_recognition/whole_image_detection/label_path)"/>
+        <arg name="whole_image_detection/yolox_roi_label_remap_path"  value="$(var traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path)"/>
         <arg name="fine_detection/model_path" value="$(var traffic_light_recognition/fine_detection/model_path)"/>
         <arg name="fine_detection/label_path" value="$(var traffic_light_recognition/fine_detection/label_path)"/>
         <arg name="classification/car/model_path" value="$(var traffic_light_recognition/classification/car/model_path)"/>

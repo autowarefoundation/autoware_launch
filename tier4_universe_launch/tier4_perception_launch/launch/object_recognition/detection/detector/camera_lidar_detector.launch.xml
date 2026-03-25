@@ -66,6 +66,8 @@
   <arg name="camera_2d_detector/model_path"/>
   <arg name="camera_2d_detector/label_path"/>
   <arg name="camera_2d_detector/color_map_path"/>
+  <arg name="camera_2d_detector/roi_remap_path"/>
+  <arg name="camera_2d_detector/roi_to_semseg_remap_path"/>
 
   <!-- Internal interfaces -->
   <let name="pointpainting/input/pointcloud" value="$(var input/pointcloud)"/>
@@ -105,6 +107,8 @@
     <arg name="camera_2d_detector/model_path" value="$(var camera_2d_detector/model_path)"/>
     <arg name="camera_2d_detector/label_path" value="$(var camera_2d_detector/label_path)"/>
     <arg name="camera_2d_detector/color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+    <arg name="camera_2d_detector/roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+    <arg name="camera_2d_detector/roi_to_semseg_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
   </include>
 
   <!-- PointPainting -->

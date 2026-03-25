@@ -22,6 +22,7 @@
   <!-- ML parameters -->
   <arg name="whole_image_detection/model_path"/>
   <arg name="whole_image_detection/label_path"/>
+  <arg name="whole_image_detection/yolox_roi_label_remap_path"/>
   <arg name="fine_detection/model_path"/>
   <arg name="fine_detection/label_path"/>
   <arg name="classification/car/model_path"/>
@@ -62,6 +63,7 @@
       <arg name="traffic_light_roi_visualizer_param_path" value="$(var traffic_light_roi_visualizer_param_path)"/>
       <arg name="whole_image_detection/model_path" value="$(var whole_image_detection/model_path)"/>
       <arg name="whole_image_detection/label_path" value="$(var whole_image_detection/label_path)"/>
+      <arg name="whole_image_detection/yolox_roi_label_remap_path" value="$(var whole_image_detection/yolox_roi_label_remap_path)"/>
       <arg name="fine_detection/model_path" value="$(var fine_detection/model_path)"/>
       <arg name="fine_detection/label_path" value="$(var fine_detection/label_path)"/>
       <arg name="classification/car/model_path" value="$(var classification/car/model_path)"/>
