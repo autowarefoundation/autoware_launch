@@ -4,7 +4,7 @@ name: DummyObjectRecognition.module
 
 instances:
   - name: object_recognition/detection
-    entity: DummyPerceptionPublisher.module
+    entity: DummyPerceptionPublisher.node
   - name: object_recognition/tracking
     entity: ObjectTrackingSingleChannel.module
   - name: object_recognition/prediction
@@ -20,12 +20,12 @@ publishers:
 connections:
   # detection
   - - subscriber.dummy_object_info
-    - object_recognition/detection.subscriber.object_info
-  - - object_recognition/detection.publisher.obstacle_segmentation/pointcloud
+    - object_recognition/detection.subscriber.dummy_objects
+  - - object_recognition/detection.publisher.points_raw
     - publisher.obstacle_segmentation/pointcloud
 
   # tracking
-  - - object_recognition/detection.publisher.objects
+  - - object_recognition/detection.publisher.detected_objects
     - object_recognition/tracking.subscriber.detected_objects
 
   # prediction
