@@ -3,7 +3,7 @@ autoware_system_design_format: 0.3.0
 name: DummyObjectRecognition.module
 
 instances:
-  - name: object_recognition/detection
+  - name: object_recognition_detection
     entity: DummyPerceptionPublisher.node
   - name: object_recognition/tracking
     entity: ObjectTrackingSingleChannel.module
@@ -20,12 +20,12 @@ publishers:
 connections:
   # detection
   - - subscriber.dummy_object_info
-    - object_recognition/detection.subscriber.dummy_objects
-  - - object_recognition/detection.publisher.points_raw
+    - object_recognition_detection.subscriber.dummy_objects
+  - - object_recognition_detection.publisher.points_raw
     - publisher.obstacle_segmentation/pointcloud
 
   # tracking
-  - - object_recognition/detection.publisher.detected_objects
+  - - object_recognition_detection.publisher.detected_objects
     - object_recognition/tracking.subscriber.detected_objects
 
   # prediction
@@ -38,4 +38,4 @@ connections:
   - - object_recognition/prediction.publisher.objects
     - publisher.object_recognition/objects
   - - object_recognition/prediction.publisher.objects
-    - object_recognition/detection.subscriber.predicted_objects
+    - object_recognition_detection.subscriber.predicted_objects
