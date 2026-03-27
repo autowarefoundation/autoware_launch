@@ -11,6 +11,7 @@
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
   <exec_depend>aip_common_sensor_launch</exec_depend>
+  <exec_depend>autoware_agnocast_wrapper</exec_depend>
   <exec_depend>autoware_dummy_diag_publisher</exec_depend>
   <exec_depend>autoware_gnss_poser</exec_depend>
   <exec_depend>autoware_imu_corrector</exec_depend>
