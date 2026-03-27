@@ -31,6 +31,6 @@ param_values:
 processes:
   - name: send_to_can_bus
     trigger_conditions:
-      - from_input: to_can_bus
+      - on_input: to_can_bus
     outcomes:
       - terminal:
