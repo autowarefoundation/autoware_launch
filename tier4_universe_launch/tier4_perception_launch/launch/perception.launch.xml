@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- cspell: ignore semseg -->
+
   <!-- Parameter files -->
   <arg name="object_recognition_detection_euclidean_cluster_param_path"/>
   <arg name="object_recognition_detection_outlier_param_path"/>

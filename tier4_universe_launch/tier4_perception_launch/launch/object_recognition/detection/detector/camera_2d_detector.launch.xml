@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- cspell: ignore semseg -->
+
   <arg name="image_raw0" default="/sensing/camera/camera0/image_raw"/>
   <arg name="image_raw1" default="/sensing/camera/camera1/image_raw"/>
   <arg name="image_raw2" default="/sensing/camera/camera2/image_raw"/>

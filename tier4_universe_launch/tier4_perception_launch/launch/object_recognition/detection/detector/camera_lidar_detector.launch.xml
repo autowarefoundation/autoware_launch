@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- cspell: ignore semseg -->
+
   <!-- Current namespace -->
   <arg name="ns" description="current namespace"/>
 
