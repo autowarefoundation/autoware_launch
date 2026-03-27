@@ -14,11 +14,14 @@
 
 import launch
 from launch.actions import DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription
 from launch.actions import OpaqueFunction
 from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.actions import Node
 from launch_ros.descriptions import ComposableNode
@@ -110,6 +113,20 @@ class SmallUnknownPipeline:
         p["max_height_offset"] = gp["vehicle_height"]
         return p
 
+    def get_agnocast_env(self):
+        agnocast_env = IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("autoware_agnocast_wrapper"),
+                        "launch",
+                        "agnocast_env.launch.py",
+                    ]
+                ),
+            ),
+        )
+        return agnocast_env
+
     def create_irregular_object_pipeline(self, input_topic, concat_info_topic, output_topic):
         components = []
         # create cropbox filter
@@ -169,6 +186,7 @@ class SmallUnknownPipeline:
                 self.roi_pointcloud_fusion_sync_param,
                 self.roi_pointcloud_fusion_param,
             ],
+            additional_env={"LD_PRELOAD": LaunchConfiguration("ld_preload_value")},
         )
         return node
 
@@ -176,6 +194,7 @@ class SmallUnknownPipeline:
 def launch_setup(context, *args, **kwargs):
     obstacle_pointcloud_topic = "obstacle_segmentation/pointcloud"
     pipeline = SmallUnknownPipeline(context)
+    agnocast_env = pipeline.get_agnocast_env()
     components = []
     components.extend(
         pipeline.create_irregular_object_pipeline(
@@ -191,7 +210,7 @@ def launch_setup(context, *args, **kwargs):
     roi_pointcloud_fusion_node = pipeline.create_roi_pointcloud_fusion_node(
         obstacle_pointcloud_topic, LaunchConfiguration("output_topic")
     )
-    return [loader, roi_pointcloud_fusion_node]
+    return [agnocast_env, loader, roi_pointcloud_fusion_node]
 
 
 def generate_launch_description():

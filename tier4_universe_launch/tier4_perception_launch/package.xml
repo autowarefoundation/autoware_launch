@@ -14,6 +14,7 @@
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
   <buildtool_depend>autoware_cmake</buildtool_depend>
 
+  <exec_depend>autoware_agnocast_wrapper</exec_depend>
   <exec_depend>autoware_bevfusion</exec_depend>
   <exec_depend>autoware_bytetrack</exec_depend>
   <exec_depend>autoware_cluster_merger</exec_depend>
