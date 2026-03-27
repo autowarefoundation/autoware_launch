@@ -4,7 +4,7 @@ name: LidarVelodyneVLS128.module
 
 instances:
   - name: lidar
-    entity: NebulaVelodyneVLS128.node
+    entity: NebulaVelodyneVLS128_online.node
   - name: crop_box_filter_self
     entity: CropBoxFilter.node
   - name: crop_box_filter_wheels

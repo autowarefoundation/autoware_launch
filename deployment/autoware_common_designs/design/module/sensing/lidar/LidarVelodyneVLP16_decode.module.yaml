@@ -7,7 +7,7 @@ base: LidarVelodyneVLP16.module
 override:
   instances:
     - name: lidar
-      entity: NebulaVelodyneVLP16_decode.node
+      entity: NebulaVelodyneVLP16_offline.node
 
   subscribers:
     - name: velodyne_packets
