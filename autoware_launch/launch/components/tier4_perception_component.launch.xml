@@ -73,7 +73,7 @@
   <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="select whether to use high accuracy detector for traffic light recognition"/>
   <arg
     name="traffic_light_recognition/high_accuracy_detection_type"
-    default="fine_detection"
+    default="whole_image_detection"
     description="select high accuracy detector type for traffic light recognition: fine_detection or whole_image_detection"
   />
 

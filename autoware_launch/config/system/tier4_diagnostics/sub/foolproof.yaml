@@ -15,4 +15,4 @@ units:
     node: autoware_diagnostics_bridge_node_sub
     name: sub_autoware_node_alive
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0

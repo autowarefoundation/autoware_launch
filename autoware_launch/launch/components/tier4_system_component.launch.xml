@@ -3,16 +3,6 @@
   <arg name="use_sim_time" default="false"/>
   <arg name="planning_setting" default="rule_based" description="planning setting diffusion_planner / rule_based"/>
   <arg name="diagnostic_graph_aggregator_param_path" default="$(find-pkg-share autoware_diagnostic_graph_aggregator)/config/default.param.yaml"/>
-  <arg
-    name="diagnostic_graph_aggregator_graph_path"
-    default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main-e2e.yaml"
-    if="$(eval &quot;'$(var planning_setting)'=='diffusion_planner'&quot;)"
-  />
-  <arg
-    name="diagnostic_graph_aggregator_graph_path"
-    default="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml"
-    if="$(eval &quot;'$(var planning_setting)'=='rule_based'&quot;)"
-  />
   <arg name="is_redundant" default="false"/>
   <arg name="use_control_command_gate" default="false"/>
 
@@ -26,8 +16,28 @@
     value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/diagnostic_graph_aggregator.param.yaml"
     unless="$(var is_redundant)"
   />
-  <let name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.main.yaml" if="$(var is_redundant)"/>
-  <let name="diagnostic_graph_aggregator_graph_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml" unless="$(var is_redundant)"/>
+
+  <!-- Diagnostic graph path selection -->
+  <let
+    name="diagnostic_graph_aggregator_graph_path"
+    value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main-e2e.yaml"
+    if="$(eval &quot;'$(var is_redundant)' == 'false' and '$(var planning_setting)'=='diffusion_planner'&quot;)"
+  />
+  <let
+    name="diagnostic_graph_aggregator_graph_path"
+    value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.yaml"
+    if="$(eval &quot;'$(var is_redundant)' == 'false' and '$(var planning_setting)'=='rule_based'&quot;)"
+  />
+  <let
+    name="diagnostic_graph_aggregator_graph_path"
+    value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.main-e2e.yaml"
+    if="$(eval &quot;'$(var is_redundant)' == 'true' and '$(var planning_setting)'=='diffusion_planner'&quot;)"
+  />
+  <let
+    name="diagnostic_graph_aggregator_graph_path"
+    value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.main.yaml"
+    if="$(eval &quot;'$(var is_redundant)' == 'true' and '$(var planning_setting)'=='rule_based'&quot;)"
+  />
 
   <let name="dummy_diag_publisher_param_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/dummy_diag_publisher.redundancy.main.param.yaml" if="$(var is_redundant)"/>
   <let name="dummy_diag_publisher_param_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/dummy_diag_publisher.param.yaml" unless="$(var is_redundant)"/>

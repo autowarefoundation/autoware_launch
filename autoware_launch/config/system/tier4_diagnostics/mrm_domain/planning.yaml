@@ -29,4 +29,4 @@ units:
     node: topic_state_monitor_trajectory_mrm_domain
     name: topic_status
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>edge_auto_jetson_launch</name>
+  <version>0.1.0</version>
+  <description>The package for meta-package for edge-auto-jetson launchers</description>
+
+  <maintainer email="aohsato@gmail.com">Akihito OHSATO</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+
+  <exec_depend>accelerated_image_processor</exec_depend>
+  <exec_depend>autoware_bytetrack</exec_depend>
+  <exec_depend>autoware_camera_streampetr</exec_depend>
+  <exec_depend>autoware_cmake</exec_depend>
+  <exec_depend>autoware_image_diagnostics</exec_depend>
+  <exec_depend>autoware_image_transport_decompressor</exec_depend>
+  <exec_depend>autoware_object_sorter</exec_depend>
+  <exec_depend>autoware_tensorrt_yolox</exec_depend>
+  <exec_depend>autoware_traffic_light_category_merger</exec_depend>
+  <exec_depend>autoware_traffic_light_classifier</exec_depend>
+  <exec_depend>autoware_traffic_light_fine_detector</exec_depend>
+  <exec_depend>autoware_traffic_light_map_based_detector</exec_depend>
+  <exec_depend>autoware_traffic_light_selector</exec_depend>
+  <exec_depend>autoware_traffic_light_visualization</exec_depend>
+  <exec_depend>c2_readout_delay_setter</exec_depend>
+  <exec_depend>compressed_image_transport</exec_depend>
+  <exec_depend>image_transport_plugins</exec_depend>
+  <exec_depend>image_view</exec_depend>
+  <exec_depend>individual_params</exec_depend>
+  <exec_depend>sensor_trigger</exec_depend>
+  <exec_depend>tier4_camera_sync_doctor</exec_depend>
+  <exec_depend>topic_tools</exec_depend>
+  <exec_depend>uevent_diagnostics_publisher</exec_depend>
+  <exec_depend>v4l2_camera</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>autoware_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

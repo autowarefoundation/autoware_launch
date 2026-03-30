@@ -22,11 +22,11 @@ units:
     node: gyro_bias_scale_validator
     name: gyro_bias_scale_validator
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /sub_ecu/sensing/imu/rate_bound_check
     type: diag
     node: /sensing/imu/tamagawa/tag_can_driver
     name: rate bound check
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0

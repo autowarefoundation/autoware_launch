@@ -138,91 +138,91 @@ units:
     node: pipeline_latency_monitor
     name: Total Latency
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/005-daytime_monitor
     type: diag
     node: daytime_monitor
     name: daytime_status
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/006-vehicle_stuck_checker
     type: diag
     node: vehicle_stuck_checker
     name: vehicle_stuck_check
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/009-dssad
-    type: diag
+    type: ok # disabled for no cyber security version
     node: dssad_packer
     name: dssad_record_status
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/010-v2x_jpn_signal
     type: diag
     node: jpn_signal_mqtt_receiver
     name: mqt_status
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/011-v2x_omron
     type: diag
     node: omron_signal_mqtt_receiver
     name: mqt_status
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/012-fms_connection
     type: diag
     node: ""
     name: edge_core_internet_connection
     timeout: 10.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/command_mode_decider/ready
     type: diag
     node: command_mode_decider
     name: ready
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/015-velocity-status
     type: diag
     node: topic_state_monitor_vehicle_status_velocity_status
     name: vehicle_topic_status
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/016-steering-status
     type: diag
     node: topic_state_monitor_vehicle_status_steering_status
     name: vehicle_topic_status
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/018-emergency_vehicle_main
     type: diag
     node: emergency_vehicle_detector_main
     name: emergency_vehicle
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/019-event_record_status
     type: diag
     node: bagkeeper
     name: event_record_status
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/020-mrm-request
     type: diag
     node: /adapi/node/mrm_request
     name: delegate
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock
     type: and
@@ -255,151 +255,151 @@ units:
     node: ""
     name: main_sys
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-main_ptp0
     type: diag
     node: ""
     name: main_ptp0
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sensor@rear_upper/lidar
     type: diag
     node: ""
     name: sensor@rear_upper/lidar
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sensor@left_upper/lidar
     type: diag
     node: ""
     name: sensor@left_upper/lidar
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sensor@rear_lower/lidar
     type: diag
     node: ""
     name: sensor@rear_lower/lidar
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sensor@left_lower/lidar
     type: diag
     node: ""
     name: sensor@left_lower/lidar
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-TE-2000_sys
     type: diag
     node: ""
     name: TE-2000_sys
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sensor@front_center/radar_link
     type: diag
     node: ""
     name: sensor@front_center/radar_link
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sensor@rear_center/radar_link
     type: diag
     node: ""
     name: sensor@rear_center/radar_link
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-main_ptp1
     type: diag
     node: ""
     name: main_ptp1
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sub_sys
     type: diag
     node: ""
     name: sub_sys
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sub_ptp0
     type: diag
     node: ""
     name: sub_ptp0
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sensor@front_upper/lidar
     type: diag
     node: ""
     name: sensor@front_upper/lidar
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sensor@right_upper/lidar
     type: diag
     node: ""
     name: sensor@right_upper/lidar
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sensor@front_lower/lidar
     type: diag
     node: ""
     name: sensor@front_lower/lidar
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-sensor@right_lower/lidar
     type: diag
     node: ""
     name: sensor@right_lower/lidar
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-perception1_ptp0
     type: diag
     node: ""
     name: perception1_ptp0
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-perception1_sys
     type: diag
     node: ""
     name: perception1_sys
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-perception2_ptp0
     type: diag
     node: ""
     name: perception2_ptp0
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-addon_sys
     type: diag
     node: ""
     name: addon_sys
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-logging_ptp0
     type: diag
     node: ""
     name: logging_ptp0
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /system/clock-logging_sys
     type: diag
     node: ""
     name: logging_sys
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0

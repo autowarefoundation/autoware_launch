@@ -145,7 +145,6 @@
         <remap from="~/output/stop_reason" to="longitudinal/stop_reason"/>
         <remap from="~/output/control_cmd" to="control_cmd"/>
       </composable_node>
-      <composable_node pkg="autoware_glog_component" plugin="autoware::glog_component::GlogComponent" name="glog_component_trajectory_follower" namespace=""/>
     </node_container>
 
     <!-- jerk constant deceleration controller -->

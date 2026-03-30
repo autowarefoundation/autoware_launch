@@ -22,13 +22,14 @@ import os
 
 import launch
 from launch.actions import DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription
 from launch.actions import OpaqueFunction
-from launch.actions import SetLaunchConfiguration
 
 # from launch.conditions import LaunchConfigurationNotEquals
 from launch.conditions import IfCondition
-from launch.conditions import UnlessCondition
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.actions import Node
@@ -132,16 +133,6 @@ def create_parameter_dict(*args):
     for x in args:
         result[x] = LaunchConfiguration(x)
     return result
-
-
-def make_common_nodes(context):
-    return [
-        ComposableNode(
-            package="autoware_glog_component",
-            plugin="autoware::glog_component::GlogComponent",
-            name="glog_component",
-        )
-    ]
 
 
 def make_nebula_node(context, as_composable_node, env=None):
@@ -452,14 +443,6 @@ def make_blockage_diag_nodes(context):
     ]
 
 
-def make_agnocast_env(context):
-    agnocast_heaphook_path = LaunchConfiguration("agnocast_heaphook_path").perform(context)
-    return {
-        "LD_PRELOAD": f"{agnocast_heaphook_path}:{os.getenv('LD_PRELOAD', '')}",  # noqa: E231
-        "AGNOCAST_MEMPOOL_SIZE": "1073741824",  # 1GB
-    }
-
-
 def make_polar_voxel_outlier_filter_node(context):
     parameters = ParameterFile(
         LaunchConfiguration("polar_voxel_outlier_filter_node_param_file").perform(context),
@@ -512,7 +495,6 @@ def make_polar_voxel_outlier_filter_node(context):
 def launch_setup(context, *args, **kwargs):
     mode = LaunchConfiguration("pipeline_mode").perform(context)
     use_agnocast = os.getenv("ENABLE_AGNOCAST") == "1"
-    env = make_agnocast_env(context) if use_agnocast else {}
 
     use_blockage_diag = IfCondition(LaunchConfiguration("enable_blockage_diag")).evaluate(context)
 
@@ -523,23 +505,6 @@ def launch_setup(context, *args, **kwargs):
     shared_container_nodes = []
     lidar_specific_container_nodes = []
     standalone_nodes = []
-
-    container_exec = "agnocast_component_container" if use_agnocast else "component_container"
-    container_exec_mt = (
-        "agnocast_component_container_mt" if use_agnocast else "component_container_mt"
-    )
-
-    set_container_executable = SetLaunchConfiguration(
-        "container_executable",
-        container_exec,
-        condition=UnlessCondition(LaunchConfiguration("use_multithread")),
-    )
-
-    set_container_mt_executable = SetLaunchConfiguration(
-        "container_executable",
-        container_exec_mt,
-        condition=IfCondition(LaunchConfiguration("use_multithread")),
-    )
 
     match mode:
         case "cuda":
@@ -581,20 +546,24 @@ def launch_setup(context, *args, **kwargs):
         case _:
             raise ValueError(f"Unknown pipeline mode: {mode}")
 
-    launch_targets = [set_container_executable, set_container_mt_executable]
+    launch_targets = []
 
     if lidar_specific_container_nodes:
-        container_package = "agnocastlib" if use_agnocast else "rclcpp_components"
-
-        lidar_specific_container_nodes.extend(make_common_nodes(context))
         lidar_specific_container = ComposableNodeContainer(
             name=LaunchConfiguration("container_name"),
             namespace="pointcloud_preprocessor",
-            package=container_package,
+            package=LaunchConfiguration("container_package"),
             executable=LaunchConfiguration("container_executable"),
             composable_node_descriptions=lidar_specific_container_nodes,
             output="both",
-            additional_env=env,
+            additional_env=(
+                {
+                    "LD_PRELOAD": LaunchConfiguration("ld_preload_value"),
+                    "AGNOCAST_MEMPOOL_SIZE": "1073741824",
+                }
+                if use_agnocast
+                else {}
+            ),
         )
         launch_targets.append(lidar_specific_container)
 
@@ -745,4 +714,22 @@ def generate_launch_description():
     add_launch_arg("hires_mode", "true")
     add_launch_arg("diagnostics.packet_loss.error_threshold")
 
-    return launch.LaunchDescription(launch_arguments + [OpaqueFunction(function=launch_setup)])
+    agnocast_env = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution(
+                [
+                    FindPackageShare("autoware_agnocast_wrapper"),
+                    "launch",
+                    "agnocast_env.launch.py",
+                ]
+            )
+        ),
+        launch_arguments=[
+            ("use_multithread", LaunchConfiguration("use_multithread")),
+            ("agnocast_heaphook_path", LaunchConfiguration("agnocast_heaphook_path")),
+        ],
+    )
+
+    return launch.LaunchDescription(
+        launch_arguments + [agnocast_env, OpaqueFunction(function=launch_setup)]
+    )

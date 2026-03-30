@@ -13,6 +13,7 @@
 
   <exec_depend>aip_x2_gen2_launch</exec_depend>
   <exec_depend>autoware_adapi_adaptors</exec_depend>
+  <exec_depend>autoware_agnocast_wrapper</exec_depend>
   <exec_depend>autoware_behavior_path_direction_change_module</exec_depend>
   <exec_depend>autoware_carla_interface</exec_depend>
   <exec_depend>autoware_command_mode_decider</exec_depend>

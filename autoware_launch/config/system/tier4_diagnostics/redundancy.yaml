@@ -112,7 +112,7 @@ units:
     node: topic_state_monitor_election_status
     name: topic_status
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   #   - path: /redundancy/pub_pose_with_covariance_to_sub_ecu
   #   type: diag

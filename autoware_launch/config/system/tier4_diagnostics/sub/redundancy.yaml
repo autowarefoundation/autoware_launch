@@ -36,7 +36,7 @@ units:
     node: sub_ecu_redundancy_switcher_interface
     name: redundancy_switcher_status
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /sub_ecu/redundancy/main_ecu_fault
     type: diag
@@ -103,4 +103,4 @@ units:
     node: topic_state_monitor_election_status
     name: topic_status
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
