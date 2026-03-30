@@ -8,8 +8,8 @@
     enable_engage_on_driving: true
 
     check_engage_condition: true # set false if you do not want to care about the engage condition.
-    nearest_dist_deviation_threshold: 3.0 # [m] for finding nearest index
-    nearest_yaw_deviation_threshold: 1.57 # [rad] for finding nearest index
+    nearest_dist_deviation_threshold: 1.5 # [m] for finding nearest index
+    nearest_yaw_deviation_threshold: 0.785 # [rad] for finding nearest index
     engage_acceptable_limits:
       allow_autonomous_in_stopped: true  # no check if the velocity is zero, always allowed.
       dist_threshold: 0.6
