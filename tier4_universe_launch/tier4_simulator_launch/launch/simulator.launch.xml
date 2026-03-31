@@ -24,6 +24,7 @@
   <arg name="traffic_light_occlusion_predictor_param_path"/>
   <arg name="traffic_light_multi_camera_fusion_param_path"/>
   <arg name="traffic_light_arbiter_param_path"/>
+  <arg name="traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path"/>
   <arg name="crosswalk_traffic_light_estimator_param_path"/>
 
   <arg name="launch_simulator_perception_modules" default="true"/>
@@ -171,6 +172,7 @@
           <arg name="crosswalk_traffic_light_estimator_param_path" value="$(var crosswalk_traffic_light_estimator_param_path)"/>
           <arg name="whole_image_detection/model_path" value="$(env HOME)/autoware_data/tensorrt_yolox/yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
           <arg name="whole_image_detection/label_path" value="$(env HOME)/autoware_data/tensorrt_yolox/car_ped_tl_detector_labels.txt"/>
+          <arg name="whole_image_detection/yolox_roi_label_remap_path" value="$(var traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path)"/>
           <arg name="fine_detection/model_path" value="$(env HOME)/autoware_data/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx"/>
           <arg name="fine_detection/label_path" value="$(env HOME)/autoware_data/traffic_light_fine_detector/tlr_labels.txt"/>
           <arg name="classification/car/model_path" value="$(env HOME)/autoware_data/traffic_light_classifier/traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
