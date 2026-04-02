@@ -280,8 +280,9 @@
       <arg name="motion_publish_mode" value="$(var motion_publish_mode)"/>
     </include>
     <group if="$(var launch_raw_vehicle_cmd_converter)">
-      <include file="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/launch/raw_vehicle_converter.launch.xml">
-        <arg name="config_file" value="$(var raw_vehicle_cmd_converter_param_path)"/>
+      <include file="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/launch/raw_vehicle_converter_if_actuation_cmd.launch.py">
+        <arg name="simulator_model_param_file" value="$(var simulator_model)"/>
+        <arg name="raw_vehicle_cmd_converter_param_path" value="$(var raw_vehicle_cmd_converter_param_path)"/>
       </include>
     </group>
   </group>
