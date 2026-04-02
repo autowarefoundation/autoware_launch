@@ -2,9 +2,11 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>autoware_common_designs</name>
-  <version>0.47.0</version>
+  <version>0.50.0</version>
   <description>The autoware_common_designs package</description>
   <maintainer email="taekjin.lee@tier4.jp">Taekjin Lee</maintainer>
+  <maintainer email="maxime.clement@tier4.jp">Maxime CLEMENT</maintainer>
+  <maintainer email="max.schmeller@tier4.jp">Max Schmeller</maintainer>
 
   <license>Apache License 2.0</license>
 
