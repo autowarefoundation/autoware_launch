@@ -97,6 +97,10 @@
     />
     <arg name="traffic_light_arbiter_param_path" value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_arbiter/traffic_light_arbiter.param.yaml"/>
     <arg
+      name="traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/tensorrt_yolox/traffic_light_roi_label_remap.csv"
+    />
+    <arg
       name="crosswalk_traffic_light_estimator_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml"
     />
