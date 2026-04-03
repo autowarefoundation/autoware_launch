@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Essential parameters -->
+  <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
+  <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
+
+  <!-- launch module preset -->
+  <arg name="planning_module_preset" default="x2" description="planning module preset"/>
+  <arg name="control_module_preset" default="x2" description="control module preset"/>
+
+  <!-- Optional parameters -->
+  <!-- Modules to be launched -->
+  <arg name="launch_vehicle" default="true" description="launch vehicle"/>
+  <arg name="launch_system" default="true" description="launch system"/>
+  <arg name="launch_map" default="true" description="launch map"/>
+  <arg name="launch_sensing" default="true" description="launch sensing"/>
+  <arg name="launch_sensing_driver" default="true" description="launch sensing driver"/>
+  <arg name="launch_localization" default="true" description="launch localization"/>
+  <arg name="launch_perception" default="true" description="launch perception"/>
+  <arg name="launch_planning" default="true" description="launch planning"/>
+  <arg name="launch_control" default="true" description="launch control"/>
+  <arg name="launch_api" default="true" description="launch api"/>
+  <arg name="launch_l4_toolkit" default="true" description="launch L4 Toolkit"/>
+  <!-- Global parameters -->
+  <arg name="use_sim_time" default="false" description="use_sim_time"/>
+  <!-- Redundant system parameters-->
+  <arg name="is_redundant" default="true" description="is_redundant"/>
+  <arg name="is_main_ecu" default="false" description="is_main_ecu"/>
+  <!-- Vehicle -->
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
+  <!-- System -->
+  <arg name="launch_dummy_diag_publisher" default="true" description="launch dummy diag publisher"/>
+
+  <!-- Global parameters -->
+  <group scoped="false">
+    <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+  <!-- Planning -->
+  <group if="$(var launch_planning)">
+    <!-- topic relay controller -->
+    <include file="$(find-pkg-share autoware_topic_relay_controller)/launch/topic_relay_controller.launch.xml">
+      <arg name="node_name_suffix" value="trajectory"/>
+      <arg name="config_file" value="$(find-pkg-share autoware_launch)/config/system/topic_relay_controller/main_planning_scenario_planning_trajectory.param.yaml"/>
+    </include>
+  </group>
+
+  <!-- Control -->
+  <group if="$(var launch_control)">
+    <push-ros-namespace namespace="control"/>
+    <!-- Control args -->
+    <arg name="lateral_controller_mode" default="mpc"/>
+    <arg name="longitudinal_controller_mode" default="pid"/>
+    <arg name="use_individual_control_param" default="false"/>
+    <let name="latlon_controller_param_path_dir" value="$(var vehicle_id)" if="$(var use_individual_control_param)"/>
+    <let name="latlon_controller_param_path_dir" value="" unless="$(var use_individual_control_param)"/>
+
+    <arg name="nearest_search_param_path" default="$(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml"/>
+    <arg name="trajectory_follower_node_param_path" default="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/trajectory_follower_node.param.yaml"/>
+    <arg
+      name="lat_controller_param_path"
+      default="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/$(var latlon_controller_param_path_dir)/lateral/$(var lateral_controller_mode).param.yaml"
+    />
+    <arg
+      name="lon_controller_param_path"
+      default="$(find-pkg-share autoware_launch)/config/control/trajectory_follower/$(var latlon_controller_param_path_dir)/longitudinal/$(var longitudinal_controller_mode).redundancy.sub.param.yaml"
+    />
+    <arg name="vehicle_info_param_path" default="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+
+    <!-- trajectory follower -->
+    <node_container pkg="rclcpp_components" exec="component_container" name="trajectory_follower_container" namespace="">
+      <composable_node
+        pkg="autoware_trajectory_follower_node"
+        plugin="autoware::motion::control::trajectory_follower_node::Controller"
+        name="trajectory_follower_node_exe"
+        namespace="trajectory_follower"
+      >
+        <param name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
+        <param name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
+        <param from="$(var nearest_search_param_path)"/>
+        <param from="$(var trajectory_follower_node_param_path)"/>
+        <param from="$(var lon_controller_param_path)"/>
+        <param from="$(var lat_controller_param_path)"/>
+        <param from="$(var vehicle_info_param_path)"/>
+
+        <remap from="~/input/reference_trajectory" to="/planning/topic_relay_controller/trajectory"/>
+        <remap from="~/input/current_steering" to="/vehicle/status/steering_status"/>
+        <remap from="~/input/current_odometry" to="/localization/kinematic_state"/>
+        <remap from="~/input/current_accel" to="/localization/acceleration"/>
+        <remap from="~/input/current_operation_mode" to="/system/operation_mode/state"/>
+        <remap from="~/output/control_cmd" to="control_cmd"/>
+      </composable_node>
+    </node_container>
+
+    <!-- jerk constant deceleration controller -->
+    <include file="$(find-pkg-share jerk_constant_deceleration_controller)/launch/jerk_constant_deceleration_controller.launch.xml"/>
+
+    <!-- control command gate -->
+    <group>
+      <include file="$(find-pkg-share autoware_control_command_gate)/launch/control_command_gate.launch.xml">
+        <arg name="config" value="$(find-pkg-share autoware_launch)/config/control/control_command_gate/control_command_gate.redundancy.sub.param.yaml"/>
+      </include>
+    </group>
+  </group>
+
+  <!-- System -->
+  <group if="$(var launch_system)">
+    <push-ros-namespace namespace="system"/>
+    <!-- System args -->
+    <arg name="domain_bridge_param_path" default="$(find-pkg-share autoware_launch)/config/system/domain_bridge/domain_bridge.redundancy.sub.psim.param.yaml"/>
+
+    <!-- domain bridge -->
+    <include file="$(find-pkg-share domain_bridge)/launch/domain_bridge.launch.xml">
+      <arg name="config" value="$(var domain_bridge_param_path)"/>
+      <!-- Optionally override domain IDs -->
+      <arg name="from_domain" value="1"/>
+      <arg name="to_domain" value="2"/>
+    </include>
+
+    <!-- diagnostic_graph_aggregator -->
+    <include file="$(find-pkg-share autoware_diagnostic_graph_aggregator)/launch/aggregator.launch.xml">
+      <arg name="param_file" value="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/diagnostic_graph_aggregator.redundancy.sub.param.yaml"/>
+      <arg name="graph_file" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/autoware-main.redundancy.sub.yaml"/>
+      <arg name="~/availability" value="/in_sub/system/command_mode/availability"/>
+      <arg name="~/struct" value="/in_sub/diagnostics_graph/struct"/>
+      <arg name="~/status" value="/in_sub/diagnostics_graph/status"/>
+    </include>
+
+    <!-- topic_state_monitor -->
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="control_command_control_cmd"/>
+      <arg name="topic" value="/control/command/control_cmd"/>
+      <arg name="topic_type" value="autoware_control_msgs/msg/Control"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include>
+
+    <!-- <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="pose_with_covariance"/>
+      <arg name="topic" value="/main/localization/pose_with_covariance"/>
+      <arg name="topic_type" value="geometry_msgs/msg/PoseWithCovarianceStamped"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="1.5"/>
+      <arg name="error_rate" value="0.3"/>
+      <arg name="timeout" value="3.0"/>
+      <arg name="window_size" value="30"/>
+      <arg name="pub_topic_name" value="/in_lane_stop/diagnostics"/>
+    </include> -->
+
+    <!-- <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="twist_with_covariance"/>
+      <arg name="topic" value="/localization/twist_estimator/twist_with_covariance"/>
+      <arg name="topic_type" value="geometry_msgs/msg/TwistWithCovarianceStamped"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include> -->
+
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="trajectory"/>
+      <arg name="topic" value="/main/planning/scenario_planning/trajectory"/>
+      <arg name="topic_type" value="autoware_planning_msgs/msg/Trajectory"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="1.5"/>
+      <arg name="error_rate" value="0.3"/>
+      <arg name="timeout" value="3.0"/>
+      <arg name="window_size" value="30"/>
+      <arg name="pub_topic_name" value="/in_lane_stop/diagnostics"/>
+    </include>
+
+    <!-- <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="control_command_actuation_cmd"/>
+      <arg name="topic" value="/control/command/actuation_cmd"/>
+      <arg name="topic_type" value="tier4_vehicle_msgs/msg/ActuationCommandStamped"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include> -->
+
+    <!-- <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="vehicle_status_velocity_status"/>
+      <arg name="topic" value="/vehicle/status/velocity_status"/>
+      <arg name="topic_type" value="autoware_vehicle_msgs/msg/VelocityReport"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include> -->
+
+    <!-- <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="vehicle_status_steering_status"/>
+      <arg name="topic" value="/vehicle/status/steering_status"/>
+      <arg name="topic_type" value="autoware_vehicle_msgs/msg/SteeringReport"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include> -->
+
+    <include file="$(find-pkg-share autoware_topic_state_monitor)/launch/topic_state_monitor.launch.xml">
+      <arg name="node_name_suffix" value="election_status"/>
+      <arg name="topic" value="/system/election/status"/>
+      <arg name="topic_type" value="tier4_external_api_msgs/msg/ElectionStatus"/>
+      <arg name="diag_name" value="topic_status"/>
+      <arg name="warn_rate" value="5.0"/>
+      <arg name="error_rate" value="1.0"/>
+      <arg name="timeout" value="1.0"/>
+    </include>
+
+    <!-- cspell: ignore overrider -->
+    <!-- mrm diagnostic overrider -->
+    <include file="$(find-pkg-share mrm_diagnostic_overrider)/launch/mrm_diagnostic_overrider.launch.xml"/>
+
+    <!-- redundancy_switcher_interface -->
+    <include file="$(find-pkg-share redundancy_switcher_interface)/launch/redundancy_switcher_interface.launch.xml">
+      <arg name="param_file" value="$(find-pkg-share redundancy_switcher_interface)/config/redundancy_switcher_interface.sub.param.yaml"/>
+      <arg name="input_command_mode_availability" value="/in_sub/system/command_mode/availability"/>
+    </include>
+
+    <!-- operation mode service caller -->
+    <include file="$(find-pkg-share autoware_operation_mode_service_caller)/launch/operation_mode_service_caller.launch.xml"/>
+
+    <!-- reset service caller -->
+    <include file="$(find-pkg-share autoware_reset_service_caller)/launch/reset_service_caller.launch.xml"/>
+
+    <!-- dummy diag publisher: for vehicle test -->
+    <group if="$(var launch_dummy_diag_publisher)">
+      <arg name="launch_rqt_reconfigure" default="false"/>
+      <arg name="launch_rqt_runtime_monitor" default="false"/>
+      <arg name="launch_rqt_robot_monitor" default="false"/>
+      <arg name="launch_rqt_runtime_monitor_err" default="false"/>
+
+      <include file="$(find-pkg-share autoware_dummy_diag_publisher)/launch/dummy_diag_publisher.launch.xml">
+        <arg name="config_file" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/dummy_diag_publisher.redundancy.sub.param.yaml"/>
+        <arg name="extra_config_file_sensor" value="$(find-pkg-share autoware_dummy_diag_publisher)/config/_empty.param.yaml"/>
+        <arg name="update_rate" value="10.0"/>
+        <arg name="launch_rqt_reconfigure" value="$(var launch_rqt_reconfigure)"/>
+        <arg name="launch_rqt_runtime_monitor" value="$(var launch_rqt_runtime_monitor)"/>
+        <arg name="launch_rqt_robot_monitor" value="$(var launch_rqt_robot_monitor)"/>
+        <arg name="launch_rqt_runtime_monitor_err" value="$(var launch_rqt_runtime_monitor_err)"/>
+      </include>
+    </group>
+
+    <!-- command mode decider -->
+    <include file="$(find-pkg-share autoware_command_mode_decider)/launch/decider.launch.xml">
+      <arg name="config" value="$(find-pkg-share autoware_launch)/config/system/command_mode/decider.redundancy.psim.param.yaml"/>
+      <arg name="~/command_mode/status" value="/in_sub/system/command_mode/status"/>
+      <arg name="~/command_mode/availability" value="/in_sub/system/command_mode/availability"/>
+      <arg name="~/operation_mode/change_operation_mode" value="/sub/system/operation_mode/change_operation_mode"/>
+      <arg name="~/operation_mode/change_autoware_control" value="/sub/system/operation_mode/change_autoware_control"/>
+      <arg name="~/mrm/state" value="/in_sub/system/fail_safe/mrm_state"/>
+    </include>
+
+    <!-- command mode switcher -->
+    <include file="$(find-pkg-share autoware_command_mode_switcher)/launch/switcher.launch.xml">
+      <arg name="config" value="$(find-pkg-share autoware_launch)/config/system/command_mode/switcher.redundancy.sub.param.yaml"/>
+      <arg name="~/command_mode/status" value="/in_sub/system/command_mode/status"/>
+    </include>
+
+    <!-- ekf_localizer_auto_activator -->
+    <include file="$(find-pkg-share autoware_ekf_localizer_auto_activator)/launch/ekf_localizer_auto_activator.launch.xml"/>
+
+    <!-- diagnostic graph merger -->
+    <include file="$(find-pkg-share diagnostic_graph_merger)/launch/merge.launch.xml">
+      <arg name="param_file" value="$(find-pkg-share diagnostic_graph_merger)/config/merge.param.yaml"/>
+      <arg name="~/output/struct" value="/diagnostics_graph/struct/merge"/>
+      <arg name="~/output/status" value="/diagnostics_graph/status/merge"/>
+      <arg name="~/input1/struct" value="/in_main/diagnostics_graph/struct"/>
+      <arg name="~/input1/status" value="/in_main/diagnostics_graph/status"/>
+      <arg name="~/input2/struct" value="/in_sub/diagnostics_graph/struct"/>
+      <arg name="~/input2/status" value="/in_sub/diagnostics_graph/status"/>
+    </include>
+
+    <!-- output master manager-->
+    <include file="$(find-pkg-share output_master_manager)/launch/output_master_manager.launch.xml">
+      <arg name="config_file" value="$(find-pkg-share output_master_manager)/config/default.param.yaml"/>
+      <arg name="is_main_ecu" value="$(var is_main_ecu)"/>
+      <arg name="input_diag_status" value="/diagnostics_graph/status/merge"/>
+      <arg name="input_diag_struct" value="/diagnostics_graph/struct/merge"/>
+      <arg name="input_mrm_state" value="/in_sub/system/fail_safe/mrm_state"/>
+      <arg name="input_election_status" value="/system/election/status"/>
+      <arg name="output_mrm_state" value="/system/fail_safe/mrm_state"/>
+      <arg name="output_diag_status" value="/diagnostics_graph/status"/>
+      <arg name="output_diag_struct" value="/diagnostics_graph/struct"/>
+    </include>
+
+    <!-- diagnostic status auto reset manager -->
+    <include file="$(find-pkg-share autoware_diagnostic_status_auto_reset_manager)/launch/diagnostic_status_auto_reset_manager.launch.xml"/>
+  </group>
+
+  <!-- API -->
+  <group if="$(var launch_api)">
+    <include file="$(find-pkg-share default_adapi_custom_launch)/launch/default_adapi.launch.py">
+      <arg name="config" value="$(find-pkg-share autoware_launch)/config/system/default_adapi_universe/default_adapi_universe.param.yaml"/>
+    </include>
+  </group>
+</launch>

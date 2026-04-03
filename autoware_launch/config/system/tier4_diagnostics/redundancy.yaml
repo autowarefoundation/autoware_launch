@@ -1,0 +1,121 @@
+units:
+  - path: /redundancy/autonomous_available
+    type: and
+    list:
+      - { type: link, link: /redundancy/redundancy_switcher }
+      - { type: link, link: /redundancy/topic_status/election_status-error }
+
+  - path: /redundancy/comfortable_stop_available
+    type: and
+    list:
+      - { type: link, link: /redundancy/redundancy_switcher }
+
+  - path: /redundancy/in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /redundancy/redundancy_switcher }
+
+  - path: /redundancy/in_lane_emergency_stop_available
+    type: and
+    list:
+      - { type: link, link: /redundancy/redundancy_switcher }
+
+  - path: /redundancy/main_ecu/notification
+    type: and
+    list:
+      - { type: link, link: /redundancy/main_ecu/main_ecu_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_ecu_fault }
+      - { type: link, link: /redundancy/main_ecu/main_vcu_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_vcu_fault }
+      - { type: link, link: /redundancy/main_ecu/main_ecu_to_sub_ecu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/main_ecu_to_main_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/main_ecu_to_sub_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_ecu_to_main_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/sub_ecu_to_sub_vcu_link_fault }
+      - { type: link, link: /redundancy/main_ecu/main_vcu_to_sub_vcu_link_fault }
+
+  - path: /redundancy/topic_status/election_status-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /redundancy/topic_status/election_status
+
+  # diag
+  - path: /redundancy/redundancy_switcher
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: redundancy_switcher_status
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_ecu_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_ecu_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/sub_ecu_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: sub_ecu_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_vcu_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_vcu_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/sub_vcu_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: sub_vcu_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_ecu_to_sub_ecu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_ecu_to_sub_ecu_link_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_ecu_to_main_vcu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_ecu_to_main_vcu_link_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_ecu_to_sub_vcu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_ecu_to_sub_vcu_link_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/sub_ecu_to_main_vcu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: sub_ecu_to_main_vcu_link_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/sub_ecu_to_sub_vcu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: sub_ecu_to_sub_vcu_link_fault
+    timeout: 3.0
+
+  - path: /redundancy/main_ecu/main_vcu_to_sub_vcu_link_fault
+    type: diag
+    node: main_ecu_redundancy_switcher_interface
+    name: main_vcu_to_sub_vcu_link_fault
+    timeout: 3.0
+
+  - path: /redundancy/topic_status/election_status
+    type: diag
+    node: topic_state_monitor_election_status
+    name: topic_status
+    timeout: 3.0
+    # latch: 0.0
+
+  #   - path: /redundancy/pub_pose_with_covariance_to_sub_ecu
+  #   type: diag
+  #   node: topic_state_monitor_pose_estimator_pose_with_covariance
+  #   name: publish_to_sub_status
+  #   timeout: 1.0

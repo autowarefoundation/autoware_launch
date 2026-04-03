@@ -9,7 +9,7 @@
     filter_activated_velocity_threshold: 1.0
     external_emergency_stop_heartbeat_timeout: 0.0
     stop_hold_acceleration: -1.5
-    emergency_acceleration: -2.4
+    emergency_acceleration: -2.5
     moderate_stop_service_acceleration: -1.5
     stop_check_duration: 1.0
     nominal:

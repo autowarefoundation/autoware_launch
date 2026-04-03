@@ -1,0 +1,56 @@
+<launch>
+  <arg name="launch_driver" default="true"/>
+  <arg name="ntrip_id" default="$(env NTRIP_ID 'invalid')"/>
+
+  <group>
+    <push-ros-namespace namespace="gnss"/>
+
+    <!-- Septentrio Mosaic Driver -->
+    <!-- launch without ntrip -->
+    <group if="$(eval '&quot;$(var ntrip_id)&quot;==&quot;invalid&quot;')">
+      <node pkg="septentrio_gnss_driver" name="septentrio" exec="septentrio_gnss_driver_node" if="$(var launch_driver)">
+        <param from="$(find-pkg-share aip_x2_gen2_launch)/config/asterx_sb3_rover.param.yaml"/>
+        <remap from="navsatfix" to="~/nav_sat_fix"/>
+        <remap from="poscovgeodetic" to="~/poscovgeodetic"/>
+        <remap from="pvtgeodetic" to="~/pvtgeodetic"/>
+        <remap from="atteuler" to="~/atteuler"/>
+      </node>
+    </group>
+
+    <!-- launch with ntrip -->
+    <group unless="$(eval '&quot;$(var ntrip_id)&quot;==&quot;invalid&quot;')">
+      <node pkg="septentrio_gnss_driver" name="septentrio" exec="septentrio_gnss_driver_node" if="$(var launch_driver)">
+        <param from="$(find-pkg-share aip_x2_gen2_launch)/config/asterx_sb3_rover.param.yaml"/>
+        <param name="rtk_settings.ntrip_1.id" value="$(env NTRIP_ID)"/>
+        <param name="rtk_settings.ntrip_1.caster" value="$(env NTRIP_CASTER)"/>
+        <param name="rtk_settings.ntrip_1.caster_port" value="$(env NTRIP_CASTER_PORT)"/>
+        <param name="rtk_settings.ntrip_1.username" value="$(env NTRIP_USERNAME)"/>
+        <param name="rtk_settings.ntrip_1.password" value="$(env NTRIP_PASSWORD)"/>
+        <param name="rtk_settings.ntrip_1.mountpoint" value="$(env NTRIP_MOUNTPOINT)"/>
+        <param name="rtk_settings.ntrip_1.version" value="$(env NTRIP_VERSION)"/>
+        <param name="rtk_settings.ntrip_1.tls" value="$(env NTRIP_TLS false)"/>
+        <param name="rtk_settings.ntrip_1.fingerprint" value="$(env NTRIP_FINGERPRINT)"/>
+        <param name="rtk_settings.ntrip_1.rtk_standard" value="$(env NTRIP_RTK_STANDARD)"/>
+        <param name="rtk_settings.ntrip_1.send_gga" value="$(env NTRIP_SEND_GGA)"/>
+        <param name="rtk_settings.ntrip_1.keep_open" value="$(env NTRIP_KEEP_OPEN)"/>
+        <remap from="navsatfix" to="~/nav_sat_fix"/>
+        <remap from="poscovgeodetic" to="~/poscovgeodetic"/>
+        <remap from="pvtgeodetic" to="~/pvtgeodetic"/>
+        <remap from="atteuler" to="~/atteuler"/>
+      </node>
+    </group>
+
+    <!-- Septentrio Heading Converter -->
+    <node pkg="aip_common_sensor_launch" name="septentrio_heading_converter" exec="septentrio_heading_converter.py"/>
+
+    <!-- NavSatFix to MGRS Pose -->
+    <include file="$(find-pkg-share autoware_gnss_poser)/launch/gnss_poser.launch.xml">
+      <arg name="input_topic_fix" value="septentrio/nav_sat_fix"/>
+      <arg name="input_topic_orientation" value="septentrio/orientation"/>
+
+      <arg name="output_topic_gnss_pose" value="pose"/>
+      <arg name="output_topic_gnss_pose_cov" value="pose_with_covariance"/>
+      <arg name="output_topic_gnss_fixed" value="fixed"/>
+    </include>
+  </group>
+</launch>

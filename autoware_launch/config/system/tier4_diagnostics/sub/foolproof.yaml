@@ -1,0 +1,18 @@
+units:
+  - path: /sub_ecu/foolproof/sub_ecu_in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /sub_ecu/foolproof/sub/autoware_node_alive/warn-to-ok }
+
+  - path: /sub_ecu/foolproof/sub/autoware_node_alive/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/foolproof/sub/autoware_node_alive
+
+  - path: /sub_ecu/foolproof/sub/autoware_node_alive
+    type: diag
+    node: autoware_diagnostics_bridge_node_sub
+    name: sub_autoware_node_alive
+    timeout: 3.0
+    # latch: 0.0
