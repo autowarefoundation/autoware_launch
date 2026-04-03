@@ -39,7 +39,6 @@
   <arg name="launch_dummy_doors"/>
   <arg name="launch_scenario_simulator_v2_adapter"/>
   <arg name="vehicle_info_param_file"/>
-  <arg name="launch_raw_vehicle_cmd_converter" default="true" description="launch autoware_raw_vehicle_cmd_converter"/>
   <arg name="raw_vehicle_cmd_converter_param_path"/>
 
   <arg name="perception/enable_detection_failure" default="true" description="enable to simulate detection failure when using dummy perception"/>
@@ -279,10 +278,12 @@
       <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
       <arg name="motion_publish_mode" value="$(var motion_publish_mode)"/>
     </include>
-    <group if="$(var launch_raw_vehicle_cmd_converter)">
-      <include file="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/launch/raw_vehicle_converter_if_actuation_cmd.launch.py">
-        <arg name="simulator_model_param_file" value="$(var simulator_model)"/>
-        <arg name="raw_vehicle_cmd_converter_param_path" value="$(var raw_vehicle_cmd_converter_param_path)"/>
+    <include file="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/launch/get_vehicle_model_type.launch.py">
+      <arg name="simulator_model_param_file" value="$(var simulator_model)"/>
+    </include>
+    <group if="$(eval '&quot;$(var vehicle_model_type)&quot;==&quot;ACTUATION_CMD&quot;')">
+      <include file="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/launch/raw_vehicle_converter.launch.xml">
+        <arg name="config_file" value="$(var raw_vehicle_cmd_converter_param_path)"/>
       </include>
     </group>
   </group>
