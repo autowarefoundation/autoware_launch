@@ -1,0 +1,31 @@
+autoware_system_design_format: 0.3.0
+
+name: LidarClustering.module
+
+instances:
+  - name: euclidean_cluster
+    entity: VoxelGridBasedEuclideanCluster.node
+  - name: shape_estimation
+    entity: ShapeEstimation.node
+  - name: detected_object_feature_remover
+    entity: DetectedObjectFeatureRemover.node
+
+subscribers:
+  - name: pointcloud
+publishers:
+  - name: detected_objects
+  - name: cluster_objects
+
+connections:
+  - - subscriber.pointcloud
+    - euclidean_cluster.subscriber.input_pointcloud
+
+  - - euclidean_cluster.publisher.output_clusters
+    - shape_estimation.subscriber.objects
+  - - shape_estimation.publisher.objects
+    - publisher.cluster_objects
+
+  - - shape_estimation.publisher.objects
+    - detected_object_feature_remover.subscriber.input
+  - - detected_object_feature_remover.publisher.output
+    - publisher.detected_objects

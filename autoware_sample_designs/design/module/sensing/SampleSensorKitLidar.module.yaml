@@ -1,0 +1,43 @@
+autoware_system_design_format: 0.3.0
+
+name: SampleSensorKitLidar.module
+
+instances:
+  - name: top
+    entity: LidarVelodyneVLS128.module
+  - name: left
+    entity: LidarVelodyneVLP16.module
+  - name: right
+    entity: LidarVelodyneVLP16.module
+  - name: concatenate_and_time_sync
+    entity: ConcatenateAndTimeSync_3_inputs.node
+
+subscribers:
+  - name: twist
+  - name: odometry
+  - name: imu
+publishers:
+  - name: concatenated/pointcloud
+  - name: concatenated/pointcloud_info
+
+connections:
+  - - subscriber.imu
+    - ^.subscriber.imu
+  - - subscriber.twist
+    - ^.subscriber.twist
+
+  # the order is important. the order need to be aligned with parameter of
+  # matching_strategy in concatenate_and_time_sync_node.param.yaml
+  - - right.publisher.pointcloud
+    - concatenate_and_time_sync.subscriber.input1
+  - - top.publisher.pointcloud
+    - concatenate_and_time_sync.subscriber.input2
+  - - left.publisher.pointcloud
+    - concatenate_and_time_sync.subscriber.input3
+
+  - - subscriber.odometry
+    - concatenate_and_time_sync.subscriber.odometry
+  - - concatenate_and_time_sync.publisher.output
+    - publisher.concatenated/pointcloud
+  - - concatenate_and_time_sync.publisher.output_info
+    - publisher.concatenated/pointcloud_info
