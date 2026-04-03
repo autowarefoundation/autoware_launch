@@ -2120,7 +2120,7 @@ Visualization Manager:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
-                Reliability Policy: ReliableExpand commentComment on line R2120
+                Reliability Policy: Reliable
                 Value: /planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/debug/route_marker
               Value: true
             - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
