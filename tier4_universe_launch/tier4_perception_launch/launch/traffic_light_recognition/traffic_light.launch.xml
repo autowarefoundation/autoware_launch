@@ -29,6 +29,8 @@
   <arg name="classification/car/label_path"/>
   <arg name="classification/pedestrian/model_path"/>
   <arg name="classification/pedestrian/label_path"/>
+  <arg name="classification/pedestrian/classifier_type"/>
+  <arg name="classification/car/classifier_type"/>
 
   <!-- topic -->
   <arg name="input/vector_map" default="/map/vector_map" description="input vector map topic"/>
@@ -70,6 +72,8 @@
       <arg name="classification/car/label_path" value="$(var classification/car/label_path)"/>
       <arg name="classification/pedestrian/model_path" value="$(var classification/pedestrian/model_path)"/>
       <arg name="classification/pedestrian/label_path" value="$(var classification/pedestrian/label_path)"/>
+      <arg name="classification/pedestrian/classifier_type" value="$(var classification/pedestrian/classifier_type)"/>
+      <arg name="classification/car/classifier_type" value="$(var classification/car/classifier_type)"/>
       <arg name="use_intra_process" value="true"/>
       <arg name="use_multithread" value="true"/>
     </include>

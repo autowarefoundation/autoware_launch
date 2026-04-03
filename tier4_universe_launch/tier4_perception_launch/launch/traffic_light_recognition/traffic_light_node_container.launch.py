@@ -115,6 +115,9 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
                         "build_only": False,
                         "label_path": LaunchConfiguration("classification/car/label_path"),
                         "model_path": LaunchConfiguration("classification/car/model_path"),
+                        "classifier_type": LaunchConfiguration(
+                            "classification/car/classifier_type"
+                        ),
                     },
                 ],
                 remappings=[
@@ -137,6 +140,9 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
                         "build_only": False,
                         "label_path": LaunchConfiguration("classification/pedestrian/label_path"),
                         "model_path": LaunchConfiguration("classification/pedestrian/model_path"),
+                        "classifier_type": LaunchConfiguration(
+                            "classification/pedestrian/classifier_type"
+                        ),
                     },
                 ],
                 remappings=[
@@ -359,6 +365,16 @@ def generate_launch_description():
     add_launch_arg("classification/car/label_path")
     add_launch_arg("classification/pedestrian/model_path")
     add_launch_arg("classification/pedestrian/label_path")
+    add_launch_arg(
+        "classification/car/classifier_type",
+        default_value="1",
+        description="0=HSVFilter, 1=CNN, 2=LAMPClassifier",
+    )
+    add_launch_arg(
+        "classification/pedestrian/classifier_type",
+        default_value="1",
+        description="0=HSVFilter, 1=CNN, 2=LampRecognizer",
+    )
     add_launch_arg("car_traffic_light_classifier_param_path")
     add_launch_arg("pedestrian_traffic_light_classifier_param_path")
 

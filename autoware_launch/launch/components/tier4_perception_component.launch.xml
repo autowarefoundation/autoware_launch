@@ -83,6 +83,32 @@
     description="select high accuracy detector type for traffic light recognition: fine_detection or whole_image_detection"
   />
 
+  <arg name="traffic_light_recognition/classification/car/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LAMPClassifier"/>
+  <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+  <arg name="traffic_light_recognition/classification/car/label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels.txt"/>
+  <arg name="traffic_light_recognition/classification/pedestrian/label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels_ped.txt"/>
+  <arg
+    name="traffic_light_car_classifier_model"
+    default="traffic_light_classifier_mobilenetv2_batch_6.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/car/classifier_type)' == '1'&quot;)"
+  />
+  <arg
+    name="traffic_light_car_classifier_model"
+    default="traffic_light_lamp_recognizer_comlops.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/car/classifier_type)' == '2'&quot;)"
+  />
+  <arg
+    name="traffic_light_ped_classifier_model"
+    default="ped_traffic_light_classifier_mobilenetv2_batch_6.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/pedestrian/classifier_type)' == '1'&quot;)"
+  />
+  <arg
+    name="traffic_light_ped_classifier_model"
+    default="ped_traffic_light_lamp_recognizer_comlops.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/pedestrian/classifier_type)' == '2'&quot;)"
+  />
+  <arg name="traffic_light_recognition/classification/car/model_path" value="$(var data_path)/traffic_light_classifier/$(var traffic_light_car_classifier_model)"/>
+  <arg name="traffic_light_recognition/classification/pedestrian/model_path" value="$(var data_path)/traffic_light_classifier/$(var traffic_light_ped_classifier_model)"/>
   <let name="occupancy_grid_map_method_full" value="$(var occupancy_grid_map_method)_occupancy_grid_map"/>
 
   <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
@@ -294,12 +320,14 @@
       name="traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/tensorrt_yolox/traffic_light_roi_label_remap.csv"
     />
+    <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" value="$(var traffic_light_recognition/classification/pedestrian/classifier_type)"/>
+    <arg name="traffic_light_recognition/classification/car/classifier_type" value="$(var traffic_light_recognition/classification/car/classifier_type)"/>
     <arg name="traffic_light_recognition/fine_detection/model_path" value="$(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx"/>
     <arg name="traffic_light_recognition/fine_detection/label_path" value="$(var data_path)/traffic_light_fine_detector/tlr_labels.txt"/>
-    <arg name="traffic_light_recognition/classification/car/model_path" value="$(var data_path)/traffic_light_classifier/traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
-    <arg name="traffic_light_recognition/classification/car/label_path" value="$(var data_path)/traffic_light_classifier/lamp_labels.txt"/>
-    <arg name="traffic_light_recognition/classification/pedestrian/model_path" value="$(var data_path)/traffic_light_classifier/ped_traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
-    <arg name="traffic_light_recognition/classification/pedestrian/label_path" value="$(var data_path)/traffic_light_classifier/lamp_labels_ped.txt"/>
+    <arg name="traffic_light_recognition/classification/car/model_path" value="$(var traffic_light_recognition/classification/car/model_path)"/>
+    <arg name="traffic_light_recognition/classification/car/label_path" value="$(var traffic_light_recognition/classification/car/label_path)"/>
+    <arg name="traffic_light_recognition/classification/pedestrian/model_path" value="$(var traffic_light_recognition/classification/pedestrian/model_path)"/>
+    <arg name="traffic_light_recognition/classification/pedestrian/label_path" value="$(var traffic_light_recognition/classification/pedestrian/label_path)"/>
     <arg name="input_pointcloud_for_traffic_light_occlusion_predictor" value="$(var input_pointcloud_for_traffic_light_occlusion_predictor)"/>
   </include>
 </launch>
