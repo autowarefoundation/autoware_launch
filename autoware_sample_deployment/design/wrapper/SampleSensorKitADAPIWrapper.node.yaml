@@ -3,7 +3,7 @@ autoware_system_design_format: 0.3.0
 name: SampleSensorKitADAPIWrapper.node
 
 package:
-  name: autoware_sample_deployment
+  name: autoware_sample_designs
   provider: autoware
 
 launch:

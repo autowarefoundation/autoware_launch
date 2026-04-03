@@ -133,7 +133,7 @@ parameters:
         value: $(var wheels_max_height_offset)
   - node: /sensing/lidar/top/distortion_corrector_node
     param_files:
-      - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/distortion_corrector_node.param.yaml
+      - param_file: $(find-pkg-share autoware_sample_designs)/config/sensing/lidar/distortion_corrector_node.param.yaml
     param_values:
       - name: input_frame
         value: base_link
@@ -143,7 +143,7 @@ parameters:
         value: false
   - node: /sensing/lidar/top/ring_outlier_filter
     param_files:
-      - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
+      - param_file: $(find-pkg-share autoware_sample_designs)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
   - node: /sensing/lidar/left/lidar
     param_files: []
     param_values:
@@ -227,7 +227,7 @@ parameters:
         value: $(var wheels_max_height_offset)
   - node: /sensing/lidar/left/distortion_corrector_node
     param_files:
-      - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/distortion_corrector_node.param.yaml
+      - param_file: $(find-pkg-share autoware_sample_designs)/config/sensing/lidar/distortion_corrector_node.param.yaml
     param_values:
       - name: input_frame
         value: base_link
@@ -237,7 +237,7 @@ parameters:
         value: false
   - node: /sensing/lidar/left/ring_outlier_filter
     param_files:
-      - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
+      - param_file: $(find-pkg-share autoware_sample_designs)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
   - node: /sensing/lidar/right/lidar
     param_files: []
     param_values:
@@ -321,7 +321,7 @@ parameters:
         value: $(var wheels_max_height_offset)
   - node: /sensing/lidar/right/distortion_corrector_node
     param_files:
-      - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/distortion_corrector_node.param.yaml
+      - param_file: $(find-pkg-share autoware_sample_designs)/config/sensing/lidar/distortion_corrector_node.param.yaml
     param_values:
       - name: input_frame
         value: base_link
@@ -331,10 +331,10 @@ parameters:
         value: false
   - node: /sensing/lidar/right/ring_outlier_filter
     param_files:
-      - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
+      - param_file: $(find-pkg-share autoware_sample_designs)/config/sensing/lidar/ring_outlier_filter_node.param.yaml
   - node: /sensing/lidar/concatenate_and_time_sync
     param_files:
-      - param_file: $(find-pkg-share autoware_sample_deployment)/config/sensing/lidar/concatenate_and_time_sync_node.param.yaml
+      - param_file: $(find-pkg-share autoware_sample_designs)/config/sensing/lidar/concatenate_and_time_sync_node.param.yaml
     param_values:
       - name: output_frame
         value: base_link

@@ -5,7 +5,7 @@ name: AutowareSample.system
 variables:
   # common variables
   - name: config_path
-    value: $(find-pkg-share autoware_sample_deployment)/config
+    value: $(find-pkg-share autoware_sample_designs)/config
   - name: vehicle_model
     value: sample_vehicle
   - name: data_path
