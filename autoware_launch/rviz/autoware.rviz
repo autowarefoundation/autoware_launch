@@ -2133,7 +2133,7 @@ Visualization Manager:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
-                Reliability Policy: ReliableExpand commentComment on line R2133
+                Reliability Policy: Reliable
                 Value: /planning/planning_factors/diffusion_planner
               Value: true
               show_safety_factors: false
