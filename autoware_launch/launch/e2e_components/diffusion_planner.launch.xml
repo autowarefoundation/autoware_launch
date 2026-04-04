@@ -1,5 +1,23 @@
 <launch>
   <!-- planning module -->
+  <!-- diffusion planner -->
+  <arg name="diffusion_planner_param_path"/>
+
+  <!-- trajectory modifier -->
+  <arg name="trajectory_modifier_param_path"/>
+  <!-- trajectory optimizer -->
+  <arg name="trajectory_optimizer_param_path"/>
+  <arg name="jerk_filtered_smoother_param_path"/>
+  <arg name="velocity_smoother_param_path"/>
+  <arg name="common_smoother_param_path"/>
+  <arg name="elastic_band_param_path"/>
+  <arg name="trajectory_point_fixer_param_path"/>
+  <arg name="trajectory_extender_param_path"/>
+  <arg name="trajectory_spline_smoother_param_path"/>
+  <arg name="trajectory_qp_smoother_param_path"/>
+  <arg name="trajectory_velocity_optimizer_param_path"/>
+  <arg name="trajectory_kinematic_feasibility_enforcer_param_path"/>
+  <arg name="trajectory_mpt_optimizer_param_path"/>
 
   <!-- mission planner -->
   <arg name="mission_planner_param_path"/>
@@ -27,6 +45,7 @@
         <group>
           <push-ros-namespace namespace="neural_network_based_planner"/>
           <include file="$(find-pkg-share autoware_diffusion_planner)/launch/diffusion_planner.launch.xml">
+            <arg name="diffusion_planner_param_path" value="$(var diffusion_planner_param_path)"/>
             <arg name="input_odometry" value="/localization/kinematic_state"/>
             <arg name="input_acceleration" value="/localization/acceleration"/>
             <arg name="input_route" value="/planning/mission_planning/route"/>
@@ -34,20 +53,46 @@
             <arg name="input_tracked_objects" value="/perception/object_recognition/tracking/objects"/>
             <arg name="input_vector_map" value="/map/vector_map"/>
             <arg name="input_turn_indicators" value="/vehicle/status/turn_indicators_status"/>
+            <arg name="debug/output_traffic_signal" value="/planning/scenario_planning/lane_driving/behavior_planning/debug/traffic_signal"/>
             <arg name="output_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
             <arg name="output_turn_indicators" value="/planning/turn_indicators_cmd"/>
           </include>
+          <include file="$(find-pkg-share autoware_trajectory_modifier)/launch/trajectory_modifier.launch.xml">
+            <arg name="trajectory_modifier_param_path" value="$(var trajectory_modifier_param_path)"/>
+            <arg name="input_candidate_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
+            <arg name="output_candidate_trajectories" value="/planning/generator/diffusion_planner/modified_candidate_trajectories"/>
+            <arg name="input_odometry" value="/localization/kinematic_state"/>
+            <arg name="input_acceleration" value="/localization/acceleration"/>
+            <arg name="input_objects_topic_name" value="/perception/object_recognition/objects"/>
+            <arg name="input_pointcloud_topic_name" value="/perception/obstacle_segmentation/pointcloud"/>
+          </include>
           <include file="$(find-pkg-share autoware_trajectory_optimizer)/launch/trajectory_optimizer.launch.xml">
-            <arg name="input_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
+            <arg name="trajectory_optimizer_param_path" value="$(var trajectory_optimizer_param_path)"/>
+            <arg name="input_trajectories" value="/planning/generator/diffusion_planner/modified_candidate_trajectories"/>
             <arg name="output_traj" value="/planning/trajectory"/>
-            <arg name="output_trajectories" value="/planning/generator/trajectory_optimizer/candidate_trajectories"/>
-            <arg
-              name="elastic_band_param_path"
-              value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/path_smoother/elastic_band_smoother.param.yaml"
-            />
+            <arg name="output_trajectories" value="/planning/generator/candidate_trajectories"/>
+            <arg name="jerk_filtered_smoother_param_path" value="$(var jerk_filtered_smoother_param_path)"/>
+            <arg name="velocity_smoother_param_path" value="$(var velocity_smoother_param_path)"/>
+            <arg name="common_smoother_param_path" value="$(var common_smoother_param_path)"/>
+            <arg name="elastic_band_param_path" value="$(var elastic_band_param_path)"/>
+            <arg name="trajectory_point_fixer_param_path" value="$(var trajectory_point_fixer_param_path)"/>
+            <arg name="trajectory_extender_param_path" value="$(var trajectory_extender_param_path)"/>
+            <arg name="trajectory_spline_smoother_param_path" value="$(var trajectory_spline_smoother_param_path)"/>
+            <arg name="trajectory_qp_smoother_param_path" value="$(var trajectory_qp_smoother_param_path)"/>
+            <arg name="trajectory_velocity_optimizer_param_path" value="$(var trajectory_velocity_optimizer_param_path)"/>
+            <arg name="trajectory_kinematic_feasibility_enforcer_param_path" value="$(var trajectory_kinematic_feasibility_enforcer_param_path)"/>
+            <arg name="trajectory_mpt_optimizer_param_path" value="$(var trajectory_mpt_optimizer_param_path)"/>
           </include>
         </group>
       </group>
+    </group>
+
+    <!-- planning evaluator -->
+    <group>
+      <include file="$(find-pkg-share autoware_planning_evaluator)/launch/planning_evaluator.launch.xml">
+        <arg name="input/objects" value="/planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/output/predicted_objects"/>
+        <arg name="input/reference_trajectory" value="/planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/output/trajectory"/>
+      </include>
     </group>
 
     <!-- mission remaining distance and time calculator -->
