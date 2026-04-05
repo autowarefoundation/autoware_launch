@@ -1,0 +1,100 @@
+/**:
+  ros__parameters:
+    sensing:
+      type: diagnostic_aggregator/AnalyzerGroup
+      path: sensing
+      analyzers:
+        node_alive_monitoring:
+          type: diagnostic_aggregator/AnalyzerGroup
+          path: node_alive_monitoring
+          analyzers:
+            topic_status:
+              type: diagnostic_aggregator/GenericAnalyzer
+              path: topic_status
+              contains: [": sensing_topic_status"]
+              timeout: 1.0
+
+        lidar:
+          type: diagnostic_aggregator/AnalyzerGroup
+          path: lidar
+          analyzers:
+            performance_monitoring:
+              type: diagnostic_aggregator/AnalyzerGroup
+              path: performance_monitoring
+              analyzers:
+                blockage:
+                  type: diagnostic_aggregator/GenericAnalyzer
+                  path: blockage
+                  contains: [": blockage_validation"]
+                  timeout: 1.0
+                visibility:
+                  type: diagnostic_aggregator/GenericAnalyzer
+                  path: visibility
+                  contains: ["left_upper: visibility_validation"]
+                  timeout: 1.0
+                concat_status:
+                  type: diagnostic_aggregator/GenericAnalyzer
+                  path: concat_status
+                  contains: [": concat_status"]
+                  timeout: 1.0
+            pandar:
+              type: diagnostic_aggregator/AnalyzerGroup
+              path: pandar
+              analyzers:
+                health_monitoring:
+                  type: diagnostic_aggregator/AnalyzerGroup
+                  path: health_monitoring
+                  analyzers:
+                    connection:
+                      type: diagnostic_aggregator/GenericAnalyzer
+                      path: connection
+                      contains: [": pandar_connection"]
+                      timeout: 5.0
+                    temperature:
+                      type: diagnostic_aggregator/GenericAnalyzer
+                      path: temperature
+                      contains: [": pandar_temperature"]
+                      timeout: 5.0
+                    ptp:
+                      type: diagnostic_aggregator/GenericAnalyzer
+                      path: ptp
+                      contains: [": pandar_ptp"]
+                      timeout: 5.0
+
+                dust:
+                  type: diagnostic_aggregator/GenericAnalyzer
+                  path: dust
+                  contains: [": dust_validation"]
+                  timeout: 1.0
+
+        gnss:
+          type: diagnostic_aggregator/AnalyzerGroup
+          path: gnss
+          analyzers:
+            septentrio:
+              type: diagnostic_aggregator/AnalyzerGroup
+              path: septentrio
+              analyzers:
+                health_monitoring:
+                  type: diagnostic_aggregator/AnalyzerGroup
+                  path: health_monitoring
+                  analyzers:
+                    gnss:
+                      type: diagnostic_aggregator/GenericAnalyzer
+                      path: gnss
+                      startswith: ["gnss"]
+                      contains: [": gnss"]
+                      timeout: 5.0
+        imu:
+          type: diagnostic_aggregator/AnalyzerGroup
+          path: imu
+          analyzers:
+            bias_monitoring:
+              type: diagnostic_aggregator/AnalyzerGroup
+              path: bias_monitoring
+              analyzers:
+                gyro_bias_validator:
+                  type: diagnostic_aggregator/GenericAnalyzer
+                  path: gyro_bias_validator
+                  contains: [": gyro_bias_validator"]
+                  timeout: 1.0

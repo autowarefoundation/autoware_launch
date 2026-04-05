@@ -1,0 +1,44 @@
+uevent_description_camera0:
+  hardware_type: vi_camera
+  devpath: /devices/platform/tegra-capture-vi
+  identifier_key: CAMERA_ID
+  key_is: ".* 9-002[a-z]" # yamllint disable-line rule:quoted-strings
+  hardware_id: camera0
+  value_key: FUSA_HW_FAULT
+  value_type: error_flag
+  criteria:
+    status_ok: 0
+    status_error: 1
+uevent_description_camera1:
+  hardware_type: vi_camera
+  devpath: /devices/platform/tegra-capture-vi
+  identifier_key: CAMERA_ID
+  key_is: ".* 10-002[a-z]" # yamllint disable-line rule:quoted-strings
+  hardware_id: camera1
+  value_key: FUSA_HW_FAULT
+  value_type: error_flag
+  criteria:
+    status_ok: 0
+    status_error: 1
+uevent_description_camera2:
+  hardware_type: vi_camera
+  devpath: /devices/platform/tegra-capture-vi
+  identifier_key: CAMERA_ID
+  key_is: ".* 11-002[a-z]" # yamllint disable-line rule:quoted-strings
+  hardware_id: camera2
+  value_key: FUSA_HW_FAULT
+  value_type: error_flag
+  criteria:
+    status_ok: 0
+    status_error: 1
+uevent_description_camera3:
+  hardware_type: vi_camera
+  devpath: /devices/platform/tegra-capture-vi
+  identifier_key: CAMERA_ID
+  key_is: ".* 12-002[a-z]" # yamllint disable-line rule:quoted-strings
+  hardware_id: camera3
+  value_key: FUSA_HW_FAULT
+  value_type: error_flag
+  criteria:
+    status_ok: 0
+    status_error: 1

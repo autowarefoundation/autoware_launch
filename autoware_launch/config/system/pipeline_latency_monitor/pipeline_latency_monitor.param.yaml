@@ -1,7 +1,7 @@
 /**:
   ros__parameters:
     update_rate: 10.0
-    latency_threshold_ms: 1000.0
+    latency_threshold_ms: 1200.0
     window_size: 10
 
     processing_steps:  # processing steps used to calculate the latency.
@@ -10,6 +10,7 @@
         - multi_object_tracker
         - decorative_object_merger_node
         - map_based_prediction
+        - perception_filter
         - planning
         - control
       # Each step needs to be associated with a topic, a topic type, a timestamp meaning, and a multiplier
@@ -34,6 +35,13 @@
           autoware_internal_debug_msgs/msg/Float64Stamped
         timestamp_meaning: "end" # whether the timestamp represent the "start" or "end" time of the step
         latency_multiplier: 1.0  # multiplier to convert the input latency duration into ms (e.g., 1e3 for s->ms, 1e-3 for us->ms)
+      perception_filter:
+        topic: # input topic with the timestamp and the latency duration of the processing step
+          /perception_filter_node/debug/objects_processing_time_ms
+        topic_type: # type of the input topic
+          autoware_internal_debug_msgs/msg/Float64Stamped
+        timestamp_meaning: "end" # whether the timestamp represent the "start" or "end" time of the step
+        latency_multiplier: 1.0 # multiplier to convert the input latency duration into ms (e.g., 1e3 for s->ms, 1e-3 for us->ms)
       planning:
         topic: # input topic with the timestamp and the latency duration of the processing step
           /planning/planning_validator/validation_status

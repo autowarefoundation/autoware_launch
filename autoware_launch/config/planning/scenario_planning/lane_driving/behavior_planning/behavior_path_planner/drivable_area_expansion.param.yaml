@@ -36,4 +36,5 @@
         types: # linestring types in the lanelet maps that will not be crossed when expanding the drivable area
           - road_border
           - curbstone
+          - drivable_area
         distance: 0.0 # [m] distance to keep between the drivable area and the linestrings to avoid
