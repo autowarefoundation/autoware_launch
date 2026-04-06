@@ -4,15 +4,15 @@ name: universe_planning.parameter_set
 parameters:
   - node: /planning/mission_planning/mission_planner
     param_files:
-      - param_path1: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
-      - param_path2: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
       - mission_planner_param: $(find-pkg-share autoware_launch)/config/planning/mission_planning/mission_planner/mission_planner.param.yaml
   - node: /planning/scenario_planning/velocity_smoother
     param_files:
-      - param_path1: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
-      - param_path2: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
-      - param_path3: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/velocity_smoother.param.yaml
-      - param_path4: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/Analytical.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/velocity_smoother.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/Analytical.param.yaml
   - node: /planning/scenario_planning/hazard_lights_selector
     param_files:
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
