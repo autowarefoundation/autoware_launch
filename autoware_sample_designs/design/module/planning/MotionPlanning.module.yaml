@@ -23,7 +23,6 @@ subscribers:
   - name: no_ground_pointcloud
   - name: pointcloud
   - name: traffic_signals
-  - name: virtual_traffic_light_states
   - name: occupancy_grid
 
 publishers:
@@ -54,8 +53,6 @@ connections:
     - motion_velocity_planner.subscriber.no_ground_pointcloud
   - - subscriber.traffic_signals
     - motion_velocity_planner.subscriber.traffic_signals
-  - - subscriber.virtual_traffic_light_states
-    - motion_velocity_planner.subscriber.virtual_traffic_light_states
   - - subscriber.occupancy_grid
     - motion_velocity_planner.subscriber.occupancy_grid
   - - subscriber.odometry
@@ -68,5 +65,4 @@ connections:
     - publisher.trajectory
   - - motion_velocity_planner.publisher.velocity_limit
     - publisher.velocity_limit
-  - - motion_velocity_planner.publisher.stop_reasons
-    - publisher.stop_reasons
+

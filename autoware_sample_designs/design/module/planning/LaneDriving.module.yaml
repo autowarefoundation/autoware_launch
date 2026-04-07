@@ -20,7 +20,6 @@ subscribers:
   - name: no_ground_pointcloud
   - name: pointcloud
   - name: traffic_signals
-  - name: virtual_traffic_light_states
   - name: odometry
   - name: accel
   - name: external_velocity_limit_mps
@@ -30,9 +29,7 @@ publishers:
   - name: turn_indicators_cmd
   - name: hazard_lights_cmd
   - name: modified_goal
-  - name: stop_reasons
   - name: motion_velocity_limit
-  - name: infrastructure_commands
 
 connections:
   - - behavior_planning.publisher.path
@@ -49,8 +46,6 @@ connections:
     - behavior_planning.subscriber.costmap
   - - subscriber.traffic_signals
     - behavior_planning.subscriber.traffic_signals
-  - - subscriber.virtual_traffic_light_states
-    - behavior_planning.subscriber.virtual_traffic_light_states
   - - subscriber.odometry
     - behavior_planning.subscriber.odometry
   - - subscriber.accel
@@ -75,8 +70,6 @@ connections:
     - motion_planning.subscriber.pointcloud
   - - subscriber.traffic_signals
     - motion_planning.subscriber.traffic_signals
-  - - subscriber.virtual_traffic_light_states
-    - motion_planning.subscriber.virtual_traffic_light_states
   - - subscriber.occupancy_grid_map
     - motion_planning.subscriber.occupancy_grid
   - - motion_planning.publisher.trajectory
@@ -87,9 +80,5 @@ connections:
     - publisher.hazard_lights_cmd
   - - behavior_planning.publisher.modified_goal
     - publisher.modified_goal
-  - - behavior_planning.publisher.infrastructure_commands
-    - publisher.infrastructure_commands
-  - - behavior_planning.publisher.stop_reasons
-    - publisher.stop_reasons
   - - motion_planning.publisher.velocity_limit
     - publisher.motion_velocity_limit

@@ -17,7 +17,6 @@ subscribers:
   - name: occupancy_grid_map
   - name: costmap
   - name: traffic_signals
-  - name: virtual_traffic_light_states
   - name: odometry
   - name: accel
   - name: scenario
@@ -28,8 +27,6 @@ publishers:
   - name: path
   - name: turn_indicators_cmd
   - name: hazard_lights_cmd
-  - name: stop_reasons
-  - name: infrastructure_commands
   - name: modified_goal
 
 connections:
@@ -63,8 +60,6 @@ connections:
     - behavior_velocity_planner.subscriber.no_ground_pointcloud
   - - subscriber.traffic_signals
     - behavior_velocity_planner.subscriber.traffic_signals
-  - - subscriber.virtual_traffic_light_states
-    - behavior_velocity_planner.subscriber.virtual_traffic_light_states
   - - subscriber.occupancy_grid_map
     - behavior_velocity_planner.subscriber.occupancy_grid
   - - subscriber.external_velocity_limit_mps
@@ -79,7 +74,4 @@ connections:
     - publisher.hazard_lights_cmd
   - - behavior_path_planner.publisher.modified_goal
     - publisher.modified_goal
-  - - behavior_velocity_planner.publisher.infrastructure_commands
-    - publisher.infrastructure_commands
-  - - behavior_velocity_planner.publisher.stop_reasons
-    - publisher.stop_reasons
+

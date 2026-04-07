@@ -27,7 +27,6 @@ subscribers:
   - name: pointcloud
   - name: occupancy_grid_map
   - name: traffic_signals
-  - name: virtual_traffic_light_states
   - name: modified_goal
 
 publishers:
@@ -70,12 +69,8 @@ connections:
     - scenario_planning.subscriber.occupancy_grid_map
   - - subscriber.traffic_signals
     - scenario_planning.subscriber.traffic_signals
-  - - subscriber.virtual_traffic_light_states
-    - scenario_planning.subscriber.virtual_traffic_light_states
   - - scenario_planning.publisher.trajectory
     - planning_validator.subscriber.trajectory
-  - - subscriber.objects
-    - planning_validator.subscriber.objects
   - - subscriber.pointcloud
     - planning_validator.subscriber.pointcloud
   - - planning_validator.publisher.trajectory
@@ -83,7 +78,7 @@ connections:
   - - subscriber.odometry
     - planning_evaluator.subscriber.odometry
   - - mission_planning.publisher.route
-    - remaining_distance_time_calculator.subscriber.mission_route
+    - remaining_distance_time_calculator.subscriber.route
   - - subscriber.odometry
     - remaining_distance_time_calculator.subscriber.odometry
   - - subscriber.vector_map
@@ -98,7 +93,5 @@ connections:
     - publisher.turn_indicators_cmd
   - - scenario_planning.publisher.hazard_lights_cmd
     - publisher.hazard_lights_cmd
-  - - scenario_planning.publisher.stop_reasons
-    - publisher.stop_reasons
   - - scenario_planning.publisher.scenario
     - publisher.scenario
