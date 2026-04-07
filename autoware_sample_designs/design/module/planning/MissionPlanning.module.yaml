@@ -21,7 +21,7 @@ subscribers:
 
 publishers:
   - name: route
-  - name: state
+  - name: route_state
   - name: route_marker
 
 servers:
@@ -47,9 +47,13 @@ connections:
   - - route_selector.publisher.route
     - publisher.route
   - - route_selector.publisher.state
-    - publisher.state
+    - publisher.route_state
 
   - - mission_planner.server.clear_route
     - route_selector.client.planner_clear_route
+  - - mission_planner.server.set_lanelet_route
+    - route_selector.client.planner_set_lanelet_route
+  - - mission_planner.server.set_waypoint_route
+    - route_selector.client.planner_set_waypoint_route
   - - route_selector.server.clear_route
     - server.clear_route

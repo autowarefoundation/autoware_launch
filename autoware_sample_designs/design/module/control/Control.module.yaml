@@ -26,11 +26,14 @@ instances:
     entity: CollisionDetector.node
   - name: control_evaluator
     entity: ControlEvaluator.node
+  - name: stop_mode_operator
+    entity: StopModeOperator.node
 
 # interfaces
 subscribers:
   - name: trajectory
   - name: route
+  - name: route_state
   - name: vector_map
   - name: odometry
   - name: acceleration
@@ -126,6 +129,8 @@ connections:
     - lane_departure_checker.subscriber.lanelet_map_bin
   - - subscriber.route
     - lane_departure_checker.subscriber.route
+  - - subscriber.route_state
+    - stop_mode_operator.subscriber.route_state
   - - subscriber.trajectory
     - lane_departure_checker.subscriber.reference_trajectory
   - - subscriber.pointcloud
