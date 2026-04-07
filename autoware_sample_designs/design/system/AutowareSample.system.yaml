@@ -229,7 +229,7 @@ connections:
 
   - - planning.publisher.trajectory
     - control.subscriber.trajectory
-  - - planning.publisher.route
+  - - planning.publisher.mission_planning/route
     - control.subscriber.route
   - - planning.publisher.turn_indicators_cmd
     - control.subscriber.turn_indicators_cmd
@@ -312,7 +312,7 @@ E2ESimulation:
         - traffic_light_recognition.subscriber.pointcloud
       - - map.publisher.vector_map
         - traffic_light_recognition.subscriber.vector_map
-      - - planning.publisher.route
+      - - planning.publisher.mission_planning/route
         - traffic_light_recognition.subscriber.route
       - - traffic_light_recognition.publisher.traffic_signals
         - planning.subscriber.traffic_signals
