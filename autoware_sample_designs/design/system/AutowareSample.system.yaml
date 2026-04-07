@@ -218,6 +218,10 @@ connections:
     - planning.subscriber.occupancy_grid_map
   - - map.publisher.vector_map
     - planning.subscriber.vector_map
+  - - localization.publisher.kinematic_state
+    - planning.subscriber.odometry
+  - - localization.publisher.acceleration
+    - planning.subscriber.acceleration
   - - object_recognition.publisher.objects
     - planning.subscriber.objects
   - - obstacle_segmentation.publisher.pointcloud
@@ -227,11 +231,17 @@ connections:
     - control.subscriber.trajectory
   - - planning.publisher.route
     - control.subscriber.route
+  - - planning.publisher.turn_indicators_cmd
+    - control.subscriber.turn_indicators_cmd
+  - - planning.publisher.hazard_lights_cmd
+    - control.subscriber.hazard_lights_cmd
 
   - - localization.publisher.kinematic_state
     - control.subscriber.odometry
   - - localization.publisher.acceleration
     - control.subscriber.acceleration
+  - - map.publisher.vector_map
+    - control.subscriber.vector_map
   - - object_recognition.publisher.objects
     - control.subscriber.objects
   - - obstacle_segmentation.publisher.pointcloud
