@@ -278,7 +278,7 @@
       <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
       <arg name="motion_publish_mode" value="$(var motion_publish_mode)"/>
     </include>
-    <include file="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/launch/get_vehicle_model_type.launch.py">
+    <include file="$(find-pkg-share autoware_simple_planning_simulator)/launch/get_vehicle_model_type.launch.py">
       <arg name="simulator_model_param_file" value="$(var simulator_model)"/>
     </include>
     <group if="$(eval '&quot;$(var vehicle_model_type)&quot;.startswith(&quot;ACTUATION_CMD&quot;)')">
