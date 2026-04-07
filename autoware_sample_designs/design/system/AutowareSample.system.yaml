@@ -252,6 +252,9 @@ connections:
   - - system.publisher.system/fail_safe/mrm_state
     - adapi.subscriber.system/fail_safe/mrm_state
 
+  - - planning.server.clear_route
+    - adapi.client.routing/clear_route
+
 # mode configurations
 LoggingSimulation:
   override:

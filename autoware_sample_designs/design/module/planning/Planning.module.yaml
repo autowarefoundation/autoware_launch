@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.3.0
+autoware_system_design_format: 0.3.1
 
 # module information
 name: Planning.module
@@ -37,6 +37,9 @@ publishers:
   - name: hazard_lights_cmd
   - name: stop_reasons
   - name: scenario
+
+servers:
+  - name: clear_route
 
 connections:
   - - subscriber.modified_goal
@@ -95,3 +98,5 @@ connections:
     - publisher.hazard_lights_cmd
   - - scenario_planning.publisher.scenario
     - publisher.scenario
+  - - mission_planning.server.clear_route
+    - server.clear_route

@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.3.0
+autoware_system_design_format: 0.3.1
 
 # module information
 name: MissionPlanning.module
@@ -24,6 +24,9 @@ publishers:
   - name: state
   - name: route_marker
 
+servers:
+  - name: clear_route
+
 connections:
   - - subscriber.modified_goal
     - mission_planner.subscriber.modified_goal
@@ -45,3 +48,8 @@ connections:
     - publisher.route
   - - route_selector.publisher.state
     - publisher.state
+
+  - - mission_planner.server.clear_route
+    - route_selector.client.planner_clear_route
+  - - route_selector.server.clear_route
+    - server.clear_route
