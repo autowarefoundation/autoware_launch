@@ -222,7 +222,7 @@ connections:
 
   - - planning.publisher.trajectory
     - control.subscriber.trajectory
-  - - planning.publisher.route
+  - - planning.publisher.mission_planning/route
     - control.subscriber.route
   - - planning.publisher.turn_indicators_cmd
     - control.subscriber.turn_indicators_cmd
