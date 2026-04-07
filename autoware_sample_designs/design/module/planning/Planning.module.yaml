@@ -31,8 +31,8 @@ subscribers:
 
 publishers:
   - name: trajectory
-  - name: mission_planning/route
-  - name: mission_planning/state
+  - name: route
+  - name: route_state
   - name: turn_indicators_cmd
   - name: hazard_lights_cmd
   - name: stop_reasons
@@ -89,9 +89,9 @@ connections:
   - - planning_validator.publisher.trajectory
     - publisher.trajectory
   - - mission_planning.publisher.route
-    - publisher.mission_planning/route
-  - - mission_planning.publisher.state
-    - publisher.mission_planning/state
+    - publisher.route
+  - - mission_planning.publisher.route_state
+    - publisher.route_state
   - - scenario_planning.publisher.turn_indicators_cmd
     - publisher.turn_indicators_cmd
   - - scenario_planning.publisher.hazard_lights_cmd
