@@ -281,7 +281,7 @@
     <include file="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/launch/get_vehicle_model_type.launch.py">
       <arg name="simulator_model_param_file" value="$(var simulator_model)"/>
     </include>
-    <group if="$(eval '&quot;$(var vehicle_model_type)&quot;==&quot;ACTUATION_CMD&quot;')">
+    <group if="$(eval '&quot;$(var vehicle_model_type)&quot;.startswith(&quot;ACTUATION_CMD&quot;)')">
       <include file="$(find-pkg-share autoware_raw_vehicle_cmd_converter)/launch/raw_vehicle_converter.launch.xml">
         <arg name="config_file" value="$(var raw_vehicle_cmd_converter_param_path)"/>
       </include>
