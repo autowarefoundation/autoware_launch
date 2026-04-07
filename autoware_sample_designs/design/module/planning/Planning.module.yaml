@@ -32,6 +32,7 @@ subscribers:
 publishers:
   - name: trajectory
   - name: route
+  - name: mission_planning/route
   - name: route_state
   - name: turn_indicators_cmd
   - name: hazard_lights_cmd
@@ -40,6 +41,8 @@ publishers:
 
 servers:
   - name: clear_route
+  - name: set_lanelet_route
+  - name: set_waypoint_route
 
 connections:
   - - subscriber.modified_goal
@@ -88,8 +91,10 @@ connections:
     - remaining_distance_time_calculator.subscriber.map
   - - planning_validator.publisher.trajectory
     - publisher.trajectory
-  - - mission_planning.publisher.route
+  - - mission_planning.publisher.api_route
     - publisher.route
+  - - mission_planning.publisher.route
+    - publisher.mission_planning/route
   - - mission_planning.publisher.route_state
     - publisher.route_state
   - - scenario_planning.publisher.turn_indicators_cmd
@@ -100,3 +105,7 @@ connections:
     - publisher.scenario
   - - mission_planning.server.clear_route
     - server.clear_route
+  - - mission_planning.server.set_lanelet_route
+    - server.set_lanelet_route
+  - - mission_planning.server.set_waypoint_route
+    - server.set_waypoint_route

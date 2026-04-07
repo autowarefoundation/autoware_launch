@@ -435,6 +435,8 @@ PlanningSimulation:
         - control.subscriber.velocity_status
       - - simulator.publisher.localization/kinematic_state
         - control.subscriber.odometry
+      - - simulator.publisher.localization/kinematic_state
+        - planning.subscriber.odometry
 
       - - simulator.publisher.localization/acceleration
         - control.subscriber.acceleration
