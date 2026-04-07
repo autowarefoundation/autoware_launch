@@ -93,6 +93,12 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
         ),
         allow_substs=True,
     )
+    classification_lamp_recognizer_ml_param = ParameterFile(
+        param_file=LaunchConfiguration("classification/lamp_recognizer_ml_param_path").perform(
+            context
+        ),
+        allow_substs=True,
+    )
     traffic_light_roi_visualizer_param = ParameterFile(
         param_file=LaunchConfiguration("traffic_light_roi_visualizer_param_path").perform(context),
         allow_substs=True,
@@ -111,6 +117,7 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
                 namespace="classification",
                 parameters=[
                     car_traffic_light_classifier_param,
+                    classification_lamp_recognizer_ml_param,
                     {
                         "build_only": False,
                         "label_path": LaunchConfiguration("classification/car/label_path"),
@@ -136,6 +143,7 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
                 namespace="classification",
                 parameters=[
                     pedestrian_traffic_light_classifier_param,
+                    classification_lamp_recognizer_ml_param,
                     {
                         "build_only": False,
                         "label_path": LaunchConfiguration("classification/pedestrian/label_path"),
@@ -365,6 +373,7 @@ def generate_launch_description():
     add_launch_arg("classification/car/label_path")
     add_launch_arg("classification/pedestrian/model_path")
     add_launch_arg("classification/pedestrian/label_path")
+    add_launch_arg("classification/lamp_recognizer_ml_param_path")
     add_launch_arg(
         "classification/car/classifier_type",
         default_value="1",

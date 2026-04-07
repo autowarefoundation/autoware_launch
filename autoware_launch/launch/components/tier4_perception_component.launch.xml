@@ -87,6 +87,7 @@
   <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
   <arg name="traffic_light_recognition/classification/car/label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels.txt"/>
   <arg name="traffic_light_recognition/classification/pedestrian/label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels_ped.txt"/>
+  <arg name="traffic_light_recognition/classification/lamp_recognizer_ml_param_path" default="$(var data_path)/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>
   <arg
     name="traffic_light_car_classifier_model"
     default="traffic_light_classifier_mobilenetv2_batch_6.onnx"
@@ -328,6 +329,7 @@
     <arg name="traffic_light_recognition/classification/car/label_path" value="$(var traffic_light_recognition/classification/car/label_path)"/>
     <arg name="traffic_light_recognition/classification/pedestrian/model_path" value="$(var traffic_light_recognition/classification/pedestrian/model_path)"/>
     <arg name="traffic_light_recognition/classification/pedestrian/label_path" value="$(var traffic_light_recognition/classification/pedestrian/label_path)"/>
+    <arg name="traffic_light_recognition/classification/lamp_recognizer_ml_param_path" value="$(var traffic_light_recognition/classification/lamp_recognizer_ml_param_path)"/>
     <arg name="input_pointcloud_for_traffic_light_occlusion_predictor" value="$(var input_pointcloud_for_traffic_light_occlusion_predictor)"/>
   </include>
 </launch>
