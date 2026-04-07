@@ -89,3 +89,6 @@ parameters:
     param_files:
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/parking/freespace_planner/freespace_planner.param.yaml
+  - node: /planning//planning_evaluator
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
