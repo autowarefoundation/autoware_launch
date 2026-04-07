@@ -38,8 +38,6 @@
   <arg name="v2x_location" default="invalid_location" description="location for v2x (e.g. komatsu, shiojiri)"/>
   <!-- Scenario simulation -->
   <arg name="scenario_simulation" default="true" description="use scenario simulation"/>
-  <!-- Perception -->
-  <arg name="centerpoint_model_path" default="/opt/autoware/mlmodels/centerpoint" description="path of centerpoint model file"/>
   <!-- Scheduling settings -->
   <arg name="enable_scheduling_settings" default="false" description="enable scheduling settings"/>
 
@@ -78,8 +76,6 @@
       <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
       <!-- Sensing -->
       <arg name="launch_sensing_driver" value="false"/>
-      <!-- Perception -->
-      <arg name="centerpoint_model_path" value="$(var centerpoint_model_path)"/>
       <!-- V2X -->
       <arg name="launch_v2x" value="$(var launch_v2x)"/>
       <arg name="v2x_location" value="$(var v2x_location)"/>
