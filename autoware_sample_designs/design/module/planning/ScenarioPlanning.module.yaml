@@ -29,7 +29,6 @@ subscribers:
   - name: occupancy_grid_map
   - name: costmap
   - name: traffic_signals
-  - name: virtual_traffic_light_states
 
 publishers:
   - name: trajectory
@@ -52,8 +51,6 @@ connections:
     - lane_driving.subscriber.costmap
   - - subscriber.traffic_signals
     - lane_driving.subscriber.traffic_signals
-  - - subscriber.virtual_traffic_light_states
-    - lane_driving.subscriber.virtual_traffic_light_states
   - - subscriber.odometry
     - lane_driving.subscriber.odometry
   - - subscriber.acceleration
@@ -62,7 +59,7 @@ connections:
     - lane_driving.subscriber.no_ground_pointcloud
   - - scenario_selector.publisher.scenario
     - lane_driving.subscriber.scenario
-  - - external_velocity_limit_selector.publisher.external_velocity_limit_mps
+  - - external_velocity_limit_selector.publisher.external_velocity_limit
     - lane_driving.subscriber.external_velocity_limit_mps
   - - subscriber.perception_objects
     - parking.subscriber.objects
@@ -92,7 +89,7 @@ connections:
     - scenario_selector.subscriber.is_parking_completed
   - - scenario_selector.publisher.trajectory
     - velocity_smoother.subscriber.trajectory
-  - - external_velocity_limit_selector.publisher.external_velocity_limit_mps
+  - - external_velocity_limit_selector.publisher.external_velocity_limit
     - velocity_smoother.subscriber.external_velocity_limit_mps
   - - subscriber.acceleration
     - velocity_smoother.subscriber.acceleration
@@ -110,5 +107,4 @@ connections:
     - publisher.hazard_lights_cmd
   - - lane_driving.publisher.turn_indicators_cmd
     - publisher.turn_indicators_cmd
-  - - lane_driving.publisher.stop_reasons
-    - publisher.stop_reasons
+
