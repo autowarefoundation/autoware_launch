@@ -92,6 +92,10 @@ publishers:
   - name: vehicle/metrics
     message_type: autoware_adapi_v1_msgs/msg/VehicleMetrics
 
+clients:
+  - name: routing/clear_route
+    message_type: autoware_planning_msgs/srv/ClearRoute
+
 # parameters
 param_files: []
 
