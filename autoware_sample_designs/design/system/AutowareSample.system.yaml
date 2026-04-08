@@ -219,7 +219,8 @@ connections:
     - planning.subscriber.obstacle_pointcloud
   - - perception.publisher.traffic_light_recognition/traffic_signals
     - planning.subscriber.traffic_signals
-
+  - - system.publisher.operation_mode/state
+    - planning.subscriber.operation_mode_state
   - - planning.publisher.trajectory
     - control.subscriber.trajectory
   - - planning.publisher.route
@@ -244,7 +245,7 @@ connections:
   - - sensing.publisher.imu/imu_data
     - control.subscriber.imu
 
-  - - system.publisher.system/fail_safe/mrm_state
+  - - system.publisher.fail_safe/mrm_state
     - adapi.subscriber.system/fail_safe/mrm_state
 
   - - planning.server.clear_route
@@ -394,7 +395,7 @@ PlanningSimulation:
         - vehicle.subscriber.steering
       - - simulator.publisher.vehicle/status/actuation_status
         - vehicle.subscriber.actuation_status
-      - - system.publisher.system/operation_mode/state
+      - - system.publisher.operation_mode/state
         - vehicle.subscriber.operation_mode_state
       - - vehicle.publisher.actuation_cmd
         - simulator.subscriber.control/command/actuation_cmd
@@ -417,3 +418,5 @@ PlanningSimulation:
 
       - - simulator.publisher.localization/acceleration
         - control.subscriber.acceleration
+      - - simulator.publisher.localization/acceleration
+        - planning.subscriber.acceleration
