@@ -25,7 +25,6 @@ subscribers:
   - name: pointcloud
   - name: occupancy_grid_map
   - name: traffic_signals
-  - name: modified_goal
 
 publishers:
   - name: trajectory
@@ -43,14 +42,16 @@ servers:
   - name: set_waypoint_route
 
 connections:
-  - - subscriber.modified_goal
-    - mission_planning.subscriber.modified_goal
   - - subscriber.vector_map
     - mission_planning.subscriber.vector_map
   - - subscriber.odometry
     - mission_planning.subscriber.odometry
   - - subscriber.operation_mode_state
     - mission_planning.subscriber.operation_mode_state
+  - - scenario_planning.publisher.modified_goal
+    - mission_planning.subscriber.modified_goal
+  - - scenario_planning.publisher.reroute_availability
+    - mission_planning.subscriber.reroute_availability
 
   - - mission_planning.publisher.route
     - scenario_planning.subscriber.route
@@ -78,12 +79,16 @@ connections:
     - planning_evaluator.subscriber.trajectory
   - - subscriber.odometry
     - planning_evaluator.subscriber.odometry
+
   - - mission_planning.publisher.route
     - remaining_distance_time_calculator.subscriber.route
   - - subscriber.odometry
     - remaining_distance_time_calculator.subscriber.odometry
   - - subscriber.vector_map
     - remaining_distance_time_calculator.subscriber.map
+  - - scenario_planning.publisher.scenario
+    - remaining_distance_time_calculator.subscriber.scenario
+
   - - planning_validator.publisher.trajectory
     - publisher.trajectory
   - - mission_planning.publisher.api_route
@@ -96,8 +101,8 @@ connections:
     - publisher.turn_indicators_cmd
   - - scenario_planning.publisher.hazard_lights_cmd
     - publisher.hazard_lights_cmd
-  - - scenario_planning.publisher.scenario
-    - publisher.scenario
+  # - - scenario_planning.publisher.scenario
+  #   - publisher.scenario
   - - mission_planning.server.clear_route
     - server.clear_route
   - - mission_planning.server.set_lanelet_route

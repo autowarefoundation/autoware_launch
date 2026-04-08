@@ -28,6 +28,7 @@ publishers:
   - name: turn_indicators_cmd
   - name: hazard_lights_cmd
   - name: modified_goal
+  - name: reroute_availability
 
 connections:
   - - subscriber.route
@@ -74,4 +75,5 @@ connections:
     - publisher.hazard_lights_cmd
   - - behavior_path_planner.publisher.modified_goal
     - publisher.modified_goal
-
+  - - behavior_path_planner.publisher.is_reroute_available
+    - publisher.reroute_availability
