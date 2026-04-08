@@ -417,6 +417,8 @@ PlanningSimulation:
         - vehicle.subscriber.accel
       - - simulator.publisher.vehicle/status/steering_status
         - vehicle.subscriber.steering
+      - - simulator.publisher.vehicle/status/steering_status
+        - control.subscriber.steering_status
       - - simulator.publisher.vehicle/status/actuation_status
         - vehicle.subscriber.actuation_status
       - - system.publisher.operation_mode/state
@@ -439,6 +441,8 @@ PlanningSimulation:
         - control.subscriber.odometry
       - - simulator.publisher.localization/kinematic_state
         - planning.subscriber.odometry
+      - - simulator.publisher.perception/traffic_light_recognition/traffic_signals
+        - planning.subscriber.traffic_signals
 
       - - simulator.publisher.localization/acceleration
         - control.subscriber.acceleration

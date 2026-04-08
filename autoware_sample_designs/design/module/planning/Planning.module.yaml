@@ -71,10 +71,24 @@ connections:
     - scenario_planning.subscriber.occupancy_grid_map
   - - subscriber.traffic_signals
     - scenario_planning.subscriber.traffic_signals
+
   - - scenario_planning.publisher.trajectory
     - planning_validator.subscriber.trajectory
+  - - mission_planning.publisher.route
+    - planning_validator.subscriber.route
+  - - subscriber.vector_map
+    - planning_validator.subscriber.lanelet_map_bin
   - - subscriber.pointcloud
     - planning_validator.subscriber.pointcloud
+  - - subscriber.odometry
+    - planning_validator.subscriber.kinematics
+  - - subscriber.acceleration
+    - planning_validator.subscriber.acceleration
+  - - subscriber.operation_mode_state
+    - planning_validator.subscriber.operational_mode_state
+  - - subscriber.traffic_signals
+    - planning_validator.subscriber.traffic_signals
+
   - - planning_validator.publisher.trajectory
     - planning_evaluator.subscriber.trajectory
   - - subscriber.odometry
