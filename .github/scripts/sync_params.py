@@ -41,7 +41,7 @@ class FileEntry:
 @dataclass(frozen=True)
 class RepositoryEntry:
     repository: str
-    ref: str
+    ref: str | None
     files: tuple[FileEntry, ...]
 
 
@@ -326,7 +326,7 @@ def load_config(config_path: Path) -> list[RepositoryEntry]:
         files_data = repo_map.get("files", [])
         if not isinstance(repository, str) or not repository:
             raise SyncError(f"repository entry #{repo_index} has invalid 'repository'.")
-        if not isinstance(ref, str) or not ref:
+        if ref is not None and (not isinstance(ref, str) or not ref):
             raise SyncError(f"repository entry #{repo_index} has invalid 'ref'.")
         if not isinstance(files_data, list):
             raise SyncError(f"repository entry #{repo_index} has invalid 'files'.")
@@ -387,6 +387,37 @@ def run_git(args: list[str], cwd: Path | None = None) -> str:
             + f": {process.stderr.strip()}"
         )
     return process.stdout.strip()
+
+
+def resolve_default_branch(repo: str) -> str:
+    output = run_git(["ls-remote", "--symref", f"https://github.com/{repo}.git", "HEAD"])
+    for line in output.splitlines():
+        if line.startswith("ref: ") and line.endswith("\tHEAD"):
+            ref_name = line.split()[1]
+            if ref_name.startswith("refs/heads/"):
+                return ref_name.removeprefix("refs/heads/")
+    raise SyncError(f"Failed to resolve default branch for repository '{repo}'.")
+
+
+def resolve_ref(repo: str, ref: str | None) -> str:
+    if ref:
+        return ref
+    return resolve_default_branch(repo)
+
+
+def repository_matches_filter(repository: str, repository_filter: str | None) -> bool:
+    if not repository_filter:
+        return True
+    if repository == repository_filter:
+        return True
+    return repository.split("/")[-1] == repository_filter
+
+
+def source_matches_dir_filter(source: str, dir_filter: str | None) -> bool:
+    if not dir_filter:
+        return True
+    normalized = dir_filter.strip("/")
+    return source == normalized or source.startswith(f"{normalized}/")
 
 
 def clone_repository(repo: str, ref: str, temp_root: Path) -> Path:
@@ -573,7 +604,13 @@ def sync_file_entry(
     return int(dest_changed), variants_changed
 
 
-def run_sync(config_path: Path, check: bool, verbose: bool = True) -> int:
+def run_sync(
+    config_path: Path,
+    check: bool,
+    verbose: bool = True,
+    repository_filter: str | None = None,
+    dir_filter: str | None = None,
+) -> int:
     workspace_root = Path.cwd()
     repositories = load_config(config_path)
 
@@ -586,12 +623,22 @@ def run_sync(config_path: Path, check: bool, verbose: bool = True) -> int:
     with tempfile.TemporaryDirectory(prefix="sync-params-") as tmp_dir_name:
         temp_root = Path(tmp_dir_name)
         for repo_entry in repositories:
+            if not repository_matches_filter(repo_entry.repository, repository_filter):
+                continue
+            filtered_files = tuple(
+                file_entry
+                for file_entry in repo_entry.files
+                if source_matches_dir_filter(file_entry.source, dir_filter)
+            )
+            if not filtered_files:
+                continue
             total_repos += 1
+            resolved_ref = resolve_ref(repo_entry.repository, repo_entry.ref)
             if verbose:
-                print(f"[sync] Cloning {repo_entry.repository}@{repo_entry.ref}")
-            repo_dir = clone_repository(repo_entry.repository, repo_entry.ref, temp_root)
+                print(f"[sync] Cloning {repo_entry.repository}@{resolved_ref}")
+            repo_dir = clone_repository(repo_entry.repository, resolved_ref, temp_root)
 
-            for file_entry in repo_entry.files:
+            for file_entry in filtered_files:
                 total_files += 1
                 if verbose:
                     print(
@@ -602,7 +649,9 @@ def run_sync(config_path: Path, check: bool, verbose: bool = True) -> int:
                 before_variants = changed_variants
                 changed_dest_delta, changed_variants_delta = sync_file_entry(
                     workspace_root=workspace_root,
-                    repository=repo_entry,
+                    repository=RepositoryEntry(
+                        repository=repo_entry.repository, ref=resolved_ref, files=repo_entry.files
+                    ),
                     file_entry=file_entry,
                     source_repo_dir=repo_dir,
                     check=check,
@@ -639,6 +688,18 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Check for drift without writing files.",
     )
+    parser.add_argument(
+        "--repo",
+        type=str,
+        default=None,
+        help="Filter by repository (owner/name or name only).",
+    )
+    parser.add_argument(
+        "--dir",
+        type=str,
+        default=None,
+        help="Filter by source path prefix (e.g., perception or perception/pkg).",
+    )
     return parser.parse_args()
 
 
@@ -647,7 +708,13 @@ def main() -> int:
     config_path = args.config if args.config.is_absolute() else (Path.cwd() / args.config)
     if not config_path.exists():
         raise SyncError(f"Config file does not exist: {config_path}")
-    return run_sync(config_path=config_path, check=args.check, verbose=True)
+    return run_sync(
+        config_path=config_path,
+        check=args.check,
+        verbose=True,
+        repository_filter=args.repo,
+        dir_filter=args.dir,
+    )
 
 
 if __name__ == "__main__":
