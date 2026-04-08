@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- cspell: ignore semseg -->
+  <!-- cspell: ignore semseg, comlops -->
   <arg
     name="launch_pointcloud_container"
     default="false"
