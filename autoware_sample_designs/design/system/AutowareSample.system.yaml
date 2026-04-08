@@ -239,6 +239,8 @@ connections:
     - control.subscriber.turn_indicators_cmd
   - - planning.publisher.hazard_lights_cmd
     - control.subscriber.hazard_lights_cmd
+  - - system.publisher.operation_mode/state
+    - control.subscriber.operation_mode_state
 
   - - localization.publisher.kinematic_state
     - control.subscriber.odometry
