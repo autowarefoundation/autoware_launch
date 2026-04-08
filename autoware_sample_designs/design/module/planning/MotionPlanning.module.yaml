@@ -65,4 +65,3 @@ connections:
     - publisher.trajectory
   - - motion_velocity_planner.publisher.velocity_limit
     - publisher.velocity_limit
-
