@@ -37,6 +37,8 @@ publishers:
   - name: scenario
   - name: current_max_velocity
   - name: stop_reasons
+  - name: modified_goal
+  - name: reroute_availability
 
 connections:
   - - subscriber.route
@@ -107,4 +109,7 @@ connections:
     - publisher.hazard_lights_cmd
   - - lane_driving.publisher.turn_indicators_cmd
     - publisher.turn_indicators_cmd
-
+  - - lane_driving.publisher.modified_goal
+    - publisher.modified_goal
+  - - lane_driving.publisher.reroute_availability
+    - publisher.reroute_availability
