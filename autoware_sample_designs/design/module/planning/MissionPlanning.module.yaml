@@ -10,6 +10,8 @@ instances:
     entity: RouteSelector.node
   - name: goal_pose_visualizer
     entity: GoalPoseVisualizer.node
+  - name: manual_lane_change_handler
+    entity: ManualLaneChangeHandler.node
 
 # interfaces
 subscribers:
@@ -41,6 +43,7 @@ connections:
     - mission_planner.subscriber.operation_mode_state
   - - subscriber.reroute_availability
     - mission_planner.subscriber.reroute_availability
+
   - - mission_planner.publisher.route
     - route_selector.subscriber.planner_route
   - - mission_planner.publisher.state
@@ -53,6 +56,13 @@ connections:
     - publisher.route
   - - route_selector.publisher.state
     - publisher.route_state
+
+  - - route_selector.publisher.route
+    - manual_lane_change_handler.subscriber.route
+  - - subscriber.odometry
+    - manual_lane_change_handler.subscriber.odometry
+  - - subscriber.vector_map
+    - manual_lane_change_handler.subscriber.vector_map
 
   - - mission_planner.server.clear_route
     - route_selector.client.planner_clear_route

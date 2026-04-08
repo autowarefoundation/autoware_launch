@@ -6,8 +6,6 @@ name: Planning.module
 instances:
   - name: mission_planning
     entity: MissionPlanning.module
-  - name: manual_lane_change_handler
-    entity: ManualLaneChangeHandler.node
   - name: scenario_planning
     entity: ScenarioPlanning.module
   - name: planning_validator
@@ -53,10 +51,7 @@ connections:
     - mission_planning.subscriber.odometry
   - - subscriber.operation_mode_state
     - mission_planning.subscriber.operation_mode_state
-  - - mission_planning.publisher.route
-    - manual_lane_change_handler.subscriber.route
-  - - subscriber.odometry
-    - manual_lane_change_handler.subscriber.odometry
+
   - - mission_planning.publisher.route
     - scenario_planning.subscriber.route
   - - subscriber.vector_map
