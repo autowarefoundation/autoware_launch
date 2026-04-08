@@ -385,6 +385,9 @@ PlanningSimulation:
       - name: vehicle
         entity: PlanningSimVehicle.module
         compute_unit: main_ecu
+      - name: Rviz
+        entity: Rviz.node
+        compute_unit: main_ecu
     connections:
       - - planning_sim_rviz_plugin.publisher.simulation/dummy_perception_publisher/object_info
         - perception.subscriber.dummy_object_info
