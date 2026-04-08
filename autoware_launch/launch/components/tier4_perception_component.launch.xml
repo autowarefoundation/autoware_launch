@@ -75,7 +75,7 @@
     description="path to a definition file for remapping ROI classes to semantic segmentation output classes"
   />
 
-  <arg name="traffic_light_recognition/camera_namespaces" default="[camera4, camera5]" description="choose camera which use for traffic light recognition"/>
+  <arg name="traffic_light_recognition/camera_namespaces" default="[camera6, camera7]" description="choose camera which use for traffic light recognition"/>
   <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="select whether to use high accuracy detector for traffic light recognition"/>
   <arg
     name="traffic_light_recognition/high_accuracy_detection_type"
