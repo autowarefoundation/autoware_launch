@@ -1,8 +1,15 @@
+# This file is managed by workflow.
+# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
+# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/538cf8da7f3c7bfadcd1693a910e1d75077fb63d/perception/autoware_lidar_centerpoint/config/centerpoint_common.param.yaml
+# Reference in this repository: .config-sync/perception/autoware_lidar_centerpoint/config/centerpoint_common.param.yaml
+
 /**:
   ros__parameters:
+    # When the processing time exceeds the max_allowed_processing_time,
+    # a warning will be triggered.
     diagnostics:
-      # When the processing time exceeds the max_allowed_processing_time,
-      # a warning will be triggered.
       max_allowed_processing_time_ms: 200.0 # in milliseconds
       # If the warning is triggered and if a timestamp of last normal processing is more than
       # max_acceptable_consecutive_delay_ms, an error diagnostic message will be sent.

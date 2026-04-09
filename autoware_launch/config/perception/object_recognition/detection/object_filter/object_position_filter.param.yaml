@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
+# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/a595b365d4e4fa7184f6d104d6ef1802285f6bbb/perception/autoware_detected_object_validation/config/object_position_filter.param.yaml
+# Reference in this repository: .config-sync/perception/autoware_detected_object_validation/config/object_position_filter.param.yaml
+
 /**:
   ros__parameters:
     filter_target_label:

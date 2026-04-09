@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
+# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/76922a845358de6042cee56e1e711bf163fdcb23/perception/autoware_lidar_transfusion/config/transfusion_common.param.yaml
+# Reference in this repository: .config-sync/perception/autoware_lidar_transfusion/config/transfusion_common.param.yaml
+
 /**:
   ros__parameters:
     diagnostics:

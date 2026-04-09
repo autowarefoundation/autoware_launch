@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
+# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/26f9914ec4f1ee53744bb55c039d75f5507353a9/perception/autoware_image_object_locator/config/bbox_object_locator.param.yaml
+# Reference in this repository: .config-sync/perception/autoware_image_object_locator/config/bbox_object_locator.param.yaml
+
 /**:
   ros__parameters:
     target_frame: "base_link"

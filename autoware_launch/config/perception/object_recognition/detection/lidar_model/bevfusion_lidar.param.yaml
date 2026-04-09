@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
+# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/b4593ce29d84b5a35165e1c15b6bcbbe3cd0227c/perception/autoware_bevfusion/config/bevfusion_lidar.param.yaml
+# Reference in this repository: .config-sync/perception/autoware_bevfusion/config/bevfusion_lidar.param.yaml
+
 /**:
   ros__parameters:
     # non-network params
@@ -18,6 +25,8 @@
     # pre-process params
     densification_num_past_frames: 1
     densification_world_frame_id: map
+    run_image_undistortion: false
+
     # post-process params
     circle_nms_dist_threshold: 0.5
     iou_nms_search_distance_2d: 10.0
