@@ -329,7 +329,7 @@ units:
     node: j6_interface
     name: override_when_level4_driving
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /vehicle/t4_vcu_version_check
     type: diag
