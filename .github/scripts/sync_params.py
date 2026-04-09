@@ -87,11 +87,39 @@ def _extract_comment_text(comment_obj: Any) -> str:
     return normalized
 
 
+def _extract_override_comment_from_line(line: str) -> str | None:
+    _before_comment, sep, comment = line.partition("#")
+    if not sep:
+        return None
+    normalized = comment.strip()
+    if OVERRIDE_MARKER not in normalized:
+        return None
+    return normalized
+
+
 @dataclass(frozen=True)
 class KeyLineInfo:
     line_idx: int
     indent: int
     has_inline_value: bool
+
+
+def _find_flow_sequence_end_idx(lines: list[str], start_idx: int) -> int:
+    depth = 0
+    opened = False
+    idx = start_idx
+    while idx < len(lines):
+        current_before_comment = lines[idx].split("#", 1)[0]
+        for char in current_before_comment:
+            if char == "[":
+                depth += 1
+                opened = True
+            elif char == "]":
+                depth -= 1
+        if opened and depth <= 0:
+            return idx + 1
+        idx += 1
+    raise SyncError("Unterminated flow sequence while applying override.")
 
 
 def _build_key_line_index(text: str) -> dict[tuple[str, ...], KeyLineInfo]:
@@ -161,7 +189,13 @@ def _replace_inline_value(line: str, value: Any) -> str:
     return new_before_comment
 
 
-def _replace_block_value(lines: list[str], key_line_idx: int, key_indent: int, value: Any) -> None:
+def _replace_block_value(
+    lines: list[str],
+    key_line_idx: int,
+    key_indent: int,
+    value: Any,
+    raw_flow_block_lines: list[str] | None = None,
+) -> None:
     value_line_idx = _find_first_value_line(lines, key_line_idx, key_indent)
     if value_line_idx is None:
         raise SyncError(f"Override target key on line {key_line_idx + 1} has no value line.")
@@ -170,7 +204,23 @@ def _replace_block_value(lines: list[str], key_line_idx: int, key_indent: int, v
     value_stripped = value_line.lstrip()
 
     if value_stripped.startswith("["):
-        lines[value_line_idx] = (" " * value_indent) + _render_inline_yaml_value(value)
+        end_idx = _find_flow_sequence_end_idx(lines, value_line_idx)
+        if raw_flow_block_lines:
+            raw_base_indent = len(raw_flow_block_lines[0]) - len(
+                raw_flow_block_lines[0].lstrip(" ")
+            )
+            replacement: list[str] = []
+            for raw_line in raw_flow_block_lines:
+                stripped = raw_line.lstrip(" ")
+                if stripped == "":
+                    replacement.append("")
+                    continue
+                raw_indent = len(raw_line) - len(stripped)
+                relative_indent = max(0, raw_indent - raw_base_indent)
+                replacement.append((" " * (value_indent + relative_indent)) + stripped)
+            lines[value_line_idx:end_idx] = replacement
+            return
+        lines[value_line_idx:end_idx] = [(" " * value_indent) + _render_inline_yaml_value(value)]
         return
 
     if value_stripped.startswith("-"):
@@ -194,7 +244,11 @@ def _replace_block_value(lines: list[str], key_line_idx: int, key_indent: int, v
     lines[value_line_idx] = (" " * value_indent) + _render_inline_yaml_value(value)
 
 
-def apply_overrides_to_source_text(source_text: str, overrides: dict[tuple[str, ...], Any]) -> str:
+def apply_overrides_to_source_text(
+    source_text: str,
+    overrides: dict[tuple[str, ...], Any],
+    override_flow_blocks: dict[tuple[str, ...], list[str]] | None = None,
+) -> str:
     lines = source_text.splitlines()
     key_index = _build_key_line_index(source_text)
     for path, value in overrides.items():
@@ -204,8 +258,36 @@ def apply_overrides_to_source_text(source_text: str, overrides: dict[tuple[str, 
         if info.has_inline_value:
             lines[info.line_idx] = _replace_inline_value(lines[info.line_idx], value)
         else:
-            _replace_block_value(lines, info.line_idx, info.indent, value)
+            _replace_block_value(
+                lines,
+                info.line_idx,
+                info.indent,
+                value,
+                (override_flow_blocks or {}).get(path),
+            )
     return "\n".join(lines) + ("\n" if source_text.endswith("\n") or lines else "")
+
+
+def extract_flow_sequence_override_blocks_from_text(
+    text: str, paths: Iterable[tuple[str, ...]]
+) -> dict[tuple[str, ...], list[str]]:
+    if not text:
+        return {}
+    lines = text.splitlines()
+    key_index = _build_key_line_index(text)
+    blocks: dict[tuple[str, ...], list[str]] = {}
+    for path in paths:
+        info = key_index.get(path)
+        if info is None or info.has_inline_value:
+            continue
+        value_line_idx = _find_first_value_line(lines, info.line_idx, info.indent)
+        if value_line_idx is None:
+            continue
+        if not lines[value_line_idx].lstrip().startswith("["):
+            continue
+        end_idx = _find_flow_sequence_end_idx(lines, value_line_idx)
+        blocks[path] = lines[value_line_idx:end_idx]
+    return blocks
 
 
 def ensure_override_markers_in_text(
@@ -296,6 +378,19 @@ def parse_override_comments_from_variant_text(text: str) -> dict[tuple[str, ...]
                 walk(item, path_prefix)
 
     walk(yaml_with_comments, ())
+
+    # Ruamel can drop key-line inline comments when the value is a multi-line
+    # flow sequence (e.g., `key: # *OVERRIDE*` followed by `[ ... ]`).
+    # Fall back to line-based extraction for those cases.
+    lines = text.splitlines()
+    key_index = _build_key_line_index(text)
+    for path, info in key_index.items():
+        if path in override_comments:
+            continue
+        inline_override_comment = _extract_override_comment_from_line(lines[info.line_idx])
+        if inline_override_comment is not None:
+            override_comments[path] = inline_override_comment
+
     return override_comments
 
 
@@ -583,6 +678,10 @@ def sync_file_entry(
             if write_or_check(variant_abs, variant_content, check):
                 variants_changed += 1
             continue
+        variant_text = variant_abs.read_text(encoding="utf-8")
+        override_flow_blocks = extract_flow_sequence_override_blocks_from_text(
+            variant_text, overrides.keys()
+        )
         variant_yaml = copy.deepcopy(source_yaml)
 
         for override_path, override_value in overrides.items():
@@ -595,7 +694,7 @@ def sync_file_entry(
                 ) from exc
             set_value_at_path(variant_yaml, override_path, override_value)
 
-        variant_body = apply_overrides_to_source_text(source_body, overrides)
+        variant_body = apply_overrides_to_source_text(source_body, overrides, override_flow_blocks)
         variant_body = ensure_override_markers_in_text(variant_body, override_comments)
         variant_body = dedupe_nearby_identical_comment_lines(variant_body)
         variant_content = build_variant_header(source_url, file_entry.dest) + variant_body

@@ -8,9 +8,11 @@ from sync_params import apply_overrides_to_source_text
 from sync_params import build_dest_header
 from sync_params import dedupe_nearby_identical_comment_lines
 from sync_params import ensure_override_markers_in_text
+from sync_params import extract_flow_sequence_override_blocks_from_text
 from sync_params import extract_override_values
 from sync_params import get_value_at_path
 from sync_params import load_config
+from sync_params import parse_override_comments_from_variant_text
 from sync_params import parse_override_paths_from_variant_text
 from sync_params import repository_matches_filter
 from sync_params import set_value_at_path
@@ -40,6 +42,28 @@ class SyncParamsTest(unittest.TestCase):
                 ("/**", "ros__parameters", "tracker_state_parameter", "names"),
                 ("/**", "ros__parameters", "tracker_state_parameter", "tagged_block_list"),
             ],
+        )
+
+    def test_parse_override_comments_from_multiline_flow_value_key_comment(self) -> None:
+        text = """
+/**:
+  ros__parameters:
+    tracker_state_parameter:
+      can_assign_matrix: # *OVERRIDE*
+        [1, 0, # row0
+        0, 1] # row1
+"""
+        comments = parse_override_comments_from_variant_text(text)
+        self.assertEqual(
+            comments,
+            {
+                (
+                    "/**",
+                    "ros__parameters",
+                    "tracker_state_parameter",
+                    "can_assign_matrix",
+                ): "*OVERRIDE*"
+            },
         )
 
     def test_config_rejects_string_variant(self) -> None:
@@ -251,6 +275,104 @@ class SyncParamsTest(unittest.TestCase):
         self.assertIn(
             "min_width: 0.1 # *OVERRIDE* old text duplicated",
             with_markers,
+        )
+
+    def test_multiline_flow_sequence_override_replacement_keeps_valid_yaml(self) -> None:
+        source_text = """
+/**:
+  ros__parameters:
+    tracker_state_parameter:
+      can_assign_matrix:
+        [0, 0, # row0
+        0, 0] # row1
+"""
+        patched = apply_overrides_to_source_text(
+            source_text,
+            {
+                (
+                    "/**",
+                    "ros__parameters",
+                    "tracker_state_parameter",
+                    "can_assign_matrix",
+                ): [1, 1, 1, 1]
+            },
+        )
+        reparsed = yaml.safe_load(patched)
+        self.assertEqual(
+            reparsed["/**"]["ros__parameters"]["tracker_state_parameter"]["can_assign_matrix"],
+            [1, 1, 1, 1],
+        )
+
+    def test_extract_flow_sequence_override_blocks_from_text(self) -> None:
+        variant_text = """
+/**:
+  ros__parameters:
+    tracker_state_parameter:
+      can_assign_matrix: # *OVERRIDE*
+        [1, 0, # row0
+        0, 1] # row1
+"""
+        blocks = extract_flow_sequence_override_blocks_from_text(
+            variant_text,
+            [
+                (
+                    "/**",
+                    "ros__parameters",
+                    "tracker_state_parameter",
+                    "can_assign_matrix",
+                )
+            ],
+        )
+        self.assertIn(
+            (
+                "/**",
+                "ros__parameters",
+                "tracker_state_parameter",
+                "can_assign_matrix",
+            ),
+            blocks,
+        )
+        block_lines = blocks[
+            (
+                "/**",
+                "ros__parameters",
+                "tracker_state_parameter",
+                "can_assign_matrix",
+            )
+        ]
+        self.assertEqual(block_lines[0].strip(), "[1, 0, # row0")
+        self.assertEqual(block_lines[1].strip(), "0, 1] # row1")
+
+    def test_multiline_flow_sequence_override_replacement_can_preserve_block_style(self) -> None:
+        source_text = """
+/**:
+  ros__parameters:
+    tracker_state_parameter:
+      can_assign_matrix:
+        [0, 0, # src_row0
+        0, 0] # src_row1
+"""
+        override_path = (
+            "/**",
+            "ros__parameters",
+            "tracker_state_parameter",
+            "can_assign_matrix",
+        )
+        raw_block_lines = [
+            "        [1, 1, # row0",
+            "        1, 1] # row1",
+        ]
+        patched = apply_overrides_to_source_text(
+            source_text,
+            {override_path: [1, 1, 1, 1]},
+            {override_path: raw_block_lines},
+        )
+        self.assertIn("[1, 1, # row0", patched)
+        self.assertIn("1, 1] # row1", patched)
+        reparsed = yaml.safe_load(patched)
+        self.assertEqual(
+            reparsed["/**"]["ros__parameters"]["tracker_state_parameter"]["can_assign_matrix"],
+            [1, 1, 1, 1],
         )
 
     def test_inline_value_replacement_preserves_spacing_before_comment(self) -> None:
