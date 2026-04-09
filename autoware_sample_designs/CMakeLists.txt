@@ -11,7 +11,6 @@ ament_auto_package(
   urdf
 )
 
-# Add a dummy library to make a target
-add_library(${PROJECT_NAME} SHARED src/empty.cpp)
+add_custom_target(${PROJECT_NAME})
 
 autoware_system_designer_build_deploy(${PROJECT_NAME} AutowareSample.system)
