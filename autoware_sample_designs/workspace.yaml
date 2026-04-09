@@ -3,8 +3,6 @@ workspace:
     resolution: source
   - provider: autowarefoundation
     resolution: source
-  - provider: pilot-auto
-    resolution: source
   - provider: ros
     resolution: installed
   - provider: ros2
