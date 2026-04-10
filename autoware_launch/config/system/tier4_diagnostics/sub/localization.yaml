@@ -1,0 +1,32 @@
+units:
+  - path: /sub_ecu/localization/sub_ecu_in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /sub_ecu/localization/topic_status/pose/warn-to-ok }
+      - { type: link, link: /sub_ecu/localization/topic_status/twist/warn-to-ok }
+
+  - path: /sub_ecu/localization/topic_status/pose/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/localization/topic_status/pose
+
+  - path: /sub_ecu/localization/topic_status/twist/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /sub_ecu/localization/topic_status/twist
+
+  - path: /sub_ecu/localization/topic_status/pose
+    type: diag
+    node: topic_state_monitor_pose_with_covariance
+    name: topic_status
+    timeout: 3.0
+    # latch: 0.0
+
+  - path: /sub_ecu/localization/topic_status/twist
+    type: diag
+    node: topic_state_monitor_twist_with_covariance
+    name: topic_status
+    timeout: 3.0
+    # latch: 0.0

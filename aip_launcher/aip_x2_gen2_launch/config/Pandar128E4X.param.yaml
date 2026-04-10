@@ -1,0 +1,17 @@
+/**:
+  ros__parameters:
+    diagnostics:
+      functional_safety:
+        mode: advanced
+        error_definitions_path: $(find-pkg-share autoware_launch)/config/sensing/lidar/diagnostics/ot128_fusa_codes.csv
+        ignored_error_codes:
+        # Do not add descriptive comments here as long as AIP Launcher is public.
+        # Hesai's error descriptions and severity levels are confidential.
+          - 0x1011  # Already ensured by SYNC.TOOLING
+          - 0x0021
+          - 0x0622
+          - 0x0a13
+          - 0x0b23
+          - 0x0e11
+          - 0x0e22
+          - 0x1411

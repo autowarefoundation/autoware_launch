@@ -15,6 +15,14 @@
   <arg name="control_input_objects_topic_name" default="/perception/object_recognition/objects"/>
   <arg name="control_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
 
+  <!-- Input topic parameters for control modules -->
+  <arg name="control_input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="control_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+
+  <!-- Input topic parameters for control modules -->
+  <arg name="control_input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="control_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+
   <!-- Global parameters -->
   <group scoped="false">
     <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
@@ -22,9 +30,32 @@
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
     </include>
   </group>
+  <arg name="is_redundant" default="false"/>
+  <arg name="use_control_command_gate" default="false"/>
 
   <let name="latlon_controller_param_path_dir" value="$(var vehicle_id)" if="$(var use_individual_control_param)"/>
   <let name="latlon_controller_param_path_dir" value="" unless="$(var use_individual_control_param)"/>
+
+  <let name="control_command_gate_param_path" value="$(find-pkg-share autoware_launch)/config/control/control_command_gate/control_command_gate.redundancy.main.param.yaml" if="$(var is_redundant)"/>
+  <let name="control_command_gate_param_path" value="$(find-pkg-share autoware_launch)/config/control/control_command_gate/control_command_gate.param.yaml" unless="$(var is_redundant)"/>
+
+  <group scoped="false" if="$(eval &quot;'$(var system_run_mode)'=='planning_simulation'&quot;)">
+    <let name="output_control_cmd" value="/main/control/command/control_cmd" if="$(var is_redundant)"/>
+    <let name="output_gear_cmd" value="/main/control/command/gear_cmd" if="$(var is_redundant)"/>
+    <let name="output_turn_indicators_cmd" value="/main/control/command/turn_indicators_cmd" if="$(var is_redundant)"/>
+    <let name="output_hazard_lights_cmd" value="/main/control/command/hazard_lights_cmd" if="$(var is_redundant)"/>
+
+    <let name="output_control_cmd" value="/control/command/control_cmd" unless="$(var is_redundant)"/>
+    <let name="output_gear_cmd" value="/control/command/gear_cmd" unless="$(var is_redundant)"/>
+    <let name="output_turn_indicators_cmd" value="/control/command/turn_indicators_cmd" unless="$(var is_redundant)"/>
+    <let name="output_hazard_lights_cmd" value="/control/command/hazard_lights_cmd" unless="$(var is_redundant)"/>
+  </group>
+  <group scoped="false" unless="$(eval &quot;'$(var system_run_mode)'=='planning_simulation'&quot;)">
+    <let name="output_control_cmd" value="/control/command/control_cmd"/>
+    <let name="output_gear_cmd" value="/control/command/gear_cmd"/>
+    <let name="output_turn_indicators_cmd" value="/control/command/turn_indicators_cmd"/>
+    <let name="output_hazard_lights_cmd" value="/control/command/hazard_lights_cmd"/>
+  </group>
 
   <include file="$(find-pkg-share tier4_control_launch)/launch/control.launch.xml">
     <!-- option -->
@@ -47,13 +78,12 @@
     <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
     <arg name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
     <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
-
     <!-- common param path -->
     <arg name="nearest_search_param_path" value="$(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml"/>
 
     <!-- package param path -->
     <arg name="vehicle_cmd_gate_param_path" value="$(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
-    <arg name="control_command_gate_param_path" value="$(find-pkg-share autoware_launch)/config/control/control_command_gate/control_command_gate.param.yaml"/>
+    <arg name="control_command_gate_param_path" value="$(var control_command_gate_param_path)"/>
     <arg name="lane_departure_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/lane_departure_checker/lane_departure_checker.param.yaml"/>
     <arg name="control_validator_param_path" value="$(find-pkg-share autoware_launch)/config/control/control_validator/control_validator.param.yaml"/>
     <arg name="operation_mode_transition_manager_param_path" value="$(find-pkg-share autoware_launch)/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
@@ -64,5 +94,11 @@
     <arg name="collision_detector_param_path" value="$(find-pkg-share autoware_launch)/config/control/autoware_collision_detector/collision_detector.param.yaml"/>
     <arg name="use_aeb_autoware_state_check" value="$(var use_aeb_autoware_state_check)"/>
     <arg name="predicted_path_checker_param_path" value="$(find-pkg-share autoware_launch)/config/control/predicted_path_checker/predicted_path_checker.param.yaml"/>
+
+    <!-- topic remap-->
+    <arg name="output_control_cmd" value="$(var output_control_cmd)"/>
+    <arg name="output_gear_cmd" value="$(var output_gear_cmd)"/>
+    <arg name="output_turn_indicators_cmd" value="$(var output_turn_indicators_cmd)"/>
+    <arg name="output_hazard_lights_cmd" value="$(var output_hazard_lights_cmd)"/>
   </include>
 </launch>
