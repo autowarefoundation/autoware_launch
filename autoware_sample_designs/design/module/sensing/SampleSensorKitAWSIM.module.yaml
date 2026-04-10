@@ -1,0 +1,46 @@
+autoware_system_design_format: 0.3.0
+
+name: SampleSensorKitAWSIM.module
+
+instances:
+  - name: vehicle_velocity_converter
+    entity: VehicleVelocityConverter.node
+  - name: lidar/top
+    entity: LidarVelodyneVLP16_awsim.module
+  - name: imu
+    entity: SampleSensorKitImu_decode.module
+
+subscribers:
+  - name: lidar/top/pointcloud_raw_ex
+  - name: imu/tamagawa/imu_raw
+  - name: velocity_status
+  - name: pose_ndt
+  - name: odometry
+publishers:
+  - name: vehicle_velocity_converter/twist_with_covariance
+  - name: lidar/concatenated/pointcloud
+  - name: imu/imu_data
+
+connections:
+  - - subscriber.velocity_status
+    - vehicle_velocity_converter.subscriber.velocity_status
+  - - vehicle_velocity_converter.publisher.twist_with_covariance
+    - publisher.vehicle_velocity_converter/twist_with_covariance
+  # IMU
+  - - subscriber.odometry
+    - imu.subscriber.odom
+  - - subscriber.imu/tamagawa/imu_raw
+    - imu.subscriber.imu_raw
+  - - subscriber.pose_ndt
+    - imu.subscriber.pose_ndt
+  - - imu.publisher.imu_data
+    - publisher.imu/imu_data
+  # LIDAR
+  - - subscriber.lidar/top/pointcloud_raw_ex
+    - lidar/top.subscriber.pointcloud_raw_ex
+  - - vehicle_velocity_converter.publisher.twist_with_covariance
+    - lidar/top.subscriber.twist
+  - - imu.publisher.imu_data
+    - lidar/top.subscriber.imu
+  - - lidar/top.publisher.pointcloud
+    - publisher.lidar/concatenated/pointcloud

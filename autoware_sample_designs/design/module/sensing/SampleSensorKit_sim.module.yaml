@@ -1,0 +1,32 @@
+autoware_system_design_format: 0.3.0
+
+name: SampleSensorKit_sim.module
+
+base: SampleSensorKit.module
+
+override:
+  instances:
+    - name: lidar
+      entity: SampleSensorKitLidar_decode.module
+    - name: imu
+      entity: SampleSensorKitImu_decode.module
+    - name: gnss
+      entity: SampleSensorKitGnss_decode.module
+  subscribers:
+    - name: lidar/top/velodyne_packets
+    - name: lidar/left/velodyne_packets
+    - name: lidar/right/velodyne_packets
+    - name: imu/tamagawa/imu_raw
+    - name: gnss/ublox/nav_sat_fix
+  publishers: []
+
+  connections:
+    # LIDAR
+    - - subscriber.lidar/+/velodyne_packets
+      - lidar.subscriber.+/velodyne_packets
+    # IMU
+    - - subscriber.imu/tamagawa/imu_raw
+      - imu.subscriber.imu_raw
+    # GNSS
+    - - subscriber.gnss/ublox/nav_sat_fix
+      - gnss.subscriber.nav_sat_fix
