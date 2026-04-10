@@ -57,7 +57,7 @@ components:
   # ADAPI
   - name: adapi
     entity: SampleSensorKitADAPIWrapper.node
-    path: /api
+    path: /
     compute_unit: main_ecu
 
   # SENSING
@@ -211,7 +211,7 @@ connections:
     - localization.subscriber.twist
   - - sensing.publisher.gnss/pose_with_covariance
     - localization.subscriber.gnss_pose_with_covariance
-  - - adapi.publisher.localization/initialization_state
+  - - adapi.publisher.api/localization/initialization_state
     - localization.subscriber.initialization_state
 
   - - occupancy_grid_map.publisher.map
