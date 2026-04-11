@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
+# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/f31e5dc592626af392ef0321b75b031b132537b2/perception/autoware_euclidean_cluster/config/euclidean_cluster.param.yaml
+# Reference in this repository: .config-sync/perception/autoware_euclidean_cluster/config/euclidean_cluster.param.yaml
+
 /**:
   ros__parameters:
     max_cluster_size: 1000

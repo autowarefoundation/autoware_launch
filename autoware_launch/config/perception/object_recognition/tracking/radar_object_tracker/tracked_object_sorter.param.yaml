@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
+# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/53b9b0d9107af89a04289400fb63fa432621f76d/perception/autoware_object_sorter/config/tracked_object_sorter.param.yaml
+# Reference in this repository: .config-sync/perception/autoware_object_sorter/config/tracked_object_sorter.param.yaml
+
 /**:
   ros__parameters:
     range_calc_frame_id: "base_link"
@@ -10,104 +17,104 @@
     sort_target:
       UNKNOWN:
         publish: true
-        min_velocity_threshold: 3.0 # [m/s]
+        min_velocity_threshold: 3.0 # *OVERRIDE* [m/s]
         range_threshold:
           # when range_thresholding_mode = distance
-          max_distance: 300.0 # [m]
-          min_distance: 70.0 # [m]
+          max_distance: 300.0 # *OVERRIDE* [m]
+          min_distance: 70.0 # *OVERRIDE* [m]
           # when range_thresholding_mode = area
-          max_x: 100.0 # [m]
-          min_x: -100.0 # [m]
-          max_y: 100.0 # [m]
-          min_y: -100.0 # [m]
+          max_x: 100.0 # *OVERRIDE* [m]
+          min_x: -100.0 # *OVERRIDE* [m]
+          max_y: 100.0 # *OVERRIDE* [m]
+          min_y: -100.0 # *OVERRIDE* [m]
 
       CAR:
         publish: true
-        min_velocity_threshold: 3.0 # [m/s]
+        min_velocity_threshold: 3.0 # *OVERRIDE* [m/s]
         range_threshold:
           # when range_thresholding_mode = distance
-          max_distance: 300.0 # [m]
-          min_distance: 70.0 # [m]
+          max_distance: 300.0 # *OVERRIDE* [m]
+          min_distance: 70.0 # *OVERRIDE* [m]
           # when range_thresholding_mode = area
-          max_x: 100.0 # [m]
-          min_x: -100.0 # [m]
-          max_y: 30.0 # [m]
-          min_y: -30.0 # [m]
+          max_x: 100.0 # *OVERRIDE* [m]
+          min_x: -100.0 # *OVERRIDE* [m]
+          max_y: 30.0 # *OVERRIDE* [m]
+          min_y: -30.0 # *OVERRIDE* [m]
 
       TRUCK:
         publish: true
-        min_velocity_threshold: 3.0 # [m/s]
+        min_velocity_threshold: 3.0 # *OVERRIDE* [m/s]
         range_threshold:
           # when range_thresholding_mode = distance
-          max_distance: 300.0 # [m]
-          min_distance: 70.0 # [m]
+          max_distance: 300.0 # *OVERRIDE* [m]
+          min_distance: 70.0 # *OVERRIDE* [m]
           # when range_thresholding_mode = area
-          max_x: 100.0 # [m]
-          min_x: -100.0 # [m]
-          max_y: 100.0 # [m]
-          min_y: -100.0 # [m]
+          max_x: 100.0 # *OVERRIDE* [m]
+          min_x: -100.0 # *OVERRIDE* [m]
+          max_y: 100.0 # *OVERRIDE* [m]
+          min_y: -100.0 # *OVERRIDE* [m]
 
       BUS:
         publish: true
-        min_velocity_threshold: 3.0 # [m/s]
+        min_velocity_threshold: 3.0 # *OVERRIDE* [m/s]
         range_threshold:
           # when range_thresholding_mode = distance
-          max_distance: 300.0 # [m]
-          min_distance: 70.0 # [m]
+          max_distance: 300.0 # *OVERRIDE* [m]
+          min_distance: 70.0 # *OVERRIDE* [m]
           # when range_thresholding_mode = area
-          max_x: 100.0 # [m]
-          min_x: -100.0 # [m]
-          max_y: 100.0 # [m]
-          min_y: -100.0 # [m]
+          max_x: 100.0 # *OVERRIDE* [m]
+          min_x: -100.0 # *OVERRIDE* [m]
+          max_y: 100.0 # *OVERRIDE* [m]
+          min_y: -100.0 # *OVERRIDE* [m]
 
       TRAILER:
         publish: true
-        min_velocity_threshold: 3.0 # [m/s]
+        min_velocity_threshold: 3.0 # *OVERRIDE* [m/s]
         range_threshold:
           # when range_thresholding_mode = distance
-          max_distance: 300.0 # [m]
-          min_distance: 70.0 # [m]
+          max_distance: 300.0 # *OVERRIDE* [m]
+          min_distance: 70.0 # *OVERRIDE* [m]
           # when range_thresholding_mode = area
-          max_x: 100.0 # [m]
-          min_x: -100.0 # [m]
-          max_y: 100.0 # [m]
-          min_y: -100.0 # [m]
+          max_x: 100.0 # *OVERRIDE* [m]
+          min_x: -100.0 # *OVERRIDE* [m]
+          max_y: 100.0 # *OVERRIDE* [m]
+          min_y: -100.0 # *OVERRIDE* [m]
 
       MOTORCYCLE:
         publish: true
-        min_velocity_threshold: 3.0 # [m/s]
+        min_velocity_threshold: 3.0 # *OVERRIDE* [m/s]
         range_threshold:
           # when range_thresholding_mode = distance
-          max_distance: 300.0 # [m]
-          min_distance: 70.0 # [m]
+          max_distance: 300.0 # *OVERRIDE* [m]
+          min_distance: 70.0 # *OVERRIDE* [m]
           # when range_thresholding_mode = area
-          max_x: 100.0 # [m]
-          min_x: -100.0 # [m]
-          max_y: 100.0 # [m]
-          min_y: -100.0 # [m]
+          max_x: 100.0 # *OVERRIDE* [m]
+          min_x: -100.0 # *OVERRIDE* [m]
+          max_y: 100.0 # *OVERRIDE* [m]
+          min_y: -100.0 # *OVERRIDE* [m]
 
       BICYCLE:
         publish: true
-        min_velocity_threshold: 3.0 # [m/s]
+        min_velocity_threshold: 3.0 # *OVERRIDE* [m/s]
         range_threshold:
          # when range_thresholding_mode = distance
-          max_distance: 300.0 # [m]
-          min_distance: 70.0 # [m]
+          max_distance: 300.0 # *OVERRIDE* [m]
+          min_distance: 70.0 # *OVERRIDE* [m]
           # when range_thresholding_mode = area
-          max_x: 100.0 # [m]
-          min_x: -100.0 # [m]
-          max_y: 100.0 # [m]
-          min_y: -100.0 # [m]
+          max_x: 100.0 # *OVERRIDE* [m]
+          min_x: -100.0 # *OVERRIDE* [m]
+          max_y: 100.0 # *OVERRIDE* [m]
+          min_y: -100.0 # *OVERRIDE* [m]
 
       PEDESTRIAN:
         publish: true
-        min_velocity_threshold: 3.0 # [m/s]
+        min_velocity_threshold: 3.0 # *OVERRIDE* [m/s]
         range_threshold:
           # when range_thresholding_mode = distance
-          max_distance: 300.0 # [m]
-          min_distance: 70.0 # [m]
+          max_distance: 300.0 # *OVERRIDE* [m]
+          min_distance: 70.0 # *OVERRIDE* [m]
           # when range_thresholding_mode = area
-          max_x: 100.0 # [m]
-          min_x: -100.0 # [m]
-          max_y: 100.0 # [m]
-          min_y: -100.0 # [m]
+          max_x: 100.0 # *OVERRIDE* [m]
+          min_x: -100.0 # *OVERRIDE* [m]
+          max_y: 100.0 # *OVERRIDE* [m]
+          min_y: -100.0 # *OVERRIDE* [m]

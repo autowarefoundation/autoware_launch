@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
+# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/89a130ad42506bc51f540ceacf3a01ea9d407ac7/perception/autoware_tracking_object_merger/config/decorative_tracker_merger_policy.param.yaml
+# Reference in this repository: .config-sync/perception/autoware_tracking_object_merger/config/decorative_tracker_merger_policy.param.yaml
+
 # Merger policy for decorative tracker merger node
 # decorative tracker merger works by merging the sub-object trackers into a main object tracker result
 # There are 3 merger policy:

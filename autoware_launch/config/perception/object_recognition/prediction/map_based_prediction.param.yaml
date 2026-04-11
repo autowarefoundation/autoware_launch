@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
+# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/8dc7e0eb06d6c1d0f00d7c424b4b4f2dbca6496d/perception/autoware_map_based_prediction/config/map_based_prediction.param.yaml
+# Reference in this repository: .config-sync/perception/autoware_map_based_prediction/config/map_based_prediction.param.yaml
+
 /**:
   ros__parameters:
     prediction_time_horizon:
@@ -6,7 +13,7 @@
       unknown: 10.0 #[s]
     lateral_control_time_horizon: 5.0 #[s]
     prediction_sampling_delta_time: 0.5 #[s]
-    min_velocity_for_map_based_prediction: 1.0 #[m/s]
+    min_velocity_for_map_based_prediction: 1.0 # *OVERRIDE*[m/s]
     min_crosswalk_user_velocity: 1.39 #[m/s]
     max_crosswalk_user_delta_yaw_threshold_for_lanelet: 0.785 #[m/s]
     max_crosswalk_user_on_road_distance: 2.0  # [m] crosswalk users on road or shoulder lanelets are only predicted to cross the crosswalk if they are within this distance
@@ -31,10 +38,10 @@
     # parameter for shoulder lane prediction
     prediction_time_horizon_rate_for_validate_shoulder_lane_length: 0.8
     use_crosswalk_user_history:
-       match_lost_and_appeared_users: false
-       remember_lost_users: false
-    crossing_intention_duration: 0.3    # [s]
-    no_crossing_intention_duration: 1.0 # [s]
+      match_lost_and_appeared_users: false
+      remember_lost_users: false
+    crossing_intention_duration: 0.3    # [s] Minimum duration that crossing intention must continuously persist to be judged as true
+    no_crossing_intention_duration: 1.0 # [s] Minimum duration that lack of crossing intention must continuously persist to be judged as false
 
     # parameters for lc prediction
     lane_change_detection:
@@ -54,8 +61,8 @@
     reference_path_resolution: 0.5 #[m]
 
     # debug parameters
-    publish_processing_time: true
-    publish_processing_time_detail: true
-    publish_debug_markers: true
+    publish_processing_time: true # *OVERRIDE*
+    publish_processing_time_detail: true # *OVERRIDE*
+    publish_debug_markers: true # *OVERRIDE*
     processing_time_tolerance: 0.5 #[s]
     processing_time_consecutive_excess_tolerance: 1.0 #[s]
