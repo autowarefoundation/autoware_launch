@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="e2e_planner_mode" default="vad"/>
+  <arg name="use_sim_time" default="false"/>
+  <arg name="vehicle_model" default="sample_vehicle"/>
+  <arg name="sensor_model" default="sample_sensor_kit"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data" description="Root data path (models expected in $(var data_path)/vad)"/>
+  <arg name="launch_control" default="true" description="Launch control stack alongside E2E planner"/>
+  <arg name="control_module_preset" default="e2e" description="Control preset used with the E2E planner"/>
+
+  <!-- E2E planner selection -->
+  <group if="$(eval &quot;'$(var e2e_planner_mode)' == 'vad'&quot;)">
+    <include file="$(find-pkg-share autoware_tensorrt_vad)/launch/vad_carla_tiny.launch.xml">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="data_path" value="$(var data_path)"/>
+      <arg name="sensor_model" value="$(var sensor_model)"/>
+      <arg name="output_trajectory" value="/planning/trajectory"/>
+    </include>
+
+    <!-- Reuse tier4 control with an E2E-specific preset -->
+    <group if="$(var launch_control)">
+      <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
+        <arg name="module_preset" value="$(var control_module_preset)"/>
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+        <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      </include>
+    </group>
+  </group>
+</launch>
