@@ -105,7 +105,7 @@
   />
   <arg
     name="traffic_light_ped_classifier_model"
-    default="ped_traffic_light_lamp_recognizer_comlops.onnx"
+    default="traffic_light_lamp_recognizer_comlops.onnx"
     if="$(eval &quot;'$(var traffic_light_recognition/classification/pedestrian/classifier_type)' == '2'&quot;)"
   />
   <arg name="traffic_light_recognition/classification/car/model_path" default="$(var data_path)/traffic_light_classifier/$(var traffic_light_car_classifier_model)"/>
