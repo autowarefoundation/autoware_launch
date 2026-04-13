@@ -1,0 +1,17 @@
+autoware_system_design_format: 0.3.0
+
+name: LidarVelodyneVLP16_awsim.module
+
+base: LidarVelodyneVLP16.module
+
+remove:
+  instances:
+    - name: lidar
+
+override:
+  subscribers:
+    - name: pointcloud_raw_ex
+
+  connections:
+    - - subscriber.pointcloud_raw_ex
+      - crop_box_filter_self.subscriber.input
