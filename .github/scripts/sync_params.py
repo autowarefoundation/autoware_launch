@@ -9,6 +9,7 @@ import difflib
 import hashlib
 import io
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -20,7 +21,8 @@ from ruamel.yaml import YAML
 from ruamel.yaml.comments import CommentedMap
 from ruamel.yaml.comments import CommentedSeq
 
-OVERRIDE_MARKER = "*OVERRIDE*"
+OVERRIDE_MARKER = "{OVERRIDE}"
+_OVERRIDE_MARKER_PATTERN = re.compile(r"\{OVERRIDE(?:\s*:\s*([^{}]*?))?\}")
 ORIGINAL_PIVOT = "###### ORIGINAL (DO NOT EDIT) ######"
 
 
@@ -77,7 +79,27 @@ def _comment_has_override_marker(comment_obj: Any) -> bool:
     if comment_obj is None:
         return False
     comment_value = getattr(comment_obj, "value", str(comment_obj))
-    return OVERRIDE_MARKER in comment_value
+    return _extract_override_marker(comment_value) is not None
+
+
+def _normalize_override_marker(reason: str | None) -> str:
+    if reason is None or not reason.strip():
+        return OVERRIDE_MARKER
+    return f"{{OVERRIDE: {reason.strip()}}}"
+
+
+def _extract_override_marker(text: str) -> str | None:
+    match = _OVERRIDE_MARKER_PATTERN.search(text)
+    if match is None:
+        return None
+    return _normalize_override_marker(match.group(1))
+
+
+def _strip_leading_override_marker(text: str) -> str:
+    match = _OVERRIDE_MARKER_PATTERN.match(text)
+    if match is None:
+        return text
+    return text[match.end() :].lstrip(" ")
 
 
 def _extract_comment_text(comment_obj: Any) -> str:
@@ -85,7 +107,8 @@ def _extract_comment_text(comment_obj: Any) -> str:
     normalized = comment_value.splitlines()[0].strip()
     if normalized.startswith("#"):
         normalized = normalized[1:].strip()
-    return normalized
+    marker = _extract_override_marker(normalized)
+    return marker if marker is not None else normalized
 
 
 def _extract_override_comment_from_line(line: str) -> str | None:
@@ -93,9 +116,7 @@ def _extract_override_comment_from_line(line: str) -> str | None:
     if not sep:
         return None
     normalized = comment.strip()
-    if OVERRIDE_MARKER not in normalized:
-        return None
-    return normalized
+    return _extract_override_marker(normalized)
 
 
 @dataclass(frozen=True)
@@ -315,9 +336,7 @@ def ensure_override_markers_in_text(
             comment_tail = existing_comment
             stripped = comment_tail.lstrip(" ")
             leading_spaces = comment_tail[: len(comment_tail) - len(stripped)]
-            if stripped.startswith(OVERRIDE_MARKER):
-                stripped = stripped[len(OVERRIDE_MARKER) :]
-                stripped = stripped.lstrip(" ")
+            stripped = _strip_leading_override_marker(stripped)
             stripped = stripped.rstrip(" ")
             comment_tail_after_marker = f"{leading_spaces}{stripped}".rstrip(" ")
 
@@ -331,9 +350,8 @@ def ensure_override_markers_in_text(
                     if next_comment_text == stripped.strip():
                         comment_tail_after_marker = ""
 
-            comment_payload = f"# {OVERRIDE_MARKER}"
-            if comment_tail_after_marker:
-                comment_payload += comment_tail_after_marker
+            reason_text = comment_tail_after_marker.strip()
+            comment_payload = f"# {_normalize_override_marker(reason_text)}"
             if desired_col is not None:
                 base = before_comment.rstrip(" ")
                 spaces = max(1, desired_col - len(base))
@@ -341,7 +359,8 @@ def ensure_override_markers_in_text(
             else:
                 lines[info.line_idx] = f"{before_comment}{comment_payload}"
             continue
-        suffix = comment_text if comment_text else OVERRIDE_MARKER
+        marker = _extract_override_marker(comment_text)
+        suffix = marker if marker is not None else _normalize_override_marker(comment_text)
         if desired_col is not None:
             spaces = max(1, desired_col - len(line))
             lines[info.line_idx] = f"{line}{' ' * spaces}# {suffix}"
@@ -368,8 +387,8 @@ def parse_override_comments_from_variant_text(text: str) -> dict[tuple[str, ...]
     Parse inline override markers from YAML comments using ruamel.
 
     Supports both:
-    - `some_list: [1,2,3] # *OVERRIDE* ...`
-    - `other_list: # *OVERRIDE* ...` followed by block list/mapping value
+    - `some_list: [1,2,3] # {OVERRIDE} ...`
+    - `other_list: # {OVERRIDE} ...` followed by block list/mapping value
     """
     try:
         yaml_with_comments = _YAML_RT.load(text)
@@ -397,7 +416,7 @@ def parse_override_comments_from_variant_text(text: str) -> dict[tuple[str, ...]
     walk(yaml_with_comments, ())
 
     # Ruamel can drop key-line inline comments when the value is a multi-line
-    # flow sequence (e.g., `key: # *OVERRIDE*` followed by `[ ... ]`).
+    # flow sequence (e.g., `key: # {OVERRIDE}` followed by `[ ... ]`).
     # Fall back to line-based extraction for those cases.
     lines = text.splitlines()
     key_index = _build_key_line_index(text)
@@ -584,8 +603,9 @@ def source_blob_url(source_repo: str, source_sha: str, source_path: str) -> str:
 def build_variant_header(source_url: str) -> str:
     lines = [
         "# This file is managed by workflow.",
-        f"# Keys marked with '{OVERRIDE_MARKER}' are persisted as variant overrides.",
-        f"# If you want to modify a field, make sure that the field has comment including -> # {OVERRIDE_MARKER}",
+        f"# Keys marked with '{OVERRIDE_MARKER}' or '# {{OVERRIDE: reason}}' are persisted as variant overrides.",
+        "# 'reason' can be any single-line text without braces.",
+        f"# To keep local changes, annotate fields with '# {OVERRIDE_MARKER}' or '# {{OVERRIDE: reason}}'.",
         "#",
         f"# Source: {source_url}",
     ]

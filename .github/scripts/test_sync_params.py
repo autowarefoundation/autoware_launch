@@ -45,9 +45,9 @@ class SyncParamsTest(unittest.TestCase):
 /**:
   ros__parameters:
     tracker_state_parameter:
-      max_dt: 0.9 # *OVERRIDE*
-      names: [a, b] # *OVERRIDE*
-      tagged_block_list: # *OVERRIDE* keep as block style
+      max_dt: 0.9 # {OVERRIDE}
+      names: [a, b] # {OVERRIDE}
+      tagged_block_list: # {OVERRIDE: keep as block style}
         - x
         - y
     plain: 1.0
@@ -67,7 +67,7 @@ class SyncParamsTest(unittest.TestCase):
 /**:
   ros__parameters:
     tracker_state_parameter:
-      can_assign_matrix: # *OVERRIDE*
+      can_assign_matrix: # {OVERRIDE}
         [1, 0, # row0
         0, 1] # row1
 """
@@ -80,7 +80,7 @@ class SyncParamsTest(unittest.TestCase):
                     "ros__parameters",
                     "tracker_state_parameter",
                     "can_assign_matrix",
-                ): "*OVERRIDE*"
+                ): "{OVERRIDE}"
             },
         )
 
@@ -88,14 +88,14 @@ class SyncParamsTest(unittest.TestCase):
         text = """
 /**:
   ros__parameters:
-    logging_file_path: /tmp/foo # *OVERRIDE* diagnostics
+    logging_file_path: /tmp/foo # {OVERRIDE: diagnostics}
 
     # diagnostics
 """
         comments = parse_override_comments_from_variant_text(text)
         self.assertEqual(
             comments,
-            {("/**", "ros__parameters", "logging_file_path"): "*OVERRIDE* diagnostics"},
+            {("/**", "ros__parameters", "logging_file_path"): "{OVERRIDE: diagnostics}"},
         )
 
     def test_config_rejects_string_variant(self) -> None:
@@ -143,7 +143,7 @@ perception: []
         variant = """
 /**:
   ros__parameters:
-    tracker_state_parameter: # *OVERRIDE*
+    tracker_state_parameter: # {OVERRIDE}
       max_dt: 0.8
 """
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -166,7 +166,7 @@ perception: []
 /**:
   ros__parameters:
     tracker_state_parameter:
-      max_dt: 0.5 # *OVERRIDE*
+      max_dt: 0.5 # {OVERRIDE}
       decay_rate: 0.1
 """
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -186,7 +186,7 @@ perception: []
         self.assertEqual(
             override_comments,
             {
-                ("/**", "ros__parameters", "tracker_state_parameter", "max_dt"): "*OVERRIDE*",
+                ("/**", "ros__parameters", "tracker_state_parameter", "max_dt"): "{OVERRIDE}",
             },
         )
 
@@ -203,7 +203,7 @@ perception: []
 /**:
   ros__parameters:
     tracker_state_parameter:
-      max_dt: 0.5 # *OVERRIDE*
+      max_dt: 0.5 # {OVERRIDE}
 """
         with tempfile.TemporaryDirectory() as tmpdir:
             variant_path = Path(tmpdir) / "variant.yaml"
@@ -237,13 +237,13 @@ perception: []
 
     def test_embedded_original_matches_source(self) -> None:
         source_body = """/**:\n  ros__parameters:\n    foo: bar\n"""
-        variant_text = """/**:\n  ros__parameters:\n    foo: local # *OVERRIDE*\n"""
+        variant_text = """/**:\n  ros__parameters:\n    foo: local # {OVERRIDE}\n"""
         variant_text += build_embedded_original_section(source_body)
         self.assertTrue(embedded_original_matches_source(variant_text, source_body))
 
     def test_embedded_original_mismatch(self) -> None:
         source_body = """/**:\n  ros__parameters:\n    foo: baz\n"""
-        variant_text = """/**:\n  ros__parameters:\n    foo: local # *OVERRIDE*\n\n# ###### ORIGINAL (DO NOT EDIT) ######\n# /**:\n#   ros__parameters:\n#     foo: bar\n"""
+        variant_text = """/**:\n  ros__parameters:\n    foo: local # {OVERRIDE}\n\n# ###### ORIGINAL (DO NOT EDIT) ######\n# /**:\n#   ros__parameters:\n#     foo: bar\n"""
         self.assertFalse(embedded_original_matches_source(variant_text, source_body))
 
     def test_extract_pinned_source_sha_and_path(self) -> None:
@@ -287,9 +287,9 @@ perception: []
 """
         with_markers = ensure_override_markers_in_text(
             source_text,
-            {("/**", "ros__parameters", "max_dt"): "*OVERRIDE* keep this comment"},
+            {("/**", "ros__parameters", "max_dt"): "{OVERRIDE: keep this comment}"},
         )
-        self.assertIn("max_dt: 1.0 # *OVERRIDE* keep this comment", with_markers)
+        self.assertIn("max_dt: 1.0 # {OVERRIDE: keep this comment}", with_markers)
 
     def test_text_marker_reinsertion_preserves_column_from_variant(self) -> None:
         source_text = """
@@ -300,13 +300,13 @@ perception: []
         variant_text = """
 /**:
   ros__parameters:
-    rois_timestamp_offsets: [0.098, 0.147, 0.078, 0.062, 0.115, 0.132]                 # *OVERRIDE*
+    rois_timestamp_offsets: [0.098, 0.147, 0.078, 0.062, 0.115, 0.132]                 # {OVERRIDE}
 """
         path = ("/**", "ros__parameters", "rois_timestamp_offsets")
         columns = parse_override_comment_columns_from_variant_text(variant_text)
         with_markers = ensure_override_markers_in_text(
             source_text,
-            {path: "*OVERRIDE*"},
+            {path: "{OVERRIDE}"},
             columns,
         )
         source_col = next(
@@ -328,13 +328,13 @@ perception: []
         variant_text = """
 /**:
   ros__parameters:
-    rois_timestamp_offsets: [0.098, 0.147, 0.078, 0.062, 0.115, 0.132] # *OVERRIDE* source comment
+    rois_timestamp_offsets: [0.098, 0.147, 0.078, 0.062, 0.115, 0.132] # {OVERRIDE: source comment}
 """
         path = ("/**", "ros__parameters", "rois_timestamp_offsets")
         columns = parse_override_comment_columns_from_variant_text(variant_text)
         with_markers = ensure_override_markers_in_text(
             source_text,
-            {path: "*OVERRIDE* source comment"},
+            {path: "{OVERRIDE: source comment}"},
             columns,
         )
         source_col = next(
@@ -358,11 +358,11 @@ perception: []
                     "/**",
                     "ros__parameters",
                     "min_width",
-                ): "*OVERRIDE* Minimum width [m] (shoulder width)"
+                ): "{OVERRIDE: Minimum width [m] (shoulder width)}"
             },
         )
         self.assertIn(
-            "min_width: 0.1 # *OVERRIDE*  Minimum width [m] (shoulder width)",
+            "min_width: 0.1 # {OVERRIDE: Minimum width [m] (shoulder width)}",
             with_markers,
         )
 
@@ -370,16 +370,16 @@ perception: []
         source_text = """
 /**:
   ros__parameters:
-    min_width: 0.1 # *OVERRIDE* old text duplicated
+    min_width: 0.1 # {OVERRIDE: old text duplicated}
 """
         with_markers = ensure_override_markers_in_text(
             source_text,
             {
-                ("/**", "ros__parameters", "min_width"): "*OVERRIDE* anything",
+                ("/**", "ros__parameters", "min_width"): "{OVERRIDE: anything}",
             },
         )
         self.assertIn(
-            "min_width: 0.1 # *OVERRIDE* old text duplicated",
+            "min_width: 0.1 # {OVERRIDE: old text duplicated}",
             with_markers,
         )
 
@@ -414,7 +414,7 @@ perception: []
 /**:
   ros__parameters:
     tracker_state_parameter:
-      can_assign_matrix: # *OVERRIDE*
+      can_assign_matrix: # {OVERRIDE}
         [1, 0, # row0
         0, 1] # row1
 """
@@ -535,10 +535,10 @@ perception: []
                     "/**",
                     "ros__parameters",
                     "min_width",
-                ): "*OVERRIDE* Minimum width [m] (shoulder width)"
+                ): "{OVERRIDE: Minimum width [m] (shoulder width)}"
             },
         )
-        self.assertIn("min_width: 0.1 # *OVERRIDE*", with_markers)
+        self.assertIn("min_width: 0.1 # {OVERRIDE}", with_markers)
         self.assertEqual(with_markers.count("# Minimum width [m] (shoulder width)"), 1)
 
     def test_text_marker_reinsertion_with_parsed_comment_does_not_duplicate_following_comment(
@@ -554,13 +554,13 @@ perception: []
         variant_text = """
 /**:
   ros__parameters:
-    logging_file_path: /tmp/foo # *OVERRIDE* diagnostics
+    logging_file_path: /tmp/foo # {OVERRIDE: diagnostics}
 
     # diagnostics
 """
         override_comments = parse_override_comments_from_variant_text(variant_text)
         with_markers = ensure_override_markers_in_text(source_text, override_comments)
-        self.assertIn("logging_file_path: /tmp/foo # *OVERRIDE* diagnostics", with_markers)
+        self.assertIn("logging_file_path: /tmp/foo # {OVERRIDE: diagnostics}", with_markers)
         self.assertEqual(with_markers.count("# diagnostics"), 1)
 
 
