@@ -399,7 +399,7 @@ def parse_override_comments_from_variant_text(text: str) -> dict[tuple[str, ...]
         raise SyncError(f"Invalid YAML while parsing override markers: {exc}") from exc
 
     if yaml_with_comments is None:
-        return []
+        return {}
 
     override_comments: dict[tuple[str, ...], str] = {}
 
