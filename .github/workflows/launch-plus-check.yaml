@@ -1,4 +1,4 @@
-name: launch-plus resolve check
+name: roscope resolve check
 
 on:
   push:
@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  LAUNCH_PLUS_VERSION: v0.1.3
+  ROSCOPE_SEMVER: 0.2.0
 
 jobs:
   resolve:
@@ -37,12 +37,14 @@ jobs:
           rosdep update
         shell: bash
 
-      - name: Install launch-plus
+      - name: Install roscope
+        shell: bash
         run: |
-          curl -fsSL "https://github.com/paulsohn/launch-plus/releases/download/${LAUNCH_PLUS_VERSION}/launch-plus-linux-amd64-ubuntu24.04" \
-            -o /usr/local/bin/launch-plus
-          chmod +x /usr/local/bin/launch-plus
-          launch-plus --version
+          curl -fsSL "https://github.com/paulsohn/roscope/releases/download/v${ROSCOPE_SEMVER}/roscope-${ROSCOPE_SEMVER}.tar.gz" \
+            -o /tmp/roscope.tar.gz
+          python3 -m pip install --no-cache-dir /tmp/roscope.tar.gz
+
+          roscope --version
 
       # Checkout ci_depends.repos and ML param assets from this repo.
       - uses: actions/checkout@v4
@@ -84,7 +86,7 @@ jobs:
       - name: Index
         working-directory: ws
         run: |
-          launch-plus index ci_depends.repos
+          roscope index ci_depends.repos
           cat manifest.lock.repos
 
       - name: Resolve (dry-run build)
@@ -92,13 +94,9 @@ jobs:
         shell: bash
         run: |
           source /opt/ros/jazzy/setup.bash
-          launch-plus build \
+          roscope build \
             autoware_launch autoware.launch.xml \
             sensor_model:=sample_sensor_kit \
             vehicle_model:=sample_vehicle \
-            "map_path:=[map_path]" \
-            --allow-global-arg-cascade \
-            --apply-launch-arg-defaults \
-            --apply-opaque-file-access \
-            --rosdep \
-            --dry-run
+            map_path:=/placeholder/map_path \
+            --rosdep --dry-run
