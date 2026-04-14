@@ -31,8 +31,8 @@
       # object's elevation from lanelet based filter
       lanelet_object_elevation_filter:
         enabled: true # {OVERRIDE}
-        max_elevation_threshold: 3.0 # {OVERRIDE: [m] from a lanelet's surface}
-        min_elevation_threshold: -0.5 # {OVERRIDE: [m] from a lanelet's surface}
+        max_elevation_threshold: 3.0 # {OVERRIDE} [m] from a lanelet's surface
+        min_elevation_threshold: -0.5 # {OVERRIDE} [m] from a lanelet's surface
 
       lanelet_extra_margin: 0.0
       debug: false

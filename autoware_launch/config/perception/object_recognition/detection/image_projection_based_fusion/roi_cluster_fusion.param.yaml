@@ -28,7 +28,7 @@
     # Pedestrian size validation parameters
     pedestrian_size_validation:
       enable: true                    # Enable pedestrian size validation (3D size check)
-      min_width: 0.1                  # {OVERRIDE: Minimum width [m] (shoulder width)}
+      min_width: 0.1                  # {OVERRIDE} Minimum width [m] (shoulder width)
       max_width: 1.0                  # Maximum width [m] (with bags/umbrella)
 
 # ###### ORIGINAL (DO NOT EDIT) ######
