@@ -404,27 +404,24 @@ def _expect_mapping(value: Any, context: str) -> dict[str, Any]:
     return value
 
 
-def load_config(config_path: Path) -> list[RepositoryEntry]:
-    try:
-        config_data = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    except yaml.YAMLError as exc:
-        raise SyncError(f"Invalid YAML in config '{config_path}': {exc}") from exc
-
-    if not isinstance(config_data, list):
-        raise SyncError(f"Top-level config must be a list in '{config_path}'.")
+def _parse_repository_entries(entries_data: Any, context: str) -> list[RepositoryEntry]:
+    if not isinstance(entries_data, list):
+        raise SyncError(f"{context} must be a list.")
 
     repositories: list[RepositoryEntry] = []
-    for repo_index, repo_item in enumerate(config_data):
-        repo_map = _expect_mapping(repo_item, f"repository entry #{repo_index}")
+    for repo_index, repo_item in enumerate(entries_data):
+        repo_map = _expect_mapping(repo_item, f"repository entry #{repo_index} in {context}")
         repository = repo_map.get("repository")
         ref = repo_map.get("ref")
         files_data = repo_map.get("files", [])
         if not isinstance(repository, str) or not repository:
-            raise SyncError(f"repository entry #{repo_index} has invalid 'repository'.")
+            raise SyncError(
+                f"repository entry #{repo_index} in {context} has invalid 'repository'."
+            )
         if ref is not None and (not isinstance(ref, str) or not ref):
-            raise SyncError(f"repository entry #{repo_index} has invalid 'ref'.")
+            raise SyncError(f"repository entry #{repo_index} in {context} has invalid 'ref'.")
         if not isinstance(files_data, list):
-            raise SyncError(f"repository entry #{repo_index} has invalid 'files'.")
+            raise SyncError(f"repository entry #{repo_index} in {context} has invalid 'files'.")
 
         files: list[FileEntry] = []
         for file_index, file_item in enumerate(files_data):
@@ -467,6 +464,24 @@ def load_config(config_path: Path) -> list[RepositoryEntry]:
     return repositories
 
 
+def load_config(config_path: Path, category: str) -> list[RepositoryEntry]:
+    try:
+        config_data = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    except yaml.YAMLError as exc:
+        raise SyncError(f"Invalid YAML in config '{config_path}': {exc}") from exc
+
+    if not isinstance(config_data, dict):
+        raise SyncError(f"Top-level config must be a mapping in '{config_path}'.")
+
+    if category not in config_data:
+        raise SyncError(
+            f"Category '{category}' is not defined in '{config_path}'. "
+            f"Available categories: {sorted(config_data.keys())}."
+        )
+
+    return _parse_repository_entries(config_data[category], f"category '{category}'")
+
+
 def run_git(args: list[str], cwd: Path | None = None) -> str:
     process = subprocess.run(
         ["git", *args],
@@ -498,21 +513,6 @@ def resolve_ref(repo: str, ref: str | None) -> str:
     if ref:
         return ref
     return resolve_default_branch(repo)
-
-
-def repository_matches_filter(repository: str, repository_filter: str | None) -> bool:
-    if not repository_filter:
-        return True
-    if repository == repository_filter:
-        return True
-    return repository.split("/")[-1] == repository_filter
-
-
-def source_matches_dir_filter(source: str, dir_filter: str | None) -> bool:
-    if not dir_filter:
-        return True
-    normalized = dir_filter.strip("/")
-    return source == normalized or source.startswith(f"{normalized}/")
 
 
 def clone_repository(repo: str, ref: str, temp_root: Path) -> Path:
@@ -706,13 +706,12 @@ def sync_file_entry(
 
 def run_sync(
     config_path: Path,
+    category: str,
     check: bool,
     verbose: bool = True,
-    repository_filter: str | None = None,
-    dir_filter: str | None = None,
 ) -> int:
     workspace_root = Path.cwd()
-    repositories = load_config(config_path)
+    repositories = load_config(config_path, category)
 
     total_repos = 0
     total_files = 0
@@ -723,22 +722,13 @@ def run_sync(
     with tempfile.TemporaryDirectory(prefix="sync-params-") as tmp_dir_name:
         temp_root = Path(tmp_dir_name)
         for repo_entry in repositories:
-            if not repository_matches_filter(repo_entry.repository, repository_filter):
-                continue
-            filtered_files = tuple(
-                file_entry
-                for file_entry in repo_entry.files
-                if source_matches_dir_filter(file_entry.source, dir_filter)
-            )
-            if not filtered_files:
-                continue
             total_repos += 1
             resolved_ref = resolve_ref(repo_entry.repository, repo_entry.ref)
             if verbose:
                 print(f"[sync] Cloning {repo_entry.repository}@{resolved_ref}")
             repo_dir = clone_repository(repo_entry.repository, resolved_ref, temp_root)
 
-            for file_entry in filtered_files:
+            for file_entry in repo_entry.files:
                 total_files += 1
                 if verbose:
                     print(
@@ -778,6 +768,11 @@ def run_sync(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Sync parameter files from external repositories.")
     parser.add_argument(
+        "category",
+        type=str,
+        help="Config category to sync (for example: perception).",
+    )
+    parser.add_argument(
         "--config",
         type=Path,
         default=Path(".github/sync-params.yaml"),
@@ -787,18 +782,6 @@ def parse_args() -> argparse.Namespace:
         "--check",
         action="store_true",
         help="Check for drift without writing files.",
-    )
-    parser.add_argument(
-        "--repo",
-        type=str,
-        default=None,
-        help="Filter by repository (owner/name or name only).",
-    )
-    parser.add_argument(
-        "--dir",
-        type=str,
-        default=None,
-        help="Filter by source path prefix (e.g., perception or perception/pkg).",
     )
     return parser.parse_args()
 
@@ -810,10 +793,9 @@ def main() -> int:
         raise SyncError(f"Config file does not exist: {config_path}")
     return run_sync(
         config_path=config_path,
+        category=args.category,
         check=args.check,
         verbose=True,
-        repository_filter=args.repo,
-        dir_filter=args.dir,
     )
 
 

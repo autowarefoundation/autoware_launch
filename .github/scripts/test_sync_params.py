@@ -14,10 +14,8 @@ from sync_params import get_value_at_path
 from sync_params import load_config
 from sync_params import parse_override_comments_from_variant_text
 from sync_params import parse_override_paths_from_variant_text
-from sync_params import repository_matches_filter
 from sync_params import set_value_at_path
 from sync_params import source_blob_url
-from sync_params import source_matches_dir_filter
 import yaml
 
 
@@ -68,57 +66,46 @@ class SyncParamsTest(unittest.TestCase):
 
     def test_config_rejects_string_variant(self) -> None:
         config = """
-- repository: a/b
-  ref: main
-  files:
-    - source: s.yaml
-      dest: d.yaml
-      variants:
-        - bad/string/path.yaml
+perception:
+  - repository: a/b
+    ref: main
+    files:
+      - source: s.yaml
+        dest: d.yaml
+        variants:
+          - bad/string/path.yaml
 """
         with tempfile.TemporaryDirectory() as tmpdir:
             config_path = Path(tmpdir) / "cfg.yaml"
             config_path.write_text(config, encoding="utf-8")
             with self.assertRaises(SyncError):
-                load_config(config_path)
+                load_config(config_path, "perception")
 
     def test_config_allows_missing_ref(self) -> None:
         config = """
-- repository: a/b
-  files:
-    - source: s.yaml
-      dest: d.yaml
-      variants: []
+perception:
+  - repository: a/b
+    files:
+      - source: s.yaml
+        dest: d.yaml
+        variants: []
 """
         with tempfile.TemporaryDirectory() as tmpdir:
             config_path = Path(tmpdir) / "cfg.yaml"
             config_path.write_text(config, encoding="utf-8")
-            repositories = load_config(config_path)
+            repositories = load_config(config_path, "perception")
             self.assertEqual(len(repositories), 1)
             self.assertIsNone(repositories[0].ref)
 
-    def test_repository_filter_matches_owner_or_name(self) -> None:
-        self.assertTrue(repository_matches_filter("autowarefoundation/autoware_universe", None))
-        self.assertTrue(
-            repository_matches_filter("autowarefoundation/autoware_universe", "autoware_universe")
-        )
-        self.assertTrue(
-            repository_matches_filter(
-                "autowarefoundation/autoware_universe", "autowarefoundation/autoware_universe"
-            )
-        )
-        self.assertFalse(repository_matches_filter("autowarefoundation/autoware_universe", "other"))
-
-    def test_dir_filter_matches_prefix(self) -> None:
-        self.assertTrue(source_matches_dir_filter("perception/foo/bar.yaml", None))
-        self.assertTrue(source_matches_dir_filter("perception/foo/bar.yaml", "perception"))
-        self.assertTrue(
-            source_matches_dir_filter(
-                "perception/autoware_image_object_locator/config/a.yaml",
-                "perception/autoware_image_object_locator",
-            )
-        )
-        self.assertFalse(source_matches_dir_filter("planning/foo.yaml", "perception"))
+    def test_config_missing_category_raises(self) -> None:
+        config = """
+perception: []
+"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config_path = Path(tmpdir) / "cfg.yaml"
+            config_path.write_text(config, encoding="utf-8")
+            with self.assertRaises(SyncError):
+                load_config(config_path, "localization")
 
     def test_extract_override_values_requires_leaf_scalar_or_scalar_array(self) -> None:
         variant = """
