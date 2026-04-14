@@ -362,7 +362,26 @@ perception: []
             },
         )
         self.assertIn(
-            "min_width: 0.1 # {OVERRIDE}  Minimum width [m] (shoulder width)",
+            "min_width: 0.1 # {OVERRIDE: Minimum width [m] (shoulder width)}  Minimum width [m] (shoulder width)",
+            with_markers,
+        )
+
+    def test_text_marker_reinsertion_preserves_reasoned_marker_on_inline_comment_source(
+        self,
+    ) -> None:
+        source_text = """
+/**:
+  ros__parameters:
+    max_velocity: 1.0 #[m/s]
+"""
+        with_markers = ensure_override_markers_in_text(
+            source_text,
+            {
+                ("/**", "ros__parameters", "max_velocity"): "{OVERRIDE: tuned for simulator}",
+            },
+        )
+        self.assertIn(
+            "max_velocity: 1.0 # {OVERRIDE: tuned for simulator}[m/s]",
             with_markers,
         )
 
@@ -537,7 +556,7 @@ perception: []
         )
         self.assertEqual(source_line.index("#"), patched_line.index("#"))
 
-    def test_text_marker_reinsertion_avoids_duplicate_next_comment_line(self) -> None:
+    def test_text_marker_reinsertion_does_not_duplicate_next_comment_line(self) -> None:
         source_text = """
 /**:
   ros__parameters:
@@ -555,7 +574,8 @@ perception: []
                 ): "{OVERRIDE: Minimum width [m] (shoulder width)}"
             },
         )
-        self.assertIn("min_width: 0.1 # {OVERRIDE}", with_markers)
+        out_line = next(line for line in with_markers.splitlines() if "min_width:" in line)
+        self.assertIn("# {OVERRIDE", out_line)
         self.assertEqual(with_markers.count("# Minimum width [m] (shoulder width)"), 1)
 
     def test_text_marker_reinsertion_with_parsed_comment_does_not_duplicate_following_comment(

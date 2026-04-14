@@ -351,7 +351,12 @@ def ensure_override_markers_in_text(
                     if next_comment_text == stripped.strip():
                         comment_tail_after_marker = ""
 
-            marker_token = existing_marker if existing_marker is not None else OVERRIDE_MARKER
+            marker_from_comment = _extract_override_marker(comment_text)
+            marker_token = (
+                existing_marker
+                if existing_marker is not None
+                else (marker_from_comment if marker_from_comment is not None else OVERRIDE_MARKER)
+            )
             comment_payload = f"# {marker_token}"
             if comment_tail_after_marker:
                 comment_payload += comment_tail_after_marker
