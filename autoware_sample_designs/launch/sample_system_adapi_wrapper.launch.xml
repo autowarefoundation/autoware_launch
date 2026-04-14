@@ -1,0 +1,28 @@
+<launch>
+  <!-- Parameters -->
+  <!-- Parameter files -->
+  <arg name="default_adapi_param_path" default="$(find-pkg-share autoware_default_adapi_universe)/config/default_adapi.param.yaml"/>
+
+  <group scoped="false">
+    <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="sample_vehicle"/>
+    </include>
+  </group>
+
+  <!-- AD API -->
+  <group>
+    <include file="$(find-pkg-share autoware_default_adapi_universe)/launch/default_adapi.launch.py">
+      <arg name="config" value="$(var default_adapi_param_path)"/>
+    </include>
+    <include file="$(find-pkg-share autoware_adapi_adaptors)/launch/rviz_adaptors.launch.xml"/>
+  </group>
+
+  <!-- RTC controller -->
+  <group>
+    <push-ros-namespace namespace="autoware_api/external/rtc_controller"/>
+    <node_container pkg="rclcpp_components" exec="component_container_mt" name="container" namespace="" ros_args="--log-level autoware_api.external.rtc_controller.container:=warn">
+      <composable_node pkg="autoware_iv_external_api_adaptor" plugin="external_api::RTCController" name="node"/>
+    </node_container>
+  </group>
+</launch>
