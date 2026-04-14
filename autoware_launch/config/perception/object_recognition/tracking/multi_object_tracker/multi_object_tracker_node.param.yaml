@@ -1,6 +1,7 @@
 # This file is managed by workflow.
-# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
-# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
 # Source: https://github.com/autowarefoundation/autoware_universe/blob/104be4474e94652ab0e7328bc0f5f380a584425f/perception/autoware_multi_object_tracker/config/multi_object_tracker_node.param.yaml
 
@@ -20,7 +21,7 @@
     publish_rate: 10.0
     world_frame_id: map
     ego_frame_id: base_link
-    enable_delay_compensation: true # *OVERRIDE*
+    enable_delay_compensation: true # {OVERRIDE}
     consider_odometry_uncertainty: false
     enable_unknown_object_velocity_estimation: true
     enable_unknown_object_motion_output: false
@@ -55,7 +56,7 @@
     pruning_static_iou_threshold: 0.0  # [ratio]
 
     # debug parameters
-    publish_processing_time: true # *OVERRIDE*
+    publish_processing_time: true # {OVERRIDE}
     publish_processing_time_detail: false
     publish_tentative_objects: false
     publish_debug_markers: false

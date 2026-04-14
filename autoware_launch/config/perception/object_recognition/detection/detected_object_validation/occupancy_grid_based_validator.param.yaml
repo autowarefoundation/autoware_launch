@@ -1,6 +1,7 @@
 # This file is managed by workflow.
-# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
-# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
 # Source: https://github.com/autowarefoundation/autoware_universe/blob/6465aafcfd2073beb61b2e32b71a48ba0f66811f/perception/autoware_detected_object_validation/config/occupancy_grid_based_validator.param.yaml
 

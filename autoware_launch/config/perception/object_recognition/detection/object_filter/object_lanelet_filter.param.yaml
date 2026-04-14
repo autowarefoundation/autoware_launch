@@ -1,6 +1,7 @@
 # This file is managed by workflow.
-# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
-# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
 # Source: https://github.com/autowarefoundation/autoware_universe/blob/7bbfa925fc756fb8f550772cde962c49daa8d3e6/perception/autoware_detected_object_validation/config/object_lanelet_filter.param.yaml
 
@@ -29,7 +30,7 @@
 
       # object's elevation from lanelet based filter
       lanelet_object_elevation_filter:
-        enabled: true # *OVERRIDE*
+        enabled: true # {OVERRIDE}
         max_elevation_threshold: 5.0 # [m] from a lanelet's surface
         min_elevation_threshold: 0.0 # [m] from a lanelet's surface
 

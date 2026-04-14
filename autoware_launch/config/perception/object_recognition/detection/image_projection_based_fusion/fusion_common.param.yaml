@@ -1,6 +1,7 @@
 # This file is managed by workflow.
-# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
-# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
 # Source: https://github.com/autowarefoundation/autoware_universe/blob/e9d43e45ca477ec70e58421be59cebf867f11f5e/perception/autoware_image_projection_based_fusion/config/fusion_common.param.yaml
 
@@ -10,7 +11,7 @@
     # msg3d's header timestamp: 0.000
     # rois's header timestamp (camera 0-5):  0.059, 0.010, 0.026, 0.042, 0.076, 0.093
     # offset = rois_timestamp- msg3d_timestamp
-    rois_timestamp_offsets: [0.098, 0.147, 0.078, 0.062, 0.115, 0.132] # *OVERRIDE*
+    rois_timestamp_offsets: [0.098, 0.147, 0.078, 0.062, 0.115, 0.132] # {OVERRIDE}
     rois_timeout_sec: 0.5
     msg3d_timeout_sec: 0.05
     image_buffer_size: 15

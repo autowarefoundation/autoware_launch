@@ -1,6 +1,7 @@
 # This file is managed by workflow.
-# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
-# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
 # Source: https://github.com/autowarefoundation/autoware_universe/blob/8dc7e0eb06d6c1d0f00d7c424b4b4f2dbca6496d/perception/autoware_map_based_prediction/config/map_based_prediction.param.yaml
 
@@ -12,7 +13,7 @@
       unknown: 10.0 #[s]
     lateral_control_time_horizon: 5.0 #[s]
     prediction_sampling_delta_time: 0.5 #[s]
-    min_velocity_for_map_based_prediction: 1.0  # *OVERRIDE*[m/s]
+    min_velocity_for_map_based_prediction: 1.0  # {OVERRIDE: [m/s]}
     min_crosswalk_user_velocity: 1.39 #[m/s]
     max_crosswalk_user_delta_yaw_threshold_for_lanelet: 0.785 #[m/s]
     max_crosswalk_user_on_road_distance: 2.0  # [m] crosswalk users on road or shoulder lanelets are only predicted to cross the crosswalk if they are within this distance
@@ -60,9 +61,9 @@
     reference_path_resolution: 0.5 #[m]
 
     # debug parameters
-    publish_processing_time: true # *OVERRIDE*
-    publish_processing_time_detail: true # *OVERRIDE*
-    publish_debug_markers: true # *OVERRIDE*
+    publish_processing_time: true # {OVERRIDE}
+    publish_processing_time_detail: true # {OVERRIDE}
+    publish_debug_markers: true # {OVERRIDE}
     processing_time_tolerance: 0.5 #[s]
     processing_time_consecutive_excess_tolerance: 1.0 #[s]
 

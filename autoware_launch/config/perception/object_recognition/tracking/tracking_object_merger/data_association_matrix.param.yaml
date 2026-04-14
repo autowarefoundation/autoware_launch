@@ -1,6 +1,7 @@
 # This file is managed by workflow.
-# Keys marked with '*OVERRIDE*' are persisted as variant overrides.
-# If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
 # Source: https://github.com/autowarefoundation/autoware_universe/blob/89a130ad42506bc51f540ceacf3a01ea9d407ac7/perception/autoware_tracking_object_merger/config/data_association_matrix.param.yaml
 
@@ -63,7 +64,7 @@
         0.1,     0.1,   0.1,   0.1,    0.1,      0.1,       0.1,     0.1]       #PEDESTRIAN
 
     lidar-radar:
-      can_assign_matrix: # *OVERRIDE*
+      can_assign_matrix: # {OVERRIDE}
         #UNKNOWN, CAR, TRUCK, BUS,  TRAILER, MOTORBIKE, BICYCLE,PEDESTRIAN
         [1,       1,   1,     1,    1,       1,         1,      1,         #UNKNOWN
         1,       1,   1,     1,    1,       1,         1,      1,         #CAR
@@ -74,7 +75,7 @@
         1,       1,   1,     1,    1,       1,         1,      1,         #BICYCLE
         1,       1,   1,     1,    1,       1,         1,      1]         #PEDESTRIAN
 
-      max_dist_matrix: # *OVERRIDE*
+      max_dist_matrix: # {OVERRIDE}
         #UNKNOWN, CAR, TRUCK, BUS,  TRAILER, MOTORBIKE, BICYCLE, PEDESTRIAN
         [4.0,     4.0, 5.0,   5.0,  5.0,     3.5,       3.5,     3.5,       #UNKNOWN
         4.0,     5.5, 6.0,   6.0,  6.0,     3.0,       3.0,     3.0,       #CAR
