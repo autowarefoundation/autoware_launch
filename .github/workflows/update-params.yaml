@@ -93,6 +93,7 @@ jobs:
         run: python .github/scripts/sync_params.py ${{ matrix.category }}
 
       - name: Create update PR
+        id: create-pr
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ steps.generate-token.outputs.token }}
@@ -101,11 +102,30 @@ jobs:
           title: "chore(sync-params): update ${{ matrix.category }} params"
           commit-message: "chore(sync-params): update ${{ matrix.category }} params"
           body: |
-            Automated parameter sync update.
+            Automated parameter sync update for category **${{ matrix.category }}**.
 
-            Category: ${{ matrix.category }}
             Trigger: ${{ github.event_name }}
             Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           labels: |
             no-issue
             chore
+
+      - name: Summarize category result
+        if: ${{ always() }}
+        run: |
+          pr_number="${{ steps.create-pr.outputs.pull-request-number }}"
+          pr_url="${{ steps.create-pr.outputs.pull-request-url }}"
+          pr_cell="-"
+          if [[ -n "${pr_url}" ]]; then
+            if [[ -n "${pr_number}" ]]; then
+              pr_cell="[#${pr_number}](${pr_url})"
+            else
+              pr_cell="[link](${pr_url})" # this is unexpected, but have a fallback anyway
+            fi
+          fi
+
+          {
+            echo "## update-params: ${{ matrix.category }}"
+            echo "Status: ${{ job.status }}"
+            echo "PR: ${pr_cell}"
+          } >> "${GITHUB_STEP_SUMMARY}"

@@ -30,7 +30,7 @@ jobs:
           echo "matrix=${matrix_json}" >> "${GITHUB_OUTPUT}"
           echo "Selected categories: ${matrix_json}"
 
-  check-params:
+  check-params-per-category:
     needs: resolve-categories
     runs-on: ubuntu-22.04
     strategy:
@@ -54,3 +54,16 @@ jobs:
 
       - name: Check params
         run: python .github/scripts/sync_params.py --check ${{ matrix.category }}
+
+  check-params:
+    needs: check-params-per-category
+    if: ${{ always() }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Evaluate per-category results
+        run: |
+          if [[ "${{ needs.check-params-per-category.result }}" != "success" ]]; then
+            echo "At least one category check failed."
+            exit 1
+          fi
+          echo "All category checks passed."
