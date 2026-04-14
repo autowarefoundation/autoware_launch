@@ -5,7 +5,7 @@ embedded original handling, and category-based config parsing for the parameter
 sync workflow.
 
 Run:
-    python -m unittest .github/scripts/test_sync_params.py
+    python .github/scripts/test_sync_params.py
 """
 
 import copy
