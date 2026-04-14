@@ -1,5 +1,6 @@
 <launch>
   <!-- Parameter files -->
+  <!-- cspell: ignore semseg, comlops -->
   <arg name="launch_fault_injection" default="false"/>
   <arg name="fault_injection_param_path"/>
   <arg name="fault_injection_input_diagnostics" default="/diagnostics"/>
@@ -15,6 +16,28 @@
   <arg name="pose_initializer_param_path"/>
   <arg name="twist2accel_param_path"/>
 
+  <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+  <arg name="traffic_light_recognition/classification/car/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+  <arg
+    name="traffic_light_car_classifier_model"
+    default="traffic_light_classifier_mobilenetv2_batch_6.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/car/classifier_type)' == '1'&quot;)"
+  />
+  <arg
+    name="traffic_light_car_classifier_model"
+    default="traffic_light_lamp_recognizer_comlops.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/car/classifier_type)' == '2'&quot;)"
+  />
+  <arg
+    name="traffic_light_ped_classifier_model"
+    default="ped_traffic_light_classifier_mobilenetv2_batch_6.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/pedestrian/classifier_type)' == '1'&quot;)"
+  />
+  <arg
+    name="traffic_light_ped_classifier_model"
+    default="traffic_light_lamp_recognizer_comlops.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/pedestrian/classifier_type)' == '2'&quot;)"
+  />
   <arg name="each_traffic_light_map_based_detector_param_path"/>
   <arg name="traffic_light_fine_detector_param_path"/>
   <arg name="yolox_traffic_light_detector_param_path"/>
@@ -175,10 +198,13 @@
           <arg name="whole_image_detection/yolox_roi_label_remap_path" value="$(var traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path)"/>
           <arg name="fine_detection/model_path" value="$(env HOME)/autoware_data/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx"/>
           <arg name="fine_detection/label_path" value="$(env HOME)/autoware_data/traffic_light_fine_detector/tlr_labels.txt"/>
-          <arg name="classification/car/model_path" value="$(env HOME)/autoware_data/traffic_light_classifier/traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
+          <arg name="classification/car/model_path" value="$(env HOME)/autoware_data/traffic_light_classifier/$(var traffic_light_car_classifier_model)"/>
           <arg name="classification/car/label_path" value="$(env HOME)/autoware_data/traffic_light_classifier/lamp_labels.txt"/>
-          <arg name="classification/pedestrian/model_path" value="$(env HOME)/autoware_data/traffic_light_classifier/ped_traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
+          <arg name="classification/pedestrian/model_path" value="$(env HOME)/autoware_data/traffic_light_classifier/$(var traffic_light_ped_classifier_model)"/>
           <arg name="classification/pedestrian/label_path" value="$(env HOME)/autoware_data/traffic_light_classifier/lamp_labels_ped.txt"/>
+          <arg name="classification/lamp_recognizer_ml_param_path" value="$(env HOME)/autoware_data/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>
+          <arg name="classification/pedestrian/classifier_type" value="$(var traffic_light_recognition/classification/pedestrian/classifier_type)"/>
+          <arg name="classification/car/classifier_type" value="$(var traffic_light_recognition/classification/car/classifier_type)"/>
         </include>
       </group>
     </group>
