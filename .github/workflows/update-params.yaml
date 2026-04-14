@@ -1,0 +1,111 @@
+name: update-params
+
+on:
+  schedule:
+    - cron: 0 0 * * *
+  workflow_dispatch:
+    inputs:
+      category:
+        description: Category to update (see .github/sync-params.yaml for available categories)
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  resolve-categories:
+    runs-on: ubuntu-22.04
+    outputs:
+      matrix: ${{ steps.build-matrix.outputs.matrix }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq \
+            https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+
+      - name: Build category matrix from config
+        id: build-matrix
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_CATEGORY: ${{ inputs.category }}
+        run: |
+          set -euo pipefail
+          categories_json="$(yq -o=json '. | keys' .github/sync-params.yaml)"
+
+          if [[ "${EVENT_NAME}" == "workflow_dispatch" ]]; then
+            input_category="${INPUT_CATEGORY}"
+            if [[ -z "${input_category}" ]]; then
+              echo "workflow_dispatch requires a non-empty category input" >&2
+              exit 1
+            fi
+            if ! jq -e --arg c "${input_category}" 'index($c) != null' <<< "${categories_json}" >/dev/null; then
+              echo "Invalid category '${input_category}'" >&2
+              echo "Available categories: $(jq -r 'join(", ")' <<< "${categories_json}")" >&2
+              exit 1
+            fi
+            selected_json="$(jq -cn --arg c "${input_category}" '[$c]')"
+          else
+            selected_json="${categories_json}"
+          fi
+
+          echo "matrix=${selected_json}" >> "${GITHUB_OUTPUT}"
+          echo "Selected categories: ${selected_json}"
+
+  update-params:
+    needs: resolve-categories
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        category: ${{ fromJson(needs.resolve-categories.outputs.matrix) }}
+    concurrency:
+      group: update-params-${{ matrix.category }}
+      cancel-in-progress: false
+    steps:
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install ruamel.yaml
+
+      - name: Update params
+        run: python .github/scripts/sync_params.py ${{ matrix.category }}
+
+      - name: Create update PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          base: ${{ github.event.repository.default_branch }}
+          branch: sync-params/${{ matrix.category }}
+          title: "chore(sync-params): update ${{ matrix.category }} params"
+          commit-message: "chore(sync-params): update ${{ matrix.category }} params"
+          body: |
+            Automated parameter sync update.
+
+            Category: ${{ matrix.category }}
+            Trigger: ${{ github.event_name }}
+            Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          labels: |
+            no-issue
+            chore
