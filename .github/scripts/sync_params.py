@@ -5,7 +5,9 @@ from __future__ import annotations
 import argparse
 import copy
 from dataclasses import dataclass
+import difflib
 import hashlib
+import io
 from pathlib import Path
 import shutil
 import subprocess
@@ -17,9 +19,9 @@ from typing import Iterable
 from ruamel.yaml import YAML
 from ruamel.yaml.comments import CommentedMap
 from ruamel.yaml.comments import CommentedSeq
-import yaml
 
 OVERRIDE_MARKER = "*OVERRIDE*"
+ORIGINAL_PIVOT = "###### ORIGINAL (DO NOT EDIT) ######"
 
 
 class SyncError(RuntimeError):
@@ -34,7 +36,6 @@ class VariantEntry:
 @dataclass(frozen=True)
 class FileEntry:
     source: str
-    dest: str
     variants: tuple[VariantEntry, ...]
 
 
@@ -148,13 +149,17 @@ def _build_key_line_index(text: str) -> dict[tuple[str, ...], KeyLineInfo]:
 
 
 def _render_inline_yaml_value(value: Any) -> str:
-    dumped = yaml.safe_dump(
-        value,
-        default_flow_style=True,
-        width=10**9,
-        allow_unicode=False,
-        sort_keys=False,
-    ).strip()
+    previous_flow_style = getattr(_YAML_RT, "default_flow_style", None)
+    previous_width = getattr(_YAML_RT, "width", None)
+    try:
+        _YAML_RT.default_flow_style = True
+        _YAML_RT.width = 10**9
+        stream = io.StringIO()
+        _YAML_RT.dump(value, stream)
+        dumped = stream.getvalue().strip()
+    finally:
+        _YAML_RT.default_flow_style = previous_flow_style
+        _YAML_RT.width = previous_width
     return dumped.splitlines()[0] if dumped else "null"
 
 
@@ -180,10 +185,10 @@ def _replace_inline_value(line: str, value: Any) -> str:
     before_comment, sep, after_comment = line.partition("#")
     key_prefix = before_comment.split(":", 1)[0]
     if sep:
-        trailing_spaces = len(before_comment) - len(before_comment.rstrip(" "))
-        new_before_comment = f"{key_prefix}: {_render_inline_yaml_value(value)}" + (
-            " " * trailing_spaces
-        )
+        new_value_text = f"{key_prefix}: {_render_inline_yaml_value(value)}"
+        original_comment_col = len(before_comment)
+        spaces_to_preserve_col = max(1, original_comment_col - len(new_value_text))
+        new_before_comment = f"{new_value_text}{' ' * spaces_to_preserve_col}"
         return f"{new_before_comment}#{after_comment}"
     new_before_comment = f"{key_prefix}: {_render_inline_yaml_value(value)}"
     return new_before_comment
@@ -291,7 +296,9 @@ def extract_flow_sequence_override_blocks_from_text(
 
 
 def ensure_override_markers_in_text(
-    text: str, override_comments: dict[tuple[str, ...], str]
+    text: str,
+    override_comments: dict[tuple[str, ...], str],
+    override_comment_columns: dict[tuple[str, ...], int] | None = None,
 ) -> str:
     lines = text.splitlines()
     key_index = _build_key_line_index(text)
@@ -300,6 +307,7 @@ def ensure_override_markers_in_text(
         if info is None:
             raise SyncError(f"Override path {_format_path(path)} not found while adding marker.")
         line = lines[info.line_idx]
+        desired_col = (override_comment_columns or {}).get(path)
         before_comment, sep, existing_comment = line.partition("#")
         if sep:
             # Preserve the source inline comment text and spacing exactly,
@@ -310,11 +318,38 @@ def ensure_override_markers_in_text(
             if stripped.startswith(OVERRIDE_MARKER):
                 stripped = stripped[len(OVERRIDE_MARKER) :]
                 stripped = stripped.lstrip(" ")
-            lines[info.line_idx] = f"{before_comment}# {OVERRIDE_MARKER}{leading_spaces}{stripped}"
+            stripped = stripped.rstrip(" ")
+            comment_tail_after_marker = f"{leading_spaces}{stripped}".rstrip(" ")
+            comment_payload = f"# {OVERRIDE_MARKER}"
+            if comment_tail_after_marker:
+                comment_payload += comment_tail_after_marker
+            if desired_col is not None:
+                base = before_comment.rstrip(" ")
+                spaces = max(1, desired_col - len(base))
+                lines[info.line_idx] = f"{base}{' ' * spaces}{comment_payload}"
+            else:
+                lines[info.line_idx] = f"{before_comment}{comment_payload}"
             continue
         suffix = comment_text if comment_text else OVERRIDE_MARKER
-        lines[info.line_idx] = f"{line} # {suffix}"
+        if desired_col is not None:
+            spaces = max(1, desired_col - len(line))
+            lines[info.line_idx] = f"{line}{' ' * spaces}# {suffix}"
+        else:
+            lines[info.line_idx] = f"{line} # {suffix}"
     return "\n".join(lines) + ("\n" if text.endswith("\n") or lines else "")
+
+
+def parse_override_comment_columns_from_variant_text(text: str) -> dict[tuple[str, ...], int]:
+    lines = text.splitlines()
+    key_index = _build_key_line_index(text)
+    columns: dict[tuple[str, ...], int] = {}
+    for path, info in key_index.items():
+        line = lines[info.line_idx]
+        comment = _extract_override_comment_from_line(line)
+        if comment is None:
+            continue
+        columns[path] = line.index("#")
+    return columns
 
 
 def dedupe_nearby_identical_comment_lines(text: str) -> str:
@@ -426,13 +461,16 @@ def _parse_repository_entries(entries_data: Any, context: str) -> list[Repositor
         files: list[FileEntry] = []
         for file_index, file_item in enumerate(files_data):
             file_map = _expect_mapping(file_item, f"file entry #{file_index} in {repository}")
+            unknown_file_keys = set(file_map.keys()) - {"source", "variants"}
+            if unknown_file_keys:
+                raise SyncError(
+                    f"File entry #{file_index} in {repository} has unsupported keys: "
+                    f"{sorted(unknown_file_keys)}."
+                )
             source = file_map.get("source")
-            dest = file_map.get("dest")
             variants_data = file_map.get("variants", [])
             if not isinstance(source, str) or not source:
                 raise SyncError(f"Invalid source in {repository} file entry #{file_index}.")
-            if not isinstance(dest, str) or not dest:
-                raise SyncError(f"Invalid dest in {repository} file entry #{file_index}.")
             if not isinstance(variants_data, list):
                 raise SyncError(f"Invalid variants list for {source} in {repository}.")
 
@@ -457,7 +495,7 @@ def _parse_repository_entries(entries_data: Any, context: str) -> list[Repositor
                     )
                 variants.append(VariantEntry(path=variant_path))
 
-            files.append(FileEntry(source=source, dest=dest, variants=tuple(variants)))
+            files.append(FileEntry(source=source, variants=tuple(variants)))
 
         repositories.append(RepositoryEntry(repository=repository, ref=ref, files=tuple(files)))
 
@@ -466,8 +504,8 @@ def _parse_repository_entries(entries_data: Any, context: str) -> list[Repositor
 
 def load_config(config_path: Path, category: str) -> list[RepositoryEntry]:
     try:
-        config_data = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    except yaml.YAMLError as exc:
+        config_data = _YAML_RT.load(config_path.read_text(encoding="utf-8"))
+    except Exception as exc:
         raise SyncError(f"Invalid YAML in config '{config_path}': {exc}") from exc
 
     if not isinstance(config_data, dict):
@@ -497,6 +535,23 @@ def run_git(args: list[str], cwd: Path | None = None) -> str:
             + f": {process.stderr.strip()}"
         )
     return process.stdout.strip()
+
+
+def load_source_body_at_sha(repo_dir: Path, sha: str, source_path: str) -> str:
+    process = subprocess.run(
+        ["git", "show", f"{sha}:{source_path}"],
+        cwd=str(repo_dir),
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if process.returncode != 0:
+        raise SyncError(
+            f"git show failed for {sha}:{source_path} (cwd={repo_dir}): "
+            f"{process.stderr.strip()}"
+        )
+    text = process.stdout
+    return text if text.endswith("\n") else f"{text}\n"
 
 
 def resolve_default_branch(repo: str) -> str:
@@ -535,42 +590,79 @@ def last_modified_sha(repo_dir: Path, source_path: str) -> str:
 
 def load_yaml_file(path: Path) -> Any:
     try:
-        return yaml.safe_load(path.read_text(encoding="utf-8"))
-    except yaml.YAMLError as exc:
+        return _YAML_RT.load(path.read_text(encoding="utf-8"))
+    except Exception as exc:
         raise SyncError(f"Invalid YAML file '{path}': {exc}") from exc
-
-
-def dump_yaml(data: Any) -> str:
-    return yaml.safe_dump(data, sort_keys=False, default_flow_style=False, allow_unicode=False)
 
 
 def source_blob_url(source_repo: str, source_sha: str, source_path: str) -> str:
     return f"https://github.com/{source_repo}/blob/{source_sha}/{source_path}"
 
 
-def build_dest_header(source_url: str, variant_paths: Iterable[str]) -> str:
-    variant_list = list(variant_paths)
-    lines = [
-        "# This file is generated by workflow. Do not modify directly.",
-        "#",
-        f"# Source: {source_url}",
-        f"# Variants in this repository:{'' if variant_list else ' (none)'}",
-    ]
-    if variant_list:
-        lines.extend([f"#   - {path}" for path in variant_list])
-    return "\n".join(lines) + "\n\n"
-
-
-def build_variant_header(source_url: str, dest_path: str) -> str:
+def build_variant_header(source_url: str) -> str:
     lines = [
         "# This file is managed by workflow.",
         f"# Keys marked with '{OVERRIDE_MARKER}' are persisted as variant overrides.",
         f"# If you want to modify a field, make sure that the field has comment including -> # {OVERRIDE_MARKER}",
         "#",
         f"# Source: {source_url}",
-        f"# Reference in this repository: {dest_path}",
     ]
     return "\n".join(lines) + "\n\n"
+
+
+def build_embedded_original_section(source_body: str) -> str:
+    lines = source_body.splitlines()
+    commented_lines = [f"# {line}" if line else "#" for line in lines]
+    section = ["", f"# {ORIGINAL_PIVOT}", *commented_lines]
+    return "\n".join(section) + "\n"
+
+
+def extract_pinned_source_sha_and_path(variant_text: str) -> tuple[str, str] | None:
+    for line in variant_text.splitlines():
+        if not line.startswith("# Source: "):
+            continue
+        source_url = line.removeprefix("# Source: ").strip()
+        if "/blob/" not in source_url:
+            return None
+        sha_and_path = source_url.split("/blob/", 1)[1]
+        sha, sep, path = sha_and_path.partition("/")
+        if not sep or not sha or not path:
+            return None
+        return sha, path
+    return None
+
+
+def extract_embedded_original_from_variant_text(text: str) -> str | None:
+    lines = text.splitlines()
+    pivot_line = f"# {ORIGINAL_PIVOT}"
+    pivot_idx = next((idx for idx, line in enumerate(lines) if line.strip() == pivot_line), None)
+    if pivot_idx is None:
+        return None
+
+    reconstructed: list[str] = []
+    for line in lines[pivot_idx + 1 :]:
+        if line == "#":
+            reconstructed.append("")
+            continue
+        if line.startswith("# "):
+            reconstructed.append(line[2:])
+            continue
+        if line.strip() == "":
+            reconstructed.append("")
+            continue
+        raise SyncError(
+            "Embedded original section is malformed; expected only commented lines "
+            f"after '{ORIGINAL_PIVOT}'."
+        )
+
+    if not reconstructed:
+        return ""
+    return "\n".join(reconstructed) + "\n"
+
+
+def embedded_original_matches_source(variant_text: str, source_body: str) -> bool:
+    extracted = extract_embedded_original_from_variant_text(variant_text)
+    return extracted is not None and extracted == source_body
 
 
 def get_value_at_path(data: Any, path: tuple[str, ...]) -> Any:
@@ -637,13 +729,37 @@ def write_or_check(path: Path, new_content: str, check: bool) -> bool:
     return True
 
 
+def _build_unified_diff(path: Path, old_content: str | None, new_content: str) -> str:
+    old_lines = old_content.splitlines(keepends=True) if old_content is not None else []
+    new_lines = new_content.splitlines(keepends=True)
+    cwd = Path.cwd()
+    display_path = str(path)
+    try:
+        display_path = str(path.relative_to(cwd))
+    except ValueError:
+        pass
+
+    diff_lines = list(
+        difflib.unified_diff(
+            old_lines,
+            new_lines,
+            fromfile=f"a/{display_path}",
+            tofile=f"b/{display_path}",
+            lineterm="",
+            n=2,
+        )
+    )
+    # Keep output concise in check mode.
+    return "\n".join(diff_lines[:80])
+
+
 def sync_file_entry(
     workspace_root: Path,
     repository: RepositoryEntry,
     file_entry: FileEntry,
     source_repo_dir: Path,
     check: bool,
-) -> tuple[int, int]:
+) -> int:
     source_abs = source_repo_dir / file_entry.source
     if not source_abs.exists():
         raise SyncError(
@@ -655,34 +771,61 @@ def sync_file_entry(
     source_yaml = load_yaml_file(source_abs)
     if source_yaml is None:
         source_yaml = {}
-    source_rt_yaml = _YAML_RT.load(source_text)
-    if source_rt_yaml is None:
-        source_rt_yaml = CommentedMap()
     source_sha = last_modified_sha(source_repo_dir, file_entry.source)
     source_url = source_blob_url(repository.repository, source_sha, file_entry.source)
 
-    dest_abs = workspace_root / file_entry.dest
     source_body = source_text if source_text.endswith("\n") else f"{source_text}\n"
-    dest_content = (
-        build_dest_header(source_url, [variant.path for variant in file_entry.variants])
-        + source_body
-    )
-    dest_changed = write_or_check(dest_abs, dest_content, check)
+    embedded_original = build_embedded_original_section(source_body)
 
     variants_changed = 0
     for variant in file_entry.variants:
         variant_abs = workspace_root / variant.path
+        variant_text = variant_abs.read_text(encoding="utf-8") if variant_abs.exists() else ""
+        source_body_for_embedded_check = source_body
+        pinned_sha_and_path = (
+            extract_pinned_source_sha_and_path(variant_text) if variant_text else None
+        )
+        if pinned_sha_and_path:
+            pinned_sha, pinned_source_path = pinned_sha_and_path
+            if pinned_source_path != file_entry.source:
+                raise SyncError(
+                    f"Source path mismatch in '{variant.path}': header points to "
+                    f"'{pinned_source_path}' but config source is '{file_entry.source}'."
+                )
+            source_body_for_embedded_check = load_source_body_at_sha(
+                source_repo_dir, pinned_sha, pinned_source_path
+            )
+
+        if variant_text and not embedded_original_matches_source(
+            variant_text, source_body_for_embedded_check
+        ):
+            if check:
+                print(
+                    "[sync] Embedded original drift detected in "
+                    f"'{variant.path}' for source '{file_entry.source}'."
+                )
+
         overrides, override_comments = extract_override_values(variant_abs)
+        override_comment_columns = parse_override_comment_columns_from_variant_text(variant_text)
         if not overrides:
-            variant_content = build_variant_header(source_url, file_entry.dest) + source_body
-            if write_or_check(variant_abs, variant_content, check):
+            variant_content = build_variant_header(source_url) + source_body
+            variant_content += embedded_original
+            changed = write_or_check(variant_abs, variant_content, check)
+            if changed:
                 variants_changed += 1
+                if check:
+                    old_content = (
+                        variant_abs.read_text(encoding="utf-8") if variant_abs.exists() else None
+                    )
+                    diff_text = _build_unified_diff(variant_abs, old_content, variant_content)
+                    print(f"[sync] Drift detail: {variant.path}")
+                    if diff_text:
+                        print(diff_text)
             continue
-        variant_text = variant_abs.read_text(encoding="utf-8")
+
         override_flow_blocks = extract_flow_sequence_override_blocks_from_text(
             variant_text, overrides.keys()
         )
-        variant_yaml = copy.deepcopy(source_yaml)
 
         for override_path, override_value in overrides.items():
             try:
@@ -692,16 +835,27 @@ def sync_file_entry(
                     f"Override path {_format_path(override_path)} in '{variant.path}' "
                     f"is missing from source '{file_entry.source}'."
                 ) from exc
-            set_value_at_path(variant_yaml, override_path, override_value)
 
         variant_body = apply_overrides_to_source_text(source_body, overrides, override_flow_blocks)
-        variant_body = ensure_override_markers_in_text(variant_body, override_comments)
+        variant_body = ensure_override_markers_in_text(
+            variant_body, override_comments, override_comment_columns
+        )
         variant_body = dedupe_nearby_identical_comment_lines(variant_body)
-        variant_content = build_variant_header(source_url, file_entry.dest) + variant_body
-        if write_or_check(variant_abs, variant_content, check):
+        variant_content = build_variant_header(source_url) + variant_body
+        variant_content += embedded_original
+        changed = write_or_check(variant_abs, variant_content, check)
+        if changed:
             variants_changed += 1
+            if check:
+                old_content = (
+                    variant_abs.read_text(encoding="utf-8") if variant_abs.exists() else None
+                )
+                diff_text = _build_unified_diff(variant_abs, old_content, variant_content)
+                print(f"[sync] Drift detail: {variant.path}")
+                if diff_text:
+                    print(diff_text)
 
-    return int(dest_changed), variants_changed
+    return variants_changed
 
 
 def run_sync(
@@ -715,9 +869,7 @@ def run_sync(
 
     total_repos = 0
     total_files = 0
-    changed_dest = 0
     changed_variants = 0
-    drift_paths: list[str] = []
 
     with tempfile.TemporaryDirectory(prefix="sync-params-") as tmp_dir_name:
         temp_root = Path(tmp_dir_name)
@@ -731,13 +883,9 @@ def run_sync(
             for file_entry in repo_entry.files:
                 total_files += 1
                 if verbose:
-                    print(
-                        "[sync] Processing "
-                        f"{repo_entry.repository}:{file_entry.source} -> {file_entry.dest}"
-                    )
-                before_dest = changed_dest
+                    print(f"[sync] Processing {repo_entry.repository}:{file_entry.source}")
                 before_variants = changed_variants
-                changed_dest_delta, changed_variants_delta = sync_file_entry(
+                changed_variants_delta = sync_file_entry(
                     workspace_root=workspace_root,
                     repository=RepositoryEntry(
                         repository=repo_entry.repository, ref=resolved_ref, files=repo_entry.files
@@ -746,21 +894,15 @@ def run_sync(
                     source_repo_dir=repo_dir,
                     check=check,
                 )
-                changed_dest += changed_dest_delta
                 changed_variants += changed_variants_delta
-                if check and (changed_dest > before_dest or changed_variants > before_variants):
-                    drift_paths.append(file_entry.dest)
-                    drift_paths.extend(variant.path for variant in file_entry.variants)
+                if not check and changed_variants > before_variants:
+                    print(f"[sync] Updated variant(s) for source: {file_entry.source}")
 
     print(
-        f"[sync] repositories={total_repos} files={total_files} "
-        f"dest_changed={changed_dest} variants_changed={changed_variants}"
+        f"[sync] repositories={total_repos} files={total_files} variants_changed={changed_variants}"
     )
-    if check and (changed_dest > 0 or changed_variants > 0):
-        unique_drift = sorted(set(drift_paths))
-        print("[sync] Drift detected in:")
-        for path in unique_drift:
-            print(f"  - {path}")
+    if check and changed_variants > 0:
+        print("[sync] Drift detected (details shown above).")
         return 1
     return 0
 
