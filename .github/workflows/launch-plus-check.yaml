@@ -27,7 +27,6 @@ jobs:
           apt-get update && apt-get install -y --no-install-recommends \
             curl \
             git \
-            python3-pip \
             python3-yaml \
             ros-dev-tools
 
@@ -40,9 +39,10 @@ jobs:
       - name: Install roscope
         shell: bash
         run: |
-          curl -fsSL "https://github.com/paulsohn/roscope/releases/download/v${ROSCOPE_SEMVER}/roscope-${ROSCOPE_SEMVER}.tar.gz" \
-            -o /tmp/roscope.tar.gz
-          python3 -m pip install --no-cache-dir --break-system-packages /tmp/roscope.tar.gz
+          # CI assumption: Ubuntu 24.04 amd64.
+          curl -fsSL "https://github.com/paulsohn/roscope/releases/download/v${ROSCOPE_SEMVER}/roscope_${ROSCOPE_SEMVER}-1_all.deb" \
+            -o /tmp/roscope.deb
+          apt-get install -y /tmp/roscope.deb
 
           roscope --version
 
