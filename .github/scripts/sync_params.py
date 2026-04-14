@@ -82,7 +82,7 @@ def _comment_has_override_marker(comment_obj: Any) -> bool:
 
 def _extract_comment_text(comment_obj: Any) -> str:
     comment_value = getattr(comment_obj, "value", str(comment_obj))
-    normalized = comment_value.strip()
+    normalized = comment_value.splitlines()[0].strip()
     if normalized.startswith("#"):
         normalized = normalized[1:].strip()
     return normalized
@@ -320,6 +320,17 @@ def ensure_override_markers_in_text(
                 stripped = stripped.lstrip(" ")
             stripped = stripped.rstrip(" ")
             comment_tail_after_marker = f"{leading_spaces}{stripped}".rstrip(" ")
+
+            next_non_empty_idx = info.line_idx + 1
+            while next_non_empty_idx < len(lines) and lines[next_non_empty_idx].strip() == "":
+                next_non_empty_idx += 1
+            if next_non_empty_idx < len(lines):
+                next_line = lines[next_non_empty_idx].lstrip(" ")
+                if next_line.startswith("#"):
+                    next_comment_text = next_line[1:].strip()
+                    if next_comment_text == stripped.strip():
+                        comment_tail_after_marker = ""
+
             comment_payload = f"# {OVERRIDE_MARKER}"
             if comment_tail_after_marker:
                 comment_payload += comment_tail_after_marker
@@ -350,35 +361,6 @@ def parse_override_comment_columns_from_variant_text(text: str) -> dict[tuple[st
             continue
         columns[path] = line.index("#")
     return columns
-
-
-def dedupe_nearby_identical_comment_lines(text: str) -> str:
-    lines = text.splitlines()
-    out: list[str] = []
-    i = 0
-    while i < len(lines):
-        line = lines[i]
-        out.append(line)
-        stripped = line.lstrip(" ")
-        if not stripped.startswith("#"):
-            i += 1
-            continue
-        indent = len(line) - len(stripped)
-        comment_text = stripped
-        j = i + 1
-        while j < len(lines):
-            candidate = lines[j]
-            candidate_stripped = candidate.strip()
-            if candidate_stripped == "":
-                j += 1
-                continue
-            c = lines[j].lstrip(" ")
-            c_indent = len(lines[j]) - len(c)
-            if c.startswith("#") and c_indent == indent and c == comment_text:
-                i = j
-            break
-        i += 1
-    return "\n".join(out) + ("\n" if text.endswith("\n") or out else "")
 
 
 def parse_override_comments_from_variant_text(text: str) -> dict[tuple[str, ...], str]:
@@ -840,7 +822,6 @@ def sync_file_entry(
         variant_body = ensure_override_markers_in_text(
             variant_body, override_comments, override_comment_columns
         )
-        variant_body = dedupe_nearby_identical_comment_lines(variant_body)
         variant_content = build_variant_header(source_url) + variant_body
         variant_content += embedded_original
         changed = write_or_check(variant_abs, variant_content, check)

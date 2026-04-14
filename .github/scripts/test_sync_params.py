@@ -1,3 +1,13 @@
+"""Unit tests for sync_params.py.
+
+This test script validates override parsing/reapplication, marker placement,
+embedded original handling, and category-based config parsing for the parameter
+sync workflow.
+
+Run:
+    python -m unittest .github/scripts/test_sync_params.py
+"""
+
 import copy
 from pathlib import Path
 import tempfile
@@ -8,7 +18,6 @@ from sync_params import SyncError
 from sync_params import apply_overrides_to_source_text
 from sync_params import build_embedded_original_section
 from sync_params import build_variant_header
-from sync_params import dedupe_nearby_identical_comment_lines
 from sync_params import embedded_original_matches_source
 from sync_params import ensure_override_markers_in_text
 from sync_params import extract_embedded_original_from_variant_text
@@ -73,6 +82,20 @@ class SyncParamsTest(unittest.TestCase):
                     "can_assign_matrix",
                 ): "*OVERRIDE*"
             },
+        )
+
+    def test_parse_override_comments_ignores_following_standalone_comments(self) -> None:
+        text = """
+/**:
+  ros__parameters:
+    logging_file_path: /tmp/foo # *OVERRIDE* diagnostics
+
+    # diagnostics
+"""
+        comments = parse_override_comments_from_variant_text(text)
+        self.assertEqual(
+            comments,
+            {("/**", "ros__parameters", "logging_file_path"): "*OVERRIDE* diagnostics"},
         )
 
     def test_config_rejects_string_variant(self) -> None:
@@ -497,18 +520,48 @@ perception: []
         )
         self.assertEqual(source_line.index("#"), patched_line.index("#"))
 
-    def test_dedupe_nearby_identical_comment_lines(self) -> None:
-        text = """
+    def test_text_marker_reinsertion_avoids_duplicate_next_comment_line(self) -> None:
+        source_text = """
 /**:
   ros__parameters:
-    # Pedestrian size validation parameters
+    min_width: 0.1 #  Minimum width [m] (shoulder width)
 
-    # Pedestrian size validation parameters
-    pedestrian_size_validation:
-      enable: true
+    # Minimum width [m] (shoulder width)
 """
-        deduped = dedupe_nearby_identical_comment_lines(text)
-        self.assertEqual(deduped.count("# Pedestrian size validation parameters"), 1)
+        with_markers = ensure_override_markers_in_text(
+            source_text,
+            {
+                (
+                    "/**",
+                    "ros__parameters",
+                    "min_width",
+                ): "*OVERRIDE* Minimum width [m] (shoulder width)"
+            },
+        )
+        self.assertIn("min_width: 0.1 # *OVERRIDE*", with_markers)
+        self.assertEqual(with_markers.count("# Minimum width [m] (shoulder width)"), 1)
+
+    def test_text_marker_reinsertion_with_parsed_comment_does_not_duplicate_following_comment(
+        self,
+    ) -> None:
+        source_text = """
+/**:
+  ros__parameters:
+    logging_file_path: /tmp/foo
+
+    # diagnostics
+"""
+        variant_text = """
+/**:
+  ros__parameters:
+    logging_file_path: /tmp/foo # *OVERRIDE* diagnostics
+
+    # diagnostics
+"""
+        override_comments = parse_override_comments_from_variant_text(variant_text)
+        with_markers = ensure_override_markers_in_text(source_text, override_comments)
+        self.assertIn("logging_file_path: /tmp/foo # *OVERRIDE* diagnostics", with_markers)
+        self.assertEqual(with_markers.count("# diagnostics"), 1)
 
 
 if __name__ == "__main__":
