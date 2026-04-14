@@ -3,7 +3,6 @@
 # If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
 #
 # Source: https://github.com/autowarefoundation/autoware_universe/blob/178b6c003ae5f5c2838352f397df7a0bbea9e6bb/perception/autoware_detected_object_validation/config/obstacle_pointcloud_based_validator.param.yaml
-# Reference in this repository: .config-sync/perception/autoware_detected_object_validation/config/obstacle_pointcloud_based_validator.param.yaml
 
 /**:
   ros__parameters:
@@ -23,3 +22,23 @@
 
     using_2d_validator: true # *OVERRIDE*
     enable_debugger: false
+
+# ###### ORIGINAL (DO NOT EDIT) ######
+# /**:
+#   ros__parameters:
+#     min_points_num:
+#     #UNKNOWN, CAR, TRUCK, BUS, TRAILER, MOTORBIKE, BICYCLE, PEDESTRIAN
+#       [10,     10,  10,    10,     10,     10,      10,         10]
+#
+#     max_points_num:
+#     #UNKNOWN, CAR, TRUCK, BUS, TRAILER, MOTORBIKE, BICYCLE, PEDESTRIAN
+#       [10,     10,  10,    10,     10,     10,      10,         10]
+#
+#     min_points_and_distance_ratio:
+#     #UNKNOWN,  CAR,    TRUCK,     BUS,    TRAILER, MOTORBIKE, BICYCLE,      PEDESTRIAN
+#       [800.0,  800.0,  800.0,    800.0,   800.0,      800.0,    800.0,         800.0]
+#
+#     validate_max_distance_m: 70.0 # [m]
+#
+#     using_2d_validator: false
+#     enable_debugger: false

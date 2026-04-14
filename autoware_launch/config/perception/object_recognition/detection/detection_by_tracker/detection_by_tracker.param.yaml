@@ -3,7 +3,6 @@
 # If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
 #
 # Source: https://github.com/autowarefoundation/autoware_universe/blob/6aab3e38933ddd264b9f32667770a75f74ec1ae3/perception/autoware_detection_by_tracker/config/detection_by_tracker.param.yaml
-# Reference in this repository: .config-sync/perception/autoware_detection_by_tracker/config/detection_by_tracker.param.yaml
 
 /**:
   ros__parameters:
@@ -15,3 +14,15 @@
     tracker_ignore_label.MOTORCYCLE : false
     tracker_ignore_label.BICYCLE : false
     tracker_ignore_label.PEDESTRIAN : false
+
+# ###### ORIGINAL (DO NOT EDIT) ######
+# /**:
+#   ros__parameters:
+#     tracker_ignore_label.UNKNOWN : true
+#     tracker_ignore_label.CAR : false
+#     tracker_ignore_label.TRUCK : false
+#     tracker_ignore_label.BUS : false
+#     tracker_ignore_label.TRAILER : false
+#     tracker_ignore_label.MOTORCYCLE : false
+#     tracker_ignore_label.BICYCLE : false
+#     tracker_ignore_label.PEDESTRIAN : false

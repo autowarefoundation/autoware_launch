@@ -3,7 +3,6 @@
 # If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
 #
 # Source: https://github.com/autowarefoundation/autoware_universe/blob/76922a845358de6042cee56e1e711bf163fdcb23/perception/autoware_lidar_transfusion/config/transfusion_common.param.yaml
-# Reference in this repository: .config-sync/perception/autoware_lidar_transfusion/config/transfusion_common.param.yaml
 
 /**:
   ros__parameters:
@@ -11,3 +10,11 @@
       max_allowed_processing_time_ms: 200.0
       max_acceptable_consecutive_delay_ms: 1000.0
       validation_callback_interval_ms: 100.0
+
+# ###### ORIGINAL (DO NOT EDIT) ######
+# /**:
+#   ros__parameters:
+#     diagnostics:
+#       max_allowed_processing_time_ms: 200.0
+#       max_acceptable_consecutive_delay_ms: 1000.0
+#       validation_callback_interval_ms: 100.0

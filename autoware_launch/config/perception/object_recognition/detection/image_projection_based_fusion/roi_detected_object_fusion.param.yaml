@@ -3,7 +3,6 @@
 # If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
 #
 # Source: https://github.com/autowarefoundation/autoware_universe/blob/065e021f6f86262c0224362fa43f03ba955c1e24/perception/autoware_image_projection_based_fusion/config/roi_detected_object_fusion.param.yaml
-# Reference in this repository: .config-sync/perception/autoware_image_projection_based_fusion/config/roi_detected_object_fusion.param.yaml
 
 /**:
   ros__parameters:
@@ -24,3 +23,24 @@
        0,       0,   0,     0,   0,       1,         1,       1,         # MOTORBIKE
        0,       0,   0,     0,   0,       1,         1,       1,         # BICYCLE
        0,       0,   0,     0,   0,       1,         1,       1]         # PEDESTRIAN
+
+# ###### ORIGINAL (DO NOT EDIT) ######
+# /**:
+#   ros__parameters:
+#     # UNKNOWN, CAR, TRUCK, BUS, TRAILER, MOTORBIKE, BICYCLE, PEDESTRIAN
+#     passthrough_lower_bound_probability_thresholds: [0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.50]
+#     trust_distances: [50.0, 100.0, 100.0, 100.0, 100.0, 50.0, 50.0, 50.0]
+#     min_iou_threshold: 0.5
+#     use_roi_probability: false
+#     roi_probability_threshold: 0.5
+#
+#     can_assign_matrix:
+#       #UNKNOWN, CAR, TRUCK, BUS, TRAILER, MOTORBIKE, BICYCLE, PEDESTRIAN <-roi_msg
+#       [1,       0,   0,     0,   0,       0,         0,       0,         # UNKNOWN <-detected_objects
+#        0,       1,   1,     1,   1,       0,         0,       0,         # CAR
+#        0,       1,   1,     1,   1,       0,         0,       0,         # TRUCK
+#        0,       1,   1,     1,   1,       0,         0,       0,         # BUS
+#        0,       1,   1,     1,   1,       0,         0,       0,         # TRAILER
+#        0,       0,   0,     0,   0,       1,         1,       1,         # MOTORBIKE
+#        0,       0,   0,     0,   0,       1,         1,       1,         # BICYCLE
+#        0,       0,   0,     0,   0,       1,         1,       1]         # PEDESTRIAN

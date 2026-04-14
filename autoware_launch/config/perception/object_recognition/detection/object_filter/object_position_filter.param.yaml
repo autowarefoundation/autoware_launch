@@ -3,7 +3,6 @@
 # If you want to modify a field, make sure that the field has comment including -> # *OVERRIDE*
 #
 # Source: https://github.com/autowarefoundation/autoware_universe/blob/a595b365d4e4fa7184f6d104d6ef1802285f6bbb/perception/autoware_detected_object_validation/config/object_position_filter.param.yaml
-# Reference in this repository: .config-sync/perception/autoware_detected_object_validation/config/object_position_filter.param.yaml
 
 /**:
   ros__parameters:
@@ -21,3 +20,21 @@
     lower_bound_x: 0.0
     upper_bound_y: 10.0
     lower_bound_y: -10.0
+
+# ###### ORIGINAL (DO NOT EDIT) ######
+# /**:
+#   ros__parameters:
+#     filter_target_label:
+#       UNKNOWN : true
+#       CAR : false
+#       TRUCK : false
+#       BUS : false
+#       TRAILER : false
+#       MOTORCYCLE : false
+#       BICYCLE : false
+#       PEDESTRIAN : false
+#
+#     upper_bound_x: 100.0
+#     lower_bound_x: 0.0
+#     upper_bound_y: 10.0
+#     lower_bound_y: -10.0
