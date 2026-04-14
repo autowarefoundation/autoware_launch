@@ -1,0 +1,18 @@
+/**:
+  ros__parameters:
+    model_params:
+      num_anchors: 3
+      chans_per_anchor: 16
+      x_index: 0
+      y_index: 1
+      w_index: 2
+      h_index: 3
+      obj_index: 4
+      color_start: 5
+      type_start: 8
+      num_types: 6
+      num_colors: 3
+      cos_index: 14
+      sin_index: 15
+      scale_x_y: 2.0
+      anchors: [7.0, 7.0, 14.0, 14.0, 42.0, 42.0]
