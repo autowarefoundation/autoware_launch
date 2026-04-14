@@ -1,0 +1,60 @@
+autoware_system_design_format: 0.3.0
+
+name: ObjectRecognition.module
+
+instances:
+  - name: detection
+    entity: ObjectDetection.module
+  - name: tracking
+    entity: ObjectTrackingSingleChannel.module
+  - name: prediction
+    entity: ObjectPredictionMapBased.module
+
+subscribers:
+  # map
+  - name: pointcloud_map
+  - name: vector_map
+  - name: service_pointcloud_map_diff
+  # localization
+  - name: kinematic_state
+  # traffic lights
+  - name: traffic_lights
+  # lidar
+  - name: obstacle_pointcloud
+  - name: lidar_ml_objects
+publishers:
+  - name: objects
+  - name: map_filtered_obstacle_pointcloud
+
+connections:
+  # detection
+  - - subscriber.pointcloud_map
+    - detection.subscriber.pointcloud_map
+  - - subscriber.vector_map
+    - detection.subscriber.vector_map
+  - - client.service_pointcloud_map_diff
+    - detection.client.service_pointcloud_map_diff
+  - - subscriber.kinematic_state
+    - detection.subscriber.kinematic_state
+  - - subscriber.obstacle_pointcloud
+    - detection.subscriber.obstacle_pointcloud
+  - - subscriber.lidar_ml_objects
+    - detection.subscriber.lidar_ml_objects
+  - - detection.publisher.filtered_obstacle_pointcloud
+    - publisher.map_filtered_obstacle_pointcloud
+
+  # tracking
+  - - detection.publisher.detected_objects
+    - tracking.subscriber.detected_objects
+  - - tracking.publisher.objects
+    - detection.subscriber.tracked_objects
+
+  # prediction
+  - - tracking.publisher.objects
+    - prediction.subscriber.tracked_objects
+  - - subscriber.vector_map
+    - prediction.subscriber.vector_map
+  - - subscriber.traffic_lights
+    - prediction.subscriber.traffic_lights
+  - - prediction.publisher.objects
+    - publisher.objects

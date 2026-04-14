@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
-from ament_index_python.packages import get_package_share_directory
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
@@ -24,6 +21,7 @@ from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.actions import Node
 from launch_ros.descriptions import ComposableNode
@@ -118,11 +116,13 @@ class SmallUnknownPipeline:
     def get_agnocast_env(self):
         agnocast_env = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
-                os.path.join(
-                    get_package_share_directory("autoware_agnocast_wrapper"),
-                    "launch",
-                    "agnocast_env.launch.py",
-                )
+                PathJoinSubstitution(
+                    [
+                        FindPackageShare("autoware_agnocast_wrapper"),
+                        "launch",
+                        "agnocast_env.launch.py",
+                    ]
+                ),
             ),
         )
         return agnocast_env
