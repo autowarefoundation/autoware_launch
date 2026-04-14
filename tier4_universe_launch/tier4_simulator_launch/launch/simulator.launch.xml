@@ -15,8 +15,8 @@
   <arg name="pose_initializer_param_path"/>
   <arg name="twist2accel_param_path"/>
 
-  <arg name="traffic_light_recognition/classification/pedestrian/classifier_type"/>
-  <arg name="traffic_light_recognition/classification/car/classifier_type"/>
+  <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+  <arg name="traffic_light_recognition/classification/car/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
   <arg
     name="traffic_light_car_classifier_model"
     default="traffic_light_classifier_mobilenetv2_batch_6.onnx"
