@@ -42,7 +42,7 @@ jobs:
         run: |
           curl -fsSL "https://github.com/paulsohn/roscope/releases/download/v${ROSCOPE_SEMVER}/roscope-${ROSCOPE_SEMVER}.tar.gz" \
             -o /tmp/roscope.tar.gz
-          python3 -m pip install --no-cache-dir /tmp/roscope.tar.gz
+          python3 -m pip install --no-cache-dir --break-system-packages /tmp/roscope.tar.gz
 
           roscope --version
 
