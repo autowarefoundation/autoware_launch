@@ -1,5 +1,6 @@
 <launch>
   <!-- Parameter files -->
+  <!-- cspell: ignore semseg, comlops -->
   <arg name="launch_fault_injection" default="false"/>
   <arg name="fault_injection_param_path"/>
   <arg name="fault_injection_input_diagnostics" default="/diagnostics"/>
