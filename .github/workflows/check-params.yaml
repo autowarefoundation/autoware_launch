@@ -26,7 +26,7 @@ jobs:
         id: build-matrix
         run: |
           set -euo pipefail
-          matrix_json="$(yq -o=json '. | keys' .github/sync-params.yaml)"
+          matrix_json="$(yq -o=json -I=0 '. | keys' .github/sync-params.yaml)"
           echo "matrix=${matrix_json}" >> "${GITHUB_OUTPUT}"
           echo "Selected categories: ${matrix_json}"
 
