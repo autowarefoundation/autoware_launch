@@ -70,8 +70,8 @@
       name="each_traffic_light_map_based_detector_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_map_based_detector/TRAFFIC_LIGHT_RECOGNITION_CAMERA_NAMESPACE_traffic_light_map_based_detector.param.yaml"
     />
-    <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
-    <arg name="traffic_light_recognition/classification/car/classifier_type" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+    <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+    <arg name="traffic_light_recognition/classification/car/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
     <arg
       name="traffic_light_fine_detector_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml"
