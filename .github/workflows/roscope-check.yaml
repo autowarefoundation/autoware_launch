@@ -18,7 +18,7 @@ env:
 
 jobs:
   resolve:
-    name: Resolve (dry-run build)
+    name: Resolve
     runs-on: ubuntu-24.04
     container: ros:jazzy
     timeout-minutes: 30
@@ -91,14 +91,14 @@ jobs:
           roscope index ci_depends.repos
           cat manifest.lock.repos
 
-      - name: Resolve (dry-run build)
+      - name: Resolve (quiet)
         working-directory: ws
         shell: bash
         run: |
           source /opt/ros/jazzy/setup.bash
-          roscope build \
+          roscope resolve \
             autoware_launch autoware.launch.xml \
             sensor_model:=sample_sensor_kit \
             vehicle_model:=sample_vehicle \
             map_path:=/placeholder/map_path \
-            --rosdep --dry-run
+            --show-args --inline-params --rosdep --preview > /dev/null
