@@ -336,6 +336,7 @@ def ensure_override_markers_in_text(
             comment_tail = existing_comment
             stripped = comment_tail.lstrip(" ")
             leading_spaces = comment_tail[: len(comment_tail) - len(stripped)]
+            existing_marker = _extract_override_marker(stripped)
             stripped = _strip_leading_override_marker(stripped)
             stripped = stripped.rstrip(" ")
             comment_tail_after_marker = f"{leading_spaces}{stripped}".rstrip(" ")
@@ -350,8 +351,10 @@ def ensure_override_markers_in_text(
                     if next_comment_text == stripped.strip():
                         comment_tail_after_marker = ""
 
-            reason_text = comment_tail_after_marker.strip()
-            comment_payload = f"# {_normalize_override_marker(reason_text)}"
+            marker_token = existing_marker if existing_marker is not None else OVERRIDE_MARKER
+            comment_payload = f"# {marker_token}"
+            if comment_tail_after_marker:
+                comment_payload += comment_tail_after_marker
             if desired_col is not None:
                 base = before_comment.rstrip(" ")
                 spaces = max(1, desired_col - len(base))

@@ -362,11 +362,11 @@ perception: []
             },
         )
         self.assertIn(
-            "min_width: 0.1 # {OVERRIDE: Minimum width [m] (shoulder width)}",
+            "min_width: 0.1 # {OVERRIDE}  Minimum width [m] (shoulder width)",
             with_markers,
         )
 
-    def test_text_marker_reinsertion_rewrites_existing_marker_comment(self) -> None:
+    def test_text_marker_reinsertion_preserves_existing_reasoned_marker(self) -> None:
         source_text = """
 /**:
   ros__parameters:
@@ -380,6 +380,23 @@ perception: []
         )
         self.assertIn(
             "min_width: 0.1 # {OVERRIDE: old text duplicated}",
+            with_markers,
+        )
+
+    def test_text_marker_reinsertion_preserves_existing_plain_marker(self) -> None:
+        source_text = """
+/**:
+  ros__parameters:
+    min_width: 0.1 # {OVERRIDE} old text duplicated
+"""
+        with_markers = ensure_override_markers_in_text(
+            source_text,
+            {
+                ("/**", "ros__parameters", "min_width"): "{OVERRIDE: anything}",
+            },
+        )
+        self.assertIn(
+            "min_width: 0.1 # {OVERRIDE} old text duplicated",
             with_markers,
         )
 
