@@ -1,3 +1,4 @@
+# E2E mode: obstacle_segmentation, traffic_light_recognition, mission_planning routes, and control_command monitors are disabled
 - module: map
   mode: [online]
   type: launch
@@ -39,19 +40,6 @@
 
 - module: perception
   mode: [online]
-  type: launch
-  args:
-    node_name_suffix: obstacle_segmentation_pointcloud
-    topic: /perception/obstacle_segmentation/pointcloud
-    topic_type: sensor_msgs/msg/PointCloud2
-    best_effort: true
-    transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
-    timeout: 2.5
-
-- module: perception
-  mode: [online]
   type: autonomous
   args:
     node_name_suffix: object_recognition_objects
@@ -62,32 +50,6 @@
     warn_rate: 5.0
     error_rate: 1.0
     timeout: 2.5
-
-- module: perception
-  mode: [online]
-  type: autonomous
-  args:
-    node_name_suffix: traffic_light_recognition_traffic_signals
-    topic: /perception/traffic_light_recognition/traffic_signals
-    topic_type: autoware_perception_msgs/msg/TrafficLightGroupArray
-    best_effort: false
-    transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
-    timeout: 2.5
-
-- module: planning
-  mode: [online]
-  type: autonomous
-  args:
-    node_name_suffix: mission_planning_route
-    topic: /planning/mission_planning/route
-    topic_type: autoware_planning_msgs/msg/LaneletRoute
-    best_effort: false
-    transient_local: true
-    warn_rate: 0.0
-    error_rate: 0.0
-    timeout: 0.0
 
 - module: planning
   mode: [online]
@@ -108,19 +70,6 @@
   args:
     node_name_suffix: trajectory_follower_control_cmd
     topic: /control/trajectory_follower/control_cmd
-    topic_type: autoware_control_msgs/msg/Control
-    best_effort: false
-    transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
-    timeout: 2.5
-
-- module: control
-  mode: [online]
-  type: autonomous
-  args:
-    node_name_suffix: control_command_control_cmd
-    topic: /control/command/control_cmd
     topic_type: autoware_control_msgs/msg/Control
     best_effort: false
     transient_local: false
