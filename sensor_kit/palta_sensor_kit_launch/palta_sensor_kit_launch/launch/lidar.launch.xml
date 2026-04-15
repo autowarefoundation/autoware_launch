@@ -1,0 +1,76 @@
+<launch>
+  <arg name="launch_driver" default="true"/>
+  <arg name="lidar1_sensor_ip" default="192.168.1.201"/>
+  <arg name="lidar2_sensor_ip" default="192.168.2.201"/>
+  <arg name="lidar1_host_ip" default="192.168.1.100"/>
+  <arg name="lidar2_host_ip" default="192.168.2.100"/>
+  <arg name="lidar1_data_port" default="2368"/>
+  <arg name="lidar2_data_port" default="2369"/>
+  <arg name="lidar1_gnss_port" default="10110"/>
+  <arg name="lidar2_gnss_port" default="10111"/>
+  <arg name="use_concat_filter" default="true"/>
+  <arg name="vehicle_mirror_param_file"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+
+  <group>
+    <push-ros-namespace namespace="lidar"/>
+
+    <group>
+      <push-ros-namespace namespace="lidar1"/>
+      <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
+        <arg name="sensor_model" value="PandarXT32"/>
+        <arg name="return_mode" value="Dual"/>
+        <arg name="max_range" value="120.0"/>
+        <arg name="min_range" value="0.05"/>
+        <arg name="frame_id" value="hesai_lidar_top_link"/>
+        <arg name="sensor_ip" value="$(var lidar1_sensor_ip)"/>
+        <arg name="host_ip" value="$(var lidar1_host_ip)"/>
+        <arg name="data_port" value="$(var lidar1_data_port)"/>
+        <arg name="gnss_port" value="$(var lidar1_gnss_port)"/>
+        <arg name="rotation_speed" value="600"/>
+        <arg name="scan_phase" value="0.0"/>
+        <arg name="cloud_min_angle" value="0"/>
+        <arg name="cloud_max_angle" value="360"/>
+        <arg name="dual_return_distance_threshold" value="0.1"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="use_intra_process" value="true"/>
+        <arg name="use_multithread" value="true"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="lidar2"/>
+      <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
+        <arg name="sensor_model" value="PandarXT32"/>
+        <arg name="return_mode" value="Dual"/>
+        <arg name="max_range" value="120.0"/>
+        <arg name="min_range" value="0.05"/>
+        <arg name="frame_id" value="hesai_lidar_front_link"/>
+        <arg name="sensor_ip" value="$(var lidar2_sensor_ip)"/>
+        <arg name="host_ip" value="$(var lidar2_host_ip)"/>
+        <arg name="data_port" value="$(var lidar2_data_port)"/>
+        <arg name="gnss_port" value="$(var lidar2_gnss_port)"/>
+        <arg name="rotation_speed" value="600"/>
+        <arg name="scan_phase" value="0.0"/>
+        <arg name="cloud_min_angle" value="0"/>
+        <arg name="cloud_max_angle" value="360"/>
+        <arg name="dual_return_distance_threshold" value="0.1"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="use_intra_process" value="true"/>
+        <arg name="use_multithread" value="true"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+
+    <include file="$(find-pkg-share palta_sensor_kit_launch)/launch/pointcloud_preprocessor.launch.py">
+      <arg name="base_frame" value="base_link"/>
+      <arg name="use_concat_filter" value="$(var use_concat_filter)"/>
+      <arg name="use_intra_process" value="true"/>
+      <arg name="use_multithread" value="true"/>
+      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+    </include>
+  </group>
+</launch>

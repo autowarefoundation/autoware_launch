@@ -1,0 +1,22 @@
+sensor_kit_base_link:
+  hesai_lidar_top_link:
+    x: 0.255
+    y: 0.0
+    z: 0.834
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  hesai_lidar_front_link:
+    x: 0.430
+    y: 0.0
+    z: 0.203
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  tamagawa/imu_link:
+    x: -0.090
+    y: 0.008
+    z: 0.195
+    roll: 3.14159265359
+    pitch: 0.0
+    yaw: 0.0

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="sensor_kit_macro" params="parent x y z roll pitch yaw">
+    <xacro:arg name="config_dir" default="$(find palta_sensor_kit_description)/config"/>
+
+    <xacro:property name="sensor_kit_base_link" default="sensor_kit_base_link"/>
+
+    <joint name="${sensor_kit_base_link}_joint" type="fixed">
+      <origin rpy="${roll} ${pitch} ${yaw}" xyz="${x} ${y} ${z}"/>
+      <parent link="${parent}"/>
+      <child link="${sensor_kit_base_link}"/>
+    </joint>
+    <link name="${sensor_kit_base_link}">
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </link>
+
+    <!-- sensor -->
+    <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensor_kit_calibration.yaml')}"/>
+
+    <!-- Top LiDAR frame -->
+    <joint name="hesai_lidar_top_link_joint" type="fixed">
+      <origin
+        xyz="${calibration['sensor_kit_base_link']['hesai_lidar_top_link']['x']}
+             ${calibration['sensor_kit_base_link']['hesai_lidar_top_link']['y']}
+             ${calibration['sensor_kit_base_link']['hesai_lidar_top_link']['z']}"
+        rpy="${calibration['sensor_kit_base_link']['hesai_lidar_top_link']['roll']}
+             ${calibration['sensor_kit_base_link']['hesai_lidar_top_link']['pitch']}
+             ${calibration['sensor_kit_base_link']['hesai_lidar_top_link']['yaw']}"
+      />
+      <parent link="${sensor_kit_base_link}"/>
+      <child link="hesai_lidar_top_link"/>
+    </joint>
+    <link name="hesai_lidar_top_link"/>
+
+    <!-- Front LiDAR frame -->
+    <joint name="hesai_lidar_front_link_joint" type="fixed">
+      <origin
+        xyz="${calibration['sensor_kit_base_link']['hesai_lidar_front_link']['x']}
+             ${calibration['sensor_kit_base_link']['hesai_lidar_front_link']['y']}
+             ${calibration['sensor_kit_base_link']['hesai_lidar_front_link']['z']}"
+        rpy="${calibration['sensor_kit_base_link']['hesai_lidar_front_link']['roll']}
+             ${calibration['sensor_kit_base_link']['hesai_lidar_front_link']['pitch']}
+             ${calibration['sensor_kit_base_link']['hesai_lidar_front_link']['yaw']}"
+      />
+      <parent link="${sensor_kit_base_link}"/>
+      <child link="hesai_lidar_front_link"/>
+    </joint>
+    <link name="hesai_lidar_front_link"/>
+
+    <!-- IMU frame -->
+    <joint name="tamagawa_imu_link_joint" type="fixed">
+      <origin
+        xyz="${calibration['sensor_kit_base_link']['tamagawa/imu_link']['x']}
+             ${calibration['sensor_kit_base_link']['tamagawa/imu_link']['y']}
+             ${calibration['sensor_kit_base_link']['tamagawa/imu_link']['z']}"
+        rpy="${calibration['sensor_kit_base_link']['tamagawa/imu_link']['roll']}
+             ${calibration['sensor_kit_base_link']['tamagawa/imu_link']['pitch']}
+             ${calibration['sensor_kit_base_link']['tamagawa/imu_link']['yaw']}"
+      />
+      <parent link="${sensor_kit_base_link}"/>
+      <child link="tamagawa/imu_link"/>
+    </joint>
+    <link name="tamagawa/imu_link"/>
+  </xacro:macro>
+</robot>
