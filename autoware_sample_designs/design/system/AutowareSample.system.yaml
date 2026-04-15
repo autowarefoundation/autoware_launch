@@ -20,6 +20,8 @@ variables:
   # environment variables
   - name: map_path
     value: $(env HOME)/autoware_map/sample-map-rosbag
+  - name: check_external_emergency_heartbeat
+    value: false
 
 variable_files:
   - name: vehicle_info
@@ -55,7 +57,7 @@ components:
   # ADAPI
   - name: adapi
     entity: SampleSensorKitADAPIWrapper.node
-    path: /api
+    path: /
     compute_unit: main_ecu
 
   # SENSING
@@ -94,18 +96,26 @@ components:
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
 
-  # PLANNING/CONTROL
+  # PLANNING
   - name: planning
-    entity: Tier4PlanningWrapper.node
+    entity: Planning.module
     compute_unit: main_ecu
+    parameter_set: universe_planning.parameter_set
+  # CONTROL
   - name: control
-    entity: Tier4ControlWrapper.node
+    entity: Control.module
     compute_unit: main_ecu
+    parameter_set: universe_control.parameter_set
 
   # SYSTEM
   - name: system
     entity: Tier4SystemWrapper.node
     compute_unit: main_ecu
+
+  # # VISUALIZATION
+  # - name: visualization
+  #   entity: Rviz.node
+  #   compute_unit: main_ecu
 
 node_groups:
   - name: pointcloud_container
@@ -117,6 +127,39 @@ node_groups:
       - /perception/object_recognition/detection/pointcloud_map_filter/voxel_based_compare_map_filter
       - /perception/occupancy_grid_map/occupancy_grid_map_node
       - /perception/traffic_light_recognition/camera1/occlusion_predictor
+  - name: control_container
+    type: ros2_component_container_mt
+    nodes:
+      - /control/shift_decider
+      - /control/vehicle_cmd_gate
+      - /control/operation_mode_transition_manager
+      - /control/trajectory_follower
+  - name: control_check_container
+    type: ros2_component_container_mt
+    nodes:
+      - /control/lane_departure_checker
+      - /control/control_validator
+      - /control/autonomous_emergency_braking
+      - /control/collision_detector
+      # - /control/obstacle_collision_checker
+      # - /control/predicted_path_checker
+  - name: mission_planner_container
+    type: ros2_component_container_mt
+    nodes:
+      - /planning/mission_planning/mission_planner
+      - /planning/mission_planning/route_selector
+  - name: behavior_planning_container
+    type: ros2_component_container_mt
+    nodes:
+      - /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner
+      - /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner
+  - name: motion_planning_container
+    type: ros2_component_container_mt
+    nodes:
+      - /planning/scenario_planning/lane_driving/motion_planning/elastic_band_smoother
+      - /planning/scenario_planning/lane_driving/motion_planning/path_optimizer
+      - /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner
+      - /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker
 
 connections:
   - - localization.publisher.kinematic_state
@@ -168,33 +211,55 @@ connections:
     - localization.subscriber.twist
   - - sensing.publisher.gnss/pose_with_covariance
     - localization.subscriber.gnss_pose_with_covariance
-  - - adapi.publisher.localization/initialization_state
+  - - adapi.publisher.api/localization/initialization_state
     - localization.subscriber.initialization_state
 
   - - occupancy_grid_map.publisher.map
     - planning.subscriber.occupancy_grid_map
   - - map.publisher.vector_map
-    - planning.subscriber.lanelet_map
+    - planning.subscriber.vector_map
+  - - localization.publisher.kinematic_state
+    - planning.subscriber.odometry
+  - - localization.publisher.acceleration
+    - planning.subscriber.acceleration
   - - object_recognition.publisher.objects
     - planning.subscriber.objects
   - - obstacle_segmentation.publisher.pointcloud
-    - planning.subscriber.obstacle_pointcloud
+    - planning.subscriber.pointcloud
+  - - system.publisher.operation_mode/state
+    - planning.subscriber.operation_mode_state
 
-  - - planning.publisher.^
-    - control.subscriber.^
+  - - planning.publisher.trajectory
+    - control.subscriber.trajectory
+  - - planning.publisher.route
+    - control.subscriber.route
+  - - planning.publisher.route_state
+    - control.subscriber.route_state
+  - - planning.publisher.turn_indicators_cmd
+    - control.subscriber.turn_indicators_cmd
+  - - planning.publisher.hazard_lights_cmd
+    - control.subscriber.hazard_lights_cmd
+  - - system.publisher.operation_mode/state
+    - control.subscriber.operation_mode_state
+
   - - localization.publisher.kinematic_state
-    - control.subscriber.kinematics
+    - control.subscriber.odometry
   - - localization.publisher.acceleration
     - control.subscriber.acceleration
+  - - map.publisher.vector_map
+    - control.subscriber.vector_map
   - - object_recognition.publisher.objects
     - control.subscriber.objects
   - - obstacle_segmentation.publisher.pointcloud
-    - control.subscriber.obstacle_pointcloud
+    - control.subscriber.pointcloud
   - - sensing.publisher.imu/imu_data
     - control.subscriber.imu
 
-  - - system.publisher.system/fail_safe/mrm_state
+  - - system.publisher.fail_safe/mrm_state
     - adapi.subscriber.system/fail_safe/mrm_state
+
+  - - planning.server.clear_route
+    - adapi.client.routing/clear_route
 
 # mode configurations
 LoggingSimulation:
@@ -256,24 +321,26 @@ E2ESimulation:
         - traffic_light_recognition.subscriber.pointcloud
       - - map.publisher.vector_map
         - traffic_light_recognition.subscriber.vector_map
-      - - planning.publisher.mission_planning/route
+      - - planning.publisher.route
         - traffic_light_recognition.subscriber.route
       - - traffic_light_recognition.publisher.traffic_signals
         - planning.subscriber.traffic_signals
+
       # localization
       - - AWSIM_out.publisher.sensing/gnss/pose_with_covariance
         - localization.subscriber.gnss_pose_with_covariance
       # control
       - - AWSIM_out.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
-      - - control.publisher.command/control_cmd
+      - - control.publisher.control_cmd
         - AWSIM_in.subscriber.control/command/control_cmd
-      - - control.publisher.command/gear_cmd
+      - - control.publisher.gear_cmd
         - AWSIM_in.subscriber.control/command/gear_cmd
-      - - control.publisher.command/hazard_lights_cmd
+      - - control.publisher.hazard_lights_cmd
         - AWSIM_in.subscriber.control/command/hazard_lights_cmd
-      - - control.publisher.command/turn_indicators_cmd
+      - - control.publisher.turn_indicators_cmd
         - AWSIM_in.subscriber.control/command/turn_indicators_cmd
+
   remove:
     connections:
       - - sensing.publisher.gnss
@@ -318,6 +385,9 @@ PlanningSimulation:
       - name: vehicle
         entity: PlanningSimVehicle.module
         compute_unit: main_ecu
+      - name: Rviz
+        entity: Rviz.node
+        compute_unit: main_ecu
     connections:
       - - planning_sim_rviz_plugin.publisher.simulation/dummy_perception_publisher/object_info
         - perception.subscriber.dummy_object_info
@@ -328,9 +398,9 @@ PlanningSimulation:
       - - perception.publisher.obstacle_segmentation/pointcloud
         - occupancy_grid_map.subscriber.obstacle_pointcloud
       - - perception.publisher.obstacle_segmentation/pointcloud
-        - planning.subscriber.obstacle_pointcloud
+        - planning.subscriber.pointcloud
       - - perception.publisher.obstacle_segmentation/pointcloud
-        - control.subscriber.obstacle_pointcloud
+        - control.subscriber.pointcloud
       - - map.publisher.vector_map
         - perception.subscriber.vector_map
       - - localization.publisher.localization/initialization_state
@@ -342,9 +412,9 @@ PlanningSimulation:
         - simulator.subscriber.initialpose3d
       - - planning.publisher.trajectory
         - simulator.subscriber.planning/trajectory
-      - - control.publisher.command/control_cmd
+      - - control.publisher.control_cmd
         - simulator.subscriber.control/command/control_cmd
-      - - control.publisher.command/control_cmd
+      - - control.publisher.control_cmd
         - vehicle.subscriber.control_cmd
       - - simulator.publisher.localization/kinematic_state
         - vehicle.subscriber.odometry
@@ -352,17 +422,19 @@ PlanningSimulation:
         - vehicle.subscriber.accel
       - - simulator.publisher.vehicle/status/steering_status
         - vehicle.subscriber.steering
+      - - simulator.publisher.vehicle/status/steering_status
+        - control.subscriber.steering_status
       - - simulator.publisher.vehicle/status/actuation_status
         - vehicle.subscriber.actuation_status
-      - - system.publisher.system/operation_mode/state
+      - - system.publisher.operation_mode/state
         - vehicle.subscriber.operation_mode_state
       - - vehicle.publisher.actuation_cmd
         - simulator.subscriber.control/command/actuation_cmd
-      - - control.publisher.command/gear_cmd
+      - - control.publisher.gear_cmd
         - simulator.subscriber.control/command/gear_cmd
-      - - control.publisher.command/turn_indicators_cmd
+      - - control.publisher.turn_indicators_cmd
         - simulator.subscriber.control/command/turn_indicators_cmd
-      - - control.publisher.command/hazard_lights_cmd
+      - - control.publisher.hazard_lights_cmd
         - simulator.subscriber.control/command/hazard_lights_cmd
       - - simulator.publisher.^
         - adapi.subscriber.^
@@ -371,9 +443,13 @@ PlanningSimulation:
       - - simulator.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
       - - simulator.publisher.localization/kinematic_state
-        - control.subscriber.kinematics
+        - control.subscriber.odometry
+      - - simulator.publisher.localization/kinematic_state
+        - planning.subscriber.odometry
+      - - simulator.publisher.perception/traffic_light_recognition/traffic_signals
+        - planning.subscriber.traffic_signals
 
-      # - - simulator.publisher.localization/acceleration
-      #   - control.subscriber.acceleration
-      - - control.subscriber.acceleration
-        - simulator.publisher.localization/acceleration
+      - - simulator.publisher.localization/acceleration
+        - control.subscriber.acceleration
+      - - simulator.publisher.localization/acceleration
+        - planning.subscriber.acceleration

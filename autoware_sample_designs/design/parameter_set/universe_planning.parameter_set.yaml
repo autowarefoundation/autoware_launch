@@ -1,0 +1,94 @@
+autoware_system_design_format: 0.3.0
+
+name: universe_planning.parameter_set
+parameters:
+  - node: /planning/mission_planning/mission_planner
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/mission_planning/mission_planner/mission_planner.param.yaml
+  - node: /planning/scenario_planning/velocity_smoother
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/velocity_smoother.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/Analytical.param.yaml
+  - node: /planning/scenario_planning/hazard_lights_selector
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_hazard_lights_selector/hazard_lights_selector.param.yaml
+  - node: /planning/planning_validator
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/planning_validator/planning_validator.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/planning_validator/latency_checker.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/planning_validator/trajectory_checker.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/planning_validator/intersection_collision_checker.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/planning_validator/rear_collision_checker.param.yaml
+  - node: /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/behavior_path_planner.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/drivable_area_expansion.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/scene_module_manager.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/lane_change/lane_change.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/autoware_behavior_path_static_obstacle_avoidance_module/static_obstacle_avoidance.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/goal_planner/goal_planner.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/start_planner/start_planner.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/side_shift/side_shift.param.yaml
+  - node: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/behavior_velocity_planner.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/behavior_velocity_planner_common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/crosswalk.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/traffic_light.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/intersection.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/blind_spot.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/detection_area.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/no_stopping_area.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/stop_line.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/virtual_traffic_light.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/occlusion_spot.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/velocity_smoother.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/Analytical.param.yaml
+  - node: /planning/scenario_planning/lane_driving/motion_planning/path_optimizer
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/autoware_path_optimizer/path_optimizer.param.yaml
+  - node: /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/velocity_smoother.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/Analytical.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_slow_down.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_cruise.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/out_of_lane.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/run_out.param.yaml
+  - node: /planning/scenario_planning/external_velocity_limit_selector
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+  - node: /planning/scenario_planning/lane_driving/motion_planning/elastic_band_smoother
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/path_smoother/elastic_band_smoother.param.yaml
+  - node: /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/surround_obstacle_checker.param.yaml
+  - node: /planning/scenario_planning/parking/freespace_planner
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/parking/freespace_planner/freespace_planner.param.yaml
+  - node: /planning//planning_evaluator
+    param_files:
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml

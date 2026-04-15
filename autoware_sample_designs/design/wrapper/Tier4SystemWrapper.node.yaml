@@ -23,23 +23,23 @@ publishers:
       durability: transient_local
   - name: diagnostics_graph/status
     message_type: tier4_system_msgs/msg/DiagGraphStatus
-  - name: system/command_mode/availability
+  - name: command_mode/availability
     message_type: tier4_system_msgs/msg/CommandModeAvailability
-  - name: system/operation_mode/availability
+  - name: operation_mode/availability
     message_type: tier4_system_msgs/msg/OperationModeAvailability
-  - name: system/operation_mode/state
+  - name: operation_mode/state
     message_type: autoware_adapi_v1_msgs/msg/OperationModeState
-  - name: system/fail_safe/mrm_state
+  - name: fail_safe/mrm_state
     message_type: autoware_adapi_v1_msgs/msg/MrmState
-  - name: system/emergency/hazard_status
+  - name: emergency/hazard_status
     message_type: autoware_system_msgs/msg/HazardStatusStamped
 
 servers:
   - name: diagnostics_graph/reset
     message_type: tier4_system_msgs/srv/ResetDiagGraph
-  - name: system/operation_mode/change_operation_mode
+  - name: operation_mode/change_operation_mode
     message_type: autoware_system_msgs/srv/ChangeOperationMode
-  - name: system/operation_mode/change_autoware_control
+  - name: operation_mode/change_autoware_control
     message_type: autoware_system_msgs/srv/ChangeAutowareControl
 
 # parameters
