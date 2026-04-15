@@ -1,0 +1,51 @@
+name: check-pr-target-branch
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+jobs:
+  check-target-branch:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Check target branch
+        id: check-branch
+        run: |
+          TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
+          echo "Target branch is: $TARGET_BRANCH"
+
+          if [ "$TARGET_BRANCH" = "awf-latest" ]; then
+            echo "is_awf_latest=true" >> $GITHUB_OUTPUT
+            echo "ERROR: Pull requests targeting the awf-latest branch are not allowed."
+            exit 1
+          else
+            echo "is_awf_latest=false" >> $GITHUB_OUTPUT
+            echo "Target branch is acceptable."
+          fi
+
+      - name: Comment on PR
+        if: failure() && steps.check-branch.outputs.is_awf_latest == 'true'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            ⚠️ **WARNING: Invalid Target Branch** ⚠️
+
+            This pull request is targeting the `awf-latest` branch, which is not allowed.
+
+            The `awf-latest` branch is no longer maintained as an automatically synchronized branch from the AWF upstream, and should not receive direct pull requests.
+
+            **Action Required - Choose One Option:**
+
+            **Option 1: For Pilot.Auto related changes**
+            - Change the target branch of this PR to `tier4/main`
+            - Click the "Edit" button next to the PR title and select `tier4/main` as the base branch
+
+            **Option 2: For AWF version launcher changes**
+            - Close this PR and create a new PR directly to the upstream repository
+            - Target: https://github.com/autowarefoundation/autoware_launch (main branch)
