@@ -11,8 +11,8 @@
     synchronized_pointcloud_postfix: pointcloud
     input_twist_topic_type: twist
     input_topics: [
-                    "/sensing/lidar/lidar1/pointcloud_before_sync",
-                    "/sensing/lidar/lidar2/pointcloud_before_sync",
+                    "/lidar/lidar1/pointcloud_before_sync",
+                    "/lidar/lidar2/pointcloud_before_sync",
                 ]
     output_frame: base_link
     matching_strategy:

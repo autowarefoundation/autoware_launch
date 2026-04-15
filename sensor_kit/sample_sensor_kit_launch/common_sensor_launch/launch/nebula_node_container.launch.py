@@ -160,11 +160,12 @@ def launch_setup(context, *args, **kwargs):
                 },
             ],
             remappings=[
-                # cSpell:ignore knzo25
-                # TODO(knzo25): fix the remapping once nebula gets updated
+                # Hesai/Nebula publishes the compatible extended layout on `pandar_points`.
+                # Keep the downstream launch interface stable by remapping it to the historical
+                # `pointcloud_raw_ex` topic used by the preprocessing chain.
+                ("pandar_points", "pointcloud_raw_ex"),
+                ("aw_points", "pointcloud_raw"),
                 ("velodyne_points", "pointcloud_raw_ex"),
-                # ("robosense_points", "pointcloud_raw_ex"), #for robosense
-                # ("pandar_points", "pointcloud_raw_ex"), # for hesai
             ],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
