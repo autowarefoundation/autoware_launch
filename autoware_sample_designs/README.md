@@ -12,12 +12,12 @@ Autoware System Designer is a toolset that lets you describe your entire softwar
 
 A system is composed of four entity types:
 
-| Entity | File | Description |
-|---|---|---|
-| **Node** | `*.node.yaml` | A single ROS 2 node — its topics, parameters, and execution config |
-| **Module** | `*.module.yaml` | A reusable group of nodes/sub-modules with wired connections |
-| **System** | `*.system.yaml` | The top-level description: components, connections, modes |
-| **Parameter Set** | `*.parameter_set.yaml` | Parameter overrides applied to nodes at deployment time |
+| Entity            | File                   | Description                                                        |
+| ----------------- | ---------------------- | ------------------------------------------------------------------ |
+| **Node**          | `*.node.yaml`          | A single ROS 2 node — its topics, parameters, and execution config |
+| **Module**        | `*.module.yaml`        | A reusable group of nodes/sub-modules with wired connections       |
+| **System**        | `*.system.yaml`        | The top-level description: components, connections, modes          |
+| **Parameter Set** | `*.parameter_set.yaml` | Parameter overrides applied to nodes at deployment time            |
 
 The build step collects node definitions from across the workspace (resolved via `workspace.yaml`), combines them with the system design files in this package, and generates launch files and a system visualization:
 
@@ -56,7 +56,7 @@ firefox install/systems.html
 google-chrome install/systems.html
 ```
 
-The visualization page shows every node, module, topic connection, and operating mode defined in the system. 
+The visualization page shows every node, module, topic connection, and operating mode defined in the system.
 
 ## Package Structure
 
