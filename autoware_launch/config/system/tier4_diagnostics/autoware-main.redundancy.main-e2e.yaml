@@ -1,5 +1,27 @@
 files:
-  - { path: $(dirname)/autoware-main.redundancy.main.yaml }
+  - { path: $(dirname)/autoware-main.redundancy.main-base.yaml }
+
+units:
+  - path: /planning/dp_comfortable_stop_blocked
+    type: error
+
+  - path: /autoware/modes/comfortable_stop
+    type: and
+    list:
+      - { type: link, link: /control/comfortable_stop_available }
+      - { type: link, link: /hardware/comfortable_stop_available }
+      - { type: link, link: /localization/comfortable_stop_available }
+      - { type: link, link: /map/comfortable_stop_available }
+      - { type: link, link: /perception/comfortable_stop_available }
+      - { type: link, link: /planning/comfortable_stop_available }
+      - { type: link, link: /sensing/comfortable_stop_available }
+      - { type: link, link: /system/comfortable_stop_available }
+      - { type: link, link: /vehicle/comfortable_stop_available }
+      - { type: link, link: /foolproof/comfortable_stop_available }
+      - { type: link, link: /redundancy/comfortable_stop_available }
+      - { type: link, link: /mrm_domain/localization/comfortable_stop_available }
+      - { type: link, link: /mrm_domain/planning/comfortable_stop_available }
+      - { type: link, link: /planning/dp_comfortable_stop_blocked }
 
 edits:
   - { type: remove, path: /planning/003-trajectory_finite_validation-error }
