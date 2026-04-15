@@ -29,8 +29,7 @@ ros2 launch palta_sensor_kit_launch sensing.launch.xml
 If needed, `vehicle_mirror_param_file` can be overridden explicitly.
 
 ```bash
-ros2 launch palta_sensor_kit_launch sensing.launch.xml \
-  vehicle_mirror_param_file:=/path/to/vehicle_mirror.param.yaml
+ros2 launch palta_sensor_kit_launch sensing.launch.xml
 ```
 
 ## Autoware Launch Example

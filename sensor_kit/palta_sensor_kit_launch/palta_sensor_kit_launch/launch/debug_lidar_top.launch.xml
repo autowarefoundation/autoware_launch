@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find-pkg-share nebula_hesai)/launch/hesai_launch_all_hw.xml">
+    <arg name="sensor_model" value="PandarXT32"/>
+    <arg name="config_file" value="$(find-pkg-share palta_sensor_kit_launch)/config/PandarXT32_top.param.yaml"/>
+  </include>
+</launch>

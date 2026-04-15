@@ -123,6 +123,7 @@ def launch_setup(context, *args, **kwargs):
                     **create_parameter_dict(
                         "host_ip",
                         "sensor_ip",
+                        "multicast_ip",
                         "data_port",
                         "gnss_port",
                         "return_mode",
@@ -138,6 +139,24 @@ def launch_setup(context, *args, **kwargs):
                         "setup_sensor",
                         "udp_only",
                     ),
+                    # Keep Nebula's required Hesai parameters aligned with the upstream
+                    # PandarXT32 defaults so the wrapper can be started from this generic launch.
+                    "udp_socket_receive_buffer_size_bytes": 5400000,
+                    "diag_span": 1000,
+                    "sync_angle": 0,
+                    "cut_angle": 0.0,
+                    "calibration_download_enabled": True,
+                    "ptp_profile": "1588v2",
+                    "ptp_domain": 0,
+                    "ptp_transport_type": "UDP",
+                    "ptp_switch_type": "TSN",
+                    "ptp_lock_threshold": 100,
+                    "retry_hw": True,
+                    "diagnostics.pointcloud_publish_rate.frequency_ok.min_hz": 9.5,
+                    "diagnostics.pointcloud_publish_rate.frequency_ok.max_hz": 10.5,
+                    "diagnostics.pointcloud_publish_rate.frequency_warn.min_hz": 9.0,
+                    "diagnostics.pointcloud_publish_rate.frequency_warn.max_hz": 11.0,
+                    "diagnostics.pointcloud_publish_rate.num_frame_transition": 1,
                 },
             ],
             remappings=[
@@ -264,6 +283,7 @@ def generate_launch_description():
     add_launch_arg("setup_sensor", "True", "configure sensor")
     add_launch_arg("sensor_ip", "192.168.1.201", "device ip address")
     add_launch_arg("host_ip", "255.255.255.255", "host ip address")
+    add_launch_arg("multicast_ip", "", "device multicast ip address")
     add_launch_arg("scan_phase", "0.0")
     add_launch_arg("base_frame", "base_link", "base frame id")
     add_launch_arg("min_range", "0.3", "minimum view range for Velodyne sensors")
