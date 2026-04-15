@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<robot name="palta_sensor_kit" xmlns:xacro="http://ros.org/wiki/xacro">
-  <link name="base_link"/>
-
-  <xacro:arg name="config_dir" default="$(find palta_sensor_kit_description)/config"/>
-  <xacro:include filename="$(find palta_sensor_kit_description)/urdf/sensors.xacro"/>
-</robot>

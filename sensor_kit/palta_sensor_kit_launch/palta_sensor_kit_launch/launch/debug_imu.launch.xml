@@ -1,3 +1,0 @@
-<launch>
-  <include file="$(find-pkg-share common_sensor_launch)/launch/serial_AU7684N.launch.xml"/>
-</launch>
