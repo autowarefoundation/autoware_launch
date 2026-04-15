@@ -21,7 +21,7 @@ A system is composed of four entity types:
 
 The build step collects node definitions from across the workspace (resolved via `workspace.yaml`), combines them with the system design files in this package, and generates launch files and a system visualization:
 
-```
+```text
 each ROS 2 package (core, universe, …)         ┐
   └── design/node/  *.node.yaml                │
                                                ├── autoware_system_designer
@@ -60,7 +60,7 @@ The visualization page shows every node, module, topic connection, and operating
 
 ## Package Structure
 
-```
+```text
 autoware_sample_designs/
 ├── design/
 │   ├── node/              # System-specific node definitions (wrapper/optional nodes only)
@@ -125,9 +125,9 @@ firefox install/systems.html
 
 Use `autoware_sample_designs` as the template. The steps to create a new system design package are:
 
-**1. Create a ROS 2 package with the standard layout**
+### 1. Create a ROS 2 package with the standard layout
 
-```
+```text
 my_vehicle_designs/
 ├── design/
 │   ├── node/
@@ -141,13 +141,13 @@ my_vehicle_designs/
 └── package.xml
 ```
 
-**2. Declare the dependency in `package.xml`**
+### 2. Declare the dependency in `package.xml`
 
 ```xml
 <depend>autoware_system_designer</depend>
 ```
 
-**3. Wire up the build in `CMakeLists.txt`**
+### 3. Wire up the build in `CMakeLists.txt`
 
 ```cmake
 find_package(autoware_system_designer REQUIRED)
@@ -161,14 +161,14 @@ autoware_system_designer_build_deploy(
 )
 ```
 
-**4. Define your system**
+### 4. Define your system
 
 Node definitions (`*.node.yaml`) live in each individual ROS 2 package (under `core/`, `universe/`, etc.) and are resolved automatically via `workspace.yaml` — you do not need to copy them.
 Only add files to `design/node/` for nodes that are unique to your system package (e.g., wrapper nodes or optional system-level nodes not defined elsewhere).
 
 Compose these nodes into modules and a top-level system in your `*.system.yaml`. Add `*.parameter_set.yaml` files to override parameters for your specific hardware.
 
-**5. Build and visualize**
+### 5. Build and visualize
 
 ```sh
 colcon build --packages-select my_vehicle_designs
