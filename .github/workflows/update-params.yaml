@@ -44,7 +44,11 @@ jobs:
               echo "workflow_dispatch requires a non-empty category input" >&2
               exit 1
             fi
-            selected_json="$(printf '%s\n' "${categories_json}" | yq -o=json -I=0 '[.[] | select(. == strenv(INPUT_CATEGORY))]')"
+            if [[ ! "${input_category}" =~ ^[a-z][a-z0-9_-]*$ ]]; then
+              echo "Invalid category name '${input_category}': must match ^[a-z][a-z0-9_-]*$" >&2
+              exit 1
+            fi
+            selected_json="$(printf '%s\n' "${categories_json}" | yq -o=json -I=0 '[.[] | select(. == "'"${input_category}"'")]')"
             if [[ "${selected_json}" == "[]" ]]; then
               echo "Invalid category '${input_category}'" >&2
               echo "Available categories: ${categories_json}" >&2
