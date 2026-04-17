@@ -4,6 +4,7 @@
   <arg name="twist_source"/>
   <arg name="initial_pose"/>
   <arg name="system_run_mode"/>
+  <arg name="gnss_enabled" default="false" description="enable GNSS based automatic initial pose estimation"/>
 
   <!-- parameter paths for ndt -->
   <arg name="ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path"/>
@@ -34,6 +35,7 @@
     <!-- pose_twist_estimator module -->
     <include file="$(find-pkg-share tier4_localization_launch)/launch/pose_twist_estimator/pose_twist_estimator.launch.xml">
       <arg name="localization_pointcloud_container_name" value="$(var localization_pointcloud_container_name)"/>
+      <arg name="gnss_enabled" value="$(var gnss_enabled)"/>
     </include>
 
     <!-- pose_twist_fusion_filter module -->

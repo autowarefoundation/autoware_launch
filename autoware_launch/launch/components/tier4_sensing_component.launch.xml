@@ -7,9 +7,10 @@
   />
   <arg name="pointcloud_container_name" description="name of pointcloud container"/>
   <arg name="launch_sensing_driver" default="true"/>
-  <arg name="sensor_model" default="sample_sensor_kit"/>
+  <arg name="sensor_model" default="palta_sensor_kit"/>
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
+  <arg name="use_lidar_host_time_stamp" default="false"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -33,5 +34,6 @@
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     <arg name="vehicle_mirror_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/mirror.param.yaml"/>
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+    <arg name="use_lidar_host_time_stamp" value="$(var use_lidar_host_time_stamp)"/>
   </include>
 </launch>

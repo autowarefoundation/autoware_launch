@@ -1,8 +1,9 @@
 <launch>
   <arg name="launch_driver" default="true" description="do launch driver"/>
-  <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
+  <arg name="sensor_model" default="palta_sensor_kit" description="sensor model name"/>
   <arg name="vehicle_mirror_param_file" default="$(find-pkg-share autoware_vehicle_info_utils)/config/vehicle_mirror.param.yaml" description="path to the file of vehicle mirror position yaml"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="use_lidar_host_time_stamp" default="false"/>
 
   <let name="sensor_launch_pkg" value="$(find-pkg-share $(var sensor_model)_launch)"/>
 
@@ -10,10 +11,20 @@
     <push-ros-namespace namespace="sensing"/>
 
     <!-- Driver -->
-    <include file="$(var sensor_launch_pkg)/launch/sensing.launch.xml">
-      <arg name="launch_driver" value="$(var launch_driver)"/>
-      <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
-    </include>
+    <group if="$(eval &quot;'$(var sensor_model)'=='palta_sensor_kit'&quot;)">
+      <include file="$(var sensor_launch_pkg)/launch/sensing.launch.xml">
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_lidar_host_time_stamp" value="$(var use_lidar_host_time_stamp)"/>
+      </include>
+    </group>
+    <group unless="$(eval &quot;'$(var sensor_model)'=='palta_sensor_kit'&quot;)">
+      <include file="$(var sensor_launch_pkg)/launch/sensing.launch.xml">
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
   </group>
 </launch>

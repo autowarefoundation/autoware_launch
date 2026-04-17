@@ -2,8 +2,8 @@
 <launch>
   <!-- Essential parameters -->
   <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
-  <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
-  <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
+  <arg name="vehicle_model" default="palta" description="vehicle model name"/>
+  <arg name="sensor_model" default="palta_sensor_kit" description="sensor model name"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
 
@@ -23,6 +23,7 @@
   <arg name="launch_planning" default="true" description="launch planning"/>
   <arg name="launch_control" default="true" description="launch control"/>
   <arg name="launch_api" default="true" description="launch api"/>
+  <arg name="use_lidar_host_time_stamp" default="false" description="use ROS host time for Hesai PointCloud2 header stamps"/>
   <!-- Global parameters -->
   <arg name="use_sim_time" default="false" description="use_sim_time"/>
   <!-- Vehicle -->
@@ -38,11 +39,14 @@
   <arg name="launch_system_monitor" default="true" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
   <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml" description="diagnostic graph config"/>
+  <!-- Localization -->
+  <arg name="gnss_enabled" default="false" description="enable GNSS based automatic initial pose estimation"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/$(var rviz_config_name)" description="rviz config path"/>
   <arg name="rviz_respawn" default="true"/>
+  <arg name="rviz_initial_pose_auto_fix_target" default="vector_map" description="map source used to fit RViz initial pose height"/>
   <!-- Perception -->
   <arg name="perception_mode" default="lidar" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
   <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="enable to use high accuracy detection for traffic light recognition"/>
@@ -90,12 +94,18 @@
   <group if="$(var launch_sensing)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml">
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="sensor_model" value="$(var sensor_model)"/>
+      <arg name="use_lidar_host_time_stamp" value="$(var use_lidar_host_time_stamp)"/>
     </include>
   </group>
 
   <!-- Localization -->
   <group if="$(var launch_localization)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_localization_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_localization_component.launch.xml">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="gnss_enabled" value="$(var gnss_enabled)"/>
+    </include>
   </group>
 
   <!-- Perception -->
@@ -139,6 +149,7 @@
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_autoware_api_component.launch.xml">
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="rviz_initial_pose_auto_fix_target" value="$(var rviz_initial_pose_auto_fix_target)"/>
     </include>
   </group>
 

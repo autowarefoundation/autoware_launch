@@ -5,6 +5,7 @@
 
   <!-- Evaluation options -->
   <arg name="launch_evaluation_adapter" default="false"/>
+  <arg name="rviz_initial_pose_auto_fix_target" default="vector_map"/>
 
   <!-- Parameter files -->
   <arg name="default_adapi_param_path" default="$(find-pkg-share autoware_default_adapi_universe)/config/default_adapi.param.yaml"/>
@@ -18,7 +19,9 @@
 
   <!-- AD API for RViz -->
   <group if="$(var launch_rviz_adaptors)">
-    <include file="$(find-pkg-share autoware_adapi_adaptors)/launch/rviz_adaptors.launch.xml"/>
+    <include file="$(find-pkg-share autoware_adapi_adaptors)/launch/rviz_adaptors.launch.xml">
+      <arg name="rviz_initial_pose_auto_fix_target" value="$(var rviz_initial_pose_auto_fix_target)"/>
+    </include>
   </group>
 
   <!-- Evaluation adapter -->

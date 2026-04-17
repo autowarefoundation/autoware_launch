@@ -22,6 +22,7 @@
 
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
+  <arg name="gnss_enabled" default="false" description="enable GNSS based automatic initial pose estimation"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -39,6 +40,7 @@
       <arg name="input_pointcloud" value="$(var input_pointcloud)"/>
       <arg name="localization_pointcloud_container_name" value="$(var localization_pointcloud_container_name)"/>
       <arg name="initial_pose" value="$(var initial_pose)"/>
+      <arg name="gnss_enabled" value="$(var gnss_enabled)"/>
 
       <!-- parameter paths for common -->
       <arg name="localization_error_monitor_param_path" value="$(var loc_config_path)/localization_error_monitor.param.yaml"/>

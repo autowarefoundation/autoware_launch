@@ -138,6 +138,7 @@ def launch_setup(context, *args, **kwargs):
                         "packet_mtu_size",
                         "setup_sensor",
                         "udp_only",
+                        "use_host_time_stamp",
                     ),
                     # Keep Nebula's required Hesai parameters aligned with the upstream
                     # PandarXT32 defaults so the wrapper can be started from this generic launch.
@@ -325,6 +326,11 @@ def generate_launch_description():
         description="path to parameter file of ring outlier filter node",
     )
     add_launch_arg("udp_only", "False", "use UDP only")
+    add_launch_arg(
+        "use_host_time_stamp",
+        "False",
+        "use ROS host time for Hesai PointCloud2 header stamps",
+    )
 
     set_container_executable = SetLaunchConfiguration(
         "container_executable",

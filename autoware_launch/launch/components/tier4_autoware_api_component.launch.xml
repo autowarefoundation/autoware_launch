@@ -4,6 +4,7 @@
   <arg name="scenario_simulation" default="false"/>
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
+  <arg name="rviz_initial_pose_auto_fix_target" default="vector_map"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -15,5 +16,6 @@
 
   <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml">
     <arg name="launch_evaluation_adapter" value="$(var scenario_simulation)"/>
+    <arg name="rviz_initial_pose_auto_fix_target" value="$(var rviz_initial_pose_auto_fix_target)"/>
   </include>
 </launch>
