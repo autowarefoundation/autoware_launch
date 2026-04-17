@@ -127,7 +127,7 @@
           <remap from="input/engage" to="/autoware/engage"/>
           <remap from="~/service/external_emergency_stop" to="~/external_emergency_stop"/>
           <remap from="~/service/clear_external_emergency_stop" to="~/clear_external_emergency_stop"/>
-          <param from="$(var vehicle_cmd_gate_param_path)"/>
+          <param from="$(var vehicle_cmd_gate_param_path)" allow_substs="true"/>
           <param from="$(var vehicle_param_file)"/>
           <param name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
           <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
