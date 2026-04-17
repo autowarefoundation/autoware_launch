@@ -564,6 +564,7 @@ def load_source_body_at_sha(repo_dir: Path, sha: str, source_path: str) -> str:
 
 
 def resolve_default_branch(repo: str) -> str:
+    # cSpell:ignore symref
     output = run_git(["ls-remote", "--symref", f"https://github.com/{repo}.git", "HEAD"])
     for line in output.splitlines():
         if line.startswith("ref: ") and line.endswith("\tHEAD"):
@@ -740,6 +741,7 @@ def write_or_check(path: Path, new_content: str, check: bool) -> bool:
 
 
 def _build_unified_diff(path: Path, old_content: str | None, new_content: str) -> str:
+    # cSpell:ignore keepends tofile lineterm
     old_lines = old_content.splitlines(keepends=True) if old_content is not None else []
     new_lines = new_content.splitlines(keepends=True)
     cwd = Path.cwd()
