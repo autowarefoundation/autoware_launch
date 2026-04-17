@@ -626,6 +626,44 @@ perception: []
         )
         self.assertEqual(source_line.index("#"), patched_line.index("#"))
 
+    def test_multiple_overrides_applied_correctly_when_earlier_override_changes_line_count(
+        self,
+    ) -> None:
+        """Two overrides where the lower one expands a block list must both be applied correctly.
+
+        When the override for 'items' (lower in the file) expands from 1 line to 3 lines,
+        the stored line_idx for 'scale' (above 'items') must remain valid so that 'scale'
+        is also patched correctly.  Overrides are applied in descending line order so
+        mutations never shift the indices of pending overrides.
+        """
+        source_text = dedent(
+            """\
+            /**:
+              ros__parameters:
+                scale: 1.0
+                items:
+                  - alpha
+            """
+        )
+
+        patched = apply_overrides_to_source_text(
+            source_text,
+            {
+                ("/**", "ros__parameters", "scale"): 2.0,
+                ("/**", "ros__parameters", "items"): ["alpha", "beta", "gamma"],
+            },
+        )
+        lines = patched.splitlines()
+
+        # scale must be updated.
+        scale_line = next(ln for ln in lines if "scale:" in ln)
+        self.assertIn("scale: 2.0", scale_line)
+
+        # items must be expanded to all three values.
+        self.assertIn("- alpha", patched)
+        self.assertIn("- beta", patched)
+        self.assertIn("- gamma", patched)
+
     def test_text_marker_reinsertion_does_not_duplicate_next_comment_line(self) -> None:
         source_text = """
 /**:

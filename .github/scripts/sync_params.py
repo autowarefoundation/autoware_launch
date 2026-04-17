@@ -277,7 +277,14 @@ def apply_overrides_to_source_text(
 ) -> str:
     lines = source_text.splitlines()
     key_index = _build_key_line_index(source_text)
-    for path, value in overrides.items():
+    # Apply in descending line order so mutations to lower lines never shift the
+    # stored line_idx values for overrides that haven't been applied yet.
+    ordered = sorted(
+        overrides.items(),
+        key=lambda item: key_index[item[0]].line_idx if item[0] in key_index else -1,
+        reverse=True,
+    )
+    for path, value in ordered:
         info = key_index.get(path)
         if info is None:
             raise SyncError(f"Override path {_format_path(path)} not found in source text.")
