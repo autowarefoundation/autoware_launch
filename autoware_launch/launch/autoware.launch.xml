@@ -39,6 +39,8 @@
   <arg name="launch_system_monitor" default="true" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
   <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml" description="diagnostic graph config"/>
+  <arg name="require_rosbag_for_auto" default="false" description="block AUTO mode unless the required rosbag node is running"/>
+  <arg name="required_rosbag_node_name" default="/rosbag2_recorder" description="rosbag node required when require_rosbag_for_auto is true"/>
   <!-- Localization -->
   <arg name="gnss_enabled" default="false" description="enable GNSS based automatic initial pose estimation"/>
   <!-- Tools -->
@@ -82,7 +84,10 @@
 
   <!-- System -->
   <group if="$(var launch_system)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_system_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_system_component.launch.xml">
+      <arg name="require_rosbag_for_auto" value="$(var require_rosbag_for_auto)"/>
+      <arg name="required_rosbag_node_name" value="$(var required_rosbag_node_name)"/>
+    </include>
   </group>
 
   <!-- Map -->

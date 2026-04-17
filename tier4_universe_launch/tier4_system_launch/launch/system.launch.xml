@@ -5,6 +5,7 @@
   <arg name="duplicated_node_checker_param_path"/>
   <arg name="processing_time_checker_param_path"/>
   <arg name="pipeline_latency_monitor_param_path"/>
+  <arg name="rosbag_node_monitor_param_path"/>
   <arg name="mrm_comfortable_stop_operator_param_path"/>
   <arg name="mrm_emergency_stop_operator_param_path"/>
   <arg name="dummy_diag_publisher_param_path"/>
@@ -21,6 +22,8 @@
   <arg name="launch_dummy_diag_publisher" description="launch dummy diag publisher"/>
   <arg name="run_mode" default="online" description="options: online, logging_simulation, planning_simulation"/>
   <arg name="sensor_model" description="sensor model name"/>
+  <arg name="require_rosbag_for_auto" default="false" description="block AUTO mode unless the required rosbag node is running"/>
+  <arg name="required_rosbag_node_name" default="/rosbag2_recorder" description="rosbag node required when require_rosbag_for_auto is true"/>
 
   <arg name="mrm_handler_param_path"/>
   <arg name="diagnostic_graph_aggregator_param_path"/>
@@ -97,6 +100,15 @@
     <group>
       <include file="$(find-pkg-share autoware_pipeline_latency_monitor)/launch/pipeline_latency_monitor.launch.xml">
         <arg name="config_file" value="$(var pipeline_latency_monitor_param_path)"/>
+      </include>
+    </group>
+
+    <!-- Rosbag Node Monitor -->
+    <group>
+      <include file="$(find-pkg-share autoware_rosbag_node_monitor)/launch/rosbag_node_monitor.launch.xml">
+        <arg name="config_file" value="$(var rosbag_node_monitor_param_path)"/>
+        <arg name="enabled" value="$(var require_rosbag_for_auto)"/>
+        <arg name="required_node_name" value="$(var required_rosbag_node_name)"/>
       </include>
     </group>
 

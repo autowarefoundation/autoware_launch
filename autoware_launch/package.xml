@@ -13,6 +13,7 @@
 
   <exec_depend>autoware_adapi_adaptors</exec_depend>
   <exec_depend>autoware_global_parameter_loader</exec_depend>
+  <exec_depend>autoware_rosbag_node_monitor</exec_depend>
   <exec_depend>python3-bson</exec_depend>
   <exec_depend>python3-tornado</exec_depend>
   <exec_depend>rviz2</exec_depend>

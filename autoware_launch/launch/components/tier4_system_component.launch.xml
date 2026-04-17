@@ -3,6 +3,9 @@
   <arg name="use_sim_time" default="false"/>
   <arg name="diagnostic_graph_aggregator_param_path" default="$(find-pkg-share autoware_diagnostic_graph_aggregator)/config/default.param.yaml"/>
   <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml"/>
+  <arg name="rosbag_node_monitor_param_path" default="$(find-pkg-share autoware_rosbag_node_monitor)/config/rosbag_node_monitor.param.yaml"/>
+  <arg name="require_rosbag_for_auto" default="false"/>
+  <arg name="required_rosbag_node_name" default="/rosbag2_recorder"/>
 
   <set_parameter name="use_sim_time" value="$(var use_sim_time)"/>
 
@@ -16,6 +19,9 @@
     <arg name="duplicated_node_checker_param_path" value="$(find-pkg-share autoware_launch)/config/system/duplicated_node_checker/duplicated_node_checker.param.yaml"/>
     <arg name="processing_time_checker_param_path" value="$(find-pkg-share autoware_launch)/config/system/processing_time_checker/processing_time_checker.param.yaml"/>
     <arg name="pipeline_latency_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/pipeline_latency_monitor/pipeline_latency_monitor.param.yaml"/>
+    <arg name="rosbag_node_monitor_param_path" value="$(var rosbag_node_monitor_param_path)"/>
+    <arg name="require_rosbag_for_auto" value="$(var require_rosbag_for_auto)"/>
+    <arg name="required_rosbag_node_name" value="$(var required_rosbag_node_name)"/>
     <arg name="mrm_comfortable_stop_operator_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_comfortable_stop_operator/mrm_comfortable_stop_operator.param.yaml"/>
     <arg name="mrm_emergency_stop_operator_param_path" value="$(find-pkg-share autoware_launch)/config/system/mrm_emergency_stop_operator/mrm_emergency_stop_operator.param.yaml"/>
     <arg name="dummy_diag_publisher_param_path" value="$(find-pkg-share autoware_launch)/config/system/diagnostics/dummy_diag_publisher.param.yaml"/>

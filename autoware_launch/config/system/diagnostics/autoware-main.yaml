@@ -39,6 +39,7 @@ units:
       - { type: link, link: /autoware/control }
       - { type: link, link: /autoware/vehicle }
       - { type: link, link: /autoware/system }
+      - { type: link, link: /autoware/system/rosbag/node_alive }
       - { type: link, link: /adapi/mrm_request/delegate }
 
   - path: /autoware/modes/pull_over

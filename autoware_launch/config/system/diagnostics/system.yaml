@@ -22,6 +22,12 @@ units:
     node: service_log_checker
     name: response_status
 
+  - path: /autoware/system/rosbag/node_alive
+    type: diag
+    node: rosbag_node_monitor
+    name: rosbag_node_alive
+    timeout: 2.0
+
   - path: /autoware/system/topic_rate_check/emergency_control_command
     type: diag
     node: topic_state_monitor_system_emergency_control_cmd
