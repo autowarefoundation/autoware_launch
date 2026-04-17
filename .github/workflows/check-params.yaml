@@ -30,6 +30,25 @@ jobs:
           echo "matrix=${matrix_json}" >> "${GITHUB_OUTPUT}"
           echo "Selected categories: ${matrix_json}"
 
+  test-sync-params-script:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install ruamel.yaml
+
+      - name: Run unit tests
+        run: python .github/scripts/test_sync_params.py
+
   check-params-per-category:
     needs: resolve-categories
     runs-on: ubuntu-22.04
@@ -56,7 +75,7 @@ jobs:
         run: python .github/scripts/sync_params.py --check ${{ matrix.category }}
 
   check-params:
-    needs: check-params-per-category
+    needs: [check-params-per-category, test-sync-params-script]
     if: ${{ always() }}
     runs-on: ubuntu-22.04
     steps:
@@ -64,6 +83,10 @@ jobs:
         run: |
           if [[ "${{ needs.check-params-per-category.result }}" != "success" ]]; then
             echo "At least one category check failed."
+            exit 1
+          fi
+          if [[ "${{ needs.test-sync-params-script.result }}" != "success" ]]; then
+            echo "sync_params.py unit tests failed."
             exit 1
           fi
           echo "All category checks passed."
