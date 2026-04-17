@@ -8,6 +8,8 @@ Run:
     python .github/scripts/test_sync_params.py
 """
 
+# cSpell:disable
+
 import copy
 from pathlib import Path
 import tempfile
