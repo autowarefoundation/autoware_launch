@@ -826,9 +826,7 @@ def sync_file_entry(
             if changed:
                 variants_changed += 1
                 if check:
-                    old_content = (
-                        variant_abs.read_text(encoding="utf-8") if variant_abs.exists() else None
-                    )
+                    old_content = variant_text if variant_text else None
                     diff_text = _build_unified_diff(variant_abs, old_content, variant_content)
                     print(f"[sync] Drift detail: {variant.path}")
                     if diff_text:
@@ -877,9 +875,7 @@ def sync_file_entry(
         if changed:
             variants_changed += 1
             if check:
-                old_content = (
-                    variant_abs.read_text(encoding="utf-8") if variant_abs.exists() else None
-                )
+                old_content = variant_text if variant_text else None
                 diff_text = _build_unified_diff(variant_abs, old_content, variant_content)
                 print(f"[sync] Drift detail: {variant.path}")
                 if diff_text:
