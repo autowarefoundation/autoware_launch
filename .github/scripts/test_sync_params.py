@@ -11,10 +11,15 @@ Run:
 import copy
 from pathlib import Path
 import tempfile
+from textwrap import dedent
 import unittest
+from unittest.mock import patch
 
 from ruamel.yaml import YAML
+from sync_params import FileEntry
+from sync_params import RepositoryEntry
 from sync_params import SyncError
+from sync_params import VariantEntry
 from sync_params import apply_overrides_to_source_text
 from sync_params import build_embedded_original_section
 from sync_params import build_variant_header
@@ -31,6 +36,7 @@ from sync_params import parse_override_comments_from_variant_text
 from sync_params import parse_override_paths_from_variant_text
 from sync_params import set_value_at_path
 from sync_params import source_blob_url
+from sync_params import sync_file_entry
 
 _YAML_SAFE = YAML(typ="safe")
 
@@ -213,6 +219,68 @@ perception: []
         for path in overrides:
             with self.assertRaises(KeyError):
                 get_value_at_path(source_yaml, path)
+
+    def test_stale_override_is_identified_separately_from_active(self) -> None:
+        """Overrides whose paths were removed from upstream can be separated from active ones."""
+        source_yaml = _parse_yaml(
+            """
+/**:
+  ros__parameters:
+    tracker_state_parameter:
+      decay_rate: 0.1
+      still_present: 5.0
+"""
+        )
+        variant_text = """
+/**:
+  ros__parameters:
+    tracker_state_parameter:
+      max_dt: 0.5      # {OVERRIDE}
+      still_present: 9.0 # {OVERRIDE}
+"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            variant_path = Path(tmpdir) / "variant.yaml"
+            variant_path.write_text(variant_text, encoding="utf-8")
+            overrides, _ = extract_override_values(variant_path)
+
+        active = {}
+        stale = []
+        for path, value in overrides.items():
+            try:
+                get_value_at_path(source_yaml, path)
+                active[path] = value
+            except KeyError:
+                stale.append(path)
+
+        self.assertEqual(stale, [("/**", "ros__parameters", "tracker_state_parameter", "max_dt")])
+        self.assertEqual(
+            list(active.keys()),
+            [("/**", "ros__parameters", "tracker_state_parameter", "still_present")],
+        )
+
+    def test_active_overrides_apply_cleanly_when_sibling_is_stale(self) -> None:
+        """Passing stale override to apply_overrides_to_source_text raises SyncError, but filtering to active-only succeeds."""
+        source_text = """
+/**:
+  ros__parameters:
+    tracker_state_parameter:
+      decay_rate: 0.1
+      still_present: 5.0
+"""
+        stale_path = ("/**", "ros__parameters", "tracker_state_parameter", "max_dt")
+        active_path = ("/**", "ros__parameters", "tracker_state_parameter", "still_present")
+        all_overrides = {stale_path: 0.5, active_path: 9.0}
+
+        # Applying all overrides (stale included) would fail.
+        with self.assertRaises(SyncError):
+            apply_overrides_to_source_text(source_text, all_overrides)
+
+        # Applying only the active override succeeds.
+        patched = apply_overrides_to_source_text(source_text, {active_path: 9.0})
+        reparsed = _parse_yaml(patched)
+        self.assertEqual(
+            reparsed["/**"]["ros__parameters"]["tracker_state_parameter"]["still_present"], 9.0
+        )
 
     def test_variant_header_mentions_source(self) -> None:
         header = build_variant_header(
@@ -599,6 +667,179 @@ perception: []
         with_markers = ensure_override_markers_in_text(source_text, override_comments)
         self.assertIn("logging_file_path: /tmp/foo # {OVERRIDE: diagnostics}", with_markers)
         self.assertEqual(with_markers.count("# diagnostics"), 1)
+
+
+class StaleOverrideIntegrationTest(unittest.TestCase):
+    """Integration tests for stale override behavior in sync_file_entry.
+
+    'Stale' means the override marker still exists in the variant file but the
+    field has since been removed from the upstream source.
+
+    Expected contract:
+    - update mode (check=False): succeeds, removes the stale field from output.
+    - check mode  (check=True):  reports the discrepancy (returns changed > 0),
+                                  so the CI gate fails.
+    """
+
+    def _make_fixtures(self, tmpdir: str):
+        workspace_root = Path(tmpdir) / "workspace"
+        workspace_root.mkdir()
+        source_dir = Path(tmpdir) / "source_repo"
+        source_dir.mkdir()
+
+        # Source no longer has 'removed_field'; only 'kept_field' remains.
+        source_text = dedent(
+            """\
+            /**:
+              ros__parameters:
+                kept_field: 1.0
+            """
+        )
+        source_file = source_dir / "params.yaml"
+        source_file.write_text(source_text, encoding="utf-8")
+
+        # Variant still has 'removed_field' with an override marker.
+        variant_text = dedent(
+            """\
+            /**:
+              ros__parameters:
+                removed_field: 99.0 # {OVERRIDE}
+                kept_field: 2.0     # {OVERRIDE}
+            """
+        )
+        variant_rel = "config/params.yaml"
+        variant_abs = workspace_root / variant_rel
+        variant_abs.parent.mkdir(parents=True, exist_ok=True)
+        variant_abs.write_text(variant_text, encoding="utf-8")
+
+        repository = RepositoryEntry(
+            repository="org/repo",
+            ref="main",
+            files=(
+                FileEntry(
+                    source="params.yaml",
+                    variants=(VariantEntry(path=variant_rel),),
+                ),
+            ),
+        )
+        return workspace_root, source_dir, repository, repository.files[0], variant_abs
+
+    def test_update_mode_succeeds_and_drops_stale_field(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            workspace_root, source_dir, repo, file_entry, variant_abs = self._make_fixtures(tmpdir)
+            with patch("sync_params.last_modified_sha", return_value="deadbeef"):
+                changed = sync_file_entry(workspace_root, repo, file_entry, source_dir, check=False)
+
+            self.assertEqual(changed, 1)
+            result = variant_abs.read_text(encoding="utf-8")
+            # Stale field is dropped — visible as a deletion in the PR diff for review.
+            self.assertNotIn("removed_field", result)
+            self.assertIn("kept_field: 2.0", result)
+            self.assertIn("{OVERRIDE}", result)
+
+    def test_check_mode_reports_stale_field_as_drift(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            workspace_root, source_dir, repo, file_entry, variant_abs = self._make_fixtures(tmpdir)
+            original_variant_text = variant_abs.read_text(encoding="utf-8")
+            with patch("sync_params.last_modified_sha", return_value="deadbeef"):
+                changed = sync_file_entry(workspace_root, repo, file_entry, source_dir, check=True)
+
+            self.assertGreater(changed, 0)
+            # Variant file must not be modified in check mode.
+            self.assertEqual(variant_abs.read_text(encoding="utf-8"), original_variant_text)
+
+    def test_full_sync_scenario_from_pr_description(self) -> None:
+        """
+        Covers all four field-change cases in a single sync cycle.
+
+          Original upstream:          Variant before sync:
+            foo: 42                     foo: 42
+            bar: hoge                   bar: hogehoge  # {OVERRIDE}
+            baz: 1                      baz: 2         # {OVERRIDE}
+
+          Upstream changes:
+            foo: 42   →  foo: 40 # updated   (non-overridden, value changed)
+            bar: hoge →  bar: fuga            (overridden, upstream changed — override wins)
+            baz: 1   →   (removed)            (overridden, removed upstream — dropped with warning)
+                          qux: piyo # added   (new field, no override — synced verbatim)
+
+          Expected variant after sync:
+            foo: 40 # updated          ← synced from upstream
+            bar: hogehoge # {OVERRIDE} ← override preserved (upstream change ignored)
+                                         baz dropped (stale, visible as deletion in PR diff)
+            qux: piyo # added          ← new field from upstream
+
+          check mode must report drift so CI fails.
+        """
+        with tempfile.TemporaryDirectory() as tmpdir:
+            workspace_root = Path(tmpdir) / "workspace"
+            workspace_root.mkdir()
+            source_dir = Path(tmpdir) / "source_repo"
+            source_dir.mkdir()
+
+            source_text = dedent(
+                """\
+                foo: 40 # updated
+                bar: fuga
+                qux: piyo # added
+                """
+            )
+            (source_dir / "params.yaml").write_text(source_text, encoding="utf-8")
+
+            variant_text = dedent(
+                """\
+                foo: 42
+                bar: hogehoge # {OVERRIDE}
+                baz: 2 # {OVERRIDE}
+                """
+            )
+            variant_rel = "config/params.yaml"
+            variant_abs = workspace_root / variant_rel
+            variant_abs.parent.mkdir(parents=True, exist_ok=True)
+            variant_abs.write_text(variant_text, encoding="utf-8")
+
+            repo = RepositoryEntry(
+                repository="org/repo",
+                ref="main",
+                files=(
+                    FileEntry(
+                        source="params.yaml",
+                        variants=(VariantEntry(path=variant_rel),),
+                    ),
+                ),
+            )
+
+            # --- update mode ---
+            with patch("sync_params.last_modified_sha", return_value="deadbeef"):
+                changed = sync_file_entry(
+                    workspace_root, repo, repo.files[0], source_dir, check=False
+                )
+
+            self.assertEqual(changed, 1)
+            result = variant_abs.read_text(encoding="utf-8")
+
+            # Non-overridden field updated upstream → synced.
+            self.assertIn("foo: 40 # updated", result)
+            # Overridden field changed upstream → override value preserved.
+            self.assertIn("bar: hogehoge", result)
+            # The upstream value must not appear as live YAML (may appear in the embedded original).
+            body_lines = [ln for ln in result.splitlines() if not ln.startswith("#")]
+            self.assertNotIn("bar: fuga", "\n".join(body_lines))
+            # Stale overridden field (removed upstream) → dropped; visible in PR diff.
+            self.assertNotIn("baz", result)
+            # New field added upstream → present.
+            self.assertIn("qux: piyo # added", result)
+
+            # --- check mode (restore variant to pre-sync state) ---
+            variant_abs.write_text(variant_text, encoding="utf-8")
+            with patch("sync_params.last_modified_sha", return_value="deadbeef"):
+                changed_check = sync_file_entry(
+                    workspace_root, repo, repo.files[0], source_dir, check=True
+                )
+
+            self.assertGreater(changed_check, 0)
+            # Variant file must not be modified in check mode.
+            self.assertEqual(variant_abs.read_text(encoding="utf-8"), variant_text)
 
 
 if __name__ == "__main__":

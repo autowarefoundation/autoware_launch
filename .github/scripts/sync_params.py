@@ -833,22 +833,41 @@ def sync_file_entry(
                         print(diff_text)
             continue
 
-        override_flow_blocks = extract_flow_sequence_override_blocks_from_text(
-            variant_text, overrides.keys()
-        )
-
+        active_overrides: dict[tuple[str, ...], Any] = {}
+        stale_paths: list[tuple[str, ...]] = []
         for override_path, override_value in overrides.items():
             try:
                 get_value_at_path(source_yaml, override_path)
-            except KeyError as exc:
-                raise SyncError(
-                    f"Override path {_format_path(override_path)} in '{variant.path}' "
-                    f"is missing from source '{file_entry.source}'."
-                ) from exc
+                active_overrides[override_path] = override_value
+            except KeyError:
+                stale_paths.append(override_path)
 
-        variant_body = apply_overrides_to_source_text(source_body, overrides, override_flow_blocks)
+        if stale_paths:
+            for p in stale_paths:
+                print(
+                    f"[sync] Stale override {_format_path(p)} in '{variant.path}' "
+                    f"no longer exists in source '{file_entry.source}'."
+                )
+            if check:
+                variants_changed += 1
+                continue
+
+        override_flow_blocks = extract_flow_sequence_override_blocks_from_text(
+            variant_text, active_overrides.keys()
+        )
+
+        active_override_comments = {
+            p: c for p, c in override_comments.items() if p in active_overrides
+        }
+        active_override_comment_columns = {
+            p: c for p, c in override_comment_columns.items() if p in active_overrides
+        }
+
+        variant_body = apply_overrides_to_source_text(
+            source_body, active_overrides, override_flow_blocks
+        )
         variant_body = ensure_override_markers_in_text(
-            variant_body, override_comments, override_comment_columns
+            variant_body, active_override_comments, active_override_comment_columns
         )
         variant_content = build_variant_header(source_url) + variant_body
         variant_content += embedded_original
