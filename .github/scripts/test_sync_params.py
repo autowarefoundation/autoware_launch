@@ -844,5 +844,158 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
             self.assertEqual(variant_abs.read_text(encoding="utf-8"), variant_text)
 
 
+class CheckModePinnedShaIntegrationTest(unittest.TestCase):
+    """Integration tests verifying that check mode uses the pinned SHA, not HEAD.
+
+    Check mode should only detect manual edits to variant files (drift from the last
+    synced state). Upstream changes between the pinned SHA and the current HEAD must
+    not cause check mode to report drift — those are handled by update-params.
+    """
+
+    def _run(
+        self,
+        *,
+        pinned_source_body: str,
+        current_head_body: str,
+        variant_text: str,
+        check: bool,
+    ) -> tuple[int, str]:
+        """Set up fixtures, run sync_file_entry, return (changed, result_text)."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            workspace_root = Path(tmpdir) / "workspace"
+            workspace_root.mkdir()
+            source_dir = Path(tmpdir) / "source_repo"
+            source_dir.mkdir()
+
+            # Current HEAD source on disk.
+            (source_dir / "params.yaml").write_text(current_head_body, encoding="utf-8")
+
+            variant_rel = "config/params.yaml"
+            variant_abs = workspace_root / variant_rel
+            variant_abs.parent.mkdir(parents=True, exist_ok=True)
+            variant_abs.write_text(variant_text, encoding="utf-8")
+
+            repo = RepositoryEntry(
+                repository="org/repo",
+                ref="main",
+                files=(
+                    FileEntry(
+                        source="params.yaml",
+                        variants=(VariantEntry(path=variant_rel),),
+                    ),
+                ),
+            )
+
+            with (
+                patch("sync_params.last_modified_sha", return_value="newsha"),
+                patch("sync_params.load_source_body_at_sha", return_value=pinned_source_body),
+            ):
+                changed = sync_file_entry(
+                    workspace_root, repo, repo.files[0], source_dir, check=check
+                )
+
+            return changed, variant_abs.read_text(encoding="utf-8")
+
+    def _make_up_to_date_variant(self, source_body: str) -> str:
+        """Build a variant that is exactly what sync would produce (no overrides)."""
+        from sync_params import build_embedded_original_section
+        from sync_params import build_variant_header
+
+        url = "https://github.com/org/repo/blob/pinnedsha/params.yaml"
+        return (
+            build_variant_header(url) + source_body + build_embedded_original_section(source_body)
+        )
+
+    def test_check_passes_when_variant_matches_pinned_sha(self) -> None:
+        """No drift reported when variant matches the pinned SHA, even if HEAD differs."""
+        pinned_source = "foo: 42\nbar: hoge\n"
+        head_source = "foo: 99\nbar: fuga\n"  # HEAD has changed
+
+        variant_text = self._make_up_to_date_variant(pinned_source)
+
+        changed, result = self._run(
+            pinned_source_body=pinned_source,
+            current_head_body=head_source,
+            variant_text=variant_text,
+            check=True,
+        )
+
+        self.assertEqual(changed, 0)
+        # File must be untouched.
+        self.assertEqual(result, variant_text)
+
+    def test_check_uses_pinned_sha_not_head(self) -> None:
+        """If check used HEAD the variant would appear drifted, but since it uses the pinned SHA it must pass."""
+        pinned_source = "foo: 42\nbar: hoge\n"
+        head_source = "foo: 99\nbar: fuga\n"  # HEAD differs from pinned
+
+        variant_text = self._make_up_to_date_variant(pinned_source)
+
+        # Sanity-check: if head were used, the reconstructed content would differ from
+        # the variant (which was built from the pinned source), so changed would be > 0.
+        # We verify this by running with head_source as the pinned source too.
+        changed_if_head_used, _ = self._run(
+            pinned_source_body=head_source,  # pretend pinned == head
+            current_head_body=head_source,
+            variant_text=variant_text,
+            check=True,
+        )
+        self.assertGreater(
+            changed_if_head_used,
+            0,
+            "Scenario is trivial: variant matches HEAD too, so this test proves nothing.",
+        )
+
+        # Now run with the correct pinned source — check must pass.
+        changed_with_pinned, result = self._run(
+            pinned_source_body=pinned_source,
+            current_head_body=head_source,
+            variant_text=variant_text,
+            check=True,
+        )
+        self.assertEqual(changed_with_pinned, 0)
+        self.assertEqual(result, variant_text)
+
+    def test_check_fails_when_variant_manually_edited(self) -> None:
+        """Drift reported when variant was manually edited without an {OVERRIDE} marker."""
+        pinned_source = "foo: 42\nbar: hoge\n"
+        head_source = pinned_source  # HEAD unchanged — only manual edit matters
+
+        correct_variant = self._make_up_to_date_variant(pinned_source)
+        # Simulate a manual edit: change foo's value without adding {OVERRIDE}.
+        tampered_variant = correct_variant.replace("foo: 42", "foo: 99")
+
+        changed, result = self._run(
+            pinned_source_body=pinned_source,
+            current_head_body=head_source,
+            variant_text=tampered_variant,
+            check=True,
+        )
+
+        self.assertGreater(changed, 0)
+        # File must not be modified in check mode.
+        self.assertEqual(result, tampered_variant)
+
+    def test_update_uses_head_not_pinned_sha(self) -> None:
+        """Update mode ignores the pinned SHA and rebuilds from current HEAD."""
+        pinned_source = "foo: 42\nbar: hoge\n"
+        head_source = "foo: 99\nbar: fuga\n"  # upstream has changed
+
+        variant_text = self._make_up_to_date_variant(pinned_source)
+
+        changed, result = self._run(
+            pinned_source_body=pinned_source,
+            current_head_body=head_source,
+            variant_text=variant_text,
+            check=False,
+        )
+
+        self.assertEqual(changed, 1)
+        # The new variant must reflect HEAD values, not the pinned ones.
+        body_lines = [ln for ln in result.splitlines() if not ln.startswith("#")]
+        self.assertIn("foo: 99", "\n".join(body_lines))
+        self.assertIn("bar: fuga", "\n".join(body_lines))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -765,6 +765,13 @@ def _build_unified_diff(path: Path, old_content: str | None, new_content: str) -
     return "\n".join(diff_lines[:80])
 
 
+def _load_yaml_from_text(text: str, label: str) -> Any:
+    try:
+        return _YAML_RT.load(text)
+    except Exception as exc:
+        raise SyncError(f"Invalid YAML in {label}: {exc}") from exc
+
+
 def sync_file_entry(
     workspace_root: Path,
     repository: RepositoryEntry,
@@ -785,15 +792,13 @@ def sync_file_entry(
         source_yaml = {}
     source_sha = last_modified_sha(source_repo_dir, file_entry.source)
     source_url = source_blob_url(repository.repository, source_sha, file_entry.source)
-
     source_body = source_text if source_text.endswith("\n") else f"{source_text}\n"
-    embedded_original = build_embedded_original_section(source_body)
 
     variants_changed = 0
     for variant in file_entry.variants:
         variant_abs = workspace_root / variant.path
         variant_text = variant_abs.read_text(encoding="utf-8") if variant_abs.exists() else ""
-        source_body_for_embedded_check = source_body
+
         pinned_sha_and_path = (
             extract_pinned_source_sha_and_path(variant_text) if variant_text else None
         )
@@ -804,14 +809,32 @@ def sync_file_entry(
                     f"Source path mismatch in '{variant.path}': header points to "
                     f"'{pinned_source_path}' but config source is '{file_entry.source}'."
                 )
-            source_body_for_embedded_check = load_source_body_at_sha(
-                source_repo_dir, pinned_sha, pinned_source_path
-            )
+            pinned_body = load_source_body_at_sha(source_repo_dir, pinned_sha, pinned_source_path)
+        else:
+            pinned_sha = None
+            pinned_body = None
 
-        if variant_text and not embedded_original_matches_source(
-            variant_text, source_body_for_embedded_check
-        ):
-            if check:
+        # In update mode: use current HEAD source.
+        # In check mode: use the pinned SHA source so that we only detect manual edits
+        # to the variant file, not upstream changes (those are handled by update-params).
+        if check and pinned_body is not None:
+            effective_source_body = pinned_body
+            effective_source_yaml = _load_yaml_from_text(pinned_body, f"pinned {pinned_sha}")
+            if effective_source_yaml is None:
+                effective_source_yaml = {}
+            effective_source_url = source_blob_url(
+                repository.repository, pinned_sha, file_entry.source
+            )
+        else:
+            effective_source_body = source_body
+            effective_source_yaml = source_yaml
+            effective_source_url = source_url
+
+        effective_embedded_original = build_embedded_original_section(effective_source_body)
+
+        # In update mode, warn if the embedded original drifted from the pinned source.
+        if not check and pinned_body is not None:
+            if variant_text and not embedded_original_matches_source(variant_text, pinned_body):
                 print(
                     "[sync] Embedded original drift detected in "
                     f"'{variant.path}' for source '{file_entry.source}'."
@@ -820,8 +843,8 @@ def sync_file_entry(
         overrides, override_comments = extract_override_values(variant_abs)
         override_comment_columns = parse_override_comment_columns_from_variant_text(variant_text)
         if not overrides:
-            variant_content = build_variant_header(source_url) + source_body
-            variant_content += embedded_original
+            variant_content = build_variant_header(effective_source_url) + effective_source_body
+            variant_content += effective_embedded_original
             changed = write_or_check(variant_abs, variant_content, check)
             if changed:
                 variants_changed += 1
@@ -837,7 +860,7 @@ def sync_file_entry(
         stale_paths: list[tuple[str, ...]] = []
         for override_path, override_value in overrides.items():
             try:
-                get_value_at_path(source_yaml, override_path)
+                get_value_at_path(effective_source_yaml, override_path)
                 active_overrides[override_path] = override_value
             except KeyError:
                 stale_paths.append(override_path)
@@ -864,13 +887,13 @@ def sync_file_entry(
         }
 
         variant_body = apply_overrides_to_source_text(
-            source_body, active_overrides, override_flow_blocks
+            effective_source_body, active_overrides, override_flow_blocks
         )
         variant_body = ensure_override_markers_in_text(
             variant_body, active_override_comments, active_override_comment_columns
         )
-        variant_content = build_variant_header(source_url) + variant_body
-        variant_content += embedded_original
+        variant_content = build_variant_header(effective_source_url) + variant_body
+        variant_content += effective_embedded_original
         changed = write_or_check(variant_abs, variant_content, check)
         if changed:
             variants_changed += 1
