@@ -49,7 +49,7 @@
 
     # for save log
     enable_save_log: false
-    save_file_directory_path: detected_reflector_intensity_top_left
+    save_file_directory_path: detected_reflector_intensity
     save_file_name: detected_reflector_intensity
     save_frame_id: velodyne_top
     radius_for_extracting_marker_pointcloud: 0.4 # [m] within
