@@ -33,7 +33,7 @@ jobs:
         id: build-matrix
         env:
           EVENT_NAME: ${{ github.event_name }}
-          INPUT_CATEGORY: ${{ inputs.category }}
+          INPUT_CATEGORY: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.category || '' }}
         run: |
           set -euo pipefail
           categories_json="$(yq -o=json -I=0 '. | keys' .github/sync-params.yaml)"
