@@ -976,6 +976,38 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
         # File must not be modified in check mode.
         self.assertEqual(result, tampered_variant)
 
+    def test_freshly_synced_variant_always_passes_check(self) -> None:
+        """A variant produced by update mode must pass check mode unchanged.
+
+        In other words, check mode detects only manual edits — never the result of
+        the sync workflow itself.  We verify this by running update then check on the
+        same source and asserting that check reports zero drift.
+        """
+        head_source = "foo: 42\nbar: hoge\nbaz: 3.14\n"
+        # Start from a stale variant (built from an older source body).
+        stale_source = "foo: 1\nbar: old\n"
+        stale_variant = self._make_up_to_date_variant(stale_source)
+
+        # Step 1: update — sync the variant to HEAD.
+        changed_update, synced_variant = self._run(
+            pinned_source_body=stale_source,
+            current_head_body=head_source,
+            variant_text=stale_variant,
+            check=False,
+        )
+        self.assertEqual(changed_update, 1, "Update must have produced a new variant.")
+
+        # Step 2: check — the freshly synced variant must pass immediately.
+        # The pinned SHA in the new header now points to the HEAD content we just wrote,
+        # so we pass head_source as both the pinned body and the current HEAD.
+        changed_check, _ = self._run(
+            pinned_source_body=head_source,
+            current_head_body=head_source,
+            variant_text=synced_variant,
+            check=True,
+        )
+        self.assertEqual(changed_check, 0, "Freshly synced variant must pass check with no drift.")
+
     def test_update_uses_head_not_pinned_sha(self) -> None:
         """Update mode ignores the pinned SHA and rebuilds from current HEAD."""
         pinned_source = "foo: 42\nbar: hoge\n"

@@ -30,6 +30,7 @@ jobs:
           echo "matrix=${matrix_json}" >> "${GITHUB_OUTPUT}"
           echo "Selected categories: ${matrix_json}"
 
+  # the test for script itself is done here for every PR until we move the workflow to a separate repository.
   test-sync-params-script:
     runs-on: ubuntu-22.04
     steps:
