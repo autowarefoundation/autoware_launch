@@ -21,7 +21,7 @@
 
     <node_container pkg="rclcpp_components" exec="$(var container_type)" name="map_container" namespace="" output="both">
       <composable_node pkg="autoware_map_loader" plugin="autoware::map_loader::PointCloudMapLoaderNode" name="pointcloud_map_loader">
-        <param from="$(var pointcloud_map_loader_param_path)"/>
+        <param from="$(var pointcloud_map_loader_param_path)" allow_substs="true"/>
         <param name="pcd_paths_or_directory" value="[$(var pointcloud_map_path)]"/>
         <param name="pcd_metadata_path" value="$(var pointcloud_map_metadata_path)"/>
         <remap from="output/pointcloud_map" to="pointcloud_map"/>
@@ -32,7 +32,7 @@
       </composable_node>
 
       <composable_node pkg="autoware_map_loader" plugin="autoware::map_loader::Lanelet2MapLoaderNode" name="lanelet2_map_loader">
-        <param from="$(var lanelet2_map_loader_param_path)"/>
+        <param from="$(var lanelet2_map_loader_param_path)" allow_substs="true"/>
         <param name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
         <remap from="output/lanelet2_map" to="vector_map"/>
       </composable_node>
@@ -43,7 +43,7 @@
       </composable_node>
 
       <composable_node pkg="autoware_map_tf_generator" plugin="autoware::map_tf_generator::VectorMapTFGeneratorNode" name="vector_map_tf_generator">
-        <param from="$(var map_tf_generator_param_path)"/>
+        <param from="$(var map_tf_generator_param_path)" allow_substs="true"/>
       </composable_node>
     </node_container>
 
