@@ -93,6 +93,12 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
         ),
         allow_substs=True,
     )
+    classification_lamp_recognizer_ml_param = ParameterFile(
+        param_file=LaunchConfiguration("classification/lamp_recognizer_ml_param_path").perform(
+            context
+        ),
+        allow_substs=True,
+    )
     traffic_light_roi_visualizer_param = ParameterFile(
         param_file=LaunchConfiguration("traffic_light_roi_visualizer_param_path").perform(context),
         allow_substs=True,
@@ -111,10 +117,14 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
                 namespace="classification",
                 parameters=[
                     car_traffic_light_classifier_param,
+                    classification_lamp_recognizer_ml_param,
                     {
                         "build_only": False,
                         "label_path": LaunchConfiguration("classification/car/label_path"),
                         "model_path": LaunchConfiguration("classification/car/model_path"),
+                        "classifier_type": LaunchConfiguration(
+                            "classification/car/classifier_type"
+                        ),
                     },
                 ],
                 remappings=[
@@ -133,10 +143,14 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
                 namespace="classification",
                 parameters=[
                     pedestrian_traffic_light_classifier_param,
+                    classification_lamp_recognizer_ml_param,
                     {
                         "build_only": False,
                         "label_path": LaunchConfiguration("classification/pedestrian/label_path"),
                         "model_path": LaunchConfiguration("classification/pedestrian/model_path"),
+                        "classifier_type": LaunchConfiguration(
+                            "classification/pedestrian/classifier_type"
+                        ),
                     },
                 ],
                 remappings=[
@@ -257,7 +271,11 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
                         "build_only": False,
                         "label_path": LaunchConfiguration("whole_image_detection/label_path"),
                         "model_path": LaunchConfiguration("whole_image_detection/model_path"),
-                        "color_map_path": "",  # not used
+                        "roi_remap_path": LaunchConfiguration(
+                            "whole_image_detection/yolox_roi_label_remap_path"
+                        ),
+                        "roi_to_semantic_segmentation_remap_path": "",  # not used
+                        "semantic_segmentation_color_map_path": "",  # not used
                     },
                 ],
                 remappings=[
@@ -342,6 +360,7 @@ def generate_launch_description():
     # whole image detector by yolox
     add_launch_arg("whole_image_detection/model_path")
     add_launch_arg("whole_image_detection/label_path")
+    add_launch_arg("whole_image_detection/yolox_roi_label_remap_path")
     add_launch_arg("yolox_traffic_light_detector_param_path")
 
     # traffic_light_fine_detector
@@ -354,6 +373,17 @@ def generate_launch_description():
     add_launch_arg("classification/car/label_path")
     add_launch_arg("classification/pedestrian/model_path")
     add_launch_arg("classification/pedestrian/label_path")
+    add_launch_arg("classification/lamp_recognizer_ml_param_path")
+    add_launch_arg(
+        "classification/car/classifier_type",
+        default_value="1",
+        description="0=HSVFilter, 1=CNN, 2=LAMPClassifier",
+    )
+    add_launch_arg(
+        "classification/pedestrian/classifier_type",
+        default_value="1",
+        description="0=HSVFilter, 1=CNN, 2=LampRecognizer",
+    )
     add_launch_arg("car_traffic_light_classifier_param_path")
     add_launch_arg("pedestrian_traffic_light_classifier_param_path")
 

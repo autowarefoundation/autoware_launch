@@ -22,12 +22,16 @@
   <!-- ML parameters -->
   <arg name="whole_image_detection/model_path"/>
   <arg name="whole_image_detection/label_path"/>
+  <arg name="whole_image_detection/yolox_roi_label_remap_path"/>
   <arg name="fine_detection/model_path"/>
   <arg name="fine_detection/label_path"/>
   <arg name="classification/car/model_path"/>
   <arg name="classification/car/label_path"/>
+  <arg name="classification/lamp_recognizer_ml_param_path"/>
   <arg name="classification/pedestrian/model_path"/>
   <arg name="classification/pedestrian/label_path"/>
+  <arg name="classification/pedestrian/classifier_type"/>
+  <arg name="classification/car/classifier_type"/>
 
   <!-- topic -->
   <arg name="input/vector_map" default="/map/vector_map" description="input vector map topic"/>
@@ -62,12 +66,16 @@
       <arg name="traffic_light_roi_visualizer_param_path" value="$(var traffic_light_roi_visualizer_param_path)"/>
       <arg name="whole_image_detection/model_path" value="$(var whole_image_detection/model_path)"/>
       <arg name="whole_image_detection/label_path" value="$(var whole_image_detection/label_path)"/>
+      <arg name="whole_image_detection/yolox_roi_label_remap_path" value="$(var whole_image_detection/yolox_roi_label_remap_path)"/>
       <arg name="fine_detection/model_path" value="$(var fine_detection/model_path)"/>
       <arg name="fine_detection/label_path" value="$(var fine_detection/label_path)"/>
       <arg name="classification/car/model_path" value="$(var classification/car/model_path)"/>
       <arg name="classification/car/label_path" value="$(var classification/car/label_path)"/>
+      <arg name="classification/lamp_recognizer_ml_param_path" value="$(var classification/lamp_recognizer_ml_param_path)"/>
       <arg name="classification/pedestrian/model_path" value="$(var classification/pedestrian/model_path)"/>
       <arg name="classification/pedestrian/label_path" value="$(var classification/pedestrian/label_path)"/>
+      <arg name="classification/pedestrian/classifier_type" value="$(var classification/pedestrian/classifier_type)"/>
+      <arg name="classification/car/classifier_type" value="$(var classification/car/classifier_type)"/>
       <arg name="use_intra_process" value="true"/>
       <arg name="use_multithread" value="true"/>
     </include>

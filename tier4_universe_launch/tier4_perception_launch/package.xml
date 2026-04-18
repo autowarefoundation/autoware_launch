@@ -14,6 +14,7 @@
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
   <buildtool_depend>autoware_cmake</buildtool_depend>
 
+  <exec_depend>autoware_agnocast_wrapper</exec_depend>
   <exec_depend>autoware_bevfusion</exec_depend>
   <exec_depend>autoware_bytetrack</exec_depend>
   <exec_depend>autoware_cluster_merger</exec_depend>
@@ -34,9 +35,7 @@
   <exec_depend>autoware_map_based_prediction</exec_depend>
   <exec_depend>autoware_multi_object_tracker</exec_depend>
   <exec_depend>autoware_object_merger</exec_depend>
-  <exec_depend>autoware_object_range_splitter</exec_depend>
   <exec_depend>autoware_object_sorter</exec_depend>
-  <exec_depend>autoware_object_velocity_splitter</exec_depend>
   <exec_depend>autoware_occupancy_grid_map_outlier_filter</exec_depend>
   <exec_depend>autoware_perception_online_evaluator</exec_depend>
   <exec_depend>autoware_pointcloud_preprocessor</exec_depend>
