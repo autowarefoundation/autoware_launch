@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/da5284cb89cb4e4263ead39d8a083534032fa848/perception/autoware_lidar_transfusion/config/transfusion.param.yaml
+
 /**:
   ros__parameters:
     # network
@@ -14,3 +21,21 @@
     iou_nms_threshold: 0.1
     yaw_norm_thresholds: [0.3, 0.3, 0.3, 0.3, 0.0]  # refers to the class_names
     score_threshold: 0.1
+
+# ###### ORIGINAL (DO NOT EDIT) ######
+# /**:
+#   ros__parameters:
+#     # network
+#     trt_precision: fp16
+#     cloud_capacity: 2000000
+#     onnx_path: "$(var model_path)/transfusion.onnx"
+#     engine_path: "$(var model_path)/transfusion.engine"
+#     # pre-process params
+#     densification_num_past_frames: 1
+#     densification_world_frame_id: map
+#     # post-process params
+#     circle_nms_dist_threshold: 0.5
+#     iou_nms_search_distance_2d: 10.0
+#     iou_nms_threshold: 0.1
+#     yaw_norm_thresholds: [0.3, 0.3, 0.3, 0.3, 0.0]  # refers to the class_names
+#     score_threshold: 0.1

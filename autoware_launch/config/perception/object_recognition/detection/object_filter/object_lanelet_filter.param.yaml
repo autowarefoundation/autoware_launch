@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/7bbfa925fc756fb8f550772cde962c49daa8d3e6/perception/autoware_detected_object_validation/config/object_lanelet_filter.param.yaml
+
 /**:
   ros__parameters:
     filter_target_label:
@@ -23,9 +30,42 @@
 
       # object's elevation from lanelet based filter
       lanelet_object_elevation_filter:
-        enabled: true
+        enabled: true # {OVERRIDE}
         max_elevation_threshold: 5.0 # [m] from a lanelet's surface
         min_elevation_threshold: 0.0 # [m] from a lanelet's surface
 
       lanelet_extra_margin: 0.0
       debug: false
+
+# ###### ORIGINAL (DO NOT EDIT) ######
+# /**:
+#   ros__parameters:
+#     filter_target_label:
+#       UNKNOWN : true
+#       CAR : false
+#       TRUCK : false
+#       BUS : false
+#       TRAILER : false
+#       MOTORCYCLE : false
+#       BICYCLE : false
+#       PEDESTRIAN : false
+#
+#     filter_settings:
+#       # polygon overlap based filter
+#       lanelet_xy_overlap_filter:
+#         enabled: true
+#
+#       # velocity direction based filter
+#       lanelet_direction_filter:
+#         enabled: false
+#         velocity_yaw_threshold: 0.785398 # [rad] (45 deg)
+#         object_speed_threshold: 3.0 # [m/s]
+#
+#       # object's elevation from lanelet based filter
+#       lanelet_object_elevation_filter:
+#         enabled: false
+#         max_elevation_threshold: 5.0 # [m] from a lanelet's surface
+#         min_elevation_threshold: 0.0 # [m] from a lanelet's surface
+#
+#       lanelet_extra_margin: 0.0
+#       debug: false

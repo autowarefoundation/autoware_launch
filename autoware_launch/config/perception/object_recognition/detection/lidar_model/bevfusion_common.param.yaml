@@ -1,11 +1,31 @@
+# This file is managed by workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/cedc73a3f9e43fa53ec31e964b051b93dde82008/perception/autoware_bevfusion/config/common_bevfusion.param.yaml
+
 /**:
   ros__parameters:
+    # When the processing time exceeds the max_allowed_processing_time,
+    # a warning will be triggered.
     diagnostics:
-      # When the processing time exceeds the max_allowed_processing_time,
-      # a warning will be triggered.
       max_allowed_processing_time_ms: 200.0 # in milliseconds
       # If the warning is triggered and if a timestamp of last normal processing is more than
       # max_acceptable_consecutive_delay_ms, an error diagnostic message will be sent.
       max_acceptable_consecutive_delay_ms: 1000.0
       # interval of diagnostic callback in milliseconds
       validation_callback_interval_ms: 100.0 # in milliseconds
+
+# ###### ORIGINAL (DO NOT EDIT) ######
+# /**:
+#   ros__parameters:
+#     # When the processing time exceeds the max_allowed_processing_time,
+#     # a warning will be triggered.
+#     diagnostics:
+#       max_allowed_processing_time_ms: 200.0 # in milliseconds
+#       # If the warning is triggered and if a timestamp of last normal processing is more than
+#       # max_acceptable_consecutive_delay_ms, an error diagnostic message will be sent.
+#       max_acceptable_consecutive_delay_ms: 1000.0
+#       # interval of diagnostic callback in milliseconds
+#       validation_callback_interval_ms: 100.0 # in milliseconds

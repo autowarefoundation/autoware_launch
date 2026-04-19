@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/8796045215f6e40f26117cde7cc86000ba3a3833/perception/autoware_tracking_object_merger/config/decorative_tracker_merger.param.yaml
+
 # Node parameters
 /**:
   ros__parameters:
@@ -14,19 +21,53 @@
 
     # tracker settings
     tracker_state_parameter:
-      remove_probability_threshold: 0.6
-      publish_probability_threshold: 0.6
+      remove_probability_threshold: 0.6 # {OVERRIDE}
+      publish_probability_threshold: 0.6 # {OVERRIDE}
       default_lidar_existence_probability: 0.7
-      default_radar_existence_probability: 0.7
-      default_camera_existence_probability: 0.7
+      default_radar_existence_probability: 0.7 # {OVERRIDE}
+      default_camera_existence_probability: 0.7 # {OVERRIDE}
       decay_rate: 0.1
       max_dt: 1.0
 
-    # logging
+    # logging settings
     enable_logging: false
-    logging_file_path: "/tmp/decorative_tracker_merger.log"
+    logging_file_path: /tmp/decorative_tracker_merger.log # {OVERRIDE: tmp path}
 
     # diagnostics
     delay_main_objects_tolerance: 1.0 # [sec]
     duration_empty_main_objects_tolerance: 5.0 # [sec]
     delay_sub_objects_tolerance: 5.0 # [sec]
+
+# ###### ORIGINAL (DO NOT EDIT) ######
+# # Node parameters
+# /**:
+#   ros__parameters:
+#     base_link_frame_id: "base_link"
+#     merge_frame_id: "map"
+#     time_sync_threshold: 0.999
+#     sub_object_timeout_sec: 0.8
+#     publish_interpolated_sub_objects: true # for debug
+#
+#     # choose the input sensor type for each object type
+#     # "lidar", "radar", "camera" are available
+#     main_sensor_type: "lidar"
+#     sub_sensor_type: "radar"
+#
+#     # tracker settings
+#     tracker_state_parameter:
+#       remove_probability_threshold: 0.3
+#       publish_probability_threshold: 0.5
+#       default_lidar_existence_probability: 0.7
+#       default_radar_existence_probability: 0.6
+#       default_camera_existence_probability: 0.5
+#       decay_rate: 0.1
+#       max_dt: 1.0
+#
+#     # logging settings
+#     enable_logging: false
+#     logging_file_path: "association_log.json"
+#
+#     # diagnostics
+#     delay_main_objects_tolerance: 1.0 # [sec]
+#     duration_empty_main_objects_tolerance: 5.0 # [sec]
+#     delay_sub_objects_tolerance: 5.0 # [sec]

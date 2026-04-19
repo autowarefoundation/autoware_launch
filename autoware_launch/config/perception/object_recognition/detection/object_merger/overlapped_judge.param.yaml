@@ -1,3 +1,10 @@
+# This file is managed by workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/108e65a1329ad7b8feddae3827ecfd2de0ac0f77/perception/autoware_object_merger/config/overlapped_judge.param.yaml
+
 /**:
   ros__parameters:
     distance_threshold_list:
@@ -5,4 +12,14 @@
       [9.0,     9.0, 9.0,   9.0,  9.0,     9.0,       9.0,    9.0]         #UNKNOWN
 
     generalized_iou_threshold:
-      [-0.1,   -0.1,-0.1, -0.6,  -0.6, -0.1, -0.1, -0.1]
+      [-0.1, -0.1, -0.1, -0.6,  -0.6, -0.1, -0.1, -0.1]
+
+# ###### ORIGINAL (DO NOT EDIT) ######
+# /**:
+#   ros__parameters:
+#     distance_threshold_list:
+#       #UNKNOWN, CAR, TRUCK, BUS,  TRAILER, MOTORBIKE, BICYCLE,PEDESTRIAN
+#       [9.0,     9.0, 9.0,   9.0,  9.0,     9.0,       9.0,    9.0]         #UNKNOWN
+#
+#     generalized_iou_threshold:
+#       [-0.1, -0.1, -0.1, -0.6,  -0.6, -0.1, -0.1, -0.1]
