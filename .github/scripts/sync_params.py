@@ -1,4 +1,73 @@
 #!/usr/bin/env python3
+"""Sync parameter files from upstream repositories into this repository's variant files.
+
+This script is the backend for the ``update-params`` and ``check-params`` GitHub Actions
+workflows.  Given a *category* name (e.g. ``perception``), it reads the corresponding
+section of ``.github/sync-params.yaml``, clones each listed upstream repository, and
+for every ``source → variants`` mapping it either **updates** the variant files on disk
+or **checks** that they are still in sync with the pinned upstream revision.
+
+Overview
+--------
+Each variant file is a copy of an upstream ``*.param.yaml`` with three additions:
+
+1. **Header** — workflow-managed comment block that records the source GitHub URL
+   (pinned to the last-modified commit SHA of that file).
+2. **Override markers** — leaf fields annotated with ``# {OVERRIDE}`` or
+   ``# {OVERRIDE: reason}`` retain their local values across syncs.  All other
+   fields are overwritten from the upstream source.
+3. **Embedded original** — the full upstream content is appended as a comment
+   block (``# ###### ORIGINAL (DO NOT EDIT) ######``) so that any upstream change
+   to an overridden field is visible in the diff of the generated sync PR.
+
+Usage
+-----
+Update variant files for the ``perception`` category::
+
+    python .github/scripts/sync_params.py perception
+
+Check for drift without writing anything (exits non-zero if drift is detected)::
+
+    python .github/scripts/sync_params.py --check perception
+
+Use a custom config file::
+
+    python .github/scripts/sync_params.py --config path/to/sync-params.yaml perception
+
+Config format (``.github/sync-params.yaml``)
+--------------------------------------------
+::
+
+    perception:               # category name (passed as the positional CLI argument)
+      - repository: autowarefoundation/autoware_universe
+        ref: main             # branch/tag/SHA; omit to use the default branch
+        files:
+          - source: perception/autoware_image_object_locator/config/bbox_object_locator.param.yaml
+            variants:
+              - path: autoware_launch/config/perception/.../near_range_camera_vru_detector.param.yaml
+
+Override markers
+----------------
+Add ``# {OVERRIDE}`` (or ``# {OVERRIDE: reason}``) as an inline comment on any
+**leaf** field (scalar value or flat list of scalars) in a variant file to preserve
+that value across syncs::
+
+    some_param: 42        # {OVERRIDE}
+    other_param: [1, 2]   # {OVERRIDE: tuned for this vehicle}
+
+After a sync the marker is re-emitted verbatim in the output, so the annotation
+survives repeated workflow runs.
+
+Check mode vs. update mode
+--------------------------
+- **Update mode** (default): clones upstream, applies overrides on top of the
+  current HEAD of each source file, and writes the result.
+- **Check mode** (``--check``): uses the SHA pinned in each variant's header
+  (``# Source: …/blob/<sha>/…``) instead of the current HEAD.  This means only
+  *manual edits* to variant files are reported as drift; upstream changes between
+  the pinned SHA and HEAD are intentionally ignored (those are handled by a
+  dedicated update run).
+"""
 
 from __future__ import annotations
 
@@ -49,10 +118,16 @@ class RepositoryEntry:
 
 
 def _is_scalar(value: Any) -> bool:
+    """Return True if *value* is a YAML leaf scalar (None, bool, int, float, or str)."""
     return value is None or isinstance(value, (bool, int, float, str))
 
 
 def _is_scalar_or_scalar_array(value: Any) -> bool:
+    """Return True if *value* is a leaf scalar or a flat list of scalars.
+
+    Only these types may be used as override values; nested mappings or lists of
+    mappings are rejected so that overrides remain unambiguous.
+    """
     if _is_scalar(value):
         return True
     if isinstance(value, list):
@@ -61,10 +136,12 @@ def _is_scalar_or_scalar_array(value: Any) -> bool:
 
 
 def _format_path(path: Iterable[str]) -> str:
+    """Format a key path tuple as a human-readable bracket string, e.g. ``[a][b][c]``."""
     return "".join(f"[{p}]" for p in path)
 
 
 def _strip_quotes(value: str) -> str:
+    """Remove matching surrounding single or double quotes from *value*, if present."""
     if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
         return value[1:-1]
     return value
@@ -76,6 +153,7 @@ _YAML_RT.indent(mapping=2, sequence=4, offset=2)
 
 
 def _comment_has_override_marker(comment_obj: Any) -> bool:
+    """Return True if the ruamel comment object contains an ``{OVERRIDE}`` marker."""
     if comment_obj is None:
         return False
     comment_value = getattr(comment_obj, "value", str(comment_obj))
@@ -83,12 +161,21 @@ def _comment_has_override_marker(comment_obj: Any) -> bool:
 
 
 def _normalize_override_marker(reason: str | None) -> str:
+    """Return the canonical marker string for *reason*.
+
+    Returns ``{OVERRIDE}`` when *reason* is absent or blank, and
+    ``{OVERRIDE: <reason>}`` otherwise.
+    """
     if reason is None or not reason.strip():
         return OVERRIDE_MARKER
     return f"{{OVERRIDE: {reason.strip()}}}"
 
 
 def _extract_override_marker(text: str) -> str | None:
+    """Search *text* for an ``{OVERRIDE}`` or ``{OVERRIDE: reason}`` token.
+
+    Returns the normalised marker string if found, or ``None``.
+    """
     match = _OVERRIDE_MARKER_PATTERN.search(text)
     if match is None:
         return None
@@ -96,6 +183,7 @@ def _extract_override_marker(text: str) -> str | None:
 
 
 def _strip_leading_override_marker(text: str) -> str:
+    """Remove a leading ``{OVERRIDE …}`` token from *text* and return the remainder."""
     match = _OVERRIDE_MARKER_PATTERN.match(text)
     if match is None:
         return text
@@ -103,6 +191,11 @@ def _strip_leading_override_marker(text: str) -> str:
 
 
 def _extract_comment_text(comment_obj: Any) -> str:
+    """Extract the normalised comment body from a ruamel comment object.
+
+    If the comment contains an override marker the marker is returned as-is;
+    otherwise the plain text (stripped of the leading ``#``) is returned.
+    """
     comment_value = getattr(comment_obj, "value", str(comment_obj))
     normalized = comment_value.splitlines()[0].strip()
     if normalized.startswith("#"):
@@ -112,6 +205,10 @@ def _extract_comment_text(comment_obj: Any) -> str:
 
 
 def _extract_override_comment_from_line(line: str) -> str | None:
+    """Return the normalised override marker from the inline comment of a YAML line.
+
+    Returns ``None`` if the line has no comment or the comment contains no marker.
+    """
     _before_comment, sep, comment = line.partition("#")
     if not sep:
         return None
@@ -127,6 +224,13 @@ class KeyLineInfo:
 
 
 def _find_flow_sequence_end_idx(lines: list[str], start_idx: int) -> int:
+    """Return the index *after* the closing ``]`` of a flow sequence that starts at *start_idx*.
+
+    Handles multi-line flow sequences by tracking ``[`` / ``]`` depth, ignoring any
+    ``#``-prefixed comment text on each line.
+
+    Raises :class:`SyncError` if the sequence is never closed.
+    """
     depth = 0
     opened = False
     idx = start_idx
@@ -145,6 +249,13 @@ def _find_flow_sequence_end_idx(lines: list[str], start_idx: int) -> int:
 
 
 def _build_key_line_index(text: str) -> dict[tuple[str, ...], KeyLineInfo]:
+    """Build a mapping from YAML key path to line metadata for *text*.
+
+    Parses *text* line-by-line (without a full YAML parse) to record, for every
+    mapping key, its line index, indentation level, and whether the value is on
+    the same line (inline) or on a following line (block).  The result is used to
+    locate lines that must be patched when applying override values.
+    """
     lines = text.splitlines()
     index: dict[tuple[str, ...], KeyLineInfo] = {}
     stack: list[tuple[int, str]] = []
@@ -170,6 +281,11 @@ def _build_key_line_index(text: str) -> dict[tuple[str, ...], KeyLineInfo]:
 
 
 def _render_inline_yaml_value(value: Any) -> str:
+    """Render *value* as a single-line YAML flow string (e.g. ``[1, 2, 3]`` or ``true``).
+
+    Temporarily overrides the global ruamel instance's flow-style and width settings
+    and restores them on exit.
+    """
     previous_flow_style = getattr(_YAML_RT, "default_flow_style", None)
     previous_width = getattr(_YAML_RT, "width", None)
     try:
@@ -185,6 +301,12 @@ def _render_inline_yaml_value(value: Any) -> str:
 
 
 def _find_first_value_line(lines: list[str], key_line_idx: int, key_indent: int) -> int | None:
+    """Return the index of the first non-comment, non-blank value line after a block key.
+
+    Scans forward from *key_line_idx + 1*, skipping blank lines and comment-only
+    lines.  Returns ``None`` if the next content line is at an indent level ``<=``
+    *key_indent* (i.e. there is no child value in the block).
+    """
     idx = key_line_idx + 1
     while idx < len(lines):
         line = lines[idx]
@@ -203,6 +325,11 @@ def _find_first_value_line(lines: list[str], key_line_idx: int, key_indent: int)
 
 
 def _replace_inline_value(line: str, value: Any) -> str:
+    """Replace the value portion of *line* (a ``key: value [# comment]`` YAML line).
+
+    Preserves the original column position of any trailing inline comment so that
+    alignment is maintained after the value changes length.
+    """
     before_comment, sep, after_comment = line.partition("#")
     key_prefix = before_comment.split(":", 1)[0]
     if sep:
@@ -222,6 +349,17 @@ def _replace_block_value(
     value: Any,
     raw_flow_block_lines: list[str] | None = None,
 ) -> None:
+    """Replace a block-style value in *lines* in-place.
+
+    Handles three block value shapes:
+
+    - **Flow sequence** (``[…]``, possibly multi-line): replaced with the rendered
+      flow form of *value*, or with *raw_flow_block_lines* verbatim if supplied
+      (preserving the original multi-line layout and inline comments).
+    - **Block sequence** (``- item`` list): replaced line-by-line with the new
+      list items rendered as flow scalars.
+    - **Scalar on its own line**: the value line is replaced in-place.
+    """
     value_line_idx = _find_first_value_line(lines, key_line_idx, key_indent)
     if value_line_idx is None:
         raise SyncError(f"Override target key on line {key_line_idx + 1} has no value line.")
@@ -275,6 +413,23 @@ def apply_overrides_to_source_text(
     overrides: dict[tuple[str, ...], Any],
     override_flow_blocks: dict[tuple[str, ...], list[str]] | None = None,
 ) -> str:
+    """Return *source_text* with override values substituted at the specified key paths.
+
+    Overrides are applied **in descending line order** so that patching a
+    lower block (which may change the line count) does not invalidate the stored
+    ``line_idx`` for overrides higher up in the file.
+
+    Args:
+        source_text: The upstream YAML content to patch.
+        overrides: Mapping from key path tuple to the new value to inject.
+        override_flow_blocks: Optional mapping from key path to raw source lines for
+            multi-line flow sequences.  When provided, the exact original block
+            layout (including inline comments) is re-used instead of re-rendering
+            through :func:`_render_inline_yaml_value`.
+
+    Raises:
+        :class:`SyncError`: If any override path cannot be found in *source_text*.
+    """
     lines = source_text.splitlines()
     key_index = _build_key_line_index(source_text)
     # Apply in descending line order so mutations to lower lines never shift the
@@ -304,6 +459,15 @@ def apply_overrides_to_source_text(
 def extract_flow_sequence_override_blocks_from_text(
     text: str, paths: Iterable[tuple[str, ...]]
 ) -> dict[tuple[str, ...], list[str]]:
+    """Extract the raw source lines of multi-line flow sequences for the given paths.
+
+    For each path in *paths* that resolves to a block-style flow sequence
+    (i.e. the value starts on the *next* line as ``[…]``), the raw lines of
+    that sequence (from the opening ``[`` to the closing ``]`` inclusive) are
+    collected.  These raw blocks are later passed to
+    :func:`apply_overrides_to_source_text` so the original multi-line layout and
+    row-annotation comments are preserved in the output.
+    """
     if not text:
         return {}
     lines = text.splitlines()
@@ -328,6 +492,26 @@ def ensure_override_markers_in_text(
     override_comments: dict[tuple[str, ...], str],
     override_comment_columns: dict[tuple[str, ...], int] | None = None,
 ) -> str:
+    """Re-attach ``{OVERRIDE}`` markers to the patched source text.
+
+    After :func:`apply_overrides_to_source_text` replaces values it strips any
+    existing inline comments.  This function walks over every overridden key and
+    re-inserts the marker comment, obeying the following rules:
+
+    - If the patched line already has an inline comment, the marker is prepended
+      to the existing comment text (avoiding duplication of the comment body when
+      it matches the marker reason).
+    - If *override_comment_columns* is given, the ``#`` character is placed at
+      the same column as it appeared in the variant file, preserving alignment.
+    - An existing reasoned marker (``{OVERRIDE: …}``) is kept as-is; only a plain
+      ``{OVERRIDE}`` is replaced if a reasoned marker is available.
+
+    Args:
+        text: The YAML text after values have been patched.
+        override_comments: Mapping from key path to the marker string to emit.
+        override_comment_columns: Optional column indices (0-based) for the ``#``
+            character, taken from the previous variant file to preserve alignment.
+    """
     lines = text.splitlines()
     key_index = _build_key_line_index(text)
     for path, comment_text in override_comments.items():
@@ -385,6 +569,12 @@ def ensure_override_markers_in_text(
 
 
 def parse_override_comment_columns_from_variant_text(text: str) -> dict[tuple[str, ...], int]:
+    """Return the column position of each override marker comment in *text*.
+
+    The column (0-based character offset of ``#``) is recorded so that
+    :func:`ensure_override_markers_in_text` can re-align the comment in the
+    regenerated output at the same position used in the previous variant file.
+    """
     lines = text.splitlines()
     key_index = _build_key_line_index(text)
     columns: dict[tuple[str, ...], int] = {}
@@ -446,16 +636,24 @@ def parse_override_comments_from_variant_text(text: str) -> dict[tuple[str, ...]
 
 
 def parse_override_paths_from_variant_text(text: str) -> list[tuple[str, ...]]:
+    """Return the ordered list of key paths that carry override markers in *text*."""
     return list(parse_override_comments_from_variant_text(text).keys())
 
 
 def _expect_mapping(value: Any, context: str) -> dict[str, Any]:
+    """Assert that *value* is a dict mapping and return it, raising :class:`SyncError` otherwise."""
     if not isinstance(value, dict):
         raise SyncError(f"{context} must be a mapping.")
     return value
 
 
 def _parse_repository_entries(entries_data: Any, context: str) -> list[RepositoryEntry]:
+    """Parse and validate the raw YAML list *entries_data* into a list of :class:`RepositoryEntry`.
+
+    Each entry must be a mapping with ``repository`` (required), optional ``ref``,
+    and ``files`` (list of source/variants pairs).  Unknown keys raise
+    :class:`SyncError` immediately so configuration mistakes are caught early.
+    """
     if not isinstance(entries_data, list):
         raise SyncError(f"{context} must be a list.")
 
@@ -519,6 +717,16 @@ def _parse_repository_entries(entries_data: Any, context: str) -> list[Repositor
 
 
 def load_config(config_path: Path, category: str) -> list[RepositoryEntry]:
+    """Load and validate the sync-params config file, returning entries for *category*.
+
+    Args:
+        config_path: Path to the YAML config file (e.g. ``.github/sync-params.yaml``).
+        category: Top-level key to read (e.g. ``perception``).
+
+    Raises:
+        :class:`SyncError`: If the file is invalid YAML, the top level is not a
+            mapping, or *category* is not defined.
+    """
     try:
         config_data = _YAML_RT.load(config_path.read_text(encoding="utf-8"))
     except Exception as exc:
@@ -537,6 +745,7 @@ def load_config(config_path: Path, category: str) -> list[RepositoryEntry]:
 
 
 def run_git(args: list[str], cwd: Path | None = None) -> str:
+    """Run a ``git`` sub-command and return its stdout, raising :class:`SyncError` on failure."""
     process = subprocess.run(
         ["git", *args],
         cwd=str(cwd) if cwd else None,
@@ -554,6 +763,12 @@ def run_git(args: list[str], cwd: Path | None = None) -> str:
 
 
 def load_source_body_at_sha(repo_dir: Path, sha: str, source_path: str) -> str:
+    """Read the content of *source_path* at commit *sha* from a local git repository.
+
+    Used in check mode to compare the variant against the pinned upstream revision
+    rather than the current HEAD, so that upstream-only changes do not trigger
+    false drift reports.
+    """
     process = subprocess.run(
         ["git", "show", f"{sha}:{source_path}"],
         cwd=str(repo_dir),
@@ -571,6 +786,10 @@ def load_source_body_at_sha(repo_dir: Path, sha: str, source_path: str) -> str:
 
 
 def resolve_default_branch(repo: str) -> str:
+    """Resolve and return the default branch name (e.g. ``main``) of a GitHub repository.
+
+    Uses ``git ls-remote --symref`` to avoid a full clone.
+    """
     # cSpell:ignore symref
     output = run_git(["ls-remote", "--symref", f"https://github.com/{repo}.git", "HEAD"])
     for line in output.splitlines():
@@ -582,12 +801,20 @@ def resolve_default_branch(repo: str) -> str:
 
 
 def resolve_ref(repo: str, ref: str | None) -> str:
+    """Return *ref* if specified, otherwise look up the default branch of *repo*."""
     if ref:
         return ref
     return resolve_default_branch(repo)
 
 
 def clone_repository(repo: str, ref: str, temp_root: Path) -> Path:
+    """Clone *repo* at the given *ref* into a deterministic sub-directory of *temp_root*.
+
+    The destination directory name is derived from the repo and ref so that a
+    second call with identical arguments is idempotent (the existing directory is
+    removed and re-cloned).  Full history is fetched because
+    :func:`last_modified_sha` requires ``git log`` over the complete ancestry.
+    """
     repo_name = repo.replace("/", "__")
     repo_dir = temp_root / f"{repo_name}_{hashlib.sha1(f'{repo}@{ref}'.encode()).hexdigest()[:8]}"
     if repo_dir.exists():
@@ -599,6 +826,11 @@ def clone_repository(repo: str, ref: str, temp_root: Path) -> Path:
 
 
 def last_modified_sha(repo_dir: Path, source_path: str) -> str:
+    """Return the full SHA of the most recent commit that modified *source_path*.
+
+    This SHA is embedded in the variant header and used as the pinned reference
+    point for future check-mode runs.
+    """
     sha = run_git(["log", "-n", "1", "--format=%H", "--", source_path], cwd=repo_dir)
     if not sha:
         raise SyncError(f"No commit found for source file '{source_path}'.")
@@ -606,6 +838,7 @@ def last_modified_sha(repo_dir: Path, source_path: str) -> str:
 
 
 def load_yaml_file(path: Path) -> Any:
+    """Load a YAML file with ruamel (round-trip mode), raising :class:`SyncError` on parse failure."""
     try:
         return _YAML_RT.load(path.read_text(encoding="utf-8"))
     except Exception as exc:
@@ -613,10 +846,16 @@ def load_yaml_file(path: Path) -> Any:
 
 
 def source_blob_url(source_repo: str, source_sha: str, source_path: str) -> str:
+    """Build the GitHub blob permalink for a source file at a specific commit SHA."""
     return f"https://github.com/{source_repo}/blob/{source_sha}/{source_path}"
 
 
 def build_variant_header(source_url: str) -> str:
+    """Build the workflow-managed comment header that is prepended to every variant file.
+
+    The header instructs maintainers how to mark overrides and embeds the
+    ``# Source: <url>`` line whose SHA is used by check mode as the pinned revision.
+    """
     lines = [
         "# This file is managed by workflow.",
         f"# Keys marked with '{OVERRIDE_MARKER}' or '# {{OVERRIDE: reason}}' are persisted as variant overrides.",
@@ -629,6 +868,13 @@ def build_variant_header(source_url: str) -> str:
 
 
 def build_embedded_original_section(source_body: str) -> str:
+    """Return the full upstream source content encoded as a comment block.
+
+    The block starts with ``# ###### ORIGINAL (DO NOT EDIT) ######`` and is
+    appended at the end of each variant file.  Its purpose is to make upstream
+    changes to overridden fields explicitly visible in the diff of the sync PR,
+    prompting reviewers to consider whether the override value should also change.
+    """
     lines = source_body.splitlines()
     commented_lines = [f"# {line}" if line else "#" for line in lines]
     section = ["", f"# {ORIGINAL_PIVOT}", *commented_lines]
@@ -636,6 +882,12 @@ def build_embedded_original_section(source_body: str) -> str:
 
 
 def extract_pinned_source_sha_and_path(variant_text: str) -> tuple[str, str] | None:
+    """Parse the ``# Source:`` header line and return ``(sha, path)`` or ``None``.
+
+    The SHA and path are extracted from the GitHub blob URL embedded in the
+    variant header (e.g. ``https://github.com/org/repo/blob/<sha>/path/to/file.yaml``).
+    Returns ``None`` when no valid ``# Source:`` line is found.
+    """
     for line in variant_text.splitlines():
         if not line.startswith("# Source: "):
             continue
@@ -651,6 +903,15 @@ def extract_pinned_source_sha_and_path(variant_text: str) -> tuple[str, str] | N
 
 
 def extract_embedded_original_from_variant_text(text: str) -> str | None:
+    """Reconstruct the upstream source body from the embedded comment block in *text*.
+
+    Strips the leading ``# `` prefix from each commented line to recover the
+    original content.  Returns ``None`` if the pivot header is absent, or an
+    empty string if the block is present but contains no content lines.
+
+    Raises :class:`SyncError` if any line in the block does not conform to the
+    expected ``# <content>`` or ``#`` (blank) format.
+    """
     lines = text.splitlines()
     pivot_line = f"# {ORIGINAL_PIVOT}"
     pivot_idx = next((idx for idx, line in enumerate(lines) if line.strip() == pivot_line), None)
@@ -679,11 +940,18 @@ def extract_embedded_original_from_variant_text(text: str) -> str | None:
 
 
 def embedded_original_matches_source(variant_text: str, source_body: str) -> bool:
+    """Return True if the embedded original block in *variant_text* equals *source_body* exactly."""
     extracted = extract_embedded_original_from_variant_text(variant_text)
     return extracted is not None and extracted == source_body
 
 
 def get_value_at_path(data: Any, path: tuple[str, ...]) -> Any:
+    """Traverse nested dicts following *path* and return the value at the leaf.
+
+    Raises :exc:`KeyError` with the missing segment if any step of *path* cannot
+    be resolved.  Used to verify that override paths still exist in the upstream
+    source and to read the current value held in a variant.
+    """
     cursor = data
     for segment in path:
         if not isinstance(cursor, dict) or segment not in cursor:
@@ -693,6 +961,10 @@ def get_value_at_path(data: Any, path: tuple[str, ...]) -> Any:
 
 
 def set_value_at_path(data: Any, path: tuple[str, ...], value: Any) -> None:
+    """Set the leaf value at *path* inside *data* to a deep copy of *value*.
+
+    Raises :exc:`KeyError` if any intermediate key or the final key is missing.
+    """
     cursor = data
     for segment in path[:-1]:
         if not isinstance(cursor, dict) or segment not in cursor:
@@ -706,6 +978,21 @@ def set_value_at_path(data: Any, path: tuple[str, ...], value: Any) -> None:
 def extract_override_values(
     variant_path: Path,
 ) -> tuple[dict[tuple[str, ...], Any], dict[tuple[str, ...], str]]:
+    """Read override values and their comment strings from an existing variant file.
+
+    Returns a tuple of two dicts:
+
+    - **overrides**: maps each override key path to its current value (deep-copied
+      from the variant's parsed YAML).
+    - **override_comments**: maps each override key path to the normalised marker
+      string (e.g. ``{OVERRIDE}`` or ``{OVERRIDE: reason}``).  This is re-emitted
+      verbatim when re-generating the variant.
+
+    Returns ``({}, {})`` when *variant_path* does not exist or contains no markers.
+
+    Raises :class:`SyncError` if a marked path is not present in the variant YAML
+    or if its value is not a leaf scalar or flat list of scalars.
+    """
     if not variant_path.exists():
         return {}, {}
 
@@ -737,17 +1024,26 @@ def extract_override_values(
 
 
 def write_or_check(path: Path, new_content: str, check: bool) -> bool:
+    """Write *new_content* to *path* (update mode) or just report whether it differs (check mode).
+
+    Returns ``True`` if a change was detected (or made), ``False`` if the file
+    already matches *new_content*.
+    """
     old_content = path.read_text(encoding="utf-8") if path.exists() else None
     if old_content == new_content:
         return False
-    if check:
-        return True
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(new_content, encoding="utf-8")
+    if not check:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(new_content, encoding="utf-8")
     return True
 
 
 def _build_unified_diff(path: Path, old_content: str | None, new_content: str) -> str:
+    """Build a concise unified diff string for display in check-mode output.
+
+    At most 80 diff lines are emitted to keep CI logs readable.  When
+    *old_content* is ``None`` the diff is shown as a pure addition.
+    """
     # cSpell:ignore keepends tofile lineterm
     old_lines = old_content.splitlines(keepends=True) if old_content is not None else []
     new_lines = new_content.splitlines(keepends=True)
@@ -773,6 +1069,7 @@ def _build_unified_diff(path: Path, old_content: str | None, new_content: str) -
 
 
 def _load_yaml_from_text(text: str, label: str) -> Any:
+    """Parse *text* as YAML (round-trip), raising :class:`SyncError` with *label* on failure."""
     try:
         return _YAML_RT.load(text)
     except Exception as exc:
@@ -786,6 +1083,27 @@ def sync_file_entry(
     source_repo_dir: Path,
     check: bool,
 ) -> int:
+    """Sync (or check) all variant files for a single source file entry.
+
+    For each variant listed under *file_entry*:
+
+    1. Read the existing variant (if any) and extract pinned SHA and overrides.
+    2. Choose the *effective* source body:
+       - **Update mode**: current HEAD content of the source file.
+       - **Check mode**: content at the SHA pinned in the variant's header,
+         so that upstream changes between the pin and HEAD are ignored.
+    3. Apply active overrides on top of the effective source body.
+    4. Re-attach override markers and prepend the header.
+    5. Append the embedded original comment block.
+    6. Write the result (update mode) or compare and report drift (check mode).
+
+    Overrides whose key paths have been removed from the upstream source are
+    treated as ``stale``:  they are silently dropped in update mode (the deletion
+    is visible in the sync PR diff) and counted as drift in check mode.
+
+    Returns the number of variant files that were changed (update mode) or that
+    differ from the expected state (check mode).
+    """
     source_abs = source_repo_dir / file_entry.source
     if not source_abs.exists():
         raise SyncError(
@@ -920,6 +1238,13 @@ def run_sync(
     check: bool,
     verbose: bool = True,
 ) -> int:
+    """Run the full sync pipeline for *category* and return an exit code.
+
+    Clones each upstream repository into a temporary directory (cleaned up on
+    exit), then calls :func:`sync_file_entry` for every configured source file.
+    Prints a summary line at the end.  In check mode returns ``1`` if any variant
+    drifted, otherwise returns ``0``.
+    """
     workspace_root = Path.cwd()
     repositories = load_config(config_path, category)
 
@@ -963,7 +1288,7 @@ def run_sync(
     return 0
 
 
-def parse_args() -> argparse.Namespace:
+def main() -> int:
     parser = argparse.ArgumentParser(description="Sync parameter files from external repositories.")
     parser.add_argument(
         "category",
@@ -981,11 +1306,7 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Check for drift without writing files.",
     )
-    return parser.parse_args()
-
-
-def main() -> int:
-    args = parse_args()
+    args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else (Path.cwd() / args.config)
     if not config_path.exists():
         raise SyncError(f"Config file does not exist: {config_path}")
