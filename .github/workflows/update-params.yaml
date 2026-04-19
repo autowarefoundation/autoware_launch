@@ -98,7 +98,7 @@ jobs:
 
       - name: Create update PR
         id: create-pr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ steps.generate-token.outputs.token }}
           base: ${{ github.event.repository.default_branch }}
@@ -111,8 +111,7 @@ jobs:
             Trigger: ${{ github.event_name }}
             Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           labels: |
-            no-issue
-            chore
+            tag:sync-params
 
       - name: Summarize category result
         if: ${{ always() }}
