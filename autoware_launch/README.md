@@ -15,3 +15,9 @@ You can use the command as follows at shell script to launch `*.launch.xml` in `
 ```bash
 ros2 launch autoware_launch autoware.launch.xml map_path:=/path/to/map_folder vehicle_model:=lexus sensor_model:=aip_xx1
 ```
+
+To run the controller with Pure Pursuit:
+
+```bash
+ros2 launch autoware_launch autoware.launch.xml map_path:=/path/to/map_folder controller:=autoware_pure_pursuit
+```

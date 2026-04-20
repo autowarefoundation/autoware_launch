@@ -10,6 +10,7 @@
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
   <arg name="control_module_preset" default="default" description="control module preset"/>
+  <arg name="controller" default="" description="control controller override. option: autoware_pure_pursuit"/>
 
   <!-- Optional parameters -->
   <!-- Modules to be launched -->
@@ -144,6 +145,7 @@
   <group if="$(var launch_control)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
       <arg name="module_preset" value="$(var control_module_preset)"/>
+      <arg name="controller" value="$(var controller)"/>
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
     </include>
