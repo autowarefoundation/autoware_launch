@@ -119,15 +119,15 @@ node_groups:
       - /perception/occupancy_grid_map/occupancy_grid_map_node
       - /perception/traffic_light_recognition/camera1/occlusion_predictor
   - name: lidar_top_container
-    type: ros2_component_container_mt_icp
+    type: ros2_component_container_mt_ipc
     nodes:
       - /sensing/lidar/top/*
   - name: lidar_left_container
-    type: ros2_component_container_icp
+    type: ros2_component_container_ipc
     nodes:
       - /sensing/lidar/left/*
   - name: lidar_right_container
-    type: ros2_component_container_icp
+    type: ros2_component_container_ipc
     nodes:
       - /sensing/lidar/right/*
 
