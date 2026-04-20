@@ -598,9 +598,9 @@ def launch_setup(context, *args, **kwargs):
             launch_arguments={
                 # "input/pointcloud": "range_cropped/pointcloud",
                 "input/pointcloud": LaunchConfiguration("input/pointcloud"),
-                "output/pointcloud/segmentation": LaunchConfiguration("ptv3_output/segmented/pointcloud"),
-                "output/pointcloud/visualization": LaunchConfiguration("ptv3_output/probs/pointcloud"),
-                "output/pointcloud/filtered": LaunchConfiguration("ptv3_output/ground_segmented/pointcloud"),
+                "output/pointcloud/segmentation": "/perception/segmented/pointcloud",
+                "output/pointcloud/visualization": "/perception/segmented/pointcloud/visualization",
+                "output/pointcloud/filtered": "/perception/obstacle_segmentation/pointcloud",
                 "pointcloud_container_name": LaunchConfiguration("pointcloud_container_name"),
                 "use_pointcloud_container": LaunchConfiguration("ptv3_use_pointcloud_container"),
                 "data_path": LaunchConfiguration("data_path"),
@@ -610,7 +610,7 @@ def launch_setup(context, *args, **kwargs):
         )
         actions.append(ptv3_launch)
 
-    return actions
+        return actions
     components.extend(
         pipeline.create_single_frame_obstacle_segmentation_components(
             input_topic=LaunchConfiguration("input/pointcloud"),
@@ -673,13 +673,10 @@ def generate_launch_description():
     add_launch_arg("use_cuda_ground_segmentation", "False")
     add_launch_arg("use_semantic_segmentation_ptv3")
     add_launch_arg("launch_lidar_frnet", "False")
-    add_launch_arg("lidar_frnet_output/pointcloud/filtered", "/perception/obstacle_segmentation/frnet/pointcloud")
-    add_launch_arg("lidar_frnet_output/pointcloud/visualization", "/perception/frnet/visualization")
-    add_launch_arg("lidar_frnet_output/pointcloud/segmentation", "/perception/frnet/segmentation")
     add_launch_arg("launch_ptv3", "True")
     add_launch_arg("ptv3_use_pointcloud_container", "True")
-    add_launch_arg("ptv3_output/segmented/pointcloud", "/perception/ptv3/segmented/pointcloud")
-    add_launch_arg("ptv3_output/ground_segmented/pointcloud", "/perception/obstacle_segmentation/ptv3/pointcloud")
+    # add_launch_arg("ptv3_output/segmented/pointcloud", "/perception/ptv3/segmented/pointcloud")
+    # add_launch_arg("ptv3_output/ground_segmented/pointcloud", "/perception/obstacle_segmentation/ptv3/pointcloud")
     add_launch_arg("ptv3_output/probs/pointcloud", "/perception/ptv3/probs/pointcloud")
     add_launch_arg("data_path", "/opt/autoware/mlmodels")
     # add_launch_arg("data_path", "/home/kyoichi-sugahara/autoware_data")

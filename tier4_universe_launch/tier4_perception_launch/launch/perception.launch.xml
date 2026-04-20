@@ -346,6 +346,7 @@
           <arg name="camera_2d_detector/roi_to_semseg_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
           <arg name="use_camera_vru_detector" value="$(var use_camera_vru_detector)"/>
           <arg name="camera_vru_detector_rois_ids" value="$(var camera_vru_detector_rois_ids)"/>
+          <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>
         </include>
       </group>
 

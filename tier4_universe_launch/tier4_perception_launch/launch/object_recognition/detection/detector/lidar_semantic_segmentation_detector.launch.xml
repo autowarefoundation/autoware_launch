@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Current namespace -->
+  <arg name="ns" description="current namespace"/>
+
+  <arg name="voxel_grid_based_euclidean_param_path"/>
+
+  <arg name="node/pointcloud_container"/>
+  <arg name="euclidean_cluster/input/pointcloud"/>
+  <arg name="detected_object_feature_remover/output/objects"/>
+
+  <!-- Clustering -->
+  <group>
+    <push-ros-namespace namespace="clustering"/>
+    <group>
+      <include file="$(find-pkg-share autoware_euclidean_cluster)/launch/voxel_grid_based_euclidean_cluster.launch.xml">
+        <arg name="input_pointcloud" value="$(var euclidean_cluster/input/pointcloud)"/>
+        <arg name="output_clusters" value="euclidean_cluster/output/clusters"/>
+        <arg name="use_low_height_cropbox" value="$(var use_low_height_cropbox)"/>
+        <arg name="use_pointcloud_container" value="false"/>
+        <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
+      </include>
+    </group>
+
+    <!-- shape_estimation 1 -->
+    <group>
+      <include file="$(find-pkg-share autoware_shape_estimation)/launch/shape_estimation.launch.xml">
+        <arg name="input/objects" value="euclidean_cluster/output/clusters"/>
+        <arg name="output/objects" value="euclidean_cluster/output/objects"/>
+      </include>
+    </group>
+    <!-- convert DynamicObjectsWithFeatureArray to DynamicObjects -->
+    <group>
+      <include file="$(find-pkg-share autoware_detected_object_feature_remover)/launch/detected_object_feature_remover.launch.xml">
+        <arg name="input" value="euclidean_cluster/output/objects"/>
+        <arg name="output" value="$(var detected_object_feature_remover/output/objects)"/>
+      </include>
+    </group>
+   
+  </group>
+</launch>
