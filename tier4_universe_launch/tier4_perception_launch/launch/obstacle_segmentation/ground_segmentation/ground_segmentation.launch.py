@@ -54,7 +54,7 @@ class GroundSegmentationPipeline:
             LaunchConfiguration("use_cuda_ground_segmentation").perform(context).lower() == "true"
         )
         self.use_semantic_segmentation_ptv3 = (
-            LaunchConfiguration("use_semantic_segmentation_pointcloud").perform(context).lower() == "true"
+            LaunchConfiguration("use_semantic_segmentation_ptv3").perform(context).lower() == "true"
         )
         
         # check if self.use_single_frame_filter is bool
@@ -583,6 +583,7 @@ def launch_setup(context, *args, **kwargs):
                 target_container=LaunchConfiguration("pointcloud_container_name"),
             )
         ]
+    actions = []
     if pipeline.use_semantic_segmentation_ptv3:
         ptv3_launch = IncludeLaunchDescription(
             AnyLaunchDescriptionSource(
