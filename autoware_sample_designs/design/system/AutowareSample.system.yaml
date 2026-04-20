@@ -109,7 +109,7 @@ components:
 
 node_groups:
   - name: pointcloud_container
-    type: ros2_component_container_mt_icp
+    type: ros2_component_container_mt
     nodes:
       - /sensing/lidar/concatenate_and_time_sync
       - /perception/obstacle_segmentation/*
