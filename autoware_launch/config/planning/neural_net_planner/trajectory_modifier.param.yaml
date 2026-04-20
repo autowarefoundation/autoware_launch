@@ -1,6 +1,6 @@
 /**:
   ros__parameters:
-    use_stop_point_fixer: true
+    use_stop_point_fixer: false
 
     # Stop Point Fixer Plugin Parameters
     stop_point_fixer:
