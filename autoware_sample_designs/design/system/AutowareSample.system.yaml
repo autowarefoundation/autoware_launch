@@ -109,12 +109,11 @@ components:
 
 node_groups:
   - name: pointcloud_container
-    type: ros2_component_container_mt
+    type: ros2_component_container_mt_ipc
     nodes:
       - /sensing/lidar/concatenate_and_time_sync
       - /perception/obstacle_segmentation/*
-      - /perception/object_recognition/detection/centerpoint/lidar_centerpoint
-      - /perception/object_recognition/detection/pointcloud_map_filter/*
+      - /perception/object_recognition/detection/pointcloud_map_filter/voxel_grid_downsample_filter
       - /perception/object_recognition/detection/clustering/euclidean_cluster
       - /perception/occupancy_grid_map/occupancy_grid_map_node
       - /perception/traffic_light_recognition/camera1/occlusion_predictor
