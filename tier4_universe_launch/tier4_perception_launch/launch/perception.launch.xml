@@ -128,6 +128,7 @@
     default="false"
     description="if use_empty_dynamic_object_publisher:=true, /perception/object_recognition/objects topic has an empty DynamicObjectArray"
   />
+  <arg name="use_roi_detected_object_validator" default="false" description="use roi_detected_object_validator at the roi_detected_object_fusion"/>
   <arg name="use_object_validator" default="true" description="use obstacle_pointcloud based object validator"/>
   <arg name="objects_validation_method" default="obstacle_pointcloud" description="options: `obstacle_pointcloud` or `occupancy_grid`"/>
   <arg name="use_perception_online_evaluator" default="false" description="use perception online evaluator"/>
@@ -273,6 +274,7 @@
         <push-ros-namespace namespace="detection"/>
         <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detection.launch.xml">
           <arg name="mode" value="$(var mode)"/>
+          <arg name="use_roi_detected_object_validator" value="$(var use_roi_detected_object_validator)"/>
           <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
           <arg name="lidar_detection_model_name" value="$(var lidar_detection_model_name)"/>
           <arg name="use_short_range_detection" value="$(var use_short_range_detection)"/>

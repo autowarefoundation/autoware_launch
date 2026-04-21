@@ -11,6 +11,7 @@
   <arg name="use_radar_tracking_fusion"/>
   <arg name="use_detection_by_tracker"/>
   <arg name="use_irregular_object_detector"/>
+  <arg name="use_roi_detected_object_validator"/>
 
   <arg name="use_object_filter" description="use object filter"/>
   <arg name="objects_filter_method"/>
@@ -61,7 +62,8 @@
   <let name="detected_object_roi_filter/input/objects" value="$(var input/lidar_ml/objects)"/>
   <let name="detected_object_roi_filter/output/objects" value="$(var lidar_detection_model_type)/roi_fusion/objects"/>
 
-  <let name="merger0/input/objects0" value="$(var detected_object_roi_filter/output/objects)"/>
+  <let name="merger0/input/objects0" value="$(var detected_object_roi_filter/output/objects)" if="$(var use_roi_detected_object_validator)"/>
+  <let name="merger0/input/objects0" value="$(var input/lidar_ml/objects)" unless="$(var use_roi_detected_object_validator)"/>
   <let name="merger0/input/objects1" value="$(var detected_irregular_object/output/objects)"/>
   <let name="merger0/output/objects" value="$(var lidar_detection_model_type)_irregular_object_merger/objects"/>
 
@@ -85,7 +87,7 @@
   <let name="merger3/output/objects" value="$(var output/objects)"/>
 
   <!-- Detected object filter by ROI -->
-  <group>
+  <group if="$(var use_roi_detected_object_validator)">
     <include file="$(find-pkg-share autoware_image_projection_based_fusion)/launch/roi_detected_object_fusion.launch.xml">
       <arg name="input/rois_number" value="$(var number_of_cameras)"/>
       <arg name="input/rois0" value="$(var input/camera0/rois)"/>
