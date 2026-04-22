@@ -54,7 +54,7 @@
       obstacle_filtering: # All parameters under this namespace can be set for each object type. If you want to set a value different from the default, please add a line.
         check_inside: # If true, the planner checks if the obstacle is inside the ego's footprint; can be tuned for each object type
           default: true
-          pointcloud: true
+          pointcloud: false
         check_outside: # If true, the planner checks if the obstacle is outside the ego's footprint. pointcloud obstacles are not supported.
           default: false
           unknown: false
