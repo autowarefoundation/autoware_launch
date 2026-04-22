@@ -37,38 +37,38 @@
                 min_ego_velocity: 4.0
                 max_ego_velocity: 12.0
             wheel_off_track_scale: 0.0 # scale factor for additional stop margin against ego's wheel off-track. Even if this value is set to 0.0, the planner considers the nominal wheel off-track.
-          car:
-            left:
-              static:
-                min_lat_margin: 0.3
-                max_lat_margin: 4.0
-                min_ego_velocity: 0.278
-                max_ego_velocity: 9.72
-            wheel_off_track_scale: 0.3
-          bus:
-            left:
-              static:
-                min_lat_margin: 0.3
-                max_lat_margin: 4.0
-                min_ego_velocity: 0.278
-                max_ego_velocity: 9.72
-            wheel_off_track_scale: 0.3
-          truck:
-            left:
-              static:
-                min_lat_margin: 0.3
-                max_lat_margin: 4.0
-                min_ego_velocity: 0.278
-                max_ego_velocity: 9.72
-            wheel_off_track_scale: 0.3
-          trailer:
-            left:
-              static:
-                min_lat_margin: 0.3
-                max_lat_margin: 4.0
-                min_ego_velocity: 0.278
-                max_ego_velocity: 9.72
-            wheel_off_track_scale: 0.3
+          # car:
+          #   left:
+          #     static:
+          #       min_lat_margin: 0.3
+          #       max_lat_margin: 4.0
+          #       min_ego_velocity: 0.278
+          #       max_ego_velocity: 9.72
+          #   wheel_off_track_scale: 0.3
+          # bus:
+          #   left:
+          #     static:
+          #       min_lat_margin: 0.3
+          #       max_lat_margin: 4.0
+          #       min_ego_velocity: 0.278
+          #       max_ego_velocity: 9.72
+          #   wheel_off_track_scale: 0.3
+          # truck:
+          #   left:
+          #     static:
+          #       min_lat_margin: 0.3
+          #       max_lat_margin: 4.0
+          #       min_ego_velocity: 0.278
+          #       max_ego_velocity: 9.72
+          #   wheel_off_track_scale: 0.3
+          # trailer:
+          #   left:
+          #     static:
+          #       min_lat_margin: 0.3
+          #       max_lat_margin: 4.0
+          #       min_ego_velocity: 0.278
+          #       max_ego_velocity: 9.72
+          #   wheel_off_track_scale: 0.3
           pedestrian:
             right:
               moving:
@@ -141,7 +141,7 @@
         # However, the objects whose lateral margin is between 0 and 'wheel_off_track_scale times wheel_off_track' are ignored by the obstacle_slow_down module unexpectedly due to the current implementation.
         # Therefore, we set the min_lat_margin to a large negative value temporarily.
         min_lat_margin: -10.0  # lateral margin between obstacle and trajectory band with ego's width to avoid the conflict with the obstacle_stop
-        max_lat_margin: 4.0  # lateral margin between obstacle and trajectory band with ego's width
+        max_lat_margin: 1.0  # lateral margin between obstacle and trajectory band with ego's width
         lat_hysteresis_margin: 0.2
         max_lat_velocity: 3.0 # [m/s] max lateral velocity of obstacle to be considered
 
