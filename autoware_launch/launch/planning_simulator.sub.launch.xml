@@ -72,7 +72,12 @@
     <arg name="vehicle_info_param_path" default="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
 
     <!-- trajectory follower -->
-    <node_container pkg="rclcpp_components" exec="component_container" name="trajectory_follower_container" namespace="">
+    <!-- switch executor-->
+    <!-- output container_package and container_executable variants-->
+    <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml">
+      <arg name="use_multithread" value="true"/>
+    </include>
+    <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="trajectory_follower_container" namespace="">
       <composable_node
         pkg="autoware_trajectory_follower_node"
         plugin="autoware::motion::control::trajectory_follower_node::Controller"
