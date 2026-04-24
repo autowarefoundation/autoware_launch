@@ -1,0 +1,56 @@
+autoware_system_design_format: 0.3.1
+
+name: OccupancyGridMapMultiLidar.module
+
+instances:
+  - name: obstacle_pc_downsample_filter
+    entity: PickupBasedVoxelGridDownsampleFilter.node
+
+  - name: raw_pc_downsample_filter_1
+    entity: PickupBasedVoxelGridDownsampleFilter.node
+  - name: raw_pc_downsample_filter_2
+    entity: PickupBasedVoxelGridDownsampleFilter.node
+  - name: raw_pc_downsample_filter_3
+    entity: PickupBasedVoxelGridDownsampleFilter.node
+
+  - name: occupancy_grid_map_node_1
+    entity: PointcloudBasedOccupancyGridMap.node
+  - name: occupancy_grid_map_node_2
+    entity: PointcloudBasedOccupancyGridMap.node
+  - name: occupancy_grid_map_node_3
+    entity: PointcloudBasedOccupancyGridMap.node
+
+  - name: occupancy_grid_map_fusion_node
+    entity: SynchronizedGridMapFusion.node
+
+subscribers:
+  # lidar
+  - name: obstacle_pointcloud
+  - name: pointcloud_1
+  - name: pointcloud_2
+  - name: pointcloud_3
+publishers:
+  - name: map
+
+connections:
+  - - subscriber.obstacle_pointcloud
+    - obstacle_pc_downsample_filter.subscriber.input
+
+  - - subscriber.pointcloud_*
+    - raw_pc_downsample_filter_*.subscriber.input
+
+  - - raw_pc_downsample_filter_*.publisher.output
+    - occupancy_grid_map_node_*.subscriber.raw_pointcloud
+
+  - - obstacle_pc_downsample_filter.publisher.output
+    - occupancy_grid_map_node_1.subscriber.obstacle_pointcloud
+  - - obstacle_pc_downsample_filter.publisher.output
+    - occupancy_grid_map_node_2.subscriber.obstacle_pointcloud
+  - - obstacle_pc_downsample_filter.publisher.output
+    - occupancy_grid_map_node_3.subscriber.obstacle_pointcloud
+
+  - - occupancy_grid_map_node_*.publisher.occupancy_grid_map
+    - occupancy_grid_map_fusion_node.subscriber.occupancy_grid_map_*
+
+  - - occupancy_grid_map_fusion_node.publisher.occupancy_grid_map
+    - publisher.map

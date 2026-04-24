@@ -1,0 +1,74 @@
+autoware_system_design_format: 0.3.0
+
+name: Camera2dDetection.module
+
+instances:
+  - name: tensorrt_yolox0
+    entity: TensorrtYolox.node
+  - name: tensorrt_yolox1
+    entity: TensorrtYolox.node
+  - name: tensorrt_yolox2
+    entity: TensorrtYolox.node
+  - name: tensorrt_yolox3
+    entity: TensorrtYolox.node
+  - name: tensorrt_yolox4
+    entity: TensorrtYolox.node
+  - name: tensorrt_yolox5
+    entity: TensorrtYolox.node
+  - name: tensorrt_yolox6
+    entity: TensorrtYolox.node
+  - name: tensorrt_yolox7
+    entity: TensorrtYolox.node
+
+subscribers:
+  - name: image_raw0
+  - name: image_raw1
+  - name: image_raw2
+  - name: image_raw3
+  - name: image_raw4
+  - name: image_raw5
+  - name: image_raw6
+  - name: image_raw7
+publishers:
+  - name: rois0
+  - name: rois1
+  - name: rois2
+  - name: rois3
+  - name: rois4
+  - name: rois5
+  - name: rois6
+  - name: rois7
+
+connections:
+  - - subscriber.image_raw0
+    - tensorrt_yolox0.subscriber.image
+  - - tensorrt_yolox0.publisher.objects
+    - publisher.rois0
+  - - subscriber.image_raw1
+    - tensorrt_yolox1.subscriber.image
+  - - tensorrt_yolox1.publisher.objects
+    - publisher.rois1
+  - - subscriber.image_raw2
+    - tensorrt_yolox2.subscriber.image
+  - - tensorrt_yolox2.publisher.objects
+    - publisher.rois2
+  - - subscriber.image_raw3
+    - tensorrt_yolox3.subscriber.image
+  - - tensorrt_yolox3.publisher.objects
+    - publisher.rois3
+  - - subscriber.image_raw4
+    - tensorrt_yolox4.subscriber.image
+  - - tensorrt_yolox4.publisher.objects
+    - publisher.rois4
+  - - subscriber.image_raw5
+    - tensorrt_yolox5.subscriber.image
+  - - tensorrt_yolox5.publisher.objects
+    - publisher.rois5
+  - - subscriber.image_raw6
+    - tensorrt_yolox6.subscriber.image
+  - - tensorrt_yolox6.publisher.objects
+    - publisher.rois6
+  - - subscriber.image_raw7
+    - tensorrt_yolox7.subscriber.image
+  - - tensorrt_yolox7.publisher.objects
+    - publisher.rois7
