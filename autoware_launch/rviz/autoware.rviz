@@ -2123,7 +2123,7 @@ Visualization Manager:
               Value: true
             - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
               Enabled: true
-              Name: PlanningFactor(NeuralNetworkPlanner)
+              Name: PlanningFactor(DiffusionPlanner)
               Namespaces:
                 {}
               Show Safety Factors: false
@@ -2132,7 +2132,7 @@ Visualization Manager:
                 Durability Policy: Volatile
                 History Policy: Keep Last
                 Reliability Policy: Reliable
-                Value: /planning/planning_factors/neural_network_planner
+                Value: /planning/planning_factors/diffusion_planner
               Value: true
               show_safety_factors: false
             - BUS:

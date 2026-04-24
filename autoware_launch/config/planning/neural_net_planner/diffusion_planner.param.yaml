@@ -12,9 +12,19 @@
     temperature: [0.0]
     velocity_smoothing_window: 8
     stopping_threshold: 0.3
-    turn_indicator_keep_offset: -1.5
+    turn_indicator_keep_offset: -1.25
     turn_indicator_hold_duration: 1.0
     shift_x: false
+    delay_step: 0
+    line_string_max_step_m: 5.0
+    use_time_interpolation: false
+    planning_factor:
+      enable_stop: true
+      enable_slowdown: false
+      stop_keep_duration_threshold: 1.0  # [s]
+      stop_velocity_threshold: 0.1       # [m/s]
+      slowdown_accel_threshold: -0.3     # [m/s^2]
     debug_params:
       publish_debug_route: true
       publish_debug_map: false
+      publish_debug_linestrings: true
