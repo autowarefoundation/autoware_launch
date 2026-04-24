@@ -1,0 +1,60 @@
+# Description:
+#   name: diag name
+#   is_active: Force update or not
+#   status: diag status set by dummy diag publisher "OK, Warn, Error, Stale"
+#
+# Note:
+#
+# default values are:
+#   is_active: "true"
+#   status: "OK"
+---
+/**:
+  ros__parameters:
+    required_diags:
+      # performance monitoring  ----> To be confirmed in v0.47.0
+      # "blockage: blockage_validation": default
+
+      # lidar
+      "concatenate_data: /sensing/lidar/concatenate_data": default
+
+      # velodyne
+      "/sensing/lidar/top/velodyne_ros_wrapper_node: velodyne_status": default
+      "/sensing/lidar/top/velodyne_ros_wrapper_node: velodyne_temperature": default
+      "/sensing/lidar/top/velodyne_ros_wrapper_node: velodyne_rpm": default
+
+      "/sensing/lidar/right/velodyne_ros_wrapper_node: velodyne_status": default
+      "/sensing/lidar/right/velodyne_ros_wrapper_node: velodyne_temperature": default
+      "/sensing/lidar/right/velodyne_ros_wrapper_node: velodyne_rpm": default
+
+      "/sensing/lidar/left/velodyne_ros_wrapper_node: velodyne_status": default
+      "/sensing/lidar/left/velodyne_ros_wrapper_node: velodyne_temperature": default
+      "/sensing/lidar/left/velodyne_ros_wrapper_node: velodyne_rpm": default
+
+      "/sensing/lidar/rear/velodyne_ros_wrapper_node: velodyne_status": default
+      "/sensing/lidar/rear/velodyne_ros_wrapper_node: velodyne_temperature": default
+      "/sensing/lidar/rear/velodyne_ros_wrapper_node: velodyne_rpm": default
+
+      # gnss
+      # "connection: gnss_connection": default
+      # "data: gnss_data": default
+      # "antenna: gnss_antenna": default
+      # "tx_usage: gnss_tx_usage": default
+      # "spoofing: gnss_spoofing": default
+      # "jamming: gnss_jamming": default
+      # "fix_topic_status: fix topic status": default
+      "ublox: fix topic status": default
+      "ublox: fix": default
+
+      # camera
+      "topic_state_monitor_camera0: sensing_topic_status": default
+      "topic_state_monitor_camera1: sensing_topic_status": default
+      "topic_state_monitor_camera2: sensing_topic_status": default
+      "topic_state_monitor_camera3: sensing_topic_status": default
+      "topic_state_monitor_camera4: sensing_topic_status": default
+      "topic_state_monitor_camera5: sensing_topic_status": default
+      "topic_state_monitor_camera6: sensing_topic_status": default
+
+      # imu
+      "topic_state_monitor_imu: sensing_topic_status": default
+      "gyro_bias_validator: gyro_bias_validator": default

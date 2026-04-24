@@ -1,0 +1,158 @@
+<launch>
+  <arg name="launch_driver" default="true"/>
+  <arg name="host_ip" default="192.168.1.10"/>
+  <arg name="use_concat_filter" default="true"/>
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
+  <arg name="vehicle_mirror_param_file"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <!-- ====================================================================================
+    PLEASE NOTE!
+
+    In XX1, only the pointcloud preprocessor uses the CUDA implementation,
+    while concatenation uses the CPU implementation.
+
+    Although `use_shared_container` is normally required to be true when `use_cuda_preprocessor` is true,
+    in this case, we are intentionally setting them to true and false respectively.
+
+    For <lidar name>.launch.xml, `use_cuda_preprocessor` is passed as this definition,
+    but for the pointcloud_preprocessor.launch.py included at the bottom, it is always passed as **FALSE**.
+  -->
+  <arg name="use_shared_container" default="false"/>
+  <arg name="use_cuda_preprocessor" default="true"/>
+  <!-- ==================================================================================== -->
+  <arg name="enable_blockage_diag" default="true"/>
+  <arg name="udp_only" default="false"/>
+
+  <group>
+    <push-ros-namespace namespace="lidar"/>
+
+    <group>
+      <push-ros-namespace namespace="top"/>
+      <include file="$(find-pkg-share aip_common_sensor_launch)/launch/velodyne_VLS128.launch.xml">
+        <arg name="max_range" value="250.0"/>
+        <arg name="sensor_frame" value="velodyne_top"/>
+        <arg name="sensor_ip" value="192.168.1.201"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2368"/>
+        <arg name="scan_phase" value="300.0"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_shared_container" value="$(var use_shared_container)"/>
+        <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
+        <arg name="vertical_bins" value="128"/>
+        <arg name="horizontal_ring_id" value="64"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="left"/>
+      <include file="$(find-pkg-share aip_common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
+        <arg name="max_range" value="5.0"/>
+        <arg name="sensor_frame" value="velodyne_left"/>
+        <arg name="sensor_ip" value="192.168.1.202"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2369"/>
+        <arg name="scan_phase" value="180.0"/>
+        <arg name="cloud_min_angle" value="300"/>
+        <arg name="cloud_max_angle" value="60"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_shared_container" value="$(var use_shared_container)"/>
+        <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
+        <arg name="vertical_bins" value="16"/>
+        <arg name="horizontal_ring_id" value="0"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="false"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="right"/>
+      <include file="$(find-pkg-share aip_common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
+        <arg name="max_range" value="5.0"/>
+        <arg name="sensor_frame" value="velodyne_right"/>
+        <arg name="sensor_ip" value="192.168.1.203"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2370"/>
+        <arg name="scan_phase" value="180.0"/>
+        <arg name="cloud_min_angle" value="300"/>
+        <arg name="cloud_max_angle" value="60"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_shared_container" value="$(var use_shared_container)"/>
+        <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
+        <arg name="vertical_bins" value="16"/>
+        <arg name="horizontal_ring_id" value="0"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="false"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="rear"/>
+      <include file="$(find-pkg-share aip_common_sensor_launch)/launch/velodyne_VLP16.launch.xml">
+        <arg name="max_range" value="1.5"/>
+        <arg name="sensor_frame" value="velodyne_rear"/>
+        <arg name="sensor_ip" value="192.168.1.204"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2371"/>
+        <arg name="scan_phase" value="180.0"/>
+        <arg name="cloud_min_angle" value="300"/>
+        <arg name="cloud_max_angle" value="60"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_shared_container" value="$(var use_shared_container)"/>
+        <arg name="use_cuda_preprocessor" value="$(var use_cuda_preprocessor)"/>
+        <arg name="vertical_bins" value="16"/>
+        <arg name="horizontal_ring_id" value="0"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="false"/>
+      </include>
+    </group>
+
+    <!-- <group>
+      <push-ros-namespace namespace="front_left"/>
+      <include file="$(find-pkg-share aip_common_sensor_launch)/launch/livox_horizon.launch.py">
+        <arg name="sensor_frame" value="livox_front_left" />
+        <arg name="bd_code_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_xx1/livox_front_left_bd_code.param.yaml" />
+        <arg name="launch_driver" value="$(var launch_driver)" />
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="front_right"/>
+      <include file="$(find-pkg-share aip_common_sensor_launch)/launch/livox_horizon.launch.py">
+        <arg name="sensor_frame" value="livox_front_right" />
+        <arg name="bd_code_param_path" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_xx1/livox_front_right_bd_code.param.yaml" />
+        <arg name="launch_driver" value="$(var launch_driver)" />
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)" />
+      </include>
+    </group> -->
+
+    <include file="$(find-pkg-share aip_xx1_launch)/launch/pointcloud_preprocessor.launch.py">
+      <arg name="base_frame" value="base_link"/>
+      <arg name="use_intra_process" value="true"/>
+      <arg name="use_multithread" value="true"/>
+      <!-- PLEASE NOTE! PLEASE READ THE COMMENTS AT THE TOP OF THIS FILES -->
+      <arg name="use_cuda_preprocessor" value="false"/>
+      <!-- PLEASE NOTE! PLEASE READ THE COMMENTS AT THE TOP OF THIS FILES -->
+
+      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+    </include>
+  </group>
+</launch>
