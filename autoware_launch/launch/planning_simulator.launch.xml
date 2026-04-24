@@ -28,6 +28,9 @@
   <arg name="perception/use_base_link_z" default="true" description="dummy perception uses base_link z axis coordinate if it is true"/>
   <arg name="sensing/visible_range" default="300.0" description="visible range when using dummy perception"/>
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
+  <arg name="launch_fault_injection" default="$(var scenario_simulation)" description="launch fault injection"/>
+  <arg name="fault_injection_output_diagnostics" default="/diagnostics/fault_injection"/>
+
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>

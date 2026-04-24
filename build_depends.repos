@@ -7,3 +7,7 @@ repositories:
     type: git
     url: https://github.com/tier4/sensor_component_description.git
     version: main
+  autoware_system_designer:
+    type: git
+    url: https://github.com/autowarefoundation/autoware_system_designer.git
+    version: main

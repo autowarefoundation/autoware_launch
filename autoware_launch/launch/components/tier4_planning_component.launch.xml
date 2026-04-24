@@ -6,10 +6,15 @@
   <arg name="is_simulation" default="false"/>
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
+  <arg name="planning_setting" default="rule_based" description="planning setting diffusion_planner / rule_based"/>
 
   <!-- Input topic parameters for planning modules -->
   <arg name="planning_input_objects_topic_name" default="/perception/object_recognition/objects"/>
   <arg name="planning_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+
+  <!-- Diffusion Planner Trajectory Optimizer Plugins-->
+  <let name="neural_net_planner_config_path" value="$(find-pkg-share autoware_launch)/config/planning/neural_net_planner"/>
+  <let name="optimizer_plugins_config_path" value="$(var neural_net_planner_config_path)/trajectory_optimizer_plugins"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -121,5 +126,21 @@
     <arg name="planning_validator_trajectory_checker_param_path" value="$(var common_config_path)/planning_validator/trajectory_checker.param.yaml"/>
     <arg name="planning_validator_intersection_collision_checker_param_path" value="$(var common_config_path)/planning_validator/intersection_collision_checker.param.yaml"/>
     <arg name="planning_validator_rear_collision_checker_param_path" value="$(var common_config_path)/planning_validator/rear_collision_checker.param.yaml"/>
+
+    <!-- trajectory generator params -->
+    <arg name="diffusion_planner_param_path" value="$(var neural_net_planner_config_path)/diffusion_planner.param.yaml"/>
+    <arg name="trajectory_modifier_param_path" value="$(var neural_net_planner_config_path)/trajectory_modifier.param.yaml"/>
+    <arg name="trajectory_optimizer_param_path" value="$(var neural_net_planner_config_path)/trajectory_optimizer.param.yaml"/>
+    <arg name="jerk_filtered_smoother_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/JerkFiltered.param.yaml"/>
+    <arg name="velocity_smoother_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/velocity_smoother.param.yaml"/>
+    <arg name="common_smoother_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml"/>
+    <arg name="elastic_band_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/path_smoother/elastic_band_smoother.param.yaml"/>
+    <arg name="trajectory_point_fixer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_point_fixer.param.yaml"/>
+    <arg name="trajectory_extender_param_path" value="$(var optimizer_plugins_config_path)/trajectory_extender.param.yaml"/>
+    <arg name="trajectory_spline_smoother_param_path" value="$(var optimizer_plugins_config_path)/trajectory_spline_smoother.param.yaml"/>
+    <arg name="trajectory_qp_smoother_param_path" value="$(var optimizer_plugins_config_path)/trajectory_qp_smoother.param.yaml"/>
+    <arg name="trajectory_velocity_optimizer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_velocity_optimizer.param.yaml"/>
+    <arg name="trajectory_kinematic_feasibility_enforcer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_kinematic_feasibility_enforcer.param.yaml"/>
+    <arg name="trajectory_mpt_optimizer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_mpt_optimizer.param.yaml"/>
   </include>
 </launch>
