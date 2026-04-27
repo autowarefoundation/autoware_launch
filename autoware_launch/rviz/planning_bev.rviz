@@ -39,7 +39,6 @@ Panels:
         - /Debug1/Perception1/RadarFarObjects(white)1/UNKNOWN1
         - /Debug1/Perception1/Detection(yellow)1/UNKNOWN1
         - /Debug1/Planning1
-        - /MrmSummaryOverlayDisplay1
       Splitter Ratio: 0.7641357183456421
     Tree Height: 378
   - Class: rviz_common/Selection

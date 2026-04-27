@@ -3184,7 +3184,6 @@ Visualization Manager:
                   Lanelet2VectorMap: true
                   PointCloudMap: true
                   Value: false
-                MrmSummaryOverlayDisplay: true
                 Perception:
                   ObjectRecognition:
                     Detection:
@@ -3352,7 +3351,6 @@ Visualization Manager:
                 StringStampedOverlayDisplay: true
                 System:
                   Grid: true
-                  MRM Summary: true
                   TF: true
                   Value: false
                   Vehicle:
