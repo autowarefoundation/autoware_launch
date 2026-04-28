@@ -126,7 +126,58 @@ perception:
 localization: []
 map: []
 planning: []
-control: []
+control:
+  # common/nearest_search.param.yaml omitted.
+  - repository: autowarefoundation/autoware_universe
+    ref: main
+    files:
+      - source: control/autoware_autonomous_emergency_braking/config/autonomous_emergency_braking.param.yaml
+        variants:
+          - path: autoware_launch/config/control/autoware_autonomous_emergency_braking/autonomous_emergency_braking.param.yaml
+      - source: control/autoware_collision_detector/config/collision_detector.param.yaml
+        variants:
+          - path: autoware_launch/config/control/autoware_collision_detector/collision_detector.param.yaml
+      - source: control/autoware_control_command_gate/config/default.param.yaml
+        variants:
+          - path: autoware_launch/config/control/control_command_gate/control_command_gate.param.yaml
+      - source: control/autoware_control_validator/config/control_validator.param.yaml
+        variants:
+          - path: autoware_launch/config/control/control_validator/control_validator.param.yaml
+      - source: control/autoware_external_cmd_selector/config/external_cmd_selector.param.yaml
+        variants:
+          - path: autoware_launch/config/control/external_cmd_selector/external_cmd_selector.param.yaml
+      - source: control/autoware_lane_departure_checker/config/lane_departure_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/control/lane_departure_checker/lane_departure_checker.param.yaml
+      - source: control/autoware_obstacle_collision_checker/config/obstacle_collision_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/control/obstacle_collision_checker/obstacle_collision_checker.param.yaml
+      - source: control/autoware_operation_mode_transition_manager/config/operation_mode_transition_manager.param.yaml
+        variants:
+          - path: autoware_launch/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml
+      - source: control/autoware_predicted_path_checker/config/predicted_path_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/control/predicted_path_checker/predicted_path_checker.param.yaml
+      - source: control/autoware_shift_decider/config/shift_decider.param.yaml
+        variants:
+          - path: autoware_launch/config/control/shift_decider/shift_decider.param.yaml
+
+      - source: control/autoware_trajectory_follower_node/param/lateral/mpc.param.yaml
+        variants:
+          - path: autoware_launch/config/control/trajectory_follower/lateral/mpc.param.yaml
+      - source: control/autoware_trajectory_follower_node/param/lateral/pure_pursuit.param.yaml
+        variants:
+          - path: autoware_launch/config/control/trajectory_follower/lateral/pure_pursuit.param.yaml
+      - source: control/autoware_trajectory_follower_node/param/longitudinal/pid.param.yaml
+        variants:
+          - path: autoware_launch/config/control/trajectory_follower/longitudinal/pid.param.yaml
+      - source: control/autoware_trajectory_follower_node/param/trajectory_follower_node.param.yaml
+        variants:
+          - path: autoware_launch/config/control/trajectory_follower/trajectory_follower_node.param.yaml
+      - source: control/autoware_vehicle_cmd_gate/config/vehicle_cmd_gate.param.yaml
+        variants:
+          - path: autoware_launch/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml
+
 system: []
 vehicle: []
 simulator: []
