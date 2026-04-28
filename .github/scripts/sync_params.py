@@ -1237,7 +1237,13 @@ def extract_override_values(
                 f"Override path {_format_path(path)} in '{variant_path}' must be a leaf "
                 "scalar or array of scalars."
             )
-        overrides[path] = copy.deepcopy(value)
+        # Values loaded via ruamel can be CommentedSeq with attached inline comment
+        # metadata. Strip that metadata by materialising plain Python containers,
+        # otherwise comment text can be re-emitted into scalar dumps repeatedly.
+        if isinstance(value, list):
+            overrides[path] = [copy.deepcopy(item) for item in value]
+        else:
+            overrides[path] = copy.deepcopy(value)
     return overrides, override_comments
 
 
