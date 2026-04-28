@@ -123,7 +123,96 @@ perception:
       # Perception/occupancy_grid_map
       # Perception/traffic_light_recognition
 
-localization: []
+localization:
+  - repository: autowarefoundation/autoware_core
+    ref: main
+    files:
+      - source: localization/autoware_ndt_scan_matcher/config/ndt_scan_matcher.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/ndt_scan_matcher/ndt_scan_matcher.param.yaml
+
+      - source: localization/autoware_ekf_localizer/config/ekf_localizer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/ekf_localizer.param.yaml
+      - source: localization/autoware_pose_initializer/config/pose_initializer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/pose_initializer.param.yaml
+      - source: localization/autoware_stop_filter/config/stop_filter.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/stop_filter.param.yaml
+      - source: localization/autoware_twist2accel/config/twist2accel.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/twist2accel.param.yaml
+
+  - repository: autowarefoundation/autoware_universe
+    ref: main
+    files:
+      # PCD preprocessor
+      - source: sensing/autoware_pointcloud_preprocessor/config/crop_box_filter_node.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml
+          - path: autoware_launch/config/localization/ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml
+      - source: sensing/autoware_pointcloud_preprocessor/config/passthrough_filter_uint16_node.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/lidar_marker_localizer/pointcloud_preprocessor/ring_filter.param.yaml
+      - source: sensing/autoware_pointcloud_preprocessor/config/random_downsample_filter_node.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter.param.yaml
+      - source: sensing/autoware_pointcloud_preprocessor/config/voxel_grid_downsample_filter_node.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_filter.param.yaml
+
+      - source: localization/autoware_landmark_based_localizer/autoware_lidar_marker_localizer/config/lidar_marker_localizer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/lidar_marker_localizer/lidar_marker_localizer.param.yaml
+
+      # Yabloc
+      - source: localization/yabloc/yabloc_common/config/ground_server.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/ground_server.param.yaml
+      - source: localization/yabloc/yabloc_common/config/ll2_decomposer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/ll2_decomposer.param.yaml
+      - source: localization/yabloc/yabloc_image_processing/config/graph_segment.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/graph_segment.param.yaml
+      - source: localization/yabloc/yabloc_image_processing/config/segment_filter.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/segment_filter.param.yaml
+      - source: localization/yabloc/yabloc_image_processing/config/undistort.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/undistort.param.yaml
+      - source: localization/yabloc/yabloc_particle_filter/config/camera_particle_corrector.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/camera_particle_corrector.param.yaml
+      - source: localization/yabloc/yabloc_particle_filter/config/gnss_particle_corrector.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/gnss_particle_corrector.param.yaml
+      - source: localization/yabloc/yabloc_particle_filter/config/predictor.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/predictor.param.yaml
+      - source: localization/yabloc/yabloc_pose_initializer/config/camera_pose_initializer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/camera_pose_initializer.param.yaml
+
+      - source: localization/autoware_landmark_based_localizer/autoware_ar_tag_based_localizer/config/ar_tag_based_localizer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/ar_tag_based_localizer.param.yaml
+      - source: localization/autoware_localization_error_monitor/config/localization_error_monitor.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/localization_error_monitor.param.yaml
+      - source: localization/autoware_pose_instability_detector/config/pose_instability_detector.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/pose_instability_detector.param.yaml
+
+  # # Eagleye is not tracked in autoware-nightly.repos, so the tracking is disabled.
+  # - repository: MapIV/eagleye
+  #   ref: main-ros2
+  #   files:
+  #     - source: eagleye_rt/config/eagleye_config.yaml
+  #       variants:
+  #         - path: autoware_launch/config/localization/eagleye_config.param.yaml
+
 map:
   - repository: autowarefoundation/autoware_core
     ref: main
