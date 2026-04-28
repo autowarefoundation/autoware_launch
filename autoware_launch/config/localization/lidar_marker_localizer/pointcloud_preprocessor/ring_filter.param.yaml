@@ -1,9 +1,14 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/60f9829795fcf6c4f07b2972a15a3c331c7eb37a/sensing/autoware_pointcloud_preprocessor/config/passthrough_filter_uint16_node.param.yaml
+
 /**:
   ros__parameters:
-    input_frame: "base_link"
-    output_frame: "base_link"
+    filter_limit_min: 5 # {OVERRIDE}
+    filter_limit_max: 45 # {OVERRIDE}
     filter_field_name: "channel"
-    filter_limit_min: 5
-    filter_limit_max: 45
-    filter_limit_negative: False
-    keep_organized: False
+    keep_organized: false
+    filter_limit_negative: false

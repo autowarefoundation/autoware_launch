@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_core/blob/61d07167a44d0fe1c8d7dccb509f78574c06b432/localization/autoware_twist2accel/config/twist2accel.param.yaml
+
 /**:
   ros__parameters:
     use_odom: true

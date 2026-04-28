@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/de9fc094b7eaaf40b40f27bf1b694166c048cd69/localization/autoware_pose_instability_detector/config/pose_instability_detector.param.yaml
+
 /**:
   ros__parameters:
     timer_period: 0.5                             # [sec]

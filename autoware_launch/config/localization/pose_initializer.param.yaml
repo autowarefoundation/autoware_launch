@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_core/blob/53d37d92b015829cff4386ab21245335da9523e2/localization/autoware_pose_initializer/config/pose_initializer.param.yaml
+
 /**:
   ros__parameters:
     user_defined_initial_pose:
@@ -7,7 +14,7 @@
     gnss_pose_timeout: 3.0 # [sec]
     stop_check_duration: 3.0 # [sec]
     pose_error_threshold: 5.0 # [m]
-    pose_error_check_enabled: false
+    pose_error_check_enabled: false # check initial pose error with gnss
     ekf_enabled: $(var ekf_enabled)
     gnss_enabled: $(var gnss_enabled)
     yabloc_enabled: $(var yabloc_enabled)

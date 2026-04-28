@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_core/blob/c1cb859bbbf61522a5ff8fd86d7077f785100853/localization/autoware_ndt_scan_matcher/config/ndt_scan_matcher.param.yaml
+
 /**:
   ros__parameters:
     frame:

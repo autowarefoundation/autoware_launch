@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/98ef5348b6e9e22f9ca69c9f841655bd7fc44610/localization/yabloc/yabloc_common/config/ll2_decomposer.param.yaml
+
 /**:
   ros__parameters:
     road_marking_labels: [cross_walk, zebra_marking, line_thin, line_thick, pedestrian_marking, stop_line, road_border]
