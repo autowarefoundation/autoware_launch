@@ -51,7 +51,7 @@ connections:
     - object_lanelet_filter.subscriber.vector_map
   - - object_lanelet_filter.publisher.object
     - publisher.lidar_clustering_objects
-  
+
   # detection by tracker
   - - subscriber.tracked_objects
     - detection_by_tracker.subscriber.tracked_objects
