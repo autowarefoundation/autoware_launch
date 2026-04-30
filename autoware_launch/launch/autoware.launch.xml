@@ -5,7 +5,7 @@
   <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
   <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
-  <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
 
   <!-- launch module preset -->
   <arg name="planning_setting" default="rule_based" description="planning setting diffusion_planner / rule_based"/>

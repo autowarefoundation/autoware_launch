@@ -7,7 +7,7 @@
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
   <arg name="planning_setting" default="rule_based" description="planning setting diffusion_planner / rule_based"/>
-  <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
 
   <!-- Input topic parameters for planning modules -->
   <arg name="planning_input_objects_topic_name" default="/perception/object_recognition/objects"/>
