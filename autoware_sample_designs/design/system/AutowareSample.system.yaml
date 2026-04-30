@@ -73,11 +73,6 @@ components:
     compute_unit: main_ecu
 
   # PERCEPTION
-  - name: centerpoint
-    entity: LidarCenterpoint.module
-    path: /perception/object_recognition/detection/centerpoint
-    compute_unit: main_ecu
-    parameter_set: sample_system_perception.parameter_set
   - name: obstacle_segmentation
     entity: ObstacleSegmentation.module
     path: /perception/obstacle_segmentation
@@ -144,16 +139,11 @@ connections:
   - - sensing.publisher.lidar/concatenated/pointcloud
     - obstacle_segmentation.subscriber.concatenated_pointcloud
 
-  - - sensing.publisher.lidar/concatenated/pointcloud
-    - centerpoint.subscriber.pointcloud
-  - - object_recognition.publisher.map_filtered_obstacle_pointcloud
-    - centerpoint.subscriber.obstacle_pointcloud
-
   - - obstacle_segmentation.publisher.pointcloud
     - object_recognition.subscriber.obstacle_pointcloud
 
-  - - centerpoint.publisher.detected_objects
-    - object_recognition.subscriber.lidar_ml_objects
+  - - sensing.publisher.lidar/concatenated/pointcloud
+    - object_recognition.subscriber.pointcloud
   - - map.publisher.vector_map
     - object_recognition.subscriber.vector_map
   - - map.publisher.pointcloud_map
@@ -297,7 +287,6 @@ PlanningSimulation:
   remove:
     components:
       - name: sensing
-      - name: centerpoint
       - name: obstacle_segmentation
       - name: object_recognition
       - name: localization

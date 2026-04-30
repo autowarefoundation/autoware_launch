@@ -3,9 +3,14 @@ autoware_system_design_format: 0.3.0
 name: ObjectDetection.module
 
 instances:
-  # lidar cluster
   - name: pointcloud_map_filter
     entity: PointcloudMapFilter.module
+
+  # lidar ml (centerpoint)
+  - name: centerpoint
+    entity: LidarCenterpoint.module
+
+  # lidar cluster
   - name: clustering
     entity: LidarClustering.module
   - name: object_lanelet_filter
@@ -20,12 +25,13 @@ subscribers:
   - name: vector_map
   - name: service_pointcloud_map_diff
   - name: kinematic_state
+  - name: pointcloud
   - name: obstacle_pointcloud
   - name: tracked_objects
 publishers:
-  - name: filtered_obstacle_pointcloud
   - name: lidar_clustering_objects
   - name: tracker_based_detector_objects
+  - name: lidar_ml_objects
 
 connections:
   # compare map filter
@@ -37,8 +43,6 @@ connections:
     - pointcloud_map_filter.client.service_pointcloud_map_diff
   - - subscriber.kinematic_state
     - pointcloud_map_filter.subscriber.kinematic_state
-  - - pointcloud_map_filter.publisher.filtered_pointcloud
-    - publisher.filtered_obstacle_pointcloud
 
   # clustering
   - - pointcloud_map_filter.publisher.filtered_pointcloud
@@ -51,6 +55,14 @@ connections:
     - object_lanelet_filter.subscriber.vector_map
   - - object_lanelet_filter.publisher.object
     - publisher.lidar_clustering_objects
+
+  # centerpoint
+  - - subscriber.pointcloud
+    - centerpoint.subscriber.pointcloud
+  - - pointcloud_map_filter.publisher.filtered_pointcloud
+    - centerpoint.subscriber.obstacle_pointcloud
+  - - centerpoint.publisher.detected_objects
+    - publisher.lidar_ml_objects
 
   # detection by tracker
   - - subscriber.tracked_objects
