@@ -7,6 +7,7 @@
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
   <arg name="planning_setting" default="rule_based" description="planning setting diffusion_planner / rule_based"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data" description="packages data and artifacts directory path"/>
 
   <!-- Input topic parameters for planning modules -->
   <arg name="planning_input_objects_topic_name" default="/perception/object_recognition/objects"/>
@@ -31,6 +32,7 @@
     <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
     <arg name="is_simulation" value="$(var is_simulation)"/>
+    <arg name="data_path" value="$(var data_path)"/>
 
     <!-- Input topic parameters -->
     <arg name="input_objects_topic_name" value="$(var planning_input_objects_topic_name)"/>

@@ -1,6 +1,7 @@
 <launch>
   <!-- planning module -->
   <!-- diffusion planner -->
+  <arg name="data_path"/>
   <arg name="diffusion_planner_param_path"/>
 
   <!-- trajectory modifier -->
@@ -30,6 +31,7 @@
     <group>
       <push-ros-namespace namespace="neural_network_based_planner"/>
       <include file="$(find-pkg-share autoware_diffusion_planner)/launch/diffusion_planner.launch.xml">
+        <arg name="data_path" value="$(var data_path)"/>
         <arg name="diffusion_planner_param_path" value="$(var diffusion_planner_param_path)"/>
         <arg name="input_odometry" value="/localization/kinematic_state"/>
         <arg name="input_acceleration" value="/localization/acceleration"/>
