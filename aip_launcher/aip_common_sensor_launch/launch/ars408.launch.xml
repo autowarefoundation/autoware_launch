@@ -1,0 +1,58 @@
+<launch>
+  <arg name="launch_driver" default="true"/>
+
+  <!-- socket can interface parameter -->
+  <arg name="interface" default="can0"/>
+  <arg name="receiver_interval_sec" default="0.01"/>
+  <!-- driver parameter -->
+  <arg name="input/frame" default="from_can_bus"/>
+  <arg name="output_frame" default="ars408_front"/>
+  <arg name="publish_radar_track" default="true"/>
+  <arg name="publish_radar_scan" default="false"/>
+  <arg name="size_x" default="1.8"/>
+  <arg name="size_y" default="1.8"/>
+  <!-- converter parameter -->
+  <arg name="input/odometry" default="/localization/kinematic_state"/>
+  <!-- parameter path -->
+  <arg name="radar_tracks_msgs_converter_param_path" default="$(find-pkg-share aip_common_sensor_launch)/config/radar_tracks_msgs_converter.param.yaml"/>
+  <arg name="radar_tracks_noise_filter_param_path" default="$(find-pkg-share aip_common_sensor_launch)/config/radar_tracks_noise_filter.param.yaml"/>
+
+  <!-- Socket CAN -->
+  <group if="$(var launch_driver)">
+    <include file="$(find-pkg-share ros2_socketcan)/launch/socket_can_receiver.launch.py">
+      <arg name="interface" value="$(var interface)"/>
+      <arg name="interval_sec" value="$(var receiver_interval_sec)"/>
+    </include>
+  </group>
+
+  <!-- ARS408 driver-->
+  <!-- Note: If the ARS408 driver is stable, continental_ars408.launch.xml move to group <if="$(var launch_driver)> -->
+  <include file="$(find-pkg-share pe_ars408_ros)/launch/continental_ars408.launch.xml">
+    <arg name="input/frame" value="$(var input/frame)"/>
+    <arg name="output/objects" value="objects_raw"/>
+    <arg name="output/scan" value="scan_raw"/>
+    <arg name="publish_radar_track" value="$(var publish_radar_track)"/>
+    <arg name="publish_radar_scan" value="$(var publish_radar_scan)"/>
+    <arg name="output_frame" value="$(var output_frame)"/>
+    <arg name="sequential_publish" value="false"/>
+    <arg name="size_x" value="$(var size_x)"/>
+    <arg name="size_y" value="$(var size_y)"/>
+  </include>
+
+  <!-- Noise filter -->
+  <include file="$(find-pkg-share autoware_radar_tracks_noise_filter)/launch/radar_tracks_noise_filter.launch.xml">
+    <arg name="input/tracks" value="objects_raw"/>
+    <arg name="output/noise_tracks" value="noise_objects"/>
+    <arg name="output/filtered_tracks" value="filtered_objects"/>
+    <arg name="param_path" value="$(var radar_tracks_noise_filter_param_path)"/>
+  </include>
+
+  <!-- Message converter -->
+  <include file="$(find-pkg-share autoware_radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+    <arg name="input/radar_objects" value="filtered_objects"/>
+    <arg name="input/odometry" value="$(var input/odometry)"/>
+    <arg name="output/radar_detected_objects" value="detected_objects"/>
+    <arg name="output/radar_tracked_objects" value="tracked_objects"/>
+    <arg name="param_path" value="$(var radar_tracks_msgs_converter_param_path)"/>
+  </include>
+</launch>

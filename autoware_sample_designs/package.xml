@@ -15,6 +15,9 @@
 
   <depend>autoware_system_designer</depend>
 
+  <exec_depend>autoware_adapi_adaptors</exec_depend>
+  <exec_depend>autoware_default_adapi_universe</exec_depend>
+  <exec_depend>autoware_global_parameter_loader</exec_depend>
   <exec_depend>sample_sensor_kit_description</exec_depend>
   <exec_depend>sample_sensor_kit_launch</exec_depend>
   <exec_depend>sample_vehicle_description</exec_depend>
