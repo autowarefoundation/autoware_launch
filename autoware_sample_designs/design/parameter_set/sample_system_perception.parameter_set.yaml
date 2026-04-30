@@ -54,7 +54,7 @@ parameters:
     param_files: []
     param_values:
       - name: input_frame
-        value: "base_link"
+        value: base_link
       - name: max_x
         value: 200.0
       - name: min_x
@@ -339,7 +339,7 @@ parameters:
       - name: tracker_state_parameter.default_camera_existence_probability
         value: 0.7
       - name: logging_file_path
-        value: "/tmp/decorative_tracker_merger.log"
+        value: /tmp/decorative_tracker_merger.log
 
   - node: /perception/obstacle_segmentation/crop_box_filter
     param_files:
