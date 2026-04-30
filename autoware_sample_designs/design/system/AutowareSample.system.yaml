@@ -113,6 +113,13 @@ node_groups:
     type: ros2_component_container_ipc
     nodes:
       - /sensing/lidar/right/*
+  - name: traffic_light_node_container
+    type: ros2_component_container_mt_ipc
+    nodes:
+      - /perception/traffic_light_recognition/camera1/map_based_detector
+      - /perception/traffic_light_recognition/camera1/detection
+      - /perception/traffic_light_recognition/camera1/classifier_pedestrian
+      - /perception/traffic_light_recognition/camera1/classifier_car
 
 connections:
   - - localization.publisher.kinematic_state
