@@ -28,10 +28,10 @@ subscribers:
   - name: external_traffic_signals
 
 publishers:
-  - name: objects
-  - name: obstacle_pointcloud
-  - name: map
-  - name: traffic_signals
+  - name: object_recognition/objects
+  - name: obstacle_segmentation/pointcloud
+  - name: occupancy_grid_map/map
+  - name: traffic_light_recognition/traffic_signals
 
 connections:
   # obstacle segmentation
@@ -76,10 +76,10 @@ connections:
 
   # outputs
   - - obstacle_segmentation.publisher.pointcloud
-    - publisher.obstacle_pointcloud
+    - publisher.obstacle_segmentation/pointcloud
   - - object_recognition.publisher.objects
-    - publisher.objects
+    - publisher.object_recognition/objects
   - - occupancy_grid_map.publisher.map
-    - publisher.map
+    - publisher.occupancy_grid_map/map
   - - traffic_light_recognition.publisher.traffic_signals
-    - publisher.traffic_signals
+    - publisher.traffic_light_recognition/traffic_signals
