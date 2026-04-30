@@ -123,7 +123,11 @@ parameters:
     param_files: []
     param_values:
       - name: input/detection01/channel
-        value: detected_objects
+        value: lidar_centerpoint
+      - name: input/detection03/channel
+        value: lidar_clustering
+      - name: input/detection05/channel
+        value: detection_by_tracker
       - name: publish_merged_objects
         value: false
       - name: enable_delay_compensation
@@ -134,6 +138,8 @@ parameters:
         value: true
       - name: association.can_assign.unknown
         value: [polygon_tracker, multi_vehicle_tracker, pedestrian_and_bicycle_tracker]
+      - name: publish_debug_markers
+        value: true
   - node: /perception/object_recognition/tracking/radar_object_filter
     param_files: []
     param_values:
