@@ -115,6 +115,7 @@
       <arg name="is_simulation" value="$(var is_simulation)"/>
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="data_path" value="$(var data_path)"/>
     </include>
 
     <!-- Relay node for trajectory topic -->
