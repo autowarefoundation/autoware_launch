@@ -9,6 +9,8 @@ instances:
     entity: ObjectRecognition.module
   - name: occupancy_grid_map
     entity: OccupancyGridMapPointcloudBased.module
+  - name: traffic_light_recognition
+    entity: TrafficLightRecognition.module
 
 subscribers:
   # lidar
@@ -19,11 +21,17 @@ subscribers:
   - name: service_pointcloud_map_diff
   # localization
   - name: kinematic_state
+  # traffic light
+  - name: route
+  - name: traffic_camera/image
+  - name: traffic_camera/camera_info
+  - name: external_traffic_signals
 
 publishers:
   - name: objects
   - name: obstacle_pointcloud
   - name: map
+  - name: traffic_signals
 
 connections:
   # obstacle segmentation
@@ -43,12 +51,28 @@ connections:
     - object_recognition.client.service_pointcloud_map_diff
   - - subscriber.kinematic_state
     - object_recognition.subscriber.kinematic_state
+  - - traffic_light_recognition.publisher.traffic_signals
+    - object_recognition.subscriber.traffic_lights
 
   # occupancy grid map
   - - subscriber.concatenated_pointcloud
     - occupancy_grid_map.subscriber.raw_pointcloud
   - - obstacle_segmentation.publisher.pointcloud
     - occupancy_grid_map.subscriber.obstacle_pointcloud
+
+  # traffic light recognition
+  - - subscriber.vector_map
+    - traffic_light_recognition.subscriber.vector_map
+  - - subscriber.route
+    - traffic_light_recognition.subscriber.route
+  - - subscriber.traffic_camera/image
+    - traffic_light_recognition.subscriber.camera1/image
+  - - subscriber.traffic_camera/camera_info
+    - traffic_light_recognition.subscriber.camera1/camera_info
+  - - subscriber.concatenated_pointcloud
+    - traffic_light_recognition.subscriber.pointcloud
+  - - subscriber.external_traffic_signals
+    - traffic_light_recognition.subscriber.external_traffic_signals
 
   # outputs
   - - obstacle_segmentation.publisher.pointcloud
@@ -57,3 +81,5 @@ connections:
     - publisher.objects
   - - occupancy_grid_map.publisher.map
     - publisher.map
+  - - traffic_light_recognition.publisher.traffic_signals
+    - publisher.traffic_signals

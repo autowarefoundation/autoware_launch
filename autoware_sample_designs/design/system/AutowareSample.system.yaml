@@ -151,6 +151,9 @@ connections:
   - - adapi.publisher.localization/initialization_state
     - localization.subscriber.initialization_state
 
+  - - planning.publisher.mission_planning/route
+    - perception.subscriber.route
+
   - - perception.publisher.map
     - planning.subscriber.occupancy_grid_map
   - - map.publisher.vector_map
@@ -159,6 +162,8 @@ connections:
     - planning.subscriber.objects
   - - perception.publisher.obstacle_pointcloud
     - planning.subscriber.obstacle_pointcloud
+  - - perception.publisher.traffic_signals
+    - planning.subscriber.traffic_signals
 
   - - planning.publisher.^
     - control.subscriber.^
@@ -214,11 +219,6 @@ E2ESimulation:
         entity: SampleSensorKitAWSIM.module
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
-      - name: traffic_light_recognition
-        entity: TrafficLightRecognition.module
-        path: /perception/traffic_light_recognition
-        compute_unit: main_ecu
-        parameter_set: sample_system_perception.parameter_set
     connections:
       # SENSING
       - - AWSIM_out.publisher.sensing/lidar/top/pointcloud_raw_ex
@@ -229,17 +229,9 @@ E2ESimulation:
         - sensing.subscriber.velocity_status
       # Traffic light
       - - AWSIM_out.publisher.sensing/camera/traffic_light/image_raw
-        - traffic_light_recognition.subscriber.camera1/image
+        - perception.subscriber.traffic_camera/image
       - - AWSIM_out.publisher.sensing/camera/traffic_light/camera_info
-        - traffic_light_recognition.subscriber.camera1/camera_info
-      - - AWSIM_out.publisher.sensing/lidar/top/pointcloud_raw_ex
-        - traffic_light_recognition.subscriber.pointcloud
-      - - map.publisher.vector_map
-        - traffic_light_recognition.subscriber.vector_map
-      - - planning.publisher.mission_planning/route
-        - traffic_light_recognition.subscriber.route
-      - - traffic_light_recognition.publisher.traffic_signals
-        - planning.subscriber.traffic_signals
+        - perception.subscriber.traffic_camera/camera_info
       # localization
       - - AWSIM_out.publisher.sensing/gnss/pose_with_covariance
         - localization.subscriber.gnss_pose_with_covariance
