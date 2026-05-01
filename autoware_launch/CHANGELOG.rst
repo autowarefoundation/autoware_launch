@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.51.0 (2026-05-01)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(traffic_light_multi_camera_fusion): add cross camera validation parameters (`#1825 <https://github.com/autowarefoundation/autoware_launch/issues/1825>`_)
   * add cross camera validation parameters

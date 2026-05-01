@@ -2,8 +2,8 @@
 Changelog for package tier4_planning_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.51.0 (2026-05-01)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(planning): wire data_path through to diffusion_planner (`#1834 <https://github.com/autowarefoundation/autoware_launch/issues/1834>`_)
   feat(autoware_launch,tier4_planning_launch): wire data_path through planning to diffusion_planner

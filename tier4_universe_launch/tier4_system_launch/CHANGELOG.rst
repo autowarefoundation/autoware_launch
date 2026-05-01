@@ -2,8 +2,8 @@
 Changelog for package tier4_system_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.51.0 (2026-05-01)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(planning_simulator.launch): add fault_injection args (`#1724 <https://github.com/autowarefoundation/autoware_launch/issues/1724>`_)
   * feat: add fault_injection args

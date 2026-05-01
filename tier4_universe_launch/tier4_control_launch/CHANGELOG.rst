@@ -2,8 +2,8 @@
 Changelog for package tier4_control_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.51.0 (2026-05-01)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(tier4_control_launch): adopt agnocast cie (`#1798 <https://github.com/autowarefoundation/autoware_launch/issues/1798>`_)
   * feat: adopt agnocast cie

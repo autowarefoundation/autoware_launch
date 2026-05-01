@@ -2,8 +2,8 @@
 Changelog for package tier4_localization_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.51.0 (2026-05-01)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(lidar_marker_localizer): extend lidar-marker localization to enhance flexibility and debugging capabilities (`#1695 <https://github.com/autowarefoundation/autoware_launch/issues/1695>`_)
   * feat: update launch files for multi lidar marker localization
