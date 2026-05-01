@@ -5,6 +5,7 @@
   <arg name="fault_injection_param_path"/>
   <arg name="fault_injection_input_diagnostics" default="/diagnostics"/>
   <arg name="fault_injection_output_diagnostics" default="/diagnostics/fault_injection"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
   <arg name="obstacle_segmentation_ground_segmentation_elevation_map_param_path"/>
   <arg name="laserscan_based_occupancy_grid_map_param_path"/>
   <arg name="occupancy_grid_map_updater"/>
@@ -193,16 +194,16 @@
           <arg name="traffic_light_multi_camera_fusion_param_path" value="$(var traffic_light_multi_camera_fusion_param_path)"/>
           <arg name="traffic_light_arbiter_param_path" value="$(var traffic_light_arbiter_param_path)"/>
           <arg name="crosswalk_traffic_light_estimator_param_path" value="$(var crosswalk_traffic_light_estimator_param_path)"/>
-          <arg name="whole_image_detection/model_path" value="$(env HOME)/autoware_data/tensorrt_yolox/yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
-          <arg name="whole_image_detection/label_path" value="$(env HOME)/autoware_data/tensorrt_yolox/car_ped_tl_detector_labels.txt"/>
+          <arg name="whole_image_detection/model_path" value="$(var data_path)/tensorrt_yolox/yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
+          <arg name="whole_image_detection/label_path" value="$(var data_path)/tensorrt_yolox/car_ped_tl_detector_labels.txt"/>
           <arg name="whole_image_detection/yolox_roi_label_remap_path" value="$(var traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path)"/>
-          <arg name="fine_detection/model_path" value="$(env HOME)/autoware_data/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx"/>
-          <arg name="fine_detection/label_path" value="$(env HOME)/autoware_data/traffic_light_fine_detector/tlr_labels.txt"/>
-          <arg name="classification/car/model_path" value="$(env HOME)/autoware_data/traffic_light_classifier/$(var traffic_light_car_classifier_model)"/>
-          <arg name="classification/car/label_path" value="$(env HOME)/autoware_data/traffic_light_classifier/lamp_labels.txt"/>
-          <arg name="classification/pedestrian/model_path" value="$(env HOME)/autoware_data/traffic_light_classifier/$(var traffic_light_ped_classifier_model)"/>
-          <arg name="classification/pedestrian/label_path" value="$(env HOME)/autoware_data/traffic_light_classifier/lamp_labels_ped.txt"/>
-          <arg name="classification/lamp_recognizer_ml_param_path" value="$(env HOME)/autoware_data/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>
+          <arg name="fine_detection/model_path" value="$(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx"/>
+          <arg name="fine_detection/label_path" value="$(var data_path)/traffic_light_fine_detector/tlr_labels.txt"/>
+          <arg name="classification/car/model_path" value="$(var data_path)/traffic_light_classifier/$(var traffic_light_car_classifier_model)"/>
+          <arg name="classification/car/label_path" value="$(var data_path)/traffic_light_classifier/lamp_labels.txt"/>
+          <arg name="classification/pedestrian/model_path" value="$(var data_path)/traffic_light_classifier/$(var traffic_light_ped_classifier_model)"/>
+          <arg name="classification/pedestrian/label_path" value="$(var data_path)/traffic_light_classifier/lamp_labels_ped.txt"/>
+          <arg name="classification/lamp_recognizer_ml_param_path" value="$(var data_path)/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>
           <arg name="classification/pedestrian/classifier_type" value="$(var traffic_light_recognition/classification/pedestrian/classifier_type)"/>
           <arg name="classification/car/classifier_type" value="$(var traffic_light_recognition/classification/car/classifier_type)"/>
         </include>

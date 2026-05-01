@@ -9,7 +9,7 @@ variables:
   - name: vehicle_model
     value: sample_vehicle
   - name: data_path
-    value: $(env HOME)/autoware_data
+    value: $(env HOME)/autoware_data/ml_models
   - name: lanelet2_map_file
     value: lanelet2_map.osm
   - name: pointcloud_map_file
@@ -19,7 +19,7 @@ variables:
     value: $(find-pkg-share sample_sensor_kit_description)/config
   # environment variables
   - name: map_path
-    value: $(env HOME)/autoware_map/sample-map-rosbag
+    value: $(env HOME)/autoware_data/maps/sample-map-rosbag
 
 variable_files:
   - name: vehicle_info
@@ -218,7 +218,7 @@ E2ESimulation:
   override:
     variables:
       - name: map_path
-        value: $(env HOME)/autoware_map/nishishinjuku_autoware_map
+        value: $(env HOME)/autoware_data/maps/nishishinjuku_autoware_map
     parameter_sets:
       - e2e_simulation.parameter_set
     components:
