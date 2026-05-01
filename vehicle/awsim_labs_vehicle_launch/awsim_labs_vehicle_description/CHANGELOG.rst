@@ -2,6 +2,9 @@
 Changelog for package awsim_labs_vehicle_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.50.0 (2026-02-13)
 -------------------
 

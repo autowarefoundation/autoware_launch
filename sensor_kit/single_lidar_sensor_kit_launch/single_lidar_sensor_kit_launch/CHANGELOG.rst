@@ -2,6 +2,9 @@
 Changelog for package single_lidar_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.50.0 (2026-02-13)
 -------------------
 

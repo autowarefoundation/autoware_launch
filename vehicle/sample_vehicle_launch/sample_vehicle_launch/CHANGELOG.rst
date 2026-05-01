@@ -2,6 +2,9 @@
 Changelog for package sample_vehicle_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.50.0 (2026-02-13)
 -------------------
 
