@@ -1,0 +1,15 @@
+autoware_system_design_format: 0.3.0
+
+name: PlanningSimRvizPlugins.module
+
+instances:
+  - name: dummy_object_publisher
+    entity: RvizPluginDummyObject.node
+
+subscribers: []
+publishers:
+  - name: simulation/dummy_perception_publisher/object_info
+
+connections:
+  - - dummy_object_publisher.publisher.object
+    - publisher.simulation/dummy_perception_publisher/object_info

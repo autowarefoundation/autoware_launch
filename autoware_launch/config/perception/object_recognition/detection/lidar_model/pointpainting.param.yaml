@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/6d587682ae9130c3723a0f83ba76d74c8dffc12d/perception/autoware_image_projection_based_fusion/config/pointpainting.param.yaml
+
 /**:
   ros__parameters:
     encoder_onnx_path: "$(var model_path)/pts_voxel_encoder_$(var model_name).onnx"
@@ -11,8 +18,6 @@
       circle_nms_dist_threshold: 0.3
       iou_nms_search_distance_2d: 10.0
       iou_nms_threshold: 0.1
-      # CAR, TRUCK, BUS, BICYCLE, PEDESTRIAN
-      score_thresholds: [0.45, 0.45, 0.45, 0.45, 0.45]
       yaw_norm_thresholds: [0.3, 0.3, 0.3, 0.3, 0.0]
     densification_params:
       world_frame_id: "map"

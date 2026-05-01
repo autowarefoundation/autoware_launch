@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/76922a845358de6042cee56e1e711bf163fdcb23/perception/autoware_lidar_transfusion/config/transfusion_common.param.yaml
+
 /**:
   ros__parameters:
     diagnostics:
