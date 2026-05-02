@@ -2,6 +2,81 @@
 Changelog for package tier4_perception_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.51.0 (2026-05-01)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(launch): default data_path to ~/autoware_data/ml_models (`#1835 <https://github.com/autowarefoundation/autoware_launch/issues/1835>`_)
+  feat(autoware_launch,tier4_perception_launch,tier4_simulator_launch,autoware_sample_designs): default data_path to ~/autoware_data/ml_models
+  Roll the `data_path` arg defaults from `$(env HOME)/autoware_data` to
+  `$(env HOME)/autoware_data/ml_models` to match the new
+  `~/autoware_data/{maps,ml_models,recordings,scenarios,...}` layout
+  defined in `autowarefoundation/autoware#7068 <https://github.com/autowarefoundation/autoware/issues/7068>`_.
+  Top-level launches and components:
+  - autoware_launch/launch/autoware.launch.xml
+  - autoware_launch/launch/e2e_simulator.launch.xml
+  - autoware_launch/launch/logging_simulator.launch.xml
+  - autoware_launch/launch/planning_simulator.launch.xml
+  - autoware_launch/launch/components/tier4_perception_component.launch.xml
+  - autoware_launch/launch/components/tier4_planning_component.launch.xml
+  - tier4_universe_launch/tier4_perception_launch/launch/perception.launch.xml
+  - tier4_universe_launch/tier4_perception_launch/launch/object_recognition/detection/detector/camera_bev_detector.launch.xml
+  - autoware_sample_designs/design/system/AutowareSample.system.yaml: also
+  migrate the `map_path` values for `Runtime` and `E2ESimulation` from
+  `$(env HOME)/autoware_map/<map>` to `$(env HOME)/autoware_data/maps[/demos]/<map>`.
+  Simulator chain (traffic-light models for planning_simulator):
+  - autoware_launch/launch/components/tier4_simulator_component.launch.xml: declare and pass `data_path`
+  - autoware_launch/launch/planning_simulator.launch.xml: forward `data_path` to the simulator component include
+  - tier4_universe_launch/tier4_simulator_launch/launch/simulator.launch.xml: declare a `data_path` arg and replace the nine hardcoded `$(env HOME)/autoware_data/{tensorrt_yolox,traffic_light_fine_detector,traffic_light_classifier}/...` strings with `$(var data_path)/<package>/...`, matching the perception convention.
+  Users on the legacy layout can pin the old root with
+  `data_path:=$HOME/autoware_data` (and override `map_path` to legacy
+  `$HOME/autoware_map/<map>` if needed).
+  Refs: https://github.com/autowarefoundation/autoware/issues/7068
+* fix(tier4_perception_launch): add missing dependency (`#1824 <https://github.com/autowarefoundation/autoware_launch/issues/1824>`_)
+* fix(traffic_light/classifier): rearrange parameter (`#1807 <https://github.com/autowarefoundation/autoware_launch/issues/1807>`_)
+  * fix(traffic_light/classifier): add new param
+  * style(pre-commit): autofix
+  * fix: missing branching
+  * typo fix
+  * fix: missing param
+  * style(pre-commit): autofix
+  * fix ml_param path
+  * spelling check fix
+  * typo: ped onnx
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat(tier4_perception_launch): add remap file parameters (`#1803 <https://github.com/autowarefoundation/autoware_launch/issues/1803>`_)
+  * add remap files
+  * add remap file paramaters
+  * style(pre-commit): autofix
+  * add ignore semseg
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* refactor: replace remaining ament_index_python with launch.substitutions (`#1799 <https://github.com/autowarefoundation/autoware_launch/issues/1799>`_)
+* feat(tier4_perception_launch): include autoware_env (`#1794 <https://github.com/autowarefoundation/autoware_launch/issues/1794>`_)
+  * feat: include autoware_env
+  * style(pre-commit): autofix
+  * feat: add dependency
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* fix(radar): remove radar-only mode, replace radar object filter (`#1774 <https://github.com/autowarefoundation/autoware_launch/issues/1774>`_)
+  * refactor(object_recognition): remove deprecated velocity and range splitter parameters, introduce detected object sorter configuration
+  - Deleted unused parameter files for object velocity and range splitters.
+  - Added new parameter file for detected object sorter.
+  - Updated launch files to reference the new sorter instead of the removed splitters.
+  * refactor(object_recognition): remove radar options from launch files
+  - Deleted radar-related choices and parameters from perception and detection launch files.
+  - Updated tracking launch file to remove radar-specific configurations.
+  - Streamlined object recognition configuration by eliminating unused radar options.
+  * refactor(object_recognition): encapsulate launch file includes in groups
+  - Wrapped the includes for detected object sorter and lanelet filter in separate groups for better organization.
+  - Maintained existing functionality while improving the structure of the launch file.
+  * refactor(object_recognition): improve indentation for detected object sorter inclusion
+  - Adjusted the indentation of the detected object sorter include statement for better readability and consistency in the launch file.
+  - No changes to functionality were made, maintaining the existing configuration.
+  ---------
+* feat(camera_lidar_irregular_object_detector): update convex hull conversion logic and parameters (`#1769 <https://github.com/autowarefoundation/autoware_launch/issues/1769>`_)
+* Contributors: Masaki Baba, Mete Fatih Cırıt, Taekjin LEE, Taeseung Sohn, Tetsuhiro Kawaguchi, badai nguyen, github-actions
+
 0.50.0 (2026-02-13)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
