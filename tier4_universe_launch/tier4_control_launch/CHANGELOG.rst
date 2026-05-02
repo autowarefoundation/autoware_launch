@@ -2,6 +2,23 @@
 Changelog for package tier4_control_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.51.0 (2026-05-01)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(tier4_control_launch): adopt agnocast cie (`#1798 <https://github.com/autowarefoundation/autoware_launch/issues/1798>`_)
+  * feat: adopt agnocast cie
+  * feat: add dependency and comments
+  ---------
+* feat(tier4_control_launch): remove glog component (`#1776 <https://github.com/autowarefoundation/autoware_launch/issues/1776>`_)
+  feat: remove glog component
+* feat(trajectory_follower): update mpc param yaml and control launch (`#1750 <https://github.com/autowarefoundation/autoware_launch/issues/1750>`_)
+  * update mpc param yaml
+  * remove unused param
+  * update control launch files
+  * tune parameter. undo unnecessary changes
+  ---------
+* Contributors: Tetsuhiro Kawaguchi, github-actions, mkquda
+
 0.50.0 (2026-02-13)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

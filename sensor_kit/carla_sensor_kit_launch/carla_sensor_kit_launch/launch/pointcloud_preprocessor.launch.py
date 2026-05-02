@@ -14,9 +14,6 @@
 
 """Pointcloud preprocessor launch for CARLA sensor kit."""
 
-import os
-
-from ament_index_python.packages import get_package_share_directory
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
@@ -24,8 +21,10 @@ from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
+from launch_ros.substitutions import FindPackageShare
 import yaml
 
 
@@ -149,8 +148,6 @@ def generate_launch_description():
     def add_launch_arg(name: str, default_value=None):
         launch_arguments.append(DeclareLaunchArgument(name, default_value=default_value))
 
-    carla_sensor_kit_launch_share_dir = get_package_share_directory("carla_sensor_kit_launch")
-
     add_launch_arg("use_multithread", "False")
     add_launch_arg("use_intra_process", "False")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
@@ -158,10 +155,12 @@ def generate_launch_description():
     add_launch_arg("output_frame", "base_link")
     add_launch_arg(
         "vehicle_mirror_param_file",
-        os.path.join(
-            carla_sensor_kit_launch_share_dir,
-            "config",
-            "mirror.param.yaml",
+        PathJoinSubstitution(
+            [
+                FindPackageShare("carla_sensor_kit_launch"),
+                "config",
+                "mirror.param.yaml",
+            ]
         ),
     )
 

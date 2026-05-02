@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/f2f7a2849b691fc82d8835cdb1c95a23a4aa8f35/perception/autoware_object_merger/config/object_association_merger.param.yaml
+
 /**:
   ros__parameters:
     sync_queue_size: 20

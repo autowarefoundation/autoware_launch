@@ -1,0 +1,25 @@
+autoware_system_design_format: 0.3.0
+
+name: LidarTransfusion.module
+
+instances:
+  - name: lidar_transfusion
+    entity: LidarTransfusion.node
+  - name: validation
+    entity: ObstaclePointCloudBasedValidator.node
+
+subscribers:
+  - name: pointcloud
+  - name: obstacle_pointcloud
+publishers:
+  - name: detected_objects
+
+connections:
+  - - subscriber.pointcloud
+    - lidar_transfusion.subscriber.pointcloud
+  - - lidar_transfusion.publisher.objects
+    - validation.subscriber.detected_objects
+  - - subscriber.obstacle_pointcloud
+    - validation.subscriber.obstacle_pointcloud
+  - - validation.publisher.objects
+    - publisher.detected_objects

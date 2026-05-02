@@ -1,0 +1,15 @@
+files:
+  - { path: $(dirname)/autoware-main.yaml }
+
+edits:
+  - { type: remove, path: /autoware/planning/trajectory_validation/finite }
+  - { type: remove, path: /autoware/planning/trajectory_validation/interval }
+  - { type: remove, path: /autoware/planning/trajectory_validation/curvature }
+  - { type: remove, path: /autoware/planning/trajectory_validation/angle }
+  - { type: remove, path: /autoware/planning/trajectory_validation/lateral_acceleration }
+  - { type: remove, path: /autoware/planning/trajectory_validation/acceleration }
+  - { type: remove, path: /autoware/planning/trajectory_validation/deceleration }
+  - { type: remove, path: /autoware/planning/trajectory_validation/steering }
+  - { type: remove, path: /autoware/planning/trajectory_validation/steering_rate }
+  - { type: remove, path: /autoware/planning/trajectory_validation/velocity_deviation }
+  - { type: remove, path: /autoware/planning/trajectory_validation/trajectory_shift }

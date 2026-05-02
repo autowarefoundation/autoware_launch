@@ -2,6 +2,9 @@
 Changelog for package tier4_sensing_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.51.0 (2026-05-01)
+-------------------
+
 0.50.0 (2026-02-13)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
