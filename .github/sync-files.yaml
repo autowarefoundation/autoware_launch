@@ -18,6 +18,7 @@
     - source: .github/workflows/semantic-pull-request.yaml
     - source: .github/workflows/spell-check-daily.yaml
     - source: .github/workflows/spell-check-differential.yaml
+    - source: .github/workflows/sync-branches.yaml
     - source: .github/workflows/sync-files.yaml
     - source: .markdown-link-check.json
     - source: .markdownlint.yaml
