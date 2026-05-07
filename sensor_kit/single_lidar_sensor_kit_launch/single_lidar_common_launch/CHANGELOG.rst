@@ -2,6 +2,19 @@
 Changelog for package single_lidar_common_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.51.0 (2026-05-01)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* refactor: replace ament_index_python with launch.substitutions (`#1762 <https://github.com/autowarefoundation/autoware_launch/issues/1762>`_)
+  * refactor: replace ament_index_python with launch.substitutions
+  * flatten nested pathjoinsubstitution
+  ---------
+* feat(autoware_launch, sendor_kit): remove glog component load (`#1778 <https://github.com/autowarefoundation/autoware_launch/issues/1778>`_)
+  * feat: remove glog component load
+  * fix: remove unnecessary import
+  ---------
+* Contributors: Taeseung Sohn, Tetsuhiro Kawaguchi, github-actions
+
 0.50.0 (2026-02-13)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
