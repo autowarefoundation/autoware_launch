@@ -1,0 +1,32 @@
+units:
+  - path: /mrm_domain/planning/autonomous_available
+    type: and
+    list:
+      # Although not strictly necessary, it is added due to notification issues.
+      - { type: link, link: /mrm_domain/planning/in_lane_moderate_stop_available }
+
+  - path: /mrm_domain/planning/comfortable_stop_available
+    type: ok
+
+  - path: /mrm_domain/planning/in_lane_moderate_stop_available
+    type: and
+    list:
+      - { type: link, link: /mrm_domain/planning/topic_status/trajectory/warn-to-ok }
+
+  - path: /mrm_domain/planning/in_lane_emergency_stop_available
+    type: and
+    list:
+      - { type: link, link: /mrm_domain/planning/in_lane_moderate_stop_available }
+
+  - path: /mrm_domain/planning/topic_status/trajectory/warn-to-ok
+    type: warn-to-ok
+    item:
+      type: link
+      link: /mrm_domain/planning/topic_status/trajectory
+
+  - path: /mrm_domain/planning/topic_status/trajectory
+    type: diag
+    node: topic_state_monitor_trajectory_mrm_domain
+    name: topic_status
+    timeout: 3.0
+    # latch: 0.0

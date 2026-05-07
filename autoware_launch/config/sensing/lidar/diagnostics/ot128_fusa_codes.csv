@@ -1,0 +1,83 @@
+Fault Code;Fault;Severity;Lidar State (for documentation only)
+0x0012;Overvoltage/Undervoltage fault;ERROR;Output Untrusted
+0x0021;Overvoltage/Undervoltage fault;OK;Warning
+0x0132;Master clock fault;ERROR;Output Untrusted
+0x0112;Functional clock fault;ERROR;Output Untrusted
+0x0122;Watch dog self-test fault;ERROR;Output Untrusted
+0x0142;Master clock fault;ERROR;Output Untrusted
+0x0152;Functional clock fault;ERROR;Output Untrusted
+0x0212;Program flow exception fault;ERROR;Output Untrusted
+0x0222;Program flow exception fault;ERROR;Output Untrusted
+0x0312;Processing unit exception;ERROR;Output Untrusted
+0x3312;Processing unit stuck;ERROR;Output Untrusted
+0x0011;Processing unit no output fault;ERROR;Output Untrusted
+0x0322;Processing unit exception;ERROR;Output Untrusted
+0x0412;CRC fault of NOR flash memory;ERROR;Output Untrusted
+0x0423;Safety mechanism self-test fault in configuration memory diagnosis;ERROR;Output Untrusted
+0x0421;Correctable single-bit fault in configuration memory;OK;Warning
+0x0422;Double-bit fault OR uncorrectable single-bit fault in configuration memory;ERROR;Output Untrusted
+0x0425;Communication fault of the safety mechanism for configuration memory diagnosis;WARNING;Performance Degradation
+0x0463;ECC self-test fault in BRAM (block RAM);ERROR;Output Untrusted
+0x0461;Single-bit fault in BRAM;OK;Warning
+0x0462;Double-bit fault in BRAM;ERROR;Output Untrusted
+0x0442;CRC fault of NOR flash memory;ERROR;Output Untrusted
+0x04A1;Abnormal cybersecurity-related data requiring authentication;OK;Warning
+0x0453;Safety mechanism self-test fault in configuration memory diagnosis;ERROR;Output Untrusted
+0x0451;Correctable single-bit fault in configuration memory;OK;Warning
+0x0452;Double-bit fault OR uncorrectable single-bit fault in configuration memory;ERROR;Output Untrusted
+0x0463;Self-test fault in ECC diagnosis in BRAM;ERROR;Output Untrusted
+0x0461;Single-bit fault in BRAM;OK;Warning
+0x0462;Double-bit fault in BRAM;ERROR;Output Untrusted
+0x0473;ECC self-test fault in DDR;ERROR;Output Untrusted
+0x0471;Single-bit fault in DDR;OK;Warning
+0x0472;Double-bit fault in DDR;ERROR;Output Untrusted
+0x0481;CRC fault in eMMC;OK;Warning
+0x04C1;Register fault;OK;Warning
+0x1721;U-boot file CRC fault;OK;Warning
+0x0611;Laser receiver module exceeds the first-level overtemperature threshold OR drops below the first-level undervoltage threshold;WARNING;Performance Degradation
+0x0612;Laser receiver module exceeds the second-level overtemperature threshold OR drops below the second-level undervoltage threshold;ERROR;Output Untrusted
+0x0632;Internal ADC module fault in the distance and reflectivity link;ERROR;Output Untrusted
+0x0622;Distance and reflectivity calculation module fault in the distance and reflectivity link;ERROR;Output Untrusted
+0x0642;Eye safety module fault;ERROR;Output Untrusted
+0x0652;Timing controller module fault in distance and reflectivity link;ERROR;Output Untrusted
+0x0662;Point cloud data transmission link fault;ERROR;Output Untrusted
+0x0661;Interstitial point filter module fault;ERROR;Output Untrusted
+0x0972;Azimuth processing module fault;ERROR;Output Untrusted
+0x0682;Point cloud data missing fault;OK;Warning
+0x0711;Abnormal motor start;OK;Warning
+0x0721;Abnormal motor speed;WARNING;Performance Degradation
+0x0722;Motor stall fault;ERROR;Shutdown
+0x0732;Motor overcurrent fault;ERROR;Output Untrusted
+0x0742;Motor rotation direction fault;ERROR;Output Untrusted
+0x0811;Encoder plausibility first-level fault;OK;Warning
+0x0812;Encoder plausibility second-level fault;ERROR;Output Untrusted
+0x0912;Encoder disk contamination fault;ERROR;Output Untrusted
+0x0A13;Self-test fault in laser diagnosis;ERROR;Output Untrusted
+0x0A11;Single-blind-channel fault;WARNING;Performance Degradation
+0x0A12;Multi-blind-channel fault;WARNING;Performance Degradation
+0x0A23;Continuous conduction fault in laser emitter;ERROR;Output Untrusted
+0x0B11;Abnormal baseline noise in single-channel;WARNING;Performance Degradation
+0x0B12;Abnormal baseline noise in multi-channel;WARNING;Performance Degradation
+0x0B24;Abnormal connection of diagnostic hardware module;ERROR;Output Untrusted
+0x0B23;Self-test fault in laser receiver diagnosis;ERROR;Output Untrusted
+0x0B21;Single-blind-channel continuous fault;WARNING;Performance Degradation
+0x0B22;Multi-blind-channel continuous fault;WARNING;Performance Degradation
+0x0B26;Single-blind-channel intermittent fault;OK;Warning
+0x0B27;Multi-blind-channel intermittent fault;OK;Warning
+0x0B34;Unintended start of safety mechanism in laser receiver diagnosis;ERROR;Output Untrusted
+0x0C11;Single-channel ADC link fault;ERROR;Output Untrusted
+0x0C12;Multi-channel ADC link fault;ERROR;Output Untrusted
+0x0D15;Hardware plausibility fault of temperature sensor;OK;Warning
+0x0D16;Cross-check fault of temperature sensor;OK;Warning
+0x0D17;Hardware plausibility fault between the cross-check temperature sensors;OK;Warning
+0x0D12;Third-level over-temperature fault;WARNING;Pre-Shutdown
+0x0D25;Hardware plausibility fault of temperature sensor;OK;Warning
+0x0E11;Uplink wireless communication data CRC fault;OK;Warning
+0x0E22;Downlink data stuck, timeout, OR CRC fault;ERROR;Output Untrusted
+0x0E32;Top and bottom controllers syncing fault;ERROR;Output Untrusted
+0x1011;Abnormal PTP synchronization;WARNING;Performance Degradation
+0x1111;Abnormal restart of software process;OK;Warning
+0x1121;Boot timeout diagnosis;OK;Warning
+0x1211;Humidity sensor fault;OK;Warning
+0x1411;Top controller ADC fault;OK;Warning
+0x1221;IMU fault;OK;Warning

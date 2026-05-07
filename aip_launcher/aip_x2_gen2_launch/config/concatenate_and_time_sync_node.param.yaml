@@ -1,0 +1,28 @@
+/**:
+  ros__parameters:
+    debug_mode: false
+    has_static_tf_only: false
+    rosbag_length: 10.0
+    maximum_queue_size: 5
+    timeout_sec: 0.2
+    is_motion_compensated: true
+    publish_synchronized_pointcloud: true
+    keep_input_frame_in_synchronized_pointcloud: true
+    publish_previous_but_late_pointcloud: false
+    synchronized_pointcloud_postfix: pointcloud
+    input_twist_topic_type: twist
+    input_topics: [
+                    "/sensing/lidar/rear_upper/pointcloud_before_sync", # 0.047
+                    "/sensing/lidar/rear_lower/pointcloud_before_sync", # 0.048
+                    "/sensing/lidar/left_upper/pointcloud_before_sync", # 0.048
+                    "/sensing/lidar/left_lower/pointcloud_before_sync", # 0.047
+                    "/sensing/lidar/front_upper/pointcloud_before_sync", # 0.072
+                    "/sensing/lidar/front_lower/pointcloud_before_sync", # 0.072
+                    "/sensing/lidar/right_upper/pointcloud_before_sync", # 0.073
+                    "/sensing/lidar/right_lower/pointcloud_before_sync" # 0.097
+                ]
+    output_frame: base_link
+    matching_strategy:
+      type: advanced
+      lidar_timestamp_offsets: [0.0, 0.001, 0.001, 0.0, 0.025, 0.025, 0.026, 0.050]
+      lidar_timestamp_noise_window: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]

@@ -1,0 +1,421 @@
+<launch>
+  <arg name="agnocast_heaphook_path" default="/opt/ros/humble/lib/libagnocast_heaphook.so" description="Path to the agnocast heaphook library"/>
+
+  <arg name="launch_driver" default="true"/>
+  <arg name="setup_sensor" default="true"/>
+  <arg name="host_ip" default="192.168.1.11"/>
+  <!-- <arg name="host_ip" default="224.0.3.3"/> -->
+  <arg name="use_concat_filter" default="true"/>
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
+  <arg name="vehicle_mirror_param_file"/>
+  <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="pipeline_mode" default="cuda">
+    <choice value="cuda"/>
+    <choice value="cpu"/>
+    <choice value="cuda-all-in-one"/>
+    <choice value="cuda-with-cpu-concat"/>
+  </arg>
+  <arg name="udp_only" default="false"/>
+  <arg name="dual_return_filter_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/dual_return_filter.param.yaml"/>
+  <arg name="blockage_diagnostics_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/blockage_diagnostics.param.yaml"/>
+  <arg name="ring_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/ring_outlier_filter_node.param.yaml"/>
+  <arg name="distortion_corrector_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/distortion_corrector_node.param.yaml"/>
+  <arg name="enable_blockage_diag" default="true"/>
+  <arg name="enable_calibration_download" default="false"/>
+
+  <arg name="polar_voxel_visibility_estimation_mode" default="cpu">
+    <choice value="cpu"/>
+    <choice value="cuda"/>
+    <choice value="disable"/>
+  </arg>
+  <arg name="polar_voxel_outlier_filter_node_param_file" default="$(find-pkg-share aip_x2_gen2_launch)/config/polar_voxel_outlier_filter_node.param.yaml"/>
+
+  <let name="use_cuda_concat" value="$(eval '\'$(var pipeline_mode)\' == \'cuda\' or \'$(var pipeline_mode)\' == \'cuda-all-in-one\'')"/>
+
+  <group>
+    <push-ros-namespace namespace="lidar"/>
+
+    <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/pointcloud_preprocessor.launch.py">
+      <arg name="base_frame" value="base_link"/>
+      <arg name="use_intra_process" value="true"/>
+      <arg name="use_multithread" value="true"/>
+      <arg name="use_cuda" value="$(var use_cuda_concat)"/>
+      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+    </include>
+
+    <!-- LiDARs connected to Main ECU -->
+    <group>
+      <push-ros-namespace namespace="rear_upper"/>
+      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+        <arg name="sensor_model" value="Pandar128E4X"/>
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
+        <arg name="frame_id" value="rear_upper/lidar"/>
+        <arg name="sensor_ip" value="192.168.1.202"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2321"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
+        <arg name="sync_angle" value="0"/>
+        <arg name="cut_angle" value="180.0"/>
+        <arg name="cloud_min_angle" value="88"/>
+        <arg name="cloud_max_angle" value="274"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.3"/>
+        <arg name="max_range" value="230.0"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="launch_hw" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
+        <arg name="blockage_range" value="[105.0, 270.0]"/>
+        <arg name="vertical_bins" value="128"/>
+        <arg name="horizontal_ring_id" value="40"/>
+        <arg name="is_channel_order_top2down" value="true"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
+        <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/rear_upper.csv"/>
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
+        <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)"/>
+        <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)"/>
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)"/>
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_upper/generated_30deg_roi.param.png"/>
+        <arg name="dual_return_distance_threshold" value="0.1"/>
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)"/>
+        <arg name="min_azimuth_deg" value="135.0"/>
+        <arg name="max_azimuth_deg" value="225.0"/>
+        <arg name="use_dual_return_filter" value="false"/>
+        <arg name="hires_mode" value="false"/>
+        <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
+        <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="left_upper"/>
+      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+        <arg name="sensor_model" value="Pandar128E4X"/>
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
+        <arg name="frame_id" value="left_upper/lidar"/>
+        <arg name="sensor_ip" value="192.168.1.203"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2322"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
+        <arg name="sync_angle" value="270"/>
+        <arg name="cut_angle" value="359.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="359"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.3"/>
+        <arg name="max_range" value="230.0"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="launch_hw" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
+        <arg name="blockage_range" value="[90.0, 270.0]"/>
+        <arg name="vertical_bins" value="128"/>
+        <arg name="horizontal_ring_id" value="40"/>
+        <arg name="is_channel_order_top2down" value="true"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
+        <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/left_upper.csv"/>
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
+        <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)"/>
+        <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)"/>
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)"/>
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_upper/generated_30deg_roi.param.png"/>
+        <arg name="dual_return_distance_threshold" value="0.1"/>
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)"/>
+        <arg name="min_azimuth_deg" value="225.0"/>
+        <arg name="max_azimuth_deg" value="315.0"/>
+        <arg name="use_dual_return_filter" value="false"/>
+        <arg name="hires_mode" value="true"/>
+        <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
+        <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="rear_lower"/>
+      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+        <arg name="sensor_model" value="PandarQT128"/>
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
+        <arg name="frame_id" value="rear_lower/lidar"/>
+        <arg name="sensor_ip" value="192.168.1.212"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2376"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
+        <arg name="sync_angle" value="0"/>
+        <arg name="cut_angle" value="180.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.1"/>
+        <arg name="max_range" value="50.0"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="launch_hw" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
+        <arg name="blockage_range" value="[130.0, 230.0]"/>
+        <arg name="vertical_bins" value="128"/>
+        <arg name="horizontal_ring_id" value="118"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
+        <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/rear_lower.csv"/>
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
+        <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)"/>
+        <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)"/>
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)"/>
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/rear_lower/generated_30deg_roi.param.png"/>
+        <arg name="dual_return_distance_threshold" value="0.1"/>
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)"/>
+        <arg name="min_azimuth_deg" value="135.0"/>
+        <arg name="max_azimuth_deg" value="225.0"/>
+        <arg name="use_dual_return_filter" value="false"/>
+        <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
+        <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="left_lower"/>
+      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+        <arg name="sensor_model" value="PandarQT128"/>
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
+        <arg name="frame_id" value="left_lower/lidar"/>
+        <arg name="sensor_ip" value="192.168.1.213"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2377"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
+        <arg name="sync_angle" value="270"/>
+        <arg name="cut_angle" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.1"/>
+        <arg name="max_range" value="50.0"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="launch_hw" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
+        <arg name="blockage_range" value="[140.0, 230.0]"/>
+        <arg name="vertical_bins" value="128"/>
+        <arg name="horizontal_ring_id" value="118"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
+        <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/left_lower.csv"/>
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
+        <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)"/>
+        <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)"/>
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)"/>
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/left_lower/generated_30deg_roi.param.png"/>
+        <arg name="dual_return_distance_threshold" value="0.1"/>
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)"/>
+        <arg name="min_azimuth_deg" value="225.0"/>
+        <arg name="max_azimuth_deg" value="315.0"/>
+        <arg name="use_dual_return_filter" value="false"/>
+        <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
+        <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+      </include>
+    </group>
+
+    <!-- LiDARs connected to Sub ECU -->
+    <group>
+      <push-ros-namespace namespace="front_upper"/>
+      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+        <arg name="sensor_model" value="Pandar128E4X"/>
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
+        <arg name="frame_id" value="front_upper/lidar"/>
+        <arg name="sensor_ip" value="192.168.1.204"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2323"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
+        <arg name="sync_angle" value="180"/>
+        <arg name="cut_angle" value="275.0"/>
+        <arg name="cloud_min_angle" value="85"/>
+        <arg name="cloud_max_angle" value="275"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.3"/>
+        <arg name="max_range" value="230.0"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="launch_hw" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
+        <arg name="blockage_range" value="[90.0, 270.0]"/>
+        <arg name="vertical_bins" value="128"/>
+        <arg name="horizontal_ring_id" value="40"/>
+        <arg name="is_channel_order_top2down" value="true"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
+        <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_upper.csv"/>
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
+        <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)"/>
+        <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)"/>
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)"/>
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_upper/generated_30deg_roi.param.png"/>
+        <arg name="dual_return_distance_threshold" value="0.1"/>
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)"/>
+        <arg name="min_azimuth_deg" value="135.0"/>
+        <arg name="max_azimuth_deg" value="225.0"/>
+        <arg name="use_dual_return_filter" value="false"/>
+        <arg name="hires_mode" value="true"/>
+        <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
+        <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="right_upper"/>
+      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+        <arg name="sensor_model" value="Pandar128E4X"/>
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
+        <arg name="frame_id" value="right_upper/lidar"/>
+        <arg name="sensor_ip" value="192.168.1.205"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2324"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
+        <arg name="sync_angle" value="90"/>
+        <arg name="cut_angle" value="270.0"/>
+        <arg name="cloud_min_angle" value="0"/>
+        <arg name="cloud_max_angle" value="270"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.3"/>
+        <arg name="max_range" value="230.0"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="launch_hw" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
+        <arg name="blockage_range" value="[90.0, 270.0]"/>
+        <arg name="vertical_bins" value="128"/>
+        <arg name="horizontal_ring_id" value="40"/>
+        <arg name="is_channel_order_top2down" value="true"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
+        <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/right_upper.csv"/>
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
+        <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)"/>
+        <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)"/>
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)"/>
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_upper/generated_30deg_roi.param.png"/>
+        <arg name="dual_return_distance_threshold" value="0.1"/>
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)"/>
+        <arg name="min_azimuth_deg" value="45.0"/>
+        <arg name="max_azimuth_deg" value="135.0"/>
+        <arg name="use_dual_return_filter" value="false"/>
+        <arg name="hires_mode" value="true"/>
+        <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_visibility_estimation_mode" value="$(var polar_voxel_visibility_estimation_mode)"/>
+        <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="front_lower"/>
+      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+        <arg name="sensor_model" value="PandarQT128"/>
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
+        <arg name="frame_id" value="front_lower/lidar"/>
+        <arg name="sensor_ip" value="192.168.1.214"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2378"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
+        <arg name="sync_angle" value="180"/>
+        <arg name="cut_angle" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.1"/>
+        <arg name="max_range" value="50.0"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="launch_hw" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
+        <arg name="blockage_range" value="[130.0, 230.0]"/>
+        <arg name="vertical_bins" value="128"/>
+        <arg name="horizontal_ring_id" value="118"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
+        <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/front_lower.csv"/>
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
+        <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)"/>
+        <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)"/>
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)"/>
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/front_lower/generated_30deg_roi.param.png"/>
+        <arg name="dual_return_distance_threshold" value="0.1"/>
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)"/>
+        <arg name="min_azimuth_deg" value="135.0"/>
+        <arg name="max_azimuth_deg" value="225.0"/>
+        <arg name="use_dual_return_filter" value="false"/>
+        <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
+        <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+      </include>
+    </group>
+
+    <group>
+      <push-ros-namespace namespace="right_lower"/>
+      <include file="$(find-pkg-share aip_x2_gen2_launch)/launch/nebula_node_container.launch.py">
+        <arg name="agnocast_heaphook_path" value="$(var agnocast_heaphook_path)"/>
+        <arg name="sensor_model" value="PandarQT128"/>
+        <arg name="setup_sensor" value="$(var setup_sensor)"/>
+        <arg name="frame_id" value="right_lower/lidar"/>
+        <arg name="sensor_ip" value="192.168.1.215"/>
+        <arg name="host_ip" value="$(var host_ip)"/>
+        <arg name="data_port" value="2379"/>
+        <arg name="udp_socket_receive_buffer_size_bytes" value="10800000"/>
+        <arg name="sync_angle" value="90"/>
+        <arg name="cut_angle" value="270.0"/>
+        <arg name="cloud_min_angle" value="90"/>
+        <arg name="cloud_max_angle" value="270"/>
+        <arg name="return_mode" value="LastStrongest"/>
+        <arg name="min_range" value="0.1"/>
+        <arg name="max_range" value="50.0"/>
+        <arg name="udp_only" value="$(var udp_only)"/>
+        <arg name="launch_hw" value="$(var launch_driver)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="pipeline_mode" value="$(var pipeline_mode)"/>
+        <arg name="blockage_range" value="[150.0, 220.0]"/>
+        <arg name="vertical_bins" value="128"/>
+        <arg name="horizontal_ring_id" value="118"/>
+        <arg name="is_channel_order_top2down" value="false"/>
+        <arg name="horizontal_resolution" value="0.4"/>
+        <arg name="enable_blockage_diag" value="$(var enable_blockage_diag)"/>
+        <arg name="calibration_file" value="$(find-pkg-share individual_params)/config/$(var vehicle_id)/aip_x2_gen2/pandar/right_lower.csv"/>
+        <arg name="calibration_download_enabled" value="$(var enable_calibration_download)"/>
+        <arg name="dual_return_filter_param_file" value="$(var dual_return_filter_param_file)"/>
+        <arg name="ring_outlier_filter_node_param_file" value="$(var ring_outlier_filter_node_param_file)"/>
+        <arg name="distortion_corrector_node_param_file" value="$(var distortion_corrector_node_param_file)"/>
+        <arg name="point_filters.downsample_mask.path" value="$(find-pkg-share aip_x2_gen2_launch)/config/point_filters/right_lower/generated_30deg_roi.param.png"/>
+        <arg name="dual_return_distance_threshold" value="0.1"/>
+        <arg name="blockage_diagnostics_param_file" value="$(var blockage_diagnostics_param_file)"/>
+        <arg name="min_azimuth_deg" value="45.0"/>
+        <arg name="max_azimuth_deg" value="135.0"/>
+        <arg name="use_dual_return_filter" value="false"/>
+        <arg name="diagnostics.packet_loss.error_threshold" value="20"/>
+        <arg name="polar_voxel_visibility_estimation_mode" value="disable"/>
+        <arg name="polar_voxel_outlier_filter_node_param_file" value="$(var polar_voxel_outlier_filter_node_param_file)"/>
+      </include>
+    </group>
+  </group>
+</launch>
