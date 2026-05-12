@@ -99,6 +99,10 @@
   <arg name="irregular_object_detector_param_path"/>
   <arg name="object_recognition_detection_object_sorter_radar_param_path"/>
 
+  <!-- label_based_param -->
+  <arg name="euclidean_clustering/shape_policy"/>
+  <arg name="euclidean_clustering/param_path"/>
+
   <!-- internal interfaces -->
   <let name="pointcloud_filter/output/pointcloud" value="$(var ns)/pointcloud_map_filtered/pointcloud"/>
   <let name="lidar_ml_detector/output/objects" value="$(var ns)/$(var lidar_detection_model_type)/objects"/>
@@ -255,6 +259,8 @@
       <arg name="euclidean_cluster/input/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
       <arg name="detected_object_feature_remover/output/objects" value="$(var camera_lidar_rule_detector/output/objects)"/>
       <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
+      <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
+      <arg name="euclidean_clustering/param_path" value="$(var euclidean_clustering/param_path)"/>
     </include>
   </group>
   <group if="$(var switch/detector/irregular_object)">
