@@ -47,18 +47,25 @@
   <arg name="launch_rqt_runtime_monitor_err" default="false"/>
 
   <!-- temporary: control_command_gate migration -->
-  <arg name="use_driving_mode_manager" default="false"/>
+  <arg name="mrm" default="handler"/>
+  <let name="launch_mrm_handler" value="true"/>
+  <let name="launch_mrm_handler" value="false" if="$(equals $(var mrm) command)"/>
+  <let name="launch_mrm_handler" value="false" if="$(equals $(var mrm) driving)"/>
+  <let name="launch_comfortable_stop_operator" value="true"/>
+  <let name="launch_comfortable_stop_operator" value="false" if="$(equals $(var mrm) command)"/>
+  <let name="launch_comfortable_stop_operator" value="false" if="$(equals $(var mrm) driving)"/>
+  <let name="launch_command_mode_nodes" value="false"/>
+  <let name="launch_command_mode_nodes" value="true" if="$(equals $(var mrm) command)"/>
 
   <group>
     <push-ros-namespace namespace="/system"/>
 
-    <!--
-    <group if="$(var use_driving_mode_manager)">
+    <group if="$(var launch_command_mode_nodes)">
       <include file="$(find-pkg-share autoware_command_mode_switcher)/launch/switcher.launch.xml">
         <arg name="config" value="$(var command_mode_switcher_param_path)"/>
       </include>
     </group>
-    <group if="$(var use_driving_mode_manager)">
+    <group if="$(var launch_command_mode_nodes)">
       <include file="$(find-pkg-share autoware_command_mode_decider)/launch/decider.launch.xml">
         <arg name="config" value="$(var command_mode_decider_param_path)"/>
         <arg name="~/operation_mode/change_operation_mode" value="$(var change_operation_mode_srv)"/>
@@ -66,7 +73,6 @@
         <arg name="~/mrm/state" value="$(var mrm_state_topic)"/>
       </include>
     </group>
-    -->
 
     <!-- System Monitor -->
     <group if="$(var launch_system_monitor)">
@@ -118,7 +124,7 @@
     </group>
 
     <!-- MRM Operator -->
-    <group unless="$(var use_driving_mode_manager)">
+    <group if="$(var launch_comfortable_stop_operator)">
       <include file="$(find-pkg-share autoware_mrm_comfortable_stop_operator)/launch/mrm_comfortable_stop_operator.launch.py">
         <arg name="config_file" value="$(var mrm_comfortable_stop_operator_param_path)"/>
       </include>
@@ -151,7 +157,7 @@
     </group>
 
     <!-- MRM Handler -->
-    <group unless="$(var use_driving_mode_manager)">
+    <group if="$(var launch_mrm_handler)">
       <include file="$(find-pkg-share autoware_mrm_handler)/launch/mrm_handler.launch.xml">
         <arg name="config_file" value="$(var mrm_handler_param_path)"/>
       </include>
