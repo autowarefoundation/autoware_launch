@@ -9,6 +9,7 @@
   <arg name="lidar_detection_model_type"/>
   <arg name="use_detection_by_tracker"/>
   <arg name="use_irregular_object_detector"/>
+  <arg name="euclidean_clustering/shape_policy"/>
 
   <arg name="use_object_filter" description="use object filter"/>
   <arg name="objects_filter_method"/>
@@ -125,7 +126,7 @@
 
   <!-- 1st merger: camera_lidar_fusion + lidar cluster-->
   <group>
-    <include file="$(find-pkg-share autoware_object_merger)/launch/object_association_merger.launch.xml">
+    <include file="$(find-pkg-share autoware_object_merger)/launch/object_association_merger.launch.xml" if="$(var euclidean_clustering/shape_policy)">
       <arg name="node_name" value="object_association_merger_alpha"/>
       <arg name="input/object0" value="$(var merger1/input/objects0)"/>
       <arg name="input/object1" value="$(var merger1/input/objects1)"/>
@@ -134,6 +135,13 @@
       <arg name="data_association_matrix_path" value="$(var object_recognition_detection_object_merger_data_association_matrix_param_path)"/>
       <arg name="distance_threshold_list_path" value="$(var object_recognition_detection_object_merger_distance_threshold_list_path)"/>
       <arg name="object_association_merger_param_path" value="$(var ml_camera_lidar_object_association_merger_param_path)"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_object_merger)/launch/object_fusion_merger.launch.xml" unless="$(var euclidean_clustering/shape_policy)">
+      <arg name="node_name" value="object_association_merger_alpha"/>
+      <arg name="input/main_objects" value="$(var merger1/input/objects0)"/>
+      <arg name="input/sub_objects" value="$(var merger1/input/objects1)"/>
+      <arg name="output/objects" value="$(var merger1/output/objects)"/>
     </include>
   </group>
 

@@ -497,6 +497,7 @@
       <arg name="use_irregular_object_detector" value="$(var switch/detector/irregular_object)"/>
       <arg name="alpha_merger_priority_mode" value="$(var ml_camera_lidar_merger_priority_mode)"/>
       <arg name="use_roi_detected_object_validator" value="$(var use_roi_detected_object_validator)"/>
+      <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
     </include>
   </group>
 
