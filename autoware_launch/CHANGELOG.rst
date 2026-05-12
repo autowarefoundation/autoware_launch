@@ -2,6 +2,273 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.51.0 (2026-05-01)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(traffic_light_multi_camera_fusion): add cross camera validation parameters (`#1825 <https://github.com/autowarefoundation/autoware_launch/issues/1825>`_)
+  * add cross camera validation parameters
+  * fix default value
+  * change parameter name
+  * revert unwated changes
+  ---------
+* feat(launch): default data_path to ~/autoware_data/ml_models (`#1835 <https://github.com/autowarefoundation/autoware_launch/issues/1835>`_)
+  feat(autoware_launch,tier4_perception_launch,tier4_simulator_launch,autoware_sample_designs): default data_path to ~/autoware_data/ml_models
+  Roll the `data_path` arg defaults from `$(env HOME)/autoware_data` to
+  `$(env HOME)/autoware_data/ml_models` to match the new
+  `~/autoware_data/{maps,ml_models,recordings,scenarios,...}` layout
+  defined in `autowarefoundation/autoware#7068 <https://github.com/autowarefoundation/autoware/issues/7068>`_.
+  Top-level launches and components:
+  - autoware_launch/launch/autoware.launch.xml
+  - autoware_launch/launch/e2e_simulator.launch.xml
+  - autoware_launch/launch/logging_simulator.launch.xml
+  - autoware_launch/launch/planning_simulator.launch.xml
+  - autoware_launch/launch/components/tier4_perception_component.launch.xml
+  - autoware_launch/launch/components/tier4_planning_component.launch.xml
+  - tier4_universe_launch/tier4_perception_launch/launch/perception.launch.xml
+  - tier4_universe_launch/tier4_perception_launch/launch/object_recognition/detection/detector/camera_bev_detector.launch.xml
+  - autoware_sample_designs/design/system/AutowareSample.system.yaml: also
+  migrate the `map_path` values for `Runtime` and `E2ESimulation` from
+  `$(env HOME)/autoware_map/<map>` to `$(env HOME)/autoware_data/maps[/demos]/<map>`.
+  Simulator chain (traffic-light models for planning_simulator):
+  - autoware_launch/launch/components/tier4_simulator_component.launch.xml: declare and pass `data_path`
+  - autoware_launch/launch/planning_simulator.launch.xml: forward `data_path` to the simulator component include
+  - tier4_universe_launch/tier4_simulator_launch/launch/simulator.launch.xml: declare a `data_path` arg and replace the nine hardcoded `$(env HOME)/autoware_data/{tensorrt_yolox,traffic_light_fine_detector,traffic_light_classifier}/...` strings with `$(var data_path)/<package>/...`, matching the perception convention.
+  Users on the legacy layout can pin the old root with
+  `data_path:=$HOME/autoware_data` (and override `map_path` to legacy
+  `$HOME/autoware_map/<map>` if needed).
+  Refs: https://github.com/autowarefoundation/autoware/issues/7068
+* feat(planning): wire data_path through to diffusion_planner (`#1834 <https://github.com/autowarefoundation/autoware_launch/issues/1834>`_)
+  feat(autoware_launch,tier4_planning_launch): wire data_path through planning to diffusion_planner
+  Propagate the `data_path` arg from `autoware.launch.xml` through the
+  planning chain so the integrated diffusion_planner picks up the root
+  artifacts directory the same way perception does.
+  Chain wired:
+  autoware.launch.xml
+  -> tier4_planning_component.launch.xml
+  -> tier4_planning_launch/launch/planning.launch.xml
+  -> tier4_planning_launch/learning_based_planning/diffusion_planner.launch.xml
+  -> autoware_diffusion_planner/launch/diffusion_planner.launch.xml
+  Replaces the hardcoded `$(env HOME)/autoware_data/diffusion_planner/v4.0/...`
+  literals in `autoware_launch/config/planning/neural_net_planner/diffusion_planner.param.yaml`
+  with `$(var data_path)/diffusion_planner/v4.0/...`, matching the
+  perception convention (literal package subdir under `data_path`).
+  After this commit, flipping `data_path` in `autoware.launch.xml` (or
+  overriding it on the command line) controls the diffusion_planner
+  artifact root end-to-end without further edits to the parallel YAML.
+  Refs: https://github.com/autowarefoundation/autoware/issues/7068
+  Refs: https://github.com/autowarefoundation/autoware_universe/pull/12521
+* ci: add sync-params workflow  (`#1812 <https://github.com/autowarefoundation/autoware_launch/issues/1812>`_)
+  * remove stale update-sync-param-file
+  * add sync params script
+  * update for optional ref and filtering
+  * text change
+  * update prettier config --no-error-on-unmatched-pattern
+  * bugfix
+  * add actual file changes
+  * add category based sync params instead of filtering
+  * update checking logic
+  * update param files
+  * improve edge case handling logic
+  * allow annotation inside override marker
+  * update param file with new annotation format
+  * add actual github workflows
+  * remove stale update-sync-param-files workflow
+  * fix yq to output oneline
+  * refine workflows
+  * fix misconfigured param updates
+  * avoid marker capture the existing comment
+  * return dict instead of empty array
+  * guide to run directly
+  * fix SHA for yq to prevent supply chain risk
+  * copilot review round
+  * drop the stale field with warning instead of raising an error
+  * disable cspell for test
+  * add cspell ignore for script
+  * hardcode input_category instead of strenv
+  * run test in check-params.yaml
+  * remove redundant re-read
+  * adjust the correct behavior for check mode
+  * update an integration test to ensure check after update passes
+  * replying to copilot comment
+  * provide empty string category on scheduled run
+  * comprehensive documentation for each function in sync_params.py
+  * match label to the standard convention for sync-files, and bump create-pull-request to v8
+  * cosmetic: add example input and output for brief descriptions
+  * fetch latest upstream params
+  * pre-commit (use r-string when backslash is contained)
+  * add footer option to selectively enable/disable footer copy
+  * collect masked info as separate file write
+  * no footer
+  * rename workflow to sync-params from update-params
+  * adjust formatting
+  * strip ruamel end-of-doc marker
+  * use fresh YAML instance for _render_yaml_value
+  * update script description
+  * specify which workflow in the header
+  ---------
+  Co-authored-by: Junya Sasaki <junya.sasaki@tier4.jp>
+* feat: allow conditionally launch diffusion planner (`#1752 <https://github.com/autowarefoundation/autoware_launch/issues/1752>`_)
+  * feat: allow conditionally launch e2e/dp
+  * rule base default
+  * feat: adding dp rviz markers to other rviz configs
+  * feat: adding dp rviz markers
+  ---------
+* chore(multi_object_tracker): add associator_type parameter for all input channels (`#1819 <https://github.com/autowarefoundation/autoware_launch/issues/1819>`_)
+  feat(multi_object_tracker): add associator_type parameter for all input channels to enhance object tracking capabilities
+* feat(lidar_marker_localizer): extend lidar-marker localization to enhance flexibility and debugging capabilities (`#1695 <https://github.com/autowarefoundation/autoware_launch/issues/1695>`_)
+  * feat: update launch files for multi lidar marker localization
+  * chore: rename to match the LiDAR in sample data
+  * feat: add "lidar-marker" pose estimator to pose_estimator_airbiter
+  * refactor: use single lidar_marker_localizer config and launch
+  Collapse the top_left/top_right split into one lidar_marker_localizer
+  namespace, consolidate parameter files under
+  config/localization/lidar_marker_localizer/, and wire tier4 localization
+  launches to the unified argument paths.
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* fix(simulator launch): add missing paramaters related to TLR (`#1817 <https://github.com/autowarefoundation/autoware_launch/issues/1817>`_)
+  * fix(simulator launch): add missing paramaters related to TLR
+  * typo
+  * add default value
+  * typo
+  * cspelling fix
+  ---------
+* fix(traffic_light/classifier): rearrange parameter (`#1807 <https://github.com/autowarefoundation/autoware_launch/issues/1807>`_)
+  * fix(traffic_light/classifier): add new param
+  * style(pre-commit): autofix
+  * fix: missing branching
+  * typo fix
+  * fix: missing param
+  * style(pre-commit): autofix
+  * fix ml_param path
+  * spelling check fix
+  * typo: ped onnx
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* fix(autoware_bevfusion): add parameter (`#1811 <https://github.com/autowarefoundation/autoware_launch/issues/1811>`_)
+* feat(autoware_bevfusion): add image_backbone\_*_path in param file (`#1801 <https://github.com/autowarefoundation/autoware_launch/issues/1801>`_)
+* feat(pid_longitudinal_controller): parameterize ff_scale limits (`#1809 <https://github.com/autowarefoundation/autoware_launch/issues/1809>`_)
+  parameterize ff_scale limits
+* fix(tier4_perception_component): revert camera ids (`#1808 <https://github.com/autowarefoundation/autoware_launch/issues/1808>`_)
+  revert camera id
+* feat(ekf_localizer): add adjustable publishing ekf_localizaer diagnostics  (`#1743 <https://github.com/autowarefoundation/autoware_launch/issues/1743>`_)
+  * feat: add diagnostics_publish_frequency to ekf_localizer.param
+  * feat: require positive diag rate and publish only via updater
+  ---------
+* feat(tier4_simulator_component): add yolox remap file path parameter (`#1806 <https://github.com/autowarefoundation/autoware_launch/issues/1806>`_)
+  add yolox remap file path parameter
+* feat(mpc_lateral_controller): add new mpc param (`#1792 <https://github.com/autowarefoundation/autoware_launch/issues/1792>`_)
+  add parameter for max steering offset update threshold
+* feat(tier4_perception_launch): add remap file parameters (`#1803 <https://github.com/autowarefoundation/autoware_launch/issues/1803>`_)
+  * add remap files
+  * add remap file paramaters
+  * style(pre-commit): autofix
+  * add ignore semseg
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* refactor(multi_object_tracker): restructure parameter configuration for clarity and consistency (`#1802 <https://github.com/autowarefoundation/autoware_launch/issues/1802>`_)
+* refactor: replace ament_index_python with launch.substitutions (`#1762 <https://github.com/autowarefoundation/autoware_launch/issues/1762>`_)
+  * refactor: replace ament_index_python with launch.substitutions
+  * flatten nested pathjoinsubstitution
+  ---------
+* feat(planning_simulator.launch): add fault_injection args (`#1724 <https://github.com/autowarefoundation/autoware_launch/issues/1724>`_)
+  * feat: add fault_injection args
+  * chore: import tier4 launchers change from universe
+  ---------
+* feat(lane_change): recreate lane change path if deviation is high (`#1791 <https://github.com/autowarefoundation/autoware_launch/issues/1791>`_)
+  * feat(lane_change): recreate lane change path if deviation is high
+  * feat: use directly lateral thresholds instead of scaling them
+  * feat: enable path miss detection by default
+  ---------
+* feat(pointcloud_container): use agnocast_component_container_cie when use_agnocast=true (`#1793 <https://github.com/autowarefoundation/autoware_launch/issues/1793>`_)
+  * use agnocast_component_container_cie when use_agnocast=true
+  * use agnocast_env.launch.py
+  * style(pre-commit): autofix
+  * fix to use LaunchConfiguration
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* fix(static_obstacle_avoidance): add turn signal hold duration parameter for approval (`#1788 <https://github.com/autowarefoundation/autoware_launch/issues/1788>`_)
+* feat(autoware_launch, sendor_kit): remove glog component load (`#1778 <https://github.com/autowarefoundation/autoware_launch/issues/1778>`_)
+  * feat: remove glog component load
+  * fix: remove unnecessary import
+  ---------
+* chore(mpc_lat_ctrler): remove unused params (`#1790 <https://github.com/autowarefoundation/autoware_launch/issues/1790>`_)
+  fix(mpc_lat_ctrler): remove unused parameters
+* feat(autoware_path_optimizer): parameters for acados-based MPT (`#1716 <https://github.com/autowarefoundation/autoware_launch/issues/1716>`_)
+  * Added param for acados
+  * added param
+  * style(pre-commit): autofix
+  * parameter updates
+  * further refinements
+  * reverted transparency value
+  * removed binary
+  * fix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* fix(irregular_object_detection): update param (`#1783 <https://github.com/autowarefoundation/autoware_launch/issues/1783>`_)
+  * fix(irregular_object_detection): update param
+  * update param name
+  ---------
+* fix(crosswalk): skip stop decision when remaining crosswalk width beside ego footprint is below threshold (`#1786 <https://github.com/autowarefoundation/autoware_launch/issues/1786>`_)
+* fix(crosswalk): remove unused param (`#1785 <https://github.com/autowarefoundation/autoware_launch/issues/1785>`_)
+* feat(autoware_behavior_velocity_traffic_light_module): support arrow-aware passing judgment on yellow signal (`#1714 <https://github.com/autowarefoundation/autoware_launch/issues/1714>`_)
+  * feat: arrow yellow pass
+  * ref: change param name
+  ---------
+* fix(crosswalk): add missing param for experimental module (`#1782 <https://github.com/autowarefoundation/autoware_launch/issues/1782>`_)
+* fix(crosswalk): improve logic to detect stuck vehicle (`#1775 <https://github.com/autowarefoundation/autoware_launch/issues/1775>`_)
+* fix: pass correct occupancy grid map param path (`#1780 <https://github.com/autowarefoundation/autoware_launch/issues/1780>`_)
+* feat(trajectory_follower): update mpc param yaml and control launch (`#1750 <https://github.com/autowarefoundation/autoware_launch/issues/1750>`_)
+  * update mpc param yaml
+  * remove unused param
+  * update control launch files
+  * tune parameter. undo unnecessary changes
+  ---------
+* fix(roi_cluster_fusion): add param for size validation (`#1746 <https://github.com/autowarefoundation/autoware_launch/issues/1746>`_)
+* fix(radar): remove radar-only mode, replace radar object filter (`#1774 <https://github.com/autowarefoundation/autoware_launch/issues/1774>`_)
+  * refactor(object_recognition): remove deprecated velocity and range splitter parameters, introduce detected object sorter configuration
+  - Deleted unused parameter files for object velocity and range splitters.
+  - Added new parameter file for detected object sorter.
+  - Updated launch files to reference the new sorter instead of the removed splitters.
+  * refactor(object_recognition): remove radar options from launch files
+  - Deleted radar-related choices and parameters from perception and detection launch files.
+  - Updated tracking launch file to remove radar-specific configurations.
+  - Streamlined object recognition configuration by eliminating unused radar options.
+  * refactor(object_recognition): encapsulate launch file includes in groups
+  - Wrapped the includes for detected object sorter and lanelet filter in separate groups for better organization.
+  - Maintained existing functionality while improving the structure of the launch file.
+  * refactor(object_recognition): improve indentation for detected object sorter inclusion
+  - Adjusted the indentation of the detected object sorter include statement for better readability and consistency in the launch file.
+  - No changes to functionality were made, maintaining the existing configuration.
+  ---------
+* chore(CenterPoint): update score_thresholds in centerpoint (`#1753 <https://github.com/autowarefoundation/autoware_launch/issues/1753>`_)
+  Update score_thresholds in centerpoint
+  Co-authored-by: Taekjin LEE <technolojin@gmail.com>
+* feat(start_planner): default turn signal when starting from centerline (`#1770 <https://github.com/autowarefoundation/autoware_launch/issues/1770>`_)
+  * feat(start_planner): default turn signal when starting from centerline
+  * fix: direction
+  ---------
+* feat(static_obstacle_avoidance): add candidate path turn signal policy to parameters (`#1765 <https://github.com/autowarefoundation/autoware_launch/issues/1765>`_)
+* fix(autoware_system_monitor): add-threshold-parameters-for-mem_monitor (`#1766 <https://github.com/autowarefoundation/autoware_launch/issues/1766>`_)
+  * fix(autoware_system_monitor): add-threshold-parameters-for-mem_monitor
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* fix(start_planner): add minimum shift length threshold (`#1764 <https://github.com/autowarefoundation/autoware_launch/issues/1764>`_)
+  * fix(start_planner): add minimum shift length threshold
+  * docs: add parameter description
+  ---------
+* feat: turn on mesh visualization for object recognition (`#1768 <https://github.com/autowarefoundation/autoware_launch/issues/1768>`_)
+* feat(trajectory_follower_node): add timeout parameters for trajectory_follower_node (`#1763 <https://github.com/autowarefoundation/autoware_launch/issues/1763>`_)
+  fix(trajectory_follower_node): add timeout parameters for trajectory_follower_node.
+* feat(beahvior_path_planner): add timeout parameters for behavior_path_planner (`#1761 <https://github.com/autowarefoundation/autoware_launch/issues/1761>`_)
+  add timeout parameters for behavior_path_planner
+* feat(static_obstacle_avoidance): add policy for close vehicle avoidance behavior (`#1760 <https://github.com/autowarefoundation/autoware_launch/issues/1760>`_)
+* refactor(component_state_monitor): remove /initialpose3d topic_state_monitor (`#1756 <https://github.com/autowarefoundation/autoware_launch/issues/1756>`_)
+* Contributors: Arjun Jagdish Ram, Autumn60, Go Sakayori, Keisuke Shima, Koichi Imai, Kok Seang Tan, Masaki Baba, Masato Saeki, Mehmet Emin BAŞOĞLU, Mete Fatih Cırıt, Motz, Ryohsuke Mitsudome, Satoshi OTA, Taekjin LEE, Taeseung Sohn, Takayuki AKAMINE, Tetsuhiro Kawaguchi, Yukinari Hisaki, Yuxuan Liu, Zulfaqar Azmi, badai nguyen, github-actions, mkquda, toki-1441
+
 0.50.0 (2026-02-13)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

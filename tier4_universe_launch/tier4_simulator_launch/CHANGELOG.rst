@@ -2,6 +2,68 @@
 Changelog for package tier4_simulator_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.51.0 (2026-05-01)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(launch): default data_path to ~/autoware_data/ml_models (`#1835 <https://github.com/autowarefoundation/autoware_launch/issues/1835>`_)
+  feat(autoware_launch,tier4_perception_launch,tier4_simulator_launch,autoware_sample_designs): default data_path to ~/autoware_data/ml_models
+  Roll the `data_path` arg defaults from `$(env HOME)/autoware_data` to
+  `$(env HOME)/autoware_data/ml_models` to match the new
+  `~/autoware_data/{maps,ml_models,recordings,scenarios,...}` layout
+  defined in `autowarefoundation/autoware#7068 <https://github.com/autowarefoundation/autoware/issues/7068>`_.
+  Top-level launches and components:
+  - autoware_launch/launch/autoware.launch.xml
+  - autoware_launch/launch/e2e_simulator.launch.xml
+  - autoware_launch/launch/logging_simulator.launch.xml
+  - autoware_launch/launch/planning_simulator.launch.xml
+  - autoware_launch/launch/components/tier4_perception_component.launch.xml
+  - autoware_launch/launch/components/tier4_planning_component.launch.xml
+  - tier4_universe_launch/tier4_perception_launch/launch/perception.launch.xml
+  - tier4_universe_launch/tier4_perception_launch/launch/object_recognition/detection/detector/camera_bev_detector.launch.xml
+  - autoware_sample_designs/design/system/AutowareSample.system.yaml: also
+  migrate the `map_path` values for `Runtime` and `E2ESimulation` from
+  `$(env HOME)/autoware_map/<map>` to `$(env HOME)/autoware_data/maps[/demos]/<map>`.
+  Simulator chain (traffic-light models for planning_simulator):
+  - autoware_launch/launch/components/tier4_simulator_component.launch.xml: declare and pass `data_path`
+  - autoware_launch/launch/planning_simulator.launch.xml: forward `data_path` to the simulator component include
+  - tier4_universe_launch/tier4_simulator_launch/launch/simulator.launch.xml: declare a `data_path` arg and replace the nine hardcoded `$(env HOME)/autoware_data/{tensorrt_yolox,traffic_light_fine_detector,traffic_light_classifier}/...` strings with `$(var data_path)/<package>/...`, matching the perception convention.
+  Users on the legacy layout can pin the old root with
+  `data_path:=$HOME/autoware_data` (and override `map_path` to legacy
+  `$HOME/autoware_map/<map>` if needed).
+  Refs: https://github.com/autowarefoundation/autoware/issues/7068
+* fix(simulator launch): add missing paramaters related to TLR (`#1817 <https://github.com/autowarefoundation/autoware_launch/issues/1817>`_)
+  * fix(simulator launch): add missing paramaters related to TLR
+  * typo
+  * add default value
+  * typo
+  * cspelling fix
+  ---------
+* fix(`simulator.launch.xml`): bring `autoware_raw_vehicle_cmd_converter` launch from `autoware_universe` (`#1804 <https://github.com/autowarefoundation/autoware_launch/issues/1804>`_)
+  * fix(`simulator.launch.xml`): bring `autoware_raw_vehicle_cmd_converter` launch from `autoware_universe`
+  * Corresponding fix for the following PR (`simple_planning_simulator`)
+  * https://github.com/autowarefoundation/autoware_universe/pull/12384
+  * bug(`raw_vehicle_cmd_converter`): fix to launch only when `ACTUATION_CMD` models
+  * Original implementation of `autoware_simple_planning_simulator` intends to launch
+  the `autoware_raw_vehicle_cmd_converter` only when `ACTUATION_CMD` models
+  * See this PR's files changed:
+  * https://github.com/autowarefoundation/autoware_universe/pull/12384
+  * bug: fix to launch `raw_vehicle_cmd_converter` only when `vehicle_model_type` is `ACTUATION_CMD`
+  * Previous way is unnecessarily complicated
+  * bug(`simulator.launch.xml`): fix to match `ACTUATION_CMD` prefix for converter
+  * bug: fix a wrong file path, following a commit below:
+  * https://github.com/autowarefoundation/autoware_universe/pull/12384/commits/92e4c885f22e67c28f8c761178e06fa5c80fa4d0
+  * fix: to follow the commit on `autoware_universe` side below
+  * https://github.com/autowarefoundation/autoware_universe/pull/12384/commits/17555b4dd91b46a755ff4d34f7b2dd9b958bfea8
+  * cosmetic(`simulator.launch.xml`): add a comment for readability
+  ---------
+* feat(tier4_simulator_component): add yolox remap file path parameter (`#1806 <https://github.com/autowarefoundation/autoware_launch/issues/1806>`_)
+  add yolox remap file path parameter
+* feat(planning_simulator.launch): add fault_injection args (`#1724 <https://github.com/autowarefoundation/autoware_launch/issues/1724>`_)
+  * feat: add fault_injection args
+  * chore: import tier4 launchers change from universe
+  ---------
+* Contributors: Junya Sasaki, Keisuke Shima, Masaki Baba, Mete Fatih Cırıt, badai nguyen, github-actions
+
 0.50.0 (2026-02-13)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

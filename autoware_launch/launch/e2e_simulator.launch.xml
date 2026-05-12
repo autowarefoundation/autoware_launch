@@ -40,7 +40,7 @@
   <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/$(var rviz_config_name)" description="rviz config path"/>
   <group scoped="false" if="$(eval '\'$(var simulator_type)\' == \'carla\'')">
-    <include file="$(find-pkg-share autoware_carla_interface)/autoware_carla_interface.launch.xml"/>
+    <include file="$(find-pkg-share autoware_carla_interface)/launch/autoware_carla_interface.launch.xml"/>
   </group>
 
   <group scoped="false">

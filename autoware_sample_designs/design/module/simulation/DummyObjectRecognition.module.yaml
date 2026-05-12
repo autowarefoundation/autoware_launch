@@ -5,8 +5,8 @@ name: DummyObjectRecognition.module
 instances:
   - name: object_recognition_detection
     entity: DummyPerceptionPublisher.node
-  - name: object_recognition/tracking
-    entity: ObjectTrackingSingleChannel.module
+  - name: object_recognition/tracking/multi_object_tracker
+    entity: MultiObjectTracker.node
   - name: object_recognition/prediction
     entity: ObjectPredictionMapBased.module
 
@@ -26,10 +26,10 @@ connections:
 
   # tracking
   - - object_recognition_detection.publisher.detected_objects
-    - object_recognition/tracking.subscriber.detected_objects
+    - object_recognition/tracking/multi_object_tracker.subscriber.detection01/objects
 
   # prediction
-  - - object_recognition/tracking.publisher.objects
+  - - object_recognition/tracking/multi_object_tracker.publisher.objects
     - object_recognition/prediction.subscriber.tracked_objects
   - - subscriber.vector_map
     - object_recognition/prediction.subscriber.vector_map

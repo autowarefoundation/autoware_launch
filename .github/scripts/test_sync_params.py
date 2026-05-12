@@ -161,15 +161,13 @@ perception: []
                 extract_override_values(path)
 
     def test_override_reapplication_tracker_max_dt(self) -> None:
-        source_yaml = _parse_yaml(
-            """
+        source_yaml = _parse_yaml("""
 /**:
   ros__parameters:
     tracker_state_parameter:
       max_dt: 1.0
       decay_rate: 0.1
-"""
-        )
+""")
         variant_text = """
 /**:
   ros__parameters:
@@ -199,14 +197,12 @@ perception: []
         )
 
     def test_fail_fast_when_override_path_removed_in_source(self) -> None:
-        source_yaml = _parse_yaml(
-            """
+        source_yaml = _parse_yaml("""
 /**:
   ros__parameters:
     tracker_state_parameter:
       decay_rate: 0.1
-"""
-        )
+""")
         variant_text = """
 /**:
   ros__parameters:
@@ -224,15 +220,13 @@ perception: []
 
     def test_stale_override_is_identified_separately_from_active(self) -> None:
         """Overrides whose paths were removed from upstream can be separated from active ones."""
-        source_yaml = _parse_yaml(
-            """
+        source_yaml = _parse_yaml("""
 /**:
   ros__parameters:
     tracker_state_parameter:
       decay_rate: 0.1
       still_present: 5.0
-"""
-        )
+""")
         variant_text = """
 /**:
   ros__parameters:
@@ -636,15 +630,13 @@ perception: []
         is also patched correctly.  Overrides are applied in descending line order so
         mutations never shift the indices of pending overrides.
         """
-        source_text = dedent(
-            """\
+        source_text = dedent("""\
             /**:
               ros__parameters:
                 scale: 1.0
                 items:
                   - alpha
-            """
-        )
+            """)
 
         patched = apply_overrides_to_source_text(
             source_text,
@@ -728,25 +720,21 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
         source_dir.mkdir()
 
         # Source no longer has 'removed_field'; only 'kept_field' remains.
-        source_text = dedent(
-            """\
+        source_text = dedent("""\
             /**:
               ros__parameters:
                 kept_field: 1.0
-            """
-        )
+            """)
         source_file = source_dir / "params.yaml"
         source_file.write_text(source_text, encoding="utf-8")
 
         # Variant still has 'removed_field' with an override marker.
-        variant_text = dedent(
-            """\
+        variant_text = dedent("""\
             /**:
               ros__parameters:
                 removed_field: 99.0 # {OVERRIDE}
                 kept_field: 2.0     # {OVERRIDE}
-            """
-        )
+            """)
         variant_rel = "config/params.yaml"
         variant_abs = workspace_root / variant_rel
         variant_abs.parent.mkdir(parents=True, exist_ok=True)
@@ -817,22 +805,18 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
             source_dir = Path(tmpdir) / "source_repo"
             source_dir.mkdir()
 
-            source_text = dedent(
-                """\
+            source_text = dedent("""\
                 foo: 40 # updated
                 bar: fuga
                 qux: piyo # added
-                """
-            )
+                """)
             (source_dir / "params.yaml").write_text(source_text, encoding="utf-8")
 
-            variant_text = dedent(
-                """\
+            variant_text = dedent("""\
                 foo: 42
                 bar: hogehoge # {OVERRIDE}
                 baz: 2 # {OVERRIDE}
-                """
-            )
+                """)
             variant_rel = "config/params.yaml"
             variant_abs = workspace_root / variant_rel
             variant_abs.parent.mkdir(parents=True, exist_ok=True)

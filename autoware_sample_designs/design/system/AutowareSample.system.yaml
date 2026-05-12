@@ -73,24 +73,8 @@ components:
     compute_unit: main_ecu
 
   # PERCEPTION
-  - name: centerpoint
-    entity: LidarCenterpoint.module
-    path: /perception/object_recognition/detection/centerpoint
-    compute_unit: main_ecu
-    parameter_set: sample_system_perception.parameter_set
-  - name: obstacle_segmentation
-    entity: ObstacleSegmentation.module
-    path: /perception/obstacle_segmentation
-    compute_unit: main_ecu
-    parameter_set: sample_system_perception.parameter_set
-  - name: object_recognition
-    entity: ObjectRecognition.module
-    path: /perception/object_recognition
-    compute_unit: main_ecu
-    parameter_set: sample_system_perception.parameter_set
-  - name: occupancy_grid_map
-    entity: OccupancyGridMapPointcloudBased.module
-    path: /perception/occupancy_grid_map
+  - name: perception
+    entity: Perception.module
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
 
@@ -109,14 +93,31 @@ components:
 
 node_groups:
   - name: pointcloud_container
-    type: ros2_component_container_mt
+    type: ros2_component_container_mt_ipc
     nodes:
-      - /sensing/lidar/*
-      - /perception/obstacle_segmentation/crop_box_filter
+      - /sensing/lidar/concatenate_and_time_sync
+      - /perception/obstacle_segmentation/*
       - /perception/object_recognition/detection/pointcloud_map_filter/voxel_grid_downsample_filter
-      - /perception/object_recognition/detection/pointcloud_map_filter/voxel_based_compare_map_filter
+      - /perception/object_recognition/detection/clustering/euclidean_cluster
       - /perception/occupancy_grid_map/occupancy_grid_map_node
-      - /perception/traffic_light_recognition/camera1/occlusion_predictor
+  - name: lidar_top_container
+    type: ros2_component_container_mt_ipc
+    nodes:
+      - /sensing/lidar/top/*
+  - name: lidar_left_container
+    type: ros2_component_container_ipc
+    nodes:
+      - /sensing/lidar/left/*
+  - name: lidar_right_container
+    type: ros2_component_container_ipc
+    nodes:
+      - /sensing/lidar/right/*
+  - name: traffic_light_node_container
+    type: ros2_component_container_mt_ipc
+    nodes:
+      - /perception/traffic_light_recognition/camera1/detection
+      - /perception/traffic_light_recognition/camera1/classifier_pedestrian
+      - /perception/traffic_light_recognition/camera1/classifier_car
 
 connections:
   - - localization.publisher.kinematic_state
@@ -130,31 +131,15 @@ connections:
     - adapi.subscriber.localization/kinematic_state
 
   - - sensing.publisher.lidar/concatenated/pointcloud
-    - obstacle_segmentation.subscriber.concatenated_pointcloud
-
-  - - sensing.publisher.lidar/concatenated/pointcloud
-    - centerpoint.subscriber.pointcloud
-  - - object_recognition.publisher.map_filtered_obstacle_pointcloud
-    - centerpoint.subscriber.obstacle_pointcloud
-
-  - - obstacle_segmentation.publisher.pointcloud
-    - object_recognition.subscriber.obstacle_pointcloud
-
-  - - centerpoint.publisher.detected_objects
-    - object_recognition.subscriber.lidar_ml_objects
+    - perception.subscriber.concatenated_pointcloud
   - - map.publisher.vector_map
-    - object_recognition.subscriber.vector_map
+    - perception.subscriber.vector_map
   - - map.publisher.pointcloud_map
-    - object_recognition.subscriber.pointcloud_map
+    - perception.subscriber.pointcloud_map
   - - map.server.get_differential_pointcloud_map
-    - object_recognition.client.service_pointcloud_map_diff
+    - perception.client.service_pointcloud_map_diff
   - - localization.publisher.kinematic_state
-    - object_recognition.subscriber.kinematic_state
-
-  - - sensing.publisher.lidar/concatenated/pointcloud
-    - occupancy_grid_map.subscriber.raw_pointcloud
-  - - obstacle_segmentation.publisher.pointcloud
-    - occupancy_grid_map.subscriber.obstacle_pointcloud
+    - perception.subscriber.kinematic_state
 
   - - map.publisher.vector_map
     - localization.subscriber.lanelet_map
@@ -171,14 +156,19 @@ connections:
   - - adapi.publisher.localization/initialization_state
     - localization.subscriber.initialization_state
 
-  - - occupancy_grid_map.publisher.map
+  - - planning.publisher.mission_planning/route
+    - perception.subscriber.route
+
+  - - perception.publisher.occupancy_grid_map/map
     - planning.subscriber.occupancy_grid_map
   - - map.publisher.vector_map
     - planning.subscriber.lanelet_map
-  - - object_recognition.publisher.objects
+  - - perception.publisher.object_recognition/objects
     - planning.subscriber.objects
-  - - obstacle_segmentation.publisher.pointcloud
+  - - perception.publisher.obstacle_segmentation/pointcloud
     - planning.subscriber.obstacle_pointcloud
+  - - perception.publisher.traffic_light_recognition/traffic_signals
+    - planning.subscriber.traffic_signals
 
   - - planning.publisher.^
     - control.subscriber.^
@@ -186,9 +176,9 @@ connections:
     - control.subscriber.kinematics
   - - localization.publisher.acceleration
     - control.subscriber.acceleration
-  - - object_recognition.publisher.objects
+  - - perception.publisher.object_recognition/objects
     - control.subscriber.objects
-  - - obstacle_segmentation.publisher.pointcloud
+  - - perception.publisher.obstacle_segmentation/pointcloud
     - control.subscriber.obstacle_pointcloud
   - - sensing.publisher.imu/imu_data
     - control.subscriber.imu
@@ -234,11 +224,6 @@ E2ESimulation:
         entity: SampleSensorKitAWSIM.module
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
-      - name: traffic_light_recognition
-        entity: TrafficLightRecognition.module
-        path: /perception/traffic_light_recognition
-        compute_unit: main_ecu
-        parameter_set: sample_system_perception.parameter_set
     connections:
       # SENSING
       - - AWSIM_out.publisher.sensing/lidar/top/pointcloud_raw_ex
@@ -249,17 +234,9 @@ E2ESimulation:
         - sensing.subscriber.velocity_status
       # Traffic light
       - - AWSIM_out.publisher.sensing/camera/traffic_light/image_raw
-        - traffic_light_recognition.subscriber.camera1/image
+        - perception.subscriber.traffic_camera/image
       - - AWSIM_out.publisher.sensing/camera/traffic_light/camera_info
-        - traffic_light_recognition.subscriber.camera1/camera_info
-      - - AWSIM_out.publisher.sensing/lidar/top/pointcloud_raw_ex
-        - traffic_light_recognition.subscriber.pointcloud
-      - - map.publisher.vector_map
-        - traffic_light_recognition.subscriber.vector_map
-      - - planning.publisher.mission_planning/route
-        - traffic_light_recognition.subscriber.route
-      - - traffic_light_recognition.publisher.traffic_signals
-        - planning.subscriber.traffic_signals
+        - perception.subscriber.traffic_camera/camera_info
       # localization
       - - AWSIM_out.publisher.sensing/gnss/pose_with_covariance
         - localization.subscriber.gnss_pose_with_covariance
@@ -285,9 +262,7 @@ PlanningSimulation:
   remove:
     components:
       - name: sensing
-      - name: centerpoint
-      - name: obstacle_segmentation
-      - name: object_recognition
+      - name: perception
       - name: localization
     node_groups:
       - name: pointcloud_container
