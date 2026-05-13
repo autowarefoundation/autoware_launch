@@ -71,9 +71,6 @@ parameters:
         value: false
       - name: processing_time_threshold_sec
         value: 0.01
-  - node: /perception/object_recognition/detection/clustering/shape_estimation
-    param_files: []
-    param_values: []
   - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/roi_cluster_fusion
     param_files: []
     param_values:
@@ -88,17 +85,11 @@ parameters:
   - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/low_intensity_cluster_filter
     param_files: []
     param_values: []
-  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/shape_estimation
-    param_files: []
-    param_values: []
-  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/detected_object_feature_remover
+  - node: /perception/object_recognition/detection/clustering/detected_object_feature_remover
     param_files: []
     param_values:
       - name: run_convex_hull_conversion
         value: true
-  - node: /perception/object_recognition/detection/detection_by_tracker
-    param_files: []
-    param_values: []
   - node: /perception/object_recognition/detection/roi_detected_object_fusion
     param_files: []
     param_values:
@@ -113,8 +104,6 @@ parameters:
         value: lidar_centerpoint
       - name: input/detection03/channel
         value: lidar_clustering
-      - name: input/detection05/channel
-        value: detection_by_tracker
       - name: publish_merged_objects
         value: false
       - name: enable_delay_compensation
