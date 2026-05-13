@@ -87,6 +87,27 @@
       </group>
     </group>
 
+    <!-- trajectory selector -->
+    <group>
+      <push-ros-namespace namespace="trajectory_selector"/>
+      <include file="$(find-pkg-share autoware_trajectory_concatenator)/launch/trajectory_concatenator.launch.xml">
+        <arg name="trajectory_concatenator_param_path" value="$(var trajectory_concatenator_param_path)"/>
+        <arg name="concatenator_input_trajectories" value="/planning/generator/candidate_trajectories"/>
+        <arg name="concatenator_output_trajectories" value="/planning/trajectory_selector/concatenated/candidate_trajectories"/>
+      </include>
+
+      <include file="$(find-pkg-share autoware_trajectory_validator)/launch/trajectory_validator.launch.xml">
+        <arg name="trajectory_validator_param_path" value="$(var trajectory_validator_param_path)"/>
+        <arg name="input_trajectories" value="/planning/trajectory_selector/concatenated/candidate_trajectories"/>
+        <arg name="output_trajectories" value="/planning/trajectory_selector/validator/candidate_trajectories"/>
+        <arg name="input_vector_map" value="/map/vector_map"/>
+        <arg name="input_odometry" value="/localization/kinematic_state"/>
+        <arg name="input_objects" value="/perception/object_recognition/objects"/>
+        <arg name="input_acceleration" value="/localization/acceleration"/>
+        <arg name="input_traffic_signals" value="/perception/traffic_light_recognition/traffic_signals"/>
+      </include>
+    </group>
+
     <!-- hazard lights selector -->
     <group>
       <include file="$(find-pkg-share autoware_hazard_lights_selector)/launch/hazard_lights_selector.launch.xml"/>
