@@ -63,7 +63,6 @@
 
   <arg name="output/ml_detector/objects"/>
   <arg name="output/rule_detector/objects"/>
-  <arg name="output/clustering/cluster_objects"/>
 
   <arg name="camera_2d_detector/model_path"/>
   <arg name="camera_2d_detector/label_path"/>
@@ -81,18 +80,14 @@
   <let name="euclidean_cluster/input/pointcloud" value="$(var segmentation_based_filtered/output/pointcloud)" if="$(var use_image_segmentation_based_filter)"/>
   <let name="euclidean_cluster/input/pointcloud" value="$(var input/pointcloud_map/pointcloud)" unless="$(var use_image_segmentation_based_filter)"/>
   <let name="euclidean_cluster/output/clusters" value="$(var ns)/clustering/clusters"/>
-  <let name="shape_estimation1/input/clusters" value="$(var euclidean_cluster/output/clusters)"/>
-  <let name="shape_estimation1/output/objects" value="$(var output/clustering/cluster_objects)"/>
 
   <let name="roi_cluster_fusion/input/clusters" value="$(var euclidean_cluster/output/clusters)"/>
   <let name="roi_cluster_fusion/output/clusters" value="$(var ns)/clustering/camera_lidar_fusion/clusters"/>
   <let name="low_intensity_cluster_filter/input/clusters" value="$(var roi_cluster_fusion/output/clusters)"/>
   <let name="low_intensity_cluster_filter/output/clusters" value="$(var ns)/clustering/camera_lidar_fusion/filtered/clusters"/>
 
-  <let name="shape_estimation2/input/clusters" value="$(var roi_cluster_fusion/output/clusters)" unless="$(var use_low_intensity_cluster_filter)"/>
-  <let name="shape_estimation2/input/clusters" value="$(var low_intensity_cluster_filter/output/clusters)" if="$(var use_low_intensity_cluster_filter)"/>
-  <let name="shape_estimation2/output/objects" value="$(var ns)/clustering/camera_lidar_fusion/objects_with_feature"/>
-  <let name="detected_object_feature_remover/input/objects_with_feature" value="$(var shape_estimation2/output/objects)"/>
+  <let name="detected_object_feature_remover/input/objects_with_feature" value="$(var roi_cluster_fusion/output/clusters)" unless="$(var use_low_intensity_cluster_filter)"/>
+  <let name="detected_object_feature_remover/input/objects_with_feature" value="$(var low_intensity_cluster_filter/output/clusters)" if="$(var use_low_intensity_cluster_filter)"/>
   <let name="detected_object_feature_remover/output/objects" value="$(var output/rule_detector/objects)"/>
 
   <arg name="enable_2d_detection" default="false" description="true: when 2d detection yolox model run the same machine, false: when it run in separate machine"/>
@@ -186,14 +181,6 @@
       </include>
     </group>
 
-    <!-- shape_estimation 1 -->
-    <group>
-      <include file="$(find-pkg-share autoware_shape_estimation)/launch/shape_estimation.launch.xml">
-        <arg name="input/objects" value="$(var shape_estimation1/input/clusters)"/>
-        <arg name="output/objects" value="$(var shape_estimation1/output/objects)"/>
-      </include>
-    </group>
-
     <group>
       <push-ros-namespace namespace="camera_lidar_fusion"/>
       <!-- Fusion camera-lidar to classify -->
@@ -244,17 +231,12 @@
         </include>
       </group>
 
-      <group>
-        <include file="$(find-pkg-share autoware_shape_estimation)/launch/shape_estimation.launch.xml">
-          <arg name="input/objects" value="$(var shape_estimation2/input/clusters)"/>
-          <arg name="output/objects" value="$(var shape_estimation2/output/objects)"/>
-        </include>
-      </group>
       <!-- convert DynamicObjectsWithFeatureArray to DynamicObjects -->
       <group>
         <include file="$(find-pkg-share autoware_detected_object_feature_remover)/launch/detected_object_feature_remover.launch.xml">
           <arg name="input" value="$(var detected_object_feature_remover/input/objects_with_feature)"/>
           <arg name="output" value="$(var detected_object_feature_remover/output/objects)"/>
+          <arg name="run_convex_hull_conversion" value="true"/>
         </include>
       </group>
     </group>
