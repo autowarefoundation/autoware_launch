@@ -63,12 +63,10 @@ Panels:
     Path: package://multi_data_monitor_config/data/debug_config.yaml
   - Class: rviz_plugin::LoggingLevelConfigureRvizPlugin
     Name: LoggingLevelConfigureRvizPlugin
-  - Class: rviz_plugins::RTCManagerPanel
-    Name: RTCManagerPanel
   - Class: rviz_plugins::VelocitySteeringFactorsPanel
     Name: VelocitySteeringFactorsPanel
-  - Class: rviz_plugins/AutowareScreenCapturePanel
-    Name: AutowareScreenCapturePanel
+  - Class: rviz_plugins/ControlModeDisplay
+    Name: ControlModeDisplay
 Visualization Manager:
   Class: ""
   Displays:
@@ -351,7 +349,7 @@ Visualization Manager:
           Color: 255; 255; 255
           Color Transformer: FlatColor
           Decay Time: 0
-          Enabled: true
+          Enabled: false
           Invert Rainbow: false
           Max Color: 255; 255; 255
           Max Intensity: 237
@@ -833,7 +831,7 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
-          Enabled: true
+          Enabled: false
           Name: Segmentation
         - Class: rviz_common/Group
           Displays:
@@ -960,6 +958,7 @@ Visualization Manager:
                     Color: 119; 11; 32
                   Name: PredictedObjects
                   Namespaces: {}
+                  Object Fill Type: Fill
                   PEDESTRIAN:
                     Alpha: 0.999
                     Color: 255; 192; 203
@@ -1106,6 +1105,18 @@ Visualization Manager:
                 History Policy: Keep Last
                 Reliability Policy: Reliable
                 Value: /planning/mission_planning/route_marker
+              Value: true
+            - Class: rviz_default_plugins/MarkerArray
+              Enabled: false
+              Name: ModifierObstacleStopMarker
+              Namespaces:
+                {}
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/trajectory_generator/neural_network_based_planner/trajectory_modifier/obstacle_stop/debug/marker
               Value: true
             - Alpha: 0.999
               Axes Length: 1
@@ -2232,6 +2243,64 @@ Visualization Manager:
           Displays:
             - Class: rviz_default_plugins/MarkerArray
               Enabled: true
+              Name: DiffusionPlannerRouteMarker
+              Namespaces:
+                {}
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/debug/route_marker
+              Value: true
+            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+              Enabled: true
+              Name: PlanningFactor(DiffusionPlanner)
+              Namespaces:
+                {}
+              Show Safety Factors: false
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/planning_factors/diffusion_planner
+              Value: true
+              show_safety_factors: false
+            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+              Enabled: true
+              Name: PlanningFactor(ModifierObstacleStop)
+              Namespaces:
+                {}
+              Show Safety Factors: true
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/planning_factors/modifier_obstacle_stop
+              Value: true
+              show_safety_factors: true
+            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+              Enabled: true
+              Name: PlanningFactor(CollisionCheckFilter)
+              Namespaces:
+                {}
+              Show Safety Factors: true
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/planning_factors/trajectory_validator
+              Value: true
+              show_safety_factors: true
+          Enabled: true
+          Name: NeuralNetworkBasedPlanner
+        - Class: rviz_common/Group
+          Displays:
+            - Class: rviz_default_plugins/MarkerArray
+              Enabled: true
               Name: PlanningErrorMarker
               Namespaces: {}
               Topic:
@@ -2561,6 +2630,14 @@ Visualization Manager:
                     GoalPose: true
                     MissionDetailsDisplay: true
                     RouteArea: true
+                    Value: true
+                  NeuralNetworkBasedPlanner:
+                    DiffusionPlannerRouteMarker: true
+                    ModifierObstacleStopMarker: true
+                    PlanningFactor(Adapter): true
+                    PlanningFactor(ModifierObstacleStop): true
+                    PlanningFactor(NeuralNetworkPlanner): true
+                    PredictedObjects: true
                     Value: true
                   ScenarioPlanning:
                     LaneDriving:
@@ -4254,6 +4331,60 @@ Visualization Manager:
           Name: Vehicle
       Enabled: true
       Name: Debug
+    - Class: autoware_string_stamped_rviz_plugin/StringStampedOverlayDisplay
+      Enabled: true
+      Font Size: 15
+      Left: 1024
+      Max Letter Num: 100
+      Name: TrajectoryValidatorProcessingTimeReport
+      Text Color: 25; 255; 240
+      Time To Erase Last Diag: 2
+      Time To Keep Last Diag: 1
+      Top: 128
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /planning/trajectory_selector/trajectory_validator_node/debug/processing_time_text
+      Value: true
+      Value height offset: 0
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: TrajectoryValidatorFilteringMarkers
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /planning/trajectory_selector/trajectory_validator_node/debug/markers
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: TrajectoryValidator(CollisionCheckFilter)
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /planning/trajectory_selector/trajectory_validator_node/debug/collision_check_filter
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: TrajectoryValidator(UncrossableBoundaryDepartureFilter)
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /planning/trajectory_selector/trajectory_validator_node/debug/uncrossable_boundary_departure_filter
+      Value: true
     - Class: rviz_default_plugins/Image
       Enabled: true
       Max Value: 1
@@ -4357,15 +4488,15 @@ Visualization Manager:
 Window Geometry:
   AutowareDateTimePanel:
     collapsed: false
-  AutowareScreenCapturePanel:
-    collapsed: false
   AutowareStatePanel:
+    collapsed: true
+  ControlModeDisplay:
     collapsed: false
   Displays:
-    collapsed: false
+    collapsed: true
   Height: 1376
   Hide Left Dock: false
-  Hide Right Dock: false
+  Hide Right Dock: true
   Image:
     collapsed: false
   LoggingLevelConfigureRvizPlugin:
@@ -4374,17 +4505,17 @@ Window Geometry:
     collapsed: false
   PointcloudOnCamera:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000001ee00000502fc020000000ffb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005d00fffffffb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000c00430061006d0065007200610100000682000000eb0000000000000000fb0000002c0049006e0069007400690061006c0050006f007300650042007500740074006f006e00500061006e0065006c000000068f000000de0000000000000000fb0000002c0049006e0069007400690061006c0050006f007300650042007500740074006f006e00500061006e0065006c000000068f000000de0000000000000000fb0000002a004100750074006f0077006100720065004400610074006500540069006d006500500061006e0065006c010000003f000000680000004400fffffffb000000240050006f0069006e00740063006c006f00750064004f006e00430061006d006500720061000000003d000000940000002900fffffffb00000020004d0075006c007400690044006100740061004d006f006e00690074006f0072000000003d000005060000006f00fffffffb0000003e004c006f006700670069006e0067004c006500760065006c0043006f006e006600690067007500720065005200760069007a0050006c007500670069006e000000003d000003830000006f00fffffffb00000034004100750074006f007700610072006500530063007200650065006e004300610070007400750072006500500061006e0065006c01000000ad0000007e0000006600fffffffb0000001e005200540043004d0061006e006100670065007200500061006e0065006c0100000131000004100000013700ffffff000000010000020800000502fc0200000008fb00000030005200650063006f0067006e006900740069006f006e0052006500730075006c0074004f006e0049006d006100670065000000003d000001200000002900fffffffb0000000a0049006d006100670065010000003f0000018c0000002900fffffffb0000000a0049006d006100670065010000003d0000019b0000000000000000fb00000024004100750074006f00770061007200650053007400610074006500500061006e0065006c01000001d1000001640000006f00fffffffc0000033b00000206000000eb0100001efa000000000100000002fb000000100044006900730070006c0061007900730100000000ffffffff0000015b00fffffffb0000000a0056006900650077007301000007c1000001f90000010000fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007300000004a2000000a10000005d00fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000e7a0000005afc0100000001fb0000000a00560069006500770073030000004e00000080000002e1000001970000000300000e7a0000005afc0100000002fb0000000800540069006d0065010000000000000e7a0000000000000000fb0000000800540069006d00650100000000000004500000000000000000000005b80000050200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
-  RTCManagerPanel:
-    collapsed: false
+  QMainWindow State: 000000ff00000000fd0000000400000000000001ee000004fdfc0200000012fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005500fffffffb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000c00430061006d0065007200610100000682000000eb0000000000000000fb0000002c0049006e0069007400690061006c0050006f007300650042007500740074006f006e00500061006e0065006c000000068f000000de0000000000000000fb0000002c0049006e0069007400690061006c0050006f007300650042007500740074006f006e00500061006e0065006c000000068f000000de0000000000000000fb0000002a004100750074006f0077006100720065004400610074006500540069006d006500500061006e0065006c0100000042000000490000004900fffffffb000000240050006f0069006e00740063006c006f00750064004f006e00430061006d006500720061000000003d000000940000003100fffffffb00000020004d0075006c007400690044006100740061004d006f006e00690074006f0072000000003d000005060000007900fffffffb0000003e004c006f006700670069006e0067004c006500760065006c0043006f006e006600690067007500720065005200760069007a0050006c007500670069006e000000003d000003830000006700fffffffb00000034004100750074006f007700610072006500530063007200650065006e004300610070007400750072006500500061006e0065006c01000000ad0000007e0000000000000000fb0000001e005200540043004d0061006e006100670065007200500061006e0065006c0100000131000004100000000000000000fb0000003800560065006c006f0063006900740079005300740065006500720069006e00670046006100630074006f0072007300500061006e0065006c010000009a000002880000016d00fffffffb0000000a0049006d0061006700650100000331000001a90000003100fffffffb000000240043006f006e00740072006f006c004d006f006400650044006900730070006c0061007901000004e9000000560000005600ffffff0000000100000208000004fdfc0200000007fb00000030005200650063006f0067006e006900740069006f006e0052006500730075006c0074004f006e0049006d006100670065000000003d000001200000003100fffffffb0000000a0049006d006100670065010000003d0000019b0000000000000000fb00000024004100750074006f00770061007200650053007400610074006500500061006e0065006c0000000042000002d80000006700fffffffc00000329000002160000000000fffffffaffffffff0100000002fb000000100044006900730070006c0061007900730000000000ffffffff0000015600fffffffb0000000a0056006900650077007300000007c1000001f90000019b00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007300000004a2000000a10000005500fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000e7a0000005afc0100000001fb0000000a00560069006500770073030000004e00000080000002e1000001970000000300000e7a0000005afc0100000002fb0000000800540069006d0065010000000000000e7a0000000000000000fb0000000800540069006d00650100000000000004500000000000000000000007bd000004fd00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   RecognitionResultOnImage:
     collapsed: false
   Selection:
     collapsed: false
   Tool Properties:
     collapsed: false
-  Views:
+  VelocitySteeringFactorsPanel:
     collapsed: false
+  Views:
+    collapsed: true
   Width: 2490
   X: 70
   Y: 27

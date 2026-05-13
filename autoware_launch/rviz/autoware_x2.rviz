@@ -1038,7 +1038,7 @@ Visualization Manager:
                   Display Yaw Covariance: false
                   Display Yaw Rate: false
                   Display Yaw Rate Covariance: false
-                  Enabled: true
+                  Enabled: false
                   Line Width: 0.10000000149011612
                   MOTORCYCLE:
                     Alpha: 0.9990000128746033
@@ -2852,6 +2852,150 @@ Visualization Manager:
               Value: true
           Enabled: true
           Name: ScenarioPlanning
+        - Class: rviz_common/Group
+          Displays:
+            - Class: rviz_default_plugins/MarkerArray
+              Enabled: true
+              Name: DiffusionPlannerRouteMarker
+              Namespaces:
+                {}
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/debug/route_marker
+              Value: true
+            - Class: rviz_default_plugins/MarkerArray
+              Enabled: true
+              Name: DiffusionPlannerRoadBoarderMarker
+              Namespaces:
+                {}
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/debug/linestring_marker
+              Value: true
+            - Class: rviz_default_plugins/MarkerArray
+              Enabled: false
+              Name: ModifierObstacleStopMarker
+              Namespaces:
+                {}
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/trajectory_generator/neural_network_based_planner/trajectory_modifier/obstacle_stop/debug/marker
+              Value: true
+            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+              Enabled: true
+              Name: PlanningFactor(NeuralNetworkPlanner)
+              Namespaces:
+                {}
+              Show Safety Factors: false
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/planning_factors/neural_network_planner
+              Value: true
+              show_safety_factors: false
+            - BUS:
+                Alpha: 0.9990000128746033
+                Color: 30; 144; 255
+              CAR:
+                Alpha: 0.9990000128746033
+                Color: 30; 144; 255
+              CYCLIST:
+                Alpha: 0.9990000128746033
+                Color: 119; 11; 32
+              Class: autoware_perception_rviz_plugin/PredictedObjects
+              Confidence Interval: 95%
+              Display Acceleration: false
+              Display Existence Probability: false
+              Display Label: false
+              Display Pose Covariance: false
+              Display Predicted Path Confidence: false
+              Display Predicted Paths: true
+              Display Twist: false
+              Display Twist Covariance: false
+              Display UUID: false
+              Display Velocity: false
+              Display Yaw Covariance: false
+              Display Yaw Rate: false
+              Display Yaw Rate Covariance: false
+              Enabled: true
+              Line Width: 0.10000000149011612
+              MOTORCYCLE:
+                Alpha: 0.9990000128746033
+                Color: 119; 11; 32
+              Name: PredictedObjects
+              Namespaces:
+                acceleration: true
+                label: true
+                path: true
+                path confidence: true
+                position covariance: true
+                shape: true
+                twist: true
+                uuid: true
+                velocity: true
+              Object Fill Type: Fill
+              PEDESTRIAN:
+                Alpha: 0.9990000128746033
+                Color: 255; 192; 203
+              Polygon Type: 3d
+              TRAILER:
+                Alpha: 0.9990000128746033
+                Color: 30; 144; 255
+              TRUCK:
+                Alpha: 0.9990000128746033
+                Color: 30; 144; 255
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Best Effort
+                Value: /planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/output/predicted_objects
+              UNKNOWN:
+                Alpha: 0.9990000128746033
+                Color: 255; 255; 255
+              Value: true
+              Visualization Type: Normal
+            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+              Enabled: true
+              Name: PlanningFactor(ModifierObstacleStop)
+              Namespaces:
+                {}
+              Show Safety Factors: true
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/planning_factors/modifier_obstacle_stop
+              Value: true
+              show_safety_factors: true
+            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+              Enabled: true
+              Name: PlanningFactor(CollisionCheckFilter)
+              Namespaces:
+                {}
+              Show Safety Factors: true
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/planning_factors/trajectory_validator
+              Value: true
+              show_safety_factors: true
+          Enabled: true
+          Name: NeuralNetworkBasedPlanner
         - Class: rviz_common/Group
           Displays:
             - Class: rviz_default_plugins/MarkerArray
@@ -4964,6 +5108,48 @@ Visualization Manager:
           Name: Vehicle
       Enabled: false
       Name: Debug
+    - Class: autoware_string_stamped_rviz_plugin/StringStampedOverlayDisplay
+      Enabled: true
+      Font Size: 15
+      Left: 1024
+      Max Letter Num: 100
+      Name: TrajectoryValidatorProcessingTimeReport
+      Text Color: 25; 255; 240
+      Time To Erase Last Diag: 2
+      Time To Keep Last Diag: 1
+      Top: 128
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /planning/trajectory_selector/trajectory_validator_node/debug/processing_time_text
+      Value: true
+      Value height offset: 0
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: TrajectoryValidatorFilteringMarkers
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /planning/trajectory_selector/trajectory_validator_node/debug/markers
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: TrajectoryValidator(CollisionCheckFilter)
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /planning/trajectory_selector/trajectory_validator_node/debug/collision_check_filter
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 15; 20; 23
@@ -5002,6 +5188,18 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /rviz/routing/rough_goal
+    - Boost Property: 0.5
+      Class: tier4_camera_view_rviz_plugin/BirdEyeViewTool
+      Fallback ViewController: tier4_camera_view_rviz_plugin/BirdEyeView
+      Fly Mode: false
+      Left Hand Mode: false
+      Step Length: 0.10000000149011612
+    - Boost Property: 0.5
+      Class: tier4_camera_view_rviz_plugin/ThirdPersonViewTool
+      Fallback ViewController: tier4_camera_view_rviz_plugin/ThirdPersonView
+      Fly Mode: false
+      Left Hand Mode: false
+      Step Length: 0.10000000149011612
     - Acceleration: 0
       Class: rviz_plugins/PedestrianInitialPoseTool
       Interactive: false
