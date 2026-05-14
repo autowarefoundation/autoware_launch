@@ -28,20 +28,20 @@
   <!-- 0: ALL_POLYGON, 1: LABEL_DEPEND -->
   <arg name="euclidean_clustering/shape_policy" default="1" description="shape policy for euclidean clustering, options: 0 (ALL_POLYGON), 1 (LABEL_DEPEND)"/>
   <arg name="euclidean_clustering/param_path" default="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml" description="parameter file path for euclidean clustering"/>
-  <arg name="use_roi_detected_object_validator" default="false" description="if true, detected objects are validated by ROI and camera-lidar fusion results are filtered accordingly"/>
-  <arg name="use_semantic_segmentation_ptv3" default="true" description="use semantic segmentation ptv3 for ground segmentation"/>
+  <arg name="use_roi_detected_object_validator" default="true" description="if true, detected objects are validated by ROI and camera-lidar fusion results are filtered accordingly"/>
+  <arg name="use_semantic_segmentation_ptv3" default="false" description="use semantic segmentation ptv3 for ground segmentation"/>
   <arg name="use_empty_dynamic_object_publisher" default="false" description="if true, /perception/object_recognition/objects topic has an empty DynamicObjectArray"/>
   <arg name="use_traffic_light_recognition" default="true" description="use traffic light recognition module, if false, traffic light recognition module will not be launched"/>
 
   <arg name="use_low_height_cropbox" default="false" description="use low height crop filter in clustering"/>
   <arg name="use_vector_map" default="true" description="use vector map in prediction"/>
   <arg name="use_pointcloud_map" default="true" description="use pointcloud map in detection"/>
-  <arg name="use_irregular_object_detector" default="false" description="enable pipeline for small unknown object detection"/>
+  <arg name="use_irregular_object_detector" default="true" description="enable pipeline for small unknown object detection"/>
   <arg name="use_low_intensity_cluster_filter" default="true" description="launch low_intensity_cluster_filter in clustering"/>
   <arg name="use_image_segmentation_based_filter" default="false" description="launch image_segmentation_based_filter in clustering"/>
   <arg name="use_perception_online_evaluator" default="false" description="launch perception online evaluator"/>
   <arg name="use_perception_analytics_publisher" default="true" description="launch perception analytics publisher"/>
-  <arg name="use_detection_by_tracker" default="false" description="launch detection_by_tracker function"/>
+  <arg name="use_detection_by_tracker" default="true" description="launch detection_by_tracker function"/>
   <arg name="use_radar_tracking_fusion" default="true" description="if true, radar objects are merged in tracking module. Otherwise, radar objects are merged in detection module."/>
   <arg name="use_object_filter" default="true" description="launch object filter to filter-out detected object"/>
   <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
