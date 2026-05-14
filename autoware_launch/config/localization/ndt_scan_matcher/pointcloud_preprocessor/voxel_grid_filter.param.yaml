@@ -1,5 +1,12 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/cd35388b023e2dd16f049c6d1a4f18ab78c5bd45/sensing/autoware_pointcloud_preprocessor/config/voxel_grid_downsample_filter_node.param.yaml
+
 /**:
   ros__parameters:
-    voxel_size_x: 3.0
-    voxel_size_y: 3.0
-    voxel_size_z: 3.0
+    voxel_size_x: 3.0 # {OVERRIDE}
+    voxel_size_y: 3.0 # {OVERRIDE}
+    voxel_size_z: 3.0 # {OVERRIDE}

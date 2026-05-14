@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/507e3f4852f0c606aafdec05c9d9a11fff1593c3/localization/autoware_landmark_based_localizer/autoware_ar_tag_based_localizer/config/ar_tag_based_localizer.param.yaml
+
 /**:
   ros__parameters:
     # marker_size

@@ -1,12 +1,17 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/1e08e0a159dd73673e5e06185bd9bb0c2090f6f9/sensing/autoware_pointcloud_preprocessor/config/crop_box_filter_node.param.yaml
+
 /**:
   ros__parameters:
-    input_frame: "base_link"
-    output_frame: "base_link"
-    min_x: -60.0
-    max_x: 60.0
-    min_y: -60.0
-    max_y: 60.0
-    min_z: -30.0
-    max_z: 50.0
-    negative: False
+    min_x: -60.0 # {OVERRIDE}
+    min_y: -60.0 # {OVERRIDE}
+    min_z: -30.0 # {OVERRIDE}
+    max_x: 60.0 # {OVERRIDE}
+    max_y: 60.0 # {OVERRIDE}
+    max_z: 50.0 # {OVERRIDE}
+    negative: false
     processing_time_threshold_sec: 0.01

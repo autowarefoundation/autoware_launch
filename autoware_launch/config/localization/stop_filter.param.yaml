@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_core/blob/0de9080a21bd7f136fe98701fb29882a6f18c526/localization/autoware_stop_filter/config/stop_filter.param.yaml
+
 /**:
   ros__parameters:
     vx_threshold: 0.1  # [m/s]
