@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/1be9bb3bd92e38ffb1b9690952ab68400d50c051/control/autoware_collision_detector/config/collision_detector.param.yaml
+
 /**:
   ros__parameters:
     use_pointcloud: false # use pointcloud as obstacle check

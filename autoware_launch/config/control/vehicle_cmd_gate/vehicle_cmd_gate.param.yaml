@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/26e3c8e411fd439965a957fb19cdf083b8b24828/control/autoware_vehicle_cmd_gate/config/vehicle_cmd_gate.param.yaml
+
 /**:
   ros__parameters:
     update_rate: 10.0

@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/23f4c8646764969eecdd1694bca9bed3b0ec9e08/control/autoware_obstacle_collision_checker/config/obstacle_collision_checker.param.yaml
+
 /**:
   ros__parameters:
     # Node
