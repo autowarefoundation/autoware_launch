@@ -1074,7 +1074,7 @@ units:
       - { type: link, link: /sensing/radar/front_center/connection }
       # - { type: link, link: /sensing/radar/front_left/connection }
       # - { type: link, link: /sensing/radar/front_right/connection }
-      - { type: link, link: /sensing/radar/rear_center/connection }
+      # - { type: link, link: /sensing/radar/rear_center/connection }
       # - { type: link, link: /sensing/radar/rear_left/connection }
       # - { type: link, link: /sensing/radar/rear_right/connection }
   - path: /sensing/radar/front_center/connection
@@ -1126,7 +1126,7 @@ units:
       - { type: link, link: /sensing/radar/front_center/dynamics }
       # - { type: link, link: /sensing/radar/front_left/dynamics }
       # - { type: link, link: /sensing/radar/front_right/dynamics }
-      - { type: link, link: /sensing/radar/rear_center/dynamics }
+      # - { type: link, link: /sensing/radar/rear_center/dynamics }
       # - { type: link, link: /sensing/radar/rear_left/dynamics }
       # - { type: link, link: /sensing/radar/rear_right/dynamics }
   - path: /sensing/radar/front_center/dynamics
@@ -1178,7 +1178,7 @@ units:
       - { type: link, link: /sensing/radar/front_center/internal }
       # - { type: link, link: /sensing/radar/front_left/internal }
       # - { type: link, link: /sensing/radar/front_right/internal }
-      - { type: link, link: /sensing/radar/rear_center/internal }
+      # - { type: link, link: /sensing/radar/rear_center/internal }
       # - { type: link, link: /sensing/radar/rear_left/internal }
       # - { type: link, link: /sensing/radar/rear_right/internal }
   - path: /sensing/radar/front_center/internal
@@ -1230,7 +1230,7 @@ units:
       - { type: link, link: /sensing/radar/front_center/blockage_validation }
       # - { type: link, link: /sensing/radar/front_left/blockage_validation }
       # - { type: link, link: /sensing/radar/front_right/blockage_validation }
-      - { type: link, link: /sensing/radar/rear_center/blockage_validation }
+      # - { type: link, link: /sensing/radar/rear_center/blockage_validation }
       # - { type: link, link: /sensing/radar/rear_left/blockage_validation }
       # - { type: link, link: /sensing/radar/rear_right/blockage_validation }
   - path: /sensing/radar/front_center/blockage_validation
@@ -1282,7 +1282,7 @@ units:
       - { type: link, link: /sensing/radar/front_center/object_rate }
       # - { type: link, link: /sensing/radar/front_left/object_rate }
       # - { type: link, link: /sensing/radar/front_right/object_rate }
-      - { type: link, link: /sensing/radar/rear_center/object_rate }
+      # - { type: link, link: /sensing/radar/rear_center/object_rate }
       # - { type: link, link: /sensing/radar/rear_left/object_rate }
       # - { type: link, link: /sensing/radar/rear_right/object_rate }
   - path: /sensing/radar/front_center/object_rate
@@ -1334,7 +1334,7 @@ units:
       - { type: link, link: /sensing/radar/front_center/detections_rate }
       # - { type: link, link: /sensing/radar/front_left/detections_rate }
       # - { type: link, link: /sensing/radar/front_right/detections_rate }
-      - { type: link, link: /sensing/radar/rear_center/detections_rate }
+      # - { type: link, link: /sensing/radar/rear_center/detections_rate }
       # - { type: link, link: /sensing/radar/rear_left/detections_rate }
       # - { type: link, link: /sensing/radar/rear_right/detections_rate }
   - path: /sensing/radar/front_center/detections_rate

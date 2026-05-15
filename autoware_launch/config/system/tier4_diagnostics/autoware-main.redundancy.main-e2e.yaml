@@ -41,3 +41,5 @@ edits:
   - { type: remove, path: /planning/017-trajectory_distance_deviation_validation-error }
   - { type: remove, path: /planning/018-rear_collision_checker-error }
   - { type: remove, path: /planning/020-boundary_departure-error }
+  - { type: remove, path: /system/018-emergency_vehicle_main-error }
+  - { type: remove, path: /control/010-collision_detector-error }

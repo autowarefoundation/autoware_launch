@@ -39,6 +39,18 @@
     if="$(eval &quot;'$(var is_redundant)' == 'true' and '$(var planning_setting)'=='rule_based'&quot;)"
   />
 
+  <!-- component_state_monitor topics path selection -->
+  <let
+    name="component_state_monitor_topic_path"
+    value="$(find-pkg-share autoware_launch)/config/system/component_state_monitor/e2e_topics.yaml"
+    if="$(eval &quot;'$(var planning_setting)'=='diffusion_planner'&quot;)"
+  />
+  <let
+    name="component_state_monitor_topic_path"
+    value="$(find-pkg-share autoware_launch)/config/system/component_state_monitor/topics.yaml"
+    if="$(eval &quot;'$(var planning_setting)'=='rule_based'&quot;)"
+  />
+
   <let name="dummy_diag_publisher_param_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/dummy_diag_publisher.redundancy.main.param.yaml" if="$(var is_redundant)"/>
   <let name="dummy_diag_publisher_param_path" value="$(find-pkg-share autoware_launch)/config/system/tier4_diagnostics/dummy_diag_publisher.param.yaml" unless="$(var is_redundant)"/>
 
@@ -82,7 +94,7 @@
     <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
     <arg name="sensor_model" value="$(var sensor_model)"/>
 
-    <arg name="component_state_monitor_topic_path" value="$(find-pkg-share autoware_launch)/config/system/component_state_monitor/topics.yaml"/>
+    <arg name="component_state_monitor_topic_path" value="$(var component_state_monitor_topic_path)"/>
     <arg name="duplicated_node_checker_param_path" value="$(find-pkg-share autoware_launch)/config/system/duplicated_node_checker/duplicated_node_checker.param.yaml"/>
     <arg name="processing_time_checker_param_path" value="$(find-pkg-share autoware_launch)/config/system/processing_time_checker/processing_time_checker.param.yaml"/>
     <arg name="pipeline_latency_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/system/pipeline_latency_monitor/pipeline_latency_monitor.param.yaml"/>

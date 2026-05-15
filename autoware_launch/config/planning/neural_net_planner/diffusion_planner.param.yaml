@@ -6,17 +6,17 @@
     planning_frequency_hz: 10.0
     ignore_neighbors: false
     ignore_unknown_neighbors: true
-    traffic_light_group_msg_timeout_seconds: 0.2
+    traffic_light_group_msg_timeout_seconds: 0.3  # 0.3 = 0.15 (basic pipeline latency) + 0.1 (maximum delay due to 10Hz timer callback in diffusion planner) + 0.05 (safety margin)
     batch_size: 1
     temperature: [0.0]
     velocity_smoothing_window: 8
     stopping_threshold: 0.3
-    turn_indicator_keep_offset: -1.5
+    turn_indicator_keep_offset: -1.25
     turn_indicator_hold_duration: 1.0
     shift_x: false
     delay_step: 0
     line_string_max_step_m: 5.0
-    use_time_interpolation: false
+    use_time_interpolation: true
     planning_factor:
       enable_stop: true
       enable_slowdown: false
