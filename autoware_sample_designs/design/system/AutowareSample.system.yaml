@@ -206,17 +206,15 @@ connections:
   - - perception.publisher.occupancy_grid_map/map
     - planning.subscriber.occupancy_grid_map
   - - map.publisher.vector_map
-    - planning.subscriber.lanelet_map
-  - - perception.publisher.object_recognition/objects
     - planning.subscriber.vector_map
   - - localization.publisher.kinematic_state
     - planning.subscriber.odometry
   - - localization.publisher.acceleration
     - planning.subscriber.acceleration
-  - - object_recognition.publisher.objects
+  - - perception.publisher.object_recognition/objects
     - planning.subscriber.objects
   - - perception.publisher.obstacle_segmentation/pointcloud
-    - planning.subscriber.obstacle_pointcloud
+    - planning.subscriber.pointcloud
   - - perception.publisher.traffic_light_recognition/traffic_signals
     - planning.subscriber.traffic_signals
   - - system.publisher.operation_mode/state
@@ -243,7 +241,7 @@ connections:
   - - perception.publisher.object_recognition/objects
     - control.subscriber.objects
   - - perception.publisher.obstacle_segmentation/pointcloud
-    - control.subscriber.obstacle_pointcloud
+    - control.subscriber.pointcloud
   - - sensing.publisher.imu/imu_data
     - control.subscriber.imu
 
