@@ -46,8 +46,10 @@ parameters:
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/behavior_velocity_planner.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/behavior_velocity_planner_common.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/crosswalk.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/walkway.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/traffic_light.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/intersection.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/roundabout.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/blind_spot.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/detection_area.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/no_stopping_area.param.yaml
@@ -67,11 +69,16 @@ parameters:
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/velocity_smoother.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/Analytical.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/motion_velocity_planner.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_slow_down.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_cruise.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/dynamic_obstacle_stop.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/out_of_lane.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_velocity_limiter.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/run_out.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/boundary_departure_prevention.param.yaml
+      - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/road_user_stop.param.yaml
   - node: /planning/scenario_planning/external_velocity_limit_selector
     param_files:
       - param_path: $(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml
