@@ -247,6 +247,8 @@ connections:
 
   - - system.publisher.fail_safe/mrm_state
     - adapi.subscriber.system/fail_safe/mrm_state
+  - - system.publisher.fail_safe/mrm_state
+    - control.subscriber.mrm_state
 
   - - planning.server.clear_route
     - adapi.client.routing/clear_route
