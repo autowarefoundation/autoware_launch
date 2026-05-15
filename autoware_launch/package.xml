@@ -29,6 +29,7 @@
   <exec_depend>autoware_ekf_localizer_auto_activator</exec_depend>
   <exec_depend>autoware_global_parameter_loader</exec_depend>
   <exec_depend>autoware_hazard_lights_selector</exec_depend>
+  <exec_depend>autoware_minimum_rule_based_planner</exec_depend>
   <exec_depend>autoware_operation_mode_service_caller</exec_depend>
   <exec_depend>autoware_operation_mode_service_divider</exec_depend>
   <exec_depend>autoware_planning_evaluator</exec_depend>
