@@ -620,6 +620,60 @@ perception: []
         )
         self.assertEqual(source_line.index("#"), patched_line.index("#"))
 
+    def test_list_override_comments_do_not_accumulate_across_sync_runs(self) -> None:
+        """List overrides must not carry ruamel comment metadata into dumped values.
+
+        This regression covers a real map-sync case where repeated runs appended
+        another "# Path ..." fragment on each execution.
+        """
+        source_text = dedent(
+            """\
+            /**:
+              ros__parameters:
+                pcd_paths_or_directory: [$(var pcd_paths_or_directory)] # Path to the pointcloud map file or directory
+            """
+        )
+        variant_text = dedent(
+            """\
+            /**:
+              ros__parameters:
+                pcd_paths_or_directory: [$(var pointcloud_map_path)] # {OVERRIDE} Path to the pointcloud map file or directory
+            """
+        )
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            variant_path = Path(tmpdir) / "variant.yaml"
+            variant_path.write_text(variant_text, encoding="utf-8")
+
+            overrides, override_comments = extract_override_values(variant_path)
+            override_comment_columns = parse_override_comment_columns_from_variant_text(
+                variant_text
+            )
+
+            once = apply_overrides_to_source_text(source_text, overrides)
+            once = ensure_override_markers_in_text(
+                once, override_comments, override_comment_columns
+            )
+            line_once = next(line for line in once.splitlines() if "pcd_paths_or_directory" in line)
+
+            # Simulate another sync run by extracting from the regenerated variant.
+            variant_path.write_text(once, encoding="utf-8")
+            overrides2, override_comments2 = extract_override_values(variant_path)
+            cols2 = parse_override_comment_columns_from_variant_text(once)
+            twice = apply_overrides_to_source_text(source_text, overrides2)
+            twice = ensure_override_markers_in_text(twice, override_comments2, cols2)
+            line_twice = next(
+                line for line in twice.splitlines() if "pcd_paths_or_directory" in line
+            )
+
+            expected = (
+                "pcd_paths_or_directory: [$(var pointcloud_map_path)] # {OVERRIDE} "
+                "Path to the pointcloud map file or directory"
+            )
+            self.assertIn(expected, line_once)
+            self.assertIn(expected, line_twice)
+            self.assertEqual(line_once, line_twice)
+
     def test_multiple_overrides_applied_correctly_when_earlier_override_changes_line_count(
         self,
     ) -> None:
