@@ -8,6 +8,9 @@ on:
     - cron: 0 6 * * * # daily 6 AM UTC
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
