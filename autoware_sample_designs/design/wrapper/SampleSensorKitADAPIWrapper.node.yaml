@@ -53,44 +53,48 @@ subscribers:
 
 publishers:
   # Localization outputs
-  - name: localization/initialization_state
+  - name: api/localization/initialization_state
     message_type: autoware_adapi_v1_msgs/msg/LocalizationInitializationState
-  - name: vehicle/kinematics
+  - name: api/vehicle/kinematics
     message_type: autoware_adapi_v1_msgs/msg/VehicleKinematics
 
   # Planning outputs
-  - name: routing/state
+  - name: api/routing/state
     message_type: autoware_adapi_v1_msgs/msg/RouteState
 
   # Control outputs
-  - name: operation_mode/state
+  - name: api/operation_mode/state
     message_type: autoware_adapi_v1_msgs/msg/OperationModeState
-  - name: vehicle/status/steering_status
+  - name: api/vehicle/status/steering_status
     message_type: autoware_adapi_v1_msgs/msg/SteeringFactorArray
-  - name: vehicle/status/velocity_status
+  - name: api/vehicle/status/velocity_status
     message_type: autoware_adapi_v1_msgs/msg/VelocityFactorArray
 
   # Vehicle outputs
-  - name: vehicle/status/gear_status
+  - name: api/vehicle/status/gear_status
     message_type: autoware_adapi_v1_msgs/msg/Gear
-  - name: vehicle/status/turn_indicators_status
+  - name: api/vehicle/status/turn_indicators_status
     message_type: autoware_adapi_v1_msgs/msg/TurnIndicators
-  - name: vehicle/status/hazard_lights_status
+  - name: api/vehicle/status/hazard_lights_status
     message_type: autoware_adapi_v1_msgs/msg/HazardLights
 
   # Perception outputs
-  - name: perception/objects
+  - name: api/perception/objects
     message_type: autoware_adapi_v1_msgs/msg/Objects
 
   # System outputs
-  - name: fail_safe/status
+  - name: api/fail_safe/status
     message_type: autoware_adapi_v1_msgs/msg/FailSafeStatus
   - name: autoware/state
     message_type: autoware_system_msgs/msg/AutowareState
-  - name: system/heartbeat
+  - name: api/system/heartbeat
     message_type: autoware_adapi_v1_msgs/msg/Heartbeat
-  - name: vehicle/metrics
+  - name: api/vehicle/metrics
     message_type: autoware_adapi_v1_msgs/msg/VehicleMetrics
+
+clients:
+  - name: routing/clear_route
+    message_type: autoware_planning_msgs/srv/ClearRoute
 
 # parameters
 param_files: []
