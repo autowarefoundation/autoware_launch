@@ -11,6 +11,8 @@ instances:
     entity: CropBoxFilter.node
   - name: distortion_corrector_node
     entity: DistortionCorrector.node
+  - name: ring_outlier_filter
+    entity: RingOutlierFilter.node
 
 subscribers:
   - name: twist
@@ -30,4 +32,6 @@ connections:
   - - subscriber.imu
     - distortion_corrector_node.subscriber.imu
   - - distortion_corrector_node.publisher.pointcloud
+    - ring_outlier_filter.subscriber.input
+  - - ring_outlier_filter.publisher.output
     - publisher.pointcloud

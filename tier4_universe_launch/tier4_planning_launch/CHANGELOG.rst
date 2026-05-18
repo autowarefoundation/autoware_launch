@@ -2,6 +2,44 @@
 Changelog for package tier4_planning_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.51.0 (2026-05-01)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(planning): wire data_path through to diffusion_planner (`#1834 <https://github.com/autowarefoundation/autoware_launch/issues/1834>`_)
+  feat(autoware_launch,tier4_planning_launch): wire data_path through planning to diffusion_planner
+  Propagate the `data_path` arg from `autoware.launch.xml` through the
+  planning chain so the integrated diffusion_planner picks up the root
+  artifacts directory the same way perception does.
+  Chain wired:
+  autoware.launch.xml
+  -> tier4_planning_component.launch.xml
+  -> tier4_planning_launch/launch/planning.launch.xml
+  -> tier4_planning_launch/learning_based_planning/diffusion_planner.launch.xml
+  -> autoware_diffusion_planner/launch/diffusion_planner.launch.xml
+  Replaces the hardcoded `$(env HOME)/autoware_data/diffusion_planner/v4.0/...`
+  literals in `autoware_launch/config/planning/neural_net_planner/diffusion_planner.param.yaml`
+  with `$(var data_path)/diffusion_planner/v4.0/...`, matching the
+  perception convention (literal package subdir under `data_path`).
+  After this commit, flipping `data_path` in `autoware.launch.xml` (or
+  overriding it on the command line) controls the diffusion_planner
+  artifact root end-to-end without further edits to the parallel YAML.
+  Refs: https://github.com/autowarefoundation/autoware/issues/7068
+  Refs: https://github.com/autowarefoundation/autoware_universe/pull/12521
+* feat: allow conditionally launch diffusion planner (`#1752 <https://github.com/autowarefoundation/autoware_launch/issues/1752>`_)
+  * feat: allow conditionally launch e2e/dp
+  * rule base default
+  * feat: adding dp rviz markers to other rviz configs
+  * feat: adding dp rviz markers
+  ---------
+* feat(tier4_planning_launch): apply CIE via inline ENABLE_AGNOCAST switching (`#1795 <https://github.com/autowarefoundation/autoware_launch/issues/1795>`_)
+  Switch component containers based on ENABLE_AGNOCAST environment variable
+  directly in each launch file, without using agnocast_env.launch.xml.
+  When ENABLE_AGNOCAST=0 (default), use the conventional rclcpp_components
+  containers; when =1, use agnocast_components/agnocast_component_container_cie.
+* feat(tier4_planning_launch): remove glog compoent (`#1777 <https://github.com/autowarefoundation/autoware_launch/issues/1777>`_)
+  feat: remove glog compoent
+* Contributors: Mete Fatih Cırıt, Tetsuhiro Kawaguchi, Yuxuan Liu, atsushi yano, github-actions
+
 0.50.0 (2026-02-13)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
