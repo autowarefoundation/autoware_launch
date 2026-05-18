@@ -14,6 +14,16 @@ subscribers:
   - name: diagnostics
     message_type: diagnostic_msgs/msg/DiagnosticArray
     global: /diagnostics
+  - name: control_cmd
+    message_type: autoware_control_msgs/msg/Control
+  - name: gear_cmd
+    message_type: autoware_vehicle_msgs/msg/GearCommand
+  - name: kinematic_state
+    message_type: nav_msgs/msg/Odometry
+  - name: control_mode
+    message_type: autoware_vehicle_msgs/msg/ControlModeReport
+  - name: api_operation_mode_state
+    message_type: autoware_adapi_v1_msgs/msg/OperationModeState
 
 publishers:
   - name: diagnostics_graph/struct
@@ -33,6 +43,14 @@ publishers:
     message_type: autoware_adapi_v1_msgs/msg/MrmState
   - name: emergency/hazard_status
     message_type: autoware_system_msgs/msg/HazardStatusStamped
+  - name: emergency/control_cmd
+    message_type: autoware_control_msgs/msg/Control
+  - name: emergency/gear_cmd
+    message_type: autoware_vehicle_msgs/msg/GearCommand
+  - name: emergency/turn_indicators_cmd
+    message_type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
+  - name: emergency/hazard_lights_cmd
+    message_type: autoware_vehicle_msgs/msg/HazardLightsCommand
 
 servers:
   - name: diagnostics_graph/reset
@@ -134,8 +152,12 @@ processes:
     outcomes:
       - to_output: diagnostics_graph/struct
       - to_output: diagnostics_graph/status
-      - to_output: system/command_mode/availability
-      - to_output: system/operation_mode/availability
-      - to_output: system/operation_mode/state
-      - to_output: system/fail_safe/mrm_state
-      - to_output: system/emergency/hazard_status
+      - to_output: command_mode/availability
+      - to_output: operation_mode/availability
+      - to_output: operation_mode/state
+      - to_output: fail_safe/mrm_state
+      - to_output: emergency/hazard_status
+      - to_output: emergency/control_cmd
+      - to_output: emergency/gear_cmd
+      - to_output: emergency/turn_indicators_cmd
+      - to_output: emergency/hazard_lights_cmd

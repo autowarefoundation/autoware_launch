@@ -71,14 +71,23 @@ subscribers:
   - name: local_turn_indicators_cmd
   - name: local_hazard_lights_cmd
   - name: local_heartbeat
+  - name: emergency_control_cmd
+  - name: emergency_turn_indicators_cmd
+  - name: emergency_hazard_lights_cmd
+  - name: emergency_gear_cmd
+  - name: gate_mode_cmd
+  - name: engage
 
 publishers:
-  - name: control_cmd
+  - name: command/control_cmd
+  - name: command/gear_cmd
+  - name: command/turn_indicators_cmd
+  - name: command/hazard_lights_cmd
+  - name: command/gate_mode
+  - name: command/vehicle_cmd_emergency
   - name: predicted_trajectory
-  - name: gear_cmd
-  - name: turn_indicators_cmd
-  - name: hazard_lights_cmd
-  - name: gate_mode
+  - name: engage
+  - name: external_emergency
   - name: is_autonomous_available
   - name: control_evaluation
 
@@ -128,12 +137,36 @@ connections:
     - vehicle_cmd_gate.subscriber.auto_hazard_lights_cmd
   - - external_cmd_converter.publisher.control_cmd
     - vehicle_cmd_gate.subscriber.external_control_cmd
+  - - external_cmd_selector.publisher.turn_indicators_cmd
+    - vehicle_cmd_gate.subscriber.external_turn_indicators_cmd
+  - - external_cmd_selector.publisher.hazard_lights_cmd
+    - vehicle_cmd_gate.subscriber.external_hazard_lights_cmd
+  - - external_cmd_selector.publisher.gear_cmd
+    - vehicle_cmd_gate.subscriber.external_gear_cmd
+  - - external_cmd_selector.publisher.heartbeat
+    - vehicle_cmd_gate.subscriber.external_emergency_stop_heartbeat
+  - - subscriber.steering_status
+    - vehicle_cmd_gate.subscriber.steering
+  - - subscriber.acceleration
+    - vehicle_cmd_gate.subscriber.acceleration
   - - subscriber.operation_mode_state
     - vehicle_cmd_gate.subscriber.operation_mode
   - - subscriber.mrm_state
     - vehicle_cmd_gate.subscriber.mrm_state
   - - subscriber.odometry
     - vehicle_cmd_gate.subscriber.kinematics
+  - - subscriber.emergency_control_cmd
+    - vehicle_cmd_gate.subscriber.emergency_control_cmd
+  - - subscriber.emergency_turn_indicators_cmd
+    - vehicle_cmd_gate.subscriber.emergency_turn_indicators_cmd
+  - - subscriber.emergency_hazard_lights_cmd
+    - vehicle_cmd_gate.subscriber.emergency_hazard_lights_cmd
+  - - subscriber.emergency_gear_cmd
+    - vehicle_cmd_gate.subscriber.emergency_gear_cmd
+  - - subscriber.gate_mode_cmd
+    - vehicle_cmd_gate.subscriber.gate_mode
+  - - subscriber.engage
+    - vehicle_cmd_gate.subscriber.engage
 
   # OperationModeTransitionManager
   - - subscriber.trajectory
@@ -142,6 +175,8 @@ connections:
     - operation_mode_transition_manager.subscriber.trajectory_follower_control_cmd
   - - vehicle_cmd_gate.publisher.control_cmd
     - operation_mode_transition_manager.subscriber.control_cmd
+  - - vehicle_cmd_gate.publisher.operation_mode
+    - operation_mode_transition_manager.subscriber.gate_operation_mode
   - - subscriber.odometry
     - operation_mode_transition_manager.subscriber.kinematics
 
@@ -236,17 +271,23 @@ connections:
 
   # Publishers
   - - vehicle_cmd_gate.publisher.control_cmd
-    - publisher.control_cmd
+    - publisher.command/control_cmd
+  - - vehicle_cmd_gate.publisher.gear_cmd
+    - publisher.command/gear_cmd
+  - - vehicle_cmd_gate.publisher.turn_indicators_cmd
+    - publisher.command/turn_indicators_cmd
+  - - vehicle_cmd_gate.publisher.hazard_lights_cmd
+    - publisher.command/hazard_lights_cmd
+  - - vehicle_cmd_gate.publisher.gate_mode
+    - publisher.command/gate_mode
+  - - vehicle_cmd_gate.publisher.vehicle_cmd_emergency
+    - publisher.command/vehicle_cmd_emergency
+  - - vehicle_cmd_gate.publisher.engage
+    - publisher.engage
+  - - vehicle_cmd_gate.publisher.external_emergency
+    - publisher.external_emergency
   - - trajectory_follower.publisher.predicted_trajectory
     - publisher.predicted_trajectory
-  - - vehicle_cmd_gate.publisher.gear_cmd
-    - publisher.gear_cmd
-  - - vehicle_cmd_gate.publisher.turn_indicators_cmd
-    - publisher.turn_indicators_cmd
-  - - vehicle_cmd_gate.publisher.hazard_lights_cmd
-    - publisher.hazard_lights_cmd
-  - - vehicle_cmd_gate.publisher.gate_mode
-    - publisher.gate_mode
   - - operation_mode_transition_manager.publisher.operation_mode
     - publisher.is_autonomous_available
   - - control_evaluator.publisher.metrics
