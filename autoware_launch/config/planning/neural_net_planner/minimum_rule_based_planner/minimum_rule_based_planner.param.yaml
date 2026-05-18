@@ -48,6 +48,8 @@
         object_types: ["car", "truck", "bus", "trailer", "motorcycle", "bicycle", "pedestrian", "unknown"] # object types to consider for obstacle stop
         max_velocity_th: 15.0     # maximum velocity threshold for target object [m/s]
         stopped_velocity_th: 0.25 # velocity threshold for target object to be considered as stopped [m/s]
+        max_lateral_velocity_th: 1.0 # [m/s] max lateral velocity (w.r.t ego traj) to consider for obstacle stop
+        safety_buffer: 0.0 # [m] safety buffer to expand object shape
 
       pointcloud:
         height_buffer: 0.5  # height buffer to add above ego height [m]
