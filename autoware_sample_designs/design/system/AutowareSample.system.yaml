@@ -382,6 +382,8 @@ PlanningSimulation:
         - planning.subscriber.pointcloud
       - - perception.publisher.obstacle_segmentation/pointcloud
         - control.subscriber.pointcloud
+      - - perception.publisher.occupancy_grid_map/map
+        - planning.subscriber.occupancy_grid_map
       - - map.publisher.vector_map
         - perception.subscriber.vector_map
       - - localization.publisher.localization/initialization_state
