@@ -27,6 +27,11 @@
     <param name="max_velocity" value="16.6"/>
   </node>
 
+  <!-- trajectory selector param paths -->
+  <arg name="trajectory_concatenator_param_path"/>
+  <arg name="trajectory_validator_param_path"/>
+  <arg name="trajectory_ranker_param_path"/>
+
   <group>
     <push-ros-namespace namespace="planning"/>
     <!-- mission planning module -->
@@ -69,7 +74,7 @@
           <include file="$(find-pkg-share autoware_trajectory_optimizer)/launch/trajectory_optimizer.launch.xml">
             <arg name="trajectory_optimizer_param_path" value="$(var trajectory_optimizer_param_path)"/>
             <arg name="input_trajectories" value="/planning/generator/diffusion_planner/modified_candidate_trajectories"/>
-            <arg name="output_traj" value="/planning/trajectory"/>
+            <arg name="output_traj" value="/planning/generator/trajectory_optimizer/debug/trajectory"/>
             <arg name="output_trajectories" value="/planning/generator/candidate_trajectories"/>
             <arg name="jerk_filtered_smoother_param_path" value="$(var jerk_filtered_smoother_param_path)"/>
             <arg name="velocity_smoother_param_path" value="$(var velocity_smoother_param_path)"/>
@@ -106,6 +111,16 @@
         <arg name="input_acceleration" value="/localization/acceleration"/>
         <arg name="input_traffic_signals" value="/perception/traffic_light_recognition/traffic_signals"/>
         <arg name="input_route" value="/planning/mission_planning/route"/>
+      </include>
+
+      <include file="$(find-pkg-share autoware_trajectory_ranker)/launch/simple_trajectory_ranker.launch.xml">
+        <arg name="trajectory_ranker_param_path" value="$(var trajectory_ranker_param_path)"/>
+        <arg name="input_trajectories" value="/planning/trajectory_selector/validator/candidate_trajectories"/>
+        <arg name="output_trajectories" value="/planning/trajectory_selector/ranker/scored_trajectories"/>
+      </include>
+      <include file="$(find-pkg-share autoware_trajectory_adapter)/launch/trajectory_adapter.launch.xml">
+        <arg name="input_trajectories" value="/planning/trajectory_selector/ranker/scored_trajectories"/>
+        <arg name="output_trajectory" value="/planning/trajectory"/>
       </include>
     </group>
 
