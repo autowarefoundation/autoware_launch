@@ -42,12 +42,23 @@ subscribers:
   - name: velocity_status
   - name: imu
   - name: operation_mode_state
+  - name: api_operation_mode_state
   - name: autoware_state
   - name: mrm_state
   - name: objects
   - name: pointcloud
-  - name: turn_indicators_cmd
+  - name: planning_turn_indicators_cmd
   - name: hazard_lights_cmd
+  - name: path_with_lane_id
+  - name: blind_spot
+  - name: crosswalk
+  - name: detection_area
+  - name: intersection
+  - name: no_stopping_area
+  - name: stop_line
+  - name: traffic_light
+  - name: virtual_traffic_light
+  - name: walkway
   - name: remote_pedals_cmd
   - name: remote_steering_cmd
   - name: remote_gear_cmd
@@ -63,16 +74,16 @@ subscribers:
 
 publishers:
   - name: control_cmd
+  - name: predicted_trajectory
   - name: gear_cmd
   - name: turn_indicators_cmd
   - name: hazard_lights_cmd
-  - name: control_mode
   - name: gate_mode
   - name: is_autonomous_available
-  - name: diagnostic
   - name: control_evaluation
 
 connections:
+  # TrajectoryFollower node
   - - subscriber.trajectory
     - trajectory_follower.subscriber.reference_trajectory
   - - subscriber.odometry
@@ -83,12 +94,16 @@ connections:
     - trajectory_follower.subscriber.current_accel
   - - subscriber.operation_mode_state
     - trajectory_follower.subscriber.current_operation_mode
+
+  # ShiftDecider
   - - trajectory_follower.publisher.control_cmd
-    - shift_decider.subscriber.control_cmd
+    - shift_decider.subscriber.trajectory_follower_control_cmd
   - - subscriber.gear_status
     - shift_decider.subscriber.current_gear
   - - subscriber.autoware_state
-    - shift_decider.subscriber.state
+    - shift_decider.subscriber.autoware/state
+
+  # ExternalCmdSelector
   - - subscriber.remote_pedals_cmd
     - external_cmd_selector.subscriber.remote_pedals_cmd
   - - subscriber.remote_gear_cmd
@@ -101,11 +116,13 @@ connections:
     - external_cmd_selector.subscriber.remote_hazard_lights_cmd
   - - subscriber.remote_heartbeat
     - external_cmd_selector.subscriber.remote_heartbeat
+
+  # VehicleCmdGate
   - - trajectory_follower.publisher.control_cmd
     - vehicle_cmd_gate.subscriber.auto_control_cmd
   - - shift_decider.publisher.gear_cmd
     - vehicle_cmd_gate.subscriber.auto_gear_cmd
-  - - subscriber.turn_indicators_cmd
+  - - subscriber.planning_turn_indicators_cmd
     - vehicle_cmd_gate.subscriber.auto_turn_indicators_cmd
   - - subscriber.hazard_lights_cmd
     - vehicle_cmd_gate.subscriber.auto_hazard_lights_cmd
@@ -117,6 +134,8 @@ connections:
     - vehicle_cmd_gate.subscriber.mrm_state
   - - subscriber.odometry
     - vehicle_cmd_gate.subscriber.kinematics
+
+  # OperationModeTransitionManager
   - - subscriber.trajectory
     - operation_mode_transition_manager.subscriber.trajectory
   - - trajectory_follower.publisher.control_cmd
@@ -124,15 +143,40 @@ connections:
   - - vehicle_cmd_gate.publisher.control_cmd
     - operation_mode_transition_manager.subscriber.control_cmd
   - - subscriber.odometry
+    - operation_mode_transition_manager.subscriber.kinematics
+
+  # LaneDepartureChecker
+  - - subscriber.odometry
     - lane_departure_checker.subscriber.odometry
   - - subscriber.vector_map
     - lane_departure_checker.subscriber.lanelet_map_bin
   - - subscriber.route
     - lane_departure_checker.subscriber.route
-  - - subscriber.route_state
-    - stop_mode_operator.subscriber.route_state
   - - subscriber.trajectory
     - lane_departure_checker.subscriber.reference_trajectory
+  - - trajectory_follower.publisher.predicted_trajectory
+    - lane_departure_checker.subscriber.predicted_trajectory
+  - - subscriber.api_operation_mode_state
+    - lane_departure_checker.subscriber.api_operation_mode_state
+
+  - - subscriber.route_state
+    - stop_mode_operator.subscriber.route_state
+
+  # ControlValidator
+  - - vehicle_cmd_gate.publisher.control_cmd
+    - control_validator.subscriber.control_cmd
+  - - subscriber.operation_mode_state
+    - control_validator.subscriber.operation_mode_state
+  - - subscriber.trajectory
+    - control_validator.subscriber.trajectory
+  - - trajectory_follower.publisher.predicted_trajectory
+    - control_validator.subscriber.predicted_trajectory
+  - - subscriber.odometry
+    - control_validator.subscriber.kinematics
+  - - subscriber.acceleration
+    - control_validator.subscriber.measured_acceleration
+
+  # AutonomousEmergencyBraking
   - - subscriber.pointcloud
     - autonomous_emergency_braking.subscriber.pointcloud
   - - subscriber.objects
@@ -141,8 +185,20 @@ connections:
     - autonomous_emergency_braking.subscriber.velocity
   - - subscriber.imu
     - autonomous_emergency_braking.subscriber.imu
+  - - subscriber.autoware_state
+    - autonomous_emergency_braking.subscriber.autoware/state
   - - trajectory_follower.publisher.predicted_trajectory
     - autonomous_emergency_braking.subscriber.predicted_trajectory
+
+  # CollisionDetector
+  - - subscriber.odometry
+    - collision_detector.subscriber.odometry
+  - - subscriber.pointcloud
+    - collision_detector.subscriber.pointcloud
+  - - subscriber.objects
+    - collision_detector.subscriber.objects
+
+  # ControlEvaluator
   - - subscriber.trajectory
     - control_evaluator.subscriber.trajectory
   - - subscriber.odometry
@@ -151,8 +207,38 @@ connections:
     - control_evaluator.subscriber.acceleration
   - - subscriber.steering_status
     - control_evaluator.subscriber.steering_status
+  - - subscriber.path_with_lane_id
+    - control_evaluator.subscriber.behavior_path
+  - - subscriber.vector_map
+    - control_evaluator.subscriber.vector_map
+  - - subscriber.route
+    - control_evaluator.subscriber.route
+  - - subscriber.objects
+    - control_evaluator.subscriber.objects
+  - - subscriber.blind_spot
+    - control_evaluator.subscriber.blind_spot
+  - - subscriber.crosswalk
+    - control_evaluator.subscriber.crosswalk
+  - - subscriber.detection_area
+    - control_evaluator.subscriber.detection_area
+  - - subscriber.intersection
+    - control_evaluator.subscriber.intersection
+  - - subscriber.no_stopping_area
+    - control_evaluator.subscriber.no_stopping_area
+  - - subscriber.stop_line
+    - control_evaluator.subscriber.stop_line
+  - - subscriber.traffic_light
+    - control_evaluator.subscriber.traffic_light
+  - - subscriber.virtual_traffic_light
+    - control_evaluator.subscriber.virtual_traffic_light
+  - - subscriber.walkway
+    - control_evaluator.subscriber.walkway
+
+  # Publishers
   - - vehicle_cmd_gate.publisher.control_cmd
     - publisher.control_cmd
+  - - trajectory_follower.publisher.predicted_trajectory
+    - publisher.predicted_trajectory
   - - vehicle_cmd_gate.publisher.gear_cmd
     - publisher.gear_cmd
   - - vehicle_cmd_gate.publisher.turn_indicators_cmd

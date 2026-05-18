@@ -19,19 +19,23 @@ instances:
 
 # interfaces
 subscribers:
-  - name: perception_objects
+  - name: objects
   - name: pointcloud
   - name: vector_map
   - name: route
   - name: odometry
   - name: acceleration
   - name: operation_mode_state
+  - name: api_operation_mode_state
   - name: occupancy_grid_map
   - name: costmap
   - name: traffic_signals
+  - name: control_cmd
+  - name: predicted_trajectory
 
 publishers:
   - name: trajectory
+  - name: path_with_lane_id
   - name: hazard_lights_cmd
   - name: turn_indicators_cmd
   - name: scenario
@@ -45,8 +49,8 @@ connections:
     - lane_driving.subscriber.route
   - - subscriber.vector_map
     - lane_driving.subscriber.vector_map
-  - - subscriber.perception_objects
-    - lane_driving.subscriber.perception
+  - - subscriber.objects
+    - lane_driving.subscriber.objects
   - - subscriber.occupancy_grid_map
     - lane_driving.subscriber.occupancy_grid_map
   - - subscriber.costmap
@@ -59,11 +63,19 @@ connections:
     - lane_driving.subscriber.accel
   - - subscriber.pointcloud
     - lane_driving.subscriber.no_ground_pointcloud
+  - - subscriber.operation_mode_state
+    - lane_driving.subscriber.operation_mode_state
+  - - subscriber.api_operation_mode_state
+    - lane_driving.subscriber.api_operation_mode_state
+  - - subscriber.control_cmd
+    - lane_driving.subscriber.control_cmd
+  - - subscriber.predicted_trajectory
+    - lane_driving.subscriber.predicted_trajectory
   - - scenario_selector.publisher.scenario
     - lane_driving.subscriber.scenario
   - - external_velocity_limit_selector.publisher.external_velocity_limit
     - lane_driving.subscriber.external_velocity_limit_mps
-  - - subscriber.perception_objects
+  - - subscriber.objects
     - parking.subscriber.objects
   - - subscriber.pointcloud
     - parking.subscriber.points_no_ground
@@ -101,6 +113,8 @@ connections:
     - hazard_lights_selector.subscriber.lane_driving_hazard_lights_cmd
   - - velocity_smoother.publisher.trajectory
     - publisher.trajectory
+  - - lane_driving.publisher.path_with_lane_id
+    - publisher.path_with_lane_id
   - - velocity_smoother.publisher.current_velocity_limit_mps
     - publisher.current_max_velocity
   - - scenario_selector.publisher.scenario
