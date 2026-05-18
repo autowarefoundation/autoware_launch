@@ -219,7 +219,7 @@ connections:
     - planning.subscriber.traffic_signals
   - - system.publisher.operation_mode/state
     - planning.subscriber.operation_mode_state
-  - - control.publisher.control_cmd
+  - - control.publisher.command/control_cmd
     - planning.subscriber.control_cmd
   - - control.publisher.predicted_trajectory
     - planning.subscriber.predicted_trajectory
@@ -260,6 +260,27 @@ connections:
     - adapi.subscriber.system/fail_safe/mrm_state
   - - system.publisher.fail_safe/mrm_state
     - control.subscriber.mrm_state
+
+  - - localization.publisher.kinematic_state
+    - system.subscriber.kinematic_state
+  - - control.publisher.command/control_cmd
+    - system.subscriber.control_cmd
+  - - control.publisher.command/gear_cmd
+    - system.subscriber.gear_cmd
+
+  - - system.publisher.emergency/control_cmd
+    - control.subscriber.emergency_control_cmd
+  - - system.publisher.emergency/turn_indicators_cmd
+    - control.subscriber.emergency_turn_indicators_cmd
+  - - system.publisher.emergency/hazard_lights_cmd
+    - control.subscriber.emergency_hazard_lights_cmd
+  - - system.publisher.emergency/gear_cmd
+    - control.subscriber.emergency_gear_cmd
+
+  # - - adapi.publisher.gate_mode_cmd
+  #   - control.subscriber.gate_mode_cmd
+  # - - adapi.publisher.engage
+  #   - control.subscriber.engage
 
   - - planning.server.clear_route
     - adapi.client.routing/clear_route
@@ -321,13 +342,13 @@ E2ESimulation:
       # control
       - - AWSIM_out.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
-      - - control.publisher.control_cmd
+      - - control.publisher.command/control_cmd
         - AWSIM_in.subscriber.control/command/control_cmd
-      - - control.publisher.gear_cmd
+      - - control.publisher.command/gear_cmd
         - AWSIM_in.subscriber.control/command/gear_cmd
-      - - control.publisher.hazard_lights_cmd
+      - - control.publisher.command/hazard_lights_cmd
         - AWSIM_in.subscriber.control/command/hazard_lights_cmd
-      - - control.publisher.turn_indicators_cmd
+      - - control.publisher.command/turn_indicators_cmd
         - AWSIM_in.subscriber.control/command/turn_indicators_cmd
 
   remove:
@@ -395,9 +416,9 @@ PlanningSimulation:
         - simulator.subscriber.initialpose3d
       - - planning.publisher.trajectory
         - simulator.subscriber.planning/trajectory
-      - - control.publisher.control_cmd
+      - - control.publisher.command/control_cmd
         - simulator.subscriber.control/command/control_cmd
-      - - control.publisher.control_cmd
+      - - control.publisher.command/control_cmd
         - vehicle.subscriber.control_cmd
       - - simulator.publisher.localization/kinematic_state
         - vehicle.subscriber.odometry
@@ -413,11 +434,11 @@ PlanningSimulation:
         - vehicle.subscriber.operation_mode_state
       - - vehicle.publisher.actuation_cmd
         - simulator.subscriber.control/command/actuation_cmd
-      - - control.publisher.gear_cmd
+      - - control.publisher.command/gear_cmd
         - simulator.subscriber.control/command/gear_cmd
-      - - control.publisher.turn_indicators_cmd
+      - - control.publisher.command/turn_indicators_cmd
         - simulator.subscriber.control/command/turn_indicators_cmd
-      - - control.publisher.hazard_lights_cmd
+      - - control.publisher.command/hazard_lights_cmd
         - simulator.subscriber.control/command/hazard_lights_cmd
       - - simulator.publisher.^
         - adapi.subscriber.^
