@@ -44,17 +44,17 @@ connections:
   - - subscriber.vector_map
     - motion_velocity_planner.subscriber.vector_map
   - - subscriber.odometry
-    - motion_velocity_planner.subscriber.odometry
+    - motion_velocity_planner.subscriber.vehicle_odometry
   - - subscriber.accel
     - motion_velocity_planner.subscriber.accel
   - - subscriber.objects
-    - motion_velocity_planner.subscriber.objects
+    - motion_velocity_planner.subscriber.dynamic_objects
   - - subscriber.no_ground_pointcloud
     - motion_velocity_planner.subscriber.no_ground_pointcloud
   - - subscriber.traffic_signals
     - motion_velocity_planner.subscriber.traffic_signals
   - - subscriber.occupancy_grid_map
-    - motion_velocity_planner.subscriber.occupancy_grid_map
+    - motion_velocity_planner.subscriber.occupancy_grid
   - - subscriber.route
     - motion_velocity_planner.subscriber.route
   - - subscriber.operation_mode_state

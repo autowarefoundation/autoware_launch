@@ -58,17 +58,17 @@ connections:
   - - subscriber.vector_map
     - behavior_velocity_planner.subscriber.vector_map
   - - subscriber.odometry
-    - behavior_velocity_planner.subscriber.odometry
+    - behavior_velocity_planner.subscriber.vehicle_odometry
   - - subscriber.accel
     - behavior_velocity_planner.subscriber.accel
   - - subscriber.objects
-    - behavior_velocity_planner.subscriber.objects
+    - behavior_velocity_planner.subscriber.dynamic_objects
   - - subscriber.no_ground_pointcloud
     - behavior_velocity_planner.subscriber.no_ground_pointcloud
   - - subscriber.traffic_signals
     - behavior_velocity_planner.subscriber.traffic_signals
   - - subscriber.occupancy_grid_map
-    - behavior_velocity_planner.subscriber.occupancy_grid_map
+    - behavior_velocity_planner.subscriber.occupancy_grid
   - - behavior_path_planner.publisher.path_with_lane_id
     - behavior_velocity_planner.subscriber.path_with_lane_id
   - - behavior_velocity_planner.publisher.path
