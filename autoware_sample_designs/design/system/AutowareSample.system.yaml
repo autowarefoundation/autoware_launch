@@ -349,10 +349,6 @@ PlanningSimulation:
     parameter_sets:
       - planning_simulation.parameter_set
     components:
-      - name: occupancy_grid_map
-        entity: LaserscanBasedOccupancyGridMap.module
-        path: /perception/occupancy_grid_map
-        compute_unit: main_ecu
       - name: planning_sim_rviz_plugin
         entity: PlanningSimRvizPlugins.module
         path: /
@@ -382,8 +378,6 @@ PlanningSimulation:
         - planning.subscriber.objects
       - - perception.publisher.object_recognition/objects
         - control.subscriber.objects
-      - - perception.publisher.obstacle_segmentation/pointcloud
-        - occupancy_grid_map.subscriber.obstacle_pointcloud
       - - perception.publisher.obstacle_segmentation/pointcloud
         - planning.subscriber.pointcloud
       - - perception.publisher.obstacle_segmentation/pointcloud
