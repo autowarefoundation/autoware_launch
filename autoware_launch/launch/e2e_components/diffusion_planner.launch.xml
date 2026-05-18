@@ -23,6 +23,21 @@
   <arg name="mission_planner_param_path"/>
   <arg name="launch_remaining_distance_time_calculator" default="false"/>
 
+  <!-- minimum rule-based planner param paths -->
+  <arg name="minimum_rule_base_planner_param_path" default="$(find-pkg-share autoware_launch)/config/planning/neural_net_planner/minimum_rule_based_planner/minimum_rule_based_planner.param.yaml"/>
+  <arg
+    name="minimum_rule_base_planner_elastic_band_smoother_param_path"
+    default="$(find-pkg-share autoware_launch)/config/planning/neural_net_planner/minimum_rule_based_planner/elastic_band_smoother.param.yaml"
+  />
+  <arg
+    name="minimum_rule_base_planner_jerk_filtered_smoother_param_path"
+    default="$(find-pkg-share autoware_launch)/config/planning/neural_net_planner/minimum_rule_based_planner/jerk_filtered_smoother.param.yaml"
+  />
+
+  <arg name="disable_diffusion_planner" default="false"/>
+  <arg name="enable_minimum_rule_based_planner" default="false"/>
+  <arg name="enable_dummy_concatenator" default="false"/>
+
   <node pkg="demo_nodes_cpp" exec="parameter_blackboard" name="velocity_smoother" namespace="/planning/scenario_planning" output="screen">
     <param name="max_velocity" value="16.6"/>
   </node>
@@ -47,7 +62,7 @@
       <group>
         <push-ros-namespace namespace="trajectory_generator"/>
         <!-- neural network based planning module -->
-        <group>
+        <group unless="$(var disable_diffusion_planner)">
           <push-ros-namespace namespace="neural_network_based_planner"/>
           <include file="$(find-pkg-share autoware_diffusion_planner)/launch/diffusion_planner.launch.xml">
             <arg name="diffusion_planner_param_path" value="$(var diffusion_planner_param_path)"/>
@@ -87,6 +102,22 @@
             <arg name="trajectory_velocity_optimizer_param_path" value="$(var trajectory_velocity_optimizer_param_path)"/>
             <arg name="trajectory_kinematic_feasibility_enforcer_param_path" value="$(var trajectory_kinematic_feasibility_enforcer_param_path)"/>
             <arg name="trajectory_mpt_optimizer_param_path" value="$(var trajectory_mpt_optimizer_param_path)"/>
+          </include>
+        </group>
+
+        <!-- minimum rule-based planner -->
+        <group if="$(var enable_minimum_rule_based_planner)">
+          <push-ros-namespace namespace="minimum_rule_based_planner"/>
+          <include file="$(find-pkg-share autoware_minimum_rule_based_planner)/launch/minimum_rule_based_planner.launch.xml">
+            <arg name="minimum_rule_base_planner_param_path" value="$(var minimum_rule_base_planner_param_path)"/>
+            <arg name="minimum_rule_base_planner_elastic_band_smoother_param_path" value="$(var minimum_rule_base_planner_elastic_band_smoother_param_path)"/>
+            <arg name="minimum_rule_base_planner_jerk_filtered_smoother_param_path" value="$(var minimum_rule_base_planner_jerk_filtered_smoother_param_path)"/>
+            <arg name="input_route" value="/planning/mission_planning/route"/>
+            <arg name="input_vector_map" value="/map/vector_map"/>
+            <arg name="input_odometry" value="/localization/kinematic_state"/>
+            <arg name="input_acceleration" value="/localization/acceleration"/>
+            <arg name="input_objects" value="/perception/object_recognition/objects"/>
+            <arg name="output_candidate_trajectories" value="/planning/generator/candidate_trajectories"/>
           </include>
         </group>
       </group>
