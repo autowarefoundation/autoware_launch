@@ -1,0 +1,22 @@
+<launch>
+  <arg name="launch_driver" default="true"/>
+  <arg name="input/frame" default="from_can_bus"/>
+  <arg name="radar_can_device" default="canRadar"/>
+
+  <group>
+    <push-ros-namespace namespace="radar"/>
+
+    <group>
+      <push-ros-namespace namespace="front_center"/>
+
+      <include file="$(find-pkg-share aip_common_sensor_launch)/launch/ars408.launch.xml">
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="interface" value="$(var radar_can_device)"/>
+        <arg name="input/frame" value="$(var input/frame)"/>
+        <arg name="output_frame" value="ars408_front_center"/>
+      </include>
+    </group>
+
+    <node pkg="topic_tools" exec="relay" name="radar_relay" output="log" args="front_center/detected_objects detected_objects"/>
+  </group>
+</launch>

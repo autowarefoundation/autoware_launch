@@ -271,15 +271,13 @@ Visualization Manager:
           Enabled: true
           Name: Vehicle
         - Class: autoware_string_stamped_rviz_plugin/StringStampedOverlayDisplay
-          Enabled: false
-          Font Size: 11
+          Enabled: true
+          Font Size: 12
           Left: 10
           Max Letter Num: 70
           Name: Error Diag Graph
           Text Color: 51; 201; 220
-          Time To Erase Last Diag: 2
-          Time To Keep Last Diag: 1
-          Top: 100
+          Top: 10
           Topic:
             Depth: 1
             Durability Policy: Volatile

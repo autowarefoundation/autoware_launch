@@ -1,11 +1,12 @@
 /**:
   ros__parameters:
     plugins_path: $(find-pkg-share autoware_tensorrt_plugins)/plugins/libautoware_tensorrt_plugins.so
-    onnx_model_path: $(var data_path)/diffusion_planner/v4.0/diffusion_planner.onnx
-    args_path: $(var data_path)/diffusion_planner/v4.0/diffusion_planner.param.json
+    onnx_model_path: /opt/autoware/mlmodels/diffusion_planner/model.onnx
+    args_path: /opt/autoware/mlmodels/diffusion_planner/args.json
     planning_frequency_hz: 10.0
     ignore_neighbors: false
     ignore_unknown_neighbors: true
+    predict_neighbor_trajectory: true
     traffic_light_group_msg_timeout_seconds: 0.2
     batch_size: 1
     temperature: [0.0]

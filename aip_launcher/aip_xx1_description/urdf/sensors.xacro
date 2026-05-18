@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!-- NOTE: If you edit this file, please also update example_config/sensors_calibration.yaml -->
+<!-- to keep the example configuration in sync with this xacro file. -->
+<robot name="vehicle" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="config_dir" default="$(find INVALID_SENSOR_KIT_description)/config"/>
+  <xacro:arg name="gpu" default="false"/>
+  <xacro:property name="calibration" value="${xacro.load_yaml('$(arg config_dir)/sensors_calibration.yaml')}"/>
+
+  <xacro:include filename="sensor_kit.xacro"/>
+
+  <xacro:include filename="$(find radar_description)/urdf/radar.xacro"/>
+
+  <xacro:include filename="$(find livox_description)/urdf/livox_horizon.xacro"/>
+
+  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+
+  <!-- sensor kit -->
+  <xacro:sensor_kit_macro
+    parent="base_link"
+    x="${calibration['base_link']['sensor_kit_base_link']['x']}"
+    y="${calibration['base_link']['sensor_kit_base_link']['y']}"
+    z="${calibration['base_link']['sensor_kit_base_link']['z']}"
+    roll="${calibration['base_link']['sensor_kit_base_link']['roll']}"
+    pitch="${calibration['base_link']['sensor_kit_base_link']['pitch']}"
+    yaw="${calibration['base_link']['sensor_kit_base_link']['yaw']}"
+  />
+
+  <!-- embedded sensors -->
+  <xacro:radar_macro
+    name="ars408_front_center"
+    parent="base_link"
+    x="${calibration['base_link']['ars408_front_center']['x']}"
+    y="${calibration['base_link']['ars408_front_center']['y']}"
+    z="${calibration['base_link']['ars408_front_center']['z']}"
+    roll="${calibration['base_link']['ars408_front_center']['roll']}"
+    pitch="${calibration['base_link']['ars408_front_center']['pitch']}"
+    yaw="${calibration['base_link']['ars408_front_center']['yaw']}"
+  />
+
+  <!-- embedded sensors -->
+  <xacro:livox_horizon_macro
+    name="livox_front_right"
+    parent="base_link"
+    x="${calibration['base_link']['livox_front_right_base_link']['x']}"
+    y="${calibration['base_link']['livox_front_right_base_link']['y']}"
+    z="${calibration['base_link']['livox_front_right_base_link']['z']}"
+    roll="${calibration['base_link']['livox_front_right_base_link']['roll']}"
+    pitch="${calibration['base_link']['livox_front_right_base_link']['pitch']}"
+    yaw="${calibration['base_link']['livox_front_right_base_link']['yaw']}"
+  />
+
+  <!-- embedded sensors -->
+  <xacro:livox_horizon_macro
+    name="livox_front_left"
+    parent="base_link"
+    x="${calibration['base_link']['livox_front_left_base_link']['x']}"
+    y="${calibration['base_link']['livox_front_left_base_link']['y']}"
+    z="${calibration['base_link']['livox_front_left_base_link']['z']}"
+    roll="${calibration['base_link']['livox_front_left_base_link']['roll']}"
+    pitch="${calibration['base_link']['livox_front_left_base_link']['pitch']}"
+    yaw="${calibration['base_link']['livox_front_left_base_link']['yaw']}"
+  />
+
+  <!-- embedded sensors -->
+  <xacro:VLP-16 parent="base_link" name="velodyne_rear" topic="/points_raw" hz="10" samples="220" gpu="$(arg gpu)">
+    <origin
+      xyz="${calibration['base_link']['velodyne_rear_base_link']['x']}
+            ${calibration['base_link']['velodyne_rear_base_link']['y']}
+            ${calibration['base_link']['velodyne_rear_base_link']['z']}"
+      rpy="${calibration['base_link']['velodyne_rear_base_link']['roll']}
+            ${calibration['base_link']['velodyne_rear_base_link']['pitch']}
+            ${calibration['base_link']['velodyne_rear_base_link']['yaw']}"
+    />
+  </xacro:VLP-16>
+</robot>

@@ -5,6 +5,14 @@
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
 
+  <arg name="launch_tier4_api" default="true"/>
+  <arg name="rosbridge_enabled" default="true"/>
+  <arg name="rosbridge_max_message_size" default="1000000000"/>
+
+  <!-- For API EOL information, see https://github.com/tier4/tier4_ad_api_adaptor -->
+  <!-- Pilot.Auto will continue to use 1 to align with Web.Auto release. -->
+  <arg name="api_mode" default="1" description="options: 0(All), 1(Without 2025/09 EOL API), 2(Without 2025/12 EOL API)"/>
+
   <!-- Global parameters -->
   <group scoped="false">
     <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
@@ -13,7 +21,22 @@
     </include>
   </group>
 
-  <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml">
-    <arg name="launch_evaluation_adapter" value="$(var scenario_simulation)"/>
-  </include>
+  <!-- AD API -->
+  <group>
+    <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml">
+      <!-- The evaluation adapter is temporarily disabled because the interface name overlaps with TIER IV API.-->
+      <!-- <arg name="launch_evaluation_adapter" value="$(var scenario_simulation)"/> -->
+      <arg name="launch_evaluation_adapter" value="false"/>
+      <arg name="default_adapi_param_path" value="$(find-pkg-share autoware_launch)/config/system/default_adapi/default_adapi.param.yaml"/>
+    </include>
+  </group>
+
+  <!-- TIER IV -->
+  <group if="$(var launch_tier4_api)">
+    <include file="$(find-pkg-share tier4_autoware_api_extension_launch)/launch/tier4_autoware_api_extension.launch.xml">
+      <arg name="api_mode" value="$(var api_mode)"/>
+      <arg name="rosbridge_enabled" value="$(var rosbridge_enabled)"/>
+      <arg name="rosbridge_max_message_size" value="$(var rosbridge_max_message_size)"/>
+    </include>
+  </group>
 </launch>
