@@ -161,7 +161,7 @@ node_groups:
       - /planning/scenario_planning/lane_driving/motion_planning/elastic_band_smoother
       - /planning/scenario_planning/lane_driving/motion_planning/path_optimizer
       - /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner
-      - /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker
+      # - /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker
 
 connections:
   - - localization.publisher.kinematic_state
@@ -219,18 +219,29 @@ connections:
     - planning.subscriber.traffic_signals
   - - system.publisher.operation_mode/state
     - planning.subscriber.operation_mode_state
+  - - control.publisher.control_cmd
+    - planning.subscriber.control_cmd
+  - - control.publisher.predicted_trajectory
+    - planning.subscriber.predicted_trajectory
+  - - adapi.publisher.api/operation_mode/state
+    - planning.subscriber.api_operation_mode_state
+
   - - planning.publisher.trajectory
     - control.subscriber.trajectory
+  - - planning.publisher.path_with_lane_id
+    - control.subscriber.path_with_lane_id
   - - planning.publisher.route
     - control.subscriber.route
   - - planning.publisher.route_state
     - control.subscriber.route_state
   - - planning.publisher.turn_indicators_cmd
-    - control.subscriber.turn_indicators_cmd
+    - control.subscriber.planning_turn_indicators_cmd
   - - planning.publisher.hazard_lights_cmd
     - control.subscriber.hazard_lights_cmd
   - - system.publisher.operation_mode/state
     - control.subscriber.operation_mode_state
+  - - adapi.publisher.api/operation_mode/state
+    - control.subscriber.api_operation_mode_state
 
   - - localization.publisher.kinematic_state
     - control.subscriber.odometry

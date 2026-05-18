@@ -10,8 +10,6 @@ instances:
     entity: PathOptimizer.node
   - name: motion_velocity_planner
     entity: MotionVelocityPlanner.node
-  - name: surround_obstacle_checker
-    entity: SurroundObstacleChecker.node
 
 # interfaces
 subscribers:
@@ -19,16 +17,18 @@ subscribers:
   - name: vector_map
   - name: odometry
   - name: accel
-  - name: dynamic_objects
+  - name: objects
   - name: no_ground_pointcloud
-  - name: pointcloud
   - name: traffic_signals
-  - name: occupancy_grid
+  - name: occupancy_grid_map
+  - name: route
+  - name: operation_mode_state
+  - name: control_cmd
+  - name: predicted_trajectory
 
 publishers:
   - name: trajectory
   - name: velocity_limit
-  - name: stop_reasons
 
 connections:
   - - subscriber.path
@@ -44,23 +44,25 @@ connections:
   - - subscriber.vector_map
     - motion_velocity_planner.subscriber.vector_map
   - - subscriber.odometry
-    - motion_velocity_planner.subscriber.vehicle_odometry
+    - motion_velocity_planner.subscriber.odometry
   - - subscriber.accel
     - motion_velocity_planner.subscriber.accel
-  - - subscriber.dynamic_objects
-    - motion_velocity_planner.subscriber.dynamic_objects
+  - - subscriber.objects
+    - motion_velocity_planner.subscriber.objects
   - - subscriber.no_ground_pointcloud
     - motion_velocity_planner.subscriber.no_ground_pointcloud
   - - subscriber.traffic_signals
     - motion_velocity_planner.subscriber.traffic_signals
-  - - subscriber.occupancy_grid
-    - motion_velocity_planner.subscriber.occupancy_grid
-  - - subscriber.odometry
-    - surround_obstacle_checker.subscriber.odometry
-  - - subscriber.dynamic_objects
-    - surround_obstacle_checker.subscriber.objects
-  - - subscriber.pointcloud
-    - surround_obstacle_checker.subscriber.pointcloud
+  - - subscriber.occupancy_grid_map
+    - motion_velocity_planner.subscriber.occupancy_grid_map
+  - - subscriber.route
+    - motion_velocity_planner.subscriber.route
+  - - subscriber.operation_mode_state
+    - motion_velocity_planner.subscriber.operation_mode_state
+  - - subscriber.control_cmd
+    - motion_velocity_planner.subscriber.control_cmd
+  - - subscriber.predicted_trajectory
+    - motion_velocity_planner.subscriber.predicted_trajectory
   - - motion_velocity_planner.publisher.trajectory
     - publisher.trajectory
   - - motion_velocity_planner.publisher.velocity_limit

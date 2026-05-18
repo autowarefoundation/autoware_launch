@@ -15,21 +15,25 @@ subscribers:
   - name: vector_map
   - name: costmap
   - name: scenario
-  - name: perception
+  - name: objects
   - name: occupancy_grid_map
   - name: no_ground_pointcloud
-  - name: pointcloud
   - name: traffic_signals
   - name: odometry
   - name: accel
   - name: external_velocity_limit_mps
+  - name: operation_mode_state
+  - name: api_operation_mode_state
+  - name: control_cmd
+  - name: predicted_trajectory
 
 publishers:
   - name: trajectory
+  - name: path_with_lane_id
   - name: turn_indicators_cmd
   - name: hazard_lights_cmd
   - name: modified_goal
-  - name: motion_velocity_limit
+  - name: velocity_limit
   - name: reroute_availability
 
 connections:
@@ -39,8 +43,8 @@ connections:
     - behavior_planning.subscriber.route
   - - subscriber.vector_map
     - behavior_planning.subscriber.vector_map
-  - - subscriber.perception
-    - behavior_planning.subscriber.perception
+  - - subscriber.objects
+    - behavior_planning.subscriber.objects
   - - subscriber.occupancy_grid_map
     - behavior_planning.subscriber.occupancy_grid_map
   - - subscriber.costmap
@@ -57,24 +61,34 @@ connections:
     - behavior_planning.subscriber.no_ground_pointcloud
   - - subscriber.external_velocity_limit_mps
     - behavior_planning.subscriber.external_velocity_limit_mps
+  - - subscriber.operation_mode_state
+    - behavior_planning.subscriber.operation_mode_state
   - - subscriber.vector_map
     - motion_planning.subscriber.vector_map
   - - subscriber.odometry
     - motion_planning.subscriber.odometry
   - - subscriber.accel
     - motion_planning.subscriber.accel
-  - - subscriber.perception
-    - motion_planning.subscriber.dynamic_objects
+  - - subscriber.objects
+    - motion_planning.subscriber.objects
   - - subscriber.no_ground_pointcloud
     - motion_planning.subscriber.no_ground_pointcloud
-  - - subscriber.pointcloud
-    - motion_planning.subscriber.pointcloud
   - - subscriber.traffic_signals
     - motion_planning.subscriber.traffic_signals
   - - subscriber.occupancy_grid_map
-    - motion_planning.subscriber.occupancy_grid
+    - motion_planning.subscriber.occupancy_grid_map
+  - - subscriber.route
+    - motion_planning.subscriber.route
+  - - subscriber.api_operation_mode_state
+    - motion_planning.subscriber.operation_mode_state
+  - - subscriber.control_cmd
+    - motion_planning.subscriber.control_cmd
+  - - subscriber.predicted_trajectory
+    - motion_planning.subscriber.predicted_trajectory
   - - motion_planning.publisher.trajectory
     - publisher.trajectory
+  - - behavior_planning.publisher.path_with_lane_id
+    - publisher.path_with_lane_id
   - - behavior_planning.publisher.turn_indicators_cmd
     - publisher.turn_indicators_cmd
   - - behavior_planning.publisher.hazard_lights_cmd
@@ -84,4 +98,4 @@ connections:
   - - behavior_planning.publisher.reroute_availability
     - publisher.reroute_availability
   - - motion_planning.publisher.velocity_limit
-    - publisher.motion_velocity_limit
+    - publisher.velocity_limit
