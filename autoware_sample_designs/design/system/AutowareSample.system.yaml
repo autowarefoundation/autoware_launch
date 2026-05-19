@@ -242,6 +242,13 @@ connections:
     - control.subscriber.operation_mode_state
   - - adapi.publisher.api/operation_mode/state
     - control.subscriber.api_operation_mode_state
+  - - adapi.publisher.*
+    - control.subscriber.*
+
+  - - control.publisher.engage
+    - control.subscriber.engage
+  - - control.publisher.gate_mode_cmd
+    - control.subscriber.gate_mode_cmd
 
   - - localization.publisher.kinematic_state
     - control.subscriber.odometry
@@ -450,6 +457,8 @@ PlanningSimulation:
         - control.subscriber.odometry
       - - simulator.publisher.localization/kinematic_state
         - planning.subscriber.odometry
+      - - simulator.publisher.sensing/imu/imu_data
+        - control.subscriber.imu
       - - simulator.publisher.perception/traffic_light_recognition/traffic_signals
         - planning.subscriber.traffic_signals
 

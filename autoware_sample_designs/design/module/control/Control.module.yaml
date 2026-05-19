@@ -59,18 +59,20 @@ subscribers:
   - name: traffic_light
   - name: virtual_traffic_light
   - name: walkway
-  - name: remote_pedals_cmd
-  - name: remote_steering_cmd
-  - name: remote_gear_cmd
-  - name: remote_turn_indicators_cmd
-  - name: remote_hazard_lights_cmd
-  - name: remote_heartbeat
-  - name: local_pedals_cmd
-  - name: local_steering_cmd
-  - name: local_gear_cmd
-  - name: local_turn_indicators_cmd
-  - name: local_hazard_lights_cmd
-  - name: local_heartbeat
+
+  - name: external/local/gear_cmd
+  - name: external/local/hazard_lights_cmd
+  - name: external/local/heartbeat
+  - name: external/local/pedals_cmd
+  - name: external/local/steering_cmd
+  - name: external/local/turn_indicators_cmd
+  - name: external/remote/gear_cmd
+  - name: external/remote/hazard_lights_cmd
+  - name: external/remote/heartbeat
+  - name: external/remote/pedals_cmd
+  - name: external/remote/steering_cmd
+  - name: external/remote/turn_indicators_cmd
+
   - name: emergency_control_cmd
   - name: emergency_turn_indicators_cmd
   - name: emergency_hazard_lights_cmd
@@ -84,12 +86,14 @@ publishers:
   - name: command/turn_indicators_cmd
   - name: command/hazard_lights_cmd
   - name: command/gate_mode
-  - name: command/vehicle_cmd_emergency
+  - name: command/emergency_cmd
   - name: predicted_trajectory
   - name: engage
   - name: external_emergency
   - name: is_autonomous_available
   - name: control_evaluation
+  - name: gate_mode_cmd
+  - name: current_gate_mode
 
 connections:
   # TrajectoryFollower node
@@ -113,18 +117,30 @@ connections:
     - shift_decider.subscriber.autoware/state
 
   # ExternalCmdSelector
-  - - subscriber.remote_pedals_cmd
-    - external_cmd_selector.subscriber.remote_pedals_cmd
-  - - subscriber.remote_gear_cmd
-    - external_cmd_selector.subscriber.remote_gear_cmd
-  - - subscriber.remote_steering_cmd
-    - external_cmd_selector.subscriber.remote_steering_cmd
-  - - subscriber.remote_turn_indicators_cmd
-    - external_cmd_selector.subscriber.remote_turn_indicators_cmd
-  - - subscriber.remote_hazard_lights_cmd
-    - external_cmd_selector.subscriber.remote_hazard_lights_cmd
-  - - subscriber.remote_heartbeat
-    - external_cmd_selector.subscriber.remote_heartbeat
+  - - subscriber.external/local/pedals_cmd
+    - external_cmd_selector.subscriber.local/pedals_cmd
+  - - subscriber.external/local/steering_cmd
+    - external_cmd_selector.subscriber.local/steering_cmd
+  - - subscriber.external/local/turn_indicators_cmd
+    - external_cmd_selector.subscriber.local/turn_indicators_cmd
+  - - subscriber.external/local/hazard_lights_cmd
+    - external_cmd_selector.subscriber.local/hazard_lights_cmd
+  - - subscriber.external/local/gear_cmd
+    - external_cmd_selector.subscriber.local/gear_cmd
+  - - subscriber.external/local/heartbeat
+    - external_cmd_selector.subscriber.local/heartbeat
+  - - subscriber.external/remote/pedals_cmd
+    - external_cmd_selector.subscriber.remote/pedals_cmd
+  - - subscriber.external/remote/steering_cmd
+    - external_cmd_selector.subscriber.remote/steering_cmd
+  - - subscriber.external/remote/turn_indicators_cmd
+    - external_cmd_selector.subscriber.remote/turn_indicators_cmd
+  - - subscriber.external/remote/hazard_lights_cmd
+    - external_cmd_selector.subscriber.remote/hazard_lights_cmd
+  - - subscriber.external/remote/gear_cmd
+    - external_cmd_selector.subscriber.remote/gear_cmd
+  - - subscriber.external/remote/heartbeat
+    - external_cmd_selector.subscriber.remote/heartbeat
 
   # VehicleCmdGate
   - - trajectory_follower.publisher.control_cmd
@@ -280,15 +296,19 @@ connections:
     - publisher.command/hazard_lights_cmd
   - - vehicle_cmd_gate.publisher.gate_mode
     - publisher.command/gate_mode
-  - - vehicle_cmd_gate.publisher.vehicle_cmd_emergency
-    - publisher.command/vehicle_cmd_emergency
-  - - vehicle_cmd_gate.publisher.engage
-    - publisher.engage
+  - - vehicle_cmd_gate.publisher.emergency_cmd
+    - publisher.command/emergency_cmd
+  - - vehicle_cmd_gate.publisher.gate_mode
+    - publisher.current_gate_mode
   - - vehicle_cmd_gate.publisher.external_emergency
     - publisher.external_emergency
+  - - operation_mode_transition_manager.publisher.engage
+    - publisher.engage
   - - trajectory_follower.publisher.predicted_trajectory
     - publisher.predicted_trajectory
   - - operation_mode_transition_manager.publisher.operation_mode
     - publisher.is_autonomous_available
   - - control_evaluator.publisher.metrics
     - publisher.control_evaluation
+  - - operation_mode_transition_manager.publisher.gate_mode_cmd
+    - publisher.gate_mode_cmd
