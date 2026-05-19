@@ -22,8 +22,8 @@ subscribers:
   - name: reroute_availability
 
 publishers:
-  - name: api_route
   - name: route
+  - name: mission_planning/route
   - name: route_state
   - name: route_marker
 
@@ -51,7 +51,7 @@ connections:
   - - route_selector.publisher.route
     - goal_pose_visualizer.subscriber.route
   - - mission_planner.publisher.route
-    - publisher.api_route
+    - publisher.mission_planning/route
   - - route_selector.publisher.route
     - publisher.route
   - - route_selector.publisher.state

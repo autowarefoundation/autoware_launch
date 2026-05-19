@@ -230,7 +230,7 @@ connections:
     - control.subscriber.trajectory
   - - planning.publisher.path_with_lane_id
     - control.subscriber.path_with_lane_id
-  - - planning.publisher.route
+  - - planning.publisher.mission_planning/route
     - control.subscriber.route
   - - planning.publisher.route_state
     - control.subscriber.route_state
