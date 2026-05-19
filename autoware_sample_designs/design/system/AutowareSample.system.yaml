@@ -240,8 +240,11 @@ connections:
     - control.subscriber.hazard_lights_cmd
   - - system.publisher.operation_mode/state
     - control.subscriber.operation_mode_state
+
   - - adapi.publisher.api/operation_mode/state
     - control.subscriber.api_operation_mode_state
+  - - adapi.publisher.autoware/state
+    - control.subscriber.autoware_state
   - - adapi.publisher.*
     - control.subscriber.*
 
@@ -466,3 +469,5 @@ PlanningSimulation:
         - control.subscriber.acceleration
       - - simulator.publisher.localization/acceleration
         - planning.subscriber.acceleration
+      - - simulator.publisher.vehicle/status/gear_status
+        - control.subscriber.gear_status
