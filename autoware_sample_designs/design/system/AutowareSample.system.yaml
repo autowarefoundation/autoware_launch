@@ -289,8 +289,8 @@ connections:
 
   # - - adapi.publisher.gate_mode_cmd
   #   - control.subscriber.gate_mode_cmd
-  # - - adapi.publisher.engage
-  #   - control.subscriber.engage
+  - - adapi.publisher.autoware/state
+    - control.subscriber.autoware_state
 
   - - planning.server.clear_route
     - adapi.client.routing/clear_route
@@ -456,6 +456,8 @@ PlanningSimulation:
         - adapi.subscriber.vehicle/doors/status
       - - simulator.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
+      - - simulator.publisher.vehicle/status/gear_status
+        - control.subscriber.gear_status
       - - simulator.publisher.localization/kinematic_state
         - control.subscriber.odometry
       - - simulator.publisher.localization/kinematic_state
@@ -464,10 +466,12 @@ PlanningSimulation:
         - control.subscriber.imu
       - - simulator.publisher.perception/traffic_light_recognition/traffic_signals
         - planning.subscriber.traffic_signals
+      - - simulator.publisher.sensing/imu/imu_data
+        - control.subscriber.imu
 
       - - simulator.publisher.localization/acceleration
         - control.subscriber.acceleration
       - - simulator.publisher.localization/acceleration
         - planning.subscriber.acceleration
-      - - simulator.publisher.vehicle/status/gear_status
-        - control.subscriber.gear_status
+      - - simulator.publisher.vehicle/status/control_mode
+        - control.subscriber.control_mode_report
