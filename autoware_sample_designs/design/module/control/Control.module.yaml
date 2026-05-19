@@ -85,7 +85,6 @@ publishers:
   - name: command/gear_cmd
   - name: command/turn_indicators_cmd
   - name: command/hazard_lights_cmd
-  - name: command/gate_mode
   - name: command/emergency_cmd
   - name: predicted_trajectory
   - name: engage
@@ -141,6 +140,14 @@ connections:
     - external_cmd_selector.subscriber.remote/gear_cmd
   - - subscriber.external/remote/heartbeat
     - external_cmd_selector.subscriber.remote/heartbeat
+
+  # external_cmd_converter
+  - - external_cmd_selector.publisher.*
+    - external_cmd_converter.subscriber.*
+  - - vehicle_cmd_gate.publisher.gate_mode
+    - external_cmd_converter.subscriber.current_gate_mode
+  - - subscriber.odometry
+    - external_cmd_converter.subscriber.odometry
 
   # VehicleCmdGate
   - - trajectory_follower.publisher.control_cmd
@@ -294,8 +301,6 @@ connections:
     - publisher.command/turn_indicators_cmd
   - - vehicle_cmd_gate.publisher.hazard_lights_cmd
     - publisher.command/hazard_lights_cmd
-  - - vehicle_cmd_gate.publisher.gate_mode
-    - publisher.command/gate_mode
   - - vehicle_cmd_gate.publisher.emergency_cmd
     - publisher.command/emergency_cmd
   - - vehicle_cmd_gate.publisher.gate_mode
