@@ -336,11 +336,25 @@ LoggingSimulation:
         parameter_set: sample_system_sensing.parameter_set
       - name: rosbag_replay
         entity: SampleRosbagReplay.node
-        path: /
         compute_unit: dummy_ecu
     connections:
       - - rosbag_replay.publisher.sensing/^
         - sensing.subscriber.^
+    remap:
+      - source: rosbag_replay.publisher.sensing/gnss/ublox/fix_velocity
+        topic: /sensing/gnss/ublox/fix_velocity
+      - source: rosbag_replay.publisher.sensing/gnss/ublox/nav_sat_fix
+        topic: /sensing/gnss/ublox/nav_sat_fix
+      - source: rosbag_replay.publisher.sensing/gnss/ublox/navpvt
+        topic: /sensing/gnss/ublox/navpvt
+      - source: rosbag_replay.publisher.sensing/imu/tamagawa/imu_raw
+        topic: /sensing/imu/tamagawa/imu_raw
+      - source: rosbag_replay.publisher.sensing/lidar/left/velodyne_packets
+        topic: /sensing/lidar/left/velodyne_packets
+      - source: rosbag_replay.publisher.sensing/lidar/right/velodyne_packets
+        topic: /sensing/lidar/right/velodyne_packets
+      - source: rosbag_replay.publisher.sensing/lidar/top/velodyne_packets
+        topic: /sensing/lidar/top/velodyne_packets
 
 E2ESimulation:
   override:
