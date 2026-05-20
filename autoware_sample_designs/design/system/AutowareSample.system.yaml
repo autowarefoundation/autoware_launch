@@ -539,8 +539,6 @@ PlanningSimulation:
         - planning.subscriber.acceleration
       - - simulator.publisher.vehicle/status/control_mode
         - control.subscriber.control_mode_report
-      - - simulator.publisher.vehicle/status/gear_status
-        - control.subscriber.gear_status
     remaps:
       # planning_sim_rviz_plugin
       - source: planning_sim_rviz_plugin.publisher.simulation/dummy_perception_publisher/object_info

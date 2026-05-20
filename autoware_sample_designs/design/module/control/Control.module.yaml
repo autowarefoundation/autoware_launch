@@ -323,6 +323,8 @@ connections:
     - publisher.current_gate_mode
   - - vehicle_cmd_gate.publisher.external_emergency
     - publisher.external_emergency
+  - - autoware_operation_mode_transition_manager.publisher.engage
+    - publisher.engage
   - - trajectory_follower.publisher.predicted_trajectory
     - publisher.predicted_trajectory
   - - autoware_operation_mode_transition_manager.publisher.operation_mode
