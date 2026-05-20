@@ -364,13 +364,8 @@ E2ESimulation:
     parameter_sets:
       - e2e_simulation.parameter_set
     components:
-      - name: AWSIM_in
-        entity: SampleAwsimIn.node
-        path: /
-        compute_unit: dummy_ecu
-      - name: AWSIM_out
-        entity: SampleAwsimOut.node
-        path: /
+      - name: awsim
+        entity: SampleAWSIM.node
         compute_unit: dummy_ecu
       - name: sensing
         entity: SampleSensorKitAWSIM.module
@@ -378,31 +373,63 @@ E2ESimulation:
         parameter_set: sample_system_sensing.parameter_set
     connections:
       # SENSING
-      - - AWSIM_out.publisher.sensing/lidar/top/pointcloud_raw_ex
+      - - awsim.publisher.sensing/lidar/top/pointcloud_raw_ex
         - sensing.subscriber.lidar/top/pointcloud_raw_ex
-      - - AWSIM_out.publisher.sensing/imu/tamagawa/imu_raw
+      - - awsim.publisher.sensing/imu/tamagawa/imu_raw
         - sensing.subscriber.imu/tamagawa/imu_raw
-      - - AWSIM_out.publisher.vehicle/status/velocity_status
+      - - awsim.publisher.vehicle/status/velocity_status
         - sensing.subscriber.velocity_status
       # Traffic light
-      - - AWSIM_out.publisher.sensing/camera/traffic_light/image_raw
+      - - awsim.publisher.sensing/camera/traffic_light/image_raw
         - perception.subscriber.traffic_camera/image
-      - - AWSIM_out.publisher.sensing/camera/traffic_light/camera_info
+      - - awsim.publisher.sensing/camera/traffic_light/camera_info
         - perception.subscriber.traffic_camera/camera_info
       # localization
-      - - AWSIM_out.publisher.sensing/gnss/pose_with_covariance
+      - - awsim.publisher.sensing/gnss/pose_with_covariance
         - localization.subscriber.gnss_pose_with_covariance
       # control
-      - - AWSIM_out.publisher.vehicle/status/velocity_status
+      - - awsim.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
       - - control.publisher.command/control_cmd
-        - AWSIM_in.subscriber.control/command/control_cmd
+        - awsim.subscriber.control/command/control_cmd
       - - control.publisher.command/gear_cmd
-        - AWSIM_in.subscriber.control/command/gear_cmd
+        - awsim.subscriber.control/command/gear_cmd
       - - control.publisher.command/hazard_lights_cmd
-        - AWSIM_in.subscriber.control/command/hazard_lights_cmd
+        - awsim.subscriber.control/command/hazard_lights_cmd
       - - control.publisher.command/turn_indicators_cmd
-        - AWSIM_in.subscriber.control/command/turn_indicators_cmd
+        - awsim.subscriber.control/command/turn_indicators_cmd
+    remap:
+      # GNSS
+      - source: awsim.publisher.sensing/gnss/pose
+        topic: /sensing/gnss/pose
+      - source: awsim.publisher.sensing/gnss/pose_with_covariance
+        topic: /sensing/gnss/pose_with_covariance
+      # IMU
+      - source: awsim.publisher.sensing/imu/tamagawa/imu_raw
+        topic: /sensing/imu/tamagawa/imu_raw
+      # LIDAR
+      - source: awsim.publisher.sensing/lidar/top/pointcloud_raw
+        topic: /sensing/lidar/top/pointcloud_raw
+      - source: awsim.publisher.sensing/lidar/top/pointcloud_raw_ex
+        topic: /sensing/lidar/top/pointcloud_raw_ex
+      # CAMERA
+      - source: awsim.publisher.sensing/camera/traffic_light/camera_info
+        topic: /sensing/camera/traffic_light/camera_info
+      - source: awsim.publisher.sensing/camera/traffic_light/image_raw
+        topic: /sensing/camera/traffic_light/image_raw
+      # VEHICLE
+      - source: awsim.publisher.vehicle/status/control_mode
+        topic: /vehicle/status/control_mode
+      - source: awsim.publisher.vehicle/status/gear_status
+        topic: /vehicle/status/gear_status
+      - source: awsim.publisher.vehicle/status/hazard_lights_status
+        topic: /vehicle/status/hazard_lights_status
+      - source: awsim.publisher.vehicle/status/steering_status
+        topic: /vehicle/status/steering_status
+      - source: awsim.publisher.vehicle/status/turn_indicators_status
+        topic: /vehicle/status/turn_indicators_status
+      - source: awsim.publisher.vehicle/status/velocity_status
+        topic: /vehicle/status/velocity_status
 
   remove:
     connections:
