@@ -78,7 +78,6 @@ subscribers:
   - name: emergency_turn_indicators_cmd
   - name: emergency_hazard_lights_cmd
   - name: emergency_gear_cmd
-  - name: gate_mode_cmd
 
 publishers:
   - name: command/control_cmd
@@ -310,13 +309,9 @@ connections:
     - publisher.current_gate_mode
   - - vehicle_cmd_gate.publisher.external_emergency
     - publisher.external_emergency
-  - - operation_mode_transition_manager.publisher.engage
-    - publisher.engage
   - - trajectory_follower.publisher.predicted_trajectory
     - publisher.predicted_trajectory
   - - autoware_operation_mode_transition_manager.publisher.operation_mode
     - publisher.is_autonomous_available
   - - control_evaluator.publisher.metrics
     - publisher.control_evaluation
-  - - operation_mode_transition_manager.publisher.gate_mode_cmd
-    - publisher.gate_mode_cmd
