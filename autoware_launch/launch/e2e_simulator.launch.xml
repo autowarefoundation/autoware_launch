@@ -45,7 +45,7 @@
   <group scoped="false" if="$(var launch_simulator_interface)">
     <!-- AWSIM does not require a simulator interface since it publishes autoware_msgs directly -->
     <!-- CARLA -->
-    <group scoped="false" if="$(eval '\'$(var simulator_type)\' == \'carla\'')">
+    <group scoped="false" if="$(equals $(var simulator_type) 'carla')">
       <include file="$(find-pkg-share autoware_carla_interface)/launch/autoware_carla_interface.launch.xml"/>
     </group>
   </group>
