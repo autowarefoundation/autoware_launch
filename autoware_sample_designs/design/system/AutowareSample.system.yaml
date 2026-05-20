@@ -452,19 +452,15 @@ PlanningSimulation:
     components:
       - name: planning_sim_rviz_plugin
         entity: PlanningSimRvizPlugins.module
-        path: /
         compute_unit: dummy_ecu
       - name: perception
         entity: DummyObjectRecognition.module
-        path: /perception
         compute_unit: main_ecu
       - name: localization
         entity: PlanningSimApiLocalization.module
-        path: /
         compute_unit: main_ecu
       - name: simulator
         entity: SimplePlanningSimulator.node
-        path: /
         compute_unit: main_ecu
       - name: vehicle
         entity: PlanningSimVehicle.module
@@ -543,3 +539,43 @@ PlanningSimulation:
         - planning.subscriber.acceleration
       - - simulator.publisher.vehicle/status/control_mode
         - control.subscriber.control_mode_report
+      - - simulator.publisher.vehicle/status/gear_status
+        - control.subscriber.gear_status
+    remap:
+      # planning_sim_rviz_plugin
+      - source: planning_sim_rviz_plugin.publisher.simulation/dummy_perception_publisher/object_info
+        topic: /simulation/dummy_perception_publisher/object_info
+      # localization (PlanningSimApiLocalization / PoseInitializer)
+      - source: localization.publisher.initialpose3d
+        topic: /initialpose3d
+      - source: localization.server.localization/initialize
+        topic: /localization/initialize
+      - source: localization.publisher.localization/initialization_state
+        topic: /localization/initialization_state
+      # simulator (SimplePlanningSimulator)
+      - source: simulator.publisher.localization/kinematic_state
+        topic: /localization/kinematic_state
+      - source: simulator.publisher.localization/acceleration
+        topic: /localization/acceleration
+      - source: simulator.publisher.sensing/imu/imu_data
+        topic: /sensing/imu/imu_data
+      - source: simulator.publisher.perception/traffic_light_recognition/traffic_signals
+        topic: /perception/traffic_light_recognition/traffic_signals
+      - source: simulator.publisher.vehicle/status/velocity_status
+        topic: /vehicle/status/velocity_status
+      - source: simulator.publisher.vehicle/status/steering_status
+        topic: /vehicle/status/steering_status
+      - source: simulator.publisher.vehicle/status/gear_status
+        topic: /vehicle/status/gear_status
+      - source: simulator.publisher.vehicle/status/turn_indicators_status
+        topic: /vehicle/status/turn_indicators_status
+      - source: simulator.publisher.vehicle/status/hazard_lights_status
+        topic: /vehicle/status/hazard_lights_status
+      - source: simulator.publisher.vehicle/status/control_mode
+        topic: /vehicle/status/control_mode
+      - source: simulator.publisher.vehicle/status/actuation_status
+        topic: /vehicle/status/actuation_status
+      - source: simulator.publisher.control/control_mode_request
+        topic: /control/control_mode_request
+      - source: simulator.publisher.api/simulator/set/pose
+        topic: /api/simulator/set/pose
