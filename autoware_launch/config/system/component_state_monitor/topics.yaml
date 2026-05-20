@@ -81,7 +81,7 @@
   type: autonomous
   args:
     node_name_suffix: mission_planning_route
-    topic: /planning/mission_planning/route
+    topic: /planning/route
     topic_type: autoware_planning_msgs/msg/LaneletRoute
     best_effort: false
     transient_local: true

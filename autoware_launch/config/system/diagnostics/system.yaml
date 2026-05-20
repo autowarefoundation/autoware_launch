@@ -2,7 +2,7 @@ units:
   - path: /autoware/system
     type: and
     list:
-      - { type: link, link: /autoware/system/duplicated_node_checker }
+      # - { type: link, link: /autoware/system/duplicated_node_checker }
       - { type: link, link: /autoware/system/topic_rate_check/emergency_control_command }
       - { type: link, link: /autoware/system/emergency_stop_operation }
 

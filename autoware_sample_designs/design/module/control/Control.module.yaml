@@ -10,7 +10,7 @@ instances:
     entity: ShiftDecider.node
   - name: vehicle_cmd_gate
     entity: VehicleCmdGate.node
-  - name: operation_mode_transition_manager
+  - name: autoware_operation_mode_transition_manager
     entity: OperationModeTransitionManager.node
   - name: external_cmd_selector
     entity: ExternalCmdSelector.node
@@ -42,6 +42,7 @@ subscribers:
   - name: velocity_status
   - name: imu
   - name: operation_mode_state
+  - name: control_mode_report
   - name: api_operation_mode_state
   - name: autoware_state
   - name: mrm_state
@@ -78,7 +79,6 @@ subscribers:
   - name: emergency_hazard_lights_cmd
   - name: emergency_gear_cmd
   - name: gate_mode_cmd
-  - name: engage
 
 publishers:
   - name: command/control_cmd
@@ -87,7 +87,6 @@ publishers:
   - name: command/hazard_lights_cmd
   - name: command/emergency_cmd
   - name: predicted_trajectory
-  - name: engage
   - name: external_emergency
   - name: is_autonomous_available
   - name: control_evaluation
@@ -188,20 +187,24 @@ connections:
     - vehicle_cmd_gate.subscriber.emergency_gear_cmd
   - - subscriber.gate_mode_cmd
     - vehicle_cmd_gate.subscriber.gate_mode
-  - - subscriber.engage
+  - - autoware_operation_mode_transition_manager.publisher.engage
     - vehicle_cmd_gate.subscriber.engage
 
   # OperationModeTransitionManager
   - - subscriber.trajectory
-    - operation_mode_transition_manager.subscriber.trajectory
+    - autoware_operation_mode_transition_manager.subscriber.trajectory
   - - trajectory_follower.publisher.control_cmd
-    - operation_mode_transition_manager.subscriber.trajectory_follower_control_cmd
+    - autoware_operation_mode_transition_manager.subscriber.trajectory_follower_control_cmd
   - - vehicle_cmd_gate.publisher.control_cmd
-    - operation_mode_transition_manager.subscriber.control_cmd
+    - autoware_operation_mode_transition_manager.subscriber.control_cmd
   - - vehicle_cmd_gate.publisher.operation_mode
-    - operation_mode_transition_manager.subscriber.gate_operation_mode
+    - autoware_operation_mode_transition_manager.subscriber.gate_operation_mode
   - - subscriber.odometry
-    - operation_mode_transition_manager.subscriber.kinematics
+    - autoware_operation_mode_transition_manager.subscriber.kinematics
+  - - subscriber.control_mode_report
+    - autoware_operation_mode_transition_manager.subscriber.control_mode_report
+  - - vehicle_cmd_gate.publisher.engage
+    - autoware_operation_mode_transition_manager.subscriber.engage
 
   # LaneDepartureChecker
   - - subscriber.odometry
@@ -311,7 +314,7 @@ connections:
     - publisher.engage
   - - trajectory_follower.publisher.predicted_trajectory
     - publisher.predicted_trajectory
-  - - operation_mode_transition_manager.publisher.operation_mode
+  - - autoware_operation_mode_transition_manager.publisher.operation_mode
     - publisher.is_autonomous_available
   - - control_evaluator.publisher.metrics
     - publisher.control_evaluation
