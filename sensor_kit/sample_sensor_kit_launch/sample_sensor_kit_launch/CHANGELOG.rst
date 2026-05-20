@@ -2,6 +2,17 @@
 Changelog for package sample_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.51.0 (2026-05-01)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* refactor: replace ament_index_python with launch.substitutions (`#1762 <https://github.com/autowarefoundation/autoware_launch/issues/1762>`_)
+  * refactor: replace ament_index_python with launch.substitutions
+  * flatten nested pathjoinsubstitution
+  ---------
+* fix(sample_sensor_kit_launch): replace ublox_gps config `c94_f9p_rover.yaml` into config file that exists (`#1781 <https://github.com/autowarefoundation/autoware_launch/issues/1781>`_)
+  fix ublox_gps config into something that exists
+* Contributors: Taeseung Sohn, github-actions
+
 0.50.0 (2026-02-13)
 -------------------
 

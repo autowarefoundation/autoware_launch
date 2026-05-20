@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/178b6c003ae5f5c2838352f397df7a0bbea9e6bb/perception/autoware_detected_object_validation/config/obstacle_pointcloud_based_validator.param.yaml
+
 /**:
   ros__parameters:
     min_points_num:
@@ -14,5 +21,5 @@
 
     validate_max_distance_m: 70.0 # [m]
 
-    using_2d_validator: true
+    using_2d_validator: true # {OVERRIDE}
     enable_debugger: false

@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/682bd2ea2df48d232d8243400c7e1f24583aaef1/perception/autoware_multi_object_tracker/config/multi_object_tracker_node.param.yaml
+
 /**:
   ros__parameters:
     # initial tracker models for each class
@@ -14,7 +21,7 @@
     publish_rate: 10.0
     world_frame_id: map
     ego_frame_id: base_link
-    enable_delay_compensation: true
+    enable_delay_compensation: true # {OVERRIDE}
     consider_odometry_uncertainty: false
     enable_unknown_object_velocity_estimation: true
     enable_unknown_object_motion_output: false
@@ -24,7 +31,7 @@
     min_unknown_object_removal_iou: 0.001  # [ratio]
 
     # pruning parameters
-    # list of generalized IoU thresholds for each class
+    # generalized IoU thresholds for tracked classes
     pruning_generalized_iou_thresholds:
       unknown: -0.3
       car: -0.4
@@ -48,7 +55,7 @@
     pruning_static_iou_threshold: 0.0  # [ratio]
 
     # debug parameters
-    publish_processing_time: true
+    publish_processing_time: true # {OVERRIDE}
     publish_processing_time_detail: false
     publish_tentative_objects: false
     publish_debug_markers: false

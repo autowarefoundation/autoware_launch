@@ -32,6 +32,8 @@ publishers:
 param_files: []
 
 param_values:
+  - name: planning_setting
+    default: rule_based
   - name: enable_all_modules_auto_mode
     default: false
   - name: is_simulation

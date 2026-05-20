@@ -6,7 +6,7 @@ instances:
   - name: detection
     entity: ObjectDetection.module
   - name: tracking
-    entity: ObjectTrackingSingleChannel.module
+    entity: ObjectTracking.module
   - name: prediction
     entity: ObjectPredictionMapBased.module
 
@@ -20,11 +20,11 @@ subscribers:
   # traffic lights
   - name: traffic_lights
   # lidar
+  - name: pointcloud
   - name: obstacle_pointcloud
   - name: lidar_ml_objects
 publishers:
   - name: objects
-  - name: map_filtered_obstacle_pointcloud
 
 connections:
   # detection
@@ -36,16 +36,18 @@ connections:
     - detection.client.service_pointcloud_map_diff
   - - subscriber.kinematic_state
     - detection.subscriber.kinematic_state
+  - - subscriber.pointcloud
+    - detection.subscriber.pointcloud
   - - subscriber.obstacle_pointcloud
     - detection.subscriber.obstacle_pointcloud
-  - - subscriber.lidar_ml_objects
-    - detection.subscriber.lidar_ml_objects
-  - - detection.publisher.filtered_obstacle_pointcloud
-    - publisher.map_filtered_obstacle_pointcloud
 
   # tracking
-  - - detection.publisher.detected_objects
-    - tracking.subscriber.detected_objects
+  - - detection.publisher.lidar_ml_objects
+    - tracking.subscriber.lidar_ml_objects
+  - - detection.publisher.lidar_clustering_objects
+    - tracking.subscriber.lidar_rule_detector_objects
+  - - detection.publisher.tracker_based_detector_objects
+    - tracking.subscriber.tracker_based_detector_objects
   - - tracking.publisher.objects
     - detection.subscriber.tracked_objects
 
