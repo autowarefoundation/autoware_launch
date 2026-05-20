@@ -185,7 +185,7 @@ connections:
     - vehicle_cmd_gate.subscriber.emergency_hazard_lights_cmd
   - - subscriber.emergency_gear_cmd
     - vehicle_cmd_gate.subscriber.emergency_gear_cmd
-  - - subscriber.gate_mode_cmd
+  - - autoware_operation_mode_transition_manager.publisher.gate_mode_cmd
     - vehicle_cmd_gate.subscriber.gate_mode
   - - autoware_operation_mode_transition_manager.publisher.engage
     - vehicle_cmd_gate.subscriber.engage
