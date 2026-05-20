@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.3.0
+autoware_system_design_format: 0.3.1
 
 # module information
 name: Control.module
@@ -86,11 +86,17 @@ publishers:
   - name: command/hazard_lights_cmd
   - name: command/emergency_cmd
   - name: predicted_trajectory
+  - name: engage
+  - name: api/engage
   - name: external_emergency
   - name: is_autonomous_available
   - name: control_evaluation
   - name: gate_mode_cmd
   - name: current_gate_mode
+
+servers:
+  - name: engage_service
+  - name: external_emergency_service
 
 connections:
   # TrajectoryFollower node
@@ -293,6 +299,14 @@ connections:
     - control_evaluator.subscriber.virtual_traffic_light
   - - subscriber.walkway
     - control_evaluator.subscriber.walkway
+
+  # VehicleCmdGate API ports
+  - - vehicle_cmd_gate.publisher.engage
+    - publisher.api/engage
+  - - vehicle_cmd_gate.server.engage_service
+    - server.engage_service
+  - - vehicle_cmd_gate.server.external_emergency_service
+    - server.external_emergency_service
 
   # Publishers
   - - vehicle_cmd_gate.publisher.control_cmd

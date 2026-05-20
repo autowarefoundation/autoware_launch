@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.3.1
+autoware_system_design_format: 0.3.2
 
 name: AutowareSample.system
 
@@ -284,6 +284,20 @@ connections:
 
   - - planning.server.clear_route
     - adapi.client.routing/clear_route
+
+remap:
+  - source: control.publisher.engage
+    topic: /autoware/engage
+  - source: control.publisher.is_autonomous_available
+    topic: /system/operation_mode/state
+  - source: control.publisher.external_emergency
+    topic: /api/autoware/get/emergency
+  - source: control.publisher.api/engage
+    topic: /api/autoware/get/engage
+  - source: control.server.engage_service
+    topic: /api/autoware/set/engage
+  - source: control.server.external_emergency_service
+    topic: /api/autoware/set/emergency
 
 # mode configurations
 LoggingSimulation:
