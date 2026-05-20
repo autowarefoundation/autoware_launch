@@ -55,9 +55,8 @@ components:
     compute_unit: main_ecu
 
   # ADAPI
-  - name: adapi
+  - name: api
     entity: SampleSensorKitADAPIWrapper.node
-    path: /
     compute_unit: main_ecu
 
   # SENSING
@@ -170,9 +169,9 @@ connections:
     - sensing.subscriber.pose_ndt
 
   - - localization.publisher.initialization_state
-    - adapi.subscriber.localization/initialization_state
+    - api.subscriber.localization/initialization_state
   - - localization.publisher.kinematic_state
-    - adapi.subscriber.localization/kinematic_state
+    - api.subscriber.localization/kinematic_state
 
   - - sensing.publisher.lidar/concatenated/pointcloud
     - perception.subscriber.concatenated_pointcloud
@@ -197,7 +196,7 @@ connections:
     - localization.subscriber.twist
   - - sensing.publisher.gnss/pose_with_covariance
     - localization.subscriber.gnss_pose_with_covariance
-  - - adapi.publisher.api/localization/initialization_state
+  - - api.publisher.localization/initialization_state
     - localization.subscriber.initialization_state
 
   - - planning.publisher.mission_planning/route
@@ -223,7 +222,7 @@ connections:
     - planning.subscriber.control_cmd
   - - control.publisher.predicted_trajectory
     - planning.subscriber.predicted_trajectory
-  - - adapi.publisher.api/operation_mode/state
+  - - api.publisher.operation_mode/state
     - planning.subscriber.api_operation_mode_state
 
   - - planning.publisher.trajectory
@@ -241,11 +240,11 @@ connections:
   - - system.publisher.operation_mode/state
     - control.subscriber.operation_mode_state
 
-  - - adapi.publisher.api/operation_mode/state
+  - - api.publisher.operation_mode/state
     - control.subscriber.api_operation_mode_state
-  - - adapi.publisher.autoware/state
+  - - api.publisher.autoware/state
     - control.subscriber.autoware_state
-  - - adapi.publisher.*
+  - - api.publisher.*
     - control.subscriber.*
 
   - - localization.publisher.kinematic_state
@@ -262,7 +261,7 @@ connections:
     - control.subscriber.imu
 
   - - system.publisher.fail_safe/mrm_state
-    - adapi.subscriber.system/fail_safe/mrm_state
+    - api.subscriber.system/fail_safe/mrm_state
   - - system.publisher.fail_safe/mrm_state
     - control.subscriber.mrm_state
 
@@ -283,7 +282,7 @@ connections:
     - control.subscriber.emergency_gear_cmd
 
   - - planning.server.clear_route
-    - adapi.client.routing/clear_route
+    - api.client.routing/clear_route
 
 remap:
   - source: control.publisher.engage
@@ -298,6 +297,32 @@ remap:
     topic: /api/autoware/set/engage
   - source: control.server.external_emergency_service
     topic: /api/autoware/set/emergency
+  - source: api.publisher.external/local/gear_cmd
+    topic: /external/local/gear_cmd
+  - source: api.publisher.external/local/hazard_lights_cmd
+    topic: /external/local/hazard_lights_cmd
+  - source: api.publisher.external/local/heartbeat
+    topic: /external/local/heartbeat
+  - source: api.publisher.external/local/pedals_cmd
+    topic: /external/local/pedals_cmd
+  - source: api.publisher.external/local/steering_cmd
+    topic: /external/local/steering_cmd
+  - source: api.publisher.external/local/turn_indicators_cmd
+    topic: /external/local/turn_indicators_cmd
+  - source: api.publisher.external/remote/gear_cmd
+    topic: /external/remote/gear_cmd
+  - source: api.publisher.external/remote/hazard_lights_cmd
+    topic: /external/remote/hazard_lights_cmd
+  - source: api.publisher.external/remote/heartbeat
+    topic: /external/remote/heartbeat
+  - source: api.publisher.external/remote/pedals_cmd
+    topic: /external/remote/pedals_cmd
+  - source: api.publisher.external/remote/steering_cmd
+    topic: /external/remote/steering_cmd
+  - source: api.publisher.external/remote/turn_indicators_cmd
+    topic: /external/remote/turn_indicators_cmd
+  - source: api.publisher.autoware/state
+    topic: /autoware/state
 
 # mode configurations
 LoggingSimulation:
@@ -422,7 +447,7 @@ PlanningSimulation:
       - - map.publisher.vector_map
         - perception.subscriber.vector_map
       - - localization.publisher.localization/initialization_state
-        - adapi.subscriber.localization/initialization_state
+        - api.subscriber.localization/initialization_state
       # SIMULATOR
       - - map.publisher.vector_map
         - simulator.subscriber.map/vector_map
@@ -455,9 +480,9 @@ PlanningSimulation:
       - - control.publisher.command/hazard_lights_cmd
         - simulator.subscriber.control/command/hazard_lights_cmd
       - - simulator.publisher.^
-        - adapi.subscriber.^
+        - api.subscriber.^
       - - vehicle.publisher.doors/status
-        - adapi.subscriber.vehicle/doors/status
+        - api.subscriber.vehicle/doors/status
       - - simulator.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
       - - simulator.publisher.vehicle/status/gear_status
