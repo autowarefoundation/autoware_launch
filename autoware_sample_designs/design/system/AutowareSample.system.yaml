@@ -284,7 +284,7 @@ connections:
   - - planning.server.clear_route
     - api.client.routing/clear_route
 
-remap:
+remaps:
   - source: control.publisher.engage
     topic: /autoware/engage
   - source: control.publisher.is_autonomous_available
@@ -340,7 +340,7 @@ LoggingSimulation:
     connections:
       - - rosbag_replay.publisher.sensing/^
         - sensing.subscriber.^
-    remap:
+    remaps:
       - source: rosbag_replay.publisher.sensing/gnss/ublox/fix_velocity
         topic: /sensing/gnss/ublox/fix_velocity
       - source: rosbag_replay.publisher.sensing/gnss/ublox/nav_sat_fix
@@ -398,7 +398,7 @@ E2ESimulation:
         - awsim.subscriber.control/command/hazard_lights_cmd
       - - control.publisher.command/turn_indicators_cmd
         - awsim.subscriber.control/command/turn_indicators_cmd
-    remap:
+    remaps:
       # GNSS
       - source: awsim.publisher.sensing/gnss/pose
         topic: /sensing/gnss/pose
@@ -541,7 +541,7 @@ PlanningSimulation:
         - control.subscriber.control_mode_report
       - - simulator.publisher.vehicle/status/gear_status
         - control.subscriber.gear_status
-    remap:
+    remaps:
       # planning_sim_rviz_plugin
       - source: planning_sim_rviz_plugin.publisher.simulation/dummy_perception_publisher/object_info
         topic: /simulation/dummy_perception_publisher/object_info
