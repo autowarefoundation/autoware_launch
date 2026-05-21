@@ -22,6 +22,8 @@ subscribers:
     message_type: autoware_adapi_v1_msgs/msg/Route
   - name: planning/mission_planning/route_state
     message_type: autoware_adapi_v1_msgs/msg/RouteState
+  - name: planning/route
+    message_type: autoware_planning_msgs/msg/LaneletRoute
 
   # Control inputs
   - name: control/operation_mode_state

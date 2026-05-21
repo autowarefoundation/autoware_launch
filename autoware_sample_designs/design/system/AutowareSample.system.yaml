@@ -233,6 +233,10 @@ connections:
     - control.subscriber.route
   - - planning.publisher.route_state
     - control.subscriber.route_state
+  - - planning.publisher.route
+    - api.subscriber.planning/route
+  - - planning.publisher.route
+    - system.subscriber.planning/route
   - - planning.publisher.turn_indicators_cmd
     - control.subscriber.planning_turn_indicators_cmd
   - - planning.publisher.hazard_lights_cmd

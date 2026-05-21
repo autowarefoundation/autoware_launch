@@ -56,7 +56,7 @@ connections:
   - - scenario_planning.publisher.reroute_availability
     - mission_planning.subscriber.reroute_availability
 
-  - - mission_planning.publisher.route
+  - - mission_planning.publisher.mission_planning/route
     - scenario_planning.subscriber.route
   - - subscriber.vector_map
     - scenario_planning.subscriber.vector_map
@@ -83,7 +83,7 @@ connections:
 
   - - scenario_planning.publisher.trajectory
     - planning_validator.subscriber.trajectory
-  - - mission_planning.publisher.route
+  - - mission_planning.publisher.mission_planning/route
     - planning_validator.subscriber.route
   - - subscriber.vector_map
     - planning_validator.subscriber.lanelet_map_bin
@@ -106,10 +106,10 @@ connections:
     - planning_evaluator.subscriber.objects
   - - subscriber.vector_map
     - planning_evaluator.subscriber.vector_map
-  - - mission_planning.publisher.route
+  - - mission_planning.publisher.mission_planning/route
     - planning_evaluator.subscriber.route
 
-  - - mission_planning.publisher.route
+  - - mission_planning.publisher.mission_planning/route
     - remaining_distance_time_calculator.subscriber.route
   - - subscriber.odometry
     - remaining_distance_time_calculator.subscriber.odometry

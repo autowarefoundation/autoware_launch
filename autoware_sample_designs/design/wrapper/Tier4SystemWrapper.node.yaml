@@ -24,6 +24,8 @@ subscribers:
     message_type: autoware_vehicle_msgs/msg/ControlModeReport
   - name: api_operation_mode_state
     message_type: autoware_adapi_v1_msgs/msg/OperationModeState
+  - name: planning/route
+    message_type: autoware_planning_msgs/msg/LaneletRoute
 
 publishers:
   - name: diagnostics_graph/struct

@@ -48,7 +48,7 @@ connections:
     - route_selector.subscriber.planner_route
   - - mission_planner.publisher.state
     - route_selector.subscriber.planner_state
-  - - route_selector.publisher.route
+  - - mission_planner.publisher.route
     - goal_pose_visualizer.subscriber.route
   - - mission_planner.publisher.route
     - publisher.mission_planning/route
@@ -57,7 +57,7 @@ connections:
   - - route_selector.publisher.state
     - publisher.route_state
 
-  - - route_selector.publisher.route
+  - - mission_planner.publisher.route
     - manual_lane_change_handler.subscriber.route
   - - subscriber.odometry
     - manual_lane_change_handler.subscriber.odometry
