@@ -15,8 +15,6 @@
   <arg name="launch_v2x" default="true" description="launch V2X"/>
   <arg name="v2x_location" default="invalid_location" description="location for v2x (e.g. komatsu, shiojiri)"/>
 
-  <arg name="launch_perception_filter" default="true" description="launch perception filter or not"/>
-
   <!-- Redundant system parameters-->
   <arg name="is_redundant" default="false" description="is_redundant"/>
   <arg name="is_main_ecu" default="true" description="is_main_ecu"/>
@@ -48,8 +46,6 @@
       <arg name="is_60kph" value="$(var is_60kph)"/>
       <!-- Control -->
       <arg name="use_control_command_gate" value="$(var use_control_command_gate)"/>
-      <!-- Perception Filter -->
-      <arg name="launch_perception_filter" value="$(var launch_perception_filter)"/>
       <!-- V2X -->
       <arg name="launch_v2x" value="$(var launch_v2x)"/>
       <arg name="v2x_location" value="$(var v2x_location)"/>
