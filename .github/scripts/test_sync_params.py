@@ -626,20 +626,16 @@ perception: []
         This regression covers a real map-sync case where repeated runs appended
         another "# Path ..." fragment on each execution.
         """
-        source_text = dedent(
-            """\
+        source_text = dedent("""\
             /**:
               ros__parameters:
                 pcd_paths_or_directory: [$(var pcd_paths_or_directory)] # Path to the pointcloud map file or directory
-            """
-        )
-        variant_text = dedent(
-            """\
+            """)
+        variant_text = dedent("""\
             /**:
               ros__parameters:
                 pcd_paths_or_directory: [$(var pointcloud_map_path)] # {OVERRIDE} Path to the pointcloud map file or directory
-            """
-        )
+            """)
 
         with tempfile.TemporaryDirectory() as tmpdir:
             variant_path = Path(tmpdir) / "variant.yaml"
