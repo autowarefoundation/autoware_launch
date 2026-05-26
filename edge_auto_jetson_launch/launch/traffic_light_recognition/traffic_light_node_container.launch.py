@@ -57,6 +57,11 @@ def generate_launch_description():
     add_launch_arg("traffic_light_fine_detector_param_path")
     add_launch_arg("car_traffic_light_classifier_param_path")
     add_launch_arg("pedestrian_traffic_light_classifier_param_path")
+    add_launch_arg("traffic_light_car_classifier_model_path")
+    add_launch_arg("traffic_light_pedestrian_classifier_model_path")
+    add_launch_arg("classification_lamp_recognizer_ml_param_path")
+    add_launch_arg("classification/car/classifier_type")
+    add_launch_arg("classification/pedestrian/classifier_type")
     add_launch_arg("traffic_light_roi_visualizer_param_path")
     add_launch_arg("whole_image_detector_param_path")
 
@@ -71,8 +76,14 @@ def generate_launch_description():
                     param_file=LaunchConfiguration("car_traffic_light_classifier_param_path"),
                     allow_substs=True,
                 ),
+                ParameterFile(
+                    param_file=LaunchConfiguration("classification_lamp_recognizer_ml_param_path"),
+                    allow_substs=True,
+                ),
                 {
                     "build_only": False,
+                    "model_path": LaunchConfiguration("traffic_light_car_classifier_model_path"),
+                    "classifier_type": LaunchConfiguration("classification/car/classifier_type"),
                 },
             ],
             remappings=[
@@ -94,8 +105,18 @@ def generate_launch_description():
                     ),
                     allow_substs=True,
                 ),
+                ParameterFile(
+                    param_file=LaunchConfiguration("classification_lamp_recognizer_ml_param_path"),
+                    allow_substs=True,
+                ),
                 {
                     "build_only": False,
+                    "model_path": LaunchConfiguration(
+                        "traffic_light_pedestrian_classifier_model_path"
+                    ),
+                    "classifier_type": LaunchConfiguration(
+                        "classification/pedestrian/classifier_type"
+                    ),
                 },
             ],
             remappings=[

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- cspell: ignore comlops -->
   <arg name="use_high_accuracy_detection" default="true" description="enable fine position adjustment of traffic light"/>
   <arg name="high_accuracy_detection_type" default="whole_image_detection" description="select high accuracy detector type for traffic light recognition: fine_detection or whole_image_detection"/>
 
@@ -12,6 +13,16 @@
   <arg name="pedestrian_traffic_light_classifier_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/pedestrian_traffic_light_classifier.param.yaml"/>
   <arg name="traffic_light_roi_visualizer_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/traffic_light_roi_visualizer.param.yaml"/>
   <arg name="whole_image_detector_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/yolox_traffic_light_detector.param.yaml"/>
+  <arg name="data_path" default="/opt/autoware/mlmodels"/>
+  <arg name="classification_lamp_recognizer_ml_param_path" default="$(var data_path)/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>
+  <arg name="classification/car/classifier_type" default="2" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+  <arg name="classification/pedestrian/classifier_type" default="2" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+  <let name="traffic_light_car_classifier_model" value="traffic_light_classifier_mobilenetv2_batch_6.onnx" if="$(eval &quot;'$(var classification/car/classifier_type)' == '1'&quot;)"/>
+  <let name="traffic_light_car_classifier_model" value="traffic_light_lamp_recognizer_comlops.onnx" if="$(eval &quot;'$(var classification/car/classifier_type)' == '2'&quot;)"/>
+  <let name="traffic_light_ped_classifier_model" value="ped_traffic_light_classifier_mobilenetv2_batch_6.onnx" if="$(eval &quot;'$(var classification/pedestrian/classifier_type)' == '1'&quot;)"/>
+  <let name="traffic_light_ped_classifier_model" value="traffic_light_lamp_recognizer_comlops.onnx" if="$(eval &quot;'$(var classification/pedestrian/classifier_type)' == '2'&quot;)"/>
+  <arg name="traffic_light_car_classifier_model_path" default="$(var data_path)/traffic_light_classifier/$(var traffic_light_car_classifier_model)"/>
+  <arg name="traffic_light_pedestrian_classifier_model_path" default="$(var data_path)/traffic_light_classifier/$(var traffic_light_ped_classifier_model)"/>
 
   <let name="input/image" value="/sensing/camera/$(var camera_name)/image_raw"/>
   <let name="input/camera_info" value="/sensing/camera/$(var camera_name)/camera_info"/>
@@ -31,12 +42,18 @@
 
     <node pkg="autoware_traffic_light_classifier" exec="traffic_light_classifier_node" name="traffic_light_classifier" output="screen">
       <param from="$(var car_traffic_light_classifier_param_path)" allow_substs="true"/>
+      <param from="$(var classification_lamp_recognizer_ml_param_path)" allow_substs="true"/>
       <param name="build_only" value="$(var build_engine_only)"/>
+      <param name="model_path" value="$(var traffic_light_car_classifier_model_path)"/>
+      <param name="classifier_type" value="$(var classification/car/classifier_type)"/>
     </node>
 
     <node pkg="autoware_traffic_light_classifier" exec="traffic_light_classifier_node" name="traffic_light_classifier" output="screen">
       <param from="$(var pedestrian_traffic_light_classifier_param_path)" allow_substs="true"/>
+      <param from="$(var classification_lamp_recognizer_ml_param_path)" allow_substs="true"/>
       <param name="build_only" value="$(var build_engine_only)"/>
+      <param name="model_path" value="$(var traffic_light_pedestrian_classifier_model_path)"/>
+      <param name="classifier_type" value="$(var classification/pedestrian/classifier_type)"/>
     </node>
 
     <node pkg="autoware_tensorrt_yolox" exec="autoware_tensorrt_yolox_node_exe" name="tensorrt_yolox" output="screen">
@@ -66,6 +83,11 @@
         <arg name="traffic_light_fine_detector_param_path" value="$(var traffic_light_fine_detector_param_path)"/>
         <arg name="car_traffic_light_classifier_param_path" value="$(var car_traffic_light_classifier_param_path)"/>
         <arg name="pedestrian_traffic_light_classifier_param_path" value="$(var pedestrian_traffic_light_classifier_param_path)"/>
+        <arg name="traffic_light_car_classifier_model_path" value="$(var traffic_light_car_classifier_model_path)"/>
+        <arg name="traffic_light_pedestrian_classifier_model_path" value="$(var traffic_light_pedestrian_classifier_model_path)"/>
+        <arg name="classification/pedestrian/classifier_type" value="$(var classification/pedestrian/classifier_type)"/>
+        <arg name="classification/car/classifier_type" value="$(var classification/car/classifier_type)"/>
+        <arg name="classification_lamp_recognizer_ml_param_path" value="$(var classification_lamp_recognizer_ml_param_path)"/>
         <arg name="traffic_light_roi_visualizer_param_path" value="$(var traffic_light_roi_visualizer_param_path)"/>
         <arg name="whole_image_detector_param_path" value="$(var whole_image_detector_param_path)"/>
         <arg name="input/image" value="$(var input/image)"/>
