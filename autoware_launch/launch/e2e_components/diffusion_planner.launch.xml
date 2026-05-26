@@ -38,9 +38,12 @@
     default="$(find-pkg-share autoware_launch)/config/planning/neural_net_planner/minimum_rule_based_planner/jerk_filtered_smoother.param.yaml"
   />
 
-  <arg name="disable_diffusion_planner" default="false"/>
+  <arg name="disable_diffusion_planner_node" default="false"/>
+  <arg name="disable_diffusion_planner_trajectory" default="false"/>
   <arg name="enable_minimum_rule_based_planner" default="false"/>
   <arg name="enable_dummy_concatenator" default="false"/>
+  <let name="diffusion_candidate_trajectories_topic" value="/planning/generator/diffusion_planner/candidate_trajectories" unless="$(var disable_diffusion_planner_trajectory)"/>
+  <let name="diffusion_candidate_trajectories_topic" value="/planning/generator/diffusion_planner/debug/candidate_trajectories" if="$(var disable_diffusion_planner_trajectory)"/>
 
   <node pkg="demo_nodes_cpp" exec="parameter_blackboard" name="velocity_smoother" namespace="/planning/scenario_planning" output="screen">
     <param name="max_velocity" value="16.6"/>
@@ -66,7 +69,7 @@
       <group>
         <push-ros-namespace namespace="trajectory_generator"/>
         <!-- neural network based planning module -->
-        <group unless="$(var disable_diffusion_planner)">
+        <group unless="$(var disable_diffusion_planner_node)">
           <push-ros-namespace namespace="neural_network_based_planner"/>
           <include file="$(find-pkg-share autoware_diffusion_planner)/launch/diffusion_planner.launch.xml">
             <arg name="diffusion_planner_param_path" value="$(var diffusion_planner_param_path)"/>
@@ -78,9 +81,11 @@
             <arg name="input_vector_map" value="/map/vector_map"/>
             <arg name="input_turn_indicators" value="/vehicle/status/turn_indicators_status"/>
             <arg name="debug/output_traffic_signal" value="/planning/scenario_planning/lane_driving/behavior_planning/debug/traffic_signal"/>
-            <arg name="output_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
+            <arg name="output_trajectories" value="$(var diffusion_candidate_trajectories_topic)"/>
             <arg name="output_turn_indicators" value="/planning/turn_indicators_cmd"/>
           </include>
+        </group>
+        <group>
           <include file="$(find-pkg-share autoware_trajectory_modifier)/launch/trajectory_modifier.launch.xml">
             <arg name="trajectory_modifier_param_path" value="$(var trajectory_modifier_param_path)"/>
             <arg name="input_candidate_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
