@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/35615358eb936aab3520bdb8a233b5b52c8529b8/map/autoware_map_tf_generator/config/map_tf_generator.param.yaml
+
 /**:
   ros__parameters:
     map_frame: map
