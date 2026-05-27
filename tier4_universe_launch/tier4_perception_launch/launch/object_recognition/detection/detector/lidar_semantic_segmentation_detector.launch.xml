@@ -40,6 +40,5 @@
         <arg name="output" value="$(var detected_object_feature_remover/output/objects)"/>
       </include>
     </group> -->
-   
   </group>
 </launch>

@@ -27,7 +27,11 @@
   </group>
   <!-- 0: ALL_POLYGON, 1: LABEL_DEPEND -->
   <arg name="euclidean_clustering/shape_policy" default="1" description="shape policy for euclidean clustering, options: 0 (ALL_POLYGON), 1 (LABEL_DEPEND)"/>
-  <arg name="euclidean_clustering/param_path" default="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml" description="parameter file path for euclidean clustering"/>
+  <arg
+    name="euclidean_clustering/param_path"
+    default="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml"
+    description="parameter file path for euclidean clustering"
+  />
   <arg name="use_roi_detected_object_validator" default="true" description="if true, detected objects are validated by ROI and camera-lidar fusion results are filtered accordingly"/>
   <arg name="use_semantic_segmentation_ptv3" default="false" description="use semantic segmentation ptv3 for ground segmentation"/>
   <arg name="use_empty_dynamic_object_publisher" default="false" description="if true, /perception/object_recognition/objects topic has an empty DynamicObjectArray"/>

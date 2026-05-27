@@ -56,7 +56,7 @@ class GroundSegmentationPipeline:
         self.use_semantic_segmentation_ptv3 = (
             LaunchConfiguration("use_semantic_segmentation_ptv3").perform(context).lower() == "true"
         )
-        
+
         # check if self.use_single_frame_filter is bool
         if isinstance(self.use_single_frame_filter, str):
             self.use_single_frame_filter = self.use_single_frame_filter.lower() == "true"

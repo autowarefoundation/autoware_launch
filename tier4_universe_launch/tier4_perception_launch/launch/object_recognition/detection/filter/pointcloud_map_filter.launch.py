@@ -36,7 +36,9 @@ class PointcloudMapFilterPipeline:
             self.pointcloud_map_filter_param = yaml.safe_load(f)["/**"]["ros__parameters"]
         self.voxel_size = self.pointcloud_map_filter_param["down_sample_voxel_size"]
         self.use_pointcloud_map = LaunchConfiguration("use_pointcloud_map").perform(context)
-        self.use_ptv3 = LaunchConfiguration("use_semantic_segmentation_ptv3").perform(context).lower() == "true"
+        self.use_ptv3 = (
+            LaunchConfiguration("use_semantic_segmentation_ptv3").perform(context).lower() == "true"
+        )
 
     def create_pipeline(self):
         if self.use_pointcloud_map == "true":
@@ -69,7 +71,7 @@ class PointcloudMapFilterPipeline:
         )
         return components
 
-    def create_compare_map_pipeline(self,use_ptv3 : bool = False):
+    def create_compare_map_pipeline(self, use_ptv3: bool = False):
         components = []
         down_sample_topic = (
             "/perception/obstacle_segmentation/pointcloud_map_filtered/downsampled/pointcloud"
