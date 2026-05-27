@@ -4,6 +4,10 @@
   <arg name="data_path"/>
   <arg name="diffusion_planner_param_path"/>
 
+  <!-- input topic parameters -->
+  <arg name="input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+
   <!-- trajectory modifier -->
   <arg name="trajectory_modifier_param_path"/>
   <!-- trajectory optimizer -->
@@ -50,8 +54,8 @@
         <arg name="output_candidate_trajectories" value="/planning/generator/diffusion_planner/modified_candidate_trajectories"/>
         <arg name="input_odometry" value="/localization/kinematic_state"/>
         <arg name="input_acceleration" value="/localization/acceleration"/>
-        <arg name="input_objects_topic_name" value="/perception/object_recognition/objects"/>
-        <arg name="input_pointcloud_topic_name" value="/perception/obstacle_segmentation/pointcloud"/>
+        <arg name="input_objects" value="$(var input_objects_topic_name)"/>
+        <arg name="input_pointcloud" value="$(var input_pointcloud_topic_name)"/>
       </include>
       <include file="$(find-pkg-share autoware_trajectory_optimizer)/launch/trajectory_optimizer.launch.xml">
         <arg name="trajectory_optimizer_param_path" value="$(var trajectory_optimizer_param_path)"/>
