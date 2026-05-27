@@ -26,6 +26,7 @@
   <!-- mission planner -->
   <arg name="mission_planner_param_path"/>
   <arg name="launch_remaining_distance_time_calculator" default="false"/>
+  <arg name="launch_proximity_hazard_object_checker" default="true"/>
 
   <!-- minimum rule-based planner param paths -->
   <arg name="minimum_rule_base_planner_param_path" default="$(find-pkg-share autoware_launch)/config/planning/neural_net_planner/minimum_rule_based_planner/minimum_rule_based_planner.param.yaml"/>
@@ -181,6 +182,10 @@
     <!-- mission remaining distance and time calculator -->
     <group if="$(var launch_remaining_distance_time_calculator)">
       <include file="$(find-pkg-share autoware_remaining_distance_time_calculator)/launch/remaining_distance_time_calculator.launch.xml"/>
+    </group>
+
+    <group if="$(var launch_proximity_hazard_object_checker)">
+      <include file="$(find-pkg-share autoware_proximity_hazard_object_checker)/launch/proximity_hazard_object_checker.launch.xml"/>
     </group>
   </group>
 </launch>

@@ -179,6 +179,9 @@
   <arg name="common_downsample_voxel_size_y" default="0.05"/>
   <arg name="common_downsample_voxel_size_z" default="0.05"/>
 
+  <!-- (temp) Azu Proximity Hazard publisher for MOT -->
+  <arg name="launch_proximity_hazard_object_checker" default="true"/>
+
   <!-- Perception module -->
   <group>
     <push-ros-namespace namespace="perception"/>
@@ -422,5 +425,10 @@
   <!-- perception analytics publisher-->
   <group if="$(var use_perception_analytics_publisher)">
     <include file="$(find-pkg-share autoware_perception_online_evaluator)/launch/perception_analytics_publisher.launch.xml"/>
+  </group>
+
+  <!-- (temp) Azu Proximity Hazard publisher for MOT -->
+  <group if="$(var launch_proximity_hazard_object_checker)">
+    <include file="$(find-pkg-share autoware_proximity_hazard_object_checker)/launch/proximity_hazard_object_checker.launch.xml"/>
   </group>
 </launch>

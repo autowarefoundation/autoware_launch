@@ -33,6 +33,7 @@
   <exec_depend>autoware_operation_mode_service_caller</exec_depend>
   <exec_depend>autoware_operation_mode_service_divider</exec_depend>
   <exec_depend>autoware_planning_evaluator</exec_depend>
+  <exec_depend>autoware_proximity_hazard_object_checker</exec_depend>
   <exec_depend>autoware_raw_vehicle_cmd_converter</exec_depend>
   <exec_depend>autoware_redundancy_relay_manager</exec_depend>
   <exec_depend>autoware_remaining_distance_time_calculator</exec_depend>
