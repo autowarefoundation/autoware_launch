@@ -127,7 +127,7 @@ node_groups:
       - /perception/traffic_light_recognition/camera1/detection
       - /perception/traffic_light_recognition/camera1/classifier_pedestrian
       - /perception/traffic_light_recognition/camera1/classifier_car
-      - /perception/traffic_light_recognition/camera1/occlusion_predictor
+      # - /perception/traffic_light_recognition/camera1/occlusion_predictor
   - name: control_container
     type: ros2_component_container_mt
     nodes:
