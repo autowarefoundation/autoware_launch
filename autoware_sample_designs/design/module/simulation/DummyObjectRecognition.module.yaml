@@ -9,6 +9,8 @@ instances:
     entity: MultiObjectTracker.node
   - name: object_recognition/prediction
     entity: ObjectPredictionMapBased.module
+  - name: occupancy_grid_map
+    entity: LaserscanBasedOccupancyGridMap.module
 
 subscribers:
   - name: dummy_object_info
@@ -17,6 +19,8 @@ subscribers:
 publishers:
   - name: object_recognition/objects
   - name: obstacle_segmentation/pointcloud
+  - name: occupancy_grid_map/map
+
 connections:
   # detection
   - - subscriber.dummy_object_info
@@ -39,3 +43,9 @@ connections:
     - publisher.object_recognition/objects
   - - object_recognition/prediction.publisher.objects
     - object_recognition_detection.subscriber.predicted_objects
+
+  # occupancy grid map
+  - - object_recognition_detection.publisher.points_raw
+    - occupancy_grid_map.subscriber.obstacle_pointcloud
+  - - occupancy_grid_map.publisher.map
+    - publisher.occupancy_grid_map/map

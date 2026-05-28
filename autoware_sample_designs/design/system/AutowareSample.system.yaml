@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.3.1
+autoware_system_design_format: 0.3.2
 
 name: AutowareSample.system
 
@@ -20,6 +20,8 @@ variables:
   # environment variables
   - name: map_path
     value: $(env HOME)/autoware_data/maps/sample-map-rosbag
+  - name: check_external_emergency_heartbeat
+    value: false
 
 variable_files:
   - name: vehicle_info
@@ -53,9 +55,8 @@ components:
     compute_unit: main_ecu
 
   # ADAPI
-  - name: adapi
+  - name: api
     entity: SampleSensorKitADAPIWrapper.node
-    path: /api
     compute_unit: main_ecu
 
   # SENSING
@@ -78,18 +79,26 @@ components:
     compute_unit: main_ecu
     parameter_set: sample_system_perception.parameter_set
 
-  # PLANNING/CONTROL
+  # PLANNING
   - name: planning
-    entity: Tier4PlanningWrapper.node
+    entity: Planning.module
     compute_unit: main_ecu
+    parameter_set: universe_planning.parameter_set
+  # CONTROL
   - name: control
-    entity: Tier4ControlWrapper.node
+    entity: Control.module
     compute_unit: main_ecu
+    parameter_set: universe_control.parameter_set
 
   # SYSTEM
   - name: system
     entity: Tier4SystemWrapper.node
     compute_unit: main_ecu
+
+  # # VISUALIZATION
+  # - name: visualization
+  #   entity: Rviz.node
+  #   compute_unit: main_ecu
 
 node_groups:
   - name: pointcloud_container
@@ -118,6 +127,40 @@ node_groups:
       - /perception/traffic_light_recognition/camera1/detection
       - /perception/traffic_light_recognition/camera1/classifier_pedestrian
       - /perception/traffic_light_recognition/camera1/classifier_car
+      # - /perception/traffic_light_recognition/camera1/occlusion_predictor
+  - name: control_container
+    type: ros2_component_container_mt
+    nodes:
+      - /control/shift_decider
+      - /control/vehicle_cmd_gate
+      - /control/operation_mode_transition_manager
+      - /control/trajectory_follower
+  - name: control_check_container
+    type: ros2_component_container_mt
+    nodes:
+      - /control/lane_departure_checker
+      - /control/control_validator
+      - /control/autonomous_emergency_braking
+      - /control/collision_detector
+      # - /control/obstacle_collision_checker
+      # - /control/predicted_path_checker
+  - name: mission_planner_container
+    type: ros2_component_container_mt
+    nodes:
+      - /planning/mission_planning/mission_planner
+      - /planning/mission_planning/route_selector
+  - name: behavior_planning_container
+    type: ros2_component_container_mt
+    nodes:
+      - /planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner
+      - /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner
+  - name: motion_planning_container
+    type: ros2_component_container_mt
+    nodes:
+      - /planning/scenario_planning/lane_driving/motion_planning/elastic_band_smoother
+      - /planning/scenario_planning/lane_driving/motion_planning/path_optimizer
+      - /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner
+      # - /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker
 
 connections:
   - - localization.publisher.kinematic_state
@@ -126,9 +169,9 @@ connections:
     - sensing.subscriber.pose_ndt
 
   - - localization.publisher.initialization_state
-    - adapi.subscriber.localization/initialization_state
+    - api.subscriber.localization/initialization_state
   - - localization.publisher.kinematic_state
-    - adapi.subscriber.localization/kinematic_state
+    - api.subscriber.localization/kinematic_state
 
   - - sensing.publisher.lidar/concatenated/pointcloud
     - perception.subscriber.concatenated_pointcloud
@@ -153,7 +196,7 @@ connections:
     - localization.subscriber.twist
   - - sensing.publisher.gnss/pose_with_covariance
     - localization.subscriber.gnss_pose_with_covariance
-  - - adapi.publisher.localization/initialization_state
+  - - api.publisher.localization/initialization_state
     - localization.subscriber.initialization_state
 
   - - planning.publisher.mission_planning/route
@@ -162,29 +205,128 @@ connections:
   - - perception.publisher.occupancy_grid_map/map
     - planning.subscriber.occupancy_grid_map
   - - map.publisher.vector_map
-    - planning.subscriber.lanelet_map
+    - planning.subscriber.vector_map
+  - - localization.publisher.kinematic_state
+    - planning.subscriber.odometry
+  - - localization.publisher.acceleration
+    - planning.subscriber.acceleration
   - - perception.publisher.object_recognition/objects
     - planning.subscriber.objects
   - - perception.publisher.obstacle_segmentation/pointcloud
-    - planning.subscriber.obstacle_pointcloud
+    - planning.subscriber.pointcloud
   - - perception.publisher.traffic_light_recognition/traffic_signals
     - planning.subscriber.traffic_signals
+  - - system.publisher.operation_mode/state
+    - planning.subscriber.operation_mode_state
+  - - control.publisher.command/control_cmd
+    - planning.subscriber.control_cmd
+  - - control.publisher.predicted_trajectory
+    - planning.subscriber.predicted_trajectory
+  - - api.publisher.operation_mode/state
+    - planning.subscriber.api_operation_mode_state
 
-  - - planning.publisher.^
-    - control.subscriber.^
+  - - planning.publisher.trajectory
+    - control.subscriber.trajectory
+  - - planning.publisher.path_with_lane_id
+    - control.subscriber.path_with_lane_id
+  - - planning.publisher.mission_planning/route
+    - control.subscriber.route
+  - - planning.publisher.route_state
+    - control.subscriber.route_state
+  - - planning.publisher.route
+    - api.subscriber.planning/route
+  - - planning.publisher.route
+    - system.subscriber.planning/route
+  - - planning.publisher.turn_indicators_cmd
+    - control.subscriber.planning_turn_indicators_cmd
+  - - planning.publisher.hazard_lights_cmd
+    - control.subscriber.hazard_lights_cmd
+  - - system.publisher.operation_mode/state
+    - control.subscriber.operation_mode_state
+
+  - - api.publisher.operation_mode/state
+    - control.subscriber.api_operation_mode_state
+  - - api.publisher.autoware/state
+    - control.subscriber.autoware_state
+  - - api.publisher.*
+    - control.subscriber.*
+
   - - localization.publisher.kinematic_state
-    - control.subscriber.kinematics
+    - control.subscriber.odometry
   - - localization.publisher.acceleration
     - control.subscriber.acceleration
+  - - map.publisher.vector_map
+    - control.subscriber.vector_map
   - - perception.publisher.object_recognition/objects
     - control.subscriber.objects
   - - perception.publisher.obstacle_segmentation/pointcloud
-    - control.subscriber.obstacle_pointcloud
+    - control.subscriber.pointcloud
   - - sensing.publisher.imu/imu_data
     - control.subscriber.imu
 
-  - - system.publisher.system/fail_safe/mrm_state
-    - adapi.subscriber.system/fail_safe/mrm_state
+  - - system.publisher.fail_safe/mrm_state
+    - api.subscriber.system/fail_safe/mrm_state
+  - - system.publisher.fail_safe/mrm_state
+    - control.subscriber.mrm_state
+
+  - - localization.publisher.kinematic_state
+    - system.subscriber.kinematic_state
+  - - control.publisher.command/control_cmd
+    - system.subscriber.control_cmd
+  - - control.publisher.command/gear_cmd
+    - system.subscriber.gear_cmd
+
+  - - system.publisher.emergency/control_cmd
+    - control.subscriber.emergency_control_cmd
+  - - system.publisher.emergency/turn_indicators_cmd
+    - control.subscriber.emergency_turn_indicators_cmd
+  - - system.publisher.emergency/hazard_lights_cmd
+    - control.subscriber.emergency_hazard_lights_cmd
+  - - system.publisher.emergency/gear_cmd
+    - control.subscriber.emergency_gear_cmd
+
+  - - planning.server.clear_route
+    - api.client.routing/clear_route
+
+remaps:
+  - source: control.publisher.engage
+    topic: /autoware/engage
+  - source: control.publisher.is_autonomous_available
+    topic: /system/operation_mode/state
+  - source: control.publisher.external_emergency
+    topic: /api/autoware/get/emergency
+  - source: control.publisher.api/engage
+    topic: /api/autoware/get/engage
+  - source: control.server.engage_service
+    topic: /api/autoware/set/engage
+  - source: control.server.external_emergency_service
+    topic: /api/autoware/set/emergency
+  - source: api.publisher.external/local/gear_cmd
+    topic: /external/local/gear_cmd
+  - source: api.publisher.external/local/hazard_lights_cmd
+    topic: /external/local/hazard_lights_cmd
+  - source: api.publisher.external/local/heartbeat
+    topic: /external/local/heartbeat
+  - source: api.publisher.external/local/pedals_cmd
+    topic: /external/local/pedals_cmd
+  - source: api.publisher.external/local/steering_cmd
+    topic: /external/local/steering_cmd
+  - source: api.publisher.external/local/turn_indicators_cmd
+    topic: /external/local/turn_indicators_cmd
+  - source: api.publisher.external/remote/gear_cmd
+    topic: /external/remote/gear_cmd
+  - source: api.publisher.external/remote/hazard_lights_cmd
+    topic: /external/remote/hazard_lights_cmd
+  - source: api.publisher.external/remote/heartbeat
+    topic: /external/remote/heartbeat
+  - source: api.publisher.external/remote/pedals_cmd
+    topic: /external/remote/pedals_cmd
+  - source: api.publisher.external/remote/steering_cmd
+    topic: /external/remote/steering_cmd
+  - source: api.publisher.external/remote/turn_indicators_cmd
+    topic: /external/remote/turn_indicators_cmd
+  - source: api.publisher.autoware/state
+    topic: /autoware/state
 
 # mode configurations
 LoggingSimulation:
@@ -198,11 +340,25 @@ LoggingSimulation:
         parameter_set: sample_system_sensing.parameter_set
       - name: rosbag_replay
         entity: SampleRosbagReplay.node
-        path: /
         compute_unit: dummy_ecu
     connections:
       - - rosbag_replay.publisher.sensing/^
         - sensing.subscriber.^
+    remaps:
+      - source: rosbag_replay.publisher.sensing/gnss/ublox/fix_velocity
+        topic: /sensing/gnss/ublox/fix_velocity
+      - source: rosbag_replay.publisher.sensing/gnss/ublox/nav_sat_fix
+        topic: /sensing/gnss/ublox/nav_sat_fix
+      - source: rosbag_replay.publisher.sensing/gnss/ublox/navpvt
+        topic: /sensing/gnss/ublox/navpvt
+      - source: rosbag_replay.publisher.sensing/imu/tamagawa/imu_raw
+        topic: /sensing/imu/tamagawa/imu_raw
+      - source: rosbag_replay.publisher.sensing/lidar/left/velodyne_packets
+        topic: /sensing/lidar/left/velodyne_packets
+      - source: rosbag_replay.publisher.sensing/lidar/right/velodyne_packets
+        topic: /sensing/lidar/right/velodyne_packets
+      - source: rosbag_replay.publisher.sensing/lidar/top/velodyne_packets
+        topic: /sensing/lidar/top/velodyne_packets
 
 E2ESimulation:
   override:
@@ -212,13 +368,8 @@ E2ESimulation:
     parameter_sets:
       - e2e_simulation.parameter_set
     components:
-      - name: AWSIM_in
-        entity: SampleAwsimIn.node
-        path: /
-        compute_unit: dummy_ecu
-      - name: AWSIM_out
-        entity: SampleAwsimOut.node
-        path: /
+      - name: awsim
+        entity: SampleAWSIM.node
         compute_unit: dummy_ecu
       - name: sensing
         entity: SampleSensorKitAWSIM.module
@@ -226,31 +377,64 @@ E2ESimulation:
         parameter_set: sample_system_sensing.parameter_set
     connections:
       # SENSING
-      - - AWSIM_out.publisher.sensing/lidar/top/pointcloud_raw_ex
+      - - awsim.publisher.sensing/lidar/top/pointcloud_raw_ex
         - sensing.subscriber.lidar/top/pointcloud_raw_ex
-      - - AWSIM_out.publisher.sensing/imu/tamagawa/imu_raw
+      - - awsim.publisher.sensing/imu/tamagawa/imu_raw
         - sensing.subscriber.imu/tamagawa/imu_raw
-      - - AWSIM_out.publisher.vehicle/status/velocity_status
+      - - awsim.publisher.vehicle/status/velocity_status
         - sensing.subscriber.velocity_status
       # Traffic light
-      - - AWSIM_out.publisher.sensing/camera/traffic_light/image_raw
+      - - awsim.publisher.sensing/camera/traffic_light/image_raw
         - perception.subscriber.traffic_camera/image
-      - - AWSIM_out.publisher.sensing/camera/traffic_light/camera_info
+      - - awsim.publisher.sensing/camera/traffic_light/camera_info
         - perception.subscriber.traffic_camera/camera_info
       # localization
-      - - AWSIM_out.publisher.sensing/gnss/pose_with_covariance
+      - - awsim.publisher.sensing/gnss/pose_with_covariance
         - localization.subscriber.gnss_pose_with_covariance
       # control
-      - - AWSIM_out.publisher.vehicle/status/velocity_status
+      - - awsim.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
       - - control.publisher.command/control_cmd
-        - AWSIM_in.subscriber.control/command/control_cmd
+        - awsim.subscriber.control/command/control_cmd
       - - control.publisher.command/gear_cmd
-        - AWSIM_in.subscriber.control/command/gear_cmd
+        - awsim.subscriber.control/command/gear_cmd
       - - control.publisher.command/hazard_lights_cmd
-        - AWSIM_in.subscriber.control/command/hazard_lights_cmd
+        - awsim.subscriber.control/command/hazard_lights_cmd
       - - control.publisher.command/turn_indicators_cmd
-        - AWSIM_in.subscriber.control/command/turn_indicators_cmd
+        - awsim.subscriber.control/command/turn_indicators_cmd
+    remaps:
+      # GNSS
+      - source: awsim.publisher.sensing/gnss/pose
+        topic: /sensing/gnss/pose
+      - source: awsim.publisher.sensing/gnss/pose_with_covariance
+        topic: /sensing/gnss/pose_with_covariance
+      # IMU
+      - source: awsim.publisher.sensing/imu/tamagawa/imu_raw
+        topic: /sensing/imu/tamagawa/imu_raw
+      # LIDAR
+      - source: awsim.publisher.sensing/lidar/top/pointcloud_raw
+        topic: /sensing/lidar/top/pointcloud_raw
+      - source: awsim.publisher.sensing/lidar/top/pointcloud_raw_ex
+        topic: /sensing/lidar/top/pointcloud_raw_ex
+      # CAMERA
+      - source: awsim.publisher.sensing/camera/traffic_light/camera_info
+        topic: /sensing/camera/traffic_light/camera_info
+      - source: awsim.publisher.sensing/camera/traffic_light/image_raw
+        topic: /sensing/camera/traffic_light/image_raw
+      # VEHICLE
+      - source: awsim.publisher.vehicle/status/control_mode
+        topic: /vehicle/status/control_mode
+      - source: awsim.publisher.vehicle/status/gear_status
+        topic: /vehicle/status/gear_status
+      - source: awsim.publisher.vehicle/status/hazard_lights_status
+        topic: /vehicle/status/hazard_lights_status
+      - source: awsim.publisher.vehicle/status/steering_status
+        topic: /vehicle/status/steering_status
+      - source: awsim.publisher.vehicle/status/turn_indicators_status
+        topic: /vehicle/status/turn_indicators_status
+      - source: awsim.publisher.vehicle/status/velocity_status
+        topic: /vehicle/status/velocity_status
+
   remove:
     connections:
       - - sensing.publisher.gnss
@@ -270,28 +454,23 @@ PlanningSimulation:
     parameter_sets:
       - planning_simulation.parameter_set
     components:
-      - name: occupancy_grid_map
-        entity: LaserscanBasedOccupancyGridMap.module
-        path: /perception/occupancy_grid_map
-        compute_unit: main_ecu
       - name: planning_sim_rviz_plugin
         entity: PlanningSimRvizPlugins.module
-        path: /
         compute_unit: dummy_ecu
       - name: perception
         entity: DummyObjectRecognition.module
-        path: /perception
         compute_unit: main_ecu
       - name: localization
         entity: PlanningSimApiLocalization.module
-        path: /
         compute_unit: main_ecu
       - name: simulator
         entity: SimplePlanningSimulator.node
-        path: /
         compute_unit: main_ecu
       - name: vehicle
         entity: PlanningSimVehicle.module
+        compute_unit: main_ecu
+      - name: Rviz
+        entity: Rviz.node
         compute_unit: main_ecu
     connections:
       - - planning_sim_rviz_plugin.publisher.simulation/dummy_perception_publisher/object_info
@@ -301,15 +480,15 @@ PlanningSimulation:
       - - perception.publisher.object_recognition/objects
         - control.subscriber.objects
       - - perception.publisher.obstacle_segmentation/pointcloud
-        - occupancy_grid_map.subscriber.obstacle_pointcloud
+        - planning.subscriber.pointcloud
       - - perception.publisher.obstacle_segmentation/pointcloud
-        - planning.subscriber.obstacle_pointcloud
-      - - perception.publisher.obstacle_segmentation/pointcloud
-        - control.subscriber.obstacle_pointcloud
+        - control.subscriber.pointcloud
+      - - perception.publisher.occupancy_grid_map/map
+        - planning.subscriber.occupancy_grid_map
       - - map.publisher.vector_map
         - perception.subscriber.vector_map
       - - localization.publisher.localization/initialization_state
-        - adapi.subscriber.localization/initialization_state
+        - api.subscriber.localization/initialization_state
       # SIMULATOR
       - - map.publisher.vector_map
         - simulator.subscriber.map/vector_map
@@ -327,9 +506,11 @@ PlanningSimulation:
         - vehicle.subscriber.accel
       - - simulator.publisher.vehicle/status/steering_status
         - vehicle.subscriber.steering
+      - - simulator.publisher.vehicle/status/steering_status
+        - control.subscriber.steering_status
       - - simulator.publisher.vehicle/status/actuation_status
         - vehicle.subscriber.actuation_status
-      - - system.publisher.system/operation_mode/state
+      - - system.publisher.operation_mode/state
         - vehicle.subscriber.operation_mode_state
       - - vehicle.publisher.actuation_cmd
         - simulator.subscriber.control/command/actuation_cmd
@@ -340,15 +521,63 @@ PlanningSimulation:
       - - control.publisher.command/hazard_lights_cmd
         - simulator.subscriber.control/command/hazard_lights_cmd
       - - simulator.publisher.^
-        - adapi.subscriber.^
+        - api.subscriber.^
       - - vehicle.publisher.doors/status
-        - adapi.subscriber.vehicle/doors/status
+        - api.subscriber.vehicle/doors/status
       - - simulator.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
+      - - simulator.publisher.vehicle/status/gear_status
+        - control.subscriber.gear_status
       - - simulator.publisher.localization/kinematic_state
-        - control.subscriber.kinematics
+        - control.subscriber.odometry
+      - - simulator.publisher.localization/kinematic_state
+        - planning.subscriber.odometry
+      - - simulator.publisher.sensing/imu/imu_data
+        - control.subscriber.imu
+      - - simulator.publisher.perception/traffic_light_recognition/traffic_signals
+        - planning.subscriber.traffic_signals
 
-      # - - simulator.publisher.localization/acceleration
-      #   - control.subscriber.acceleration
-      - - control.subscriber.acceleration
-        - simulator.publisher.localization/acceleration
+      - - simulator.publisher.localization/acceleration
+        - control.subscriber.acceleration
+      - - simulator.publisher.localization/acceleration
+        - planning.subscriber.acceleration
+      - - simulator.publisher.vehicle/status/control_mode
+        - control.subscriber.control_mode_report
+    remaps:
+      # planning_sim_rviz_plugin
+      - source: planning_sim_rviz_plugin.publisher.simulation/dummy_perception_publisher/object_info
+        topic: /simulation/dummy_perception_publisher/object_info
+      # localization (PlanningSimApiLocalization / PoseInitializer)
+      - source: localization.publisher.initialpose3d
+        topic: /initialpose3d
+      - source: localization.server.localization/initialize
+        topic: /localization/initialize
+      - source: localization.publisher.localization/initialization_state
+        topic: /localization/initialization_state
+      # simulator (SimplePlanningSimulator)
+      - source: simulator.publisher.localization/kinematic_state
+        topic: /localization/kinematic_state
+      - source: simulator.publisher.localization/acceleration
+        topic: /localization/acceleration
+      - source: simulator.publisher.sensing/imu/imu_data
+        topic: /sensing/imu/imu_data
+      - source: simulator.publisher.perception/traffic_light_recognition/traffic_signals
+        topic: /perception/traffic_light_recognition/traffic_signals
+      - source: simulator.publisher.vehicle/status/velocity_status
+        topic: /vehicle/status/velocity_status
+      - source: simulator.publisher.vehicle/status/steering_status
+        topic: /vehicle/status/steering_status
+      - source: simulator.publisher.vehicle/status/gear_status
+        topic: /vehicle/status/gear_status
+      - source: simulator.publisher.vehicle/status/turn_indicators_status
+        topic: /vehicle/status/turn_indicators_status
+      - source: simulator.publisher.vehicle/status/hazard_lights_status
+        topic: /vehicle/status/hazard_lights_status
+      - source: simulator.publisher.vehicle/status/control_mode
+        topic: /vehicle/status/control_mode
+      - source: simulator.publisher.vehicle/status/actuation_status
+        topic: /vehicle/status/actuation_status
+      - source: simulator.publisher.control/control_mode_request
+        topic: /control/control_mode_request
+      - source: simulator.publisher.api/simulator/set/pose
+        topic: /api/simulator/set/pose
