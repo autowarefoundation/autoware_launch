@@ -5,7 +5,7 @@ name: Control.module
 
 instances:
   - name: trajectory_follower
-    entity: TrajectoryFollower.node
+    entity: TrajectoryFollower.module
   - name: shift_decider
     entity: ShiftDecider.node
   - name: vehicle_cmd_gate
@@ -16,8 +16,6 @@ instances:
     entity: ExternalCmdSelector.node
   - name: external_cmd_converter
     entity: ExternalCmdConverter.node
-  - name: lane_departure_checker
-    entity: LaneDepartureChecker.node
   - name: control_validator
     entity: ControlValidator.node
   - name: autonomous_emergency_braking
@@ -99,17 +97,23 @@ servers:
   - name: external_emergency_service
 
 connections:
-  # TrajectoryFollower node
+  # TrajectoryFollower module
   - - subscriber.trajectory
-    - trajectory_follower.subscriber.reference_trajectory
+    - trajectory_follower.subscriber.trajectory
   - - subscriber.odometry
-    - trajectory_follower.subscriber.current_odometry
+    - trajectory_follower.subscriber.odometry
   - - subscriber.steering_status
-    - trajectory_follower.subscriber.current_steering
+    - trajectory_follower.subscriber.steering_status
   - - subscriber.acceleration
-    - trajectory_follower.subscriber.current_accel
+    - trajectory_follower.subscriber.acceleration
   - - subscriber.operation_mode_state
-    - trajectory_follower.subscriber.current_operation_mode
+    - trajectory_follower.subscriber.operation_mode_state
+  - - subscriber.vector_map
+    - trajectory_follower.subscriber.vector_map
+  - - subscriber.route
+    - trajectory_follower.subscriber.route
+  - - subscriber.api_operation_mode_state
+    - trajectory_follower.subscriber.api_operation_mode_state
 
   # ShiftDecider
   - - trajectory_follower.publisher.control_cmd
@@ -210,20 +214,6 @@ connections:
     - autoware_operation_mode_transition_manager.subscriber.control_mode_report
   - - vehicle_cmd_gate.publisher.engage
     - autoware_operation_mode_transition_manager.subscriber.engage
-
-  # LaneDepartureChecker
-  - - subscriber.odometry
-    - lane_departure_checker.subscriber.odometry
-  - - subscriber.vector_map
-    - lane_departure_checker.subscriber.lanelet_map_bin
-  - - subscriber.route
-    - lane_departure_checker.subscriber.route
-  - - subscriber.trajectory
-    - lane_departure_checker.subscriber.reference_trajectory
-  - - trajectory_follower.publisher.predicted_trajectory
-    - lane_departure_checker.subscriber.predicted_trajectory
-  - - subscriber.api_operation_mode_state
-    - lane_departure_checker.subscriber.api_operation_mode_state
 
   - - subscriber.route_state
     - stop_mode_operator.subscriber.route_state

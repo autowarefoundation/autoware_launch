@@ -2,7 +2,7 @@ autoware_system_design_format: 0.3.0
 
 name: universe_control.parameter_set
 parameters:
-  - node: /control/trajectory_follower
+  - node: /control/trajectory_follower/controller_node_exe
     param_files:
       - param_path: $(find-pkg-share autoware_launch)/config/control/trajectory_follower/trajectory_follower_node.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/control/trajectory_follower/lateral/mpc.param.yaml
@@ -31,7 +31,7 @@ parameters:
     param_files:
       - param_path: $(find-pkg-share autoware_launch)/config/control/external_cmd_selector/external_cmd_selector.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
-  - node: /control/lane_departure_checker
+  - node: /control/trajectory_follower/lane_departure_checker_node
     param_files:
       - param_path: $(find-pkg-share autoware_launch)/config/control/lane_departure_checker/lane_departure_checker.param.yaml
       - param_path: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
