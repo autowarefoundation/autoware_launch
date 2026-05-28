@@ -53,7 +53,6 @@ connections:
   - - controller_node_exe.publisher.slope_angle
     - publisher.longitudinal/slope_angle
 
-
   # lane_departure_checker_node
   - - subscriber.trajectory
     - lane_departure_checker_node.subscriber.reference_trajectory
