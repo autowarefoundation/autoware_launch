@@ -19,10 +19,14 @@ subscribers:
   - name: vector_map
   - name: route
   - name: api_operation_mode_state
+  - name: steering_offset_update
 
 publishers:
   - name: control_cmd
   - name: predicted_trajectory
+  - name: lateral/diagnostic
+  - name: longitudinal/diagnostic
+  - name: longitudinal/slope_angle
 
 connections:
   # controller_node_exe
@@ -36,10 +40,19 @@ connections:
     - controller_node_exe.subscriber.current_accel
   - - subscriber.operation_mode_state
     - controller_node_exe.subscriber.current_operation_mode
+  - - subscriber.steering_offset_update
+    - controller_node_exe.subscriber.steering_offset_update
   - - controller_node_exe.publisher.control_cmd
     - publisher.control_cmd
   - - controller_node_exe.publisher.predicted_trajectory
     - publisher.predicted_trajectory
+  - - controller_node_exe.publisher.lateral_diagnostic
+    - publisher.lateral/diagnostic
+  - - controller_node_exe.publisher.longitudinal_diagnostic
+    - publisher.longitudinal/diagnostic
+  - - controller_node_exe.publisher.slope_angle
+    - publisher.longitudinal/slope_angle
+
 
   # lane_departure_checker_node
   - - subscriber.trajectory

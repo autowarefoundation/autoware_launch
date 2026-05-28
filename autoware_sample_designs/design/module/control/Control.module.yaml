@@ -58,6 +58,7 @@ subscribers:
   - name: traffic_light
   - name: virtual_traffic_light
   - name: walkway
+  - name: steering_offset_update
 
   - name: external/local/gear_cmd
   - name: external/local/hazard_lights_cmd
@@ -114,6 +115,8 @@ connections:
     - trajectory_follower.subscriber.route
   - - subscriber.api_operation_mode_state
     - trajectory_follower.subscriber.api_operation_mode_state
+  - - subscriber.steering_offset_update
+    - trajectory_follower.subscriber.steering_offset_update
 
   # ShiftDecider
   - - trajectory_follower.publisher.control_cmd
