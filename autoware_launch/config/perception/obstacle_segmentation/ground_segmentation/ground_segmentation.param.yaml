@@ -9,7 +9,7 @@
         max_x: 150.0
         min_y: -70.0
         max_y: 70.0
-        margin_max_z: 0.0  # to extend the crop box max_z from vehicle_height
+        margin_max_z: 2.5  # to extend the crop box max_z from vehicle_height
         margin_min_z: -2.5 # to extend the crop box min_z from ground
         negative: False
         processing_time_threshold_sec: 0.01
@@ -25,7 +25,7 @@
         non_ground_height_threshold: 0.20
         grid_size_m: 0.5
         gnd_grid_buffer_size: 4
-        detection_range_z_max: 2.5
+        detection_range_z_max: 3.5
         elevation_grid_mode: true
         use_recheck_ground_cluster: true
         recheck_start_distance: 20.0

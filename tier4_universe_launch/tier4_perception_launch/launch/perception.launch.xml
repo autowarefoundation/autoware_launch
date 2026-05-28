@@ -160,7 +160,7 @@
   <arg name="traffic_light_recognition/classification/car/classifier_type"/>
 
   <!-- Whether to use detection by tracker -->
-  <arg name="use_detection_by_tracker" default="true"/>
+  <arg name="use_detection_by_tracker" default="false"/>
 
   <!-- Radar parameters -->
   <arg
