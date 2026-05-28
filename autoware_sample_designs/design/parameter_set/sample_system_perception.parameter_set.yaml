@@ -52,25 +52,7 @@ parameters:
         value: 1000.0
   - node: /perception/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster
     param_files: []
-    param_values:
-      - name: input_frame
-        value: base_link
-      - name: max_x
-        value: 200.0
-      - name: min_x
-        value: -200.0
-      - name: max_y
-        value: 200.0
-      - name: min_y
-        value: -200.0
-      - name: max_z
-        value: 2.0
-      - name: min_z
-        value: -10.0
-      - name: negative
-        value: false
-      - name: processing_time_threshold_sec
-        value: 0.01
+    param_values: []
   - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/roi_cluster_fusion
     param_files: []
     param_values:
