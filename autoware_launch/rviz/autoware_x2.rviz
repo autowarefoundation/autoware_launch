@@ -2968,6 +2968,20 @@ Visualization Manager:
               Visualization Type: Normal
             - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
               Enabled: true
+              Name: PlanningFactor(DiffusionPlanner)
+              Namespaces:
+                {}
+              Show Safety Factors: true
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/planning_factors/diffusion_planner
+              Value: true
+              show_safety_factors: true
+            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+              Enabled: true
               Name: PlanningFactor(ModifierObstacleStop)
               Namespaces:
                 {}
