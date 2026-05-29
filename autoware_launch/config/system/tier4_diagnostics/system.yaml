@@ -39,7 +39,7 @@ units:
     type: and
     list:
       - { type: link, link: /system/002-latency/total-latency-error }
-      - { type: link, link: /system/005-daytime_monitor-error }
+      # - { type: link, link: /system/005-daytime_monitor-error }
       - { type: link, link: /system/009-dssad-error }
       - { type: link, link: /system/018-emergency_vehicle_main-error }
       - { type: link, link: /system/019-event_record_status-error }
