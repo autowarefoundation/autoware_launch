@@ -26,7 +26,7 @@
     </include>
   </group>
   <!-- 0: ALL_POLYGON, 1: LABEL_DEPEND -->
-  <arg name="euclidean_clustering/shape_policy" default="1" description="shape policy for euclidean clustering, options: 0 (ALL_POLYGON), 1 (LABEL_DEPEND)"/>
+  <arg name="euclidean_clustering/shape_policy" default="0" description="shape policy for euclidean clustering, options: 0 (ALL_POLYGON), 1 (LABEL_DEPEND)"/>
   <arg
     name="euclidean_clustering/param_path"
     default="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml"
@@ -64,7 +64,14 @@
   <arg name="lidar_detection_model" default="centerpoint" description="If the model name is not declared, the default model in perception.launch.xml will be used"/>
   <arg name="ml_camera_lidar_merger_priority_mode" default="0" description="priority mode for ml and camera_lidar merger, options: `0: Object0`, `1: Object1`, `2: ConfidenceBased`, `3: ClassBased`"/>
   <arg name="input_pointcloud_for_traffic_light_occlusion_predictor" default="/sensing/lidar/top/pointcloud_raw_ex" description="input pointcloud topic for traffic_light_occlusion_predictor"/>
-
+  <arg name="centerpoint_model_path" default="/opt/autoware/mlmodels/centerpoint" description="path of centerpoint model file"/>
+  <arg name="bevfusion_model_path" default="/opt/autoware/mlmodels/bevfusion_lidar" description="path of bevfusion model file"/>
+  <group scoped="false" if="$(var use_semantic_segmentation_ptv3)">
+    <let name="use_roi_detected_object_validator" value="false"/>
+    <let name="use_irregular_object_detector" value="false"/>
+    <let name="use_detection_by_tracker" value="false"/>
+    <let name="use_multi_channel_tracker_merger" value="false"/>
+  </group>
   <arg
     name="camera_2d_detector/model_path"
     default="$(var data_path)/tensorrt_yolox/yolox-sPlus-opt-pseudoV2-T4-960x960-T4-seg16cls.onnx"

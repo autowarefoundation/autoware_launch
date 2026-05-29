@@ -159,7 +159,7 @@
     </include>
 
     <include file="$(find-pkg-share autoware_object_merger)/launch/object_fusion_merger.launch.xml" unless="$(var euclidean_clustering/shape_policy)">
-      <arg name="node_name" value="object_association_merger_alpha"/>
+      <arg name="node_name" value="object_fusion_merger_alpha"/>
       <arg name="input/main_objects" value="$(var merger1/input/objects0)"/>
       <arg name="input/sub_objects" value="$(var merger1/input/objects1)"/>
       <arg name="output/objects" value="$(var merger1/output/objects)"/>

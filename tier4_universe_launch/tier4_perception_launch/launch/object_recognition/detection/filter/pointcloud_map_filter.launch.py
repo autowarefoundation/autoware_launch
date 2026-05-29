@@ -36,13 +36,10 @@ class PointcloudMapFilterPipeline:
             self.pointcloud_map_filter_param = yaml.safe_load(f)["/**"]["ros__parameters"]
         self.voxel_size = self.pointcloud_map_filter_param["down_sample_voxel_size"]
         self.use_pointcloud_map = LaunchConfiguration("use_pointcloud_map").perform(context)
-        self.use_ptv3 = (
-            LaunchConfiguration("use_semantic_segmentation_ptv3").perform(context).lower() == "true"
-        )
 
     def create_pipeline(self):
         if self.use_pointcloud_map == "true":
-            return self.create_compare_map_pipeline(self.use_ptv3)
+            return self.create_compare_map_pipeline()
         else:
             return self.create_no_compare_map_pipeline()
 
@@ -71,13 +68,11 @@ class PointcloudMapFilterPipeline:
         )
         return components
 
-    def create_compare_map_pipeline(self, use_ptv3: bool = False):
+    def create_compare_map_pipeline(self):
         components = []
         down_sample_topic = (
             "/perception/obstacle_segmentation/pointcloud_map_filtered/downsampled/pointcloud"
         )
-        if use_ptv3:
-            down_sample_topic = LaunchConfiguration("output_topic")
         components.append(
             ComposableNode(
                 package="autoware_pointcloud_preprocessor",
@@ -99,30 +94,29 @@ class PointcloudMapFilterPipeline:
                 ],
             ),
         )
-        if not use_ptv3:
-            components.append(
-                ComposableNode(
-                    package="autoware_compare_map_segmentation",
-                    plugin="autoware::compare_map_segmentation::VoxelBasedCompareMapFilterComponent",
-                    name="voxel_based_compare_map_filter",
-                    remappings=[
-                        ("input", down_sample_topic),
-                        ("map", "/map/pointcloud_map"),
-                        ("output", LaunchConfiguration("output_topic")),
-                        ("map_loader_service", "/map/get_differential_pointcloud_map"),
-                        ("kinematic_state", "/localization/kinematic_state"),
-                    ],
-                    parameters=[
-                        self.pointcloud_map_filter_param,
-                        {
-                            "input_frame": "map",
-                        },
-                    ],
-                    extra_arguments=[
-                        {"use_intra_process_comms": False},
-                    ],
-                )
+        components.append(
+            ComposableNode(
+                package="autoware_compare_map_segmentation",
+                plugin="autoware::compare_map_segmentation::VoxelBasedCompareMapFilterComponent",
+                name="voxel_based_compare_map_filter",
+                remappings=[
+                    ("input", down_sample_topic),
+                    ("map", "/map/pointcloud_map"),
+                    ("output", LaunchConfiguration("output_topic")),
+                    ("map_loader_service", "/map/get_differential_pointcloud_map"),
+                    ("kinematic_state", "/localization/kinematic_state"),
+                ],
+                parameters=[
+                    self.pointcloud_map_filter_param,
+                    {
+                        "input_frame": "map",
+                    },
+                ],
+                extra_arguments=[
+                    {"use_intra_process_comms": False},
+                ],
             )
+        )
         return components
 
 
@@ -149,7 +143,6 @@ def generate_launch_description():
     add_launch_arg("use_intra_process", "True")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
     add_launch_arg("use_pointcloud_map", "true")
-    add_launch_arg("use_semantic_segmentation_ptv3")
     set_container_executable = SetLaunchConfiguration(
         "container_executable",
         "component_container",

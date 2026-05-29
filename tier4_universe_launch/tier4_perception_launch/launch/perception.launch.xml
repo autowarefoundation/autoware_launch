@@ -129,7 +129,8 @@
     description="if use_empty_dynamic_object_publisher:=true, /perception/object_recognition/objects topic has an empty DynamicObjectArray"
   />
   <arg name="use_roi_detected_object_validator" default="false" description="use roi_detected_object_validator at the roi_detected_object_fusion"/>
-  <arg name="use_object_validator" default="true" description="use obstacle_pointcloud based object validator"/>
+  <arg name="use_object_validator" default="false" description="use obstacle_pointcloud based object validator"/>
+  <let name="use_object_validator" value="false" if="$(var use_semantic_segmentation_ptv3)"/>
   <arg name="objects_validation_method" default="obstacle_pointcloud" description="options: `obstacle_pointcloud` or `occupancy_grid`"/>
   <arg name="use_perception_online_evaluator" default="false" description="use perception online evaluator"/>
   <arg name="use_perception_analytics_publisher" default="true" description="use perception analytics publisher"/>
