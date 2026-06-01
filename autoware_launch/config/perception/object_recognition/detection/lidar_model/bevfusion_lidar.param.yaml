@@ -32,7 +32,7 @@
     iou_nms_search_distance_2d: 10.0
     iou_nms_threshold: 0.1
     yaw_norm_thresholds: [0.3, 0.3, 0.3, 0.3, 0.0] # refers to the class_names
-    
+
     detection_score_thresholds:
         # Upper bound of radial distance of 3d center_x and center_y in bounding boxes, and starting from 0
         # [0-50m), [50.0-90m), [90.0-121.0m), [121.0-200.0m), set a very high number for the last one to be safe
