@@ -1,0 +1,69 @@
+autoware_system_design_format: 0.3.0
+
+# module information
+name: MotionPlanning.module
+
+instances:
+  - name: elastic_band_smoother
+    entity: ElasticBandSmoother.node
+  - name: path_optimizer
+    entity: PathOptimizer.node
+  - name: motion_velocity_planner
+    entity: MotionVelocityPlanner.node
+
+# interfaces
+subscribers:
+  - name: path
+  - name: vector_map
+  - name: odometry
+  - name: accel
+  - name: objects
+  - name: no_ground_pointcloud
+  - name: traffic_signals
+  - name: occupancy_grid_map
+  - name: route
+  - name: operation_mode_state
+  - name: control_cmd
+  - name: predicted_trajectory
+
+publishers:
+  - name: trajectory
+  - name: velocity_limit
+
+connections:
+  - - subscriber.path
+    - elastic_band_smoother.subscriber.path
+  - - subscriber.odometry
+    - elastic_band_smoother.subscriber.odometry
+  - - elastic_band_smoother.publisher.path
+    - path_optimizer.subscriber.path
+  - - subscriber.odometry
+    - path_optimizer.subscriber.odometry
+  - - path_optimizer.publisher.trajectory
+    - motion_velocity_planner.subscriber.trajectory
+  - - subscriber.vector_map
+    - motion_velocity_planner.subscriber.vector_map
+  - - subscriber.odometry
+    - motion_velocity_planner.subscriber.vehicle_odometry
+  - - subscriber.accel
+    - motion_velocity_planner.subscriber.accel
+  - - subscriber.objects
+    - motion_velocity_planner.subscriber.dynamic_objects
+  - - subscriber.no_ground_pointcloud
+    - motion_velocity_planner.subscriber.no_ground_pointcloud
+  - - subscriber.traffic_signals
+    - motion_velocity_planner.subscriber.traffic_signals
+  - - subscriber.occupancy_grid_map
+    - motion_velocity_planner.subscriber.occupancy_grid
+  - - subscriber.route
+    - motion_velocity_planner.subscriber.route
+  - - subscriber.operation_mode_state
+    - motion_velocity_planner.subscriber.operation_mode_state
+  - - subscriber.control_cmd
+    - motion_velocity_planner.subscriber.control_cmd
+  - - subscriber.predicted_trajectory
+    - motion_velocity_planner.subscriber.predicted_trajectory
+  - - motion_velocity_planner.publisher.trajectory
+    - publisher.trajectory
+  - - motion_velocity_planner.publisher.velocity_limit
+    - publisher.velocity_limit

@@ -16,7 +16,7 @@
     min_x: -200.0
     max_y: 200.0
     min_y: -200.0
-    max_z: 2.0
+    max_z: 4.0
     min_z: -10.0
     negative: false
     processing_time_threshold_sec: 0.01

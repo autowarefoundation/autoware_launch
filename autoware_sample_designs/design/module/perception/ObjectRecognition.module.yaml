@@ -46,10 +46,6 @@ connections:
     - tracking.subscriber.lidar_ml_objects
   - - detection.publisher.lidar_clustering_objects
     - tracking.subscriber.lidar_rule_detector_objects
-  - - detection.publisher.tracker_based_detector_objects
-    - tracking.subscriber.tracker_based_detector_objects
-  - - tracking.publisher.objects
-    - detection.subscriber.tracked_objects
 
   # prediction
   - - tracking.publisher.objects
