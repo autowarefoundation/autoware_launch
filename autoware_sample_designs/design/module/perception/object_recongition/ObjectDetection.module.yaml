@@ -16,10 +16,6 @@ instances:
   - name: object_lanelet_filter
     entity: ObjectLaneletFilter.node
 
-  # tracker based detection
-  - name: detection_by_tracker
-    entity: DetectionByTracker.node
-
 subscribers:
   - name: pointcloud_map
   - name: vector_map
@@ -27,10 +23,8 @@ subscribers:
   - name: kinematic_state
   - name: pointcloud
   - name: obstacle_pointcloud
-  - name: tracked_objects
 publishers:
   - name: lidar_clustering_objects
-  - name: tracker_based_detector_objects
   - name: lidar_ml_objects
 
 connections:
@@ -63,11 +57,3 @@ connections:
     - centerpoint.subscriber.obstacle_pointcloud
   - - centerpoint.publisher.detected_objects
     - publisher.lidar_ml_objects
-
-  # detection by tracker
-  - - subscriber.tracked_objects
-    - detection_by_tracker.subscriber.tracked_objects
-  - - clustering.publisher.cluster_objects
-    - detection_by_tracker.subscriber.initial_objects
-  - - detection_by_tracker.publisher.objects
-    - publisher.tracker_based_detector_objects
