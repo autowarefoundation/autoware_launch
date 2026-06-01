@@ -27,11 +27,13 @@
   <arg name="launch_api" default="true" description="launch api"/>
   <arg name="launch_v2x" default="true" description="launch V2X"/>
   <arg name="launch_l4_toolkit" default="true" description="launch L4 Toolkit"/>
+  <arg name="launch_redundancy" default="true" description="launch redundancy"/>
   <!-- Global parameters -->
   <arg name="use_sim_time" default="false" description="use_sim_time"/>
   <!-- Redundant system parameters-->
   <arg name="is_redundant" default="false" description="is_redundant"/>
   <arg name="is_main_ecu" default="true" description="is_main_ecu"/>
+  <arg name="is_multi_domain" default="false" description="is_multi_domain"/>
   <!-- Vehicle -->
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
   <arg name="launch_vehicle_interface" default="true" description="launch vehicle interface"/>
@@ -201,6 +203,13 @@
     <include file="$(find-pkg-share l4_toolkit_launch)/launch/l4_toolkit.launch.xml">
       <arg name="launch_obstacle_post_filter" value="$(var launch_obstacle_post_filter)"/>
       <arg name="daytime_monitor_param_file" value="$(var daytime_monitor_param_file)"/>
+    </include>
+  </group>
+
+  <!-- Redundancy -->
+  <group if="$(eval &quot;'$(var launch_redundancy)'=='true' and '$(var is_multi_domain)'=='true'&quot;)">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/x2_redundancy_component.launch.xml">
+      <arg name="is_redundant" value="$(var is_redundant)"/>
     </include>
   </group>
 

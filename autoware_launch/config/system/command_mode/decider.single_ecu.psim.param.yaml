@@ -1,0 +1,17 @@
+/**:
+  ros__parameters:
+    update_rate: 10.0
+    transition_timeout: 10.0
+    request_timeout: 1.0
+    plugin_name: x2_command_mode_decider::SingleEcuCommandModeDecider
+    command_modes:  # See x2_command_mode_types/modes.hpp
+      - 1000  # manual
+      - 1001  # stop
+      - 1002  # autonomous
+      - 1003  # local
+      - 1004  # remote
+      - 2002  # comfortable_stop
+      - 3001  # main_ecu_in_lane_moderate_stop
+      - 3002  # main_ecu_in_lane_emergency_stop
+    initial_operation_mode: 1001
+    initial_autoware_control: true
