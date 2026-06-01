@@ -3,7 +3,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/b4593ce29d84b5a35165e1c15b6bcbbe3cd0227c/perception/autoware_bevfusion/config/bevfusion_lidar.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/6621aea066dda73b95264e634d7a86ab15acb4d5/perception/autoware_bevfusion/config/bevfusion_lidar.param.yaml
 
 /**:
   ros__parameters:
