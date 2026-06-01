@@ -1,0 +1,99 @@
+# excerpted from autowarefoundation/autoware:
+# `repositories/autoware.repos` + `repositories/autoware-nightly.repos`.
+repositories:
+  # core
+  core/autoware_msgs:
+    type: git
+    url: https://github.com/autowarefoundation/autoware_msgs.git
+    version: 1.12.0
+  core/autoware_adapi_msgs:
+    type: git
+    url: https://github.com/autowarefoundation/autoware_adapi_msgs.git
+    version: main
+  core/autoware_internal_msgs:
+    type: git
+    url: https://github.com/autowarefoundation/autoware_internal_msgs.git
+    version: main
+  core/autoware_cmake:
+    type: git
+    url: https://github.com/autowarefoundation/autoware_cmake.git
+    version: 1.2.0
+  core/autoware_utils:
+    type: git
+    url: https://github.com/autowarefoundation/autoware_utils.git
+    version: main
+  core/autoware_lanelet2_extension:
+    type: git
+    url: https://github.com/autowarefoundation/autoware_lanelet2_extension.git
+    version: 1.1.0
+  core/autoware_core:
+    type: git
+    url: https://github.com/autowarefoundation/autoware_core.git
+    version: main
+  # universe
+  universe/autoware_universe:
+    type: git
+    url: https://github.com/autowarefoundation/autoware_universe.git
+    version: main
+  universe/external/tier4_autoware_msgs:
+    type: git
+    url: https://github.com/tier4/tier4_autoware_msgs.git
+    version: tier4/universe
+  universe/external/muSSP:
+    type: git
+    url: https://github.com/tier4/muSSP.git
+    version: c79e98fd5e658f4f90c06d93472faa977bc873b9
+  universe/external/pointcloud_to_laserscan:
+    type: git
+    url: https://github.com/tier4/pointcloud_to_laserscan.git
+    version: d969ec699f84fad827fbadfa3001c9c657482fbe
+  universe/external/eagleye:
+    type: git
+    url: https://github.com/MapIV/eagleye.git
+    version: 575136ebba99892946d36d8398f228aee2136af0
+  universe/external/rtklib_ros_bridge:
+    type: git
+    url: https://github.com/MapIV/rtklib_ros_bridge.git
+    version: ef094407bba4f475a8032972e0c60cbb939b51b8
+  universe/external/bevdet_vendor:
+    type: git
+    url: https://github.com/autowarefoundation/bevdet_vendor.git
+    version: 0.1.0
+  universe/external/cuda_blackboard:
+    type: git
+    url: https://github.com/autowarefoundation/cuda_blackboard.git
+    version: 0.3.0
+  universe/external/negotiated:
+    type: git
+    url: https://github.com/osrf/negotiated.git
+    version: eac198b55dcd052af5988f0f174902913c5f20e7
+  universe/external/managed_transform_buffer:
+    type: git
+    url: https://github.com/autowarefoundation/managed_transform_buffer.git
+    version: main
+  # sensor_component
+  sensor_component/external/sensor_component_description:
+    type: git
+    url: https://github.com/tier4/sensor_component_description.git
+    version: 03ba094851ec90febfcfc0adb20b64b0e19df7a8
+  sensor_component/external/nebula:
+    type: git
+    url: https://github.com/tier4/nebula.git
+    version: v1.1.0
+  sensor_component/external/sync_tooling_msgs:
+    type: git
+    url: https://github.com/tier4/sync_tooling_msgs.git
+    version: 0.2.7
+  sensor_component/transport_drivers:
+    type: git
+    url: https://github.com/autowarefoundation/transport_drivers.git
+    version: 39ebd8afe1bb9760a6cd6272e428468480f6de90
+  sensor_component/ros2_socketcan:
+    type: git
+    url: https://github.com/autowarefoundation/ros2_socketcan.git
+    version: e39a814180b03f00a5692b6951a5d4e9f0463486
+  # launcher
+  launcher/autoware_launch:
+    type: git
+    url: https://github.com/autowarefoundation/autoware_launch.git
+    version: main # in CI for pull request, use the branch of the pull request instead of main

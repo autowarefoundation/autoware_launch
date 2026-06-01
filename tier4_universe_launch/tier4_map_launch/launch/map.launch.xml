@@ -21,9 +21,7 @@
 
     <node_container pkg="rclcpp_components" exec="$(var container_type)" name="map_container" namespace="" output="both">
       <composable_node pkg="autoware_map_loader" plugin="autoware::map_loader::PointCloudMapLoaderNode" name="pointcloud_map_loader">
-        <param from="$(var pointcloud_map_loader_param_path)"/>
-        <param name="pcd_paths_or_directory" value="[$(var pointcloud_map_path)]"/>
-        <param name="pcd_metadata_path" value="$(var pointcloud_map_metadata_path)"/>
+        <param from="$(var pointcloud_map_loader_param_path)" allow_substs="true"/>
         <remap from="output/pointcloud_map" to="pointcloud_map"/>
         <remap from="output/pointcloud_map_metadata" to="pointcloud_map_metadata"/>
         <remap from="service/get_partial_pcd_map" to="/map/get_partial_pointcloud_map"/>
@@ -32,8 +30,7 @@
       </composable_node>
 
       <composable_node pkg="autoware_map_loader" plugin="autoware::map_loader::Lanelet2MapLoaderNode" name="lanelet2_map_loader">
-        <param from="$(var lanelet2_map_loader_param_path)"/>
-        <param name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
+        <param from="$(var lanelet2_map_loader_param_path)" allow_substs="true"/>
         <remap from="output/lanelet2_map" to="vector_map"/>
       </composable_node>
 

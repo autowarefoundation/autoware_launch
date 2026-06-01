@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_core/blob/588765440f691cd06db9e552007a0771f2b7e5f2/map/autoware_map_loader/config/lanelet2_map_loader.param.yaml
+
 /**:
   ros__parameters:
     allow_unsupported_version: true             # flag to load unsupported format_version anyway. If true, just prints warning.

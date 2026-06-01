@@ -2,6 +2,23 @@
 Changelog for package tier4_localization_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.51.0 (2026-05-01)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(lidar_marker_localizer): extend lidar-marker localization to enhance flexibility and debugging capabilities (`#1695 <https://github.com/autowarefoundation/autoware_launch/issues/1695>`_)
+  * feat: update launch files for multi lidar marker localization
+  * chore: rename to match the LiDAR in sample data
+  * feat: add "lidar-marker" pose estimator to pose_estimator_airbiter
+  * refactor: use single lidar_marker_localizer config and launch
+  Collapse the top_left/top_right split into one lidar_marker_localizer
+  namespace, consolidate parameter files under
+  config/localization/lidar_marker_localizer/, and wire tier4 localization
+  launches to the unified argument paths.
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* Contributors: Motz, github-actions
+
 0.50.0 (2026-02-13)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
