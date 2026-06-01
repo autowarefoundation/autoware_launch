@@ -51,7 +51,7 @@ units:
     list:
       - { type: link, link: /control/002-topic_status/control_command-error }
       - { type: link, link: /control/003-max_distance_deviation-error }
-      - { type: link, link: /control/004-over_velocity-error }
+      # - { type: link, link: /control/004-over_velocity-error }
       - { type: link, link: /control/009-slip_detection-error }
       - { type: link, link: /control/control_command_gate/timeout_main-error }
 
@@ -60,13 +60,13 @@ units:
     list:
       - { type: link, link: /control/005-yaw_deviation-error }
       - { type: link, link: /control/control_command_gate/timeout_stop-error }
-      - { type: link, link: /control/010-collision_detector-error }
+      # - { type: link, link: /control/010-collision_detector-error }
 
   - path: /control/none
     type: and
     list:
-      - { type: link, link: /control/012-overrun_stop_point-error }
-      - { type: link, link: /control/013-will_overrun_stop_point-error }
+      # - { type: link, link: /control/012-overrun_stop_point-error }
+      # - { type: link, link: /control/013-will_overrun_stop_point-error }
       - { type: link, link: /control/014-acceleration_error-error }
       - { type: link, link: /control/016-sudden_deceleration_monitor-error }
 

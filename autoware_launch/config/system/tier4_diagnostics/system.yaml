@@ -40,8 +40,8 @@ units:
     list:
       - { type: link, link: /system/002-latency/total-latency-error }
       # - { type: link, link: /system/005-daytime_monitor-error }
-      - { type: link, link: /system/009-dssad-error }
-      - { type: link, link: /system/018-emergency_vehicle_main-error }
+      # - { type: link, link: /system/009-dssad-error }
+      # - { type: link, link: /system/018-emergency_vehicle_main-error }
       - { type: link, link: /system/019-event_record_status-error }
       - { type: link, link: /system/020-mrm-request-error }
       # - { type: link, link: /system/clock-error }
@@ -61,7 +61,7 @@ units:
   - path: /system/none
     type: and
     list:
-      - { type: link, link: /system/006-vehicle_stuck_checker }
+      # - { type: link, link: /system/006-vehicle_stuck_checker }
       - { type: link, link: /system/010-v2x_jpn_signal }
       - { type: link, link: /system/011-v2x_omron }
       - { type: link, link: /system/012-fms_connection }

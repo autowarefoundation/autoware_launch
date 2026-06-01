@@ -98,8 +98,8 @@ units:
     list:
       # Main ECU
       - { type: link, link: /hardware/mot/001-connection }
-      - { type: link, link: /hardware/signage/001-connection }
-      - { type: link, link: /hardware/voice/001-connection }
+      # - { type: link, link: /hardware/signage/001-connection }
+      # - { type: link, link: /hardware/voice/001-connection }
       # Sub ECU - reserve
       # Perception1 ECU - reserve
       # Perception2 ECU - reserve
