@@ -13,7 +13,6 @@
     # Each (shape, label) should be listed explicitly.
     # create: "null" — explicitly not accepted: silently ignored at runtime.
     # Omitted entries — implicitly not accepted: a throttled error is emitted at runtime.
-    # pass_through_tracker entries omit 'match' (no profile, no association needed).
     tracker_assignment:
       bounding_box:
         unknown:    {create: multi_vehicle_tracker,          match: [multi_vehicle_tracker, pedestrian_and_bicycle_tracker]}
