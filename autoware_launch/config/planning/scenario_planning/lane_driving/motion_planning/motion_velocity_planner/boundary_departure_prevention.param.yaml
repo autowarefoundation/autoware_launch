@@ -101,8 +101,8 @@
           dist_error_m: 1.0
           th_dist_to_boundary_m:
             left:
-              min: 0.01
-              max: 0.5
+              min: 0.1
+              max: 0.3
             right:
-              min: 0.01
-              max: 0.5
+              min: 0.1
+              max: 0.3
