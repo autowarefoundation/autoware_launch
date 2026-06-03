@@ -1,0 +1,38 @@
+name: check-config-sync
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
+      - unlabeled
+    # Config directories live under the package; the exact names are resolved
+    # from .github/config-sync-dirs.txt by the check script.
+    paths:
+      - "autoware_launch/**"
+
+jobs:
+  check-config-sync:
+    runs-on: ubuntu-latest
+    # Allow authors to acknowledge an intentional divergence by labeling the PR.
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'ignore-config-sync') }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v34
+
+      - name: Check config sync
+        if: ${{ steps.changed-files.outputs.any_changed == 'true' }}
+        env:
+          CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+          ADDED_FILES: ${{ steps.changed-files.outputs.added_files }}
+        run: |
+          python3 .github/check-config-sync.py
+        shell: bash
