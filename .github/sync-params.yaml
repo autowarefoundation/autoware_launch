@@ -145,6 +145,33 @@ map:
           - path: autoware_launch/config/map/map_tf_generator.param.yaml
 
 planning:
+  - repository: autowarefoundation/autoware_core
+    ref: main
+    files:
+      - source: planning/autoware_velocity_smoother/config/Analytical.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_velocity_smoother/Analytical.param.yaml
+      - source: planning/autoware_velocity_smoother/config/JerkFiltered.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_velocity_smoother/JerkFiltered.param.yaml
+      - source: planning/autoware_velocity_smoother/config/L2.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_velocity_smoother/L2.param.yaml
+      - source: planning/autoware_velocity_smoother/config/Linf.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_velocity_smoother/Linf.param.yaml
+      - source: planning/autoware_core_planning/config/autoware_velocity_smoother/velocity_smoother.param.yaml
+        # planning/autoware_velocity_smoother/config/default_velocity_smoother.param.yaml ?
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_velocity_smoother/velocity_smoother.param.yaml
+      - source: planning/autoware_core_planning/config/common.param.yaml
+        # planning/autoware_velocity_smoother/config/default_common.param.yaml ?
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/common.param.yaml
+      - source: planning/autoware_core_planning/config/nearest_search.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/nearest_search.param.yaml
+      
   - repository: autowarefoundation/autoware_universe
     ref: main
     files:
@@ -183,10 +210,34 @@ planning:
       - source: planning/autoware_trajectory_optimizer/config/trajectory_optimizer.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer.param.yaml
+      # Planning/parking
+      - source: planning/autoware_freespace_planner/config/freespace_planner.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/parking/freespace_planner/freespace_planner.param.yaml
       # Planning/scenario_planning/common
+      - source: planning/autoware_hazard_lights_selector/config/hazard_lights_selector.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_hazard_lights_selector/hazard_lights_selector.param.yaml
+      - source: planning/planning_validator/autoware_planning_validator_intersection_collision_checker/config/intersection_collision_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/planning_validator/intersection_collision_checker.param.yaml
+      - source: planning/planning_validator/autoware_planning_validator_latency_checker/config/latency_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/planning_validator/latency_checker.param.yaml
+      - source: planning/planning_validator/autoware_planning_validator_rear_collision_checker/config/rear_collision_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/planning_validator/rear_collision_checker.param.yaml
+      - source: planning/planning_validator/autoware_planning_validator_trajectory_checker/config/trajectory_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/planning_validator/trajectory_checker.param.yaml
+      - source: planning/planning_validator/autoware_planning_validator/config/planning_validator.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/planning_validator/planning_validator.param.yaml
+      - source: planning/autoware_costmap_generator/config/costmap_generator.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/costmap_generator.param.yaml
       # Planning/scenario_planning/lane_driving/behavior_planning
       # Planning/scenario_planning/lane_driving/motion_planning
-      # Planning/parking
 
 control: []
 system: []
