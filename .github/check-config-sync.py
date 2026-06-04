@@ -43,9 +43,9 @@ def set_output(status: str) -> None:
 
 
 OP_LABELS = {
-    "added": "🟢 Added",
-    "deleted": "🔴 Deleted",
-    "modified": "🟡 Modified",
+    "added": "Added",
+    "deleted": "Deleted",
+    "modified": "Modified",
 }
 
 
@@ -55,20 +55,16 @@ def build_comment(problems) -> str:
     body = [
         f"{mention}thank you for the update! 🙏",
         "",
-        "This PR changes parameter files in only one config directory, but "
-        "`autoware_launch` keeps multiple config directories in sync. "
-        "Please reflect each change in its counterpart below:",
+        "This PR changes parameter files in only one config directory. "
+        "`autoware_launch` keeps its config directories in sync, so please make "
+        "the same change in the other directory (same relative path):",
         "",
-        "| Operation | Changed in this PR | Counterpart to update |",
-        "| --- | --- | --- |",
+        "| Operation | File |",
+        "| --- | --- |",
     ]
-    for op, src, counterpart in problems:
-        body.append(f"| {OP_LABELS.get(op, op)} | `{src}` | `{counterpart}` |")
+    for op, src, _counterpart in problems:
+        body.append(f"| {OP_LABELS.get(op, op)} | `{src}` |")
     body += [
-        "",
-        "Legend: 🟢 a file was **added**, 🔴 a file was **deleted**, "
-        "🟡 a file was **modified** (parameter added / removed / value changed). "
-        "Please make the same operation on the counterpart file.",
         "",
         "If the divergence is intentional, add the `ignore-config-sync` label "
         "to silence this check.",
