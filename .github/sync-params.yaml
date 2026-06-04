@@ -459,4 +459,10 @@ vehicle:
         variants:
           - path: autoware_launch/config/vehicle/raw_vehicle_cmd_converter/raw_vehicle_cmd_converter.param.yaml
 
-simulator: []
+simulator:
+  - repository: autowarefoundation/autoware_universe
+    ref: main
+    files:
+      - source: simulator/autoware_fault_injection/config/fault_injection.param.yaml
+        variants:
+          - path: autoware_launch/config/simulator/fault_injection.param.yaml
