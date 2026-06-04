@@ -8,8 +8,8 @@ on:
       - reopened
       - labeled
       - unlabeled
-    # Config directories live under the package; the exact names are resolved
-    # from .github/config-sync-dirs.txt by the check script.
+    # Config directories live under the package; their exact names are
+    # auto-discovered by the check script (any subdir with a *.param.yaml).
     paths:
       - "autoware_launch/**"
 
@@ -27,6 +27,11 @@ jobs:
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v34
+        with:
+          # Needed so that `any_changed` is populated; the config dir names
+          # themselves are still resolved by the check script (name-agnostic).
+          files: |
+            autoware_launch/**
 
       - name: Check config sync
         if: ${{ steps.changed-files.outputs.any_changed == 'true' }}
