@@ -9,7 +9,7 @@ on:
       - labeled
       - unlabeled
     paths:
-      - "autoware_launch/**"
+      - autoware_launch/**
 
 jobs:
   check-config-sync:
@@ -29,10 +29,11 @@ jobs:
             autoware_launch/**
 
       - name: Check config sync
-        if: ${{ steps.changed-files.outputs.any_changed == 'true' }}
+        if: ${{ steps.changed-files.outputs.any_changed == 'true' || steps.changed-files.outputs.any_deleted == 'true' }}
         env:
           CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
           ADDED_FILES: ${{ steps.changed-files.outputs.added_files }}
+          DELETED_FILES: ${{ steps.changed-files.outputs.deleted_files }}
         run: |
           python3 .github/check-config-sync.py
         shell: bash

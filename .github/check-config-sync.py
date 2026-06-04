@@ -44,32 +44,35 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--package-dir", type=Path, default=PACKAGE_DIR)
     parser.add_argument("--added-file", action="append", default=[])
+    parser.add_argument("--deleted-file", action="append", default=[])
     parser.add_argument("changed_files", nargs="*")
     args = parser.parse_args()
 
     changed = {Path(f) for f in (args.changed_files or split_env("CHANGED_FILES"))}
     added = {Path(f) for f in (args.added_file or split_env("ADDED_FILES"))}
+    deleted = {Path(f) for f in (args.deleted_file or split_env("DELETED_FILES"))}
+    touched = changed | deleted
 
     config_roots = discover_config_roots(args.package_dir)
     if len(config_roots) < 2:
         print(f"Less than 2 config directories under '{args.package_dir}'. Skipped.")
         return 0
 
-    # A changed file under one config root must also be changed in the others.
+    # A file touched under one config root must also be touched in the others.
     problems = []
-    for changed_file in sorted(changed):
+    for touched_file in sorted(touched):
         for root in config_roots:
-            rel = relative_within(changed_file, root)
+            rel = relative_within(touched_file, root)
             if rel is None:
                 continue
             for other in config_roots:
                 counterpart = other / rel
-                if other == root or counterpart in changed:
+                if other == root or counterpart in touched:
                     continue
                 if counterpart.exists():
-                    problems.append(f"{changed_file} -> {counterpart} (not changed)")
-                elif changed_file in added:
-                    problems.append(f"{changed_file} -> {counterpart} (does not exist)")
+                    problems.append(f"{touched_file} -> {counterpart} (counterpart not updated)")
+                elif touched_file in added:
+                    problems.append(f"{touched_file} -> {counterpart} (does not exist)")
             break
 
     if not problems:
