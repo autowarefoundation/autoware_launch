@@ -16,6 +16,8 @@
       MOTORCYCLE : true # {OVERRIDE}
       BICYCLE : true # {OVERRIDE}
       PEDESTRIAN : true # {OVERRIDE}
+      ANIMAL : true
+      HAZARD : true
 
     filter_settings:
       # polygon overlap based filter
