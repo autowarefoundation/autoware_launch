@@ -451,5 +451,12 @@ control:
           - path: autoware_launch/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml
 
 system: []
-vehicle: []
+vehicle:
+  - repository: autowarefoundation/autoware_universe
+    ref: main
+    files:
+      - source: vehicle/autoware_raw_vehicle_cmd_converter/config/raw_vehicle_cmd_converter.param.yaml
+        variants:
+          - path: autoware_launch/config/vehicle/raw_vehicle_cmd_converter.param.yaml
+
 simulator: []
