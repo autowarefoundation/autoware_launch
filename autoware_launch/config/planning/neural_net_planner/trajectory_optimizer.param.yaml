@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/54657b7f5e8080e8a820ef3c670ca8f055f55510/planning/autoware_trajectory_optimizer/config/trajectory_optimizer.param.yaml
+
 /**:
   ros__parameters:
     # Plugin execution order - plugins will run in this order

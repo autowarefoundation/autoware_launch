@@ -1,11 +1,18 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/c08146d8333e0329d2011517c5db270a4acd9d83/planning/autoware_mission_planner_universe/config/mission_planner.param.yaml
+
 /**:
   ros__parameters:
     map_frame: map
     arrival_check_angle_deg: 45.0
-    arrival_check_duration: 1.0
     arrival_check_lateral_distance: 1.0
     arrival_check_longitudinal_undershoot_distance: 1.0
     arrival_check_longitudinal_overshoot_distance: 2.0
+    arrival_check_duration: 1.0
     goal_angle_threshold_deg: 45.0
     enable_correct_goal_pose: false
     reroute_time_threshold: 10.0
@@ -13,4 +20,4 @@
     consider_no_drivable_lanes: false # This flag is for considering no_drivable_lanes in planning or not.
     check_footprint_inside_lanes: true
     allow_reroute_in_autonomous_mode: true
-    goal_lanelet_transparency: 0.05 # Sets the transparency of the goal lanelet marker in RViz. Higher value makes the marker more visible.
+    goal_lanelet_transparency: 0.05 # {OVERRIDE: Sets the transparency of the goal lanelet marker in RViz. Higher value makes the marker more visible.}

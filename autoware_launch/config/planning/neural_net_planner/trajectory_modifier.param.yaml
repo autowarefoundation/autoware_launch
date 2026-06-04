@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/3506a676ad33ee45b28a430c8033eddd36adb1ba/planning/autoware_trajectory_modifier/config/trajectory_modifier.param.yaml
+
 /**:
   ros__parameters:
     plugin_names:
