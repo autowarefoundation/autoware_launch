@@ -7,26 +7,18 @@ from typing import List
 from typing import Optional
 
 """
-This module checks that a parameter change is reflected across all config
-directories of `autoware_launch` (e.g. `config`, `config_lv2`, ...), which are
-auto-discovered as any subdirectory holding a `*.param.yaml` file. When a file
-is changed in only one of them, it exits non-zero so the PR status check fails.
-Add the `ignore-config-sync` label to bypass an intentional divergence.
+This module checks that a parameter change is reflected across the config
+directories of `autoware_launch` listed in CONFIG_ROOTS. When a file is added,
+changed, or deleted in only one of them, it exits non-zero so the PR status
+check fails. Add the `ignore-config-sync` label to bypass an intentional
+divergence.
 """
 
-PACKAGE_DIR = Path("autoware_launch")
-PARAM_GLOB = "*.param.yaml"
-
-
-def discover_config_roots(package_dir: Path) -> List[Path]:
-    if not package_dir.is_dir():
-        return []
-    roots = [
-        child
-        for child in package_dir.iterdir()
-        if child.is_dir() and next(child.rglob(PARAM_GLOB), None) is not None
-    ]
-    return sorted(roots)
+# Config directories to keep in sync. Edit this list when a directory is added.
+CONFIG_ROOTS = [
+    Path("autoware_launch/config"),
+    Path("autoware_launch/config_lv2"),
+]
 
 
 def relative_within(path: Path, root: Path) -> Optional[Path]:
@@ -42,7 +34,6 @@ def split_env(name: str) -> List[str]:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--package-dir", type=Path, default=PACKAGE_DIR)
     parser.add_argument("--added-file", action="append", default=[])
     parser.add_argument("--deleted-file", action="append", default=[])
     parser.add_argument("changed_files", nargs="*")
@@ -53,9 +44,9 @@ def main():
     deleted = {Path(f) for f in (args.deleted_file or split_env("DELETED_FILES"))}
     touched = changed | deleted
 
-    config_roots = discover_config_roots(args.package_dir)
+    config_roots = [root for root in CONFIG_ROOTS if root.is_dir()]
     if len(config_roots) < 2:
-        print(f"Less than 2 config directories under '{args.package_dir}'. Skipped.")
+        print("Less than 2 config directories present. Skipped.")
         return 0
 
     # A file touched under one config root must also be touched in the others.
