@@ -1,7 +1,7 @@
 name: check-config-sync
 
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - synchronize
@@ -10,6 +10,10 @@ on:
       - unlabeled
     paths:
       - autoware_launch/**
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   check-config-sync:
@@ -29,11 +33,26 @@ jobs:
             autoware_launch/**
 
       - name: Check config sync
+        id: check
         if: ${{ steps.changed-files.outputs.any_changed == 'true' || steps.changed-files.outputs.any_deleted == 'true' }}
         env:
           CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
           ADDED_FILES: ${{ steps.changed-files.outputs.added_files }}
           DELETED_FILES: ${{ steps.changed-files.outputs.deleted_files }}
-        run: |
-          python3 .github/check-config-sync.py
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: python3 .github/check-config-sync.py
         shell: bash
+
+      - name: Post comment
+        if: ${{ always() && steps.check.outputs.status == 'mismatch' }}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: check-config-sync
+          path: config-sync-comment.md
+
+      - name: Resolve comment
+        if: ${{ always() && steps.check.outputs.status == 'ok' }}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: check-config-sync
+          delete: true

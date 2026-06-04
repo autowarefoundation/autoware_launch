@@ -9,9 +9,10 @@ from typing import Optional
 """
 This module checks that a parameter change is reflected across the config
 directories of `autoware_launch` listed in CONFIG_ROOTS. When a file is added,
-changed, or deleted in only one of them, it exits non-zero so the PR status
-check fails. Add the `ignore-config-sync` label to bypass an intentional
-divergence.
+changed, or deleted in only one of them, it writes a PR comment body
+(config-sync-comment.md), sets the `status` step output to `mismatch`, and
+exits non-zero so the PR status check also fails. Add the `ignore-config-sync`
+label to bypass an intentional divergence.
 """
 
 # Config directories to keep in sync. Edit this list when a directory is added.
@@ -19,6 +20,8 @@ CONFIG_ROOTS = [
     Path("autoware_launch/config"),
     Path("autoware_launch/config_lv2"),
 ]
+
+COMMENT_PATH = Path("config-sync-comment.md")
 
 
 def relative_within(path: Path, root: Path) -> Optional[Path]:
@@ -30,6 +33,33 @@ def relative_within(path: Path, root: Path) -> Optional[Path]:
 
 def split_env(name: str) -> List[str]:
     return os.environ.get(name, "").split()
+
+
+def set_output(status: str) -> None:
+    github_output = os.environ.get("GITHUB_OUTPUT")
+    if github_output:
+        with open(github_output, "a") as f:
+            f.write(f"status={status}\n")
+
+
+def build_comment(problems) -> str:
+    author = os.environ.get("PR_AUTHOR", "").strip()
+    mention = f"@{author} " if author else ""
+    body = [
+        f"{mention}thank you for the update! 🙏",
+        "",
+        "This PR changes parameter files in only one config directory, but "
+        "`autoware_launch` keeps multiple config directories in sync. "
+        "Please check whether the counterpart file(s) below should also be updated:",
+        "",
+    ]
+    body += [f"- `{src}` → `{counterpart}`" for src, counterpart in problems]
+    body += [
+        "",
+        "If the divergence is intentional, add the `ignore-config-sync` label "
+        "to silence this check.",
+    ]
+    return "\n".join(body) + "\n"
 
 
 def main():
@@ -47,6 +77,7 @@ def main():
     config_roots = [root for root in CONFIG_ROOTS if root.is_dir()]
     if len(config_roots) < 2:
         print("Less than 2 config directories present. Skipped.")
+        set_output("ok")
         return 0
 
     # A file touched under one config root must also be touched in the others.
@@ -60,19 +91,20 @@ def main():
                 counterpart = other / rel
                 if other == root or counterpart in touched:
                     continue
-                if counterpart.exists():
-                    problems.append(f"{touched_file} -> {counterpart} (counterpart not updated)")
-                elif touched_file in added:
-                    problems.append(f"{touched_file} -> {counterpart} (does not exist)")
+                if counterpart.exists() or touched_file in added:
+                    problems.append((touched_file, counterpart))
             break
 
     if not problems:
         print("All config directories are in sync.")
+        set_output("ok")
         return 0
 
+    COMMENT_PATH.write_text(build_comment(problems))
+    set_output("mismatch")
     print("::error::Parameter changes are not reflected across all config directories.")
-    for problem in problems:
-        print(f"  {problem}")
+    for src, counterpart in problems:
+        print(f"  {src} -> {counterpart}")
     print("Update the counterpart file(s), or add the 'ignore-config-sync' label.")
     return 1
 
