@@ -42,6 +42,13 @@ def set_output(status: str) -> None:
             f.write(f"status={status}\n")
 
 
+OP_LABELS = {
+    "added": "🟢 Added",
+    "deleted": "🔴 Deleted",
+    "modified": "🟡 Modified",
+}
+
+
 def build_comment(problems) -> str:
     author = os.environ.get("PR_AUTHOR", "").strip()
     mention = f"@{author} " if author else ""
@@ -50,11 +57,18 @@ def build_comment(problems) -> str:
         "",
         "This PR changes parameter files in only one config directory, but "
         "`autoware_launch` keeps multiple config directories in sync. "
-        "Please check whether the counterpart file(s) below should also be updated:",
+        "Please reflect each change in its counterpart below:",
         "",
+        "| Operation | Changed in this PR | Counterpart to update |",
+        "| --- | --- | --- |",
     ]
-    body += [f"- `{src}` → `{counterpart}`" for src, counterpart in problems]
+    for op, src, counterpart in problems:
+        body.append(f"| {OP_LABELS.get(op, op)} | `{src}` | `{counterpart}` |")
     body += [
+        "",
+        "Legend: 🟢 a file was **added**, 🔴 a file was **deleted**, "
+        "🟡 a file was **modified** (parameter added / removed / value changed). "
+        "Please make the same operation on the counterpart file.",
         "",
         "If the divergence is intentional, add the `ignore-config-sync` label "
         "to silence this check.",
@@ -83,6 +97,12 @@ def main():
     # A file touched under one config root must also be touched in the others.
     problems = []
     for touched_file in sorted(touched):
+        if touched_file in deleted:
+            op = "deleted"
+        elif touched_file in added:
+            op = "added"
+        else:
+            op = "modified"
         for root in config_roots:
             rel = relative_within(touched_file, root)
             if rel is None:
@@ -92,7 +112,7 @@ def main():
                 if other == root or counterpart in touched:
                     continue
                 if counterpart.exists() or touched_file in added:
-                    problems.append((touched_file, counterpart))
+                    problems.append((op, touched_file, counterpart))
             break
 
     if not problems:
@@ -103,8 +123,8 @@ def main():
     COMMENT_PATH.write_text(build_comment(problems))
     set_output("mismatch")
     print("::error::Parameter changes are not reflected across all config directories.")
-    for src, counterpart in problems:
-        print(f"  {src} -> {counterpart}")
+    for op, src, counterpart in problems:
+        print(f"  [{op}] {src} -> {counterpart}")
     print("Update the counterpart file(s), or add the 'ignore-config-sync' label.")
     return 1
 
