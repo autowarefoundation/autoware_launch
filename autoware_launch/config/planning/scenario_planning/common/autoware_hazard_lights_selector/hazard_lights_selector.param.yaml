@@ -1,3 +1,10 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/283e94f203c2e7ecadeb2c9b01b7d4ea48c69347/planning/autoware_hazard_lights_selector/config/hazard_lights_selector.param.yaml
+
 /**:
   ros__parameters:
     update_rate: 10  # Hz

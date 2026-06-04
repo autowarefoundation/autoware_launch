@@ -1,10 +1,17 @@
+# This file is managed by sync-params workflow.
+# Keys marked with '{OVERRIDE}' or '# {OVERRIDE: reason}' are persisted as variant overrides.
+# 'reason' can be any single-line text without braces.
+# To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
+#
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/e0002f3e36defd695a026df741b5761df615d7e1/planning/autoware_costmap_generator/config/costmap_generator.param.yaml
+
 /**:
   ros__parameters:
     costmap_frame: "map"
     vehicle_frame: "base_link"
     map_frame: "map"
     update_rate: 10.0
-    activate_by_scenario: False
+    activate_by_scenario: false
     grid_min_value: 0.0
     grid_max_value: 1.0
     grid_resolution: 0.3
