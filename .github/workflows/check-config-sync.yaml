@@ -8,15 +8,12 @@ on:
       - reopened
       - labeled
       - unlabeled
-    # Config directories live under the package; their exact names are
-    # auto-discovered by the check script (any subdir with a *.param.yaml).
     paths:
       - "autoware_launch/**"
 
 jobs:
   check-config-sync:
     runs-on: ubuntu-latest
-    # Allow authors to acknowledge an intentional divergence by labeling the PR.
     if: ${{ !contains(github.event.pull_request.labels.*.name, 'ignore-config-sync') }}
     steps:
       - name: Check out repository
@@ -28,8 +25,6 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v34
         with:
-          # Needed so that `any_changed` is populated; the config dir names
-          # themselves are still resolved by the check script (name-agnostic).
           files: |
             autoware_launch/**
 
