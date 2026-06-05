@@ -68,7 +68,7 @@
   <arg name="bevfusion_model_path" default="/opt/autoware/mlmodels/bevfusion_lidar" description="path of bevfusion model file"/>
   <group scoped="false" if="$(var use_semantic_segmentation_ptv3)">
     <let name="use_roi_detected_object_validator" value="false"/>
-    <let name="use_irregular_object_detector" value="false"/>
+    <let name="use_irregular_object_detector" value="true"/>
     <let name="use_detection_by_tracker" value="false"/>
     <let name="use_multi_channel_tracker_merger" value="false"/>
   </group>
