@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="use_autoware_pose_covariance_modifier" default="false"/>
+  <arg name="use_autoware_covariance_selector" default="false"/>
+  <arg name="covariance_selector_param_path" default="$(find-pkg-share autoware_covariance_selector)/config/covariance_selector.param.yaml"/>
   <!-- only when running with a real vehicle, the pose_initializer judges the stop -->
   <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)" value="true"/>
   <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)" value="false"/>
@@ -33,10 +35,10 @@
     <push-ros-namespace namespace="pose_estimator"/>
     <let
       name="ndt_output_pose_with_cov_topic_name"
-      if="$(eval &quot;'$(var use_autoware_pose_covariance_modifier)'=='true'&quot;)"
+      if="$(eval &quot;'$(var use_autoware_pose_covariance_modifier)'=='true' or '$(var use_autoware_covariance_selector)'=='true'&quot;)"
       value="/localization/pose_estimator/ndt_scan_matcher/pose_with_covariance"
     />
-    <let name="ndt_output_pose_with_cov_topic_name" unless="$(eval &quot;'$(var use_autoware_pose_covariance_modifier)'=='true'&quot;)" value="/localization/pose_estimator/pose_with_covariance"/>
+    <let name="ndt_output_pose_with_cov_topic_name" unless="$(eval &quot;'$(var use_autoware_pose_covariance_modifier)'=='true' or '$(var use_autoware_covariance_selector)'=='true'&quot;)" value="/localization/pose_estimator/pose_with_covariance"/>
     <include file="$(find-pkg-share tier4_localization_launch)/launch/pose_twist_estimator/ndt_scan_matcher.launch.xml">
       <arg name="output_pose_with_covariance_topic" value="$(var ndt_output_pose_with_cov_topic_name)"/>
     </include>
@@ -44,6 +46,15 @@
     <!-- Autoware Pose Covariance Modifier Node Launch -->
     <group if="$(var use_autoware_pose_covariance_modifier)">
       <include file="$(find-pkg-share autoware_pose_covariance_modifier)/launch/pose_covariance_modifier.launch.xml"/>
+    </group>
+
+    <!-- Autoware Covariance Selector Node Launch -->
+    <group if="$(var use_autoware_covariance_selector)">
+      <include file="$(find-pkg-share autoware_covariance_selector)/launch/covariance_selector.launch.xml">
+        <arg name="input/pose_with_covariance" value="/localization/pose_estimator/ndt_scan_matcher/pose_with_covariance"/>
+        <arg name="output/pose_with_covariance" value="/localization/pose_estimator/pose_with_covariance"/>
+        <arg name="param_file" value="$(var covariance_selector_param_path)"/>
+      </include>
     </group>
   </group>
 
