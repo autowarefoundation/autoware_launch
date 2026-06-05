@@ -15,6 +15,7 @@
   <buildtool_depend>autoware_cmake</buildtool_depend>
 
   <exec_depend>autoware_dummy_perception_publisher</exec_depend>
+  <exec_depend>autoware_dummy_traffic_light_publisher</exec_depend>
   <exec_depend>autoware_elevation_map_loader</exec_depend>
   <exec_depend>autoware_fault_injection</exec_depend>
   <exec_depend>autoware_multi_object_tracker</exec_depend>
