@@ -225,28 +225,29 @@
       edge_core_internet_connection: default
 
       ## clock
-      "main_sys": default
-      "main_ptp0": default
+      "main.sys": default
+      "main.ptp0": default
       "sensor@rear_upper/lidar": default
       "sensor@left_upper/lidar": default
       "sensor@rear_lower/lidar": default
       "sensor@left_lower/lidar": default
-      "TE-2000_sys": default
+      "TE-2000.sys": default
       "sensor@front_center/radar_link": default
       "sensor@rear_center/radar_link": default
-      "main_ptp1": default
-      "sub_sys": default
-      "sub_ptp0": default
+      "main.ptp1": default
+      "sub.sys": default
+      "sub.ptp0": default
       "sensor@front_upper/lidar": default
       "sensor@right_upper/lidar": default
       "sensor@front_lower/lidar": default
       "sensor@right_lower/lidar": default
-      "perception1_ptp0": default
-      "perception1_sys": default
-      "perception2_ptp0": default
-      "addon_sys": default
-      "logging_ptp0": default
-      "logging_sys": default
+      "perception1.ptp0": default
+      "perception1.sys": default
+      "perception2.ptp0": default
+      "perception2.sys": default
+      "addon.sys": default
+      "logging.ptp0": default
+      "logging.sys": default
 
       # vehicle
       ## /vehicle/001-topic_status/velocity

@@ -45,7 +45,7 @@ units:
       - { type: link, link: /system/019-event_record_status-error }
       - { type: link, link: /system/020-mrm-request-error }
       - { type: link, link: /system/021-logpacker-error }
-      # - { type: link, link: /system/clock-error }
+      - { type: link, link: /system/clock-error }
 
   - path: /system/in_lane_moderate_stop
     type: and
@@ -67,6 +67,13 @@ units:
       - { type: link, link: /system/011-v2x_omron }
       - { type: link, link: /system/012-fms_connection }
       - { type: link, link: /system/command_mode_decider/ready-error }
+      - { type: link, link: /system/clock-TE-2000_sys-error }
+      - { type: link, link: /system/clock-main_ptp0-error }
+      - { type: link, link: /system/clock-main_ptp1-error }
+      - { type: link, link: /system/clock-sub_ptp0-error }
+      - { type: link, link: /system/clock-perception1_ptp0-error }
+      - { type: link, link: /system/clock-perception2_ptp0-error }
+      - { type: link, link: /system/clock-logging_ptp0-error }
 
   - path: /system/002-latency/total-latency-error
     type: warn-to-ok
@@ -240,40 +247,172 @@ units:
   - path: /system/clock
     type: and
     list:
-      - { type: link, link: /system/clock-main_sys }
-      - { type: link, link: /system/clock-main_ptp0 }
-      - { type: link, link: /system/clock-sensor@rear_upper/lidar }
-      - { type: link, link: /system/clock-sensor@left_upper/lidar }
-      - { type: link, link: /system/clock-sensor@rear_lower/lidar }
-      - { type: link, link: /system/clock-sensor@left_lower/lidar }
-      - { type: link, link: /system/clock-TE-2000_sys }
-      - { type: link, link: /system/clock-sensor@front_center/radar_link }
-      - { type: link, link: /system/clock-sensor@rear_center/radar_link }
-      - { type: link, link: /system/clock-main_ptp1 }
-      - { type: link, link: /system/clock-sub_sys }
-      - { type: link, link: /system/clock-sub_ptp0 }
-      - { type: link, link: /system/clock-sensor@front_upper/lidar }
-      - { type: link, link: /system/clock-sensor@right_upper/lidar }
-      - { type: link, link: /system/clock-sensor@front_lower/lidar }
-      - { type: link, link: /system/clock-sensor@right_lower/lidar }
-      - { type: link, link: /system/clock-perception1_ptp0 }
-      - { type: link, link: /system/clock-perception1_sys }
-      - { type: link, link: /system/clock-perception2_ptp0 }
-      - { type: link, link: /system/clock-addon_sys }
-      - { type: link, link: /system/clock-logging_ptp0 }
-      - { type: link, link: /system/clock-logging_sys }
+      - { type: link, link: /system/clock-main_sys-error }
+      - { type: link, link: /system/clock-sensor@rear_upper/lidar-error }
+      - { type: link, link: /system/clock-sensor@left_upper/lidar-error }
+      - { type: link, link: /system/clock-sensor@rear_lower/lidar-error }
+      - { type: link, link: /system/clock-sensor@left_lower/lidar-error }
+      - { type: link, link: /system/clock-sensor@front_center/radar_link-error }
+      - { type: link, link: /system/clock-sensor@rear_center/radar_link-error }
+      - { type: link, link: /system/clock-sub_sys-error }
+      - { type: link, link: /system/clock-sensor@front_upper/lidar-error }
+      - { type: link, link: /system/clock-sensor@right_upper/lidar-error }
+      - { type: link, link: /system/clock-sensor@front_lower/lidar-error }
+      - { type: link, link: /system/clock-sensor@right_lower/lidar-error }
+      - { type: link, link: /system/clock-perception1_sys-error }
+      - { type: link, link: /system/clock-perception2_sys-error }
+      - { type: link, link: /system/clock-addon_sys-error }
+      - { type: link, link: /system/clock-logging_sys-error }
+
+  - path: /system/clock-main_sys-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-main_sys
+
+  - path: /system/clock-sensor@rear_upper/lidar-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sensor@rear_upper/lidar
+
+  - path: /system/clock-sensor@left_upper/lidar-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sensor@left_upper/lidar
+
+  - path: /system/clock-sensor@rear_lower/lidar-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sensor@rear_lower/lidar
+
+  - path: /system/clock-sensor@left_lower/lidar-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sensor@left_lower/lidar
+
+  - path: /system/clock-sensor@front_center/radar_link-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sensor@front_center/radar_link
+
+  - path: /system/clock-sensor@rear_center/radar_link-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sensor@rear_center/radar_link
+
+  - path: /system/clock-main_ptp1-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-main_ptp1
+
+  - path: /system/clock-sub_sys-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sub_sys
+
+  - path: /system/clock-sensor@front_upper/lidar-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sensor@front_upper/lidar
+
+  - path: /system/clock-sensor@right_upper/lidar-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sensor@right_upper/lidar
+
+  - path: /system/clock-sensor@front_lower/lidar-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sensor@front_lower/lidar
+
+  - path: /system/clock-sensor@right_lower/lidar-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sensor@right_lower/lidar
+
+  - path: /system/clock-perception1_sys-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-perception1_sys
+
+  - path: /system/clock-perception2_sys-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-perception2_sys
+
+  - path: /system/clock-addon_sys-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-addon_sys
+
+  - path: /system/clock-logging_sys-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-logging_sys
+
+  - path: /system/clock-TE-2000_sys-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-TE-2000_sys
+
+  - path: /system/clock-main_ptp0-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-main_ptp0
+
+  - path: /system/clock-sub_ptp0-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-sub_ptp0
+
+  - path: /system/clock-perception1_ptp0-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-perception1_ptp0
+
+  - path: /system/clock-perception2_ptp0-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-perception2_ptp0
+
+  - path: /system/clock-logging_ptp0-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/clock-logging_ptp0
 
   - path: /system/clock-main_sys
     type: diag
     node: ""
-    name: main_sys
+    name: main.sys
     timeout: 3.0
     # latch: 0.0
 
   - path: /system/clock-main_ptp0
     type: diag
     node: ""
-    name: main_ptp0
+    name: main.ptp0
     timeout: 3.0
     # latch: 0.0
 
@@ -308,7 +447,7 @@ units:
   - path: /system/clock-TE-2000_sys
     type: diag
     node: ""
-    name: TE-2000_sys
+    name: TE-2000.sys
     timeout: 3.0
     # latch: 0.0
 
@@ -329,21 +468,21 @@ units:
   - path: /system/clock-main_ptp1
     type: diag
     node: ""
-    name: main_ptp1
+    name: main.ptp1
     timeout: 3.0
     # latch: 0.0
 
   - path: /system/clock-sub_sys
     type: diag
     node: ""
-    name: sub_sys
+    name: sub.sys
     timeout: 3.0
     # latch: 0.0
 
   - path: /system/clock-sub_ptp0
     type: diag
     node: ""
-    name: sub_ptp0
+    name: sub.ptp0
     timeout: 3.0
     # latch: 0.0
 
@@ -378,41 +517,47 @@ units:
   - path: /system/clock-perception1_ptp0
     type: diag
     node: ""
-    name: perception1_ptp0
+    name: perception1.ptp0
     timeout: 3.0
     # latch: 0.0
 
   - path: /system/clock-perception1_sys
     type: diag
     node: ""
-    name: perception1_sys
+    name: perception1.sys
     timeout: 3.0
     # latch: 0.0
 
   - path: /system/clock-perception2_ptp0
     type: diag
     node: ""
-    name: perception2_ptp0
+    name: perception2.ptp0
+    timeout: 3.0
+
+  - path: /system/clock-perception2_sys
+    type: diag
+    node: ""
+    name: perception2.sys
     timeout: 3.0
     # latch: 0.0
 
   - path: /system/clock-addon_sys
     type: diag
     node: ""
-    name: addon_sys
+    name: addon.sys
     timeout: 3.0
     # latch: 0.0
 
   - path: /system/clock-logging_ptp0
     type: diag
     node: ""
-    name: logging_ptp0
+    name: logging.ptp0
     timeout: 3.0
     # latch: 0.0
 
   - path: /system/clock-logging_sys
     type: diag
     node: ""
-    name: logging_sys
+    name: logging.sys
     timeout: 3.0
     # latch: 0.0
