@@ -29,9 +29,6 @@ CONFIG_ROOTS = [
 IGNORE_LABEL = "ignore-config-sync"
 APPLY_LABEL = "apply-config-sync"
 
-COMMENT_PATH = Path("config-sync-comment.md")
-APPLIED_COMMENT_PATH = Path("config-sync-applied.md")
-
 OP_LABELS = {
     "added": "✨ Added",
     "deleted": "🗑️ Deleted",
@@ -59,8 +56,13 @@ def split_env(name: str) -> List[str]:
 
 def set_output(key: str, value: str) -> None:
     github_output = os.environ.get("GITHUB_OUTPUT")
-    if github_output:
-        with open(github_output, "a") as f:
+    if not github_output:
+        return
+    with open(github_output, "a") as f:
+        if "\n" in value:
+            delimiter = "CONFIG_SYNC_EOF"
+            f.write(f"{key}<<{delimiter}\n{value}\n{delimiter}\n")
+        else:
             f.write(f"{key}={value}\n")
 
 
@@ -175,7 +177,7 @@ def main():
         if not applied:
             print("Nothing to apply.")
             return 0
-        APPLIED_COMMENT_PATH.write_text(build_applied_comment(applied))
+        set_output("comment", build_applied_comment(applied))
         for op, src, counterpart in applied:
             print(f"  [{op}] {src} -> {counterpart}")
         return 0
@@ -185,7 +187,7 @@ def main():
         set_output("status", "ok")
         return 0
 
-    COMMENT_PATH.write_text(build_comment(problems))
+    set_output("comment", build_comment(problems))
     set_output("status", "mismatch")
     print("::error::Parameter changes are not reflected across all config directories.")
     for op, src, counterpart in problems:

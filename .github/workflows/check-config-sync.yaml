@@ -48,7 +48,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: check-config-sync
-          path: config-sync-comment.md
+          message: ${{ steps.check.outputs.comment }}
 
       - name: Resolve comment
         if: ${{ always() && steps.check.outputs.status == 'ok' }}
@@ -93,7 +93,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
+          git add -A -- autoware_launch
           if git diff --cached --quiet; then
             echo "Nothing to commit; configs already in sync."
           else
@@ -108,4 +108,4 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: apply-config-sync
-          path: config-sync-applied.md
+          message: ${{ steps.apply.outputs.comment }}
