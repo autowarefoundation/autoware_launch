@@ -43,9 +43,9 @@ def set_output(status: str) -> None:
 
 
 OP_LABELS = {
-    "added": "Added",
-    "deleted": "Deleted",
-    "modified": "Modified",
+    "added": "🆕 Added",
+    "deleted": "🗑️ Deleted",
+    "modified": "✏️ Modified",
 }
 
 
