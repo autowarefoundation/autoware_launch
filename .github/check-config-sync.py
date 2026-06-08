@@ -43,9 +43,9 @@ def set_output(status: str) -> None:
 
 
 OP_LABELS = {
-    "added": "✨ Added",
-    "deleted": "🗑️ Deleted",
-    "modified": "✏️ Modified",
+    "added": "✨ Added",
+    "deleted": "🗑️ Deleted",
+    "modified": "✏️ Modified",
 }
 
 
@@ -63,7 +63,9 @@ def build_comment(problems) -> str:
         "| --- | --- |",
     ]
     for op, src, _counterpart in problems:
-        body.append(f"| {OP_LABELS.get(op, op)} | `{src}` |")
+        # Non-breaking space keeps the emoji and label on one line in the table.
+        label = OP_LABELS.get(op, op).replace(" ", " ")
+        body.append(f"| {label} | `{src}` |")
     body += [
         "",
         "If the divergence is intentional, add the `ignore-config-sync` label "
