@@ -39,7 +39,7 @@ units:
     type: and
     list:
       - { type: link, link: /perception/001-topic_status/traffic_signals-error }
-      - { type: link, link: /perception/009-spec_limit/voxel_based_compare_map_filter-error }
+      # - { type: link, link: /perception/009-spec_limit/voxel_based_compare_map_filter-error }
 
   - path: /perception/in_lane_moderate_stop
     type: and
