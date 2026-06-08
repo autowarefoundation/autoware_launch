@@ -1,23 +1,28 @@
 #!/usr/bin/env python3
 import argparse
+import dataclasses
 import os
 from pathlib import Path
 import shutil
 import sys
 from typing import List
 from typing import Optional
+from typing import Set
 
 """
 This module checks that a parameter change is reflected across the config
 directories of `autoware_launch` listed in CONFIG_ROOTS. When a file is added,
-changed, or deleted in only one of them, it writes a PR comment body
-(config-sync-comment.md), sets the `status` step output to `mismatch`, and exits
+modified, or deleted in only one of them, the comment body is written to the
+`comment` step output, `status` is set to `mismatch`, and the script exits
 non-zero so the PR status check also fails.
 
-With `--apply` it instead mirrors each one-sided change to the corresponding
-directory (run when the `apply-config-sync` label is added) and writes the
-`config-sync-applied.md` comment body. Add the `ignore-config-sync` label to
-bypass an intentional divergence.
+With `--apply` the one-sided changes are instead mirrored to the corresponding
+directory (run when the `apply-config-sync` label is added) and the summary is
+written to the `comment` step output.
+
+If fewer than two config directories exist (e.g. only `config` is present), the
+check is skipped. Add the `ignore-config-sync` label to bypass an intentional
+divergence.
 """
 
 # Config directories to keep in sync. Edit this list when a directory is added.
@@ -36,6 +41,13 @@ OP_LABELS = {
 }
 
 
+@dataclasses.dataclass
+class Change:
+    operation: str  # "added", "modified" or "deleted"
+    source: Path  # the file changed in this PR
+    counterpart: Path  # the file that should receive the same change
+
+
 def relative_within(path: Path, root: Path) -> Optional[Path]:
     try:
         return path.relative_to(root)
@@ -50,8 +62,8 @@ def config_root_of(path: Path) -> Path:
     return path.parent
 
 
-def split_env(name: str) -> List[str]:
-    return os.environ.get(name, "").split()
+def split_env(name: str) -> Set[Path]:
+    return {Path(f) for f in os.environ.get(name, "").split()}
 
 
 def set_output(key: str, value: str) -> None:
@@ -66,38 +78,41 @@ def set_output(key: str, value: str) -> None:
             f.write(f"{key}={value}\n")
 
 
-def op_label(op: str) -> str:
+def op_label(operation: str) -> str:
     # Non-breaking space keeps the emoji and label on one line in the table.
-    return OP_LABELS.get(op, op).replace(" ", "\N{NO-BREAK SPACE}")
+    return OP_LABELS.get(operation, operation).replace(" ", "\N{NO-BREAK SPACE}")
 
 
-def collect_problems(touched, added, deleted, config_roots):
-    problems = []
-    for touched_file in sorted(touched):
-        if touched_file in deleted:
-            op = "deleted"
-        elif touched_file in added:
-            op = "added"
+def find_unsynced_changes(
+    changed: Set[Path], added: Set[Path], deleted: Set[Path], config_roots: List[Path]
+) -> List[Change]:
+    touched = changed | deleted
+    changes = []
+    for path in sorted(touched):
+        if path in deleted:
+            operation = "deleted"
+        elif path in added:
+            operation = "added"
         else:
-            op = "modified"
+            operation = "modified"
         for root in config_roots:
-            rel = relative_within(touched_file, root)
+            rel = relative_within(path, root)
             if rel is None:
                 continue
             for other in config_roots:
                 counterpart = other / rel
                 if other == root or counterpart in touched:
                     continue
-                if counterpart.exists() or touched_file in added:
-                    problems.append((op, touched_file, counterpart))
+                if counterpart.exists() or path in added:
+                    changes.append(Change(operation, path, counterpart))
             break
-    return problems
+    return changes
 
 
-def build_comment(problems) -> str:
+def build_check_comment(changes: List[Change]) -> str:
     author = os.environ.get("PR_AUTHOR", "").strip()
     mention = f"@{author} " if author else ""
-    body = [
+    lines = [
         f"{mention}thank you for the update! 🙏",
         "",
         "This PR changes parameter files in only one config directory. "
@@ -107,91 +122,90 @@ def build_comment(problems) -> str:
         "| Operation | File | Corresponding directory |",
         "| --- | --- | --- |",
     ]
-    for op, src, counterpart in problems:
-        body.append(f"| {op_label(op)} | `{src}` | `{config_root_of(counterpart)}` |")
-    body += [
+    for change in changes:
+        lines.append(
+            f"| {op_label(change.operation)} | `{change.source}` "
+            f"| `{config_root_of(change.counterpart)}` |"
+        )
+    lines += [
         "",
-        f"To apply the same changes to the corresponding directory automatically, "
-        f"add the `{APPLY_LABEL}` label to this PR. If the divergence is "
-        f"intentional, add the `{IGNORE_LABEL}` label to silence this check.",
+        f"To apply these changes to the corresponding directory automatically, add "
+        f"the `{APPLY_LABEL}` label to this PR. If the divergence is intentional, "
+        f"add the `{IGNORE_LABEL}` label to silence this check.",
     ]
-    return "\n".join(body) + "\n"
+    return "\n".join(lines) + "\n"
 
 
-def build_applied_comment(applied) -> str:
-    body = [
-        "🤖 Automatically mirrored the change(s) to the corresponding config "
-        "directory and pushed a commit. Please review it:",
+def build_apply_comment(changes: List[Change]) -> str:
+    lines = [
+        "🤖 Mirrored the change(s) to the corresponding config directory and "
+        "pushed a commit. Please review it:",
         "",
         "| Operation | Updated file |",
         "| --- | --- |",
     ]
-    for op, _src, counterpart in applied:
-        body.append(f"| {op_label(op)} | `{counterpart}` |")
-    return "\n".join(body) + "\n"
+    for change in changes:
+        lines.append(f"| {op_label(change.operation)} | `{change.counterpart}` |")
+    return "\n".join(lines) + "\n"
 
 
-def apply_sync(problems):
+def apply_changes(changes: List[Change]) -> List[Change]:
     applied = []
-    for op, src, counterpart in problems:
-        if op == "deleted":
-            if counterpart.exists():
-                counterpart.unlink()
-                applied.append((op, src, counterpart))
+    for change in changes:
+        if change.operation == "deleted":
+            if change.counterpart.exists():
+                change.counterpart.unlink()
+                applied.append(change)
         else:  # added or modified
-            counterpart.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(src, counterpart)
-            applied.append((op, src, counterpart))
+            change.counterpart.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(change.source, change.counterpart)
+            applied.append(change)
     return applied
 
 
-def main():
-    parser = argparse.ArgumentParser()
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--apply",
         action="store_true",
         help="mirror one-sided changes to the corresponding directory",
     )
-    parser.add_argument("--added-file", action="append", default=[])
-    parser.add_argument("--deleted-file", action="append", default=[])
-    parser.add_argument("changed_files", nargs="*")
     args = parser.parse_args()
 
-    changed = {Path(f) for f in (args.changed_files or split_env("CHANGED_FILES"))}
-    added = {Path(f) for f in (args.added_file or split_env("ADDED_FILES"))}
-    deleted = {Path(f) for f in (args.deleted_file or split_env("DELETED_FILES"))}
-    touched = changed | deleted
+    changed = split_env("CHANGED_FILES")
+    added = split_env("ADDED_FILES")
+    deleted = split_env("DELETED_FILES")
 
     config_roots = [root for root in CONFIG_ROOTS if root.is_dir()]
     if len(config_roots) < 2:
-        print("Less than 2 config directories present. Skipped.")
+        print("Fewer than two config directories present; skipping.")
         set_output("status", "ok")
         set_output("applied", "false")
         return 0
 
-    problems = collect_problems(touched, added, deleted, config_roots)
+    changes = find_unsynced_changes(changed, added, deleted, config_roots)
 
     if args.apply:
-        applied = apply_sync(problems)
+        applied = apply_changes(changes)
         set_output("applied", "true" if applied else "false")
         if not applied:
             print("Nothing to apply.")
             return 0
-        set_output("comment", build_applied_comment(applied))
-        for op, src, counterpart in applied:
-            print(f"  [{op}] {src} -> {counterpart}")
+        set_output("comment", build_apply_comment(applied))
+        for change in applied:
+            print(f"  [{change.operation}] {change.source} -> {change.counterpart}")
         return 0
 
-    if not problems:
+    if not changes:
         print("All config directories are in sync.")
         set_output("status", "ok")
         return 0
 
-    set_output("comment", build_comment(problems))
     set_output("status", "mismatch")
+    set_output("comment", build_check_comment(changes))
     print("::error::Parameter changes are not reflected across all config directories.")
-    for op, src, counterpart in problems:
-        print(f"  [{op}] {src} -> {counterpart}")
+    for change in changes:
+        print(f"  [{change.operation}] {change.source} -> {change.counterpart}")
     print(f"Update the counterpart file(s), or add the '{IGNORE_LABEL}' label.")
     return 1
 

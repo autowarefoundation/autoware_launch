@@ -41,7 +41,6 @@ jobs:
           DELETED_FILES: ${{ steps.changed-files.outputs.deleted_files }}
           PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         run: python3 .github/check-config-sync.py
-        shell: bash
 
       - name: Post comment
         if: ${{ always() && steps.check.outputs.status == 'mismatch' }}
@@ -85,7 +84,6 @@ jobs:
           ADDED_FILES: ${{ steps.changed-files.outputs.added_files }}
           DELETED_FILES: ${{ steps.changed-files.outputs.deleted_files }}
         run: python3 .github/check-config-sync.py --apply
-        shell: bash
 
       - name: Commit and push
         id: commit
@@ -103,7 +101,7 @@ jobs:
           fi
         shell: bash
 
-      - name: Comment auto-commit
+      - name: Post comment
         if: ${{ steps.commit.outputs.pushed == 'true' }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
