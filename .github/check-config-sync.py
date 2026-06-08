@@ -23,12 +23,25 @@ CONFIG_ROOTS = [
 
 COMMENT_PATH = Path("config-sync-comment.md")
 
+OP_LABELS = {
+    "added": "✨ Added",
+    "deleted": "🗑️ Deleted",
+    "modified": "✏️ Modified",
+}
+
 
 def relative_within(path: Path, root: Path) -> Optional[Path]:
     try:
         return path.relative_to(root)
     except ValueError:
         return None
+
+
+def config_root_of(path: Path) -> Path:
+    for root in CONFIG_ROOTS:
+        if root == path or root in path.parents:
+            return root
+    return path.parent
 
 
 def split_env(name: str) -> List[str]:
@@ -42,11 +55,9 @@ def set_output(status: str) -> None:
             f.write(f"status={status}\n")
 
 
-OP_LABELS = {
-    "added": "✨ Added",
-    "deleted": "🗑️ Deleted",
-    "modified": "✏️ Modified",
-}
+def op_label(op: str) -> str:
+    # Non-breaking space keeps the emoji and label on one line in the table.
+    return OP_LABELS.get(op, op).replace(" ", "\N{NO-BREAK SPACE}")
 
 
 def build_comment(problems) -> str:
@@ -57,15 +68,13 @@ def build_comment(problems) -> str:
         "",
         "This PR changes parameter files in only one config directory. "
         "`autoware_launch` keeps its config directories in sync, so please make "
-        "the same change in the other directory (same relative path):",
+        "the same change to the same relative path in the corresponding directory:",
         "",
-        "| Operation | File |",
-        "| --- | --- |",
+        "| Operation | File | Corresponding directory |",
+        "| --- | --- | --- |",
     ]
-    for op, src, _counterpart in problems:
-        # Non-breaking space keeps the emoji and label on one line in the table.
-        label = OP_LABELS.get(op, op).replace(" ", " ")
-        body.append(f"| {label} | `{src}` |")
+    for op, src, counterpart in problems:
+        body.append(f"| {op_label(op)} | `{src}` | `{config_root_of(counterpart)}` |")
     body += [
         "",
         "If the divergence is intentional, add the `ignore-config-sync` label "
@@ -92,7 +101,7 @@ def main():
         set_output("ok")
         return 0
 
-    # A file touched under one config root must also be touched in the others.
+    # Classify each touched file as added / deleted / modified.
     problems = []
     for touched_file in sorted(touched):
         if touched_file in deleted:
