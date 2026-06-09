@@ -28,8 +28,8 @@
       emergency_vehicle: car
       train: unknown
       truck: truck
-      tractor_unit: trailer
-      semi_trailer: trailer
+      tractor_unit: truck
+      semi_trailer: truck
       construction_vehicle: truck
       forklift: car
       kart: car
