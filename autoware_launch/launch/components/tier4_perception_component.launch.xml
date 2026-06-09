@@ -64,7 +64,7 @@
   <arg name="lidar_detection_model" default="centerpoint" description="If the model name is not declared, the default model in perception.launch.xml will be used"/>
   <arg name="ml_camera_lidar_merger_priority_mode" default="0" description="priority mode for ml and camera_lidar merger, options: `0: Object0`, `1: Object1`, `2: ConfidenceBased`, `3: ClassBased`"/>
   <arg name="input_pointcloud_for_traffic_light_occlusion_predictor" default="/sensing/lidar/top/pointcloud_raw_ex" description="input pointcloud topic for traffic_light_occlusion_predictor"/>
-  
+
   <group scoped="false" if="$(var use_semantic_segmentation_ptv3)">
     <let name="use_roi_detected_object_validator" value="false"/>
     <let name="use_irregular_object_detector" value="true"/>
