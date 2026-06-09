@@ -110,6 +110,7 @@
   <let name="lidar_rule_detector/output/cluster_objects" value="$(var ns)/clustering/objects_with_feature"/>
   <let name="lidar_rule_detector/output/objects" value="$(var ns)/clustering/objects"/>
   <let name="camera_lidar_rule_detector/output/objects" value="$(var ns)/clustering/camera_lidar_fusion/objects"/>
+  <let name="lidar_cluster/output/objects" value="$(var ns)/clustering/label_based_euclidean_cluster/objects"/>
   <let name="camera_lidar_rule_detector/output/cluster_objects" value="$(var ns)/clustering/objects_with_feature"/>
   <let name="tracker_based_detector/input/clusters" value="$(var ns)/clustering/objects_with_feature"/>
   <let name="tracker_based_detector/output/objects" value="$(var ns)/detection_by_tracker/objects"/>
@@ -257,7 +258,7 @@
       <arg name="ns" value="$(var ns)"/>
       <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
       <arg name="euclidean_cluster/input/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
-      <arg name="detected_object_feature_remover/output/objects" value="$(var camera_lidar_rule_detector/output/objects)"/>
+      <arg name="semantic_cluster/output/objects" value="$(var lidar_cluster/output/objects)"/>
       <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
       <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
       <arg name="euclidean_clustering/param_path" value="$(var euclidean_clustering/param_path)"/>

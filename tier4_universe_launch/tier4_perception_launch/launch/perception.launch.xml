@@ -374,6 +374,7 @@
           <arg name="use_validator" value="$(var use_object_validator)"/>
           <arg name="use_short_range_detection" value="$(var use_short_range_detection)"/>
           <arg name="use_camera_vru_detector" value="$(var use_camera_vru_detector)"/>
+          <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>
           <arg name="output/merged_objects" value="$(var output/tracker_merged_objects)"/>
           <arg name="publish_merged_objects" value="$(var tracker_publish_merged_objects)"/>
         </include>
