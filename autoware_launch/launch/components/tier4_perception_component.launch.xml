@@ -45,7 +45,7 @@
   <arg name="use_image_segmentation_based_filter" default="false" description="launch image_segmentation_based_filter in clustering"/>
   <arg name="use_perception_online_evaluator" default="false" description="launch perception online evaluator"/>
   <arg name="use_perception_analytics_publisher" default="true" description="launch perception analytics publisher"/>
-  <arg name="use_detection_by_tracker" default="true" description="launch detection_by_tracker function"/>
+  <arg name="use_detection_by_tracker" default="false" description="launch detection_by_tracker function"/>
   <arg name="use_radar_tracking_fusion" default="true" description="if true, radar objects are merged in tracking module. Otherwise, radar objects are merged in detection module."/>
   <arg name="use_object_filter" default="true" description="launch object filter to filter-out detected object"/>
   <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
@@ -64,8 +64,7 @@
   <arg name="lidar_detection_model" default="centerpoint" description="If the model name is not declared, the default model in perception.launch.xml will be used"/>
   <arg name="ml_camera_lidar_merger_priority_mode" default="0" description="priority mode for ml and camera_lidar merger, options: `0: Object0`, `1: Object1`, `2: ConfidenceBased`, `3: ClassBased`"/>
   <arg name="input_pointcloud_for_traffic_light_occlusion_predictor" default="/sensing/lidar/top/pointcloud_raw_ex" description="input pointcloud topic for traffic_light_occlusion_predictor"/>
-  <arg name="centerpoint_model_path" default="/opt/autoware/mlmodels/centerpoint" description="path of centerpoint model file"/>
-  <arg name="bevfusion_model_path" default="/opt/autoware/mlmodels/bevfusion_lidar" description="path of bevfusion model file"/>
+  
   <group scoped="false" if="$(var use_semantic_segmentation_ptv3)">
     <let name="use_roi_detected_object_validator" value="false"/>
     <let name="use_irregular_object_detector" value="true"/>
