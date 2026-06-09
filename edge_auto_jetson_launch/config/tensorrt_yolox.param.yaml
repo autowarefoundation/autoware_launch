@@ -3,7 +3,7 @@
   ros__parameters:
     # refine segmentation mask by overlay roi class
     # disable when sematic segmentation accuracy is good enough
-    is_roi_overlap_segment: true
+    is_roi_overlap_segmentation: true
 
     # minimum existence_probability of detected roi considered to replace segmentation
     overlap_roi_score_threshold: 0.3
@@ -11,15 +11,16 @@
     # publish color mask for result visualization
     is_publish_color_mask: false
 
-    roi_overlay_segment_label:
-      UNKNOWN: true
-      CAR: false
-      TRUCK: false
-      BUS: false
-      MOTORCYCLE: true
-      BICYCLE: true
-      PEDESTRIAN: true
+    roi_overlay_segmentation_label:
+      UNKNOWN : true
+      CAR : false
+      TRUCK : false
+      BUS : false
+      MOTORCYCLE : true
+      BICYCLE : true
+      PEDESTRIAN : true
       ANIMAL: true
+      HAZARD: true
 
     model_path: "/opt/autoware/mlmodels/yolox/yolox-sPlus-T4-960x960-debris.onnx"
     label_path: "/opt/autoware/mlmodels/yolox/label.txt"
