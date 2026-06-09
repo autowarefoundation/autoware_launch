@@ -173,6 +173,13 @@
   <!-- Object merger method: whether to enable multi-channel tracker merger -->
   <arg name="use_multi_channel_tracker_merger" default="false" description="if it is true, replace the multi step merger to multi-channel tracker merger."/>
   <arg name="output/tracker_merged_objects" default="/perception/object_recognition/detection/objects"/>
+
+  <!-- Proximity Hazard publisher -->
+  <arg name="launch_proximity_hazard_object_checker" default="true"/>
+  <arg name="proximity_hazard_object_checker_param_path" default="$(find-pkg-share autoware_launch)/config/perception/proximity_hazard_object_checker.param.yaml"/>
+  <arg name="proximity_hazard_object_checker_input_odometry" default="/localization/kinematic_state"/>
+  <arg name="proximity_hazard_object_checker_output_hazards" default="/hmi/proximity_hazards"/>
+
   <!-- Downsample pointcloud for perception usage -->
   <arg name="downsample_perception_common_pointcloud" default="false"/>
   <arg name="cuda_pointcloud_preprocessing" default="false"/>
@@ -382,6 +389,15 @@
       <node pkg="autoware_dummy_perception_publisher" exec="empty_objects_publisher" name="empty_objects_publisher" output="screen">
         <remap from="~/output/objects" to="/perception/object_recognition/objects"/>
       </node>
+    </group>
+
+    <!-- Proximity Hazard publisher -->
+    <group if="$(var launch_proximity_hazard_object_checker)">
+      <include file="$(find-pkg-share autoware_proximity_hazard_object_checker)/launch/proximity_hazard_object_checker.launch.xml">
+        <arg name="input_odometry" value="$(var proximity_hazard_object_checker_input_odometry)"/>
+        <arg name="output_hazards" value="$(var proximity_hazard_object_checker_output_hazards)"/>
+        <arg name="param_path" value="$(var proximity_hazard_object_checker_param_path)"/>
+      </include>
     </group>
 
     <!-- Traffic light module -->
