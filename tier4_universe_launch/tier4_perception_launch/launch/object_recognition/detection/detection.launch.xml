@@ -302,6 +302,7 @@
       <arg name="output/objects" value="$(var lidar_rule_detector/output/objects)"/>
       <arg name="use_low_height_cropbox" value="$(var use_low_height_cropbox)"/>
       <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
+      <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>
     </include>
   </group>
   <group if="$(var switch/detector/radar)">
