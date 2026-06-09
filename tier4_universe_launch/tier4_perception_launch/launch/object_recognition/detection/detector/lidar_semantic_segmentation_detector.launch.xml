@@ -25,20 +25,5 @@
         <arg name="param_path" value="$(var euclidean_clustering/param_path)"/>
       </include>
     </group>
-
-    <!-- shape_estimation 1 -->
-    <!-- <group>
-      <include file="$(find-pkg-share autoware_shape_estimation)/launch/shape_estimation.launch.xml">
-        <arg name="input/objects" value="clusters"/>
-        <arg name="output/objects" value="objects_with_feature"/>
-      </include>
-    </group> -->
-    <!-- convert DynamicObjectsWithFeatureArray to DynamicObjects -->
-    <!-- <group>
-      <include file="$(find-pkg-share autoware_detected_object_feature_remover)/launch/detected_object_feature_remover.launch.xml">
-        <arg name="input" value="objects_with_feature"/>
-        <arg name="output" value="$(var detected_object_feature_remover/output/objects)"/>
-      </include>
-    </group> -->
   </group>
 </launch>
