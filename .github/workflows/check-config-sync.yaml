@@ -58,7 +58,7 @@ jobs:
 
   apply-config-sync:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'apply-config-sync') }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'apply-config-sync') && !contains(github.event.pull_request.labels.*.name, 'ignore-config-sync') }}
     permissions:
       contents: write
       pull-requests: write
