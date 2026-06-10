@@ -254,8 +254,16 @@
     <group>
       <push-ros-namespace namespace="occupancy_grid_map"/>
       <let name="unfiltered_obstacle_pointcloud" value="/perception/obstacle_segmentation/pointcloud"/>
-      <let name="unfiltered_obstacle_pointcloud" value="/perception/obstacle_segmentation/single_frame/pointcloud" if="$(eval &quot;'$(var use_semantic_segmentation_ptv3)' == 'false' and '$(var use_obstacle_segmentation_single_frame_filter)' == 'true'&quot;)"/>
-      <let name="unfiltered_obstacle_pointcloud" value="/perception/obstacle_segmentation/single_frame/pointcloud" if="$(eval &quot;'$(var use_semantic_segmentation_ptv3)' == 'false' and '$(var use_obstacle_segmentation_time_series_filter)' == 'true'&quot;)"/>
+      <let
+        name="unfiltered_obstacle_pointcloud"
+        value="/perception/obstacle_segmentation/single_frame/pointcloud"
+        if="$(eval &quot;'$(var use_semantic_segmentation_ptv3)' == 'false' and '$(var use_obstacle_segmentation_single_frame_filter)' == 'true'&quot;)"
+      />
+      <let
+        name="unfiltered_obstacle_pointcloud"
+        value="/perception/obstacle_segmentation/single_frame/pointcloud"
+        if="$(eval &quot;'$(var use_semantic_segmentation_ptv3)' == 'false' and '$(var use_obstacle_segmentation_time_series_filter)' == 'true'&quot;)"
+      />
       <include file="$(find-pkg-share tier4_perception_launch)/launch/occupancy_grid_map/probabilistic_occupancy_grid_map.launch.xml">
         <arg name="input/obstacle_pointcloud" value="$(var unfiltered_obstacle_pointcloud)"/>
         <arg name="input/raw_pointcloud" value="$(var perception_pointcloud)"/>
