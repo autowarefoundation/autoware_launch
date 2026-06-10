@@ -12,21 +12,15 @@ from typing import Set
 from typing import Tuple
 
 """
-This module checks that a parameter change is reflected across the config
-directories of `autoware_launch` listed in CONFIG_ROOTS. The changes are read
-from `git diff`, using the last auto-sync commit as the base so the bot's own
-mirror commits are treated as already applied (otherwise a later user deletion
-would be mistaken for an addition and undone). When a file is added, modified,
-or deleted in only one directory, the comment body is written to the `comment`
-step output, `status` is set to `mismatch`, and the script exits non-zero so the
-PR status check also fails.
+When a file is added, modified, or deleted in only one directory, the comment
+body is written to the `comment` step output, `status` is set to `mismatch`, and
+the script exits non-zero so the PR status check fails. With `--apply` the
+one-sided changes are instead mirrored to the corresponding directory (run when
+the `apply-config-sync` label is added).
 
-With `--apply` the one-sided changes are instead mirrored to the corresponding
-directory (run when the `apply-config-sync` label is added).
-
-If fewer than two config directories exist (e.g. only `config` is present), the
-check is skipped. Add the `ignore-config-sync` label to bypass an intentional
-divergence.
+The check is skipped when fewer than two config directories exist (e.g. only
+`config` is present). Add the `ignore-config-sync` label to bypass an
+intentional divergence.
 """
 
 # Config directories to keep in sync. Edit this list when a directory is added.
@@ -53,14 +47,14 @@ class Change:
     counterpart: Path  # the file that should receive the same change
 
 
-def git(*args: str) -> str:
+def run_git(*args: str) -> str:
     return subprocess.run(["git", *args], capture_output=True, text=True, check=True).stdout
 
 
 def diff_base(pr_base: str) -> str:
     # Use the last auto-sync commit as the base so the bot's own mirror commits
     # are treated as already applied; fall back to the PR base.
-    last_sync = git(
+    last_sync = run_git(
         "rev-list",
         "-1",
         "--author=github-actions",
@@ -75,7 +69,7 @@ def git_changes(base: str) -> Tuple[Set[Path], Set[Path], Set[Path]]:
     modified: Set[Path] = set()
     deleted: Set[Path] = set()
     bucket = {"A": added, "M": modified, "D": deleted}
-    for line in git("diff", "--no-renames", "--name-status", base, "HEAD").splitlines():
+    for line in run_git("diff", "--no-renames", "--name-status", base, "HEAD").splitlines():
         status, _, path = line.partition("\t")
         if status in bucket and path:
             bucket[status].add(Path(path))
@@ -117,7 +111,7 @@ def find_unsynced_changes(
     added: Set[Path], modified: Set[Path], deleted: Set[Path], config_roots: List[Path]
 ) -> List[Change]:
     touched = added | modified | deleted
-    changes = []
+    changes: List[Change] = []
     for path in sorted(touched):
         if path in deleted:
             operation = "deleted"
@@ -159,7 +153,7 @@ def build_check_comment(changes: List[Change]) -> str:
         )
     lines += [
         "",
-        f"To apply these changes to the corresponding directory automatically, add "
+        "To apply these changes to the corresponding directory automatically, add "
         f"the `{APPLY_LABEL}` label to this PR. If the divergence is intentional, "
         f"add the `{IGNORE_LABEL}` label to silence this check.",
     ]
@@ -180,7 +174,7 @@ def build_apply_comment(changes: List[Change]) -> str:
 
 
 def apply_changes(changes: List[Change]) -> List[Change]:
-    applied = []
+    applied: List[Change] = []
     for change in changes:
         if change.operation == "deleted":
             if change.counterpart.exists():
@@ -191,18 +185,6 @@ def apply_changes(changes: List[Change]) -> List[Change]:
             shutil.copy2(change.source, change.counterpart)
             applied.append(change)
     return applied
-
-
-def read_changes() -> Tuple[Set[Path], Set[Path], Set[Path]]:
-    pr_base = os.environ.get("PR_BASE_SHA")
-    if pr_base:
-        return git_changes(diff_base(pr_base))
-    # Local testing fallback: read the file lists straight from the environment.
-    return (
-        {Path(f) for f in os.environ.get("ADDED_FILES", "").split()},
-        {Path(f) for f in os.environ.get("MODIFIED_FILES", "").split()},
-        {Path(f) for f in os.environ.get("DELETED_FILES", "").split()},
-    )
 
 
 def main() -> int:
@@ -221,7 +203,7 @@ def main() -> int:
         set_output("applied", "false")
         return 0
 
-    added, modified, deleted = read_changes()
+    added, modified, deleted = git_changes(diff_base(os.environ["PR_BASE_SHA"]))
     changes = find_unsynced_changes(added, modified, deleted, config_roots)
 
     if args.apply:
