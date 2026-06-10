@@ -24,6 +24,7 @@
   <arg name="use_validator" description="use obstacle_pointcloud based validator"/>
   <arg name="use_short_range_detection"/>
   <arg name="use_camera_vru_detector"/>
+  <arg name="use_semantic_segmentation_ptv3" default="false" description="treat ptv3 cluster output as lidar_clustering channel"/>
   <arg name="publish_merged_objects"/>
 
   <!-- External interface -->
@@ -37,6 +38,8 @@
   <arg name="input/lidar_dnn_short_range/objects" default="/perception/object_recognition/detection/$(var lidar_short_range_detection_model_type)/objects"/>
   <arg name="input/camera_lidar_rule_detector/channel" default="camera_lidar_fusion"/>
   <arg name="input/camera_lidar_rule_detector/objects" default="/perception/object_recognition/detection/clustering/camera_lidar_fusion/objects"/>
+  <arg name="input/lidar_cluster/channel" default="lidar_clustering"/>
+  <arg name="input/lidar_cluster/objects" default="/perception/object_recognition/detection/clustering/label_based_euclidean_cluster/objects"/>
   <arg name="input/irregular_object_detector/channel" default="camera_lidar_fusion_irregular"/>
   <arg name="input/irregular_object_detector/objects" default="/perception/object_recognition/detection/irregular_object/objects"/>
   <arg name="input/tracker_based_detector/channel" default="detection_by_tracker"/>
@@ -116,29 +119,34 @@
     <let name="input/detection02/objects" value="$(var input/lidar_dnn_short_range/objects)"/>
 
     <let name="input/detection03/channel" value="$(var input/camera_lidar_rule_detector/channel)"/>
+    <let name="input/detection03/channel" value="none" if="$(var use_semantic_segmentation_ptv3)"/>
     <let name="input/detection03/objects" value="$(var input/camera_lidar_rule_detector/objects)"/>
 
-    <let name="input/detection04/channel" value="$(var input/irregular_object_detector/channel)"/>
-    <let name="input/detection04/objects" value="$(var input/irregular_object_detector/objects)"/>
+    <let name="input/detection04/channel" value="$(var input/lidar_cluster/channel)" if="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/detection04/channel" value="none" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/detection04/objects" value="$(var input/lidar_cluster/objects)"/>
 
-    <let name="input/detection05/channel" value="$(var input/tracker_based_detector/channel)"/>
-    <let name="input/detection05/channel" value="none" unless="$(var use_detection_by_tracker)"/>
-    <let name="input/detection05/objects" value="$(var input/tracker_based_detector/objects)"/>
+    <let name="input/detection05/channel" value="$(var input/irregular_object_detector/channel)"/>
+    <let name="input/detection05/objects" value="$(var input/irregular_object_detector/objects)"/>
 
-    <let name="input/detection06/channel" value="$(var input/radar/channel)"/>
-    <let name="input/detection06/objects" value="$(var input/radar/far_objects)"/>
+    <let name="input/detection06/channel" value="$(var input/tracker_based_detector/channel)"/>
+    <let name="input/detection06/channel" value="none" unless="$(var use_detection_by_tracker)"/>
+    <let name="input/detection06/objects" value="$(var input/tracker_based_detector/objects)"/>
 
-    <let name="input/detection07/channel" value="$(var input/camera_vru/channel)"/>
-    <let name="input/detection07/channel" value="none" unless="$(var use_camera_vru_detector)"/>
-    <let name="input/detection07/objects" value="$(var input/camera_vru/objects)"/>
+    <let name="input/detection07/channel" value="$(var input/radar/channel)"/>
+    <let name="input/detection07/objects" value="$(var input/radar/far_objects)"/>
 
-    <let name="input/detection08/channel" value="$(var input/camera_only/channel)"/>
-    <let name="input/detection08/objects" value="$(var input/camera_only/objects)"/>
+    <let name="input/detection08/channel" value="$(var input/camera_vru/channel)"/>
+    <let name="input/detection08/channel" value="none" unless="$(var use_camera_vru_detector)"/>
+    <let name="input/detection08/objects" value="$(var input/camera_vru/objects)"/>
+
+    <let name="input/detection09/channel" value="$(var input/camera_only/channel)"/>
+    <let name="input/detection09/objects" value="$(var input/camera_only/objects)"/>
 
     <!-- camera lidar -->
     <group scoped="false" if="$(eval '&quot;$(var mode)&quot;==&quot;camera_lidar_fusion&quot;')">
       <!-- radar far object is not used -->
-      <let name="input/detection06/channel" value="none"/>
+      <let name="input/detection07/channel" value="none"/>
     </group>
 
     <!-- lidar radar -->
@@ -146,9 +154,9 @@
       <!-- camera lidar fusion is not used -->
       <let name="input/detection03/channel" value="none"/>
       <!-- irregular object detector is not used -->
-      <let name="input/detection04/channel" value="none"/>
+      <let name="input/detection05/channel" value="none"/>
       <!-- camera vru is not used -->
-      <let name="input/detection07/channel" value="none"/>
+      <let name="input/detection08/channel" value="none"/>
     </group>
 
     <!-- lidar -->
@@ -156,11 +164,11 @@
       <!-- camera lidar detector is not used -->
       <let name="input/detection03/channel" value="none"/>
       <!-- irregular object detector is not used -->
-      <let name="input/detection04/channel" value="none"/>
+      <let name="input/detection05/channel" value="none"/>
       <!-- radar far object is not used -->
-      <let name="input/detection06/channel" value="none"/>
-      <!-- camera vru is not used -->
       <let name="input/detection07/channel" value="none"/>
+      <!-- camera vru is not used -->
+      <let name="input/detection08/channel" value="none"/>
     </group>
 
     <!-- Multi object tracking -->
@@ -179,6 +187,8 @@
       <arg name="input/detection06/channel" value="$(var input/detection06/channel)"/>
       <arg name="input/detection07/objects" value="$(var input/detection07/objects)"/>
       <arg name="input/detection07/channel" value="$(var input/detection07/channel)"/>
+      <arg name="input/detection08/objects" value="$(var input/detection08/objects)"/>
+      <arg name="input/detection08/channel" value="$(var input/detection08/channel)"/>
       <arg name="output/objects" value="$(var output/objects)"/>
       <arg name="output/merged_objects" value="$(var output/merged_objects)"/>
       <arg name="data_association_matrix_path" value="$(var object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path)"/>
