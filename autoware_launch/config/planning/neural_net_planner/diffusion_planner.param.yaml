@@ -8,7 +8,7 @@
       use_cuda_graph: true
       args_path: $(var data_path)/diffusion_planner/v5.0/args.json
       single_step_model:
-        onnx_model_path: $(var data_path)/diffusion_planner/v5.0/diffusion_planner.onnx
+      args_path: $(var data_path)/diffusion_planner/v5.0/diffusion_planner.param.json
       multi_step_model:
         encoder_onnx_model_path: $(var data_path)/diffusion_planner/v5.0/diffusion_planner_encoder.onnx
         decoder_onnx_model_path: $(var data_path)/diffusion_planner/v5.0/diffusion_planner_decoder.onnx
