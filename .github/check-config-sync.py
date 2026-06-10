@@ -4,21 +4,25 @@ import dataclasses
 import os
 from pathlib import Path
 import shutil
+import subprocess
 import sys
 from typing import List
 from typing import Optional
 from typing import Set
+from typing import Tuple
 
 """
 This module checks that a parameter change is reflected across the config
-directories of `autoware_launch` listed in CONFIG_ROOTS. When a file is added,
-modified, or deleted in only one of them, the comment body is written to the
-`comment` step output, `status` is set to `mismatch`, and the script exits
-non-zero so the PR status check also fails.
+directories of `autoware_launch` listed in CONFIG_ROOTS. The changes are read
+from `git diff`, using the last auto-sync commit as the base so the bot's own
+mirror commits are treated as already applied (otherwise a later user deletion
+would be mistaken for an addition and undone). When a file is added, modified,
+or deleted in only one directory, the comment body is written to the `comment`
+step output, `status` is set to `mismatch`, and the script exits non-zero so the
+PR status check also fails.
 
 With `--apply` the one-sided changes are instead mirrored to the corresponding
-directory (run when the `apply-config-sync` label is added) and the summary is
-written to the `comment` step output.
+directory (run when the `apply-config-sync` label is added).
 
 If fewer than two config directories exist (e.g. only `config` is present), the
 check is skipped. Add the `ignore-config-sync` label to bypass an intentional
@@ -33,6 +37,7 @@ CONFIG_ROOTS = [
 
 IGNORE_LABEL = "ignore-config-sync"
 APPLY_LABEL = "apply-config-sync"
+SYNC_COMMIT_SUBJECT = "mirror changes to the corresponding config directory"
 
 OP_LABELS = {
     "added": "✨ Added",
@@ -48,6 +53,35 @@ class Change:
     counterpart: Path  # the file that should receive the same change
 
 
+def git(*args: str) -> str:
+    return subprocess.run(["git", *args], capture_output=True, text=True, check=True).stdout
+
+
+def diff_base(pr_base: str) -> str:
+    # Use the last auto-sync commit as the base so the bot's own mirror commits
+    # are treated as already applied; fall back to the PR base.
+    last_sync = git(
+        "rev-list",
+        "-1",
+        "--author=github-actions",
+        f"--grep={SYNC_COMMIT_SUBJECT}",
+        f"{pr_base}..HEAD",
+    ).strip()
+    return last_sync or pr_base
+
+
+def git_changes(base: str) -> Tuple[Set[Path], Set[Path], Set[Path]]:
+    added: Set[Path] = set()
+    modified: Set[Path] = set()
+    deleted: Set[Path] = set()
+    bucket = {"A": added, "M": modified, "D": deleted}
+    for line in git("diff", "--no-renames", "--name-status", base, "HEAD").splitlines():
+        status, _, path = line.partition("\t")
+        if status in bucket and path:
+            bucket[status].add(Path(path))
+    return added, modified, deleted
+
+
 def relative_within(path: Path, root: Path) -> Optional[Path]:
     try:
         return path.relative_to(root)
@@ -60,10 +94,6 @@ def config_root_of(path: Path) -> Path:
         if root == path or root in path.parents:
             return root
     return path.parent
-
-
-def split_env(name: str) -> Set[Path]:
-    return {Path(f) for f in os.environ.get(name, "").split()}
 
 
 def set_output(key: str, value: str) -> None:
@@ -84,9 +114,9 @@ def op_label(operation: str) -> str:
 
 
 def find_unsynced_changes(
-    changed: Set[Path], added: Set[Path], deleted: Set[Path], config_roots: List[Path]
+    added: Set[Path], modified: Set[Path], deleted: Set[Path], config_roots: List[Path]
 ) -> List[Change]:
-    touched = changed | deleted
+    touched = added | modified | deleted
     changes = []
     for path in sorted(touched):
         if path in deleted:
@@ -103,7 +133,7 @@ def find_unsynced_changes(
                 counterpart = other / rel
                 if other == root or counterpart in touched:
                     continue
-                if counterpart.exists() or path in added:
+                if counterpart.exists() or operation == "added":
                     changes.append(Change(operation, path, counterpart))
             break
     return changes
@@ -163,18 +193,26 @@ def apply_changes(changes: List[Change]) -> List[Change]:
     return applied
 
 
+def read_changes() -> Tuple[Set[Path], Set[Path], Set[Path]]:
+    pr_base = os.environ.get("PR_BASE_SHA")
+    if pr_base:
+        return git_changes(diff_base(pr_base))
+    # Local testing fallback: read the file lists straight from the environment.
+    return (
+        {Path(f) for f in os.environ.get("ADDED_FILES", "").split()},
+        {Path(f) for f in os.environ.get("MODIFIED_FILES", "").split()},
+        {Path(f) for f in os.environ.get("DELETED_FILES", "").split()},
+    )
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description="Check or sync config directories.")
     parser.add_argument(
         "--apply",
         action="store_true",
         help="mirror one-sided changes to the corresponding directory",
     )
     args = parser.parse_args()
-
-    changed = split_env("CHANGED_FILES")
-    added = split_env("ADDED_FILES")
-    deleted = split_env("DELETED_FILES")
 
     config_roots = [root for root in CONFIG_ROOTS if root.is_dir()]
     if len(config_roots) < 2:
@@ -183,7 +221,8 @@ def main() -> int:
         set_output("applied", "false")
         return 0
 
-    changes = find_unsynced_changes(changed, added, deleted, config_roots)
+    added, modified, deleted = read_changes()
+    changes = find_unsynced_changes(added, modified, deleted, config_roots)
 
     if args.apply:
         applied = apply_changes(changes)

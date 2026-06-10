@@ -25,20 +25,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v34
-        with:
-          files: |
-            autoware_launch/**
-
       - name: Check config sync
         id: check
-        if: ${{ steps.changed-files.outputs.any_changed == 'true' || steps.changed-files.outputs.any_deleted == 'true' }}
         env:
-          CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-          ADDED_FILES: ${{ steps.changed-files.outputs.added_files }}
-          DELETED_FILES: ${{ steps.changed-files.outputs.deleted_files }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
           PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         run: python3 .github/check-config-sync.py
 
@@ -69,20 +59,10 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v34
-        with:
-          files: |
-            autoware_launch/**
-
       - name: Apply config sync
         id: apply
-        if: ${{ steps.changed-files.outputs.any_changed == 'true' || steps.changed-files.outputs.any_deleted == 'true' }}
         env:
-          CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-          ADDED_FILES: ${{ steps.changed-files.outputs.added_files }}
-          DELETED_FILES: ${{ steps.changed-files.outputs.deleted_files }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: python3 .github/check-config-sync.py --apply
 
       - name: Commit and push
@@ -99,7 +79,6 @@ jobs:
             git push
             echo "pushed=true" >> "$GITHUB_OUTPUT"
           fi
-        shell: bash
 
       - name: Post comment
         if: ${{ steps.commit.outputs.pushed == 'true' }}
