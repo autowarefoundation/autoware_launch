@@ -186,6 +186,8 @@
       <let name="input/detection05/objects" value="$(var input/radar/objects)"/>
       <!-- camera vru is not used -->
       <let name="input/detection07/channel" value="none"/>
+      <!-- camera vru is not used -->
+      <let name="input/detection08/channel" value="none"/>
     </group>
 
     <!-- Multi object tracking -->
