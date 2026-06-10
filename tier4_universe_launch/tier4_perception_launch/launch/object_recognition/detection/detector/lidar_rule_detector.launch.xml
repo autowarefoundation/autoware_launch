@@ -11,6 +11,7 @@
   <arg name="output/objects"/>
 
   <arg name="voxel_grid_based_euclidean_param_path"/>
+  <arg name="use_semantic_segmentation_ptv3"/>
 
   <!-- Internal interfaces -->
   <let name="euclidean_cluster/input/pointcloud" value="$(var input/pointcloud_map/pointcloud)"/>
@@ -21,7 +22,7 @@
   <let name="detected_object_feature_remover/output" value="$(var output/objects)"/>
 
   <!-- Clustering -->
-  <group>
+  <group unless="$(var use_semantic_segmentation_ptv3)">
     <push-ros-namespace namespace="clustering"/>
     <group>
       <include file="$(find-pkg-share autoware_euclidean_cluster)/launch/voxel_grid_based_euclidean_cluster.launch.xml">
