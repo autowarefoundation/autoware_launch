@@ -54,6 +54,7 @@ units:
       # - { type: link, link: /control/004-over_velocity-error }
       - { type: link, link: /control/009-slip_detection-error }
       - { type: link, link: /control/control_command_gate/timeout_main-error }
+      - { type: link, link: /control/017-incoming_message_timeout }
 
   - path: /control/comfortable_stop
     type: and
@@ -277,3 +278,9 @@ units:
     name: sudden_deceleration_monitor
     timeout: 3.0
     # latch: 0.0
+
+  - path: /control/017-incoming_message_timeout
+    type: diag
+    node: controller_node_exe
+    name: incoming_message_timeout
+    timeout: 3.0

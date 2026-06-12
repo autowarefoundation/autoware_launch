@@ -36,16 +36,11 @@ units:
     type: and
 
   - path: /perception/comfortable_stop
-    type: and
-    list:
-      - { type: link, link: /perception/001-topic_status/traffic_signals-error }
-      # - { type: link, link: /perception/009-spec_limit/voxel_based_compare_map_filter-error }
+    type: ok
 
   - path: /perception/in_lane_moderate_stop
     type: and
     list:
-      - { type: link, link: /perception/001-topic_status/objects-error }
-      - { type: link, link: /perception/001-topic_status/pointcloud-error }
       - { type: link, link: /perception/topic_state_monitor/perception_ecu-error }
 
   - path: /perception/in_lane_emergency_stop
@@ -70,50 +65,11 @@ units:
       - { type: link, link: /perception/007-missing_input/object_merger_beta }
       - { type: link, link: /perception/008-decorative_tracker_merger }
 
-  - path: /perception/001-topic_status/traffic_signals-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /perception/001-topic_status/traffic_signals
-
-  - path: /perception/001-topic_status/objects-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /perception/001-topic_status/objects
-
-  - path: /perception/001-topic_status/pointcloud-error
-    type: warn-to-ok
-    item:
-      type: link
-      link: /perception/001-topic_status/pointcloud
-
   - path: /perception/009-spec_limit/voxel_based_compare_map_filter-error
     type: warn-to-ok
     item:
       type: link
       link: /perception/009-spec_limit/voxel_based_compare_map_filter
-
-  - path: /perception/001-topic_status/traffic_signals
-    type: diag
-    node: topic_state_monitor_traffic_light_recognition_traffic_signals
-    name: perception_topic_status
-    timeout: 3.0
-    # latch: 0.0
-
-  - path: /perception/001-topic_status/objects
-    type: diag
-    node: topic_state_monitor_object_recognition_objects
-    name: perception_topic_status
-    timeout: 3.0
-    # latch: 0.0
-
-  - path: /perception/001-topic_status/pointcloud
-    type: diag
-    node: topic_state_monitor_obstacle_segmentation_pointcloud
-    name: perception_topic_status
-    timeout: 3.0
-    # latch: 0.0
 
   - path: /perception/002-detection_delay/tracker
     type: diag

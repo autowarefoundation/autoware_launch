@@ -52,6 +52,7 @@ units:
       - { type: link, link: /planning/010-trajectory_steering_validation-error }
       - { type: link, link: /planning/011-trajectory_steering_rate_validation-error }
       - { type: link, link: /planning/012-trajectory_velocity_deviation_validation-error }
+      # - { type: link, link: /planning/021-incoming_message_timeout }
       - { type: link, link: /planning/013-trajectory_shift_validation-error }
       - { type: link, link: /planning/014-trajectory_validation_yaw_deviation-error }
       - { type: link, link: /planning/017-trajectory_distance_deviation_validation-error }
@@ -295,5 +296,12 @@ units:
     type: diag
     node: motion_velocity_planner
     name: boundary_departure
+    timeout: 3.0
+    # latch: 0.0
+
+  - path: /planning/021-incoming_message_timeout
+    type: diag
+    node: behavior_path_planner
+    name: incoming_message_timeout
     timeout: 3.0
     # latch: 0.0
