@@ -133,6 +133,7 @@ jobs:
           title: "chore(sync-params): update ${{ matrix.category }} params"
           commit-message: "chore(sync-params): update ${{ matrix.category }} params"
           body-path: /tmp/pr-body.md
+          signoff: true
           labels: |
             tag:sync-params
 
