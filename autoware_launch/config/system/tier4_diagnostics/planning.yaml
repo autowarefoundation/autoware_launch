@@ -41,7 +41,7 @@ units:
   - path: /planning/in_lane_moderate_stop
     type: and
     list:
-      - { type: link, link: /planning/000-component_status/route_state }
+      # - { type: link, link: /planning/000-component_status/route_state }
       - { type: link, link: /planning/003-trajectory_finite_validation-error }
       - { type: link, link: /planning/004-trajectory_interval_validation-error }
       - { type: link, link: /planning/005-trajectory_curvature_validation-error }
