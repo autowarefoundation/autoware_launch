@@ -281,6 +281,7 @@ perception: []
     def test_variant_header_mentions_source(self) -> None:
         header = build_variant_header(
             source_url="https://github.com/org/repo/blob/abc123/path/to/file.yaml",
+            category="perception",
         )
         self.assertIn("managed by sync-params workflow", header)
         self.assertIn("https://github.com/org/repo/blob/abc123/path/to/file.yaml", header)
@@ -806,7 +807,9 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             workspace_root, source_dir, repo, file_entry, variant_abs = self._make_fixtures(tmpdir)
             with patch("sync_params.last_modified_sha", return_value="deadbeef"):
-                changed = sync_file_entry(workspace_root, repo, file_entry, source_dir, check=False)
+                changed = sync_file_entry(
+                    workspace_root, repo, file_entry, source_dir, category="perception", check=False
+                )
 
             self.assertEqual(changed, 1)
             result = variant_abs.read_text(encoding="utf-8")
@@ -820,7 +823,9 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
             workspace_root, source_dir, repo, file_entry, variant_abs = self._make_fixtures(tmpdir)
             original_variant_text = variant_abs.read_text(encoding="utf-8")
             with patch("sync_params.last_modified_sha", return_value="deadbeef"):
-                changed = sync_file_entry(workspace_root, repo, file_entry, source_dir, check=True)
+                changed = sync_file_entry(
+                    workspace_root, repo, file_entry, source_dir, category="perception", check=True
+                )
 
             self.assertGreater(changed, 0)
             # Variant file must not be modified in check mode.
@@ -886,7 +891,12 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
             # --- update mode ---
             with patch("sync_params.last_modified_sha", return_value="deadbeef"):
                 changed = sync_file_entry(
-                    workspace_root, repo, repo.files[0], source_dir, check=False
+                    workspace_root,
+                    repo,
+                    repo.files[0],
+                    source_dir,
+                    category="perception",
+                    check=False,
                 )
 
             self.assertEqual(changed, 1)
@@ -908,7 +918,12 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
             variant_abs.write_text(variant_text, encoding="utf-8")
             with patch("sync_params.last_modified_sha", return_value="deadbeef"):
                 changed_check = sync_file_entry(
-                    workspace_root, repo, repo.files[0], source_dir, check=True
+                    workspace_root,
+                    repo,
+                    repo.files[0],
+                    source_dir,
+                    category="perception",
+                    check=True,
                 )
 
             self.assertGreater(changed_check, 0)
@@ -969,6 +984,7 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
                     repo,
                     repo.files[0],
                     source_dir,
+                    category="perception",
                     check=check,
                     footer=footer,
                     output_masked=output_masked,
@@ -982,7 +998,7 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
         from sync_params import build_variant_header
 
         url = "https://github.com/org/repo/blob/pinnedsha/params.yaml"
-        result = build_variant_header(url) + source_body
+        result = build_variant_header(url, category="perception") + source_body
         if footer:
             result += build_embedded_original_section(source_body)
         return result
@@ -1150,7 +1166,10 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
         url = "https://github.com/org/repo/blob/pinnedsha/params.yaml"
         from sync_params import build_variant_header
 
-        variant_text = build_variant_header(url) + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        variant_text = (
+            build_variant_header(url, category="perception")
+            + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        )
 
         with tempfile.TemporaryDirectory() as tmpd:
             masked_file = Path(tmpd) / "masked.txt"
@@ -1185,7 +1204,10 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
         url = "https://github.com/org/repo/blob/pinnedsha/params.yaml"
         from sync_params import build_variant_header
 
-        variant_text = build_variant_header(url) + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        variant_text = (
+            build_variant_header(url, category="perception")
+            + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        )
 
         captured = StringIO()
         with patch("sys.stdout", captured):
@@ -1211,7 +1233,10 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
         url = "https://github.com/org/repo/blob/pinnedsha/params.yaml"
         from sync_params import build_variant_header
 
-        variant_text = build_variant_header(url) + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        variant_text = (
+            build_variant_header(url, category="perception")
+            + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        )
 
         captured = StringIO()
         with patch("sys.stdout", captured):
