@@ -145,5 +145,6 @@
     <arg name="trajectory_velocity_optimizer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_velocity_optimizer.param.yaml"/>
     <arg name="trajectory_kinematic_feasibility_enforcer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_kinematic_feasibility_enforcer.param.yaml"/>
     <arg name="trajectory_mpt_optimizer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_mpt_optimizer.param.yaml"/>
+    <arg name="trajectory_temporal_mpt_optimizer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_temporal_mpt_optimizer.param.yaml"/>
   </include>
 </launch>
