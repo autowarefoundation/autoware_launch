@@ -3032,6 +3032,20 @@ Visualization Manager:
               show_safety_factors: true
             - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
               Enabled: true
+              Name: PlanningFactor(ModifierObstacleStop)
+              Namespaces:
+                {}
+              Show Safety Factors: true
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /planning/planning_factors/modifier_traffic_light_stop
+              Value: true
+              show_safety_factors: true
+            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+              Enabled: true
               Name: PlanningFactor(CollisionCheckFilter)
               Namespaces:
                 {}
