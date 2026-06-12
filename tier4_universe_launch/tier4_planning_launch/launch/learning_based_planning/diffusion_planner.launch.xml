@@ -19,6 +19,7 @@
   <arg name="trajectory_velocity_optimizer_param_path"/>
   <arg name="trajectory_kinematic_feasibility_enforcer_param_path"/>
   <arg name="trajectory_mpt_optimizer_param_path"/>
+  <arg name="trajectory_temporal_mpt_optimizer_param_path"/>
 
   <node pkg="demo_nodes_cpp" exec="parameter_blackboard" name="velocity_smoother" namespace="/planning/scenario_planning" output="screen">
     <param name="max_velocity" value="16.6"/>
@@ -69,6 +70,7 @@
         <arg name="trajectory_velocity_optimizer_param_path" value="$(var trajectory_velocity_optimizer_param_path)"/>
         <arg name="trajectory_kinematic_feasibility_enforcer_param_path" value="$(var trajectory_kinematic_feasibility_enforcer_param_path)"/>
         <arg name="trajectory_mpt_optimizer_param_path" value="$(var trajectory_mpt_optimizer_param_path)"/>
+        <arg name="trajectory_temporal_mpt_optimizer_param_path" value="$(var trajectory_temporal_mpt_optimizer_param_path)"/>
       </include>
     </group>
   </group>
