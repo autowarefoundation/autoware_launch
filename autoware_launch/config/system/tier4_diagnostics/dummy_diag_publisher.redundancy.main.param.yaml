@@ -279,6 +279,9 @@
       ## /vehicle/007-vehicle-emergency-button
       "j6_interface: vehicle_emergency_button": default
 
+      ## /vehicle/007-steering_response
+      "j6_interface: steering_angle_command_response_error": default
+
       ## /vehicle/008-vcu-not-authenticated
       "j6_interface: vcu_not_authenticated": default
 
