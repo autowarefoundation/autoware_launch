@@ -465,7 +465,8 @@ system:
         variants:
           - path: autoware_launch/config/system/command_mode/switcher.param.yaml
       # Component State Monitor (skipped: no .param.yaml files to sync)
-      # Diagnostics (skipped: no .param.yaml files to sync)
+      # Diagnostics (skipped)
+      # dummy_diag_publisher.param.yaml omitted (has key-value map and the schema is not fixed)
       # System Monitor
       - source: system/autoware_system_monitor/config/cpu_monitor.param.yaml
         variants:
