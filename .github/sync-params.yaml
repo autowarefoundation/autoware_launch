@@ -198,6 +198,9 @@ planning:
       - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_spline_smoother.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_spline_smoother.param.yaml
+      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_temporal_mpt_optimizer.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_temporal_mpt_optimizer.param.yaml
       - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_velocity_optimizer.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_velocity_optimizer.param.yaml
