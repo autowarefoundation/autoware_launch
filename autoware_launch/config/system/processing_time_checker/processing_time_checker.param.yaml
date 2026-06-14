@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/paulsohn/autoware_universe/blob/8ba01838c6b5ab1e4d6a52341650b8a01234f76a/system/autoware_processing_time_checker/config/processing_time_checker.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/cbd6d8e84d1c00eaaf04f33692799c4a1cf31ae6/system/autoware_processing_time_checker/config/processing_time_checker.param.yaml
 
 /**:
   ros__parameters:
