@@ -1,5 +1,8 @@
 <!-- cSpell: ignore autosar -->
 <launch>
+  <!-- Provides ld_preload_value (heaphook prepended when Agnocast is enabled) -->
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+
   <arg name="launch_driver" default="true" description="do launch driver"/>
 
   <let name="odometry_topic" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
@@ -188,12 +191,14 @@
     <!-- merge radar objects -->
     <let name="merger_param_path" value="$(find-pkg-share aip_x2_gen2_launch)/config/simple_object_merger.param.yaml"/>
     <node pkg="autoware_simple_object_merger" exec="simple_object_merger_node" name="simple_object_merger" output="screen">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
       <remap from="~/output/objects" to="detected_objects"/>
       <param from="$(var merger_param_path)"/>
     </node>
 
     <let name="tracked_objects_merger_param_path" value="$(find-pkg-share aip_x2_gen2_launch)/config/simple_tracked_object_merger.param.yaml"/>
     <node pkg="autoware_simple_object_merger" exec="simple_tracked_object_merger_node" name="simple_tracked_object_merger" output="screen">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
       <remap from="~/output/objects" to="tracked_objects"/>
       <param from="$(var tracked_objects_merger_param_path)"/>
     </node>
