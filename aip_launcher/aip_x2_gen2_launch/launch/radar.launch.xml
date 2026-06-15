@@ -1,6 +1,5 @@
 <!-- cSpell: ignore autosar -->
 <launch>
-  <!-- Provides ld_preload_value (heaphook prepended when Agnocast is enabled) -->
   <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
 
   <arg name="launch_driver" default="true" description="do launch driver"/>
