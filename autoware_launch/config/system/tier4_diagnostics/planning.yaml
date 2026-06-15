@@ -297,7 +297,7 @@ units:
     node: motion_velocity_planner
     name: boundary_departure
     timeout: 3.0
-    # latch: 0.0
+    latch: 0.0
 
   - path: /planning/021-incoming_message_timeout
     type: diag
