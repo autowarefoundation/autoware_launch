@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/4804e4d9e827466a8f00047935cc0bd21404766b/control/autoware_trajectory_follower_node/param/lateral/pure_pursuit.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/0125e058646558879fc697cc434705feb7a8249c/control/autoware_pure_pursuit/config/pure_pursuit.param.yaml
 
 /**:
   ros__parameters:

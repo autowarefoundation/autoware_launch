@@ -9,11 +9,11 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/ca311943e60290ae386c5f81da9b9ea3325807d4/control/autoware_trajectory_follower_node/param/longitudinal/pid.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/ca311943e60290ae386c5f81da9b9ea3325807d4/control/autoware_pid_longitudinal_controller/config/autoware_pid_longitudinal_controller.param.yaml
 
 /**:
   ros__parameters:
-    delay_compensation_time: 0.1
+    delay_compensation_time: 0.1 # {OVERRIDE}
 
     enable_smooth_stop: true
     enable_overshoot_emergency: false # {OVERRIDE}
@@ -88,7 +88,7 @@
 
     # slope compensation
     lpf_pitch_gain: 0.95
-    slope_source: "trajectory_goal_adaptive" # {OVERRIDE} raw_pitch, trajectory_pitch or trajectory_adaptive
+    slope_source: "trajectory_goal_adaptive" # {OVERRIDE} raw_pitch, trajectory_pitch, trajectory_adaptive or trajectory_goal_adaptive
     adaptive_trajectory_velocity_th: 1.0
     max_pitch_rad: 0.1
     min_pitch_rad: -0.1

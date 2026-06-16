@@ -1,3 +1,9 @@
+# If you want to change the param source, follow these steps:
+#
+# 1. Remove the sync-params header from the target (variant) param file.
+# 2. update `source:` in this file.
+# 3. Run the sync-params workflow locally with `python .github/scripts/sync_params.py <category (e.g. perception)>` to update the target param file and reattach the header.
+
 perception:
   - repository: autowarefoundation/autoware_universe
     ref: main
@@ -368,13 +374,13 @@ control:
         variants:
           - path: autoware_launch/config/control/shift_decider/shift_decider.param.yaml
 
-      - source: control/autoware_trajectory_follower_node/param/lateral/mpc.param.yaml
+      - source: control/autoware_mpc_lateral_controller/param/lateral_controller_defaults.param.yaml
         variants:
           - path: autoware_launch/config/control/trajectory_follower/lateral/mpc.param.yaml
-      - source: control/autoware_trajectory_follower_node/param/lateral/pure_pursuit.param.yaml
+      - source: control/autoware_pure_pursuit/config/pure_pursuit.param.yaml
         variants:
           - path: autoware_launch/config/control/trajectory_follower/lateral/pure_pursuit.param.yaml
-      - source: control/autoware_trajectory_follower_node/param/longitudinal/pid.param.yaml
+      - source: control/autoware_pid_longitudinal_controller/config/autoware_pid_longitudinal_controller.param.yaml
         variants:
           - path: autoware_launch/config/control/trajectory_follower/longitudinal/pid.param.yaml
       - source: control/autoware_trajectory_follower_node/param/trajectory_follower_node.param.yaml
