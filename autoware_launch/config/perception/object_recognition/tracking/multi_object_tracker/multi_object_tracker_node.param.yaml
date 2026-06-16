@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/3c50b3662c6918ffe076e1fc6172fa407863d15e/perception/autoware_multi_object_tracker/config/multi_object_tracker_node.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/841ee5af39b548c724b847356d5efac8dae7ee9d/perception/autoware_multi_object_tracker/config/multi_object_tracker_node.param.yaml
 
 /**:
   ros__parameters:
@@ -29,16 +29,16 @@
     # pruning parameters
     # generalized IoU thresholds for tracked classes
     pruning_generalized_iou_thresholds:
-      unknown: -0.3
-      car: -0.4
-      truck: -0.6
-      bus: -0.6
-      trailer: -0.6
-      motorcycle: -0.1
-      bicycle: -0.1
-      pedestrian: -0.1
-      animal: -0.1
-      hazard: -0.1
+      unknown: 0.1
+      car: 0.1
+      truck: 0.1
+      bus: 0.1
+      trailer: 0.1
+      motorcycle: 0.1
+      bicycle: 0.1
+      pedestrian: 0.1
+      animal: 0.1
+      hazard: 0.1
     pruning_distance_thresholds:
       unknown: 9.0
       car: 5.0
