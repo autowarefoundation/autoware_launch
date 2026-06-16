@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/f31e5dc592626af392ef0321b75b031b132537b2/perception/autoware_euclidean_cluster/config/euclidean_cluster.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/4e2342b7ccc9d5b1006ad5e2edec6768f39dd7d3/perception/autoware_euclidean_cluster/config/euclidean_cluster.param.yaml
 
 /**:
   ros__parameters:
