@@ -50,7 +50,7 @@
     # Semantic label selection and mapping
     # YAML declaration order is treated as the input class_id order.
     # cspell:ignore pullable
-    class_names:
+    class_names: # {OVERRIDE}
       car: car
       truck: truck
       bus: bus
