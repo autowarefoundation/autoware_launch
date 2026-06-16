@@ -41,7 +41,7 @@
 
   <arg name="disable_diffusion_planner_node" default="false"/>
   <arg name="disable_diffusion_planner_trajectory" default="false"/>
-  <arg name="enable_minimum_rule_based_planner" default="false"/>
+  <arg name="enable_minimum_rule_based_planner" default="true"/>
   <arg name="enable_diffusion_planner_dummy_gate" default="false"/>
   <let name="diffusion_candidate_trajectories_topic" value="/planning/generator/diffusion_planner/candidate_trajectories" unless="$(var disable_diffusion_planner_trajectory)"/>
   <let name="diffusion_candidate_trajectories_topic" value="/planning/generator/diffusion_planner/debug/candidate_trajectories" if="$(var disable_diffusion_planner_trajectory)"/>
