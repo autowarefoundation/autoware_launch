@@ -31,6 +31,7 @@
     <choice value=""/>
   </arg>
   <arg name="use_semantic_segmentation_ptv3" description="use semantic segmentation ptv3"/>
+  <arg name="use_semantic_segmentation_ptv3" description="use semantic segmentation ptv3"/>
   <arg name="use_object_filter" description="use object filter"/>
   <arg name="objects_filter_method" description="options: `lanelet_filter` or `position_filter`"/>
   <arg name="use_pointcloud_map" description="use pointcloud map filter"/>
@@ -89,11 +90,16 @@
   <arg name="input/tracked_objects" default="/perception/object_recognition/tracking/objects"/>
   <arg name="output/objects" default="objects"/>
   <arg name="use_roi_detected_object_validator"/>
+  <arg name="use_roi_detected_object_validator"/>
 
   <!-- Parameter paths -->
   <arg name="sync_param_path"/>
   <arg name="voxel_grid_based_euclidean_param_path"/>
   <arg name="irregular_object_detector_param_path"/>
+
+  <!-- label_based_param -->
+  <arg name="euclidean_clustering/shape_policy"/>
+  <arg name="euclidean_clustering/param_path"/>
 
   <!-- label_based_param -->
   <arg name="euclidean_clustering/shape_policy"/>
@@ -197,6 +203,7 @@
   </group>
 
   <!-- Detector -->
+  <group if="$(eval &quot;'$(var switch/detector/camera_lidar)' == 'true' and '$(var use_semantic_segmentation_ptv3)' == 'false'&quot;)">
   <group if="$(eval &quot;'$(var switch/detector/camera_lidar)' == 'true' and '$(var use_semantic_segmentation_ptv3)' == 'false'&quot;)">
     <!-- Camera-Lidar detectors -->
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/camera_lidar_detector.launch.xml">
@@ -390,6 +397,7 @@
 
   <!-- Filter -->
   <group if="$(eval &quot;'$(var switch/filter/pointcloud)' == 'true' and '$(var use_semantic_segmentation_ptv3)' == 'false'&quot;)">
+  <group if="$(eval &quot;'$(var switch/filter/pointcloud)' == 'true' and '$(var use_semantic_segmentation_ptv3)' == 'false'&quot;)">
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/filter/pointcloud_map_filter.launch.py">
       <arg name="input_topic" value="$(var input/obstacle_segmentation/pointcloud)"/>
       <arg name="output_topic" value="$(var pointcloud_filter/output/pointcloud)"/>
@@ -465,6 +473,8 @@
       <arg name="alpha_merger_priority_mode" value="$(var ml_camera_lidar_merger_priority_mode)"/>
       <arg name="use_roi_detected_object_validator" value="$(var use_roi_detected_object_validator)"/>
       <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
+      <arg name="use_roi_detected_object_validator" value="$(var use_roi_detected_object_validator)"/>
+      <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
     </include>
   </group>
 
@@ -511,6 +521,8 @@
       <arg name="use_pointcloud_map" value="$(var use_pointcloud_map)"/>
       <arg name="use_irregular_object_detector" value="$(var switch/detector/irregular_object)"/>
       <arg name="alpha_merger_priority_mode" value="$(var ml_camera_lidar_merger_priority_mode)"/>
+      <arg name="use_roi_detected_object_validator" value="$(var use_roi_detected_object_validator)"/>
+      <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
       <arg name="use_roi_detected_object_validator" value="$(var use_roi_detected_object_validator)"/>
       <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
     </include>

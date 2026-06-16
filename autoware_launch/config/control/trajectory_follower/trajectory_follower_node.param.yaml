@@ -4,3 +4,4 @@
     timeout_thr_sec: 0.5
     trajectory_reference_mode: "temporal" # "spatial" or "temporal"
     enable_control_cmd_horizon_pub: true  # required for use_vehicle_adaptor in raw_vehicle_cmd_converter
+    cyclic_message_timeout_thr_sec: 0.9

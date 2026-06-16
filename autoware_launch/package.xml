@@ -33,6 +33,7 @@
   <exec_depend>autoware_operation_mode_service_caller</exec_depend>
   <exec_depend>autoware_operation_mode_service_divider</exec_depend>
   <exec_depend>autoware_planning_evaluator</exec_depend>
+  <exec_depend>autoware_planning_validator</exec_depend>
   <exec_depend>autoware_proximity_hazard_object_checker</exec_depend>
   <exec_depend>autoware_raw_vehicle_cmd_converter</exec_depend>
   <exec_depend>autoware_redundancy_relay_manager</exec_depend>
@@ -44,6 +45,7 @@
   <exec_depend>autoware_topic_state_monitor</exec_depend>
   <exec_depend>autoware_trajectory_adapter</exec_depend>
   <exec_depend>autoware_trajectory_concatenator</exec_depend>
+  <exec_depend>autoware_trajectory_dummy_gate</exec_depend>
   <exec_depend>autoware_trajectory_modifier</exec_depend>
   <exec_depend>autoware_trajectory_optimizer</exec_depend>
   <exec_depend>autoware_trajectory_ranker</exec_depend>

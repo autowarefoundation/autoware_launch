@@ -49,6 +49,7 @@ units:
       - { type: link, link: /vehicle/006-c_steering-error }
       - { type: link, link: /vehicle/006-d_drive_system-error }
       - { type: link, link: /vehicle/006-e_steering-error }
+      - { type: link, link: /vehicle/007-steering_response_error }
       - { type: link, link: /vehicle/t4_vcu_version_check-error }
       - { type: link, link: /vehicle/vcu-not-authenticated-error }
 
@@ -205,6 +206,12 @@ units:
       type: link
       link: /vehicle/006-e-02_sas
 
+  - path: /vehicle/007-steering_response_error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /vehicle/007-steering_response
+
   - path: /vehicle/006-a-00_brake_external_request
     type: diag
     node: j6_interface
@@ -323,6 +330,13 @@ units:
     name: vehicle_emergency_button
     timeout: 3.0
     latch: 0.0
+
+  - path: /vehicle/007-steering_response
+    type: diag
+    node: j6_interface
+    name: steering_angle_command_response_error
+    timeout: 3.0
+    # latch: 0.0
 
   - path: /vehicle/override_when_level4_driving
     type: diag

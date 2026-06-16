@@ -8,8 +8,8 @@
     min_radius_m: 0.5                                     # Minimum distance from the sensor to include points, in meters
     max_radius_m: 300.0                                   # Maximum distance from the sensor to include points, in meters
     visibility_estimation_max_range_m: 10.0               # Maximum range for estimating point cloud visibility, in meters
-    visibility_estimation_min_azimuth_rad: 0.78           # Minimum azimuth for estimating point cloud visibility, in radius
-    visibility_estimation_max_azimuth_rad: 2.35           # Maximum azimuth for estimating point cloud visibility, in radius
+    visibility_estimation_min_azimuth_rad: 1.047          # Minimum azimuth for estimating point cloud visibility, in radius
+    visibility_estimation_max_azimuth_rad: 2.093          # Maximum azimuth for estimating point cloud visibility, in radius
     visibility_estimation_min_elevation_rad: -0.26        # Minimum elevation for estimating point cloud visibility, in radius
     visibility_estimation_max_elevation_rad: 1.04         # Maximum elevation for estimating point cloud visibility, in radius
     visibility_estimation_max_secondary_voxel_count: 115  # Max number of secondary voxels to consider in visibility estimation

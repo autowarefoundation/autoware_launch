@@ -15,8 +15,8 @@
   <arg name="whole_image_detector_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/yolox_traffic_light_detector.param.yaml"/>
   <arg name="data_path" default="/opt/autoware/mlmodels"/>
   <arg name="classification_lamp_recognizer_ml_param_path" default="$(var data_path)/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>
-  <arg name="classification/car/classifier_type" default="2" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
-  <arg name="classification/pedestrian/classifier_type" default="2" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+  <arg name="classification/car/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+  <arg name="classification/pedestrian/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
   <let name="traffic_light_car_classifier_model" value="traffic_light_classifier_mobilenetv2_batch_6.onnx" if="$(eval &quot;'$(var classification/car/classifier_type)' == '1'&quot;)"/>
   <let name="traffic_light_car_classifier_model" value="traffic_light_lamp_recognizer_comlops.onnx" if="$(eval &quot;'$(var classification/car/classifier_type)' == '2'&quot;)"/>
   <let name="traffic_light_ped_classifier_model" value="ped_traffic_light_classifier_mobilenetv2_batch_6.onnx" if="$(eval &quot;'$(var classification/pedestrian/classifier_type)' == '1'&quot;)"/>

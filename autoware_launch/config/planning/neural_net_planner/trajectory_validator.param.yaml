@@ -27,6 +27,10 @@
           constant_curvature: true
           diffusion_based: true
         ego_total_braking_delay: 0.4
+        ego_footprint_margin:
+          lateral: 0.0
+          front: 0.0
+          rear: 0.0
         warn_threshold:
           ego_acceleration: -2.0
         error_threshold:
@@ -40,6 +44,10 @@
           constant_curvature: true
           diffusion_based: true
         ego_total_braking_delay: 0.4
+        ego_footprint_margin:
+          lateral: 0.0
+          front: 0.0
+          rear: 0.0
         ego_assumed_acceleration: -4.0
         warn_threshold:
           ego_first_passing_time_gap: 1.0
@@ -53,6 +61,10 @@
           unknown: false
         stop_distance_margin: 2.0
         ego_total_braking_delay: 0.4
+        ego_footprint_margin:
+          lateral: 0.0
+          front: 0.0
+          rear: 0.0
         object_assumed_acceleration: -4.0
         error_threshold:
           ego_acceleration: -4.0
@@ -70,6 +82,7 @@
       delay_response_time: 0.5 # [s] delay response time used to estimate the minimum ego stopping distance
       crossing_time_limit: 2.75 # [s] trajectories crossing an amber light are rejected if they cannot cross before this time
       treat_amber_light_as_red_light: false # [-] when true, amber lights are handled like red lights
+      treat_unknown_light_as_red_light: true # [-] when true, UNKNOWN traffic light signals are handled like red lights
       stable_duration_threshold_red: 0.2 # [s] stability duration for RED signals
       stable_duration_threshold_amber: 0.2 # [s] stability duration for amber signals
       amber_rejection_hysteresis_duration: 0.5 # [s] hysteresis duration to persist an AMBER rejection

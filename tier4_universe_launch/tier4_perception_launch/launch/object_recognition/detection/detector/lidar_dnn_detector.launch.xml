@@ -75,8 +75,8 @@
         <arg name="output/objects" value="$(var output/objects)"/>
         <arg name="model_name" value="$(var lidar_detection_model_name)"/>
         <arg name="model_path" value="$(var bevfusion_model_path)"/>
-        <arg name="model_param_path" value="$(var bevfusion_model_path)/$(var lidar_detection_model_name)_new.param.yaml"/>
-        <arg name="ml_package_param_path" value="$(var bevfusion_model_path)/ml_package_$(var lidar_detection_model_name)_new.param.yaml"/>
+        <arg name="model_param_path" value="$(var bevfusion_model_path)/$(var lidar_detection_model_name).param.yaml"/>
+        <arg name="ml_package_param_path" value="$(var bevfusion_model_path)/ml_package_$(var lidar_detection_model_name).param.yaml"/>
         <arg name="class_remapper_param_path" value="$(var bevfusion_model_path)/detection_class_remapper.param.yaml"/>
         <arg name="common_param_path" value="$(var lidar_model_param_path)/bevfusion_common.param.yaml"/>
 
