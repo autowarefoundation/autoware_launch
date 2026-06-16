@@ -147,14 +147,15 @@ localization:
   - repository: autowarefoundation/autoware_universe
     ref: main
     files:
-      # PCD preprocessor
-      - source: sensing/autoware_pointcloud_preprocessor/config/crop_box_filter_node.param.yaml
-        variants:
-          - path: autoware_launch/config/localization/lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml
-          - path: autoware_launch/config/localization/ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml
-      - source: sensing/autoware_pointcloud_preprocessor/config/passthrough_filter_uint16_node.param.yaml
-        variants:
-          - path: autoware_launch/config/localization/lidar_marker_localizer/pointcloud_preprocessor/ring_filter.param.yaml
+      # # PCD preprocessor
+      # # TODO: uncomment and track the following files after input_frame and output_frame are added in the universe side.
+      # - source: sensing/autoware_pointcloud_preprocessor/config/crop_box_filter_node.param.yaml
+      #   variants:
+      #     - path: autoware_launch/config/localization/lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml
+      #     - path: autoware_launch/config/localization/ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml
+      # - source: sensing/autoware_pointcloud_preprocessor/config/passthrough_filter_uint16_node.param.yaml
+      #   variants:
+      #     - path: autoware_launch/config/localization/lidar_marker_localizer/pointcloud_preprocessor/ring_filter.param.yaml
       - source: sensing/autoware_pointcloud_preprocessor/config/random_downsample_filter_node.param.yaml
         variants:
           - path: autoware_launch/config/localization/ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter.param.yaml
