@@ -244,8 +244,9 @@
       <param from="$(var nearest_search_param_path)"/>
       <param from="$(var velocity_smoother_param_path)"/>
       <param from="$(var motion_velocity_planner_velocity_smoother_type_param_path)"/>
-      <param from="$(var motion_velocity_planner_param_path)"/>
+      <param from="$(var motion_velocity_planner_param_path)" allow_substs="true"/>
       <param from="$(var motion_velocity_planner_boundary_departure_prevention_module_param_path)"/>
+      <param name="pointcloud_preprocessing.downsample_by_voxel_grid.enable_downsample" value="false"/>
     </node>
 
     <!-- hazard lights selector -->
