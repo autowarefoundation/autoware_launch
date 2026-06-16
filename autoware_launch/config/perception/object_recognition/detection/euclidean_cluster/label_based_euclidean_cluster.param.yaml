@@ -50,33 +50,22 @@
     # Semantic label selection and mapping
     # YAML declaration order is treated as the input class_id order.
     # cspell:ignore pullable
-    class_names:
-      drivable_surface: ignore
-      other_flat_surface: ignore
-      sidewalk: ignore
-      manmade: ignore
-      vegetation: ignore
+    class_names: # {OVERRIDE}
       car: car
-      bus: bus
-      emergency_vehicle: car
-      train: unknown
       truck: truck
-      tractor_unit: trailer
-      semi_trailer: trailer
-      construction_vehicle: truck
-      forklift: car
-      kart: car
-      motorcycle: motorcycle
+      bus: bus
       bicycle: bicycle
       pedestrian: pedestrian
-      personal_mobility: pedestrian
-      animal: animal
-      pushable_pullable: pedestrian
       traffic_cone: hazard
+      barrier: hazard
       debris: hazard
-      stroller: pedestrian
-      other_stuff: ignore
-      noise+ghost_point: ignore
+      drivable_flat: ignore
+      non_drivable_flat: ignore
+      vegetation: ignore
+      building: ignore
+      vertical_thin: hazard
+      static_clutter: ignore
+      noise: ignore
 
     # Shape estimation behavior
     use_shape_estimation_corrector: false
