@@ -3032,7 +3032,7 @@ Visualization Manager:
               show_safety_factors: true
             - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
               Enabled: true
-              Name: PlanningFactor(ModifierObstacleStop)
+              Name: PlanningFactor(ModifierTrafficLightStop)
               Namespaces:
                 {}
               Show Safety Factors: true
