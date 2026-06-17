@@ -69,6 +69,7 @@
   <arg name="input_pointcloud_for_traffic_light_occlusion_predictor" default="/sensing/lidar/top/pointcloud_raw_ex" description="input pointcloud topic for traffic_light_occlusion_predictor"/>
   <arg name="centerpoint_model_path" default="/opt/autoware/mlmodels/centerpoint" description="path of centerpoint model file"/>
   <arg name="bevfusion_model_path" default="/opt/autoware/mlmodels/bevfusion_lidar" description="path of bevfusion model file"/>
+  <arg name="ptv3_model_path" default="/opt/autoware/mlmodels/ptv3" description="path of ptv3 model file"/>
 
   <group scoped="false" if="$(var use_semantic_segmentation_ptv3)">
     <let name="use_roi_detected_object_validator" value="false"/>

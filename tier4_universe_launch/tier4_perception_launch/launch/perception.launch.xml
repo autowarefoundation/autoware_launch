@@ -59,6 +59,7 @@
     <choice value="centerpoint_short_range"/>
     <choice value=""/>
   </arg>
+  <arg name="ptv3_model_path" default="$(var data_path)/ptv3"/>
   <arg name="bevfusion_model_path" default="$(var data_path)/bevfusion"/>
   <arg name="centerpoint_model_path" default="$(var data_path)/lidar_centerpoint"/>
   <arg name="transfusion_model_path" default="$(var data_path)/lidar_transfusion"/>
@@ -248,7 +249,7 @@
         <arg name="use_time_series_filter" value="$(var use_obstacle_segmentation_time_series_filter)"/>
         <arg name="use_cuda_ground_segmentation" value="$(var use_cuda_ground_segmentation)"/>
         <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>
-        <arg name="data_path" value="$(var data_path)"/>
+        <arg name="ptv3_model_path" value="$(var ptv3_model_path)"/>
       </include>
     </group>
 
