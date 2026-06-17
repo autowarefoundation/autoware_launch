@@ -603,7 +603,7 @@ def launch_setup(context, *args, **kwargs):
                 "output/pointcloud/filtered": "/perception/obstacle_segmentation/pointcloud",
                 "pointcloud_container_name": LaunchConfiguration("pointcloud_container_name"),
                 "use_pointcloud_container": LaunchConfiguration("ptv3_use_pointcloud_container"),
-                "data_path": LaunchConfiguration("data_path"),
+                "model_path": LaunchConfiguration("ptv3_model_path"),
                 "model_name": LaunchConfiguration("ptv3_model_name"),
             }.items(),
         )
@@ -672,7 +672,7 @@ def generate_launch_description():
     add_launch_arg("use_cuda_ground_segmentation", "False")
     add_launch_arg("use_semantic_segmentation_ptv3")
     add_launch_arg("ptv3_use_pointcloud_container", "True")
-    add_launch_arg("data_path", "/opt/autoware/mlmodels")
+    add_launch_arg("ptv3_model_path", "/opt/autoware/mlmodels/ptv3")
     add_launch_arg("ptv3_model_name", "ptv3")
     add_launch_arg(
         "ogm_outlier_filter_param_path",
