@@ -126,8 +126,68 @@ perception:
         variants:
           - path: autoware_launch/config/perception/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml
       # Perception/obstacle_segmentation
+      - source: perception/autoware_elevation_map_loader/config/elevation_map_parameters.yaml
+        # note: this is not a valid ROS2 param file format.
+        variants:
+          - path: autoware_launch/config/perception/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml
+      #
+      # ground_segmentation.param.yaml omitted. The 'param file' is completely interpreted by launcher. Should refactor to use sync-params.
+      #
+      - source: perception/autoware_occupancy_grid_map_outlier_filter/config/occupancy_grid_map_outlier_filter.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/obstacle_segmentation/occupancy_grid_based_outlier_filter/occupancy_grid_map_outlier_filter.param.yaml
       # Perception/occupancy_grid_map
+      - source: perception/autoware_probabilistic_occupancy_grid_map/config/binary_bayes_filter_updater.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/occupancy_grid_map/binary_bayes_filter_updater.param.yaml
+      - source: perception/autoware_probabilistic_occupancy_grid_map/config/laserscan_based_occupancy_grid_map.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/occupancy_grid_map/laserscan_based_occupancy_grid_map.param.yaml
+      - source: perception/autoware_probabilistic_occupancy_grid_map/config/multi_lidar_pointcloud_based_occupancy_grid_map.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/occupancy_grid_map/multi_lidar_pointcloud_based_occupancy_grid_map.param.yaml
+      - source: perception/autoware_probabilistic_occupancy_grid_map/config/pointcloud_based_occupancy_grid_map.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/occupancy_grid_map/pointcloud_based_occupancy_grid_map.param.yaml
+      - source: perception/autoware_probabilistic_occupancy_grid_map/config/synchronized_grid_map_fusion_node.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/occupancy_grid_map/synchronized_grid_map_fusion_node.param.yaml
+
       # Perception/traffic_light_recognition
+      - source: perception/autoware_crosswalk_traffic_light_estimator/config/crosswalk_traffic_light_estimator.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml
+      - source: perception/autoware_tensorrt_yolox/config/yolox_traffic_light_detector.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/tensorrt_yolox/yolox_traffic_light_detector.param.yaml
+      # TODO: sync roi_label_remap.csv, roi_to_semseg_label_remap.csv, traffic_light_roi_label_remap.csv
+      # (either sync-params can support csv, or refactor these csv files as param files)
+      - source: perception/autoware_traffic_light_arbiter/config/traffic_light_arbiter.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_arbiter/traffic_light_arbiter.param.yaml
+      - source: perception/autoware_traffic_light_classifier/config/car_traffic_light_classifier.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml
+      - source: perception/autoware_traffic_light_classifier/config/pedestrian_traffic_light_classifier.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml
+      - source: perception/autoware_traffic_light_fine_detector/config/traffic_light_fine_detector.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml
+      - source: perception/autoware_traffic_light_map_based_detector/config/traffic_light_map_based_detector.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_map_based_detector/camera6_traffic_light_map_based_detector.param.yaml
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_map_based_detector/camera7_traffic_light_map_based_detector.param.yaml
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_map_based_detector/traffic_light_traffic_light_map_based_detector.param.yaml
+      - source: perception/autoware_traffic_light_multi_camera_fusion/config/traffic_light_multi_camera_fusion.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml
+      - source: perception/autoware_traffic_light_occlusion_predictor/config/traffic_light_occlusion_predictor.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml
+      - source: perception/autoware_traffic_light_visualization/config/traffic_light_roi_visualizer.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_visualization/traffic_light_roi_visualizer.param.yaml
 
 localization:
   - repository: autowarefoundation/autoware_core
