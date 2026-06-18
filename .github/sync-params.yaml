@@ -324,7 +324,7 @@ planning:
         # planning/autoware_velocity_smoother/config/default_common.param.yaml ?
         variants:
           - path: autoware_launch/config/planning/scenario_planning/common/common.param.yaml
-      - source: planning/motion_velocity_planner/autoware_motion_velocity_planner/test_config/nearest_search.param.yaml
+      - source: planning/autoware_core_planning/config/nearest_search.param.yaml
         variants:
           - path: autoware_launch/config/planning/scenario_planning/common/nearest_search.param.yaml
       - source: planning/behavior_velocity_planner/autoware_behavior_velocity_planner_common/config/behavior_velocity_planner_common.param.yaml
