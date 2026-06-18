@@ -9,15 +9,24 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/40738da892ce8504e46d0d11de6500b341bf0910/perception/autoware_multi_object_tracker/config/multi_object_tracker_node.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/82bf9b20f9b1a0847451a003a4410ae965c75652/perception/autoware_multi_object_tracker/config/multi_object_tracker_node.param.yaml
 
 /**:
   ros__parameters:
     # default tracker node parameters
-    publish_rate: 10.0
     world_frame_id: map
     ego_frame_id: base_link
-    enable_delay_compensation: true # {OVERRIDE}
+
+    # publish-trigger
+    publish_on_timer: false
+    publish_rate: 10.0
+
+    # ego pose source: "tf" (look up from TF tree) or "odometry" (interpolate from ~/input/odometry)
+    ego_source: tf
+    # delay compensation, least -> most:
+    # "none" | "publish_delay" (detection + update->publish delay) | "odometry" (up to latest odometry) | "full" (to now)
+    delay_compensation: none
+
     consider_odometry_uncertainty: false
 
     # Per-tracker-type configuration
