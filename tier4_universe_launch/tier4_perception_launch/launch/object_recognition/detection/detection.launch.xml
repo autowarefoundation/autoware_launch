@@ -405,6 +405,8 @@
   <!-- Merger -->
   <group if="$(var switch/merger/camera_lidar_radar)">
     <!-- Camera-Lidar-Radar merger -->
+    <let name="input/lidar_rule/objects" value="$(var camera_lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/lidar_rule/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/camera_lidar_radar_merger.launch.xml">
       <arg name="number_of_cameras" value="$(var number_of_cameras)"/>
       <arg name="input/camera0/image" value="$(var input/camera0/image)"/>
@@ -435,7 +437,7 @@
       <arg name="input/camera8/info" value="$(var input/camera8/info)"/>
       <arg name="input/camera8/rois" value="$(var input/camera8/rois)"/>
       <arg name="input/lidar_ml/objects" value="$(var object_merger/input/ml_detected_objects)"/>
-      <arg name="input/lidar_rule/objects" value="$(var camera_lidar_rule_detector/output/objects)"/>
+      <arg name="input/lidar_rule/objects" value="$(var input/lidar_rule/objects)"/>
       <arg name="input/detection_by_tracker/objects" value="$(var tracker_based_detector/output/objects)"/>
       <arg name="input/radar/objects" value="radar/noise_filtered_objects"/>
       <arg name="input/radar_far/objects" value="$(var radar_pipeline/output/objects)"/>
@@ -457,6 +459,8 @@
 
   <group if="$(var switch/merger/camera_lidar)">
     <!-- Camera-Lidar merger -->
+    <let name="input/lidar_rule/objects" value="$(var camera_lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/lidar_rule/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/camera_lidar_merger.launch.xml">
       <arg name="number_of_cameras" value="$(var number_of_cameras)"/>
       <arg name="input/camera0/image" value="$(var input/camera0/image)"/>
@@ -487,7 +491,7 @@
       <arg name="input/camera8/info" value="$(var input/camera8/info)"/>
       <arg name="input/camera8/rois" value="$(var input/camera8/rois)"/>
       <arg name="input/lidar_ml/objects" value="$(var object_merger/input/ml_detected_objects)"/>
-      <arg name="input/lidar_rule/objects" value="$(var camera_lidar_rule_detector/output/objects)"/>
+      <arg name="input/lidar_rule/objects" value="$(var input/lidar_rule/objects)"/>
       <arg name="input/detection_by_tracker/objects" value="$(var tracker_based_detector/output/objects)"/>
       <arg name="detected_irregular_object/output/objects" value="$(var irregular_object_pipeline/output/objects)"/>
       <arg name="output/objects" value="$(var output/objects)"/>
@@ -505,10 +509,12 @@
 
   <group if="$(var switch/merger/lidar_radar)">
     <!-- Lidar object merger-->
+    <let name="input/lidar_rule/objects" value="$(var lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/lidar_rule/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
     <group>
       <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/lidar_merger.launch.xml">
         <arg name="input/lidar_ml/objects" value="$(var object_merger/input/ml_detected_objects)"/>
-        <arg name="input/lidar_rule/objects" value="$(var lidar_rule_detector/output/objects)"/>
+        <arg name="input/lidar_rule/objects" value="$(var input/lidar_rule/objects)"/>
         <arg name="output/objects" value="lidar/objects"/>
         <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
         <arg name="use_detection_by_tracker" value="$(var use_detection_by_tracker)"/>
@@ -529,9 +535,11 @@
 
   <group if="$(var switch/merger/lidar)">
     <!-- Lidar object merger-->
+    <let name="input/lidar_rule/objects" value="$(var lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/lidar_rule/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/lidar_merger.launch.xml">
       <arg name="input/lidar_ml/objects " value="$(var object_merger/input/ml_detected_objects)"/>
-      <arg name="input/lidar_rule/objects" value="$(var lidar_rule_detector/output/objects)"/>
+      <arg name="input/lidar_rule/objects" value="$(var input/lidar_rule/objects)"/>
       <arg name="input/detection_by_tracker/objects" value="$(var tracker_based_detector/output/objects)"/>
       <arg name="output/objects" value="$(var output/objects)"/>
       <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
