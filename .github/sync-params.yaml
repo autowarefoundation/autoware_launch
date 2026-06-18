@@ -160,7 +160,8 @@ perception:
       - source: perception/autoware_tensorrt_yolox/config/yolox_traffic_light_detector.param.yaml
         variants:
           - path: autoware_launch/config/perception/traffic_light_recognition/tensorrt_yolox/yolox_traffic_light_detector.param.yaml
-      # TODO: sync roi_label_remap.csv, roi_to_semseg_label_remap.csv, traffic_light_roi_label_remap.csv (or refactor them as param files?)
+      # TODO: sync roi_label_remap.csv, roi_to_semseg_label_remap.csv, traffic_light_roi_label_remap.csv
+      # (either sync-params can support csv, or refactor these csv files as param files)
       - source: perception/autoware_traffic_light_arbiter/config/traffic_light_arbiter.param.yaml
         variants:
           - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_arbiter/traffic_light_arbiter.param.yaml
