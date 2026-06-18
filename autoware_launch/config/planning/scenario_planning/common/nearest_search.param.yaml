@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_core/blob/c9eb7eceb90976a5c66daae0718aba2e07c030db/planning/motion_velocity_planner/autoware_motion_velocity_planner/test_config/nearest_search.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_core/blob/cef72e02f92cf21333231db9b247b7d4c85a944d/planning/autoware_core_planning/config/nearest_search.param.yaml
 
 /**:
   ros__parameters:
