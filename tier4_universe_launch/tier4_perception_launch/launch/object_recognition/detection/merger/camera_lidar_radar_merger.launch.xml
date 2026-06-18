@@ -48,7 +48,7 @@
   <arg name="input/camera8/info"/>
   <arg name="input/camera8/rois"/>
   <arg name="input/lidar_ml/objects"/>
-  <arg name="input/lidar_rule/objects"/>
+  <arg name="input/lidar_cluster/objects"/>
   <arg name="input/radar/objects"/>
   <arg name="input/radar_far/objects"/>
   <arg name="input/detection_by_tracker/objects"/>
@@ -79,7 +79,7 @@
     value="$(var input/lidar_ml/objects)"
     if="$(eval &quot;'$(var use_irregular_object_detector)'=='false' and '$(var use_roi_detected_object_validator)'=='false' &quot;)"
   />
-  <let name="merger1/input/objects1" value="$(var input/lidar_rule/objects)"/>
+  <let name="merger1/input/objects1" value="$(var input/lidar_cluster/objects)"/>
   <let name="merger1/output/objects" value="$(var output/objects)" if="$(var without_dbt_and_filter)"/>
   <let name="merger1/output/objects" value="$(var lidar_detection_model_type)_roi_cluster_fusion/objects" unless="$(var without_dbt_and_filter)"/>
 

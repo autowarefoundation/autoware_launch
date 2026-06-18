@@ -14,13 +14,13 @@
 
   <!-- external interfaces -->
   <arg name="input/lidar_ml/objects" default="$(var lidar_detection_model_type)/objects"/>
-  <arg name="input/lidar_rule/objects" default="clustering/objects"/>
+  <arg name="input/lidar_cluster/objects" default="clustering/objects"/>
   <arg name="input/detection_by_tracker/objects" default="detection_by_tracker/objects"/>
   <arg name="output/objects"/>
 
   <!-- internal interfaces -->
   <let name="merger1/input/objects0" value="$(var input/lidar_ml/objects)"/>
-  <let name="merger1/input/objects1" value="$(var input/lidar_rule/objects)"/>
+  <let name="merger1/input/objects1" value="$(var input/lidar_cluster/objects)"/>
   <let name="merger1/output/objects" value="$(var output/objects)" if="$(var without_dbt_and_filter)"/>
   <let name="merger1/output/objects" value="temporary_merged_objects" unless="$(var without_dbt_and_filter)"/>
 
