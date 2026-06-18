@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/cdb32fdcdc92bf3a344462336880b7171d69b6a6/perception/autoware_tracking_object_merger/config/data_association_matrix.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/6017d427aadcc7c0e0208f2e59286388b4140dd6/perception/autoware_tracking_object_merger/config/data_association_matrix.param.yaml
 
 /**:
   ros__parameters:
