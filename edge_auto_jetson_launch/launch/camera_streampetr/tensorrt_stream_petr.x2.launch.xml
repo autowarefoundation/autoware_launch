@@ -27,7 +27,7 @@
     <remap from="~/input/camera2/camera_info" to="/sensing/camera/camera10/camera_info"/>
     <remap from="~/input/camera3/camera_info" to="/sensing/camera/camera7/camera_info"/>
     <remap from="~/input/camera4/camera_info" to="/sensing/camera/camera9/camera_info"/>
-    
+
     <remap from="~/input/camera0/image" to="/sensing/camera/camera8/image_raw"/>
     <remap from="~/input/camera1/image" to="/sensing/camera/camera6/image_raw"/>
     <remap from="~/input/camera2/image" to="/sensing/camera/camera10/image_raw"/>
@@ -40,13 +40,15 @@
     <remap from="~/input/camera3/image/compressed" to="/sensing/camera/camera7/image_raw/compressed"/>
     <remap from="~/input/camera4/image/compressed" to="/sensing/camera/camera9/image_raw/compressed"/>
 
-    <param name="anchor_camera_id" value="$(var anchor_camera_id)" />   <!-- The forward pass begins once every anchor camera topic reaches. Choose this as the camera that causes the shortest differnce in min and max timestamp between cameras-->
-    <param name="is_compressed_image" value="$(var is_compressed_image)" />   <!-- Whether the input image is compressed. -->
-    <param name="is_distorted_image" value="$(var is_distorted_image)" />   <!-- Whether the input image is compressed. -->
+    <param name="anchor_camera_id" value="$(var anchor_camera_id)"/>
+    <!-- The forward pass begins once every anchor camera topic reaches. Choose this as the camera that causes the shortest differnce in min and max timestamp between cameras-->
+    <param name="is_compressed_image" value="$(var is_compressed_image)"/>
+    <!-- Whether the input image is compressed. -->
+    <param name="is_distorted_image" value="$(var is_distorted_image)"/>
+    <!-- Whether the input image is compressed. -->
     <param name="multithreading" value="$(var multithreading)"/>
     <param name="downsample_factor" value="$(var downsample_factor)"/>
     <param name="max_camera_time_diff" value="$(var max_camera_time_diff)"/>
-
   </node>
 
   <group unless="$(var build_only)">
@@ -56,5 +58,4 @@
       <arg name="param_path" value="$(find-pkg-share edge_auto_jetson_launch)/config/streampetr_object_sorter.yaml"/>
     </include>
   </group>
-
 </launch>
