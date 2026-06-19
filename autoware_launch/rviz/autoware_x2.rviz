@@ -3032,7 +3032,7 @@ Visualization Manager:
               show_safety_factors: true
             - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
               Enabled: true
-              Name: PlanningFactor(ModifierObstacleStop)
+              Name: PlanningFactor(ModifierTrafficLightStop)
               Namespaces:
                 {}
               Show Safety Factors: true
@@ -3055,7 +3055,7 @@ Visualization Manager:
                 Durability Policy: Volatile
                 History Policy: Keep Last
                 Reliability Policy: Reliable
-                Value: /planning/planning_factors/trajectory_validator
+                Value: /planning/planning_factors/trajectory_selector
               Value: true
               show_safety_factors: true
           Enabled: true
@@ -5187,12 +5187,12 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /planning/trajectory_selector/trajectory_validator_node/debug/processing_time_text
+        Value: /planning/trajectory_selector/trajectory_selector_node/debug/validator/processing_time_text
       Value: true
       Value height offset: 0
     - Class: rviz_default_plugins/MarkerArray
-      Enabled: true
-      Name: TrajectoryValidatorFilteringMarkers
+      Enabled: false
+      Name: TrajectoryValidatorFilterReport
       Namespaces:
         {}
       Topic:
@@ -5200,7 +5200,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /planning/trajectory_selector/trajectory_validator_node/debug/markers
+        Value: /planning/trajectory_selector/trajectory_selector_node/debug/validator/plugin_report_text
       Value: true
     - Class: rviz_default_plugins/MarkerArray
       Enabled: false
@@ -5212,7 +5212,19 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /planning/trajectory_selector/trajectory_validator_node/debug/collision_check_filter
+        Value: /planning/trajectory_selector/trajectory_selector_node/debug/validator/markers/collision_check_filter
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: TrajectoryValidator(UncrossableBoundaryDepartureFilter)
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /planning/trajectory_selector/trajectory_selector_node/debug/validator/markers/uncrossable_boundary_departure_filter
       Value: true
   Enabled: true
   Global Options:
