@@ -1,10 +1,43 @@
 <?xml version="1.0"?>
 <launch>
-  <group>
-    <include file="$(find-pkg-share autoware_gyro_odometer)/launch/gyro_odometer.launch.xml">
-      <arg name="input_vehicle_twist_with_covariance_topic" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
-      <arg name="output_twist_with_covariance_topic" value="/localization/twist_estimator/twist_with_covariance"/>
-      <arg name="output_twist_with_covariance_raw_topic" value="/localization/twist_estimator/twist_with_covariance_raw"/>
+  <arg name="input_vehicle_twist_with_covariance_topic" default="/sensing/vehicle_velocity_converter/twist_with_covariance" description="input twist with covariance topic name from vehicle"/>
+  <arg name="input_imu_topic" default="/sensing/imu/imu_data" description="input imu topic name"/>
+
+  <arg name="output_twist_raw_topic" default="gyro_twist_raw" description="output raw twist topic name"/>
+  <arg name="output_twist_with_covariance_raw_topic" default="gyro_twist_with_covariance_raw" description="output raw twist with covariance topic name"/>
+
+  <arg name="output_twist_topic" default="gyro_twist" description="output twist topic name"/>
+  <arg name="output_twist_with_covariance_topic" default="gyro_twist_with_covariance" description="output twist with covariance topic name"/>
+
+  <arg name="config_file" default="$(find-pkg-share autoware_gyro_odometer)/config/gyro_odometer.param.yaml"/>
+
+  <arg name="use_autoware_velocity_scale_selector" default="true"/>
+  <arg name="velocity_scale_selector_param_path" default="$(find-pkg-share autoware_velocity_scale_selector)/config/velocity_scale_selector.param.yaml"/>
+  <arg name="input_pose_with_covariance_for_velocity_scale_selector" default="/localization/pose_estimator/ndt_scan_matcher/pose_with_covariance"/>
+
+  <let name="gyro_odometer_input_twist_topic" value="$(var input_vehicle_twist_with_covariance_topic)" unless="$(var use_autoware_velocity_scale_selector)"/>
+  <let name="gyro_odometer_input_twist_topic" value="/localization/twist_estimator/twist_with_covariance_scaled" if="$(var use_autoware_velocity_scale_selector)"/>
+
+  <group if="$(var use_autoware_velocity_scale_selector)">
+    <include file="$(find-pkg-share autoware_velocity_scale_selector)/launch/velocity_scale_selector.launch.xml">
+      <arg name="input/twist_with_covariance" value="$(var input_vehicle_twist_with_covariance_topic)"/>
+      <arg name="input/pose_with_covariance" value="$(var input_pose_with_covariance_for_velocity_scale_selector)"/>
+      <arg name="output/twist_with_covariance" value="/localization/twist_estimator/twist_with_covariance_scaled"/>
+      <arg name="param_file" value="$(var velocity_scale_selector_param_path)"/>
     </include>
   </group>
+
+  <node pkg="autoware_gyro_odometer" exec="autoware_gyro_odometer_node" output="both">
+    <remap from="vehicle/twist_with_covariance" to="$(var gyro_odometer_input_twist_topic)"/>
+
+    <remap from="imu" to="$(var input_imu_topic)"/>
+
+    <remap from="twist_raw" to="$(var output_twist_raw_topic)"/>
+    <remap from="twist_with_covariance_raw" to="$(var output_twist_with_covariance_raw_topic)"/>
+
+    <remap from="twist" to="$(var output_twist_topic)"/>
+    <remap from="twist_with_covariance" to="$(var output_twist_with_covariance_topic)"/>
+
+    <param from="$(var config_file)"/>
+  </node>
 </launch>

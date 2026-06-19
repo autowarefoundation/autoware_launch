@@ -3,6 +3,8 @@
   <arg name="use_autoware_pose_covariance_modifier" default="false"/>
   <arg name="use_autoware_covariance_selector" default="false"/>
   <arg name="covariance_selector_param_path" default="$(find-pkg-share autoware_covariance_selector)/config/covariance_selector.param.yaml"/>
+  <arg name="use_autoware_velocity_scale_selector" default="true"/>
+  <arg name="velocity_scale_selector_param_path" default="$(find-pkg-share autoware_velocity_scale_selector)/config/velocity_scale_selector.param.yaml"/>
   <!-- only when running with a real vehicle, the pose_initializer judges the stop -->
   <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)" value="true"/>
   <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)" value="false"/>
@@ -72,7 +74,12 @@
   <!-- Gyro Odometer Launch (as twist estimator) -->
   <group if="$(var use_gyro_odom_twist)">
     <push-ros-namespace namespace="twist_estimator"/>
-    <include file="$(find-pkg-share tier4_localization_launch)/launch/pose_twist_estimator/gyro_odometer.launch.xml"/>
+    <let name="effective_use_velocity_scale_selector" value="false" unless="$(var use_ndt_pose)"/>
+    <let name="effective_use_velocity_scale_selector" value="$(var use_autoware_velocity_scale_selector)" if="$(var use_ndt_pose)"/>
+    <include file="$(find-pkg-share tier4_localization_launch)/launch/pose_twist_estimator/gyro_odometer.launch.xml">
+      <arg name="use_autoware_velocity_scale_selector" value="$(var effective_use_velocity_scale_selector)"/>
+      <arg name="velocity_scale_selector_param_path" value="$(var velocity_scale_selector_param_path)"/>
+    </include>
   </group>
 
   <!-- Eagleye Launch -->
