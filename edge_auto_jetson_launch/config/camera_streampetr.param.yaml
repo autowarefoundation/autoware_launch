@@ -7,7 +7,7 @@
     is_compressed_image: false # Whether the input images are compressed
     is_distorted_image: false # Whether the input images are distorted
     ego_mask.fill_value_bgr: [0.0, 0.0, 0.0]
-    camera_mask.camera_ids: [8, 6, 10, 7, 9] 
+    camera_mask.camera_ids: [8, 6, 10, 7, 9]
     camera_0_mask:
       enable: false
       mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # points to construct the polygon, [x1, y2, x2, y2, x3, y3...]
@@ -52,4 +52,4 @@
       enable: true
       mask: [0.0, 0.0, 0.2, 0.0, 0.2, 1.0, 0.0, 1.0]
       normalized: true
-    
+
