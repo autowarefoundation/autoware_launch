@@ -36,7 +36,7 @@
 
     roi_pointcloud_fusion:
       parameters:
-        override_class_with_unknown: true
+        override_class_with_unknown: false
         min_cluster_size: 2
         max_cluster_size: 1000
         cluster_2d_tolerance: 0.5

@@ -99,9 +99,6 @@
   <arg name="euclidean_clustering/shape_policy"/>
   <arg name="euclidean_clustering/param_path"/>
 
-  <!-- label_based_param -->
-  <arg name="euclidean_clustering/shape_policy"/>
-  <arg name="euclidean_clustering/param_path"/>
   <let name="use_object_filter" value="false" if="$(eval &quot;'$(var use_semantic_segmentation_ptv3)' == 'true' and '$(var use_multi_channel_tracker_merger)' == 'true'&quot;)"/>
   <!-- internal interfaces -->
   <let name="pointcloud_filter/output/pointcloud" value="$(var ns)/pointcloud_map_filtered/pointcloud"/>
