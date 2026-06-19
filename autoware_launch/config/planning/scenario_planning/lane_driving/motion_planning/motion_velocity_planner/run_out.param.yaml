@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/ebc9927f3fdd7b978343c8f05eb2752e12d707cd/planning/motion_velocity_planner/autoware_motion_velocity_run_out_module/config/run_out.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/9ed967b4ba5699dd9630d4c6c6bedd3813953993/planning/motion_velocity_planner/autoware_motion_velocity_run_out_module/config/run_out.param.yaml
 
 /**:
   ros__parameters:
