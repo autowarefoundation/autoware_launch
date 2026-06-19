@@ -41,7 +41,7 @@
     <remap from="~/input/camera4/image/compressed" to="/sensing/camera/camera9/image_raw/compressed"/>
 
     <param name="anchor_camera_id" value="$(var anchor_camera_id)"/>
-    <!-- The forward pass begins once every anchor camera topic reaches. Choose this as the camera that causes the shortest differnce in min and max timestamp between cameras-->
+    <!-- The forward pass begins once every anchor camera topic reaches. Choose this as the camera that causes the shortest difference in min and max timestamp between cameras-->
     <param name="is_compressed_image" value="$(var is_compressed_image)"/>
     <!-- Whether the input image is compressed. -->
     <param name="is_distorted_image" value="$(var is_distorted_image)"/>
