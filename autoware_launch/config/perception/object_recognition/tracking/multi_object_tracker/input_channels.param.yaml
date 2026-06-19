@@ -68,7 +68,7 @@
           short_name: "Lpp"
       # CAMERA - DNN
       camera_streampetr:
-        associator_type: bev
+        associator_type: polar
         flags:
           can_spawn_new_tracker: true
           can_trust_existence_probability: true
