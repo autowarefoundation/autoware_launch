@@ -92,8 +92,8 @@
     description="select high accuracy detector type for traffic light recognition: fine_detection or whole_image_detection"
   />
 
-  <arg name="traffic_light_recognition/classification/car/classifier_type" default="2" description="0=HSVFilter, 1=CNN, 2=LAMPClassifier"/>
-  <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" default="2" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+  <arg name="traffic_light_recognition/classification/car/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LAMPClassifier"/>
+  <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
   <arg name="traffic_light_recognition/classification/car/label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels.txt"/>
   <arg name="traffic_light_recognition/classification/pedestrian/label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels_ped.txt"/>
   <arg name="traffic_light_recognition/classification/lamp_recognizer_ml_param_path" default="$(var data_path)/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>
