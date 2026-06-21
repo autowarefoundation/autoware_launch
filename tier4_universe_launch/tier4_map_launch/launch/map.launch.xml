@@ -16,7 +16,6 @@
   <let name="container_type" value="component_container" unless="$(var use_multithread)"/>
   <let name="container_type" value="component_container_mt" if="$(var use_multithread)"/>
 
-  <!-- When ENABLE_AGNOCAST=1, AgnocastOnly nodes run standalone instead of in map_container. -->
   <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
   <let name="agnocast_enabled" value="$(eval &quot;'$(env ENABLE_AGNOCAST 0)' == '1'&quot;)"/>
 
