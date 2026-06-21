@@ -16,11 +16,15 @@
   <let name="container_type" value="component_container" unless="$(var use_multithread)"/>
   <let name="container_type" value="component_container_mt" if="$(var use_multithread)"/>
 
+  <!-- When ENABLE_AGNOCAST=1, AgnocastOnly nodes run standalone instead of in map_container. -->
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+  <let name="agnocast_enabled" value="$(eval &quot;'$(env ENABLE_AGNOCAST 0)' == '1'&quot;)"/>
+
   <group>
     <push-ros-namespace namespace="map"/>
 
     <node_container pkg="rclcpp_components" exec="$(var container_type)" name="map_container" namespace="" output="both">
-      <composable_node pkg="autoware_map_loader" plugin="autoware::map_loader::PointCloudMapLoaderNode" name="pointcloud_map_loader">
+      <composable_node unless="$(var agnocast_enabled)" pkg="autoware_map_loader" plugin="autoware::map_loader::PointCloudMapLoaderNode" name="pointcloud_map_loader">
         <param from="$(var pointcloud_map_loader_param_path)" allow_substs="true"/>
         <remap from="output/pointcloud_map" to="pointcloud_map"/>
         <remap from="output/pointcloud_map_metadata" to="pointcloud_map_metadata"/>
@@ -29,20 +33,48 @@
         <remap from="service/get_selected_pcd_map" to="/map/get_selected_pointcloud_map"/>
       </composable_node>
 
-      <composable_node pkg="autoware_map_loader" plugin="autoware::map_loader::Lanelet2MapLoaderNode" name="lanelet2_map_loader">
+      <composable_node unless="$(var agnocast_enabled)" pkg="autoware_map_loader" plugin="autoware::map_loader::Lanelet2MapLoaderNode" name="lanelet2_map_loader">
         <param from="$(var lanelet2_map_loader_param_path)" allow_substs="true"/>
         <remap from="output/lanelet2_map" to="vector_map"/>
       </composable_node>
 
-      <composable_node pkg="autoware_lanelet2_map_visualizer" plugin="autoware::lanelet2_map_visualizer::Lanelet2MapVisualizationNode" name="lanelet2_map_visualization">
+      <composable_node unless="$(var agnocast_enabled)" pkg="autoware_lanelet2_map_visualizer" plugin="autoware::lanelet2_map_visualizer::Lanelet2MapVisualizationNode" name="lanelet2_map_visualization">
         <remap from="input/lanelet2_map" to="vector_map"/>
         <remap from="output/lanelet2_map_marker" to="vector_map_marker"/>
       </composable_node>
 
-      <composable_node pkg="autoware_map_tf_generator" plugin="autoware::map_tf_generator::VectorMapTFGeneratorNode" name="vector_map_tf_generator">
+      <composable_node unless="$(var agnocast_enabled)" pkg="autoware_map_tf_generator" plugin="autoware::map_tf_generator::VectorMapTFGeneratorNode" name="vector_map_tf_generator">
         <param from="$(var map_tf_generator_param_path)"/>
       </composable_node>
     </node_container>
+
+    <!-- ENABLE_AGNOCAST=1: run the AgnocastOnly nodes as standalone executables. -->
+    <node if="$(var agnocast_enabled)" pkg="autoware_map_loader" exec="autoware_pointcloud_map_loader" name="pointcloud_map_loader" output="both">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <param from="$(var pointcloud_map_loader_param_path)" allow_substs="true"/>
+      <remap from="output/pointcloud_map" to="pointcloud_map"/>
+      <remap from="output/pointcloud_map_metadata" to="pointcloud_map_metadata"/>
+      <remap from="service/get_partial_pcd_map" to="/map/get_partial_pointcloud_map"/>
+      <remap from="service/get_differential_pcd_map" to="/map/get_differential_pointcloud_map"/>
+      <remap from="service/get_selected_pcd_map" to="/map/get_selected_pointcloud_map"/>
+    </node>
+
+    <node if="$(var agnocast_enabled)" pkg="autoware_map_loader" exec="autoware_lanelet2_map_loader" name="lanelet2_map_loader" output="both">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <param from="$(var lanelet2_map_loader_param_path)" allow_substs="true"/>
+      <remap from="output/lanelet2_map" to="vector_map"/>
+    </node>
+
+    <node if="$(var agnocast_enabled)" pkg="autoware_lanelet2_map_visualizer" exec="autoware_lanelet2_map_visualizer" name="lanelet2_map_visualization" output="both">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <remap from="input/lanelet2_map" to="vector_map"/>
+      <remap from="output/lanelet2_map_marker" to="vector_map_marker"/>
+    </node>
+
+    <node if="$(var agnocast_enabled)" pkg="autoware_map_tf_generator" exec="autoware_vector_map_tf_generator" name="vector_map_tf_generator" output="both">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <param from="$(var map_tf_generator_param_path)"/>
+    </node>
 
     <node pkg="autoware_map_loader" exec="map_hash_generator" name="map_hash_generator">
       <param name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
