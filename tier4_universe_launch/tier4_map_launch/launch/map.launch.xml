@@ -38,7 +38,12 @@
         <remap from="output/lanelet2_map" to="vector_map"/>
       </composable_node>
 
-      <composable_node unless="$(var agnocast_enabled)" pkg="autoware_lanelet2_map_visualizer" plugin="autoware::lanelet2_map_visualizer::Lanelet2MapVisualizationNode" name="lanelet2_map_visualization">
+      <composable_node
+        unless="$(var agnocast_enabled)"
+        pkg="autoware_lanelet2_map_visualizer"
+        plugin="autoware::lanelet2_map_visualizer::Lanelet2MapVisualizationNode"
+        name="lanelet2_map_visualization"
+      >
         <remap from="input/lanelet2_map" to="vector_map"/>
         <remap from="output/lanelet2_map_marker" to="vector_map_marker"/>
       </composable_node>
