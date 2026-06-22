@@ -2,13 +2,15 @@
   ros__parameters:
     filter_target_label:
       UNKNOWN : true
-      CAR : true
-      TRUCK : true
-      BUS : true
-      TRAILER : true
-      MOTORCYCLE : true
-      BICYCLE : true
-      PEDESTRIAN : true
+      CAR : true # {OVERRIDE}
+      TRUCK : true # {OVERRIDE}
+      BUS : true # {OVERRIDE}
+      TRAILER : true # {OVERRIDE}
+      MOTORCYCLE : true # {OVERRIDE}
+      BICYCLE : true # {OVERRIDE}
+      PEDESTRIAN : true # {OVERRIDE}
+      ANIMAL : true # {OVERRIDE}
+      HAZARD : true # {OVERRIDE}
 
     filter_settings:
       # polygon overlap based filter
