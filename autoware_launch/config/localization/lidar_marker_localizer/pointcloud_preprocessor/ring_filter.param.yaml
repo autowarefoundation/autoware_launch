@@ -1,9 +1,10 @@
 /**:
   ros__parameters:
-    input_frame: "base_link"
-    output_frame: "base_link"
-    filter_field_name: "channel"
+    input_frame: base_link
+    output_frame: base_link
+
     filter_limit_min: 5
     filter_limit_max: 45
-    filter_limit_negative: False
-    keep_organized: False
+    filter_field_name: "channel"
+    keep_organized: false
+    filter_limit_negative: false

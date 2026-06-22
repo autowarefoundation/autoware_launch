@@ -70,6 +70,7 @@
         <arg name="trajectory_velocity_optimizer_param_path" value="$(var trajectory_velocity_optimizer_param_path)"/>
         <arg name="trajectory_kinematic_feasibility_enforcer_param_path" value="$(var trajectory_kinematic_feasibility_enforcer_param_path)"/>
         <arg name="trajectory_mpt_optimizer_param_path" value="$(var trajectory_mpt_optimizer_param_path)"/>
+        <arg name="trajectory_temporal_mpt_optimizer_param_path" value="$(var trajectory_temporal_mpt_optimizer_param_path)"/>
       </include>
     </group>
 
