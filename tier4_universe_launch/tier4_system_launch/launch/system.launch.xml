@@ -53,7 +53,6 @@
   <let name="launch_mrm_handler" value="false" if="$(equals $(var mrm) driving)"/>
   <let name="launch_comfortable_stop_operator" value="true"/>
   <let name="launch_comfortable_stop_operator" value="false" if="$(equals $(var mrm) command)"/>
-  <let name="launch_comfortable_stop_operator" value="false" if="$(equals $(var mrm) driving)"/>
   <let name="launch_command_mode_nodes" value="false"/>
   <let name="launch_command_mode_nodes" value="true" if="$(equals $(var mrm) command)"/>
 
