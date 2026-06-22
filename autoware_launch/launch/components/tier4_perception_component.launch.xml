@@ -53,7 +53,7 @@
   <arg name="use_object_filter" default="true" description="launch object filter to filter-out detected object"/>
   <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
   <arg name="segmentation_pointcloud_fusion_camera_ids" default="[0,2,4]" description="list of camera ids used for segmentation_pointcloud_fusion node, mainly using front camera"/>
-  <arg name="use_multi_channel_tracker_merger" default="false" description="if true, multi channel tracker merger is used. Otherwise, merged object is used."/>
+  <arg name="use_multi_channel_tracker_merger" default="true" description="if true, multi channel tracker merger is used. Otherwise, merged object is used."/>
   <arg name="tracker_publish_merged_objects" default="false"/>
   <arg name="use_obstacle_segmentation_time_series_filter" default="false" description="use time series filter at the ground segmentation"/>
   <arg name="use_camera_vru_detector" default="false" description="enable pipeline for camera VRU object detection"/>
@@ -69,11 +69,11 @@
   <arg name="input_pointcloud_for_traffic_light_occlusion_predictor" default="/sensing/lidar/top/pointcloud_raw_ex" description="input pointcloud topic for traffic_light_occlusion_predictor"/>
   <arg name="centerpoint_model_path" default="/opt/autoware/mlmodels/centerpoint" description="path of centerpoint model file"/>
   <arg name="bevfusion_model_path" default="/opt/autoware/mlmodels/bevfusion_lidar" description="path of bevfusion model file"/>
+  <arg name="ptv3_model_path" default="/opt/autoware/mlmodels/ptv3" description="path of ptv3 model file"/>
+
   <group scoped="false" if="$(var use_semantic_segmentation_ptv3)">
     <let name="use_roi_detected_object_validator" value="false"/>
-    <let name="use_irregular_object_detector" value="false"/>
     <let name="use_detection_by_tracker" value="false"/>
-    <let name="use_multi_channel_tracker_merger" value="false"/>
   </group>
   <arg
     name="camera_2d_detector/model_path"
@@ -92,8 +92,8 @@
     description="select high accuracy detector type for traffic light recognition: fine_detection or whole_image_detection"
   />
 
-  <arg name="traffic_light_recognition/classification/car/classifier_type" default="2" description="0=HSVFilter, 1=CNN, 2=LAMPClassifier"/>
-  <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" default="2" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+  <arg name="traffic_light_recognition/classification/car/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LAMPClassifier"/>
+  <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
   <arg name="traffic_light_recognition/classification/car/label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels.txt"/>
   <arg name="traffic_light_recognition/classification/pedestrian/label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels_ped.txt"/>
   <arg name="traffic_light_recognition/classification/lamp_recognizer_ml_param_path" default="$(var data_path)/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>

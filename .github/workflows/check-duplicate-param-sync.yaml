@@ -32,6 +32,7 @@ jobs:
             "autoware_launch/config/perception/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml edge_auto_jetson_launch/config/traffic_light_fine_detector.param.yaml"
             "autoware_launch/config/perception/traffic_light_recognition/traffic_light_visualization/traffic_light_roi_visualizer.param.yaml edge_auto_jetson_launch/config/traffic_light_roi_visualizer.param.yaml"
             "autoware_launch/config/perception/traffic_light_recognition/tensorrt_yolox/yolox_traffic_light_detector.param.yaml edge_auto_jetson_launch/config/yolox_traffic_light_detector.param.yaml"
+            "autoware_launch/config/perception/traffic_light_recognition/tensorrt_yolox/traffic_light_roi_label_remap.csv edge_auto_jetson_launch/config/traffic_light_roi_label_remap.csv"
           )
 
           for pair in "${pairs[@]}"; do
