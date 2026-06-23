@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/812559aa0eb5f4bce212660dc36fd5e9f977c6f0/planning/behavior_path_planner/autoware_behavior_path_planner/config/behavior_path_planner.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/003fc59248023ea53372e077dc379247e4faa2f7/planning/behavior_path_planner/autoware_behavior_path_planner/config/behavior_path_planner.param.yaml
 
 /**:
   ros__parameters:
