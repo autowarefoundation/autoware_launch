@@ -457,6 +457,6 @@ vehicle:
     files:
       - source: vehicle/autoware_raw_vehicle_cmd_converter/config/raw_vehicle_cmd_converter.param.yaml
         variants:
-          - path: autoware_launch/config/vehicle/raw_vehicle_cmd_converter.param.yaml
+          - path: autoware_launch/config/vehicle/raw_vehicle_cmd_converter/raw_vehicle_cmd_converter.param.yaml
 
 simulator: []
