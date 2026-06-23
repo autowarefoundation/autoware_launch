@@ -7,14 +7,19 @@
     # Applied as: v_out = v_in * longitudinal_scale_factor
     default_longitudinal_scale_factor: 1.0
 
-    # Area subtype to environment ID mapping
+    # Lanelet2 polygon attribute name for per-area longitudinal scale factor.
+    # Set on feature_environment_specify polygons in lanelet2_map.osm, e.g.:
+    #   <tag k='longitudinal_scale_factor' v='1.0075'/>
+    map_longitudinal_scale_factor_attribute: longitudinal_scale_factor
+
+    # Area subtype to environment ID mapping (used for debug and param fallback)
     # The lanelet2 polygon type must be "feature_environment_specify"
     area_subtype_uniform_road:
       environment_id: 1
     area_subtype_feature_poor_road:
       environment_id: 2
 
-    # Longitudinal scale factor per environment_id
-    # Odaiba tunnel DR section: factor ~= 1 + (6m / 800m) = 1.0075
-    environment_1_longitudinal_scale_factor: 1.0075
+    # Fallback when map polygon has no longitudinal_scale_factor attribute.
+    # Prefer defining longitudinal_scale_factor on each area polygon in the map.
+    environment_1_longitudinal_scale_factor: 1.0
     environment_2_longitudinal_scale_factor: 1.0

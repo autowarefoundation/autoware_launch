@@ -15,6 +15,7 @@
   <arg name="localization_error_monitor_param_path"/>
   <arg name="covariance_selector_param_path" default="$(find-pkg-share autoware_covariance_selector)/config/covariance_selector.param.yaml"/>
   <arg name="velocity_scale_selector_param_path" default="$(find-pkg-share autoware_velocity_scale_selector)/config/velocity_scale_selector.param.yaml"/>
+  <arg name="use_autoware_velocity_scale_selector" default="false"/>
   <arg name="ekf_localizer_param_path"/>
   <arg name="stop_filter_param_path"/>
   <arg name="pose_instability_detector_param_path"/>
