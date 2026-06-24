@@ -3,9 +3,19 @@ from_domain: 1
 to_domain: 3
 topics:
   # main -> mrm
-  /to_mrm/planning/scenario_planning/trajectory:
-    type: autoware_planning_msgs/msg/Trajectory
-    remap: /main/planning/scenario_planning/trajectory
+  /map/vector_map:
+    type: autoware_map_msgs/msg/LaneletMapBin
+    remap: /main/map/vector_map
+    qos:
+      durability: transient_local
+  /planning/mission_planning/route:
+    type: autoware_planning_msgs/msg/LaneletRoute
+    remap: /main/planning/mission_planning/route
+    qos:
+      durability: transient_local
+  /perception/object_recognition/objects:
+    type: autoware_perception_msgs/msg/PredictedObjects
+    remap: /main/perception/object_recognition/objects
   /localization/kinematic_state:
     type: nav_msgs/msg/Odometry
   /localization/acceleration:
@@ -13,9 +23,6 @@ topics:
   /control/jerk_constant_deceleration_trigger:
     type: jerk_constant_deceleration_controller_msgs/msg/JerkConstantDecelerationTrigger
     remap: /main/control/jerk_constant_deceleration_trigger
-  /control/command/control_cmd:
-    type: autoware_control_msgs/msg/Control
-    remap: /main/control/command/control_cmd
   /system/operation_mode/state:
     type: autoware_adapi_v1_msgs/msg/OperationModeState
     remap: /main/system/operation_mode/state
@@ -47,10 +54,18 @@ topics:
     type: diagnostic_msgs/msg/DiagnosticArray
     reversed: True
     remap: /mrm/diagnostics
-  /planning/topic_relay_controller/trajectory:
+  /planning/in_lane_mrm_planner/output/trajectory:
     type: autoware_planning_msgs/msg/Trajectory
     reversed: True
-    remap: /mrm/planning/topic_relay_controller/trajectory
+    remap: /mrm/planning/in_lane_mrm_planner/output/trajectory
+  /planning/in_lane_mrm_planner/input/trigger:
+    type: std_msgs/msg/Bool
+    reversed: True
+    remap: /mrm/planning/in_lane_mrm_planner/input/trigger
+  /planning/in_lane_mrm_planner/debug/planner_status:
+    type: autoware_internal_debug_msgs/msg/Float32MultiArrayStamped
+    reversed: True
+    remap: /mrm/planning/in_lane_mrm_planner/debug/planner_status
   /control/trajectory_follower/lateral/diagnostic:
     type: autoware_internal_debug_msgs/msg/Float32MultiArrayStamped
     reversed: True
