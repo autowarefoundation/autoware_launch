@@ -144,7 +144,7 @@
             <arg name="input_acceleration" value="/localization/acceleration"/>
             <arg name="input_objects" value="$(var input_objects_topic_name)"/>
             <arg name="input_pointcloud" value="$(var input_pointcloud_topic_name)"/>
-            <arg name="output_candidate_trajectories" value="/planning/generator/candidate_trajectories"/>
+            <arg name="output_candidate_trajectories" value="/planning/generator/minimum_rule_based/candidate_trajectories"/>
           </include>
         </group>
       </group>
@@ -157,7 +157,7 @@
         <arg name="trajectory_concatenator_param_path" value="$(var trajectory_concatenator_param_path)"/>
         <arg name="trajectory_validator_param_path" value="$(var trajectory_validator_param_path)"/>
         <arg name="input_generative_trajectories" value="/planning/generator/candidate_trajectories"/>
-        <!-- <arg name="input_backup_trajectories" value=""/> -->
+        <arg name="input_backup_trajectories" value="/planning/generator/minimum_rule_based/candidate_trajectories"/>
         <arg name="output_trajectories" value="/planning/trajectory_selector/validator/candidate_trajectories"/>
         <arg name="input_vector_map" value="/map/vector_map"/>
         <arg name="input_odometry" value="/localization/kinematic_state"/>
