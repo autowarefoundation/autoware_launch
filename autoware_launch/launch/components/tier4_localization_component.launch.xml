@@ -22,12 +22,7 @@
 
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
-  <arg name="launch_speed_scale_corrector" default="true" description="launch speed scale corrector"/>
-  <arg
-    name="speed_scale_corrector_param_path"
-    default="$(find-pkg-share autoware_launch)/config/localization/speed_scale_corrector.param.yaml"
-    description="path to speed scale corrector parameter file"
-  />
+  <arg name="launch_speed_scale_corrector" default="false" description="launch speed scale corrector"/>
 
   <!-- Global parameters -->
   <group scoped="false">
@@ -47,7 +42,6 @@
       <arg name="initial_pose" value="$(var initial_pose)"/>
       <arg name="launch_speed_scale_corrector" value="$(var launch_speed_scale_corrector)"/>
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
-      <arg name="speed_scale_corrector_param_path" value="$(var speed_scale_corrector_param_path)"/>
 
       <!-- parameter paths for common -->
       <arg name="localization_error_monitor_param_path" value="$(var loc_config_path)/localization_error_monitor.param.yaml"/>

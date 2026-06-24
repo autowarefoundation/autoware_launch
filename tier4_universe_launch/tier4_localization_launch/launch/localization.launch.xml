@@ -26,7 +26,7 @@
   <arg name="lidar_marker_localizer/pointcloud_preprocessor/ring_filter_param_path"/>
 
   <arg name="use_sim_time" default="false" description="use simulation time"/>
-  <arg name="launch_speed_scale_corrector" default="true" description="launch speed scale corrector"/>
+  <arg name="launch_speed_scale_corrector" default="false" description="launch speed scale corrector"/>
   <arg
     name="speed_scale_corrector_param_path"
     default="$(find-pkg-share autoware_speed_scale_corrector)/config/speed_scale_corrector.yaml"
