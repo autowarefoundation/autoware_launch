@@ -65,6 +65,8 @@
 
   <arg name="perception/enable_detection_failure" default="true" description="enable to simulate detection failure when using dummy perception"/>
   <arg name="perception/enable_object_recognition" default="false" description="enable object recognition"/>
+  <arg name="perception/enable_object_tracking" default="true" description="enable object tracking"/>
+  <arg name="perception/enable_object_prediction" default="true" description="enable object prediction"/>
   <arg name="perception/enable_elevation_map" default="false" description="enable elevation map loader"/>
   <arg name="perception/enable_traffic_light" default="true" description="enable traffic light"/>
   <arg name="fusion_only" default="true" description="enable only camera and V2X fusion when enabling traffic light"/>
@@ -121,7 +123,7 @@
       <group if="$(var perception/enable_object_recognition)">
         <push-ros-namespace namespace="object_recognition"/>
         <!-- tracking module -->
-        <group>
+        <group if="$(var perception/enable_object_tracking)">
           <push-ros-namespace namespace="tracking"/>
           <include file="$(find-pkg-share autoware_multi_object_tracker)/launch/multi_object_tracker.launch.xml">
             <arg name="input/detection01/objects" value="/perception/object_recognition/detection/objects"/>
@@ -133,7 +135,7 @@
           </include>
         </group>
         <!-- prediction module -->
-        <group>
+        <group if="$(var perception/enable_object_prediction)">
           <push-ros-namespace namespace="prediction"/>
           <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/prediction/prediction.launch.xml">
             <arg name="use_vector_map" value="true"/>
