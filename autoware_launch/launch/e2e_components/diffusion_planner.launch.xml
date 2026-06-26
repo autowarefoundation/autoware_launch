@@ -22,6 +22,7 @@
   <arg name="trajectory_velocity_optimizer_param_path"/>
   <arg name="trajectory_kinematic_feasibility_enforcer_param_path"/>
   <arg name="trajectory_mpt_optimizer_param_path"/>
+  <arg name="trajectory_optimizer_max_velocity_mps" default="11.11"/>
 
   <!-- mission planner -->
   <arg name="mission_planner_param_path"/>
@@ -109,7 +110,7 @@
             <arg name="output_trajectories" value="$(var diffusion_optimizer_output_topic)"/>
             <arg name="jerk_filtered_smoother_param_path" value="$(var jerk_filtered_smoother_param_path)"/>
             <arg name="velocity_smoother_param_path" value="$(var velocity_smoother_param_path)"/>
-            <arg name="common_smoother_param_path" value="$(var common_smoother_param_path)"/>
+            <arg name="common_param_path" value="$(var common_smoother_param_path)"/>
             <arg name="elastic_band_param_path" value="$(var elastic_band_param_path)"/>
             <arg name="trajectory_point_fixer_param_path" value="$(var trajectory_point_fixer_param_path)"/>
             <arg name="trajectory_extender_param_path" value="$(var trajectory_extender_param_path)"/>
@@ -118,6 +119,7 @@
             <arg name="trajectory_velocity_optimizer_param_path" value="$(var trajectory_velocity_optimizer_param_path)"/>
             <arg name="trajectory_kinematic_feasibility_enforcer_param_path" value="$(var trajectory_kinematic_feasibility_enforcer_param_path)"/>
             <arg name="trajectory_mpt_optimizer_param_path" value="$(var trajectory_mpt_optimizer_param_path)"/>
+            <arg name="max_velocity" value="$(var trajectory_optimizer_max_velocity_mps)"/>
           </include>
 
           <!-- trajectory dummy gate (verification or debug only) -->
