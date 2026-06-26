@@ -4,12 +4,14 @@
   <arg name="model_path" default="/opt/autoware/mlmodels/streampetr"/>
   <arg name="model_param_path" default="$(var model_path)/ml_package_camera_streampetr.param.yaml"/>
   <arg name="node_param_path" default="$(find-pkg-share edge_auto_jetson_launch)/config/camera_streampetr.param.yaml"/>
+  <arg name="is_compressed_image" default="false" description="Whether the input image is compressed."/>
 
   <node pkg="autoware_camera_streampetr" exec="autoware_camera_streampetr_node" name="stream_petr" namespace="/perception" output="screen">
     <param from="$(var model_param_path)" allow_substs="true"/>
     <param from="$(var node_param_path)" allow_substs="true"/>
     <param name="build_only" value="$(var build_only)"/>
     <param name="debug_mode" value="$(var debug_mode)"/>
+    <param name="is_compressed_image" value="$(var is_compressed_image)"/>
     <param name="model_params.backbone_path" value="$(var model_path)/simplify_extract_img_feat.onnx"/>
     <param name="model_params.head_path" value="$(var model_path)/simplify_pts_head_memory.onnx"/>
     <param name="model_params.position_embedding_path" value="$(var model_path)/simplify_position_embedding.onnx"/>
@@ -39,16 +41,6 @@
     <remap from="~/input/camera2/image/compressed" to="/sensing/camera/camera10/image_raw/compressed"/>
     <remap from="~/input/camera3/image/compressed" to="/sensing/camera/camera7/image_raw/compressed"/>
     <remap from="~/input/camera4/image/compressed" to="/sensing/camera/camera9/image_raw/compressed"/>
-
-    <param name="anchor_camera_id" value="$(var anchor_camera_id)"/>
-    <!-- The forward pass begins once every anchor camera topic reaches. Choose this as the camera that causes the shortest difference in min and max timestamp between cameras-->
-    <param name="is_compressed_image" value="$(var is_compressed_image)"/>
-    <!-- Whether the input image is compressed. -->
-    <param name="is_distorted_image" value="$(var is_distorted_image)"/>
-    <!-- Whether the input image is compressed. -->
-    <param name="multithreading" value="$(var multithreading)"/>
-    <param name="downsample_factor" value="$(var downsample_factor)"/>
-    <param name="max_camera_time_diff" value="$(var max_camera_time_diff)"/>
   </node>
 
   <group unless="$(var build_only)">
