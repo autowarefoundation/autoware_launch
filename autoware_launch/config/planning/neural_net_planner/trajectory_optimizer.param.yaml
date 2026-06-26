@@ -20,6 +20,6 @@
     use_trajectory_point_fixer: true
     use_velocity_optimizer: true
     use_trajectory_extender: false
-    use_kinematic_feasibility_enforcer: true
+    use_kinematic_feasibility_enforcer: false
     use_mpt_optimizer: false
     use_temporal_mpt_optimizer: true

@@ -231,6 +231,13 @@ def generate_launch_description():
                     ),
                     {
                         "build_only": False,
+                        "roi_remap_path": PathJoinSubstitution(
+                            [
+                                FindPackageShare("edge_auto_jetson_launch"),
+                                "config",
+                                "traffic_light_roi_label_remap.csv",
+                            ]
+                        ),
                     },
                 ],
                 remappings=[

@@ -1275,7 +1275,11 @@ Visualization Manager:
               Enabled: true
               Name: RouteArea
               Namespaces:
-                {}
+                left_lane_bound: true
+                right_lane_bound: true
+                lane_start_bound: true
+                route_lanelets: true
+                goal_lanelets: false
               Topic:
                 Depth: 5
                 Durability Policy: Transient Local
