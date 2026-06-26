@@ -25,7 +25,6 @@
   <arg name="lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path"/>
   <arg name="lidar_marker_localizer/pointcloud_preprocessor/ring_filter_param_path"/>
 
-  <arg name="use_sim_time" default="false" description="use simulation time"/>
   <arg name="launch_speed_scale_corrector" default="false" description="launch speed scale corrector"/>
   <arg name="speed_scale_corrector_param_path" default="$(find-pkg-share autoware_speed_scale_corrector)/config/speed_scale_corrector.yaml" description="path to speed scale corrector parameter file"/>
 
@@ -51,7 +50,6 @@
     <!-- speed scale corrector -->
     <group if="$(var launch_speed_scale_corrector)">
       <include file="$(find-pkg-share autoware_speed_scale_corrector)/launch/speed_scale_corrector.launch.xml">
-        <arg name="use_sim_time" value="$(var use_sim_time)"/>
         <arg name="param_path" value="$(var speed_scale_corrector_param_path)"/>
         <arg name="input_pose_name" value="/localization/pose_estimator/pose"/>
         <arg name="input_velocity_report" value="/vehicle/status/velocity_status"/>

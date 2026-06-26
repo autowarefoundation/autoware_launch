@@ -99,7 +99,6 @@
   <group if="$(var launch_localization)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_localization_component.launch.xml">
       <arg name="launch_speed_scale_corrector" value="$(var launch_speed_scale_corrector)"/>
-      <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
   </group>
 
