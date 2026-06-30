@@ -56,6 +56,7 @@
   </node>
 
   <!-- trajectory selector param paths -->
+  <arg name="trajectory_selector_param_path"/>
   <arg name="trajectory_concatenator_param_path"/>
   <arg name="trajectory_validator_param_path"/>
   <arg name="trajectory_ranker_param_path"/>
@@ -157,6 +158,7 @@
     <group>
       <push-ros-namespace namespace="trajectory_selector"/>
       <include file="$(find-pkg-share autoware_trajectory_selector)/launch/trajectory_selector.launch.xml">
+        <arg name="trajectory_selector_param_path" value="$(var trajectory_selector_param_path)"/>
         <arg name="trajectory_concatenator_param_path" value="$(var trajectory_concatenator_param_path)"/>
         <arg name="trajectory_validator_param_path" value="$(var trajectory_validator_param_path)"/>
         <arg name="input_generative_trajectories" value="/planning/generator/candidate_trajectories"/>
