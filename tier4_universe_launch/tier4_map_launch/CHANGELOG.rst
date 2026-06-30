@@ -2,8 +2,8 @@
 Changelog for package tier4_map_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.52.0 (2026-06-30)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat: add parameters to support get_selected_lanelet2_map interface (`#1813 <https://github.com/autowarefoundation/autoware_launch/issues/1813>`_)
   * feat: add parameters to support get_selected_lanelet2_map interface

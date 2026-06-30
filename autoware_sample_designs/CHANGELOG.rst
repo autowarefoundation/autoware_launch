@@ -2,8 +2,8 @@
 Changelog for package autoware_sample_designs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.52.0 (2026-06-30)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(autoware system designs): autoware system designs psim add planning control (`#1810 <https://github.com/autowarefoundation/autoware_launch/issues/1810>`_)
   * add planning node/modules (WIP)

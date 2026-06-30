@@ -2,8 +2,8 @@
 Changelog for package tier4_perception_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.52.0 (2026-06-30)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * fix(merger_topic): mis-aligning topic when using semantic_segmentation without multi_channel_tracker (`#1895 <https://github.com/autowarefoundation/autoware_launch/issues/1895>`_)
   * fix(merger_topic): mis-aligning topic when using semantic_segmentation without multi_channel_tracker

@@ -2,8 +2,8 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.52.0 (2026-06-30)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * chore(rviz): adjust object recognition line widths and disable raw detection by default (`#1905 <https://github.com/autowarefoundation/autoware_launch/issues/1905>`_)
   update line width, toggle off detections

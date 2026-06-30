@@ -2,8 +2,8 @@
 Changelog for package tier4_planning_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.52.0 (2026-06-30)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(diffusion_planner): update launch file (`#1854 <https://github.com/autowarefoundation/autoware_launch/issues/1854>`_)
   update arg names for modifier, define input topics args

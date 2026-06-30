@@ -2,8 +2,8 @@
 Changelog for package carla_sensor_kit_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.52.0 (2026-06-30)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * chore: sync files (`#1338 <https://github.com/autowarefoundation/autoware_launch/issues/1338>`_)
   * chore: sync files

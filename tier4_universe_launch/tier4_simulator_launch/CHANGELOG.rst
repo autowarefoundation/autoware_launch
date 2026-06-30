@@ -2,8 +2,8 @@
 Changelog for package tier4_simulator_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.52.0 (2026-06-30)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(autoware_launch): launch dummy traffic light publisher in simulator (`#1859 <https://github.com/autowarefoundation/autoware_launch/issues/1859>`_)
   * feat(autoware_launch): launch dummy traffic light publisher in simulator
