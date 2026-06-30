@@ -2,6 +2,9 @@
 Changelog for package carla_sensor_kit_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.51.0 (2026-05-01)
 -------------------
 

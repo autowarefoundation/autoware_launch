@@ -2,6 +2,205 @@
 Changelog for package autoware_sample_designs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(autoware system designs): autoware system designs psim add planning control (`#1810 <https://github.com/autowarefoundation/autoware_launch/issues/1810>`_)
+  * add planning node/modules (WIP)
+  fix traffic light msg type
+  add control node/modules (WIP)
+  fix some msg types, inputs, and connections
+  tmp fix
+  update
+  add visualization component (just rviz node)
+  add missing parameters
+  fix control parameter setting
+  temporary remove the check_external_emergency_heartbeat arg from param
+  Remove namespace entries for planning and control modules in AutowareSample.system.yaml
+  Update message type for traffic_signals in Tier4PlanningWrapper.node.yaml to use autoware_perception_msgs
+  Add new planning and control modules
+  - Introduced Control.module, BehaviorPlanning.module, LaneDriving.module, MissionPlanning.module, MotionPlanning.module, Planning.module, and ScenarioPlanning.module.
+  - Each module includes instances, subscribers, publishers, and connections to facilitate communication within the system.
+  - Added Rviz.node for visualization purposes.
+  This update enhances the overall architecture and functionality of the Autoware system design.
+  Add control containers to AutowareSample.system.yaml
+  - Introduced control_container and control_check_container to encapsulate control-related nodes.
+  - Updated Control.module.yaml to remove commented-out control_container instance.
+  - This update enhances the modularity and organization of the control components within the Autoware system design.
+  Refactor planning modules and add component containers to AutowareSample.system.yaml
+  - Removed commented-out container instances from BehaviorPlanning.module.yaml, MissionPlanning.module.yaml, and MotionPlanning.module.yaml for clarity.
+  - Introduced new component containers for behavior, mission, and motion planning in AutowareSample.system.yaml to enhance modularity and organization of planning nodes.
+  - This update improves the structure and maintainability of the planning components within the Autoware system design.
+  Update parameter set files for universe_control and universe_planning
+  - Updated autoware_system_design_format to 0.3.0 in both universe_control.parameter_set.yaml and universe_planning.parameter_set.yaml.
+  - Changed 'parameters' to 'param_values' and 'parameter_files' to 'param_files' for consistency across parameter definitions.
+  - Enhanced clarity by renaming parameter paths in universe_planning.parameter_set.yaml for better readability.
+  Fix formatting issues in Rviz.node.yaml and AutowareSample.system.yaml
+  - Added a newline at the end of Rviz.node.yaml to adhere to file formatting standards.
+  - Removed unnecessary blank lines in AutowareSample.system.yaml for improved readability.
+  * Refactor parameter paths in universe_planning.parameter_set.yaml for consistency
+  - Unified parameter path keys from 'param_path1', 'param_path2', etc., to a single 'param_path' for clarity and consistency across nodes.
+  - Ensured all relevant parameter files are correctly referenced under their respective nodes.
+  * Enhance universe_planning.parameter_set.yaml and AutowareSample.system.yaml with additional parameter paths and connections
+  - Updated parameter paths in universe_planning.parameter_set.yaml for consistency and clarity.
+  - Added new parameter files for latency checking, trajectory checking, and collision checking in the universe planning configuration.
+  - Expanded connections in AutowareSample.system.yaml to include localization publishers for kinematic state and acceleration, improving data flow between modules.
+  * Refactor Control.module.yaml to update connections and improve clarity
+  - Removed the steering status subscriber connection for better organization.
+  - Updated the operation mode publisher connection to enhance clarity in the control module's configuration.
+  * Refactor planning module configurations to remove virtual traffic light states
+  - Eliminated the virtual_traffic_light_states subscriber and publisher from BehaviorPlanning, LaneDriving, MotionPlanning, Planning, and ScenarioPlanning modules for improved clarity and organization.
+  - Updated connections accordingly to reflect the removal of these components, enhancing the overall structure of the planning modules.
+  * Update planning module and system configurations to use mission planning namespaces
+  - Changed publisher names in Planning.module.yaml to include the 'mission_planning' namespace for route and state.
+  - Updated connections in AutowareSample.system.yaml to reflect the new publisher names, enhancing clarity and organization in the planning module's configuration.
+  * Add planning evaluator node to universe_planning.parameter_set.yaml
+  - Introduced a new node configuration for the planning evaluator, including its associated parameter files for enhanced planning capabilities.
+  - This update improves the modularity and organization of the planning parameters within the universe planning configuration.
+  * Update MissionPlanning and Planning modules to include clear_route server and connections
+  - Incremented autoware_system_design_format to 0.3.1 in MissionPlanning.module.yaml and Planning.module.yaml.
+  - Added clear_route server to both modules, enhancing route management capabilities.
+  - Updated connections in both modules and AutowareSample.system.yaml to integrate clear_route functionality, improving overall system communication.
+  - Introduced routing/clear_route client in SampleSensorKitADAPIWrapper.node.yaml for better interaction with the routing service.
+  * Enhance Control and Planning modules with new route_state integration
+  - Added stop_mode_operator node to Control.module.yaml for improved control logic.
+  - Updated subscribers and connections in Control.module.yaml to include route_state, enhancing data flow.
+  - Renamed state publisher to route_state in MissionPlanning.module.yaml and Planning.module.yaml for consistency.
+  - Updated connections in AutowareSample.system.yaml to reflect new route_state integration, improving overall system communication.
+  * Enhance MissionPlanning and Planning modules with new route and server integrations
+  - Added new publishers for api_route and mission_planning/route in MissionPlanning.module.yaml and Planning.module.yaml to improve routing capabilities.
+  - Introduced set_lanelet_route and set_waypoint_route servers in both modules for enhanced route management.
+  - Updated connections in both modules and AutowareSample.system.yaml to reflect the new publishers and servers, improving overall system communication.
+  * Add manual lane change handler to MissionPlanning module
+  - Introduced manual_lane_change_handler node in MissionPlanning.module.yaml to enhance lane change capabilities.
+  - Updated connections in both MissionPlanning.module.yaml and Planning.module.yaml to integrate the new handler, improving overall routing and operational functionality.
+  * Add reroute availability publisher to planning modules
+  - Introduced reroute_availability publisher in BehaviorPlanning, LaneDriving, and ScenarioPlanning modules to enhance routing capabilities.
+  - Updated connections in Planning.module.yaml to integrate reroute availability, improving overall system communication and responsiveness.
+  - Ensured consistency across modules by adding modified_goal and reroute_availability connections where applicable.
+  * Update Planning and AutowareSample system configurations with new subscriber connections
+  - Added new subscriber connections in Planning.module.yaml for route, lanelet map, kinematics, acceleration, operational mode state, and traffic signals to enhance data flow and validation capabilities.
+  - Updated AutowareSample.system.yaml to include additional subscriber connections for steering status and traffic signals, improving overall system communication and integration.
+  * style(pre-commit): autofix
+  * Add operation mode state subscriber connection to AutowareSample system configuration
+  - Introduced a new subscriber connection for operation_mode/state in AutowareSample.system.yaml to enhance system communication and integration.
+  - This update improves the overall data flow and responsiveness of the system by ensuring that the operation mode state is properly communicated to the control module.
+  * Add Rviz node configuration and integration into AutowareSample system
+  - Updated Rviz.node.yaml to include arguments for loading the Autoware RViz configuration and image.
+  - Integrated Rviz node into AutowareSample.system.yaml, enhancing the system's visualization capabilities by ensuring Rviz is properly connected to the main ECU.
+  * Update API paths in AutowareSample system and SampleSensorKitADAPIWrapper configurations
+  - Changed the API path for the SampleSensorKitADAPIWrapper from '/api' to '/' to streamline endpoint access.
+  - Updated publisher names in SampleSensorKitADAPIWrapper.node.yaml to include 'api/' prefix for consistency across localization, vehicle, planning, and system outputs.
+  - Adjusted connections in AutowareSample.system.yaml to reflect the new publisher naming conventions, enhancing overall system integration and communication.
+  * Refactor connections in AutowareSample system configuration for clarity and consistency
+  * Add additional parameter files for behavior and motion velocity planners in universe planning configuration
+  * Add additional parameter files for behavior path planner in universe planning configuration
+  * Add connection for fail-safe state between system and control components
+  * Refactor planning and control modules to enhance subscriber and publisher interfaces, including updates to object handling and path management.
+  * Refactor module connections to improve clarity and consistency in subscriber and publisher mappings across BehaviorPlanning, MotionPlanning, DummyObjectRecognition, and AutowareSample configurations.
+  * style(pre-commit): autofix
+  * Add occupancy grid map connections for PlanningSimulation mode
+  * Enhance control module interfaces by adding emergency command subscribers and publishers, and update connections for improved functionality.
+  * Refactor planning module connections to replace 'api_route' with 'mission_planning/route' for improved clarity and consistency in routing.
+  * Refactor control module interfaces and connections to standardize external command naming and improve clarity in subscriber and publisher mappings.
+  * Enhance connections in AutowareSample system by adding new subscribers for adapi and simulator states to improve data flow and control responsiveness.
+  * Fix formatting in Control.module.yaml by ensuring proper newline at the end of the connections section.
+  * Refactor Control.module.yaml by removing unused gate_mode publisher and updating connections for external_cmd_converter to enhance data flow.
+  * add missing connections to control: sim(imu,vehicle status), api(state)
+  * temporary fixes for the diagnostic topics and some control module topics
+  * fix gate mode topic
+  * cleanup rebase issues
+  * Update Control.module.yaml and AutowareSample.system.yaml for version 0.3.1 to 0.3.2, enhancing connections and remapping topics for improved data flow and control responsiveness.
+  * Refactor API naming in AutowareSample.system.yaml and SampleSensorKitADAPIWrapper.node.yaml to standardize topic paths and improve clarity in publisher and subscriber mappings.
+  * Add remapping for rosbag replay publisher topics to improve data flow in LoggingSimulation mode
+  * Add SampleAWSIM node configuration and update connections in AutowareSample.system.yaml for improved data flow and topic remapping
+  * Add remapping for PlanningSimulation components to enhance topic routing and data flow
+  * Fix remap key to remaps in AutowareSample.system.yaml for consistency across modes
+  * Add engage publisher connection and clean up PlanningSimulation remaps for improved data flow
+  * Update planning connections and add route publisher for improved data flow
+  * bring back temporary fixes
+  * Comment out occlusion predictor in traffic light recognition for clarity in node group configuration
+  * Refactor Control.module.yaml and add TrajectoryFollower.module.yaml for improved module structure and clarity
+  * Add steering_offset_update subscriber and enhance TrajectoryFollower connections for improved data handling
+  * Restore performance monitoring links in control diagnostics for enhanced monitoring capabilities
+  * Remove unnecessary blank line in TrajectoryFollower.module.yaml for improved readability
+  * Update autoware_system_designer to v0.4.0 in workflow and pre-commit configuration for improved linting capabilities
+  * Update autoware_system_designer to v0.4.1 in workflow and pre-commit configuration for improved linting capabilities
+  ---------
+  Co-authored-by: Maxime CLEMENT <maxime.clement@tier4.jp>
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat(perception): update perception pipeline to remove shape estimation (`#1846 <https://github.com/autowarefoundation/autoware_launch/issues/1846>`_)
+  * fix(perception): update input channels and ground segmentation parameters for improved tracking and detection
+  - Changed associator type from 'bev' to 'polar' in multi-object tracker input channels for better performance.
+  - Adjusted ground segmentation parameters: increased margin_max_z from 0.0 to 1.0 and detection_range_z_max from 2.5 to 3.5 to enhance ground detection capabilities.
+  * feat(Tier4PlanningWrapper): add data_path parameter for enhanced configuration flexibility
+  - Introduced a new parameter 'data_path' with a default value to improve the configuration options for the Tier4PlanningWrapper node.
+  - This addition allows for better management of data paths within the planning framework.
+  * refactor(perception): remove deprecated tracking modules and streamline object recognition configuration
+  - Eliminated unused tracking modules and parameters from ObjectRecognition and ObjectDetection configurations to enhance clarity and reduce complexity.
+  - Updated connections in LidarClustering to reflect the removal of obsolete components, ensuring a more efficient data flow.
+  refactor(parameter_set): streamline perception parameters by removing unused nodes and updating node paths
+  - Removed the unused shape_estimation node from the perception parameter set to enhance clarity.
+  - Updated the path for the detected_object_feature_remover node to reflect its new location within the clustering module.
+  fix(perception): update pointcloud_map_filter node path for improved object recognition
+  * fix(perception): update pointcloud_map_filter node to use voxel_grid_downsample_filter
+  * fix(perception): update source URL in input_channels.param.yaml for accuracy
+  * fix(perception): update max_z and margin_max_z parameters for improved segmentation accuracy
+  * refactor(perception): remove unused parameters from crop_box_filter and streamline sample_system_perception configuration
+  * fix(perception): disable detection_by_tracker function in perception launch configuration
+  ---------
+* refactor(perception): update object recognition modules and parameters to multi-channel merger (`#1833 <https://github.com/autowarefoundation/autoware_launch/issues/1833>`_)
+  * refactor(sample_system_perception): streamline parameter configurations by removing unused param_files and adding new param_values for improved clarity and functionality
+  * feat(autoware_sample_designs): enhance AutowareSample system configuration by adding new lidar containers and updating node group definitions for improved modularity and clarity
+  * feat(lidar): add ring outlier filter node to LidarVelodyneVLS128 module for enhanced point cloud processing
+  * fix(robot_state_publisher): add remap targets for robot_description and joint_states to enhance topic clarity and global accessibility
+  * refactor(autoware_sample_designs): update lidar container types in AutowareSample system configuration for improved clarity and consistency
+  * refactor(autoware_sample_designs): simplify lidar container type in AutowareSample system configuration for enhanced clarity
+  * refactor(autoware_sample_designs): correct lidar container types in AutowareSample system configuration for consistency
+  * refactor(autoware_sample_designs): update pointcloud_container type and refine node group definitions in AutowareSample system configuration for improved clarity
+  * refactor(perception): update object recognition modules and parameters to multi-channel merger
+  * style(pre-commit): autofix
+  * refactor(perception): update object recognition modules and remove deprecated tracking modules
+  - Changed tracking entity from ObjectTrackingMultiChannel.module to ObjectTracking.module.
+  - Added centerpoint instance to ObjectDetection.module for improved lidar processing.
+  - Introduced new ObjectTracking.module for multi-object tracking capabilities.
+  - Removed obsolete ObjectTrackingSingleChannel.module and ObjectTrackingTrackerMergerRadarFusion.module.
+  * feat(perception): introduce Perception module and update system configuration
+  - Added a new Perception.module.yaml file defining instances for obstacle segmentation, object recognition, and occupancy grid mapping.
+  - Updated AutowareSample.system.yaml to integrate the new Perception module, replacing individual perception components with a unified entry.
+  - Adjusted connections to route data through the new Perception module for improved modularity and clarity.
+  * feat(perception): enhance traffic light recognition integration
+  - Added traffic light recognition module to Perception.module.yaml, including new instances and connections for traffic signals.
+  - Updated AutowareSample.system.yaml to establish connections for traffic light recognition, integrating it with existing perception components.
+  - Adjusted subscriber and publisher configurations to accommodate traffic light data flow.
+  * refactor(perception): update object recognition tracking module and connections
+  - Changed tracking entity from ObjectTrackingSingleChannel.module to MultiObjectTracker.node for enhanced multi-object tracking capabilities.
+  - Updated connections to reflect the new tracking module, ensuring proper data flow between detection and tracking components.
+  * style(pre-commit): autofix
+  * feat(system): add traffic light node container to AutowareSample system configuration
+  - Introduced a new node group for traffic light recognition, including multiple nodes for detection and classification.
+  - Enhanced the system's modularity by integrating traffic light components into the existing architecture.
+  * feat(system): add lidar centerpoint detection node to AutowareSample system configuration
+  - Included the lidar_centerpoint node in the perception object recognition group to enhance detection capabilities.
+  - Improved the system's functionality by integrating additional object recognition components.
+  * refactor(perception): update publisher names and connections in Perception and AutowareSample system configurations
+  - Renamed publishers in Perception.module.yaml for clarity and consistency, aligning with the new object recognition and segmentation modules.
+  - Updated connections in AutowareSample.system.yaml to reflect the new publisher names, ensuring proper data flow between perception and planning components.
+  * fix(parameter_set): update parameter values to remove quotes for consistency
+  - Changed the value format for 'input_frame' and 'logging_file_path' parameters in sample_system_perception.parameter_set.yaml to remove quotes, ensuring consistency in parameter representation.
+  * refactor(parameter_set): remove deprecated object association and tracking parameters
+  - Eliminated unused parameters related to object association and tracking from sample_system_perception.parameter_set.yaml to streamline configuration.
+  - This cleanup enhances clarity and reduces potential confusion in the parameter set.
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* chore: sync files (`#1338 <https://github.com/autowarefoundation/autoware_launch/issues/1338>`_)
+  * chore: sync files
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: github-actions <github-actions@github.com>
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* Contributors: Taekjin LEE, awf-autoware-bot[bot], github-actions
+
 0.51.0 (2026-05-01)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

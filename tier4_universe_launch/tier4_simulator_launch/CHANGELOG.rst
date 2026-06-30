@@ -2,6 +2,28 @@
 Changelog for package tier4_simulator_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(autoware_launch): launch dummy traffic light publisher in simulator (`#1859 <https://github.com/autowarefoundation/autoware_launch/issues/1859>`_)
+  * feat(autoware_launch): launch dummy traffic light publisher in simulator
+  Wire autoware_dummy_traffic_light_publisher into the simulator launch so
+  that, when traffic light recognition is disabled (e.g. planning
+  simulator), dummy traffic signals are published. The fallback mode
+  (dummy_traffic_light_mode: empty/standalone/fixed) and the fixed-mode
+  color (dummy_traffic_light_fixed_color) are threaded from
+  planning_simulator.launch.xml down to the node.
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* chore: sync files (`#1338 <https://github.com/autowarefoundation/autoware_launch/issues/1338>`_)
+  * chore: sync files
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: github-actions <github-actions@github.com>
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* Contributors: Takayuki AKAMINE, awf-autoware-bot[bot], github-actions
+
 0.51.0 (2026-05-01)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

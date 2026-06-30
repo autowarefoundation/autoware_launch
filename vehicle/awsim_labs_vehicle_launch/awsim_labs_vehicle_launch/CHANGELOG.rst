@@ -2,6 +2,9 @@
 Changelog for package awsim_labs_vehicle_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.51.0 (2026-05-01)
 -------------------
 
