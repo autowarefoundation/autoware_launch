@@ -731,7 +731,7 @@ Visualization Manager:
                     Yaw: false
                     Yaw Rate: false
                   Enabled: true
-                  Line Width: 0.10000000149011612
+                  Line Width: 0.03
                   Name: Centerpoint(red)
                   Namespaces:
                     {}
@@ -774,7 +774,7 @@ Visualization Manager:
                     Yaw: false
                     Yaw Rate: false
                   Enabled: true
-                  Line Width: 0.10000000149011612
+                  Line Width: 0.03
                   Name: Stream PETR(yellow)
                   Namespaces:
                     {}
@@ -817,7 +817,7 @@ Visualization Manager:
                     Yaw: false
                     Yaw Rate: false
                   Enabled: true
-                  Line Width: 0.10000000149011612
+                  Line Width: 0.03
                   Name: PTv3 Cluster(light_green)
                   Namespaces:
                     {}
@@ -860,7 +860,7 @@ Visualization Manager:
                     Yaw: false
                     Yaw Rate: false
                   Enabled: true
-                  Line Width: 0.10000000149011612
+                  Line Width: 0.03
                   Name: Irregular object(pink)
                   Namespaces:
                     {}
@@ -903,7 +903,7 @@ Visualization Manager:
                     Yaw: false
                     Yaw Rate: false
                   Enabled: true
-                  Line Width: 0.10000000149011612
+                  Line Width: 0.03
                   Name: PTv3 Object(magenta)
                   Namespaces:
                     {}
@@ -946,7 +946,7 @@ Visualization Manager:
                     Yaw: false
                     Yaw Rate: false
                   Enabled: true
-                  Line Width: 0.10000000149011612
+                  Line Width: 0.03
                   Name: BEV Fusion(cyan)
                   Namespaces:
                     {}
@@ -979,7 +979,7 @@ Visualization Manager:
                   Vector:
                     Twist: true
                     Yaw Rate: false
-              Enabled: true
+              Enabled: false
               Name: Detection
             - Class: rviz_common/Group
               Displays:
@@ -994,7 +994,7 @@ Visualization Manager:
                     Yaw Rate: false
                   Dynamic Status: All
                   Enabled: true
-                  Line Width: 0.029999999329447746
+                  Line Width: 0.15000000596046448
                   Name: TrackedObjects
                   Namespaces:
                     {}
@@ -1051,7 +1051,7 @@ Visualization Manager:
                     Yaw: false
                     Yaw Rate: false
                   Enabled: true
-                  Line Width: 0.029999999329447746
+                  Line Width: 0.15000000596046448
                   Name: PredictedObjects
                   Namespaces:
                     {}
@@ -3602,7 +3602,7 @@ Visualization Manager:
                 Yaw: false
                 Yaw Rate: false
               Enabled: true
-              Line Width: 0.029999999329447746
+              Line Width: 0.03
               Name: RadarRawObjects(white)
               Namespaces:
                 {}
