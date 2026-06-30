@@ -31,6 +31,7 @@
     <choice value="centerpoint_short_range"/>
     <choice value=""/>
   </arg>
+  <arg name="use_semantic_segmentation_ptv3" description="use semantic segmentation ptv3"/>
   <arg name="use_object_filter" description="use object filter"/>
   <arg name="objects_filter_method" description="options: `lanelet_filter` or `position_filter`"/>
   <arg name="use_pointcloud_map" description="use pointcloud map filter"/>
@@ -90,6 +91,7 @@
   <arg name="input/radar"/>
   <arg name="input/tracked_objects" default="/perception/object_recognition/tracking/objects"/>
   <arg name="output/objects" default="objects"/>
+  <arg name="use_roi_detected_object_validator"/>
 
   <!-- Parameter paths -->
   <arg name="sync_param_path"/>
@@ -97,6 +99,10 @@
   <arg name="irregular_object_detector_param_path"/>
   <arg name="object_recognition_detection_object_sorter_radar_param_path"/>
 
+  <!-- label_based_param -->
+  <arg name="euclidean_clustering/shape_policy"/>
+  <arg name="euclidean_clustering/param_path"/>
+  <let name="use_object_filter" value="false" if="$(eval &quot;'$(var use_semantic_segmentation_ptv3)' == 'true' and '$(var use_multi_channel_tracker_merger)' == 'true'&quot;)"/>
   <!-- internal interfaces -->
   <let name="pointcloud_filter/output/pointcloud" value="$(var ns)/pointcloud_map_filtered/pointcloud"/>
   <let name="lidar_ml_detector/output/objects" value="$(var ns)/$(var lidar_detection_model_type)/objects"/>
@@ -104,6 +110,7 @@
   <let name="lidar_rule_detector/output/cluster_objects" value="$(var ns)/clustering/objects_with_feature"/>
   <let name="lidar_rule_detector/output/objects" value="$(var ns)/clustering/objects"/>
   <let name="camera_lidar_rule_detector/output/objects" value="$(var ns)/clustering/camera_lidar_fusion/objects"/>
+  <let name="lidar_cluster/output/objects" value="$(var ns)/clustering/label_based_euclidean_cluster/objects"/>
   <let name="camera_lidar_rule_detector/output/cluster_objects" value="$(var ns)/clustering/objects_with_feature"/>
   <let name="tracker_based_detector/input/clusters" value="$(var ns)/clustering/objects_with_feature"/>
   <let name="tracker_based_detector/output/objects" value="$(var ns)/detection_by_tracker/objects"/>
@@ -186,7 +193,7 @@
   </group>
 
   <!-- Detector -->
-  <group if="$(var switch/detector/camera_lidar)">
+  <group if="$(eval &quot;'$(var switch/detector/camera_lidar)' == 'true' and '$(var use_semantic_segmentation_ptv3)' == 'false'&quot;)">
     <!-- Camera-Lidar detectors -->
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/camera_lidar_detector.launch.xml">
       <arg name="ns" value="$(var ns)"/>
@@ -245,6 +252,18 @@
     </include>
   </group>
 
+  <!-- replace camera_lidar_detector with lidar_semantic_segmentation_detector -->
+  <group if="$(var use_semantic_segmentation_ptv3)">
+    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/lidar_semantic_segmentation_detector.launch.xml">
+      <arg name="ns" value="$(var ns)"/>
+      <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
+      <arg name="euclidean_cluster/input/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
+      <arg name="semantic_cluster/output/objects" value="$(var lidar_cluster/output/objects)"/>
+      <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
+      <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
+      <arg name="euclidean_clustering/param_path" value="$(var euclidean_clustering/param_path)"/>
+    </include>
+  </group>
   <group if="$(var switch/detector/irregular_object)">
     <!-- Irregular object detector -->
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/camera_lidar_irregular_object_detector.launch.xml">
@@ -284,6 +303,7 @@
       <arg name="output/objects" value="$(var lidar_rule_detector/output/objects)"/>
       <arg name="use_low_height_cropbox" value="$(var use_low_height_cropbox)"/>
       <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
+      <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>
     </include>
   </group>
   <group if="$(var switch/detector/radar)">
@@ -356,7 +376,7 @@
   </group>
 
   <!-- Filter -->
-  <group if="$(var switch/filter/pointcloud)">
+  <group if="$(eval &quot;'$(var switch/filter/pointcloud)' == 'true' and '$(var use_semantic_segmentation_ptv3)' == 'false'&quot;)">
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/filter/pointcloud_map_filter.launch.py">
       <arg name="input_topic" value="$(var input/obstacle_segmentation/pointcloud)"/>
       <arg name="output_topic" value="$(var pointcloud_filter/output/pointcloud)"/>
@@ -385,6 +405,8 @@
   <!-- Merger -->
   <group if="$(var switch/merger/camera_lidar_radar)">
     <!-- Camera-Lidar-Radar merger -->
+    <let name="input/lidar_cluster/objects" value="$(var camera_lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/lidar_cluster/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/camera_lidar_radar_merger.launch.xml">
       <arg name="number_of_cameras" value="$(var number_of_cameras)"/>
       <arg name="input/camera0/image" value="$(var input/camera0/image)"/>
@@ -415,7 +437,7 @@
       <arg name="input/camera8/info" value="$(var input/camera8/info)"/>
       <arg name="input/camera8/rois" value="$(var input/camera8/rois)"/>
       <arg name="input/lidar_ml/objects" value="$(var object_merger/input/ml_detected_objects)"/>
-      <arg name="input/lidar_rule/objects" value="$(var camera_lidar_rule_detector/output/objects)"/>
+      <arg name="input/lidar_cluster/objects" value="$(var input/lidar_cluster/objects)"/>
       <arg name="input/detection_by_tracker/objects" value="$(var tracker_based_detector/output/objects)"/>
       <arg name="input/radar/objects" value="radar/noise_filtered_objects"/>
       <arg name="input/radar_far/objects" value="$(var radar_pipeline/output/objects)"/>
@@ -430,11 +452,15 @@
       <arg name="use_irregular_object_detector" value="$(var switch/detector/irregular_object)"/>
       <arg name="detected_irregular_object/output/objects" value="$(var irregular_object_pipeline/output/objects)"/>
       <arg name="alpha_merger_priority_mode" value="$(var ml_camera_lidar_merger_priority_mode)"/>
+      <arg name="use_roi_detected_object_validator" value="$(var use_roi_detected_object_validator)"/>
+      <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
     </include>
   </group>
 
   <group if="$(var switch/merger/camera_lidar)">
     <!-- Camera-Lidar merger -->
+    <let name="input/lidar_cluster/objects" value="$(var camera_lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/lidar_cluster/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/camera_lidar_merger.launch.xml">
       <arg name="number_of_cameras" value="$(var number_of_cameras)"/>
       <arg name="input/camera0/image" value="$(var input/camera0/image)"/>
@@ -465,7 +491,7 @@
       <arg name="input/camera8/info" value="$(var input/camera8/info)"/>
       <arg name="input/camera8/rois" value="$(var input/camera8/rois)"/>
       <arg name="input/lidar_ml/objects" value="$(var object_merger/input/ml_detected_objects)"/>
-      <arg name="input/lidar_rule/objects" value="$(var camera_lidar_rule_detector/output/objects)"/>
+      <arg name="input/lidar_cluster/objects" value="$(var input/lidar_cluster/objects)"/>
       <arg name="input/detection_by_tracker/objects" value="$(var tracker_based_detector/output/objects)"/>
       <arg name="detected_irregular_object/output/objects" value="$(var irregular_object_pipeline/output/objects)"/>
       <arg name="output/objects" value="$(var output/objects)"/>
@@ -476,15 +502,19 @@
       <arg name="use_pointcloud_map" value="$(var use_pointcloud_map)"/>
       <arg name="use_irregular_object_detector" value="$(var switch/detector/irregular_object)"/>
       <arg name="alpha_merger_priority_mode" value="$(var ml_camera_lidar_merger_priority_mode)"/>
+      <arg name="use_roi_detected_object_validator" value="$(var use_roi_detected_object_validator)"/>
+      <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
     </include>
   </group>
 
   <group if="$(var switch/merger/lidar_radar)">
     <!-- Lidar object merger-->
+    <let name="input/lidar_cluster/objects" value="$(var lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/lidar_cluster/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
     <group>
       <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/lidar_merger.launch.xml">
         <arg name="input/lidar_ml/objects" value="$(var object_merger/input/ml_detected_objects)"/>
-        <arg name="input/lidar_rule/objects" value="$(var lidar_rule_detector/output/objects)"/>
+        <arg name="input/lidar_cluster/objects" value="$(var input/lidar_cluster/objects)"/>
         <arg name="output/objects" value="lidar/objects"/>
         <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
         <arg name="use_detection_by_tracker" value="$(var use_detection_by_tracker)"/>
@@ -505,9 +535,11 @@
 
   <group if="$(var switch/merger/lidar)">
     <!-- Lidar object merger-->
+    <let name="input/lidar_cluster/objects" value="$(var lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/lidar_cluster/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
     <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/lidar_merger.launch.xml">
       <arg name="input/lidar_ml/objects " value="$(var object_merger/input/ml_detected_objects)"/>
-      <arg name="input/lidar_rule/objects" value="$(var lidar_rule_detector/output/objects)"/>
+      <arg name="input/lidar_cluster/objects" value="$(var input/lidar_cluster/objects)"/>
       <arg name="input/detection_by_tracker/objects" value="$(var tracker_based_detector/output/objects)"/>
       <arg name="output/objects" value="$(var output/objects)"/>
       <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>

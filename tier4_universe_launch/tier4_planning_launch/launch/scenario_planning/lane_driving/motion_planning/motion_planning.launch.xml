@@ -71,7 +71,10 @@
   <let name="container_executable" value="$(var container_type)" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"/>
   <let name="container_executable" value="agnocast_component_container_cie" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"/>
 
-  <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="motion_planning_container" namespace="" args="" output="screen"/>
+  <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="motion_planning_container" namespace="" args="" output="screen">
+    <!-- for acados-based path optimizer -->
+    <env name="LD_LIBRARY_PATH" value="/opt/acados/lib:$(env LD_LIBRARY_PATH)"/>
+  </node_container>
 
   <!-- path smoothing -->
   <group>

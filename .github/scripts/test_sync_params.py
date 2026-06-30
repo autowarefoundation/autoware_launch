@@ -161,15 +161,13 @@ perception: []
                 extract_override_values(path)
 
     def test_override_reapplication_tracker_max_dt(self) -> None:
-        source_yaml = _parse_yaml(
-            """
+        source_yaml = _parse_yaml("""
 /**:
   ros__parameters:
     tracker_state_parameter:
       max_dt: 1.0
       decay_rate: 0.1
-"""
-        )
+""")
         variant_text = """
 /**:
   ros__parameters:
@@ -199,14 +197,12 @@ perception: []
         )
 
     def test_fail_fast_when_override_path_removed_in_source(self) -> None:
-        source_yaml = _parse_yaml(
-            """
+        source_yaml = _parse_yaml("""
 /**:
   ros__parameters:
     tracker_state_parameter:
       decay_rate: 0.1
-"""
-        )
+""")
         variant_text = """
 /**:
   ros__parameters:
@@ -224,15 +220,13 @@ perception: []
 
     def test_stale_override_is_identified_separately_from_active(self) -> None:
         """Overrides whose paths were removed from upstream can be separated from active ones."""
-        source_yaml = _parse_yaml(
-            """
+        source_yaml = _parse_yaml("""
 /**:
   ros__parameters:
     tracker_state_parameter:
       decay_rate: 0.1
       still_present: 5.0
-"""
-        )
+""")
         variant_text = """
 /**:
   ros__parameters:
@@ -287,6 +281,7 @@ perception: []
     def test_variant_header_mentions_source(self) -> None:
         header = build_variant_header(
             source_url="https://github.com/org/repo/blob/abc123/path/to/file.yaml",
+            category="perception",
         )
         self.assertIn("managed by sync-params workflow", header)
         self.assertIn("https://github.com/org/repo/blob/abc123/path/to/file.yaml", header)
@@ -626,6 +621,56 @@ perception: []
         )
         self.assertEqual(source_line.index("#"), patched_line.index("#"))
 
+    def test_list_override_comments_do_not_accumulate_across_sync_runs(self) -> None:
+        """List overrides must not carry ruamel comment metadata into dumped values.
+
+        This regression covers a real map-sync case where repeated runs appended
+        another "# Path ..." fragment on each execution.
+        """
+        source_text = dedent("""\
+            /**:
+              ros__parameters:
+                pcd_paths_or_directory: [$(var pcd_paths_or_directory)] # Path to the pointcloud map file or directory
+            """)
+        variant_text = dedent("""\
+            /**:
+              ros__parameters:
+                pcd_paths_or_directory: [$(var pointcloud_map_path)] # {OVERRIDE} Path to the pointcloud map file or directory
+            """)
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            variant_path = Path(tmpdir) / "variant.yaml"
+            variant_path.write_text(variant_text, encoding="utf-8")
+
+            overrides, override_comments = extract_override_values(variant_path)
+            override_comment_columns = parse_override_comment_columns_from_variant_text(
+                variant_text
+            )
+
+            once = apply_overrides_to_source_text(source_text, overrides)
+            once = ensure_override_markers_in_text(
+                once, override_comments, override_comment_columns
+            )
+            line_once = next(line for line in once.splitlines() if "pcd_paths_or_directory" in line)
+
+            # Simulate another sync run by extracting from the regenerated variant.
+            variant_path.write_text(once, encoding="utf-8")
+            overrides2, override_comments2 = extract_override_values(variant_path)
+            cols2 = parse_override_comment_columns_from_variant_text(once)
+            twice = apply_overrides_to_source_text(source_text, overrides2)
+            twice = ensure_override_markers_in_text(twice, override_comments2, cols2)
+            line_twice = next(
+                line for line in twice.splitlines() if "pcd_paths_or_directory" in line
+            )
+
+            expected = (
+                "pcd_paths_or_directory: [$(var pointcloud_map_path)] # {OVERRIDE} "
+                "Path to the pointcloud map file or directory"
+            )
+            self.assertIn(expected, line_once)
+            self.assertIn(expected, line_twice)
+            self.assertEqual(line_once, line_twice)
+
     def test_multiple_overrides_applied_correctly_when_earlier_override_changes_line_count(
         self,
     ) -> None:
@@ -636,15 +681,13 @@ perception: []
         is also patched correctly.  Overrides are applied in descending line order so
         mutations never shift the indices of pending overrides.
         """
-        source_text = dedent(
-            """\
+        source_text = dedent("""\
             /**:
               ros__parameters:
                 scale: 1.0
                 items:
                   - alpha
-            """
-        )
+            """)
 
         patched = apply_overrides_to_source_text(
             source_text,
@@ -728,25 +771,21 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
         source_dir.mkdir()
 
         # Source no longer has 'removed_field'; only 'kept_field' remains.
-        source_text = dedent(
-            """\
+        source_text = dedent("""\
             /**:
               ros__parameters:
                 kept_field: 1.0
-            """
-        )
+            """)
         source_file = source_dir / "params.yaml"
         source_file.write_text(source_text, encoding="utf-8")
 
         # Variant still has 'removed_field' with an override marker.
-        variant_text = dedent(
-            """\
+        variant_text = dedent("""\
             /**:
               ros__parameters:
                 removed_field: 99.0 # {OVERRIDE}
                 kept_field: 2.0     # {OVERRIDE}
-            """
-        )
+            """)
         variant_rel = "config/params.yaml"
         variant_abs = workspace_root / variant_rel
         variant_abs.parent.mkdir(parents=True, exist_ok=True)
@@ -768,7 +807,9 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             workspace_root, source_dir, repo, file_entry, variant_abs = self._make_fixtures(tmpdir)
             with patch("sync_params.last_modified_sha", return_value="deadbeef"):
-                changed = sync_file_entry(workspace_root, repo, file_entry, source_dir, check=False)
+                changed = sync_file_entry(
+                    workspace_root, repo, file_entry, source_dir, category="perception", check=False
+                )
 
             self.assertEqual(changed, 1)
             result = variant_abs.read_text(encoding="utf-8")
@@ -782,7 +823,9 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
             workspace_root, source_dir, repo, file_entry, variant_abs = self._make_fixtures(tmpdir)
             original_variant_text = variant_abs.read_text(encoding="utf-8")
             with patch("sync_params.last_modified_sha", return_value="deadbeef"):
-                changed = sync_file_entry(workspace_root, repo, file_entry, source_dir, check=True)
+                changed = sync_file_entry(
+                    workspace_root, repo, file_entry, source_dir, category="perception", check=True
+                )
 
             self.assertGreater(changed, 0)
             # Variant file must not be modified in check mode.
@@ -817,22 +860,18 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
             source_dir = Path(tmpdir) / "source_repo"
             source_dir.mkdir()
 
-            source_text = dedent(
-                """\
+            source_text = dedent("""\
                 foo: 40 # updated
                 bar: fuga
                 qux: piyo # added
-                """
-            )
+                """)
             (source_dir / "params.yaml").write_text(source_text, encoding="utf-8")
 
-            variant_text = dedent(
-                """\
+            variant_text = dedent("""\
                 foo: 42
                 bar: hogehoge # {OVERRIDE}
                 baz: 2 # {OVERRIDE}
-                """
-            )
+                """)
             variant_rel = "config/params.yaml"
             variant_abs = workspace_root / variant_rel
             variant_abs.parent.mkdir(parents=True, exist_ok=True)
@@ -852,7 +891,12 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
             # --- update mode ---
             with patch("sync_params.last_modified_sha", return_value="deadbeef"):
                 changed = sync_file_entry(
-                    workspace_root, repo, repo.files[0], source_dir, check=False
+                    workspace_root,
+                    repo,
+                    repo.files[0],
+                    source_dir,
+                    category="perception",
+                    check=False,
                 )
 
             self.assertEqual(changed, 1)
@@ -874,7 +918,12 @@ class StaleOverrideIntegrationTest(unittest.TestCase):
             variant_abs.write_text(variant_text, encoding="utf-8")
             with patch("sync_params.last_modified_sha", return_value="deadbeef"):
                 changed_check = sync_file_entry(
-                    workspace_root, repo, repo.files[0], source_dir, check=True
+                    workspace_root,
+                    repo,
+                    repo.files[0],
+                    source_dir,
+                    category="perception",
+                    check=True,
                 )
 
             self.assertGreater(changed_check, 0)
@@ -935,6 +984,7 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
                     repo,
                     repo.files[0],
                     source_dir,
+                    category="perception",
                     check=check,
                     footer=footer,
                     output_masked=output_masked,
@@ -948,7 +998,7 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
         from sync_params import build_variant_header
 
         url = "https://github.com/org/repo/blob/pinnedsha/params.yaml"
-        result = build_variant_header(url) + source_body
+        result = build_variant_header(url, category="perception") + source_body
         if footer:
             result += build_embedded_original_section(source_body)
         return result
@@ -1116,7 +1166,10 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
         url = "https://github.com/org/repo/blob/pinnedsha/params.yaml"
         from sync_params import build_variant_header
 
-        variant_text = build_variant_header(url) + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        variant_text = (
+            build_variant_header(url, category="perception")
+            + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        )
 
         with tempfile.TemporaryDirectory() as tmpd:
             masked_file = Path(tmpd) / "masked.txt"
@@ -1151,7 +1204,10 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
         url = "https://github.com/org/repo/blob/pinnedsha/params.yaml"
         from sync_params import build_variant_header
 
-        variant_text = build_variant_header(url) + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        variant_text = (
+            build_variant_header(url, category="perception")
+            + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        )
 
         captured = StringIO()
         with patch("sys.stdout", captured):
@@ -1177,7 +1233,10 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
         url = "https://github.com/org/repo/blob/pinnedsha/params.yaml"
         from sync_params import build_variant_header
 
-        variant_text = build_variant_header(url) + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        variant_text = (
+            build_variant_header(url, category="perception")
+            + "foo: local_val # {OVERRIDE}\nbar: hoge\n"
+        )
 
         captured = StringIO()
         with patch("sys.stdout", captured):

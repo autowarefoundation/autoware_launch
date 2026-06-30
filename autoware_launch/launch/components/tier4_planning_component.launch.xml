@@ -66,6 +66,7 @@
     <arg name="behavior_path_planner_goal_planner_module_param_path" value="$(var behavior_path_config_path)/goal_planner/goal_planner.param.yaml"/>
     <arg name="behavior_path_planner_start_planner_module_param_path" value="$(var behavior_path_config_path)/start_planner/start_planner.param.yaml"/>
     <arg name="behavior_path_bidirectional_traffic_module_param_path" value="$(var behavior_path_config_path)/autoware_behavior_path_bidirectional_traffic_module/bidirectional_traffic.param.yaml"/>
+    <arg name="behavior_path_planner_direction_change_module_param_path" value="$(var behavior_path_config_path)/autoware_behavior_path_direction_change_module/direction_change.param.yaml"/>
     <arg name="behavior_path_planner_drivable_area_expansion_param_path" value="$(var behavior_path_config_path)/drivable_area_expansion.param.yaml"/>
 
     <!-- path generator -->
@@ -144,5 +145,6 @@
     <arg name="trajectory_velocity_optimizer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_velocity_optimizer.param.yaml"/>
     <arg name="trajectory_kinematic_feasibility_enforcer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_kinematic_feasibility_enforcer.param.yaml"/>
     <arg name="trajectory_mpt_optimizer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_mpt_optimizer.param.yaml"/>
+    <arg name="trajectory_temporal_mpt_optimizer_param_path" value="$(var optimizer_plugins_config_path)/trajectory_temporal_mpt_optimizer.param.yaml"/>
   </include>
 </launch>

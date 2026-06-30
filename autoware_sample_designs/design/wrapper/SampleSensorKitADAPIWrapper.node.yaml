@@ -22,6 +22,8 @@ subscribers:
     message_type: autoware_adapi_v1_msgs/msg/Route
   - name: planning/mission_planning/route_state
     message_type: autoware_adapi_v1_msgs/msg/RouteState
+  - name: planning/route
+    message_type: autoware_planning_msgs/msg/LaneletRoute
 
   # Control inputs
   - name: control/operation_mode_state
@@ -69,6 +71,30 @@ publishers:
     message_type: autoware_adapi_v1_msgs/msg/SteeringFactorArray
   - name: vehicle/status/velocity_status
     message_type: autoware_adapi_v1_msgs/msg/VelocityFactorArray
+  - name: external/local/gear_cmd
+    message_type: autoware_vehicle_msgs/msg/GearCommand
+  - name: external/local/hazard_lights_cmd
+    message_type: autoware_vehicle_msgs/msg/HazardLightsCommand
+  - name: external/local/heartbeat
+    message_type: autoware_adapi_v1_msgs/msg/ManualOperatorHeartbeat
+  - name: external/local/pedals_cmd
+    message_type: autoware_adapi_v1_msgs/msg/PedalsCommand
+  - name: external/local/steering_cmd
+    message_type: autoware_adapi_v1_msgs/msg/SteeringCommand
+  - name: external/local/turn_indicators_cmd
+    message_type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
+  - name: external/remote/gear_cmd
+    message_type: autoware_vehicle_msgs/msg/GearCommand
+  - name: external/remote/hazard_lights_cmd
+    message_type: autoware_vehicle_msgs/msg/HazardLightsCommand
+  - name: external/remote/heartbeat
+    message_type: autoware_adapi_v1_msgs/msg/ManualOperatorHeartbeat
+  - name: external/remote/pedals_cmd
+    message_type: autoware_adapi_v1_msgs/msg/PedalsCommand
+  - name: external/remote/steering_cmd
+    message_type: autoware_adapi_v1_msgs/msg/SteeringCommand
+  - name: external/remote/turn_indicators_cmd
+    message_type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
 
   # Vehicle outputs
   - name: vehicle/status/gear_status
@@ -91,6 +117,10 @@ publishers:
     message_type: autoware_adapi_v1_msgs/msg/Heartbeat
   - name: vehicle/metrics
     message_type: autoware_adapi_v1_msgs/msg/VehicleMetrics
+
+clients:
+  - name: routing/clear_route
+    message_type: autoware_planning_msgs/srv/ClearRoute
 
 # parameters
 param_files: []

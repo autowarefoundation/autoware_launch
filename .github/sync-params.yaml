@@ -1,3 +1,9 @@
+# If you want to change the param source, follow these steps:
+#
+# 1. Remove the sync-params header from the target (variant) param file.
+# 2. update `source:` in this file.
+# 3. Run the sync-params workflow locally with `python .github/scripts/sync_params.py <category (e.g. perception)>` to update the target param file and reattach the header.
+
 perception:
   - repository: autowarefoundation/autoware_universe
     ref: main
@@ -120,13 +126,343 @@ perception:
         variants:
           - path: autoware_launch/config/perception/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml
       # Perception/obstacle_segmentation
+      - source: perception/autoware_elevation_map_loader/config/elevation_map_parameters.yaml
+        # note: this is not a valid ROS2 param file format.
+        variants:
+          - path: autoware_launch/config/perception/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml
+      #
+      # ground_segmentation.param.yaml omitted. The 'param file' is completely interpreted by launcher. Should refactor to use sync-params.
+      #
+      - source: perception/autoware_occupancy_grid_map_outlier_filter/config/occupancy_grid_map_outlier_filter.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/obstacle_segmentation/occupancy_grid_based_outlier_filter/occupancy_grid_map_outlier_filter.param.yaml
       # Perception/occupancy_grid_map
-      # Perception/traffic_light_recognition
+      - source: perception/autoware_probabilistic_occupancy_grid_map/config/binary_bayes_filter_updater.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/occupancy_grid_map/binary_bayes_filter_updater.param.yaml
+      - source: perception/autoware_probabilistic_occupancy_grid_map/config/laserscan_based_occupancy_grid_map.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/occupancy_grid_map/laserscan_based_occupancy_grid_map.param.yaml
+      - source: perception/autoware_probabilistic_occupancy_grid_map/config/multi_lidar_pointcloud_based_occupancy_grid_map.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/occupancy_grid_map/multi_lidar_pointcloud_based_occupancy_grid_map.param.yaml
+      - source: perception/autoware_probabilistic_occupancy_grid_map/config/pointcloud_based_occupancy_grid_map.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/occupancy_grid_map/pointcloud_based_occupancy_grid_map.param.yaml
+      - source: perception/autoware_probabilistic_occupancy_grid_map/config/synchronized_grid_map_fusion_node.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/occupancy_grid_map/synchronized_grid_map_fusion_node.param.yaml
 
-localization: []
-map: []
-planning: []
-control: []
+      # Perception/traffic_light_recognition
+      - source: perception/autoware_crosswalk_traffic_light_estimator/config/crosswalk_traffic_light_estimator.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml
+      - source: perception/autoware_tensorrt_yolox/config/yolox_traffic_light_detector.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/tensorrt_yolox/yolox_traffic_light_detector.param.yaml
+      # TODO: sync roi_label_remap.csv, roi_to_semseg_label_remap.csv, traffic_light_roi_label_remap.csv
+      # (either sync-params can support csv, or refactor these csv files as param files)
+      - source: perception/autoware_traffic_light_arbiter/config/traffic_light_arbiter.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_arbiter/traffic_light_arbiter.param.yaml
+      - source: perception/autoware_traffic_light_classifier/config/car_traffic_light_classifier.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml
+      - source: perception/autoware_traffic_light_classifier/config/pedestrian_traffic_light_classifier.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml
+      - source: perception/autoware_traffic_light_fine_detector/config/traffic_light_fine_detector.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml
+      - source: perception/autoware_traffic_light_map_based_detector/config/traffic_light_map_based_detector.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_map_based_detector/camera6_traffic_light_map_based_detector.param.yaml
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_map_based_detector/camera7_traffic_light_map_based_detector.param.yaml
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_map_based_detector/traffic_light_traffic_light_map_based_detector.param.yaml
+      - source: perception/autoware_traffic_light_multi_camera_fusion/config/traffic_light_multi_camera_fusion.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml
+      - source: perception/autoware_traffic_light_occlusion_predictor/config/traffic_light_occlusion_predictor.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml
+      - source: perception/autoware_traffic_light_visualization/config/traffic_light_roi_visualizer.param.yaml
+        variants:
+          - path: autoware_launch/config/perception/traffic_light_recognition/traffic_light_visualization/traffic_light_roi_visualizer.param.yaml
+
+localization:
+  - repository: autowarefoundation/autoware_core
+    ref: main
+    files:
+      - source: localization/autoware_ndt_scan_matcher/config/ndt_scan_matcher.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/ndt_scan_matcher/ndt_scan_matcher.param.yaml
+
+      - source: localization/autoware_ekf_localizer/config/ekf_localizer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/ekf_localizer.param.yaml
+      - source: localization/autoware_pose_initializer/config/pose_initializer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/pose_initializer.param.yaml
+      - source: localization/autoware_stop_filter/config/stop_filter.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/stop_filter.param.yaml
+      - source: localization/autoware_twist2accel/config/twist2accel.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/twist2accel.param.yaml
+
+  - repository: autowarefoundation/autoware_universe
+    ref: main
+    files:
+      # # PCD preprocessor
+      # # TODO: uncomment and track the following files after input_frame and output_frame are added in the universe side.
+      # - source: sensing/autoware_pointcloud_preprocessor/config/crop_box_filter_node.param.yaml
+      #   variants:
+      #     - path: autoware_launch/config/localization/lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml
+      #     - path: autoware_launch/config/localization/ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml
+      # - source: sensing/autoware_pointcloud_preprocessor/config/passthrough_filter_uint16_node.param.yaml
+      #   variants:
+      #     - path: autoware_launch/config/localization/lidar_marker_localizer/pointcloud_preprocessor/ring_filter.param.yaml
+      - source: sensing/autoware_pointcloud_preprocessor/config/random_downsample_filter_node.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter.param.yaml
+      - source: sensing/autoware_pointcloud_preprocessor/config/voxel_grid_downsample_filter_node.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_filter.param.yaml
+
+      - source: localization/autoware_landmark_based_localizer/autoware_lidar_marker_localizer/config/lidar_marker_localizer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/lidar_marker_localizer/lidar_marker_localizer.param.yaml
+
+      # Yabloc
+      - source: localization/yabloc/yabloc_common/config/ground_server.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/ground_server.param.yaml
+      - source: localization/yabloc/yabloc_common/config/ll2_decomposer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/ll2_decomposer.param.yaml
+      - source: localization/yabloc/yabloc_image_processing/config/graph_segment.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/graph_segment.param.yaml
+      - source: localization/yabloc/yabloc_image_processing/config/segment_filter.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/segment_filter.param.yaml
+      - source: localization/yabloc/yabloc_image_processing/config/undistort.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/undistort.param.yaml
+      - source: localization/yabloc/yabloc_particle_filter/config/camera_particle_corrector.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/camera_particle_corrector.param.yaml
+      - source: localization/yabloc/yabloc_particle_filter/config/gnss_particle_corrector.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/gnss_particle_corrector.param.yaml
+      - source: localization/yabloc/yabloc_particle_filter/config/predictor.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/predictor.param.yaml
+      - source: localization/yabloc/yabloc_pose_initializer/config/camera_pose_initializer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/yabloc/camera_pose_initializer.param.yaml
+
+      - source: localization/autoware_landmark_based_localizer/autoware_ar_tag_based_localizer/config/ar_tag_based_localizer.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/ar_tag_based_localizer.param.yaml
+      - source: localization/autoware_localization_error_monitor/config/localization_error_monitor.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/localization_error_monitor.param.yaml
+      - source: localization/autoware_pose_instability_detector/config/pose_instability_detector.param.yaml
+        variants:
+          - path: autoware_launch/config/localization/pose_instability_detector.param.yaml
+
+  # # Eagleye is not tracked in autoware-nightly.repos, so the tracking is disabled.
+  # - repository: MapIV/eagleye
+  #   ref: main-ros2
+  #   files:
+  #     - source: eagleye_rt/config/eagleye_config.yaml
+  #       variants:
+  #         - path: autoware_launch/config/localization/eagleye_config.param.yaml
+
+map:
+  - repository: autowarefoundation/autoware_core
+    ref: main
+    files:
+      - source: map/autoware_map_loader/config/lanelet2_map_loader.param.yaml
+        variants:
+          - path: autoware_launch/config/map/lanelet2_map_loader.param.yaml
+      - source: map/autoware_map_loader/config/pointcloud_map_loader.param.yaml
+        variants:
+          - path: autoware_launch/config/map/pointcloud_map_loader.param.yaml
+      - source: map/autoware_map_projection_loader/config/map_projection_loader.param.yaml
+        variants:
+          - path: autoware_launch/config/map/map_projection_loader.param.yaml
+  - repository: autowarefoundation/autoware_universe
+    ref: main
+    files:
+      - source: map/autoware_map_tf_generator/config/map_tf_generator.param.yaml
+        variants:
+          - path: autoware_launch/config/map/map_tf_generator.param.yaml
+
+planning:
+  - repository: autowarefoundation/autoware_core
+    ref: main
+    files:
+      - source: planning/autoware_velocity_smoother/config/Analytical.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_velocity_smoother/Analytical.param.yaml
+      - source: planning/autoware_velocity_smoother/config/JerkFiltered.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_velocity_smoother/JerkFiltered.param.yaml
+      - source: planning/autoware_velocity_smoother/config/L2.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_velocity_smoother/L2.param.yaml
+      - source: planning/autoware_velocity_smoother/config/Linf.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_velocity_smoother/Linf.param.yaml
+      - source: planning/autoware_core_planning/config/autoware_velocity_smoother/velocity_smoother.param.yaml
+        # planning/autoware_velocity_smoother/config/default_velocity_smoother.param.yaml ?
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_velocity_smoother/velocity_smoother.param.yaml
+      - source: planning/autoware_core_planning/config/common.param.yaml
+        # planning/autoware_velocity_smoother/config/default_common.param.yaml ?
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/common.param.yaml
+      - source: planning/autoware_core_planning/config/nearest_search.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/nearest_search.param.yaml
+
+  - repository: autowarefoundation/autoware_universe
+    ref: main
+    files:
+      # Planning/mission_planner
+      - source: planning/autoware_mission_planner_universe/config/mission_planner.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/mission_planning/mission_planner/mission_planner.param.yaml
+      # Planning/neural_net_planner
+      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_extender.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_extender.param.yaml
+      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_kinematic_feasibility_enforcer.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_kinematic_feasibility_enforcer.param.yaml
+      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_mpt_optimizer.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_mpt_optimizer.param.yaml
+      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_point_fixer.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_point_fixer.param.yaml
+      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_qp_smoother.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_qp_smoother.param.yaml
+      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_spline_smoother.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_spline_smoother.param.yaml
+      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_temporal_mpt_optimizer.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_temporal_mpt_optimizer.param.yaml
+      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_velocity_optimizer.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_velocity_optimizer.param.yaml
+      - source: planning/autoware_diffusion_planner/config/diffusion_planner.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/diffusion_planner.param.yaml
+      - source: planning/autoware_trajectory_modifier/config/trajectory_modifier.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_modifier.param.yaml
+      - source: planning/autoware_trajectory_optimizer/config/trajectory_optimizer.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer.param.yaml
+      # Planning/parking
+      - source: planning/autoware_freespace_planner/config/freespace_planner.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/parking/freespace_planner/freespace_planner.param.yaml
+      # Planning/scenario_planning/common
+      - source: planning/autoware_hazard_lights_selector/config/hazard_lights_selector.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/autoware_hazard_lights_selector/hazard_lights_selector.param.yaml
+      - source: planning/planning_validator/autoware_planning_validator_intersection_collision_checker/config/intersection_collision_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/planning_validator/intersection_collision_checker.param.yaml
+      - source: planning/planning_validator/autoware_planning_validator_latency_checker/config/latency_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/planning_validator/latency_checker.param.yaml
+      - source: planning/planning_validator/autoware_planning_validator_rear_collision_checker/config/rear_collision_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/planning_validator/rear_collision_checker.param.yaml
+      - source: planning/planning_validator/autoware_planning_validator_trajectory_checker/config/trajectory_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/planning_validator/trajectory_checker.param.yaml
+      - source: planning/planning_validator/autoware_planning_validator/config/planning_validator.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/planning_validator/planning_validator.param.yaml
+      - source: planning/autoware_costmap_generator/config/costmap_generator.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/common/costmap_generator.param.yaml
+      # Planning/scenario_planning/lane_driving/behavior_planning
+      # Planning/scenario_planning/lane_driving/motion_planning
+
+control:
+  # common/nearest_search.param.yaml omitted.
+  - repository: autowarefoundation/autoware_universe
+    ref: main
+    files:
+      - source: control/autoware_autonomous_emergency_braking/config/autonomous_emergency_braking.param.yaml
+        variants:
+          - path: autoware_launch/config/control/autoware_autonomous_emergency_braking/autonomous_emergency_braking.param.yaml
+      - source: control/autoware_collision_detector/config/collision_detector.param.yaml
+        variants:
+          - path: autoware_launch/config/control/autoware_collision_detector/collision_detector.param.yaml
+      - source: control/autoware_control_command_gate/config/default.param.yaml
+        variants:
+          - path: autoware_launch/config/control/control_command_gate/control_command_gate.param.yaml
+      - source: control/autoware_control_validator/config/control_validator.param.yaml
+        variants:
+          - path: autoware_launch/config/control/control_validator/control_validator.param.yaml
+      - source: control/autoware_external_cmd_selector/config/external_cmd_selector.param.yaml
+        variants:
+          - path: autoware_launch/config/control/external_cmd_selector/external_cmd_selector.param.yaml
+      - source: control/autoware_lane_departure_checker/config/lane_departure_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/control/lane_departure_checker/lane_departure_checker.param.yaml
+      - source: control/autoware_obstacle_collision_checker/config/obstacle_collision_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/control/obstacle_collision_checker/obstacle_collision_checker.param.yaml
+      - source: control/autoware_operation_mode_transition_manager/config/operation_mode_transition_manager.param.yaml
+        variants:
+          - path: autoware_launch/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml
+      - source: control/autoware_predicted_path_checker/config/predicted_path_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/control/predicted_path_checker/predicted_path_checker.param.yaml
+      - source: control/autoware_shift_decider/config/shift_decider.param.yaml
+        variants:
+          - path: autoware_launch/config/control/shift_decider/shift_decider.param.yaml
+
+      - source: control/autoware_mpc_lateral_controller/param/lateral_controller_defaults.param.yaml
+        variants:
+          - path: autoware_launch/config/control/trajectory_follower/lateral/mpc.param.yaml
+      - source: control/autoware_pure_pursuit/config/pure_pursuit.param.yaml
+        variants:
+          - path: autoware_launch/config/control/trajectory_follower/lateral/pure_pursuit.param.yaml
+      - source: control/autoware_pid_longitudinal_controller/config/autoware_pid_longitudinal_controller.param.yaml
+        variants:
+          - path: autoware_launch/config/control/trajectory_follower/longitudinal/pid.param.yaml
+      - source: control/autoware_trajectory_follower_node/param/trajectory_follower_node.param.yaml
+        variants:
+          - path: autoware_launch/config/control/trajectory_follower/trajectory_follower_node.param.yaml
+      - source: control/autoware_vehicle_cmd_gate/config/vehicle_cmd_gate.param.yaml
+        variants:
+          - path: autoware_launch/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml
+
 system: []
-vehicle: []
-simulator: []
+vehicle:
+  - repository: autowarefoundation/autoware_universe
+    ref: main
+    files:
+      - source: vehicle/autoware_raw_vehicle_cmd_converter/config/raw_vehicle_cmd_converter.param.yaml
+        variants:
+          - path: autoware_launch/config/vehicle/raw_vehicle_cmd_converter/raw_vehicle_cmd_converter.param.yaml
+
+simulator:
+  - repository: autowarefoundation/autoware_universe
+    ref: main
+    files:
+      - source: simulator/autoware_fault_injection/config/fault_injection.param.yaml
+        variants:
+          - path: autoware_launch/config/simulator/fault_injection.param.yaml
