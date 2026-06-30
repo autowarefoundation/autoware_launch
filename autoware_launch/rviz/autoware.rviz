@@ -1040,6 +1040,49 @@ Visualization Manager:
                   Vector:
                     Twist: true
                     Yaw Rate: false
+                - Alpha: 0.9990000128746033
+                  Class: autoware_perception_rviz_plugin/DetectedObjects
+                  Color: 0; 255; 255
+                  Covariance:
+                    Confidence Interval: 95%
+                    Pose: true
+                    Twist: false
+                    Yaw: false
+                    Yaw Rate: false
+                  Enabled: true
+                  Line Width: 0.10000000149011612
+                  Name: BEV Fusion(cyan)
+                  Namespaces:
+                    {}
+                  Path:
+                    Path Confidence: true
+                    Path Footprint: false
+                    Path Resolution: Normal
+                    Predicted Path: true
+                  Per Class Color:
+                    Value: false
+                  Shape:
+                    BBox Footprint: false
+                    Mesh:
+                      Signal Lights: false
+                      Value: false
+                    Shape Type: Skeleton 3D
+                  Text:
+                    Acceleration: true
+                    Existence Probability: false
+                    Label: true
+                    UUID: true
+                    Velocity: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Best Effort
+                    Value: /perception/object_recognition/detection/bevfusion/objects
+                  Value: true
+                  Vector:
+                    Twist: true
+                    Yaw Rate: false
               Enabled: true
               Name: Detection
             - Class: rviz_common/Group
