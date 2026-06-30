@@ -3925,6 +3925,18 @@ Visualization Manager:
               Vector:
                 Twist: true
                 Yaw Rate: false
+            - Class: rviz_default_plugins/MarkerArray
+              Enabled: true
+              Name: TrackerDebug
+              Namespaces:
+                {}
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /perception/object_recognition/tracking/multi_object_tracker/debug/objects_markers
+              Value: true
           Enabled: true
           Name: Perception
         - Class: rviz_common/Group
