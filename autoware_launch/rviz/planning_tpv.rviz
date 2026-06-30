@@ -21,22 +21,7 @@ Panels:
         - /Control1/Predicted Trajectory1
         - /Debug1/Sensing1/PointcloudOnCamera1
         - /Debug1/Sensing1/ConcatenatePointCloud1/Autocompute Value Bounds1
-        - /Debug1/Perception1/Centerpoint(red1)1/UNKNOWN1
-        - /Debug1/Perception1/Centerpoint(red1)1/CAR1
-        - /Debug1/Perception1/Centerpoint(red1)1/TRUCK1
-        - /Debug1/Perception1/Centerpoint(red1)1/BUS1
-        - /Debug1/Perception1/Centerpoint(red1)1/TRAILER1
-        - /Debug1/Perception1/Centerpoint(red1)1/MOTORCYCLE1
-        - /Debug1/Perception1/Centerpoint(red1)1/CYCLIST1
-        - /Debug1/Perception1/Centerpoint(red1)1/PEDESTRIAN1
-        - /Debug1/Perception1/CenterpointROIFusion(red2)1/UNKNOWN1
-        - /Debug1/Perception1/CenterpointValidator(red3)1/UNKNOWN1
-        - /Debug1/Perception1/PointPainting(light_green1)1/UNKNOWN1
-        - /Debug1/Perception1/PointPaintingROIFusion(light_green2)1/UNKNOWN1
-        - /Debug1/Perception1/PointPaintingValidator(light_green3)1/UNKNOWN1
-        - /Debug1/Perception1/DetectionByTracker(orange)1/UNKNOWN1
         - /Debug1/Perception1/RadarFarObjects(white)1/UNKNOWN1
-        - /Debug1/Perception1/Detection(yellow)1/UNKNOWN1
         - /Debug1/Planning1
         - /Debug1/Planning1/Objects Of Interest1
       Splitter Ratio: 0.7641357183456421
@@ -833,152 +818,417 @@ Visualization Manager:
               Use Fixed Frame: true
               Use rainbow: true
               Value: true
+            - Alpha: 0.999
+              Autocompute Intensity Bounds: false
+              Autocompute Value Bounds:
+                Max Value: 15
+                Min Value: -2
+                Value: false
+              Axis: Z
+              Channel Name: class_id
+              Class: rviz_default_plugins/PointCloud2
+              Color: 200; 200; 200
+              Color Transformer: Intensity
+              Decay Time: 0
+              Enabled: false
+              Invert Rainbow: false
+              Max Color: 255; 255; 255
+              Max Intensity: 16
+              Min Color: 0; 0; 0
+              Min Intensity: 0
+              Name: SegmentedPointCloud
+              Position Transformer: XYZ
+              Selectable: false
+              Size (Pixels): 1.5
+              Size (m): 0.02
+              Style: Points
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Best Effort
+                Value: /perception/segmented/pointcloud
+              Use Fixed Frame: true
+              Use rainbow: true
+              Value: true
           Enabled: true
           Name: Segmentation
         - Class: rviz_common/Group
           Displays:
             - Class: rviz_common/Group
               Displays:
-                - BUS:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
-                  CAR:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
-                  CYCLIST:
-                    Alpha: 0.999
-                    Color: 119; 11; 32
+                - Alpha: 0.9990000128746033
                   Class: autoware_perception_rviz_plugin/DetectedObjects
-                  Display 3d polygon: true
-                  Display Label: true
-                  Display PoseWithCovariance: true
-                  Display Predicted Path Confidence: true
-                  Display Predicted Paths: true
-                  Display Twist: true
-                  Display UUID: true
-                  Display Velocity: true
-                  Line Width: 0.03
+                  Color: 255; 138; 128
+                  Covariance:
+                    Confidence Interval: 95%
+                    Pose: true
+                    Twist: false
+                    Yaw: false
+                    Yaw Rate: false
                   Enabled: true
-                  MOTORCYCLE:
-                    Alpha: 0.999
-                    Color: 119; 11; 32
-                  Name: DetectedObjects
-                  Namespaces: {}
-                  PEDESTRIAN:
-                    Alpha: 0.999
-                    Color: 255; 192; 203
-                  TRAILER:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
-                  TRUCK:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
+                  Line Width: 0.10000000149011612
+                  Name: Centerpoint(red)
+                  Namespaces:
+                    {}
+                  Path:
+                    Path Confidence: true
+                    Path Footprint: false
+                    Path Resolution: Normal
+                    Predicted Path: true
+                  Per Class Color:
+                    Value: false
+                  Shape:
+                    BBox Footprint: false
+                    Mesh:
+                      Signal Lights: false
+                      Value: false
+                    Shape Type: Skeleton 3D
+                  Text:
+                    Acceleration: true
+                    Existence Probability: false
+                    Label: true
+                    UUID: true
+                    Velocity: true
                   Topic:
                     Depth: 5
                     Durability Policy: Volatile
                     History Policy: Keep Last
                     Reliability Policy: Best Effort
-                    Value: /perception/object_recognition/detection/objects
-                  UNKNOWN:
-                    Alpha: 0.999
-                    Color: 255; 255; 255
+                    Value: /perception/object_recognition/detection/centerpoint/objects
                   Value: true
-              Enabled: false
+                  Vector:
+                    Twist: true
+                    Yaw Rate: false
+                - Alpha: 0.9990000128746033
+                  Class: autoware_perception_rviz_plugin/DetectedObjects
+                  Color: 255; 234; 0
+                  Covariance:
+                    Confidence Interval: 95%
+                    Pose: true
+                    Twist: false
+                    Yaw: false
+                    Yaw Rate: false
+                  Enabled: true
+                  Line Width: 0.10000000149011612
+                  Name: Stream PETR(yellow)
+                  Namespaces:
+                    {}
+                  Path:
+                    Path Confidence: true
+                    Path Footprint: false
+                    Path Resolution: Normal
+                    Predicted Path: true
+                  Per Class Color:
+                    Value: false
+                  Shape:
+                    BBox Footprint: false
+                    Mesh:
+                      Signal Lights: false
+                      Value: false
+                    Shape Type: Skeleton 3D
+                  Text:
+                    Acceleration: true
+                    Existence Probability: false
+                    Label: true
+                    UUID: true
+                    Velocity: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Best Effort
+                    Value: /perception/object_recognition/detection/camera_only/objects
+                  Value: true
+                  Vector:
+                    Twist: true
+                    Yaw Rate: false
+                - Alpha: 0.9990000128746033
+                  Class: autoware_perception_rviz_plugin/DetectedObjects
+                  Color: 178; 255; 89
+                  Covariance:
+                    Confidence Interval: 95%
+                    Pose: true
+                    Twist: false
+                    Yaw: false
+                    Yaw Rate: false
+                  Enabled: true
+                  Line Width: 0.10000000149011612
+                  Name: PTv3 Cluster(light_green)
+                  Namespaces:
+                    {}
+                  Path:
+                    Path Confidence: true
+                    Path Footprint: false
+                    Path Resolution: Normal
+                    Predicted Path: true
+                  Per Class Color:
+                    Value: false
+                  Shape:
+                    BBox Footprint: false
+                    Mesh:
+                      Signal Lights: false
+                      Value: false
+                    Shape Type: Skeleton 3D
+                  Text:
+                    Acceleration: true
+                    Existence Probability: false
+                    Label: true
+                    UUID: true
+                    Velocity: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Best Effort
+                    Value: /perception/object_recognition/detection/clustering/label_based_euclidean_cluster/objects
+                  Value: true
+                  Vector:
+                    Twist: true
+                    Yaw Rate: false
+                - Alpha: 0.9990000128746033
+                  Class: autoware_perception_rviz_plugin/DetectedObjects
+                  Color: 255; 128; 171
+                  Covariance:
+                    Confidence Interval: 95%
+                    Pose: true
+                    Twist: false
+                    Yaw: false
+                    Yaw Rate: false
+                  Enabled: true
+                  Line Width: 0.10000000149011612
+                  Name: Irregular object(pink)
+                  Namespaces:
+                    {}
+                  Path:
+                    Path Confidence: true
+                    Path Footprint: false
+                    Path Resolution: Normal
+                    Predicted Path: true
+                  Per Class Color:
+                    Value: false
+                  Shape:
+                    BBox Footprint: false
+                    Mesh:
+                      Signal Lights: false
+                      Value: false
+                    Shape Type: Skeleton 3D
+                  Text:
+                    Acceleration: true
+                    Existence Probability: false
+                    Label: true
+                    UUID: true
+                    Velocity: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Best Effort
+                    Value: /perception/object_recognition/detection/irregular_object/objects
+                  Value: true
+                  Vector:
+                    Twist: true
+                    Yaw Rate: false
+                - Alpha: 0.9990000128746033
+                  Class: autoware_perception_rviz_plugin/DetectedObjects
+                  Color: 255; 0; 255
+                  Covariance:
+                    Confidence Interval: 95%
+                    Pose: true
+                    Twist: false
+                    Yaw: false
+                    Yaw Rate: false
+                  Enabled: true
+                  Line Width: 0.10000000149011612
+                  Name: PTv3 Object(magenta)
+                  Namespaces:
+                    {}
+                  Path:
+                    Path Confidence: true
+                    Path Footprint: false
+                    Path Resolution: Normal
+                    Predicted Path: true
+                  Per Class Color:
+                    Value: false
+                  Shape:
+                    BBox Footprint: false
+                    Mesh:
+                      Signal Lights: false
+                      Value: false
+                    Shape Type: Skeleton 3D
+                  Text:
+                    Acceleration: true
+                    Existence Probability: false
+                    Label: true
+                    UUID: true
+                    Velocity: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Best Effort
+                    Value: /perception/obstacle_segmentation/ptv3/objects
+                  Value: true
+                  Vector:
+                    Twist: true
+                    Yaw Rate: false
+                - Alpha: 0.9990000128746033
+                  Class: autoware_perception_rviz_plugin/DetectedObjects
+                  Color: 0; 255; 255
+                  Covariance:
+                    Confidence Interval: 95%
+                    Pose: true
+                    Twist: false
+                    Yaw: false
+                    Yaw Rate: false
+                  Enabled: true
+                  Line Width: 0.10000000149011612
+                  Name: BEV Fusion(cyan)
+                  Namespaces:
+                    {}
+                  Path:
+                    Path Confidence: true
+                    Path Footprint: false
+                    Path Resolution: Normal
+                    Predicted Path: true
+                  Per Class Color:
+                    Value: false
+                  Shape:
+                    BBox Footprint: false
+                    Mesh:
+                      Signal Lights: false
+                      Value: false
+                    Shape Type: Skeleton 3D
+                  Text:
+                    Acceleration: true
+                    Existence Probability: false
+                    Label: true
+                    UUID: true
+                    Velocity: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Best Effort
+                    Value: /perception/object_recognition/detection/bevfusion/objects
+                  Value: true
+                  Vector:
+                    Twist: true
+                    Yaw Rate: false
+              Enabled: true
               Name: Detection
             - Class: rviz_common/Group
               Displays:
-                - BUS:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
-                  CAR:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
-                  CYCLIST:
-                    Alpha: 0.999
-                    Color: 119; 11; 32
+                - Alpha: 0.999
                   Class: autoware_perception_rviz_plugin/TrackedObjects
-                  Display 3d polygon: true
-                  Display Label: true
-                  Display PoseWithCovariance: true
-                  Display Predicted Path Confidence: true
-                  Display Predicted Paths: true
-                  Display Twist: true
-                  Display UUID: true
-                  Display Velocity: true
-                  Line Width: 0.03
+                  Color: 255; 255; 255
+                  Covariance:
+                    Confidence Interval: 95%
+                    Pose: true
+                    Twist: false
+                    Yaw: false
+                    Yaw Rate: false
                   Enabled: true
-                  MOTORCYCLE:
-                    Alpha: 0.999
-                    Color: 119; 11; 32
+                  Line Width: 0.03
                   Name: TrackedObjects
-                  Namespaces: {}
-                  PEDESTRIAN:
-                    Alpha: 0.999
-                    Color: 255; 192; 203
-                  TRAILER:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
-                  TRUCK:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
+                  Namespaces:
+                    {}
+                  Path:
+                    Path Confidence: true
+                    Path Footprint: false
+                    Path Resolution: Normal
+                    Predicted Path: true
+                  Per Class Color:
+                    ANIMAL: 255; 105; 180
+                    BUS: 30; 144; 255
+                    CAR: 30; 144; 255
+                    CYCLIST: 119; 11; 32
+                    HAZARD: 255; 69; 0
+                    MOTORCYCLE: 119; 11; 32
+                    PEDESTRIAN: 255; 192; 203
+                    TRAILER: 30; 144; 255
+                    TRUCK: 30; 144; 255
+                    UNKNOWN: 255; 255; 255
+                    Value: true
+                  Shape:
+                    BBox Footprint: false
+                    Mesh:
+                      Signal Lights: false
+                      Value: false
+                    Shape Type: Skeleton 3D
+                  Text:
+                    Acceleration: false
+                    Existence Probability: false
+                    Label: true
+                    UUID: true
+                    Velocity: true
                   Topic:
                     Depth: 5
                     Durability Policy: Volatile
                     History Policy: Keep Last
                     Reliability Policy: Best Effort
                     Value: /perception/object_recognition/tracking/objects
-                  UNKNOWN:
-                    Alpha: 0.999
-                    Color: 255; 255; 255
                   Value: true
+                  Vector:
+                    Twist: true
+                    Yaw Rate: false
               Enabled: false
               Name: Tracking
             - Class: rviz_common/Group
               Displays:
-                - BUS:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
-                  CAR:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
-                  CYCLIST:
-                    Alpha: 0.999
-                    Color: 119; 11; 32
+                - Alpha: 0.999
                   Class: autoware_perception_rviz_plugin/PredictedObjects
-                  Display 3d polygon: true
-                  Display Label: true
-                  Display PoseWithCovariance: false
-                  Display Predicted Path Confidence: true
-                  Display Predicted Paths: true
-                  Display Twist: true
-                  Display UUID: true
-                  Display Velocity: true
-                  Line Width: 0.03
+                  Color: 255; 255; 255
+                  Covariance:
+                    Confidence Interval: 95%
+                    Pose: false
+                    Twist: false
+                    Yaw: false
+                    Yaw Rate: false
                   Enabled: true
-                  MOTORCYCLE:
-                    Alpha: 0.999
-                    Color: 119; 11; 32
+                  Line Width: 0.03
                   Name: PredictedObjects
-                  Namespaces: {}
-                  PEDESTRIAN:
-                    Alpha: 0.999
-                    Color: 255; 192; 203
-                  TRAILER:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
-                  TRUCK:
-                    Alpha: 0.999
-                    Color: 30; 144; 255
+                  Namespaces:
+                    {}
+                  Path:
+                    Path Confidence: true
+                    Path Footprint: false
+                    Path Resolution: Normal
+                    Predicted Path: true
+                  Per Class Color:
+                    ANIMAL: 255; 105; 180
+                    BUS: 30; 144; 255
+                    CAR: 30; 144; 255
+                    CYCLIST: 119; 11; 32
+                    HAZARD: 255; 69; 0
+                    MOTORCYCLE: 119; 11; 32
+                    PEDESTRIAN: 255; 192; 203
+                    TRAILER: 30; 144; 255
+                    TRUCK: 30; 144; 255
+                    UNKNOWN: 255; 255; 255
+                    Value: true
+                  Shape:
+                    BBox Footprint: false
+                    Mesh:
+                      Signal Lights: false
+                      Value: false
+                    Shape Type: Skeleton 3D
+                  Text:
+                    Acceleration: false
+                    Existence Probability: false
+                    Label: true
+                    UUID: true
+                    Velocity: true
                   Topic:
                     Depth: 5
                     Durability Policy: Volatile
                     History Policy: Keep Last
                     Reliability Policy: Best Effort
                     Value: /perception/object_recognition/objects
-                  UNKNOWN:
-                    Alpha: 0.999
-                    Color: 255; 255; 255
                   Value: true
+                  Vector:
+                    Twist: true
+                    Yaw Rate: false
                 - Class: rviz_default_plugins/MarkerArray
                   Enabled: false
                   Name: Maneuver
@@ -2183,35 +2433,17 @@ Visualization Manager:
                 Value: /planning/planning_factors/diffusion_planner
               Value: true
               show_safety_factors: false
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 30; 144; 255
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 30; 144; 255
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 119; 11; 32
+            - Alpha: 0.9990000128746033
               Class: autoware_perception_rviz_plugin/PredictedObjects
-              Confidence Interval: 95%
-              Display Acceleration: true
-              Display Existence Probability: false
-              Display Label: true
-              Display Pose Covariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display Twist Covariance: false
-              Display UUID: true
-              Display Velocity: true
-              Display Yaw Covariance: false
-              Display Yaw Rate: false
-              Display Yaw Rate Covariance: false
+              Color: 255; 255; 255
+              Covariance:
+                Confidence Interval: 95%
+                Pose: true
+                Twist: false
+                Yaw: false
+                Yaw Rate: false
               Enabled: true
               Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 119; 11; 32
               Name: PredictedObjects
               Namespaces:
                 acceleration: true
@@ -2223,28 +2455,45 @@ Visualization Manager:
                 twist: true
                 uuid: true
                 velocity: true
-              Object Fill Type: Fill
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 255; 192; 203
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 30; 144; 255
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 30; 144; 255
+              Path:
+                Path Confidence: true
+                Path Footprint: false
+                Path Resolution: Normal
+                Predicted Path: true
+              Per Class Color:
+                ANIMAL: 255; 105; 180
+                BUS: 30; 144; 255
+                CAR: 30; 144; 255
+                CYCLIST: 119; 11; 32
+                HAZARD: 255; 69; 0
+                MOTORCYCLE: 119; 11; 32
+                PEDESTRIAN: 255; 192; 203
+                TRAILER: 30; 144; 255
+                TRUCK: 30; 144; 255
+                UNKNOWN: 255; 255; 255
+                Value: true
+              Shape:
+                BBox Footprint: false
+                Mesh:
+                  Signal Lights: false
+                  Value: false
+                Shape Type: Fill
+              Text:
+                Acceleration: true
+                Existence Probability: false
+                Label: true
+                UUID: true
+                Velocity: true
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
                 Reliability Policy: Best Effort
                 Value: /planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/output/predicted_objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 255; 255; 255
               Value: true
-              Visualization Type: Normal
+              Vector:
+                Twist: true
+                Yaw Rate: false
           Enabled: true
           Name: NeuralNetworkBasedPlanner
         - Class: rviz_common/Group
@@ -2513,14 +2762,6 @@ Visualization Manager:
                   Map: true
                   Perception:
                     CameraLidarFusion(purple): true
-                    Centerpoint(red1): true
-                    CenterpointROIFusion(red2): true
-                    CenterpointValidator(red3): true
-                    Detection(yellow): true
-                    DetectionByTracker(cyan): true
-                    PointPainting(light_green1): true
-                    PointPaintingROIFusion(light_green2): true
-                    PointPaintingValidator(light_green3): true
                     Prediction(light_blue): true
                     RadarFarObjects(white): true
                     Tracking(green): true
@@ -2551,7 +2792,11 @@ Visualization Manager:
                 Perception:
                   ObjectRecognition:
                     Detection:
-                      DetectedObjects: true
+                      Centerpoint(red): true
+                      Irregular object(pink): true
+                      PTv3 Cluster(light_green): true
+                      PTv3 Object(magenta): true
+                      Stream PETR(yellow): true
                       Value: true
                     Prediction:
                       Maneuver: true
@@ -2763,53 +3008,59 @@ Visualization Manager:
               Use Fixed Frame: false
               Use rainbow: true
               Value: true
-            - BUS:
-                Alpha: 0.5
-                Color: 255; 255; 255
-              CAR:
-                Alpha: 0.5
-                Color: 255; 255; 255
-              CYCLIST:
-                Alpha: 0.5
-                Color: 255; 255; 255
+            - Alpha: 0.5
               Class: autoware_perception_rviz_plugin/DetectedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
+              Color: 255; 255; 255
+              Covariance:
+                Confidence Interval: 95%
+                Pose: true
+                Twist: false
+                Yaw: false
+                Yaw Rate: false
               Enabled: true
               Line Width: 0.029999999329447746
-              MOTORCYCLE:
-                Alpha: 0.5
-                Color: 255; 255; 255
               Name: RadarRawObjects(white)
               Namespaces:
                 {}
-              PEDESTRIAN:
-                Alpha: 0.5
-                Color: 255; 255; 255
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.5
-                Color: 255; 255; 255
-              TRUCK:
-                Alpha: 0.5
-                Color: 255; 255; 255
+              Path:
+                Path Confidence: true
+                Path Footprint: false
+                Path Resolution: Normal
+                Predicted Path: true
+              Per Class Color:
+                ANIMAL: 255; 105; 180
+                BUS: 255; 255; 255
+                CAR: 255; 255; 255
+                CYCLIST: 255; 255; 255
+                HAZARD: 255; 69; 0
+                MOTORCYCLE: 255; 255; 255
+                PEDESTRIAN: 255; 255; 255
+                TRAILER: 255; 255; 255
+                TRUCK: 255; 255; 255
+                UNKNOWN: 255; 255; 255
+                Value: true
+              Shape:
+                BBox Footprint: false
+                Mesh:
+                  Signal Lights: false
+                  Value: false
+                Shape Type: Skeleton 3D
+              Text:
+                Acceleration: true
+                Existence Probability: false
+                Label: true
+                UUID: true
+                Velocity: true
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
                 Reliability Policy: Best Effort
                 Value: /sensing/radar/detected_objects
-              UNKNOWN:
-                Alpha: 0.5
-                Color: 255; 255; 255
               Value: true
-              Visualization Type: Normal
+              Vector:
+                Twist: true
+                Yaw Rate: false
           Enabled: false
           Name: Sensing
         - Class: rviz_common/Group
@@ -2920,570 +3171,230 @@ Visualization Manager:
               Value: true
         - Class: rviz_common/Group
           Displays:
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 255; 138; 128
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 255; 138; 128
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 255; 138; 128
+            - Alpha: 0.9990000128746033
               Class: autoware_perception_rviz_plugin/DetectedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
+              Color: 255; 255; 255
+              Covariance:
+                Confidence Interval: 95%
+                Pose: true
+                Twist: false
+                Yaw: false
+                Yaw Rate: false
               Enabled: true
               Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 255; 138; 128
-              Name: Centerpoint(red1)
-              Namespaces:
-                {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 255; 138; 128
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 255; 138; 128
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 255; 138; 128
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Best Effort
-                Value: /perception/object_recognition/detection/centerpoint/objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 255; 138; 128
-              Value: false
-              Visualization Type: Normal
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 255; 82; 82
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 255; 82; 82
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 255; 82; 82
-              Class: autoware_perception_rviz_plugin/DetectedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
-              Enabled: true
-              Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 255; 82; 82
-              Name: CenterpointROIFusion(red2)
-              Namespaces:
-                {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 255; 82; 82
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 255; 82; 82
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 255; 82; 82
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Best Effort
-                Value: /perception/object_recognition/detection/centerpoint/roi_fusion/objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 255; 82; 82
-              Value: false
-              Visualization Type: Normal
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 0
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 0
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 0
-              Class: autoware_perception_rviz_plugin/DetectedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
-              Enabled: true
-              Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 0
-              Name: CenterpointValidator(red3)
-              Namespaces:
-                {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 0
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 0
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 0
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Best Effort
-                Value: /perception/object_recognition/detection/centerpoint/validation/objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 0
-              Value: false
-              Visualization Type: Normal
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 178; 255; 89
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 178; 255; 89
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 178; 255; 89
-              Class: autoware_perception_rviz_plugin/DetectedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
-              Enabled: true
-              Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 178; 255; 89
-              Name: PointPainting(light_green1)
-              Namespaces:
-                {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 178; 255; 89
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 178; 255; 89
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 178; 255; 89
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Best Effort
-                Value: /perception/object_recognition/detection/pointpainting/objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 178; 255; 89
-              Value: false
-              Visualization Type: Normal
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 118; 255; 3
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 118; 255; 3
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 118; 255; 3
-              Class: autoware_perception_rviz_plugin/DetectedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
-              Enabled: true
-              Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 118; 255; 3
-              Name: PointPaintingROIFusion(light_green2)
-              Namespaces:
-                {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 118; 255; 3
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 118; 255; 3
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 118; 255; 3
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Best Effort
-                Value: /perception/object_recognition/detection/pointpainting/roi_fusion/objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 118; 255; 3
-              Value: false
-              Visualization Type: Normal
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 100; 221; 23
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 100; 221; 23
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 100; 221; 23
-              Class: autoware_perception_rviz_plugin/DetectedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
-              Enabled: true
-              Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 100; 221; 23
-              Name: PointPaintingValidator(light_green3)
-              Namespaces:
-                {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 100; 221; 23
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 100; 221; 23
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 100; 221; 23
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Best Effort
-                Value: /perception/object_recognition/detection/pointpainting/validation/objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 100; 221; 23
-              Value: false
-              Visualization Type: Normal
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 255; 145; 0
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 255; 145; 0
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 255; 145; 0
-              Class: autoware_perception_rviz_plugin/DetectedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
-              Enabled: true
-              Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 255; 145; 0
-              Name: DetectionByTracker(orange)
-              Namespaces:
-                {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 255; 145; 0
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 255; 145; 0
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 255; 145; 0
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Best Effort
-                Value: /perception/object_recognition/detection/detection_by_tracker/objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 255; 145; 0
-              Value: false
-              Visualization Type: Normal
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 249
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 249
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 249
-              Class: autoware_perception_rviz_plugin/DetectedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
-              Enabled: true
-              Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 249
               Name: CameraLidarFusion(purple)
               Namespaces:
                 {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 249
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 249
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 249
+              Path:
+                Path Confidence: true
+                Path Footprint: false
+                Path Resolution: Normal
+                Predicted Path: true
+              Per Class Color:
+                ANIMAL: 255; 105; 180
+                BUS: 213; 0; 249
+                CAR: 213; 0; 249
+                CYCLIST: 213; 0; 249
+                HAZARD: 255; 69; 0
+                MOTORCYCLE: 213; 0; 249
+                PEDESTRIAN: 213; 0; 249
+                TRAILER: 213; 0; 249
+                TRUCK: 213; 0; 249
+                UNKNOWN: 213; 0; 249
+                Value: true
+              Shape:
+                BBox Footprint: false
+                Mesh:
+                  Signal Lights: false
+                  Value: false
+                Shape Type: Skeleton 3D
+              Text:
+                Acceleration: true
+                Existence Probability: false
+                Label: true
+                UUID: true
+                Velocity: true
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
                 Reliability Policy: Best Effort
                 Value: /perception/object_recognition/detection/clustering/camera_lidar_fusion/objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 213; 0; 249
               Value: false
-              Visualization Type: Normal
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 255; 255; 255
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 255; 255; 255
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 255; 255; 255
+              Vector:
+                Twist: true
+                Yaw Rate: false
+            - Alpha: 0.9990000128746033
               Class: autoware_perception_rviz_plugin/DetectedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
+              Color: 255; 255; 255
+              Covariance:
+                Confidence Interval: 95%
+                Pose: true
+                Twist: false
+                Yaw: false
+                Yaw Rate: false
               Enabled: true
               Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 255; 255; 255
               Name: RadarFarObjects(white)
               Namespaces:
                 {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 255; 255; 255
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 255; 255; 255
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 255; 255; 255
+              Path:
+                Path Confidence: true
+                Path Footprint: false
+                Path Resolution: Normal
+                Predicted Path: true
+              Per Class Color:
+                ANIMAL: 255; 105; 180
+                BUS: 255; 255; 255
+                CAR: 255; 255; 255
+                CYCLIST: 255; 255; 255
+                HAZARD: 255; 69; 0
+                MOTORCYCLE: 255; 255; 255
+                PEDESTRIAN: 255; 255; 255
+                TRAILER: 255; 255; 255
+                TRUCK: 255; 255; 255
+                UNKNOWN: 255; 255; 255
+                Value: true
+              Shape:
+                BBox Footprint: false
+                Mesh:
+                  Signal Lights: false
+                  Value: false
+                Shape Type: Skeleton 3D
+              Text:
+                Acceleration: true
+                Existence Probability: false
+                Label: true
+                UUID: true
+                Velocity: true
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
                 Reliability Policy: Best Effort
                 Value: /perception/object_recognition/detection/radar/far_objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 255; 255; 255
               Value: false
-              Visualization Type: Normal
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 255; 234; 0
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 255; 234; 0
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 255; 234; 0
-              Class: autoware_perception_rviz_plugin/DetectedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
-              Enabled: true
-              Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 255; 234; 0
-              Name: Detection(yellow)
-              Namespaces:
-                {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 255; 234; 0
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 255; 234; 0
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 255; 234; 0
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Best Effort
-                Value: /perception/object_recognition/detection/objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 255; 234; 0
-              Value: false
-              Visualization Type: Normal
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 0; 230; 118
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 0; 230; 118
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 0; 230; 118
+              Vector:
+                Twist: true
+                Yaw Rate: false
+            - Alpha: 0.9990000128746033
               Class: autoware_perception_rviz_plugin/TrackedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: true
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
+              Color: 255; 255; 255
+              Covariance:
+                Confidence Interval: 95%
+                Pose: true
+                Twist: false
+                Yaw: false
+                Yaw Rate: false
               Enabled: true
               Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 0; 230; 118
               Name: Tracking(green)
               Namespaces:
                 {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 0; 230; 118
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 0; 230; 118
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 0; 230; 118
+              Path:
+                Path Confidence: true
+                Path Footprint: false
+                Path Resolution: Normal
+                Predicted Path: true
+              Per Class Color:
+                ANIMAL: 255; 105; 180
+                BUS: 0; 230; 118
+                CAR: 0; 230; 118
+                CYCLIST: 0; 230; 118
+                HAZARD: 255; 69; 0
+                MOTORCYCLE: 0; 230; 118
+                PEDESTRIAN: 0; 230; 118
+                TRAILER: 0; 230; 118
+                TRUCK: 0; 230; 118
+                UNKNOWN: 0; 230; 118
+                Value: true
+              Shape:
+                BBox Footprint: false
+                Mesh:
+                  Signal Lights: false
+                  Value: false
+                Shape Type: Skeleton 3D
+              Text:
+                Acceleration: true
+                Existence Probability: false
+                Label: true
+                UUID: true
+                Velocity: true
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
                 Reliability Policy: Best Effort
                 Value: /perception/object_recognition/tracking/objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 0; 230; 118
               Value: false
-              Visualization Type: Normal
-            - BUS:
-                Alpha: 0.9990000128746033
-                Color: 0; 176; 255
-              CAR:
-                Alpha: 0.9990000128746033
-                Color: 0; 176; 255
-              CYCLIST:
-                Alpha: 0.9990000128746033
-                Color: 0; 176; 255
+              Vector:
+                Twist: true
+                Yaw Rate: false
+            - Alpha: 0.9990000128746033
               Class: autoware_perception_rviz_plugin/PredictedObjects
-              Display Acceleration: true
-              Display Label: true
-              Display PoseWithCovariance: false
-              Display Predicted Path Confidence: true
-              Display Predicted Paths: true
-              Display Twist: true
-              Display UUID: true
-              Display Velocity: true
+              Color: 255; 255; 255
+              Covariance:
+                Confidence Interval: 95%
+                Pose: false
+                Twist: false
+                Yaw: false
+                Yaw Rate: false
               Enabled: true
               Line Width: 0.10000000149011612
-              MOTORCYCLE:
-                Alpha: 0.9990000128746033
-                Color: 0; 176; 255
               Name: Prediction(light_blue)
               Namespaces:
                 {}
-              PEDESTRIAN:
-                Alpha: 0.9990000128746033
-                Color: 0; 176; 255
-              Polygon Type: 3d
-              TRAILER:
-                Alpha: 0.9990000128746033
-                Color: 0; 176; 255
-              TRUCK:
-                Alpha: 0.9990000128746033
-                Color: 0; 176; 255
+              Path:
+                Path Confidence: true
+                Path Footprint: false
+                Path Resolution: Normal
+                Predicted Path: true
+              Per Class Color:
+                ANIMAL: 255; 105; 180
+                BUS: 0; 176; 255
+                CAR: 0; 176; 255
+                CYCLIST: 0; 176; 255
+                HAZARD: 255; 69; 0
+                MOTORCYCLE: 0; 176; 255
+                PEDESTRIAN: 0; 176; 255
+                TRAILER: 0; 176; 255
+                TRUCK: 0; 176; 255
+                UNKNOWN: 0; 176; 255
+                Value: true
+              Shape:
+                BBox Footprint: false
+                Mesh:
+                  Signal Lights: false
+                  Value: false
+                Shape Type: Skeleton 3D
+              Text:
+                Acceleration: true
+                Existence Probability: false
+                Label: true
+                UUID: true
+                Velocity: true
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
                 History Policy: Keep Last
                 Reliability Policy: Best Effort
                 Value: /perception/object_recognition/objects
-              UNKNOWN:
-                Alpha: 0.9990000128746033
-                Color: 0; 176; 255
               Value: false
-              Visualization Type: Normal
+              Vector:
+                Twist: true
+                Yaw Rate: false
+            - Class: rviz_default_plugins/MarkerArray
+              Enabled: true
+              Name: TrackerDebug
+              Namespaces:
+                {}
+              Topic:
+                Depth: 5
+                Durability Policy: Volatile
+                History Policy: Keep Last
+                Reliability Policy: Reliable
+                Value: /perception/object_recognition/tracking/multi_object_tracker/debug/objects_markers
+              Value: true
           Enabled: false
           Name: Perception
         - Class: rviz_common/Group
