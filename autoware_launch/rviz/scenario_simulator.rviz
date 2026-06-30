@@ -678,7 +678,7 @@ Visualization Manager:
                     Yaw: false
                     Yaw Rate: false
                   Enabled: true
-                  Line Width: 0.029999999329447746
+                  Line Width: 0.03
                   Name: DetectedObjects
                   Namespaces:
                     {}
@@ -731,7 +731,7 @@ Visualization Manager:
                     Yaw: false
                     Yaw Rate: false
                   Enabled: true
-                  Line Width: 0.029999999329447746
+                  Line Width: 0.03
                   Name: BEV Fusion(cyan)
                   Namespaces:
                     {}
@@ -778,7 +778,7 @@ Visualization Manager:
                     Yaw: false
                     Yaw Rate: false
                   Enabled: true
-                  Line Width: 0.029999999329447746
+                  Line Width: 0.15000000596046448
                   Name: TrackedObjects
                   Namespaces:
                     {}
@@ -847,7 +847,7 @@ Visualization Manager:
                     Yaw: false
                     Yaw Rate: false
                   Enabled: true
-                  Line Width: 0.5
+                  Line Width: 0.15000000596046448
                   Name: PredictedObjects
                   Namespaces:
                     {}
@@ -3103,7 +3103,7 @@ Visualization Manager:
                 Yaw: false
                 Yaw Rate: false
               Enabled: true
-              Line Width: 0.029999999329447746
+              Line Width: 0.03
               Name: Detected Objects
               Namespaces:
                 {}
