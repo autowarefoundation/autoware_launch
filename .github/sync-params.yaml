@@ -327,6 +327,24 @@ planning:
       - source: planning/autoware_core_planning/config/nearest_search.param.yaml
         variants:
           - path: autoware_launch/config/planning/scenario_planning/common/nearest_search.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_planner_common/config/behavior_velocity_planner_common.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/behavior_velocity_planner_common.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_planner/config/behavior_velocity_planner.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/behavior_velocity_planner.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_stop_line_module/config/stop_line.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/stop_line.param.yaml
+      - source: planning/autoware_path_generator/config/path_generator.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/path_generator/path_generator.param.yaml
+      - source: planning/motion_velocity_planner/autoware_motion_velocity_planner/config/motion_velocity_planner.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/motion_velocity_planner.param.yaml
+      - source: planning/motion_velocity_planner/autoware_motion_velocity_obstacle_stop_module/config/obstacle_stop.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop.param.yaml
 
   - repository: autowarefoundation/autoware_universe
     ref: main
@@ -396,7 +414,121 @@ planning:
         variants:
           - path: autoware_launch/config/planning/scenario_planning/common/costmap_generator.param.yaml
       # Planning/scenario_planning/lane_driving/behavior_planning
+      - source: planning/behavior_path_planner/autoware_behavior_path_bidirectional_traffic_module/config/bidirectional_traffic.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/autoware_behavior_path_bidirectional_traffic_module/bidirectional_traffic.param.yaml
+      #
+      # direction_change.param.yaml omitted (no upstream file)
+      #
+      - source: planning/behavior_path_planner/autoware_behavior_path_dynamic_obstacle_avoidance_module/config/dynamic_obstacle_avoidance.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/autoware_behavior_path_dynamic_obstacle_avoidance_module/dynamic_obstacle_avoidance.param.yaml
+      - source: planning/behavior_path_planner/autoware_behavior_path_static_obstacle_avoidance_module/config/static_obstacle_avoidance.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/autoware_behavior_path_static_obstacle_avoidance_module/static_obstacle_avoidance.param.yaml
+      - source: planning/behavior_path_planner/autoware_behavior_path_avoidance_by_lane_change_module/config/avoidance_by_lane_change.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/avoidance_by_lane_change/avoidance_by_lane_change.param.yaml
+      - source: planning/behavior_path_planner/autoware_behavior_path_goal_planner_module/config/goal_planner.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/goal_planner/goal_planner.param.yaml
+      - source: planning/behavior_path_planner/autoware_behavior_path_lane_change_module/config/lane_change.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/lane_change/lane_change.param.yaml
+      - source: planning/behavior_path_planner/autoware_behavior_path_sampling_planner_module/config/sampling_planner.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/sampling_planner/sampling_planner.param.yaml
+      - source: planning/behavior_path_planner/autoware_behavior_path_side_shift_module/config/side_shift.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/side_shift/side_shift.param.yaml
+      - source: planning/behavior_path_planner/autoware_behavior_path_start_planner_module/config/start_planner.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/start_planner/start_planner.param.yaml
+      - source: planning/behavior_path_planner/autoware_behavior_path_planner/config/behavior_path_planner.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/behavior_path_planner.param.yaml
+      - source: planning/behavior_path_planner/autoware_behavior_path_planner/config/drivable_area_expansion.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/drivable_area_expansion.param.yaml
+      - source: planning/behavior_path_planner/autoware_behavior_path_planner/config/scene_module_manager.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/scene_module_manager.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_blind_spot_module/config/blind_spot.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/blind_spot.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_crosswalk_module/config/crosswalk.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/crosswalk.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_detection_area_module/config/detection_area.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/detection_area.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_intersection_module/config/intersection.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/intersection.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_no_drivable_lane_module/config/no_drivable_lane.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/no_drivable_lane.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_no_stopping_area_module/config/no_stopping_area.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/no_stopping_area.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_occlusion_spot_module/config/occlusion_spot.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/occlusion_spot.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_roundabout_module/config/roundabout.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/roundabout.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_speed_bump_module/config/speed_bump.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/speed_bump.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_traffic_light_module/config/traffic_light.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/traffic_light.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_virtual_traffic_light_module/config/virtual_traffic_light.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/virtual_traffic_light.param.yaml
+      - source: planning/behavior_velocity_planner/autoware_behavior_velocity_walkway_module/config/walkway.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/walkway.param.yaml
+      #
+      # rtc_replayer.param.yaml omitted (no upstream file)
+      #
       # Planning/scenario_planning/lane_driving/motion_planning
+      - source: planning/autoware_path_optimizer/config/path_optimizer.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/autoware_path_optimizer/path_optimizer.param.yaml
+      - source: planning/motion_velocity_planner/autoware_motion_velocity_boundary_departure_prevention_module/config/boundary_departure_prevention.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/boundary_departure_prevention.param.yaml
+      - source: planning/motion_velocity_planner/autoware_motion_velocity_dynamic_obstacle_stop_module/config/dynamic_obstacle_stop.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/dynamic_obstacle_stop.param.yaml
+      - source: planning/motion_velocity_planner/autoware_motion_velocity_obstacle_cruise_module/config/obstacle_cruise.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_cruise.param.yaml
+      - source: planning/motion_velocity_planner/autoware_motion_velocity_obstacle_slow_down_module/config/obstacle_slow_down.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_slow_down.param.yaml
+      - source: planning/motion_velocity_planner/autoware_motion_velocity_obstacle_velocity_limiter_module/config/obstacle_velocity_limiter.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_velocity_limiter.param.yaml
+      - source: planning/motion_velocity_planner/autoware_motion_velocity_out_of_lane_module/config/out_of_lane.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/out_of_lane.param.yaml
+      - source: planning/motion_velocity_planner/autoware_motion_velocity_road_user_stop_module/config/road_user_stop.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/road_user_stop.param.yaml
+      - source: planning/motion_velocity_planner/autoware_motion_velocity_run_out_module/config/run_out.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/run_out.param.yaml
+      #
+      # path_sampler.param.yaml omitted (no upstream file)
+      #
+      - source: planning/autoware_path_smoother/config/elastic_band_smoother.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/path_smoother/elastic_band_smoother.param.yaml
+      - source: planning/autoware_surround_obstacle_checker/config/surround_obstacle_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker/surround_obstacle_checker.param.yaml
 
 control:
   # common/nearest_search.param.yaml omitted.
