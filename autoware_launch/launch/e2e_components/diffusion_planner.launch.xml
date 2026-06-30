@@ -2,6 +2,7 @@
   <!-- planning module -->
   <!-- diffusion planner -->
   <arg name="diffusion_planner_param_path"/>
+  <arg name="vehicle_param_file"/>
 
   <!-- input topic parameters -->
   <arg name="input_objects_topic_name" default="/perception/object_recognition/objects"/>
@@ -78,6 +79,7 @@
           <push-ros-namespace namespace="neural_network_based_planner"/>
           <include file="$(find-pkg-share autoware_diffusion_planner)/launch/diffusion_planner.launch.xml">
             <arg name="diffusion_planner_param_path" value="$(var diffusion_planner_param_path)"/>
+            <arg name="vehicle_info_param_path" value="$(var vehicle_param_file)"/>
             <arg name="input_odometry" value="/localization/kinematic_state"/>
             <arg name="input_acceleration" value="/localization/acceleration"/>
             <arg name="input_route" value="/planning/mission_planning/route"/>
