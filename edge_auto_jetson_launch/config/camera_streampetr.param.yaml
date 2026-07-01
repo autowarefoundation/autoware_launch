@@ -33,21 +33,21 @@
       normalized: false
     camera_6_mask:
       enable: false
-      mask: []
-      normalized: true
+      mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      normalized: false
     camera_7_mask:
-      enable: true
-      mask: [0.193924, 0.999462, 0.207813, 0.892204, 0.378646, 0.890054, 0.385938, 0.999462]
-      normalized: true
+      enable: false
+      mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      normalized: false
     camera_8_mask:
       enable: false
       mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
       normalized: false
     camera_9_mask:
       enable: true
-      mask: [0.882118, 0, 0.999653, 0, 0.999653, 0.999462, 0.8, 0.999462]
+      mask: [0.8, 0.0, 1.0, 0.0, 1.0, 1.0, 0.8, 1.0]
       normalized: true
     camera_10_mask:
       enable: true
-      mask: [0, 0, 0.111979, 0.000269, 0.2, 0.999462, 0, 0.999462]
+      mask: [0.0, 0.0, 0.2, 0.0, 0.2, 1.0, 0.0, 1.0]
       normalized: true
