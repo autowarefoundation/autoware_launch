@@ -4,7 +4,7 @@
     max_camera_time_diff: 0.15 #Maximum allowed time difference for camera image sync in seconds
     multithreading: false # Whether to use multithreading for handling image callbacks
     anchor_camera_id: 0 # Camera id of the anchor topic. The forward pass begins once every anchor camera topic reaches.
-    is_distorted_image: false # Whether the input images are distorted
+    is_distorted_image: true # Whether the input images are distorted
     ego_mask.fill_value_bgr: [0.0, 0.0, 0.0]
     camera_mask.camera_ids: [8, 6, 10, 7, 9]
     camera_0_mask:
@@ -33,21 +33,21 @@
       normalized: false
     camera_6_mask:
       enable: false
-      mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-      normalized: false
+      mask: []
+      normalized: true
     camera_7_mask:
-      enable: false
-      mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-      normalized: false
+      enable: true
+      mask: [0.193924, 0.999462, 0.207813, 0.892204, 0.378646, 0.890054, 0.385938, 0.999462]
+      normalized: true
     camera_8_mask:
       enable: false
       mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
       normalized: false
     camera_9_mask:
       enable: true
-      mask: [0.8, 0.0, 1.0, 0.0, 1.0, 1.0, 0.8, 1.0]
+      mask: [0.882118, 0, 0.999653, 0, 0.999653, 0.999462, 0.8, 0.999462]
       normalized: true
     camera_10_mask:
       enable: true
-      mask: [0.0, 0.0, 0.2, 0.0, 0.2, 1.0, 0.0, 1.0]
+      mask: [0, 0, 0.111979, 0.000269, 0.2, 0.999462, 0, 0.999462]
       normalized: true
