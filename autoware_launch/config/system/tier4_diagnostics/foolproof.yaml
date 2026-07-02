@@ -235,14 +235,12 @@ units:
   #   name: main_scheduling_settings_others
   #   timeout: 3.0
   #   # latch: 0.0
-
   # - path: /foolproof/main/scheduling_settings_autoware
   #   type: diag
   #   node: autoware_diagnostics_bridge_node_main
   #   name: main_scheduling_settings_autoware
   #   timeout: 3.0
   #   # latch: 0.0
-
   - path: /foolproof/main/update_status_ota
     type: diag
     node: autoware_diagnostics_bridge_node_main
