@@ -79,7 +79,7 @@
   <let name="agnocast_heaphook_path" value="/opt/ros/$(env ROS_DISTRO)/lib/libagnocast_heaphook.so" if="$(var use_system_agnocast_heaphook)"/>
   <let name="agnocast_heaphook_path" value="$(env AGNOCAST_HEAPHOOK_PATH)" unless="$(var use_system_agnocast_heaphook)"/>
   <!-- Scheduling settings -->
-  <arg name="enable_scheduling_settings" default="true" description="enable scheduling settings"/>
+  <arg name="enable_scheduling_settings" default="false" description="enable scheduling settings"/>
   <arg name="scheduling_settings_script_file" default="/opt/autoware/services/scheduling-settings/scheduling_settings.py" description="python script that does scheduling settings"/>
   <arg
     name="scheduling_settings_autoware_yaml_file"
