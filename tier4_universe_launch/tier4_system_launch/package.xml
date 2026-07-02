@@ -16,6 +16,7 @@
   <exec_depend>autoware_component_interface_tools</exec_depend>
   <exec_depend>autoware_component_state_monitor</exec_depend>
   <exec_depend>autoware_diagnostic_graph_aggregator</exec_depend>
+  <exec_depend>autoware_driving_mode_manager</exec_depend>
   <exec_depend>autoware_dummy_diag_publisher</exec_depend>
   <exec_depend>autoware_duplicated_node_checker</exec_depend>
   <exec_depend>autoware_hazard_status_converter</exec_depend>
