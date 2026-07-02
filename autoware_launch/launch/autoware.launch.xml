@@ -19,8 +19,8 @@
   <arg name="launch_map" default="true" description="launch map"/>
   <arg name="launch_sensing" default="true" description="launch sensing"/>
   <arg name="launch_sensing_driver" default="true" description="launch sensing driver"/>
+  <arg name="launch_speed_scale_estimator" default="false" description="launch speed scale estimator"/>
   <arg name="launch_localization" default="true" description="launch localization"/>
-  <arg name="launch_speed_scale_corrector" default="false" description="launch speed scale corrector"/>
   <arg name="launch_perception" default="true" description="launch perception"/>
   <arg name="launch_planning" default="true" description="launch planning"/>
   <arg name="launch_control" default="true" description="launch control"/>
@@ -92,14 +92,13 @@
   <group if="$(var launch_sensing)">
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml">
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="launch_speed_scale_estimator" value="$(var launch_speed_scale_estimator)"/>
     </include>
   </group>
 
   <!-- Localization -->
   <group if="$(var launch_localization)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_localization_component.launch.xml">
-      <arg name="launch_speed_scale_corrector" value="$(var launch_speed_scale_corrector)"/>
-    </include>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_localization_component.launch.xml"/>
   </group>
 
   <!-- Perception -->

@@ -18,7 +18,7 @@
   <exec_depend>autoware_diagnostic_graph_utils</exec_depend>
   <exec_depend>autoware_dummy_infrastructure</exec_depend>
   <exec_depend>autoware_global_parameter_loader</exec_depend>
-  <exec_depend>autoware_speed_scale_corrector</exec_depend>
+  <exec_depend>autoware_speed_scale_estimator</exec_depend>
   <exec_depend>python3-bson</exec_depend>
   <exec_depend>python3-tornado</exec_depend>
   <exec_depend>rviz2</exec_depend>
