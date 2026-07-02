@@ -4,11 +4,7 @@
   <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="vehicle_mirror_param_file" default="$(find-pkg-share autoware_vehicle_info_utils)/config/vehicle_mirror.param.yaml" description="path to the file of vehicle mirror position yaml"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
-  <arg
-    name="speed_scale_estimator_param_path"
-    default="$(find-pkg-share autoware_speed_scale_estimator)/config/speed_scale_estimator.yaml"
-    description="path to speed scale estimator parameter file"
-  />
+  <arg name="speed_scale_estimator_param_path" default="$(find-pkg-share autoware_speed_scale_estimator)/config/speed_scale_estimator.yaml" description="path to speed scale estimator parameter file"/>
 
   <let name="sensor_launch_pkg" value="$(find-pkg-share $(var sensor_model)_launch)"/>
 
