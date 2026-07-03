@@ -8,12 +8,12 @@
     default_longitudinal_scale_factor: 1.0
 
     # Lanelet2 polygon attribute name for per-area longitudinal scale factor.
-    # Set on feature_environment_specify polygons in lanelet2_map.osm, e.g.:
+    # Set on degenerate_area polygons in lanelet2_map.osm, e.g.:
     #   <tag k='longitudinal_scale_factor' v='1.0075'/>
     map_longitudinal_scale_factor_attribute: longitudinal_scale_factor
 
     # Area subtype to environment ID mapping
-    # The lanelet2 polygon type must be "feature_environment_specify"
+    # The lanelet2 polygon type must be "degenerate_area"
     area_subtype_uniform_road:
       environment_id: 1
     area_subtype_feature_poor_road:
