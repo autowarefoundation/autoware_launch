@@ -44,6 +44,7 @@ units:
       # - { type: link, link: /system/018-emergency_vehicle_main-error }
       - { type: link, link: /system/019-event_record_status-error }
       - { type: link, link: /system/020-mrm-request-error }
+      - { type: link, link: /system/021-logpacker-error }
       # - { type: link, link: /system/clock-error }
 
   - path: /system/in_lane_moderate_stop
@@ -126,6 +127,12 @@ units:
     item:
       type: link
       link: /system/020-mrm-request
+
+  - path: /system/021-logpacker-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /system/021-logpacker
 
   - path: /system/clock-error
     type: warn-to-ok
@@ -223,6 +230,12 @@ units:
     name: delegate
     timeout: 3.0
     # latch: 0.0
+
+  - path: /system/021-logpacker
+    type: diag
+    node: ""
+    name: logpacker_state
+    timeout: 3.0
 
   - path: /system/clock
     type: and
