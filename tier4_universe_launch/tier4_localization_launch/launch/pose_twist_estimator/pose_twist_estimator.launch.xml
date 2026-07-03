@@ -27,8 +27,7 @@
 
   <let name="effective_use_environment_adaptor" value="false" unless="$(var use_ndt_pose)"/>
   <let name="effective_use_environment_adaptor" value="false" unless="$(var use_gyro_odom_twist)"/>
-  <let name="effective_use_environment_adaptor" value="$(var use_autoware_environment_adaptor)"
-       if="$(eval &quot;$(var use_ndt_pose) and $(var use_gyro_odom_twist)&quot;)"/>
+  <let name="effective_use_environment_adaptor" value="$(var use_autoware_environment_adaptor)" if="$(eval &quot;$(var use_ndt_pose) and $(var use_gyro_odom_twist)&quot;)"/>
 
   <!-- set initial pose -->
   <let name="user_defined_initial_pose/enable" value="$(eval &quot;len($(var initial_pose)) == 7&quot;)"/>
@@ -43,7 +42,11 @@
       if="$(eval &quot;'$(var use_autoware_pose_covariance_modifier)'=='true' or '$(var effective_use_environment_adaptor)'=='true'&quot;)"
       value="/localization/pose_estimator/ndt_scan_matcher/pose_with_covariance"
     />
-    <let name="ndt_output_pose_with_cov_topic_name" unless="$(eval &quot;'$(var use_autoware_pose_covariance_modifier)'=='true' or '$(var effective_use_environment_adaptor)'=='true'&quot;)" value="/localization/pose_estimator/pose_with_covariance"/>
+    <let
+      name="ndt_output_pose_with_cov_topic_name"
+      unless="$(eval &quot;'$(var use_autoware_pose_covariance_modifier)'=='true' or '$(var effective_use_environment_adaptor)'=='true'&quot;)"
+      value="/localization/pose_estimator/pose_with_covariance"
+    />
     <include file="$(find-pkg-share tier4_localization_launch)/launch/pose_twist_estimator/ndt_scan_matcher.launch.xml">
       <arg name="output_pose_with_covariance_topic" value="$(var ndt_output_pose_with_cov_topic_name)"/>
     </include>
