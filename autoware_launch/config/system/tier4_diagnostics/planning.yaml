@@ -76,7 +76,7 @@ units:
     type: diag
     node: /adapi/node/routing
     name: state
-    timeout: 1.0
+    timeout: 3.0
 
   - path: /planning/003-trajectory_finite_validation-error
     type: warn-to-ok

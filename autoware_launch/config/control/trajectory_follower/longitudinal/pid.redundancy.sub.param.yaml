@@ -6,6 +6,7 @@
     enable_overshoot_emergency: true
     enable_large_tracking_error_emergency: true
     enable_slope_compensation: true
+    enable_emergency_exit_without_stop: true
     enable_keep_stopped_until_steer_convergence: false
 
     # state transition
@@ -35,6 +36,9 @@
     time_threshold_before_pid_integration: 2.0
     ff_scale_min: 0.5
     ff_scale_max: 2.0
+    enable_velocity_lookahead_feedback: true
+    velocity_lookahead_time: 1.0
+    velocity_lookahead_blend_weight: 0.5
     enable_brake_keeping_before_stop: false
     brake_keeping_acc: -0.2
 
@@ -66,11 +70,11 @@
 
     # acceleration limit
     max_acc: 1.86
-    min_acc: -6.00
+    min_acc: -3.36
 
     # jerk limit
     max_jerk: 2.0
-    min_jerk: -30.0
+    min_jerk: -5.0
     max_acc_cmd_diff: 50.0 # [m/s^2 * s^-1]
 
     # slope compensation

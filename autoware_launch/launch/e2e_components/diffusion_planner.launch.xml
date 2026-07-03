@@ -2,6 +2,7 @@
   <!-- planning module -->
   <!-- diffusion planner -->
   <arg name="diffusion_planner_param_path"/>
+  <arg name="vehicle_param_file"/>
 
   <!-- input topic parameters -->
   <arg name="input_objects_topic_name" default="/perception/object_recognition/objects"/>
@@ -22,11 +23,12 @@
   <arg name="trajectory_velocity_optimizer_param_path"/>
   <arg name="trajectory_kinematic_feasibility_enforcer_param_path"/>
   <arg name="trajectory_mpt_optimizer_param_path"/>
+  <arg name="trajectory_optimizer_max_velocity_mps" default="11.11"/>
 
   <!-- mission planner -->
   <arg name="mission_planner_param_path"/>
+
   <arg name="launch_remaining_distance_time_calculator" default="false"/>
-  <arg name="launch_proximity_hazard_object_checker" default="true"/>
 
   <!-- minimum rule-based planner param paths -->
   <arg name="minimum_rule_base_planner_param_path" default="$(find-pkg-share autoware_launch)/config/planning/neural_net_planner/minimum_rule_based_planner/minimum_rule_based_planner.param.yaml"/>
@@ -54,28 +56,10 @@
   </node>
 
   <!-- trajectory selector param paths -->
+  <arg name="trajectory_selector_param_path"/>
   <arg name="trajectory_concatenator_param_path"/>
   <arg name="trajectory_validator_param_path"/>
   <arg name="trajectory_ranker_param_path"/>
-
-  <!-- boundary_departure param paths -->
-  <arg name="input_objects_topic_name" default="/perception/object_recognition/objects"/>
-  <arg name="input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
-  <arg name="input_trajectory_topic" default="/control/trajectory_follower/lateral/predicted_trajectory"/>
-  <arg name="output_trajectory_topic" default="/planning/trajectory_checked_for_boundary_departure"/>
-  <arg name="common_config_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common"/>
-  <arg name="common_param_path" default="$(var common_config_path)/common.param.yaml"/>
-  <arg name="vehicle_model" default="j6_gen2"/>
-  <arg name="vehicle_param_file" default="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-  <arg name="nearest_search_param_path" default="$(var common_config_path)/nearest_search.param.yaml"/>
-  <arg name="motion_config_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning"/>
-  <arg name="motion_velocity_planner_param_path" default="$(var motion_config_path)/motion_velocity_planner/motion_velocity_planner.param.yaml"/>
-  <arg
-    name="motion_velocity_planner_velocity_smoother_type_param_path"
-    default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/Analytical.param.yaml"
-  />
-  <arg name="motion_velocity_planner_boundary_departure_prevention_module_param_path" default="$(var motion_config_path)/motion_velocity_planner/boundary_departure_prevention.param.yaml"/>
-  <arg name="motion_velocity_planner_launch_modules" default="[autoware::motion_velocity_planner::experimental::BoundaryDeparturePreventionModule]"/>
 
   <group>
     <push-ros-namespace namespace="planning"/>
@@ -96,6 +80,7 @@
           <push-ros-namespace namespace="neural_network_based_planner"/>
           <include file="$(find-pkg-share autoware_diffusion_planner)/launch/diffusion_planner.launch.xml">
             <arg name="diffusion_planner_param_path" value="$(var diffusion_planner_param_path)"/>
+            <arg name="vehicle_info_param_path" value="$(var vehicle_param_file)"/>
             <arg name="input_odometry" value="/localization/kinematic_state"/>
             <arg name="input_acceleration" value="/localization/acceleration"/>
             <arg name="input_route" value="/planning/mission_planning/route"/>
@@ -128,7 +113,7 @@
             <arg name="output_trajectories" value="$(var diffusion_optimizer_output_topic)"/>
             <arg name="jerk_filtered_smoother_param_path" value="$(var jerk_filtered_smoother_param_path)"/>
             <arg name="velocity_smoother_param_path" value="$(var velocity_smoother_param_path)"/>
-            <arg name="common_smoother_param_path" value="$(var common_smoother_param_path)"/>
+            <arg name="common_param_path" value="$(var common_smoother_param_path)"/>
             <arg name="elastic_band_param_path" value="$(var elastic_band_param_path)"/>
             <arg name="trajectory_point_fixer_param_path" value="$(var trajectory_point_fixer_param_path)"/>
             <arg name="trajectory_extender_param_path" value="$(var trajectory_extender_param_path)"/>
@@ -137,6 +122,7 @@
             <arg name="trajectory_velocity_optimizer_param_path" value="$(var trajectory_velocity_optimizer_param_path)"/>
             <arg name="trajectory_kinematic_feasibility_enforcer_param_path" value="$(var trajectory_kinematic_feasibility_enforcer_param_path)"/>
             <arg name="trajectory_mpt_optimizer_param_path" value="$(var trajectory_mpt_optimizer_param_path)"/>
+            <arg name="max_velocity" value="$(var trajectory_optimizer_max_velocity_mps)"/>
           </include>
 
           <!-- trajectory dummy gate (verification or debug only) -->
@@ -162,7 +148,7 @@
             <arg name="input_acceleration" value="/localization/acceleration"/>
             <arg name="input_objects" value="$(var input_objects_topic_name)"/>
             <arg name="input_pointcloud" value="$(var input_pointcloud_topic_name)"/>
-            <arg name="output_candidate_trajectories" value="/planning/generator/candidate_trajectories"/>
+            <arg name="output_candidate_trajectories" value="/planning/generator/minimum_rule_based/candidate_trajectories"/>
           </include>
         </group>
       </group>
@@ -172,10 +158,11 @@
     <group>
       <push-ros-namespace namespace="trajectory_selector"/>
       <include file="$(find-pkg-share autoware_trajectory_selector)/launch/trajectory_selector.launch.xml">
+        <arg name="trajectory_selector_param_path" value="$(var trajectory_selector_param_path)"/>
         <arg name="trajectory_concatenator_param_path" value="$(var trajectory_concatenator_param_path)"/>
         <arg name="trajectory_validator_param_path" value="$(var trajectory_validator_param_path)"/>
         <arg name="input_generative_trajectories" value="/planning/generator/candidate_trajectories"/>
-        <!-- <arg name="input_backup_trajectories" value=""/> -->
+        <arg name="input_backup_trajectories" value="/planning/generator/minimum_rule_based/candidate_trajectories"/>
         <arg name="output_trajectories" value="/planning/trajectory_selector/validator/candidate_trajectories"/>
         <arg name="input_vector_map" value="/map/vector_map"/>
         <arg name="input_odometry" value="/localization/kinematic_state"/>
@@ -221,30 +208,6 @@
       </include>
     </group>
 
-    <!-- boundary departure module of motion velocity planner for diagnostics -->
-    <node pkg="autoware_motion_velocity_planner" exec="autoware_motion_velocity_planner_node" name="motion_velocity_planner" output="screen">
-      <remap from="~/input/trajectory" to="$(var input_trajectory_topic)"/>
-      <remap from="~/input/vector_map" to="/map/vector_map"/>
-      <remap from="~/input/vehicle_odometry" to="/localization/kinematic_state"/>
-      <remap from="~/input/accel" to="/localization/acceleration"/>
-      <remap from="~/input/dynamic_objects" to="$(var input_objects_topic_name)"/>
-      <remap from="~/input/no_ground_pointcloud" to="$(var input_pointcloud_topic_name)"/>
-      <remap from="~/input/traffic_signals" to="/perception/traffic_light_recognition/traffic_signals"/>
-      <remap from="~/input/virtual_traffic_light_states" to="/perception/virtual_traffic_light_states"/>
-      <remap from="~/input/occupancy_grid" to="/perception/occupancy_grid_map/map"/>
-      <remap from="~/output/trajectory" to="$(var output_trajectory_topic)"/>
-
-      <param name="launch_modules" value="$(var motion_velocity_planner_launch_modules)"/>
-      <param from="$(var common_param_path)"/>
-      <param from="$(var vehicle_param_file)"/>
-      <param from="$(var nearest_search_param_path)"/>
-      <param from="$(var velocity_smoother_param_path)"/>
-      <param from="$(var motion_velocity_planner_velocity_smoother_type_param_path)"/>
-      <param from="$(var motion_velocity_planner_param_path)" allow_substs="true"/>
-      <param from="$(var motion_velocity_planner_boundary_departure_prevention_module_param_path)"/>
-      <param name="pointcloud_preprocessing.downsample_by_voxel_grid.enable_downsample" value="false"/>
-    </node>
-
     <!-- hazard lights selector -->
     <group>
       <include file="$(find-pkg-share autoware_hazard_lights_selector)/launch/hazard_lights_selector.launch.xml"/>
@@ -261,10 +224,6 @@
     <!-- mission remaining distance and time calculator -->
     <group if="$(var launch_remaining_distance_time_calculator)">
       <include file="$(find-pkg-share autoware_remaining_distance_time_calculator)/launch/remaining_distance_time_calculator.launch.xml"/>
-    </group>
-
-    <group if="$(var launch_proximity_hazard_object_checker)">
-      <include file="$(find-pkg-share autoware_proximity_hazard_object_checker)/launch/proximity_hazard_object_checker.launch.xml"/>
     </group>
   </group>
 </launch>

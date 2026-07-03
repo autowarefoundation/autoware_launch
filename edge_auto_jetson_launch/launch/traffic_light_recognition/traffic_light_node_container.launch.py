@@ -18,10 +18,12 @@ from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PathJoinSubstitution
 from launch.substitutions import PythonExpression
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
+from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
@@ -174,6 +176,20 @@ def generate_launch_description():
                     ),
                     {
                         "build_only": False,
+                        "roi_remap_path": PathJoinSubstitution(
+                            [
+                                FindPackageShare("edge_auto_jetson_launch"),
+                                "config",
+                                "traffic_light_roi_label_remap.csv",
+                            ]
+                        ),
+                        "roi_to_semantic_segmentation_remap_path": PathJoinSubstitution(
+                            [
+                                FindPackageShare("edge_auto_jetson_launch"),
+                                "config",
+                                "roi_to_semseg_label_remap.yaml",
+                            ]
+                        ),
                     },
                 ],
                 remappings=[
@@ -215,6 +231,13 @@ def generate_launch_description():
                     ),
                     {
                         "build_only": False,
+                        "roi_remap_path": PathJoinSubstitution(
+                            [
+                                FindPackageShare("edge_auto_jetson_launch"),
+                                "config",
+                                "traffic_light_roi_label_remap.csv",
+                            ]
+                        ),
                     },
                 ],
                 remappings=[

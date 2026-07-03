@@ -215,6 +215,7 @@
       rosbag_status: default
       "dssad_packer: dssad_record_status": default
       "bagkeeper: event_record_status": default
+      "logpacker_state": default
 
       ## /system/004-bagpacker_disk_space
       disk1_status: default

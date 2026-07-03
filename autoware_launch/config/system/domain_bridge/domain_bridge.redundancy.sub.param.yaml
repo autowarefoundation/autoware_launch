@@ -6,6 +6,20 @@ topics:
   /to_mrm/planning/scenario_planning/trajectory:
     type: autoware_planning_msgs/msg/Trajectory
     remap: /main/planning/scenario_planning/trajectory
+  # in-lane MRM planner inputs (domain 1 -> domain 2)
+  /map/vector_map:
+    type: autoware_map_msgs/msg/LaneletMapBin
+    remap: /main/map/vector_map
+    qos:
+      durability: transient_local
+  /planning/mission_planning/route:
+    type: autoware_planning_msgs/msg/LaneletRoute
+    remap: /main/planning/mission_planning/route
+    qos:
+      durability: transient_local
+  /perception/object_recognition/objects:
+    type: autoware_perception_msgs/msg/PredictedObjects
+    remap: /main/perception/object_recognition/objects
   /to_mrm/localization/pose_with_covariance:
     type: geometry_msgs/msg/PoseWithCovarianceStamped
     remap: /main/localization/pose_with_covariance
@@ -126,10 +140,19 @@ topics:
     type: j6_interface_msgs/msg/B0Command
     reversed: True
     remap: /sub/can/command/b0_command
-  /planning/topic_relay_controller/trajectory:
+  # in-lane MRM planner outputs (domain 2 -> domain 1, for logging)
+  /planning/in_lane_mrm_planner/output/trajectory:
     type: autoware_planning_msgs/msg/Trajectory
     reversed: True
-    remap: /sub/planning/topic_relay_controller/trajectory
+    remap: /sub/planning/in_lane_mrm_planner/output/trajectory
+  /planning/in_lane_mrm_planner/input/trigger:
+    type: std_msgs/msg/Bool
+    reversed: True
+    remap: /sub/planning/in_lane_mrm_planner/input/trigger
+  /planning/in_lane_mrm_planner/debug/planner_status:
+    type: autoware_internal_debug_msgs/msg/Float32MultiArrayStamped
+    reversed: True
+    remap: /sub/planning/in_lane_mrm_planner/debug/planner_status
   /main/localization/pose_with_covariance:
     type: geometry_msgs/msg/PoseWithCovarianceStamped
     reversed: True

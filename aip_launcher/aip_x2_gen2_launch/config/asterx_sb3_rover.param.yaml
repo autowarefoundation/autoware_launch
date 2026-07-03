@@ -142,3 +142,7 @@
         # For GNSS Rx only
         gpgsa: false
         gpgsv: false
+
+    login:
+      user: "GnssUser"
+      password: "gnss.user"

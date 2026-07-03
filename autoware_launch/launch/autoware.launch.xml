@@ -26,6 +26,7 @@
   <arg name="launch_control" default="true" description="launch control"/>
   <arg name="launch_api" default="true" description="launch api"/>
   <arg name="launch_v2x" default="true" description="launch V2X"/>
+  <arg name="launch_proximity_hazard_checker" default="true" description="launch proximity hazard object checker"/>
   <arg name="launch_l4_toolkit" default="true" description="launch L4 Toolkit"/>
   <arg name="launch_redundancy" default="true" description="launch redundancy"/>
   <!-- Global parameters -->
@@ -196,6 +197,11 @@
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
       <arg name="location" value="$(var v2x_location)"/>
     </include>
+  </group>
+
+  <!-- Proximity Hazard Object Checker -->
+  <group if="$(var launch_proximity_hazard_checker)">
+    <include file="$(find-pkg-share autoware_proximity_hazard_checker)/launch/proximity_hazard_checker.launch.xml"/>
   </group>
 
   <!-- L4 Toolkit -->

@@ -1,0 +1,12 @@
+/**:
+  ros__parameters:
+    ctrl_period: 0.03
+    timeout_thr_sec: 0.5
+    # NOTE: in-lane MRM planner emits an ego-prefix whose time_from_start is 0 for
+    # all points up to ego (autoware_motion_utils::calculate_time_from_start), so the
+    # MPC temporal validity check (strictly-increasing time_from_start) rejects it as
+    # "Trajectory is invalid!!". Use spatial (distance-based) reference for MRM until
+    # the planner assigns strictly-increasing time_from_start to the ego-prefix.
+    trajectory_reference_mode: "spatial" # "spatial" or "temporal"
+    enable_control_cmd_horizon_pub: true  # required for use_vehicle_adaptor in raw_vehicle_cmd_converter
+    cyclic_message_timeout_thr_sec: 0.9

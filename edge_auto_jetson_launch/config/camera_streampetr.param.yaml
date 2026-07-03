@@ -1,0 +1,53 @@
+/**:
+  ros__parameters:
+    debug_mode: true # Whether to enable debug mode, which may include additional logging
+    max_camera_time_diff: 0.15 #Maximum allowed time difference for camera image sync in seconds
+    multithreading: false # Whether to use multithreading for handling image callbacks
+    anchor_camera_id: 0 # Camera id of the anchor topic. The forward pass begins once every anchor camera topic reaches.
+    is_distorted_image: true # Whether the input images are distorted
+    ego_mask.fill_value_bgr: [0.0, 0.0, 0.0]
+    camera_mask.camera_ids: [8, 6, 10, 7, 9]
+    camera_0_mask:
+      enable: false
+      mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # points to construct the polygon, [x1, y2, x2, y2, x3, y3...]
+      normalized: false
+    camera_1_mask:
+      enable: false
+      mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      normalized: false
+    camera_2_mask:
+      enable: false
+      mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      normalized: false
+    camera_3_mask:
+      enable: false
+      mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      normalized: false
+    camera_4_mask:
+      enable: false
+      mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      normalized: false
+    camera_5_mask:
+      enable: false
+      mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      normalized: false
+    camera_6_mask:
+      enable: true
+      mask: [0.64, 1.0, 0.73, 0.65, 0.8, 0.65, 0.79, 0.74, 0.97, 0.83, 1.0, 0.73, 1.0, 1.0]
+      normalized: true
+    camera_7_mask:
+      enable: true
+      mask: [0.19, 1.0, 0.21, 0.89, 0.38, 0.89, 0.39, 1.0]
+      normalized: true
+    camera_8_mask:
+      enable: false
+      mask: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      normalized: false
+    camera_9_mask:
+      enable: true
+      mask: [0.88, 0.0, 1.0, 0.0, 1.0, 1.0, 0.8, 1.0]
+      normalized: true
+    camera_10_mask:
+      enable: true
+      mask: [0.0, 0.0, 0.11, 0.0, 0.2, 1.0, 0.0, 1.0]
+      normalized: true
