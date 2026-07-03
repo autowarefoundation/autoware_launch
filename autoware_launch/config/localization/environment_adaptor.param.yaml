@@ -20,13 +20,8 @@
       environment_id: 2
 
     # --- pose covariance ---
-    default_output_pose_covariance:
-      [0.0225, 0.0,   0.0,   0.0,      0.0,      0.0,
-       0.0,   0.0225, 0.0,   0.0,      0.0,      0.0,
-       0.0,   0.0,   0.0225, 0.0,      0.0,      0.0,
-       0.0,   0.0,   0.0,   0.000625, 0.0,      0.0,
-       0.0,   0.0,   0.0,   0.0,      0.000625, 0.0,
-       0.0,   0.0,   0.0,   0.0,      0.0,      0.000625]
+    # When no environment_<id>_output_pose_covariance is defined for the classified
+    # environment_id, the input pose covariance is passed through unchanged.
 
     environment_1_output_pose_covariance:
       [1.0, 0.0,  0.0,   0.0,      0.0,      0.0,
