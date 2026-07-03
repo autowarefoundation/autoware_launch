@@ -2,7 +2,7 @@
   ros__parameters:
     plugins_path: $(find-pkg-share autoware_tensorrt_plugins)/plugins/libautoware_tensorrt_plugins.so
     model:
-      type: "multi_step"
+      type: "single_step"
       backend: "tensorrt" # "tensorrt" "ort_cpu" "ort_cuda" "ort_tensorrt"
       precision: "fp32"
       use_cuda_graph: false
