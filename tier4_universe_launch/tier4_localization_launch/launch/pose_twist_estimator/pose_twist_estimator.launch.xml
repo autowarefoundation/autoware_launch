@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="use_autoware_pose_covariance_modifier" default="false"/>
-  <arg name="use_autoware_covariance_selector" default="false"/>
-  <arg name="covariance_selector_param_path" default="$(find-pkg-share autoware_covariance_selector)/config/covariance_selector.param.yaml"/>
-  <arg name="use_autoware_velocity_scale_selector" default="true"/>
-  <arg name="velocity_scale_selector_param_path" default="$(find-pkg-share autoware_velocity_scale_selector)/config/velocity_scale_selector.param.yaml"/>
+  <arg name="use_autoware_environment_adaptor" default="true"/>
+  <arg name="environment_adaptor_param_path" default="$(find-pkg-share autoware_environment_adaptor)/config/environment_adaptor.param.yaml"/>
   <!-- only when running with a real vehicle, the pose_initializer judges the stop -->
   <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)" value="true"/>
   <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)" value="false"/>
@@ -27,6 +25,11 @@
   <let name="use_eagleye_twist" value="$(eval &quot;'eagleye' == '$(var twist_source)'&quot;)"/>
   <let name="use_gyro_odom_twist" value="$(eval &quot;'gyro_odom' == '$(var twist_source)'&quot;)"/>
 
+  <let name="effective_use_environment_adaptor" value="false" unless="$(var use_ndt_pose)"/>
+  <let name="effective_use_environment_adaptor" value="false" unless="$(var use_gyro_odom_twist)"/>
+  <let name="effective_use_environment_adaptor" value="$(var use_autoware_environment_adaptor)"
+       if="$(eval &quot;$(var use_ndt_pose) and $(var use_gyro_odom_twist)&quot;)"/>
+
   <!-- set initial pose -->
   <let name="user_defined_initial_pose/enable" value="$(eval &quot;len($(var initial_pose)) == 7&quot;)"/>
   <let name="user_defined_initial_pose/pose" value="$(var initial_pose)" if="$(var user_defined_initial_pose/enable)"/>
@@ -37,10 +40,10 @@
     <push-ros-namespace namespace="pose_estimator"/>
     <let
       name="ndt_output_pose_with_cov_topic_name"
-      if="$(eval &quot;'$(var use_autoware_pose_covariance_modifier)'=='true' or '$(var use_autoware_covariance_selector)'=='true'&quot;)"
+      if="$(eval &quot;'$(var use_autoware_pose_covariance_modifier)'=='true' or '$(var effective_use_environment_adaptor)'=='true'&quot;)"
       value="/localization/pose_estimator/ndt_scan_matcher/pose_with_covariance"
     />
-    <let name="ndt_output_pose_with_cov_topic_name" unless="$(eval &quot;'$(var use_autoware_pose_covariance_modifier)'=='true' or '$(var use_autoware_covariance_selector)'=='true'&quot;)" value="/localization/pose_estimator/pose_with_covariance"/>
+    <let name="ndt_output_pose_with_cov_topic_name" unless="$(eval &quot;'$(var use_autoware_pose_covariance_modifier)'=='true' or '$(var effective_use_environment_adaptor)'=='true'&quot;)" value="/localization/pose_estimator/pose_with_covariance"/>
     <include file="$(find-pkg-share tier4_localization_launch)/launch/pose_twist_estimator/ndt_scan_matcher.launch.xml">
       <arg name="output_pose_with_covariance_topic" value="$(var ndt_output_pose_with_cov_topic_name)"/>
     </include>
@@ -48,15 +51,6 @@
     <!-- Autoware Pose Covariance Modifier Node Launch -->
     <group if="$(var use_autoware_pose_covariance_modifier)">
       <include file="$(find-pkg-share autoware_pose_covariance_modifier)/launch/pose_covariance_modifier.launch.xml"/>
-    </group>
-
-    <!-- Autoware Covariance Selector Node Launch -->
-    <group if="$(var use_autoware_covariance_selector)">
-      <include file="$(find-pkg-share autoware_covariance_selector)/launch/covariance_selector.launch.xml">
-        <arg name="input/pose_with_covariance" value="/localization/pose_estimator/ndt_scan_matcher/pose_with_covariance"/>
-        <arg name="output/pose_with_covariance" value="/localization/pose_estimator/pose_with_covariance"/>
-        <arg name="param_file" value="$(var covariance_selector_param_path)"/>
-      </include>
     </group>
   </group>
 
@@ -74,11 +68,19 @@
   <!-- Gyro Odometer Launch (as twist estimator) -->
   <group if="$(var use_gyro_odom_twist)">
     <push-ros-namespace namespace="twist_estimator"/>
-    <let name="effective_use_velocity_scale_selector" value="false" unless="$(var use_ndt_pose)"/>
-    <let name="effective_use_velocity_scale_selector" value="$(var use_autoware_velocity_scale_selector)" if="$(var use_ndt_pose)"/>
     <include file="$(find-pkg-share tier4_localization_launch)/launch/pose_twist_estimator/gyro_odometer.launch.xml">
-      <arg name="use_autoware_velocity_scale_selector" value="$(var effective_use_velocity_scale_selector)"/>
-      <arg name="velocity_scale_selector_param_path" value="$(var velocity_scale_selector_param_path)"/>
+      <arg name="use_autoware_environment_adaptor" value="$(var effective_use_environment_adaptor)"/>
+    </include>
+  </group>
+
+  <!-- Environment Adaptor Launch (pose covariance + twist velocity scale) -->
+  <group if="$(var effective_use_environment_adaptor)">
+    <include file="$(find-pkg-share autoware_environment_adaptor)/launch/environment_adaptor.launch.xml">
+      <arg name="input/pose_with_covariance" value="/localization/pose_estimator/ndt_scan_matcher/pose_with_covariance"/>
+      <arg name="output/pose_with_covariance" value="/localization/pose_estimator/pose_with_covariance"/>
+      <arg name="input/twist_with_covariance" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
+      <arg name="output/twist_with_covariance" value="/localization/twist_estimator/twist_with_covariance_scaled"/>
+      <arg name="param_file" value="$(var environment_adaptor_param_path)"/>
     </include>
   </group>
 
