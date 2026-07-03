@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="use_autoware_pose_covariance_modifier" default="false"/>
-  <arg name="use_autoware_environment_adaptor" default="true"/>
+  <arg name="use_autoware_environment_adaptor" default="false"/>
   <arg name="environment_adaptor_param_path" default="$(find-pkg-share autoware_environment_adaptor)/config/environment_adaptor.param.yaml"/>
   <!-- only when running with a real vehicle, the pose_initializer judges the stop -->
   <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)" value="true"/>
