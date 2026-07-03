@@ -44,6 +44,5 @@
        0.0,   0.0,   0.0,   0.0,      0.000625, 0.0,
        0.0,   0.0,   0.0,   0.0,      0.0,      0.000625]
 
-    # Fallback when map polygon has no longitudinal_scale_factor attribute.
-    environment_1_longitudinal_scale_factor: 1.0
-    environment_2_longitudinal_scale_factor: 1.0
+    # The scale factor is read from the map polygon's longitudinal_scale_factor attribute.
+    # When a polygon has no such attribute, default_longitudinal_scale_factor is applied.
