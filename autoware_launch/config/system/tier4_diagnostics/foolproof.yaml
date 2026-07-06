@@ -64,8 +64,8 @@ units:
   - path: /foolproof/sub_ecu_in_lane_moderate_stop
     type: and
     list:
-      - { type: link, link: /foolproof/main/scheduling_settings_others }
-      - { type: link, link: /foolproof/main/scheduling_settings_autoware }
+      # - { type: link, link: /foolproof/main/scheduling_settings_others }
+      # - { type: link, link: /foolproof/main/scheduling_settings_autoware }
       - { type: link, link: /foolproof/main/autoware_node_alive }
       - { type: link, link: /foolproof/main/autoware_system_node_alive }
       - { type: link, link: /foolproof/perception1/recognition_node_alive }
@@ -229,20 +229,18 @@ units:
     # latch: 0.0
 
   # scheduling_settings
-  - path: /foolproof/main/scheduling_settings_others
-    type: diag
-    node: autoware_diagnostics_bridge_node_main
-    name: main_scheduling_settings_others
-    timeout: 3.0
-    # latch: 0.0
-
-  - path: /foolproof/main/scheduling_settings_autoware
-    type: diag
-    node: autoware_diagnostics_bridge_node_main
-    name: main_scheduling_settings_autoware
-    timeout: 3.0
-    # latch: 0.0
-
+  # - path: /foolproof/main/scheduling_settings_others
+  #   type: diag
+  #   node: autoware_diagnostics_bridge_node_main
+  #   name: main_scheduling_settings_others
+  #   timeout: 3.0
+  #   # latch: 0.0
+  # - path: /foolproof/main/scheduling_settings_autoware
+  #   type: diag
+  #   node: autoware_diagnostics_bridge_node_main
+  #   name: main_scheduling_settings_autoware
+  #   timeout: 3.0
+  #   # latch: 0.0
   - path: /foolproof/main/update_status_ota
     type: diag
     node: autoware_diagnostics_bridge_node_main

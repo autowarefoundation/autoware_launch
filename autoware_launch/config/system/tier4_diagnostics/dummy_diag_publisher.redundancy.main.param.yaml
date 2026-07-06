@@ -344,8 +344,8 @@
       "autoware_diagnostics_bridge_node_perception2: perception2_camera": default
       "autoware_diagnostics_bridge_node_perception1: perception1_mgbe1-ready": default
       "autoware_diagnostics_bridge_node_perception2: perception2_mgbe1-ready": default
-      "autoware_diagnostics_bridge_node_main: main_scheduling_settings_others": default
-      "autoware_diagnostics_bridge_node_main: main_scheduling_settings_autoware": default
+      # "autoware_diagnostics_bridge_node_main: main_scheduling_settings_others": default
+      # "autoware_diagnostics_bridge_node_main: main_scheduling_settings_autoware": default
       "autoware_diagnostics_bridge_node_addon: addon_recognition_node_alive": default
       "autoware_diagnostics_bridge_node_addon: addon_camera_driver_node_alive": default
 
