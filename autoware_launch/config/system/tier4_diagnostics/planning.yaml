@@ -53,6 +53,7 @@ units:
       - { type: link, link: /planning/011-trajectory_steering_rate_validation-error }
       - { type: link, link: /planning/012-trajectory_velocity_deviation_validation-error }
       # - { type: link, link: /planning/021-incoming_message_timeout }
+      - { type: link, link: /planning/020-boundary_departure-error }
       - { type: link, link: /planning/013-trajectory_shift_validation-error }
       - { type: link, link: /planning/014-trajectory_validation_yaw_deviation-error }
       - { type: link, link: /planning/017-trajectory_distance_deviation_validation-error }
@@ -60,7 +61,6 @@ units:
   - path: /planning/in_lane_emergency_stop
     type: and
     list:
-      - { type: link, link: /planning/020-boundary_departure-error }
       - { type: link, link: /planning/016-trajectory_validation_distance_deviation-error }
 
   - path: /planning/sub_ecu_in_lane_moderate_stop
@@ -294,10 +294,10 @@ units:
 
   - path: /planning/020-boundary_departure
     type: diag
-    node: motion_velocity_planner
-    name: boundary_departure
+    node: trajectory_selector_node
+    name: trajectory_validator_uncrossable_boundary_departure_danger
     timeout: 3.0
-    latch: 0.0
+    # latch: 0.0
 
   - path: /planning/021-incoming_message_timeout
     type: diag
