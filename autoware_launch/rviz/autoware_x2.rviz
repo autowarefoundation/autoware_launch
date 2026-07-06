@@ -4978,7 +4978,7 @@ Visualization Manager:
         Value: /planning/trajectory_selector/trajectory_selector_node/debug/validator/markers/collision_check_filter
       Value: true
     - Class: rviz_default_plugins/MarkerArray
-      Enabled: false
+      Enabled: true
       Name: TrajectoryValidator(UncrossableBoundaryDepartureFilter)
       Namespaces:
         {}
