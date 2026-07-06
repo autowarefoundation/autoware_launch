@@ -50,7 +50,7 @@
       arrived_distance_threshold: 0.5 # threshold to check if the ego vehicle has arrived at the stop point [m]
 
       objects:
-        object_types: ["car", "truck", "bus", "trailer", "motorcycle", "bicycle", "pedestrian"] # object types to consider for obstacle stop
+        object_types: ["car", "truck", "bus", "trailer", "motorcycle", "bicycle", "pedestrian", "hazard"] # object types to consider for obstacle stop
         max_velocity_th: 3.0     # maximum velocity threshold for target object [m/s]
         stopped_velocity_th: 0.3 # velocity threshold for target object to be considered as stopped [m/s]
         max_lateral_velocity_th: 1.0 # [m/s] max lateral velocity (w.r.t ego traj) to consider for obstacle stop
@@ -89,7 +89,7 @@
       enable: true
       use_objects: true
       use_pointcloud: false
-      object_types: ["car", "truck", "bus", "trailer", "motorcycle", "bicycle", "pedestrian", "unknown"] # object types to consider for surround obstacle stop
+      object_types: ["car", "truck", "bus", "trailer", "motorcycle", "bicycle", "pedestrian", "hazard", "animal", "unknown"] # object types to consider for surround obstacle stop
       front_distance_th:
         car: 0.5
         truck: 0.5
@@ -98,6 +98,8 @@
         motorcycle: 0.5
         bicycle: 0.5
         pedestrian: 0.5
+        hazard: 0.5
+        animal: 0.5
         unknown: 0.5
         pointcloud: 0.5
       side_distance_th:
@@ -108,6 +110,8 @@
         motorcycle: 1.0
         bicycle: 1.0
         pedestrian: 1.0
+        hazard: 0.5
+        animal: 0.5
         unknown: 0.5
         pointcloud: 0.5
       back_distance_th:
@@ -118,6 +122,8 @@
         motorcycle: 0.5
         bicycle: 0.5
         pedestrian: 0.5
+        hazard: 0.5
+        animal: 0.5
         unknown: 0.5
         pointcloud: 0.5
       hysteresis_distance: 0.1 # [m]
