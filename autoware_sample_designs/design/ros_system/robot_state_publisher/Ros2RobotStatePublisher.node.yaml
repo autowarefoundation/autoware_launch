@@ -13,13 +13,15 @@ launch:
 
 # interfaces
 subscribers:
-  - name: robot_description
-    message_type: std_msgs/msg/String
   - name: joint_states
     message_type: sensor_msgs/msg/JointState
+    remap_target: joint_states
+    global: /joint_states
 publishers:
   - name: robot_description
     message_type: std_msgs/msg/String
+    remap_target: robot_description
+    global: /robot_description
   - name: tf
     message_type: tf2_msgs/msg/TFMessage
     global: /tf

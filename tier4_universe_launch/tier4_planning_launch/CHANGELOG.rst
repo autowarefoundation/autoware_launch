@@ -2,6 +2,35 @@
 Changelog for package tier4_planning_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.52.0 (2026-06-30)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(diffusion_planner): update launch file (`#1854 <https://github.com/autowarefoundation/autoware_launch/issues/1854>`_)
+  update arg names for modifier, define input topics args
+* fix(neural_net_planner): add temporal MPT optimizer config for trajec… (`#1878 <https://github.com/autowarefoundation/autoware_launch/issues/1878>`_)
+  fix(neural_net_planner): add temporal MPT optimizer config for trajectory_optimizer
+  The autoware_trajectory_optimizer node now declares use_temporal_mpt_optimizer
+  as a statically typed parameter, so it crashes on startup
+  (UninitializedStaticallyTypedParameterException) when launched with the
+  autoware_launch config, which did not provide it.
+  - Add use_temporal_mpt_optimizer: false to trajectory_optimizer.param.yaml
+  - Add trajectory_temporal_mpt_optimizer.param.yaml plugin config
+  - Wire trajectory_temporal_mpt_optimizer_param_path through the launch chain
+* feat: add launch params and configs for direction_change module (`#1857 <https://github.com/autowarefoundation/autoware_launch/issues/1857>`_)
+  * feat: add launch params and configs for direction_change module
+  * feat: add launch param in default_preset.yaml
+  ---------
+* fix(tier4_planning_launch): rename virtual traffic light state (`#1827 <https://github.com/autowarefoundation/autoware_launch/issues/1827>`_)
+  feat(tier4_planning_launch): rename virtual traffic light state input
+* fix: assign acados-prepended `LD_LIBRARY_PATH` for motion planning container (`#1842 <https://github.com/autowarefoundation/autoware_launch/issues/1842>`_)
+* chore: sync files (`#1338 <https://github.com/autowarefoundation/autoware_launch/issues/1338>`_)
+  * chore: sync files
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: github-actions <github-actions@github.com>
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* Contributors: Go Sakayori, Taeseung Sohn, Takagi, Isamu, awf-autoware-bot[bot], emmeyteja, github-actions, mkquda
+
 0.51.0 (2026-05-01)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

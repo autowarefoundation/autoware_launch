@@ -2,6 +2,79 @@
 Changelog for package tier4_perception_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.52.0 (2026-06-30)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* fix(merger_topic): mis-aligning topic when using semantic_segmentation without multi_channel_tracker (`#1895 <https://github.com/autowarefoundation/autoware_launch/issues/1895>`_)
+  * fix(merger_topic): mis-aligning topic when using semantic_segmentation without multi_channel_tracker
+  * chore: rename for readablity
+  ---------
+* fix(ptv3): model path (`#1890 <https://github.com/autowarefoundation/autoware_launch/issues/1890>`_)
+* chore: add maintainer (`#1880 <https://github.com/autowarefoundation/autoware_launch/issues/1880>`_)
+* fix(tier4_perception_launch): occupancy_grid_map input topic when ptv3 used (`#1871 <https://github.com/autowarefoundation/autoware_launch/issues/1871>`_)
+  * fix(tier4_perception_launch): occupancy_grid_map input topic when ptv3 used
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* fix: remove unnecessary dependency (`#1870 <https://github.com/autowarefoundation/autoware_launch/issues/1870>`_)
+* feat: add semantic segmentation pipeline option (`#1865 <https://github.com/autowarefoundation/autoware_launch/issues/1865>`_)
+  * fix: ground segmentation launch
+  * fix: missing dependencies and param
+  * fix: ptv3 topic
+  * fix: euclidean pipeline
+  * feat: add use_roi_detected_object_validator options
+  * replace with label_based_euclidean
+  * revert to bevfusion
+  * fix: aligning with updated EC
+  * fix: add alpha merger option
+  * fix: missing toggle condition
+  * disable irregular_object_detector
+  * fix: camera_lidar_radar merger
+  * update label_based_ec param
+  * revert to v4.4.0  pipeline option
+  * fix(merger launch): missing toggle condition
+  * style(pre-commit): autofix
+  * style(pre-commit): autofix
+  * remove voxel_downsample and pc validation
+  * RDDR-353 Enable irregular object detection (`#2379 <https://github.com/autowarefoundation/autoware_launch/issues/2379>`_)
+  * update config for 2 new classes
+  * typo
+  * style(pre-commit): autofix
+  * refactor
+  * refactor
+  * fix data_path
+  * fix: adjust combination when ptv3 used
+  * fix: remove fixed option when using ptv3
+  * remove object filter
+  * Update autoware_launch/config/perception/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml
+  Co-authored-by: Taekjin LEE <technolojin@gmail.com>
+  * fix: add semseg pipeline option for lidar perception mode
+  ---------
+  Co-authored-by: ktro2828 <60615504+ktro2828@users.noreply.github.com>
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+  Co-authored-by: Taekjin LEE <technolojin@gmail.com>
+* feat(perception): update perception pipeline to remove shape estimation (`#1846 <https://github.com/autowarefoundation/autoware_launch/issues/1846>`_)
+  * fix(perception): update input channels and ground segmentation parameters for improved tracking and detection
+  - Changed associator type from 'bev' to 'polar' in multi-object tracker input channels for better performance.
+  - Adjusted ground segmentation parameters: increased margin_max_z from 0.0 to 1.0 and detection_range_z_max from 2.5 to 3.5 to enhance ground detection capabilities.
+  * feat(Tier4PlanningWrapper): add data_path parameter for enhanced configuration flexibility
+  - Introduced a new parameter 'data_path' with a default value to improve the configuration options for the Tier4PlanningWrapper node.
+  - This addition allows for better management of data paths within the planning framework.
+  * refactor(perception): remove deprecated tracking modules and streamline object recognition configuration
+  - Eliminated unused tracking modules and parameters from ObjectRecognition and ObjectDetection configurations to enhance clarity and reduce complexity.
+  - Updated connections in LidarClustering to reflect the removal of obsolete components, ensuring a more efficient data flow.
+  refactor(parameter_set): streamline perception parameters by removing unused nodes and updating node paths
+  - Removed the unused shape_estimation node from the perception parameter set to enhance clarity.
+  - Updated the path for the detected_object_feature_remover node to reflect its new location within the clustering module.
+  fix(perception): update pointcloud_map_filter node path for improved object recognition
+  * fix(perception): update pointcloud_map_filter node to use voxel_grid_downsample_filter
+  * fix(perception): update source URL in input_channels.param.yaml for accuracy
+  * fix(perception): update max_z and margin_max_z parameters for improved segmentation accuracy
+  * refactor(perception): remove unused parameters from crop_box_filter and streamline sample_system_perception configuration
+  * fix(perception): disable detection_by_tracker function in perception launch configuration
+  ---------
+* Contributors: Ryohsuke Mitsudome, Taekjin LEE, badai nguyen, github-actions
+
 0.51.0 (2026-05-01)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

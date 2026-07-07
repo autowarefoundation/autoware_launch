@@ -2,6 +2,21 @@
 Changelog for package tier4_map_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.52.0 (2026-06-30)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat: add parameters to support get_selected_lanelet2_map interface (`#1813 <https://github.com/autowarefoundation/autoware_launch/issues/1813>`_)
+  * feat: add parameters to support get_selected_lanelet2_map interface
+  * rename topic names and parameter names
+  * set default to false
+  ---------
+  Co-authored-by: Ryohsuke Mitsudome <ryoshuke.mitsudome@tier4.jp>
+* fix(tier4_map_launch): add `allow_substs="true"` to map launcher parameter including (`#1821 <https://github.com/autowarefoundation/autoware_launch/issues/1821>`_)
+  * add allow substs=true to map launcher
+  * review response to remove now-unnecessary params
+  ---------
+* Contributors: Ryohsuke Mitsudome, Taeseung Sohn, github-actions
+
 0.51.0 (2026-05-01)
 -------------------
 
