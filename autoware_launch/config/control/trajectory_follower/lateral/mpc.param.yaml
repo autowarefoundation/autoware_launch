@@ -59,12 +59,19 @@
 
     # stop state: steering command is kept in the previous value in the stop state.
     stop_state_entry_ego_speed: 0.001
-    stop_state_entry_target_speed: 0.001
+    stop_state_entry_target_speed: 0.52 # larger then 0.5
     converged_steer_rad: 0.1
-    keep_steer_control_until_converged: false
+    keep_steer_control_until_converged: true # so that the vehicle steering can fall back to zero after stopping.
     new_traj_duration_time: 1.0
     new_traj_end_dist: 0.3
     mpc_converged_threshold_rps:  0.01 # threshold of mpc convergence check [rad/s]
+    stop_state_steer_hold_duration: 1.0
+
+    # reference-confidence steer slew limit (post-MPC, outside QP)
+    enable_confidence_steer_slew_limit: true
+    reference_confidence_L_ahead_min: 0.5
+    reference_confidence_L_ahead_ref: 1.0
+    steer_slew_rate_min_rad_s: 0.02
 
     # steer offset
     steering_offset:
