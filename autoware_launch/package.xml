@@ -41,6 +41,7 @@
   <exec_depend>autoware_remaining_distance_time_calculator</exec_depend>
   <exec_depend>autoware_reset_service_caller</exec_depend>
   <exec_depend>autoware_reset_service_divider</exec_depend>
+  <exec_depend>autoware_speed_scale_estimator</exec_depend>
   <exec_depend>autoware_stop_filter</exec_depend>
   <exec_depend>autoware_topic_relay_controller</exec_depend>
   <exec_depend>autoware_topic_state_monitor</exec_depend>
