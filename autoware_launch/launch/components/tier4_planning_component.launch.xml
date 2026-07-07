@@ -27,6 +27,7 @@
     <let name="optimizer_plugins_config_path" value="$(var neural_net_planner_config_path)/trajectory_optimizer_plugins"/>
     <include file="$(find-pkg-share autoware_launch)/launch/e2e_components/diffusion_planner.launch.xml">
       <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
 
       <!-- Input topic parameters -->

@@ -1,6 +1,7 @@
 <launch>
   <!-- planning module -->
   <!-- diffusion planner -->
+  <arg name="vehicle_model" default="sample_vehicle"/>
   <arg name="diffusion_planner_param_path"/>
   <arg name="vehicle_param_file"/>
 
@@ -79,6 +80,7 @@
         <group unless="$(var disable_diffusion_planner_node)">
           <push-ros-namespace namespace="neural_network_based_planner"/>
           <include file="$(find-pkg-share autoware_diffusion_planner)/launch/diffusion_planner.launch.xml">
+            <arg name="vehicle_model" value="$(var vehicle_model)"/>
             <arg name="diffusion_planner_param_path" value="$(var diffusion_planner_param_path)"/>
             <arg name="vehicle_info_param_path" value="$(var vehicle_param_file)"/>
             <arg name="input_odometry" value="/localization/kinematic_state"/>
