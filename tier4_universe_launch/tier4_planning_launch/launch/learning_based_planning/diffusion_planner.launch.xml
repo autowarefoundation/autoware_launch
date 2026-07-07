@@ -49,7 +49,7 @@
         <arg name="output_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
         <arg name="output_turn_indicators" value="/planning/turn_indicators_cmd"/>
       </include>
-      <include file="$(find-pkg-share autoware_trajectory_modifier)/launch/trajectory_modifier.launch.xml">
+      <include file="$(find-pkg-share autoware_trajectory_processor)/launch/trajectory_modifier.launch.xml">
         <arg name="trajectory_modifier_param_path" value="$(var trajectory_modifier_param_path)"/>
         <arg name="input_candidate_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
         <arg name="output_candidate_trajectories" value="/planning/generator/diffusion_planner/modified_candidate_trajectories"/>
@@ -58,7 +58,7 @@
         <arg name="input_objects" value="$(var input_objects_topic_name)"/>
         <arg name="input_pointcloud" value="$(var input_pointcloud_topic_name)"/>
       </include>
-      <include file="$(find-pkg-share autoware_trajectory_optimizer)/launch/trajectory_optimizer.launch.xml">
+      <include file="$(find-pkg-share autoware_trajectory_processor)/launch/trajectory_optimizer.launch.xml">
         <arg name="trajectory_optimizer_param_path" value="$(var trajectory_optimizer_param_path)"/>
         <arg name="input_trajectories" value="/planning/generator/diffusion_planner/modified_candidate_trajectories"/>
         <arg name="output_traj" value="/planning/trajectory_generator/trajectory"/>
