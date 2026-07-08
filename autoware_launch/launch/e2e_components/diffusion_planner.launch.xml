@@ -92,7 +92,6 @@
             <arg name="input_turn_indicators" value="/vehicle/status/turn_indicators_status"/>
             <arg name="debug/output_traffic_signal" value="/planning/scenario_planning/lane_driving/behavior_planning/debug/traffic_signal"/>
             <arg name="output_trajectories" value="$(var diffusion_candidate_trajectories_topic)"/>
-            <arg name="output_turn_indicators" value="/planning/turn_indicators_cmd"/>
           </include>
         </group>
         <group>
@@ -182,6 +181,7 @@
       <include file="$(find-pkg-share autoware_trajectory_adapter)/launch/trajectory_adapter.launch.xml">
         <arg name="input_trajectories" value="/planning/trajectory_selector/ranker/scored_trajectories"/>
         <arg name="output_trajectory" value="/planning/trajectory"/>
+        <arg name="output_turn_indicators" value="/planning/turn_indicators_cmd"/>
       </include>
     </group>
 
