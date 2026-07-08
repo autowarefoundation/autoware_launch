@@ -103,13 +103,14 @@
     </group>
 
     <!-- Dummy Traffic Light Publisher (used when traffic light recognition is disabled, e.g. planning simulator) -->
-    <group if="$(var launch_dummy_traffic_light_publisher)">
+    <!-- TODO: enable this when other simulation modules are ready -->
+    <!-- <group if="$(var launch_dummy_traffic_light_publisher)">
       <group unless="$(var perception/enable_traffic_light)">
         <include file="$(find-pkg-share autoware_dummy_traffic_light_publisher)/launch/dummy_traffic_light_publisher.launch.xml">
           <arg name="mode" value="$(var dummy_traffic_light_mode)"/>
         </include>
       </group>
-    </group>
+    </group> -->
 
     <group unless="$(var scenario_simulation)">
       <!-- Occupancy Grid -->
