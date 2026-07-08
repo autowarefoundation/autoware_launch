@@ -13,39 +13,39 @@
   <arg name="map_projection_loader_param_path"/>
 
   <!-- select container type -->
-  <arg name="use_multithread" default="false"/>
-  <let name="container_type" value="component_container" unless="$(var use_multithread)"/>
-  <let name="container_type" value="component_container_mt" if="$(var use_multithread)"/>
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
 
   <group>
     <push-ros-namespace namespace="map"/>
 
-    <node_container pkg="rclcpp_components" exec="$(var container_type)" name="map_container" namespace="" output="both">
-      <composable_node pkg="autoware_map_loader" plugin="autoware::map_loader::PointCloudMapLoaderNode" name="pointcloud_map_loader">
-        <param from="$(var pointcloud_map_loader_param_path)" allow_substs="true"/>
-        <remap from="output/pointcloud_map" to="pointcloud_map"/>
-        <remap from="output/pointcloud_map_metadata" to="pointcloud_map_metadata"/>
-        <remap from="service/get_partial_pcd_map" to="/map/get_partial_pointcloud_map"/>
-        <remap from="service/get_differential_pcd_map" to="/map/get_differential_pointcloud_map"/>
-        <remap from="service/get_selected_pcd_map" to="/map/get_selected_pointcloud_map"/>
-      </composable_node>
+    <node pkg="autoware_map_loader" exec="autoware_pointcloud_map_loader" name="pointcloud_map_loader" output="both">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <param from="$(var pointcloud_map_loader_param_path)" allow_substs="true"/>
+      <remap from="output/pointcloud_map" to="pointcloud_map"/>
+      <remap from="output/pointcloud_map_metadata" to="pointcloud_map_metadata"/>
+      <remap from="service/get_partial_pcd_map" to="/map/get_partial_pointcloud_map"/>
+      <remap from="service/get_differential_pcd_map" to="/map/get_differential_pointcloud_map"/>
+      <remap from="service/get_selected_pcd_map" to="/map/get_selected_pointcloud_map"/>
+    </node>
 
-      <composable_node pkg="autoware_map_loader" plugin="autoware::map_loader::Lanelet2MapLoaderNode" name="lanelet2_map_loader">
-        <param from="$(var lanelet2_map_loader_param_path)" allow_substs="true"/>
-        <remap from="output/lanelet2_map" to="vector_map"/>
-        <remap from="output/lanelet2_map_metadata" to="/map/vector_map_metadata"/>
-        <remap from="service/get_selected_lanelet2_map" to="/map/get_selected_vector_map"/>
-      </composable_node>
+    <node pkg="autoware_map_loader" exec="autoware_lanelet2_map_loader" name="lanelet2_map_loader" output="both">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <param from="$(var lanelet2_map_loader_param_path)" allow_substs="true"/>
+      <remap from="output/lanelet2_map" to="vector_map"/>
+      <remap from="output/lanelet2_map_metadata" to="/map/vector_map_metadata"/>
+      <remap from="service/get_selected_lanelet2_map" to="/map/get_selected_vector_map"/>
+    </node>
 
-      <composable_node pkg="autoware_lanelet2_map_visualizer" plugin="autoware::lanelet2_map_visualizer::Lanelet2MapVisualizationNode" name="lanelet2_map_visualization">
-        <remap from="input/lanelet2_map" to="vector_map"/>
-        <remap from="output/lanelet2_map_marker" to="vector_map_marker"/>
-      </composable_node>
+    <node pkg="autoware_lanelet2_map_visualizer" exec="autoware_lanelet2_map_visualizer" name="lanelet2_map_visualization" output="both">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <remap from="input/lanelet2_map" to="vector_map"/>
+      <remap from="output/lanelet2_map_marker" to="vector_map_marker"/>
+    </node>
 
-      <composable_node pkg="autoware_map_tf_generator" plugin="autoware::map_tf_generator::VectorMapTFGeneratorNode" name="vector_map_tf_generator">
-        <param from="$(var map_tf_generator_param_path)"/>
-      </composable_node>
-    </node_container>
+    <node pkg="autoware_map_tf_generator" exec="autoware_vector_map_tf_generator" name="vector_map_tf_generator" output="both">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <param from="$(var map_tf_generator_param_path)"/>
+    </node>
 
     <node pkg="autoware_map_loader" exec="map_hash_generator" name="map_hash_generator">
       <param name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
