@@ -80,9 +80,9 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
         allow_substs=True,
     )
     traffic_light_whole_image_detector_ml_package_param = ParameterFile(
-        param_file=LaunchConfiguration(
-            "whole_image_detection/ml_package_param_path"
-        ).perform(context),
+        param_file=LaunchConfiguration("whole_image_detection/ml_package_param_path").perform(
+            context
+        ),
         allow_substs=True,
     )
     traffic_light_fine_detector_param = ParameterFile(
