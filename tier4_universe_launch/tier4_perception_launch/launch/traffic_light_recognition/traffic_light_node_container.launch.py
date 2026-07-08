@@ -79,6 +79,12 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
         param_file=LaunchConfiguration("yolox_traffic_light_detector_param_path").perform(context),
         allow_substs=True,
     )
+    traffic_light_whole_image_detector_ml_package_param = ParameterFile(
+        param_file=LaunchConfiguration(
+            "whole_image_detection/ml_package_param_path"
+        ).perform(context),
+        allow_substs=True,
+    )
     traffic_light_fine_detector_param = ParameterFile(
         param_file=LaunchConfiguration("traffic_light_fine_detector_param_path").perform(context),
         allow_substs=True,
@@ -267,6 +273,7 @@ def create_traffic_light_node_container(namespace, context, *args, **kwargs):
                 namespace=f"{namespace}/detection",
                 parameters=[
                     traffic_light_whole_image_detector_param,
+                    traffic_light_whole_image_detector_ml_package_param,
                     {
                         "build_only": False,
                         "label_path": LaunchConfiguration("whole_image_detection/label_path"),
@@ -361,6 +368,7 @@ def generate_launch_description():
     add_launch_arg("whole_image_detection/model_path")
     add_launch_arg("whole_image_detection/label_path")
     add_launch_arg("whole_image_detection/yolox_roi_label_remap_path")
+    add_launch_arg("whole_image_detection/ml_package_param_path")
     add_launch_arg("yolox_traffic_light_detector_param_path")
 
     # traffic_light_fine_detector
