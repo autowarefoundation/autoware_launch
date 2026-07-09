@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/a333d0e4529af5a6ec509b97140eda96b24295ba/planning/autoware_diffusion_planner/config/diffusion_planner.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/d5ff1d71b876924815503f6f037b89d1f28ea86a/planning/autoware_diffusion_planner/config/diffusion_planner.param.yaml
 
 /**:
   ros__parameters:
