@@ -499,6 +499,9 @@ system:
       - source: system/autoware_mrm_emergency_stop_operator/config/mrm_emergency_stop_operator.param.yaml
         variants:
           - path: autoware_launch/config/system/mrm_emergency_stop_operator/mrm_emergency_stop_operator.param.yaml
+      - source: system/autoware_mrm_handler/config/mrm_handler.param.yaml
+        variants:
+          - path: autoware_launch/config/system/mrm_handler/mrm_handler.param.yaml
       # Misc
       - source: system/autoware_duplicated_node_checker/config/duplicated_node_checker.param.yaml
         variants:
