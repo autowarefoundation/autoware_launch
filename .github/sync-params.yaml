@@ -450,7 +450,69 @@ control:
         variants:
           - path: autoware_launch/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml
 
-system: []
+system:
+  - repository: autowarefoundation/autoware_universe
+    ref: main
+    files:
+      # Command Mode
+      - source: system/autoware_diagnostic_graph_aggregator/config/converter.param.yaml
+        variants:
+          - path: autoware_launch/config/system/command_mode/converter.param.yaml
+      - source: system/autoware_command_mode_decider/config/default.param.yaml
+        variants:
+          - path: autoware_launch/config/system/command_mode/decider.param.yaml
+      - source: system/autoware_command_mode_switcher/config/default.param.yaml
+        variants:
+          - path: autoware_launch/config/system/command_mode/switcher.param.yaml
+      # Component State Monitor (skipped: no .param.yaml files to sync)
+      # Diagnostics (skipped)
+      # dummy_diag_publisher.param.yaml omitted (has key-value map and the schema is not fixed)
+      # System Monitor
+      - source: system/autoware_system_monitor/config/cpu_monitor.param.yaml
+        variants:
+          - path: autoware_launch/config/system/system_monitor/cpu_monitor.param.yaml
+      - source: system/autoware_system_monitor/config/gpu_monitor.param.yaml
+        variants:
+          - path: autoware_launch/config/system/system_monitor/gpu_monitor.param.yaml
+      - source: system/autoware_system_monitor/config/hdd_monitor.param.yaml
+        variants:
+          - path: autoware_launch/config/system/system_monitor/hdd_monitor.param.yaml
+      - source: system/autoware_system_monitor/config/mem_monitor.param.yaml
+        variants:
+          - path: autoware_launch/config/system/system_monitor/mem_monitor.param.yaml
+      - source: system/autoware_system_monitor/config/net_monitor.param.yaml
+        variants:
+          - path: autoware_launch/config/system/system_monitor/net_monitor.param.yaml
+      - source: system/autoware_system_monitor/config/ntp_monitor.param.yaml
+        variants:
+          - path: autoware_launch/config/system/system_monitor/ntp_monitor.param.yaml
+      - source: system/autoware_system_monitor/config/process_monitor.param.yaml
+        variants:
+          - path: autoware_launch/config/system/system_monitor/process_monitor.param.yaml
+      - source: system/autoware_system_monitor/config/voltage_monitor.param.yaml
+        variants:
+          - path: autoware_launch/config/system/system_monitor/voltage_monitor.param.yaml
+      # MRM
+      - source: system/autoware_mrm_comfortable_stop_operator/config/mrm_comfortable_stop_operator.param.yaml
+        variants:
+          - path: autoware_launch/config/system/mrm_comfortable_stop_operator/mrm_comfortable_stop_operator.param.yaml
+      - source: system/autoware_mrm_emergency_stop_operator/config/mrm_emergency_stop_operator.param.yaml
+        variants:
+          - path: autoware_launch/config/system/mrm_emergency_stop_operator/mrm_emergency_stop_operator.param.yaml
+      - source: system/autoware_mrm_handler/config/mrm_handler.param.yaml
+        variants:
+          - path: autoware_launch/config/system/mrm_handler/mrm_handler.param.yaml
+      # Misc
+      - source: system/autoware_duplicated_node_checker/config/duplicated_node_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/system/duplicated_node_checker/duplicated_node_checker.param.yaml
+      - source: system/autoware_pipeline_latency_monitor/config/pipeline_latency_monitor.param.yaml
+        variants:
+          - path: autoware_launch/config/system/pipeline_latency_monitor/pipeline_latency_monitor.param.yaml
+      - source: system/autoware_processing_time_checker/config/processing_time_checker.param.yaml
+        variants:
+          - path: autoware_launch/config/system/processing_time_checker/processing_time_checker.param.yaml
+
 vehicle:
   - repository: autowarefoundation/autoware_universe
     ref: main
