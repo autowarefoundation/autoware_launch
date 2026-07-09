@@ -336,37 +336,37 @@ planning:
         variants:
           - path: autoware_launch/config/planning/mission_planning/mission_planner/mission_planner.param.yaml
       # Planning/neural_net_planner
-      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_extender.param.yaml
+      - source: planning/autoware_trajectory_processor/config/plugins/trajectory_extender.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_extender.param.yaml
-      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_kinematic_feasibility_enforcer.param.yaml
+      - source: planning/autoware_trajectory_processor/config/plugins/trajectory_kinematic_feasibility_enforcer.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_kinematic_feasibility_enforcer.param.yaml
-      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_mpt_optimizer.param.yaml
+      - source: planning/autoware_trajectory_processor/config/plugins/trajectory_mpt_optimizer.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_mpt_optimizer.param.yaml
-      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_point_fixer.param.yaml
+      - source: planning/autoware_trajectory_processor/config/plugins/trajectory_point_fixer.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_point_fixer.param.yaml
-      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_qp_smoother.param.yaml
+      - source: planning/autoware_trajectory_processor/config/plugins/trajectory_qp_smoother.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_qp_smoother.param.yaml
-      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_spline_smoother.param.yaml
+      - source: planning/autoware_trajectory_processor/config/plugins/trajectory_spline_smoother.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_spline_smoother.param.yaml
-      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_temporal_mpt_optimizer.param.yaml
+      - source: planning/autoware_trajectory_processor/config/plugins/trajectory_temporal_mpt_optimizer.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_temporal_mpt_optimizer.param.yaml
-      - source: planning/autoware_trajectory_optimizer/config/plugins/trajectory_velocity_optimizer.param.yaml
+      - source: planning/autoware_trajectory_processor/config/plugins/trajectory_velocity_optimizer.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer_plugins/trajectory_velocity_optimizer.param.yaml
       - source: planning/autoware_diffusion_planner/config/diffusion_planner.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/diffusion_planner.param.yaml
-      - source: planning/autoware_trajectory_modifier/config/trajectory_modifier.param.yaml
+      - source: planning/autoware_trajectory_processor/config/trajectory_modifier.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_modifier.param.yaml
-      - source: planning/autoware_trajectory_optimizer/config/trajectory_optimizer.param.yaml
+      - source: planning/autoware_trajectory_processor/config/trajectory_optimizer.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer.param.yaml
       # Planning/parking
