@@ -1,8 +1,15 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="input_vehicle_twist_with_covariance_topic" default="/sensing/vehicle_velocity_converter/twist_with_covariance" description="input twist with covariance topic name from vehicle"/>
+
+  <arg name="use_autoware_environment_adaptor" default="false"/>
+
+  <let name="gyro_odometer_input_twist_topic" value="$(var input_vehicle_twist_with_covariance_topic)" unless="$(var use_autoware_environment_adaptor)"/>
+  <let name="gyro_odometer_input_twist_topic" value="/localization/twist_estimator/twist_with_covariance_scaled" if="$(var use_autoware_environment_adaptor)"/>
+
   <group>
     <include file="$(find-pkg-share autoware_gyro_odometer)/launch/gyro_odometer.launch.xml">
-      <arg name="input_vehicle_twist_with_covariance_topic" value="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
+      <arg name="input_vehicle_twist_with_covariance_topic" value="$(var gyro_odometer_input_twist_topic)"/>
       <arg name="output_twist_with_covariance_topic" value="/localization/twist_estimator/twist_with_covariance"/>
       <arg name="output_twist_with_covariance_raw_topic" value="/localization/twist_estimator/twist_with_covariance_raw"/>
     </include>
