@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/3d17712df617b6cce00498a1c7c0d76d78430f3f/planning/autoware_trajectory_optimizer/config/plugins/trajectory_extender.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/b5f1243c2e320b4436327ed33cc0acbbc52d2d4e/planning/autoware_trajectory_processor/config/plugins/trajectory_extender.param.yaml
 
 /**:
   ros__parameters:
