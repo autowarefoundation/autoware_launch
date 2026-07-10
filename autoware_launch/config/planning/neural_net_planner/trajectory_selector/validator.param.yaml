@@ -94,6 +94,7 @@
       treat_unknown_light_as_red_light: true # [-] when true, UNKNOWN traffic light signals are handled like red lights
       stable_duration_threshold_red: 0.2 # [s] stability duration for RED signals
       stable_duration_threshold_amber: 0.2 # [s] stability duration for amber signals
+      stable_duration_threshold_unknown: 0.5 # [s] stability duration for UNKNOWN signals
       amber_rejection_hysteresis_duration: 0.5 # [s] hysteresis duration to persist an AMBER rejection
       ego_stopped_velocity_threshold: 0.01 # [m/s] velocity below which ego is considered fully stopped
       stop_overshoot_margin: 0.5 # [m] maximum distance between the stop line and the trajectory stop point to consider the trajectory feasible
