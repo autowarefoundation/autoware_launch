@@ -65,7 +65,7 @@
     new_traj_duration_time: 1.0
     new_traj_end_dist: 0.3
     mpc_converged_threshold_rps:  0.01 # threshold of mpc convergence check [rad/s]
-    stop_state_steer_hold_duration: 1.0
+    stop_state_steer_hold_duration: 2.0
 
     # reference-confidence steer slew limit (post-MPC, outside QP)
     enable_confidence_steer_slew_limit: true
