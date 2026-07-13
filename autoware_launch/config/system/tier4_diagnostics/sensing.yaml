@@ -45,7 +45,7 @@ units:
       - { type: link, link: /sensing/radar/001-connection-error }
       - { type: link, link: /sensing/radar/002-dynamics-error }
       - { type: link, link: /sensing/radar/003-internal-error }
-      # - { type: link, link: /sensing/radar/004-blockage-error }
+      - { type: link, link: /sensing/radar/004-blockage-error }
       - { type: link, link: /sensing/radar/005-object-rate-error }
       - { type: link, link: /sensing/radar/006-detections-rate-error }
 
