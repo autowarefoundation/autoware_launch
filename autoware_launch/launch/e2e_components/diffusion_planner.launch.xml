@@ -45,12 +45,15 @@
   <arg name="disable_diffusion_planner_node" default="false"/>
   <arg name="disable_diffusion_planner_trajectory" default="false"/>
   <arg name="enable_minimum_rule_based_planner" default="true"/>
+  <arg name="minimum_rule_based_planner_shadow_mode" default="true"/>
   <arg name="enable_diffusion_planner_dummy_gate" default="false"/>
   <let name="diffusion_candidate_trajectories_topic" value="/planning/generator/diffusion_planner/candidate_trajectories" unless="$(var disable_diffusion_planner_trajectory)"/>
   <let name="diffusion_candidate_trajectories_topic" value="/planning/generator/diffusion_planner/debug/candidate_trajectories" if="$(var disable_diffusion_planner_trajectory)"/>
   <!-- when the dummy gate is enabled, the optimizer publishes to an intermediate topic and the gate forwards it to the selector input -->
   <let name="diffusion_optimizer_output_topic" value="/planning/generator/candidate_trajectories" unless="$(var enable_diffusion_planner_dummy_gate)"/>
   <let name="diffusion_optimizer_output_topic" value="/planning/generator/diffusion_planner/optimized_candidate_trajectories" if="$(var enable_diffusion_planner_dummy_gate)"/>
+  <let name="minimum_rule_based_planner_output_topic" value="/planning/generator/minimum_rule_based/candidate_trajectories" unless="$(var minimum_rule_based_planner_shadow_mode)"/>
+  <let name="minimum_rule_based_planner_output_topic" value="/planning/generator/minimum_rule_based/shadow_candidate_trajectories" if="$(var minimum_rule_based_planner_shadow_mode)"/>
 
   <node pkg="demo_nodes_cpp" exec="parameter_blackboard" name="velocity_smoother" namespace="/planning/scenario_planning" output="screen">
     <param name="max_velocity" value="16.6"/>
@@ -151,7 +154,7 @@
             <arg name="input_acceleration" value="/localization/acceleration"/>
             <arg name="input_objects" value="$(var input_objects_topic_name)"/>
             <arg name="input_pointcloud" value="$(var input_pointcloud_topic_name)"/>
-            <arg name="output_candidate_trajectories" value="/planning/generator/minimum_rule_based/candidate_trajectories"/>
+            <arg name="output_candidate_trajectories" value="$(var minimum_rule_based_planner_output_topic)"/>
           </include>
         </group>
       </group>
