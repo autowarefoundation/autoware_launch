@@ -2,6 +2,274 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.52.0 (2026-06-30)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* chore(rviz): adjust object recognition line widths and disable raw detection by default (`#1905 <https://github.com/autowarefoundation/autoware_launch/issues/1905>`_)
+  update line width, toggle off detections
+* feat: add parameters to support get_selected_lanelet2_map interface (`#1813 <https://github.com/autowarefoundation/autoware_launch/issues/1813>`_)
+  * feat: add parameters to support get_selected_lanelet2_map interface
+  * rename topic names and parameter names
+  * set default to false
+  ---------
+  Co-authored-by: Ryohsuke Mitsudome <ryoshuke.mitsudome@tier4.jp>
+* chore(rviz): update perception configs for refactored rviz plugin and latest detection pipeline (`#1903 <https://github.com/autowarefoundation/autoware_launch/issues/1903>`_)
+  * update plugin configs
+  * update color settings
+  * add segmented pointcloud
+  * add tracker debug vis
+  * add bevfusion object
+  ---------
+* ci: register simulation param files for sync-params workflow (`#1862 <https://github.com/autowarefoundation/autoware_launch/issues/1862>`_)
+  * add fault_injection
+  * apply fault_injection
+  ---------
+* chore(autoware_launch): remove comment referencing to outdated COMPILE_WITH_OLD_ARCHITECTURE (`#1845 <https://github.com/autowarefoundation/autoware_launch/issues/1845>`_)
+* ci: register vehicle param files for sync-params workflow (`#1861 <https://github.com/autowarefoundation/autoware_launch/issues/1861>`_)
+  * add raw_vehicle_cmd_converter
+  * apply raw_vehicle_cmd_converter
+  * fix file
+  ---------
+* feat(direction_change): propagate allow area for downstream modules (`#1899 <https://github.com/autowarefoundation/autoware_launch/issues/1899>`_)
+  * feat: add allow_area param in lane_departure_checker
+  * feat: add allow_area param for mission_planner
+  * feat: add allow_area param for planning_validator
+  * refactor: direction_cahnge parama
+  * feat: add allow_area param for beahvior_path_planner
+  * fix: set allow_area param default to false
+  ---------
+* chore(sync-params): update planning params (`#1892 <https://github.com/autowarefoundation/autoware_launch/issues/1892>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* ci: register remaining perception params for sync-params workflow (`#1893 <https://github.com/autowarefoundation/autoware_launch/issues/1893>`_)
+  * add remaining perception files for sync-params.yaml
+  * apply sync-params workflow
+  * fix comment
+  ---------
+* chore(sync-params): update perception params (`#1894 <https://github.com/autowarefoundation/autoware_launch/issues/1894>`_)
+  * chore(sync-params): update perception params
+  * chore(sync-params): update multi_object_tracker_node parameters for publish trigger and delay compensation
+  ---------
+  Co-authored-by: technolojin <42434141+technolojin@users.noreply.github.com>
+  Co-authored-by: Taekjin LEE <taekjin.lee@tier4.jp>
+* chore(sync-params): update perception params (`#1891 <https://github.com/autowarefoundation/autoware_launch/issues/1891>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* chore(yolox): remove param named preprocess_on_gpu (`#1889 <https://github.com/autowarefoundation/autoware_launch/issues/1889>`_)
+  chore: remove param named preprocess_on_gpu
+* chore(sync-params): update perception params (`#1888 <https://github.com/autowarefoundation/autoware_launch/issues/1888>`_)
+  Co-authored-by: technolojin <42434141+technolojin@users.noreply.github.com>
+* fix: update class_names in label_based_euclidean_cluster parameters for new ptv3 model (`#1887 <https://github.com/autowarefoundation/autoware_launch/issues/1887>`_)
+  * refactor: update class_names in label_based_euclidean_cluster parameters for new ptv3 model
+  * fix: add override comment for class_names in label_based_euclidean_cluster parameters
+  ---------
+* chore(sync-params): update perception params (`#1885 <https://github.com/autowarefoundation/autoware_launch/issues/1885>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* ci: register control param files for sync-params workflow (`#1832 <https://github.com/autowarefoundation/autoware_launch/issues/1832>`_)
+  * register control param files into sync-params workflow
+  * apply sync-params to control param files
+  * update sync source and re-apply sync-params
+  ---------
+* ci: register planning param files for sync-params workflow (1) (`#1863 <https://github.com/autowarefoundation/autoware_launch/issues/1863>`_)
+  * add mission planning, neural net planning param files
+  * apply sync-params
+  * add scenario planning - common and parking
+  * apply sync-params on these param files
+  * style(pre-commit): autofix
+  * reapply sync-params with updated header
+  * add trajectory_temporal_mpt_optimizer.param.yaml
+  * apply sync-params for trajectory_temporal_mpt_optimizer.param.yaml
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* ci: register localization param files for sync-params workflow (`#1830 <https://github.com/autowarefoundation/autoware_launch/issues/1830>`_)
+  * register localization params files to sync-params
+  * adjust files and run sync_params.py localization
+  * revert input_frame and output_frame
+  ---------
+* feat(euclidean_cluster): update cluster parameters for universe renames and per-label/confusable merge (`#1884 <https://github.com/autowarefoundation/autoware_launch/issues/1884>`_)
+  * feat(euclidean_cluster): update cluster parameters to match universe renames and new features
+  Mirror the renamed/restructured clustering parameters from
+  `autowarefoundation/autoware_universe#12738 <https://github.com/autowarefoundation/autoware_universe/issues/12738>`_:
+  - Rename params for unit-explicitness and clarity (tolerance -> tolerance_m,
+  voxel_leaf_size -> voxel_leaf_size_m, min_cluster_size -> min_points_per_cluster,
+  min_points_number_per_voxel -> min_points_per_voxel,
+  min_voxel_cluster_size_for_filtering -> large_cluster_voxel_count_threshold,
+  max_points_per_voxel_in_large_cluster -> large_cluster_max_points_per_voxel,
+  max_voxel_cluster_for_output -> max_voxels_per_cluster).
+  - Drop the now-unused max_cluster_size from the voxel-grid and label-based configs
+  (oversized clusters are split, not dropped).
+  - Adopt the new label_based defaults plus the per-label label_cluster_params
+  (pedestrian/bicycle/hazard) and confusable_label_groups (truck_trailer) blocks,
+  and map tractor_unit/semi_trailer to trailer so the confusable merge applies.
+  Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+  * feat(cluster_params): streamline parameter documentation and organization in clustering YAML files
+  * feat(euclidean_cluster): update min_points_per_voxel and large_cluster_voxel_count_threshold for improved clustering
+  ---------
+  Co-authored-by: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+* feat(perception): update tracker assignments to use general_vehicle_tracker for bounding box and polygon types (`#1872 <https://github.com/autowarefoundation/autoware_launch/issues/1872>`_)
+  * feat(perception): update tracker assignments to use general_vehicle_tracker for bounding box and polygon types
+  * feat(perception): enable classification trust for lidar clustering in multi-object tracker
+  ---------
+* feat(autoware_tensorrt_yolox): add HAZARD label and update remap (`#1867 <https://github.com/autowarefoundation/autoware_launch/issues/1867>`_)
+  * add HAZARD label and update remapping files
+  * fix remap class
+  ---------
+* chore(sync-params): update perception params (`#1858 <https://github.com/autowarefoundation/autoware_launch/issues/1858>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* chore(sync-params): update map params (`#1849 <https://github.com/autowarefoundation/autoware_launch/issues/1849>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* feat(autoware_bevfusion): update parameters for TRAFFIC_CONE and BARRIER classes (`#1869 <https://github.com/autowarefoundation/autoware_launch/issues/1869>`_)
+  add parameters for TRAFFIC_CONE and BARRIER
+* fix: update param for ANIMAL and HAZARD class (`#1879 <https://github.com/autowarefoundation/autoware_launch/issues/1879>`_)
+  * update param for ANIMAL and HAZARD class
+  * fix: update ml_camera_lidar_objects_association param
+  ---------
+* fix(neural_net_planner): add temporal MPT optimizer config for trajec… (`#1878 <https://github.com/autowarefoundation/autoware_launch/issues/1878>`_)
+  fix(neural_net_planner): add temporal MPT optimizer config for trajectory_optimizer
+  The autoware_trajectory_optimizer node now declares use_temporal_mpt_optimizer
+  as a statically typed parameter, so it crashes on startup
+  (UninitializedStaticallyTypedParameterException) when launched with the
+  autoware_launch config, which did not provide it.
+  - Add use_temporal_mpt_optimizer: false to trajectory_optimizer.param.yaml
+  - Add trajectory_temporal_mpt_optimizer.param.yaml plugin config
+  - Wire trajectory_temporal_mpt_optimizer_param_path through the launch chain
+* fix(radar_object_tracker): add ANIMAL and HAZARD into tracked objects (`#1876 <https://github.com/autowarefoundation/autoware_launch/issues/1876>`_)
+  * fix(radar_object_tracker): add ANIMAL and HAZARD into tracked objects
+  * fix: update tracked_object_lanelet filter param
+  * fix: assosiation matrix for tracking objects
+  ---------
+* fix: roi_detected_object config for new ANIMAL and HAZARD classes (`#1874 <https://github.com/autowarefoundation/autoware_launch/issues/1874>`_)
+  * fix: roi_detected_object config for new ANIMAL and HAZARD classes
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* fix: detected_object_sorter config for new ANIMAL and HAZARD classes (`#1875 <https://github.com/autowarefoundation/autoware_launch/issues/1875>`_)
+* feat: add semantic segmentation pipeline option (`#1865 <https://github.com/autowarefoundation/autoware_launch/issues/1865>`_)
+  * fix: ground segmentation launch
+  * fix: missing dependencies and param
+  * fix: ptv3 topic
+  * fix: euclidean pipeline
+  * feat: add use_roi_detected_object_validator options
+  * replace with label_based_euclidean
+  * revert to bevfusion
+  * fix: aligning with updated EC
+  * fix: add alpha merger option
+  * fix: missing toggle condition
+  * disable irregular_object_detector
+  * fix: camera_lidar_radar merger
+  * update label_based_ec param
+  * revert to v4.4.0  pipeline option
+  * fix(merger launch): missing toggle condition
+  * style(pre-commit): autofix
+  * style(pre-commit): autofix
+  * remove voxel_downsample and pc validation
+  * RDDR-353 Enable irregular object detection (`#2379 <https://github.com/autowarefoundation/autoware_launch/issues/2379>`_)
+  * update config for 2 new classes
+  * typo
+  * style(pre-commit): autofix
+  * refactor
+  * refactor
+  * fix data_path
+  * fix: adjust combination when ptv3 used
+  * fix: remove fixed option when using ptv3
+  * remove object filter
+  * Update autoware_launch/config/perception/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml
+  Co-authored-by: Taekjin LEE <technolojin@gmail.com>
+  * fix: add semseg pipeline option for lidar perception mode
+  ---------
+  Co-authored-by: ktro2828 <60615504+ktro2828@users.noreply.github.com>
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+  Co-authored-by: Taekjin LEE <technolojin@gmail.com>
+* fix(object_filter): aadd ANIMAL and HAZARD filter labels (`#1866 <https://github.com/autowarefoundation/autoware_launch/issues/1866>`_)
+* feat(perception): add animal and hazard tracking parameters to multi-object tracker configuration (`#1864 <https://github.com/autowarefoundation/autoware_launch/issues/1864>`_)
+  * feat: add animal and hazard tracking parameters to multi-object tracker configuration
+  * feat: update multi-object tracker parameters for improved detection accuracy
+  ---------
+* feat(autoware_launch): launch dummy traffic light publisher in simulator (`#1859 <https://github.com/autowarefoundation/autoware_launch/issues/1859>`_)
+  * feat(autoware_launch): launch dummy traffic light publisher in simulator
+  Wire autoware_dummy_traffic_light_publisher into the simulator launch so
+  that, when traffic light recognition is disabled (e.g. planning
+  simulator), dummy traffic signals are published. The fallback mode
+  (dummy_traffic_light_mode: empty/standalone/fixed) and the fixed-mode
+  color (dummy_traffic_light_fixed_color) are threaded from
+  planning_simulator.launch.xml down to the node.
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat: update multi-object tracker parameters for improved shape-class association (`#1856 <https://github.com/autowarefoundation/autoware_launch/issues/1856>`_)
+  * feat: update multi-object tracker parameters for improved association and debugging
+  * feat: refine multi-object tracker parameters for improved shape association
+  * feat: enhance multi-object tracker parameters for improved association thresholds
+  * feat: clarify tracker_assignment comments in data_association_matrix.param.yaml
+  ---------
+* fix: update prameter related to 2 new classess for detection pipeline (`#1855 <https://github.com/autowarefoundation/autoware_launch/issues/1855>`_)
+  * fix(image_projection_based_fusion): update prameter for new classess
+  * style(pre-commit): autofix
+  * fix missing param
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat: add launch params and configs for direction_change module (`#1857 <https://github.com/autowarefoundation/autoware_launch/issues/1857>`_)
+  * feat: add launch params and configs for direction_change module
+  * feat: add launch param in default_preset.yaml
+  ---------
+* feat(BEVFusion): update score thresholds from bevfusion launch file (`#1852 <https://github.com/autowarefoundation/autoware_launch/issues/1852>`_)
+  * Remove score thresholds from bevfusion launch file
+  * style(pre-commit): autofix
+  * Revert changes
+  * style(pre-commit): autofix
+  * Update launch file
+  * Update launch file
+  * style(pre-commit): autofix
+  * Update launch file hash commits
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat(perception): update perception pipeline to remove shape estimation (`#1846 <https://github.com/autowarefoundation/autoware_launch/issues/1846>`_)
+  * fix(perception): update input channels and ground segmentation parameters for improved tracking and detection
+  - Changed associator type from 'bev' to 'polar' in multi-object tracker input channels for better performance.
+  - Adjusted ground segmentation parameters: increased margin_max_z from 0.0 to 1.0 and detection_range_z_max from 2.5 to 3.5 to enhance ground detection capabilities.
+  * feat(Tier4PlanningWrapper): add data_path parameter for enhanced configuration flexibility
+  - Introduced a new parameter 'data_path' with a default value to improve the configuration options for the Tier4PlanningWrapper node.
+  - This addition allows for better management of data paths within the planning framework.
+  * refactor(perception): remove deprecated tracking modules and streamline object recognition configuration
+  - Eliminated unused tracking modules and parameters from ObjectRecognition and ObjectDetection configurations to enhance clarity and reduce complexity.
+  - Updated connections in LidarClustering to reflect the removal of obsolete components, ensuring a more efficient data flow.
+  refactor(parameter_set): streamline perception parameters by removing unused nodes and updating node paths
+  - Removed the unused shape_estimation node from the perception parameter set to enhance clarity.
+  - Updated the path for the detected_object_feature_remover node to reflect its new location within the clustering module.
+  fix(perception): update pointcloud_map_filter node path for improved object recognition
+  * fix(perception): update pointcloud_map_filter node to use voxel_grid_downsample_filter
+  * fix(perception): update source URL in input_channels.param.yaml for accuracy
+  * fix(perception): update max_z and margin_max_z parameters for improved segmentation accuracy
+  * refactor(perception): remove unused parameters from crop_box_filter and streamline sample_system_perception configuration
+  * fix(perception): disable detection_by_tracker function in perception launch configuration
+  ---------
+* feat: remove deprecated planning interface (`#1850 <https://github.com/autowarefoundation/autoware_launch/issues/1850>`_)
+  * remove deprecated interface
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* ci: register map param files for sync-params workflow + sync-params bugfix (`#1831 <https://github.com/autowarefoundation/autoware_launch/issues/1831>`_)
+  * register map param files
+  * apply sync-params for map param files
+  * fix sync_params
+  ---------
+* feat(autoware_launch): remove MrmSummaryoverlayPlugins  (`#1829 <https://github.com/autowarefoundation/autoware_launch/issues/1829>`_)
+  feat: remove MrmSummaryOverlayDisplay plugins from rviz configs
+* feat(autoware_launch): make launch of simulator_interface optional for e2e_simulator.launch.xml (`#1836 <https://github.com/autowarefoundation/autoware_launch/issues/1836>`_)
+* feat(autoware_launch): add ndt publish_loaded_map parameter (`#1843 <https://github.com/autowarefoundation/autoware_launch/issues/1843>`_)
+  * add publish loaded map parameter
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat(behavior_path_side_shift): add drivable area check parameters to prevent lane departure (`#1828 <https://github.com/autowarefoundation/autoware_launch/issues/1828>`_)
+* fix(e2e_simulator): fix path to carla launch file (`#1841 <https://github.com/autowarefoundation/autoware_launch/issues/1841>`_)
+* chore: sync files (`#1338 <https://github.com/autowarefoundation/autoware_launch/issues/1338>`_)
+  * chore: sync files
+  * style(pre-commit): autofix
+  ---------
+  Co-authored-by: github-actions <github-actions@github.com>
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* Contributors: Go Sakayori, Kazusa Hashimoto, Kok Seang Tan, Kotaro Uetake, Masaki Baba, Maxime CLEMENT, Ryohsuke Mitsudome, Taekjin LEE, Taeseung Sohn, Takayuki AKAMINE, Uta Kawakami, Vincent Richard, Yukihiro Saito, awf-autoware-bot[bot], badai nguyen, emmeyteja, github-actions
+
 0.51.0 (2026-05-01)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

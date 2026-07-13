@@ -69,6 +69,8 @@
   <arg name="perception/enable_object_recognition" default="false" description="enable object recognition"/>
   <arg name="perception/enable_elevation_map" default="false" description="enable elevation map loader"/>
   <arg name="perception/enable_traffic_light" default="true" description="enable traffic light"/>
+  <arg name="launch_dummy_traffic_light_publisher" default="true" description="launch dummy traffic light publisher when traffic light recognition is disabled"/>
+  <arg name="dummy_traffic_light_mode" default="empty" description="fallback mode of dummy traffic light publisher when no passthrough input arrives: 'empty', 'standalone' or 'fixed'"/>
   <arg name="fusion_only" default="true" description="enable only camera and V2X fusion when enabling traffic light"/>
   <arg name="perception/use_base_link_z" default="true" description="dummy perception uses base_link z axis coordinate if it is true"/>
   <arg name="sensing/visible_range" default="300.0" description="visible range when using dummy perception"/>
@@ -98,6 +100,15 @@
         <arg name="use_base_link_z" value="$(var perception/use_base_link_z)"/>
         <arg name="visible_range" value="$(var sensing/visible_range)"/>
       </include>
+    </group>
+
+    <!-- Dummy Traffic Light Publisher (used when traffic light recognition is disabled, e.g. planning simulator) -->
+    <group if="$(var launch_dummy_traffic_light_publisher)">
+      <group unless="$(var perception/enable_traffic_light)">
+        <include file="$(find-pkg-share autoware_dummy_traffic_light_publisher)/launch/dummy_traffic_light_publisher.launch.xml">
+          <arg name="mode" value="$(var dummy_traffic_light_mode)"/>
+        </include>
+      </group>
     </group>
 
     <group unless="$(var scenario_simulation)">

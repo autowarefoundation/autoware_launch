@@ -9,6 +9,7 @@
   <arg name="lidar_detection_model_type"/>
   <arg name="use_detection_by_tracker"/>
   <arg name="use_irregular_object_detector"/>
+  <arg name="euclidean_clustering/shape_policy"/>
 
   <arg name="use_object_filter" description="use object filter"/>
   <arg name="objects_filter_method"/>
@@ -44,22 +45,33 @@
   <arg name="input/camera8/info"/>
   <arg name="input/camera8/rois"/>
   <arg name="input/lidar_ml/objects"/>
-  <arg name="input/lidar_rule/objects"/>
+  <arg name="input/lidar_cluster/objects"/>
   <arg name="input/detection_by_tracker/objects"/>
   <arg name="output/objects" default="objects"/>
   <arg name="alpha_merger_priority_mode" default="0"/>
+  <arg name="use_roi_detected_object_validator"/>
 
   <!-- internal interfaces -->
   <let name="detected_object_roi_filter/input/objects" value="$(var input/lidar_ml/objects)"/>
   <let name="detected_object_roi_filter/output/objects" value="$(var lidar_detection_model_type)/roi_fusion/objects"/>
 
-  <let name="merger0/input/objects0" value="$(var detected_object_roi_filter/output/objects)"/>
+  <let name="merger0/input/objects0" value="$(var detected_object_roi_filter/output/objects)" if="$(var use_roi_detected_object_validator)"/>
+  <let name="merger0/input/objects0" value="$(var input/lidar_ml/objects)" unless="$(var use_roi_detected_object_validator)"/>
   <let name="merger0/input/objects1" value="$(var detected_irregular_object/output/objects)"/>
   <let name="merger0/output/objects" value="$(var lidar_detection_model_type)_irregular_object_merger/objects"/>
 
-  <let name="merger1/input/objects0" value="$(var detected_object_roi_filter/output/objects)" unless="$(var use_irregular_object_detector)"/>
+  <let
+    name="merger1/input/objects0"
+    value="$(var detected_object_roi_filter/output/objects)"
+    if="$(eval &quot;'$(var use_irregular_object_detector)'=='false' and '$(var use_roi_detected_object_validator)'=='true' &quot;)"
+  />
   <let name="merger1/input/objects0" value="$(var merger0/output/objects)" if="$(var use_irregular_object_detector)"/>
-  <let name="merger1/input/objects1" value="$(var input/lidar_rule/objects)"/>
+  <let
+    name="merger1/input/objects0"
+    value="$(var input/lidar_ml/objects)"
+    if="$(eval &quot;'$(var use_irregular_object_detector)'=='false' and '$(var use_roi_detected_object_validator)'=='false' &quot;)"
+  />
+  <let name="merger1/input/objects1" value="$(var input/lidar_cluster/objects)"/>
   <let name="merger1/output/objects" value="$(var output/objects)" if="$(var without_dbt_and_filter)"/>
   <let name="merger1/output/objects" value="$(var lidar_detection_model_type)_roi_cluster_fusion/objects" unless="$(var without_dbt_and_filter)"/>
 
@@ -73,7 +85,7 @@
   <let name="filter/output/objects" value="$(var output/objects)"/>
 
   <!-- Detected object filter by ROI -->
-  <group>
+  <group if="$(var use_roi_detected_object_validator)">
     <include file="$(find-pkg-share autoware_image_projection_based_fusion)/launch/roi_detected_object_fusion.launch.xml">
       <arg name="input/rois_number" value="$(var number_of_cameras)"/>
       <arg name="input/rois0" value="$(var input/camera0/rois)"/>
@@ -123,7 +135,7 @@
 
   <!-- 1st merger: camera_lidar_fusion + lidar cluster-->
   <group>
-    <include file="$(find-pkg-share autoware_object_merger)/launch/object_association_merger.launch.xml">
+    <include file="$(find-pkg-share autoware_object_merger)/launch/object_association_merger.launch.xml" if="$(var euclidean_clustering/shape_policy)">
       <arg name="node_name" value="object_association_merger_alpha"/>
       <arg name="input/object0" value="$(var merger1/input/objects0)"/>
       <arg name="input/object1" value="$(var merger1/input/objects1)"/>
@@ -132,6 +144,13 @@
       <arg name="data_association_matrix_path" value="$(var object_recognition_detection_object_merger_data_association_matrix_param_path)"/>
       <arg name="distance_threshold_list_path" value="$(var object_recognition_detection_object_merger_distance_threshold_list_path)"/>
       <arg name="object_association_merger_param_path" value="$(var ml_camera_lidar_object_association_merger_param_path)"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_object_merger)/launch/object_fusion_merger.launch.xml" unless="$(var euclidean_clustering/shape_policy)">
+      <arg name="node_name" value="object_fusion_merger_alpha"/>
+      <arg name="input/main_objects" value="$(var merger1/input/objects0)"/>
+      <arg name="input/sub_objects" value="$(var merger1/input/objects1)"/>
+      <arg name="output/objects" value="$(var merger1/output/objects)"/>
     </include>
   </group>
 

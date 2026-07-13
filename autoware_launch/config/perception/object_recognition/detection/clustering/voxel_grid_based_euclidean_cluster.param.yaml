@@ -1,13 +1,12 @@
 /**:
   ros__parameters:
-    tolerance: 0.7
-    voxel_leaf_size: 0.3
-    min_points_number_per_voxel: 1
-    min_cluster_size: 10
-    max_cluster_size: 3000  # this is the maximum number of voxels when clustered
-    max_voxel_cluster_for_output: 800  # Maximum number of voxels in a cluster when outputted
-    min_voxel_cluster_size_for_filtering: 65  # Clusters below this number of voxels are exempt from per-voxel filtering
-    max_points_per_voxel_in_large_cluster: 10  # Max points allowed per voxel in a large cluster
+    tolerance_m: 0.7
+    voxel_leaf_size_m: 0.3
+    min_points_per_voxel: 1
+    min_points_per_cluster: 10
+    max_voxels_per_cluster: 800
+    large_cluster_voxel_count_threshold: 65
+    large_cluster_max_points_per_voxel: 10
     use_height: false
     input_frame: "base_link"
 
@@ -16,7 +15,7 @@
     min_x: -200.0
     max_y: 200.0
     min_y: -200.0
-    max_z: 2.0
+    max_z: 4.0
     min_z: -10.0
     negative: false
     processing_time_threshold_sec: 0.01
