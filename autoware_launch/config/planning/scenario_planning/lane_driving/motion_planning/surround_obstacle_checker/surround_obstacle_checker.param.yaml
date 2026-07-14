@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/bfdec4257f5b4149f8a5c0722beced7110016659/planning/autoware_surround_obstacle_checker/config/surround_obstacle_checker.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/5540be5f3c5ac1584051a599ecd92ac9a8bb9701/planning/autoware_surround_obstacle_checker/config/surround_obstacle_checker.param.yaml
 
 /**:
   ros__parameters:
