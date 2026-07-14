@@ -82,6 +82,16 @@
   />
   <arg name="camera_2d_detector/label_path" default="$(var data_path)/tensorrt_yolox/label.txt" description="label path"/>
   <arg name="camera_2d_detector/color_map_path" default="$(var data_path)/tensorrt_yolox/semseg_color_map.csv" description="color map path"/>
+  <arg
+    name="camera_2d_detector/roi_remap_path"
+    default="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/tensorrt_yolox/roi_label_remap.csv"
+    description="path to a definition file for remapping ROI classes"
+  />
+  <arg
+    name="camera_2d_detector/roi_to_semseg_remap_path"
+    default="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/tensorrt_yolox/roi_to_semseg_label_remap.csv"
+    description="path to a definition file for remapping ROI classes to semantic segmentation output classes"
+  />
 
   <arg name="traffic_light_recognition/fusion_only" default="true" description="if true, the node which is launched in perception ECU is not launched"/>
   <arg name="traffic_light_recognition/camera_namespaces" default="[camera4, camera5]" description="choose camera which use for traffic light recognition"/>
@@ -166,6 +176,8 @@
     <arg name="camera_2d_detector/model_path" value="$(var camera_2d_detector/model_path)"/>
     <arg name="camera_2d_detector/label_path" value="$(var camera_2d_detector/label_path)"/>
     <arg name="camera_2d_detector/color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+    <arg name="camera_2d_detector/roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+    <arg name="camera_2d_detector/roi_to_semseg_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
 
     <!-- traffic light recognition options to switch launch function/module -->
     <arg name="use_traffic_light_recognition" value="$(var use_traffic_light_recognition)"/>

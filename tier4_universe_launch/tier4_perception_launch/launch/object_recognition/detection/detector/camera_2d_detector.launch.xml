@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- cspell: ignore semseg -->
+
   <arg name="image_raw0" default="/sensing/camera/camera0/image_raw"/>
   <arg name="image_raw1" default="/sensing/camera/camera1/image_raw"/>
   <arg name="image_raw2" default="/sensing/camera/camera2/image_raw"/>
@@ -17,6 +19,8 @@
   <arg name="camera_2d_detector/model_path"/>
   <arg name="camera_2d_detector/label_path"/>
   <arg name="camera_2d_detector/color_map_path"/>
+  <arg name="camera_2d_detector/roi_remap_path"/>
+  <arg name="camera_2d_detector/roi_to_semseg_remap_path"/>
   <arg name="tensorrt_yolox_ns" default=""/>
   <let name="tensorrt_yolox_ns" value="yolox/" if="$(var use_bytetrack)"/>
 
@@ -29,7 +33,9 @@
       <arg name="output/objects" value="$(var tensorrt_yolox_ns)rois$(var camera_index)"/>
       <arg name="model_path" value="$(var camera_2d_detector/model_path)"/>
       <arg name="label_path" value="$(var camera_2d_detector/label_path)"/>
-      <arg name="color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="semantic_segmentation_color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+      <arg name="roi_to_semantic_segmentation_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
     </include>
 
     <include file="$(find-pkg-share autoware_bytetrack)/launch/bytetrack.launch.xml" if="$(var use_bytetrack)">
@@ -50,7 +56,9 @@
       <arg name="output/objects" value="$(var tensorrt_yolox_ns)rois$(var camera_index)"/>
       <arg name="model_path" value="$(var camera_2d_detector/model_path)"/>
       <arg name="label_path" value="$(var camera_2d_detector/label_path)"/>
-      <arg name="color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="semantic_segmentation_color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+      <arg name="roi_to_semantic_segmentation_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
     </include>
 
     <include file="$(find-pkg-share autoware_bytetrack)/launch/bytetrack.launch.xml" if="$(var use_bytetrack)">
@@ -71,7 +79,9 @@
       <arg name="output/objects" value="$(var tensorrt_yolox_ns)rois$(var camera_index)"/>
       <arg name="model_path" value="$(var camera_2d_detector/model_path)"/>
       <arg name="label_path" value="$(var camera_2d_detector/label_path)"/>
-      <arg name="color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="semantic_segmentation_color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+      <arg name="roi_to_semantic_segmentation_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
     </include>
 
     <include file="$(find-pkg-share autoware_bytetrack)/launch/bytetrack.launch.xml" if="$(var use_bytetrack)">
@@ -92,7 +102,9 @@
       <arg name="output/objects" value="$(var tensorrt_yolox_ns)rois$(var camera_index)"/>
       <arg name="model_path" value="$(var camera_2d_detector/model_path)"/>
       <arg name="label_path" value="$(var camera_2d_detector/label_path)"/>
-      <arg name="color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="semantic_segmentation_color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+      <arg name="roi_to_semantic_segmentation_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
     </include>
 
     <include file="$(find-pkg-share autoware_bytetrack)/launch/bytetrack.launch.xml" if="$(var use_bytetrack)">
@@ -113,7 +125,9 @@
       <arg name="output/objects" value="$(var tensorrt_yolox_ns)rois$(var camera_index)"/>
       <arg name="model_path" value="$(var camera_2d_detector/model_path)"/>
       <arg name="label_path" value="$(var camera_2d_detector/label_path)"/>
-      <arg name="color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="semantic_segmentation_color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+      <arg name="roi_to_semantic_segmentation_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
     </include>
 
     <include file="$(find-pkg-share autoware_bytetrack)/launch/bytetrack.launch.xml" if="$(var use_bytetrack)">
@@ -134,7 +148,9 @@
       <arg name="output/objects" value="$(var tensorrt_yolox_ns)rois$(var camera_index)"/>
       <arg name="model_path" value="$(var camera_2d_detector/model_path)"/>
       <arg name="label_path" value="$(var camera_2d_detector/label_path)"/>
-      <arg name="color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="semantic_segmentation_color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+      <arg name="roi_to_semantic_segmentation_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
     </include>
 
     <include file="$(find-pkg-share autoware_bytetrack)/launch/bytetrack.launch.xml" if="$(var use_bytetrack)">
@@ -155,7 +171,9 @@
       <arg name="output/objects" value="$(var tensorrt_yolox_ns)rois$(var camera_index)"/>
       <arg name="model_path" value="$(var camera_2d_detector/model_path)"/>
       <arg name="label_path" value="$(var camera_2d_detector/label_path)"/>
-      <arg name="color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="semantic_segmentation_color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+      <arg name="roi_to_semantic_segmentation_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
     </include>
 
     <include file="$(find-pkg-share autoware_bytetrack)/launch/bytetrack.launch.xml" if="$(var use_bytetrack)">
@@ -176,7 +194,9 @@
       <arg name="output/objects" value="$(var tensorrt_yolox_ns)rois$(var camera_index)"/>
       <arg name="model_path" value="$(var camera_2d_detector/model_path)"/>
       <arg name="label_path" value="$(var camera_2d_detector/label_path)"/>
-      <arg name="color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="semantic_segmentation_color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+      <arg name="roi_to_semantic_segmentation_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
     </include>
 
     <include file="$(find-pkg-share autoware_bytetrack)/launch/bytetrack.launch.xml" if="$(var use_bytetrack)">
@@ -196,8 +216,10 @@
       <arg name="input/image" value="$(var image_raw8)"/>
       <arg name="output/objects" value="$(var tensorrt_yolox_ns)rois$(var camera_index)"/>
       <arg name="model_path" value="$(var camera_2d_detector/model_path)"/>
-      <arg name="color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
       <arg name="label_path" value="$(var camera_2d_detector/label_path)"/>
+      <arg name="semantic_segmentation_color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+      <arg name="roi_to_semantic_segmentation_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
     </include>
 
     <include file="$(find-pkg-share autoware_bytetrack)/launch/bytetrack.launch.xml" if="$(var use_bytetrack)">
@@ -218,7 +240,9 @@
       <arg name="output/objects" value="$(var tensorrt_yolox_ns)rois$(var camera_index)"/>
       <arg name="model_path" value="$(var camera_2d_detector/model_path)"/>
       <arg name="label_path" value="$(var camera_2d_detector/label_path)"/>
-      <arg name="color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="semantic_segmentation_color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+      <arg name="roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+      <arg name="roi_to_semantic_segmentation_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
     </include>
 
     <include file="$(find-pkg-share autoware_bytetrack)/launch/bytetrack.launch.xml" if="$(var use_bytetrack)">
