@@ -68,6 +68,7 @@ units:
     list:
       # - { type: link, link: /control/012-overrun_stop_point-error }
       # - { type: link, link: /control/013-will_overrun_stop_point-error }
+      - { type: link, link: /control/010-collision_detector-error }
       - { type: link, link: /control/014-acceleration_error-error }
       - { type: link, link: /control/016-sudden_deceleration_monitor-error }
 
