@@ -78,6 +78,7 @@
   <arg name="use_perception_analytics_publisher" default="true" description="use perception analytics publisher"/>
   <arg name="diagnostic_config" default="" description="path to diagnostic configuration file for scenario simulator v2 adapter"/>
 
+  <arg name="whole_image_detection/yolox_roi_label_remap_path"/>
   <arg name="vehicle_model" description="vehicle model name"/>
   <arg name="initial_engage_state" default="true" description="/vehicle/engage state after starting Autoware"/>
 
@@ -217,6 +218,7 @@
           <arg name="classification/lamp_recognizer_ml_param_path" value="$(env HOME)/autoware_data/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>
           <arg name="classification/pedestrian/classifier_type" value="$(var traffic_light_recognition/classification/pedestrian/classifier_type)"/>
           <arg name="classification/car/classifier_type" value="$(var traffic_light_recognition/classification/car/classifier_type)"/>
+          <arg name="whole_image_detection/yolox_roi_label_remap_path" value="$(var whole_image_detection/yolox_roi_label_remap_path)"/>
         </include>
       </group>
     </group>
