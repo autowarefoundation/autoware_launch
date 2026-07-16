@@ -4,7 +4,7 @@
       - safety::UncrossableBoundaryDepartureFilter
 
     shadow_mode_filter_names:
-      - safety::CollisionCheckFilter
+      # - safety::CollisionCheckFilter
       - safety::VehicleConstraintFilter
       - traffic_rule::TrafficLightFilter
 
