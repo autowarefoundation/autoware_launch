@@ -68,6 +68,7 @@ units:
   - path: /planning/none
     type: and
     list:
+      - { type: link, link: /planning/001-topic_status/trajectory-error }
       - { type: link, link: /planning/015-intersection_collision_checker-error }
       - { type: link, link: /planning/018-rear_collision_checker-error }
 
@@ -76,6 +77,12 @@ units:
     node: /adapi/node/routing
     name: state
     timeout: 3.0
+
+  - path: /planning/001-topic_status/trajectory-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/001-topic_status/trajectory
 
   - path: /planning/003-trajectory_finite_validation-error
     type: warn-to-ok
@@ -178,6 +185,13 @@ units:
     item:
       type: link
       link: /planning/020-boundary_departure
+
+  - path: /planning/001-topic_status/trajectory
+    type: diag
+    node: topic_state_monitor_scenario_planning_trajectory
+    name: planning_topic_status
+    timeout: 3.0
+    # latch: 0.0
 
   - path: /planning/003-trajectory_finite_validation
     type: diag
