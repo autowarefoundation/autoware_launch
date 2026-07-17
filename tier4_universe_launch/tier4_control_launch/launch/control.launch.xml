@@ -79,9 +79,7 @@
     </group>
 
     <group>
-      <!-- shift decider: runs as autoware::agnocast_wrapper::Node, which does not support
-           being loaded into any component container (agnocast-aware or not), so it is
-           launched standalone instead. -->
+      <!-- shift decider -->
       <node pkg="autoware_shift_decider" exec="autoware_shift_decider" name="autoware_shift_decider" output="screen">
         <remap from="input/control_cmd" to="/control/trajectory_follower/control_cmd"/>
         <remap from="input/state" to="/autoware/state"/>
