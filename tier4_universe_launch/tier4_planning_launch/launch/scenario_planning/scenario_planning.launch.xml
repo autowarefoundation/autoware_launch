@@ -29,8 +29,6 @@
       </include>
     </group>
     <!-- motion velocity smoother -->
-    <!-- standalone (not a composable_node in a container): agnocast::Node does not run inside a
-         component container, so this node is always launched standalone. -->
     <group>
       <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
 
