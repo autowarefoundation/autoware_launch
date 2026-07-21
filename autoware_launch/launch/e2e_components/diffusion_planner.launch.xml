@@ -63,6 +63,7 @@
   <arg name="trajectory_selector_param_path"/>
   <arg name="trajectory_concatenator_param_path"/>
   <arg name="trajectory_validator_param_path"/>
+  <arg name="validator_diagnostic_param_path"/>
   <arg name="trajectory_ranker_param_path"/>
 
   <group>
@@ -166,6 +167,7 @@
         <arg name="trajectory_selector_param_path" value="$(var trajectory_selector_param_path)"/>
         <arg name="trajectory_concatenator_param_path" value="$(var trajectory_concatenator_param_path)"/>
         <arg name="trajectory_validator_param_path" value="$(var trajectory_validator_param_path)"/>
+        <arg name="validator_diagnostic_param_path" value="$(var validator_diagnostic_param_path)"/>
         <arg name="input_generative_trajectories" value="/planning/generator/candidate_trajectories"/>
         <arg name="input_backup_trajectories" value="/planning/generator/minimum_rule_based/candidate_trajectories"/>
         <arg name="output_trajectories" value="/planning/trajectory_selector/validator/candidate_trajectories"/>

@@ -1,0 +1,5 @@
+/**:
+  ros__parameters:
+    configured_actions:
+      - uncrossable_boundary_departure_filter:moderate:trajectory_validator_uncrossable_boundary_departure_danger
+    no_candidates_diag_status_name: trajectory_validator_no_candidate_trajectory
