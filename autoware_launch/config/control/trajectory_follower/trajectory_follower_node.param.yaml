@@ -9,10 +9,14 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/6a6a2ec761674267f2ffd6222efc8086f50c9be9/control/autoware_trajectory_follower_node/param/trajectory_follower_node.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/58433ba867863a8caf7b9c1499af7e9a9ba1b67a/control/autoware_trajectory_follower_node/param/trajectory_follower_node.param.yaml
 
 /**:
   ros__parameters:
+    # common trajectory reference mode for controllers
+    # spatial: distance-based tracking (current behavior)
+    # temporal: time-step-based tracking
+    trajectory_reference_mode: "spatial"
     ctrl_period: 0.03
     timeout_thr_sec: 0.5
     cyclic_message_timeout_thr_sec: 0.9
