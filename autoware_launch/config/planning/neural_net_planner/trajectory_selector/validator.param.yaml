@@ -109,6 +109,7 @@
       amber_rejection_hysteresis_duration: 0.5 # [s] hysteresis duration to persist an AMBER rejection
       ego_stopped_velocity_threshold: 0.05 # [m/s] velocity below which ego is considered stopped
       stop_overshoot_margin: 0.5 # [m] maximum distance between the stop line and the trajectory stop point to consider the trajectory feasible
+      allow_if_cannot_stop_distance: 1.0 # [m]
       checked_trajectory_length:  # maximum length of the planned trajectory that is scanned for traffic light stop lines.
         deceleration_limit: 1.0  # [m/s^2] deceleration limit to calculate the stop distance used as trajectory length limit
         jerk_limit: 2.0  # [m/s^3] jerk limit to calculate the stop distance used as trajectory length limit
