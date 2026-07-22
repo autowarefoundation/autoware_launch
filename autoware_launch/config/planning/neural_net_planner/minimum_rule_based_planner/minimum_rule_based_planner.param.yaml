@@ -38,6 +38,7 @@
       stop_margin_distance: 0.0 # [m]
       stop_distance_from_crosswalk: 3.5 # [m]
       stop_distance_from_private_area: 3.0 # [m]
+      stop_distance_from_intersection: 1.0 # [m]
       max_deceleration: 4.0 # [m/s^2]
       max_jerk: 5.0 # [m/s^3]
       stop_point_diff_threshold: 0.5 # [m]
