@@ -73,6 +73,7 @@
 
   <!-- Internal interfaces -->
   <let name="pointpainting/input/pointcloud" value="$(var input/pointcloud)"/>
+  <!-- <let name="pointpainting/input/pointcloud" value="/sensing/lidar/top/pointcloud_merged"/> -->
   <let name="pointpainting/output/objects" value="$(var output/ml_detector/objects)"/>
 
   <let name="segmentation_based_filtered/input/pointcloud" value="$(var input/pointcloud_map/pointcloud)"/>

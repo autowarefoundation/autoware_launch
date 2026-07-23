@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+//changed by noda
 import launch
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
@@ -157,6 +158,8 @@ def launch_setup(context, *args, **kwargs):
             name="crop_box_filter_self",
             remappings=[
                 ("input", "pointcloud_raw_ex"),
+                # ("input", "/sensing/lidar/top/pointcloud_merged"),
+                # ("input", "/sensing/lidar/top1/pointcloud_raw"),
                 ("output", "self_cropped/pointcloud_ex"),
             ],
             parameters=[cropbox_parameters],
