@@ -2,4 +2,5 @@
   ros__parameters:
     configured_actions:
       - uncrossable_boundary_departure_filter:moderate:trajectory_validator_uncrossable_boundary_departure_danger
+      - vehicle_constraint_filter:comfortable:vehicle_constraint_filter_high_caution
     no_candidates_diag_status_name: trajectory_validator_no_candidate_trajectory
