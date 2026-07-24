@@ -13,7 +13,6 @@
 
   <exec_depend>autoware_command_mode_decider</exec_depend>
   <exec_depend>autoware_command_mode_switcher</exec_depend>
-  <exec_depend>autoware_component_interface_tools</exec_depend>
   <exec_depend>autoware_component_state_monitor</exec_depend>
   <exec_depend>autoware_diagnostic_graph_aggregator</exec_depend>
   <exec_depend>autoware_dummy_diag_publisher</exec_depend>
