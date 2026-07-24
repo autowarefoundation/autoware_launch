@@ -79,18 +79,18 @@
     </group>
 
     <group>
+      <!-- shift decider -->
+      <node pkg="autoware_shift_decider" exec="autoware_shift_decider" name="autoware_shift_decider" output="screen">
+        <remap from="input/control_cmd" to="/control/trajectory_follower/control_cmd"/>
+        <remap from="input/state" to="/autoware/state"/>
+        <remap from="input/current_gear" to="/vehicle/status/gear_status"/>
+        <remap from="output/gear_cmd" to="/control/shift_decider/gear_cmd"/>
+        <param from="$(var shift_decider_param_path)"/>
+        <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      </node>
+
       <!-- set a control container to run all required components in the same process -->
       <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="control_container" namespace="">
-        <!-- shift decider -->
-        <composable_node pkg="autoware_shift_decider" plugin="autoware::shift_decider::ShiftDecider" name="autoware_shift_decider">
-          <remap from="input/control_cmd" to="/control/trajectory_follower/control_cmd"/>
-          <remap from="input/state" to="/autoware/state"/>
-          <remap from="input/current_gear" to="/vehicle/status/gear_status"/>
-          <remap from="output/gear_cmd" to="/control/shift_decider/gear_cmd"/>
-          <param from="$(var shift_decider_param_path)"/>
-          <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-        </composable_node>
-
         <!-- vehicle cmd gate -->
         <composable_node pkg="autoware_vehicle_cmd_gate" plugin="autoware::vehicle_cmd_gate::VehicleCmdGate" name="vehicle_cmd_gate" unless="$(var use_control_command_gate)">
           <remap from="input/steering" to="/vehicle/status/steering_status"/>
