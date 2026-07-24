@@ -155,6 +155,7 @@
   <arg name="traffic_light_recognition/whole_image_detection/model_path"/>
   <arg name="traffic_light_recognition/whole_image_detection/label_path"/>
   <arg name="traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path"/>
+  <arg name="traffic_light_recognition/whole_image_detection/ml_package_param_path"/>
   <arg name="traffic_light_recognition/fine_detection/model_path"/>
   <arg name="traffic_light_recognition/fine_detection/label_path"/>
   <arg name="traffic_light_recognition/classification/car/model_path"/>
@@ -427,6 +428,7 @@
         <arg name="whole_image_detection/model_path" value="$(var traffic_light_recognition/whole_image_detection/model_path)"/>
         <arg name="whole_image_detection/label_path" value="$(var traffic_light_recognition/whole_image_detection/label_path)"/>
         <arg name="whole_image_detection/yolox_roi_label_remap_path" value="$(var traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path)"/>
+        <arg name="whole_image_detection/ml_package_param_path" value="$(var traffic_light_recognition/whole_image_detection/ml_package_param_path)"/>
         <arg name="fine_detection/model_path" value="$(var traffic_light_recognition/fine_detection/model_path)"/>
         <arg name="fine_detection/label_path" value="$(var traffic_light_recognition/fine_detection/label_path)"/>
         <arg name="classification/car/model_path" value="$(var traffic_light_recognition/classification/car/model_path)"/>
