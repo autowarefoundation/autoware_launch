@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/1fa8d85dc6a80aed540e9204f37dc83ccd25eefb/planning/behavior_path_planner/autoware_behavior_path_planner/config/scene_module_manager.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/abbc4977816a222baf5bd494af6ca76c8eaf295c/planning/behavior_path_planner/autoware_behavior_path_planner/config/scene_module_manager.param.yaml
 
 # NOTE: The smaller the priority number is, the higher the module priority is.
 /**:
@@ -101,5 +101,5 @@
 
     direction_change:
       enable_rtc: false
-      enable_simultaneous_execution_as_approved_module: false
+      enable_simultaneous_execution_as_approved_module: false # {OVERRIDE}
       enable_simultaneous_execution_as_candidate_module: false
