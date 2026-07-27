@@ -53,6 +53,7 @@ units:
       - { type: link, link: /planning/011-trajectory_steering_rate_validation-error }
       - { type: link, link: /planning/012-trajectory_velocity_deviation_validation-error }
       - { type: link, link: /planning/020-boundary_departure-error }
+      - { type: link, link: /planning/021-traffic_light_filter-error }
       - { type: link, link: /planning/013-trajectory_shift_validation-error }
       - { type: link, link: /planning/014-trajectory_validation_yaw_deviation-error }
       - { type: link, link: /planning/017-trajectory_distance_deviation_validation-error }
@@ -186,6 +187,12 @@ units:
       type: link
       link: /planning/020-boundary_departure
 
+  - path: /planning/021-traffic_light_filter-error
+    type: warn-to-ok
+    item:
+      type: link
+      link: /planning/021-traffic_light_filter
+
   - path: /planning/001-topic_status/trajectory
     type: diag
     node: topic_state_monitor_scenario_planning_trajectory
@@ -309,5 +316,12 @@ units:
     type: diag
     node: trajectory_selector_node
     name: trajectory_validator_uncrossable_boundary_departure_danger
+    timeout: 3.0
+    # latch: 0.0
+
+  - path: /planning/021-traffic_light_filter
+    type: diag
+    node: trajectory_selector_node
+    name: trajectory_validator_traffic_light_filter_danger
     timeout: 3.0
     # latch: 0.0

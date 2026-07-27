@@ -3,11 +3,12 @@
     filter_names:
       - safety::UncrossableBoundaryDepartureFilter
       - safety::TrajectoryFeasibilityFilter
+      - traffic_rule::TrafficLightFilter
 
     shadow_mode_filter_names:
       # - safety::CollisionCheckFilter
       # - safety::TrajectoryFeasibilityFilter
-      - traffic_rule::TrafficLightFilter
+      - ""
 
     out_of_lane:
       time: 2.0
