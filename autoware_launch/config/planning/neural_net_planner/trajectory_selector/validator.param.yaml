@@ -18,6 +18,13 @@
       global_setting:
         time_resolution: 0.1
       drac:
+        stop_tracking:
+          ego:
+            stopped_velocity_threshold: 0.01
+            history_timeout: 0.3
+          object:
+            stopped_velocity_threshold: 0.3
+            history_timeout: 0.3
         enable_assessment:
           # default value is true.
           unknown: false
@@ -55,6 +62,12 @@
               enable_abandon: false
         map_based:
           enable_assessment: true
+          mutual_yield_timeout_arbitration:
+            enabled:
+              base: false
+              pedestrian: true
+              bicycle: true
+            min_wait_time: 3.0
           ego_prioritized_ego_earlier:
             enable_assessment: false # Not evaluated. Must be false
           ego_prioritized_object_earlier:
