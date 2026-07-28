@@ -47,25 +47,26 @@
     # Point filtering by semantic confidence
     min_probability: 0.3
 
-    # Semantic label selection and mapping
-    # YAML declaration order is treated as the input class_id order.
+    # Semantic label selection and mapping.
+    # The list index is treated as the input class_id (order matters).
+    # Inline comments record the source model class name for each index.
     # cspell:ignore pullable
     class_names: # {OVERRIDE}
-      car: car
-      truck: truck
-      bus: bus
-      bicycle: bicycle
-      pedestrian: pedestrian
-      traffic_cone: hazard
-      barrier: hazard
-      debris: hazard
-      drivable_flat: ignore
-      non_drivable_flat: ignore
-      vegetation: ignore
-      building: ignore
-      vertical_thin: hazard
-      static_clutter: ignore
-      noise: ignore
+      - car  # 0: car
+      - truck  # 1: truck
+      - bus  # 2: bus
+      - bicycle  # 3: bicycle
+      - pedestrian  # 4: pedestrian
+      - hazard  # 5: traffic_cone
+      - hazard  # 6: barrier
+      - hazard  # 7: debris
+      - ignore  # 8: drivable_flat
+      - ignore  # 9: non_drivable_flat
+      - ignore  # 10: vegetation
+      - ignore  # 11: building
+      - hazard  # 12: vertical_thin
+      - ignore  # 13: static_clutter
+      - ignore  # 14: noise
 
     # Shape estimation behavior
     use_shape_estimation_corrector: false
