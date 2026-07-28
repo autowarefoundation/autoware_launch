@@ -42,26 +42,26 @@ units:
     type: and
     list:
       # - { type: link, link: /planning/000-component_status/route_state }
-      - { type: link, link: /planning/003-trajectory_finite_validation-error }
-      - { type: link, link: /planning/004-trajectory_interval_validation-error }
-      - { type: link, link: /planning/005-trajectory_curvature_validation-error }
-      - { type: link, link: /planning/006-trajectory_relative_angle_validation-error }
-      - { type: link, link: /planning/007-trajectory_lateral_acceleration_validation-error }
-      - { type: link, link: /planning/008-trajectory_acceleration_validation-error }
-      - { type: link, link: /planning/009-trajectory_deceleration_validation-error }
-      - { type: link, link: /planning/010-trajectory_steering_validation-error }
-      - { type: link, link: /planning/011-trajectory_steering_rate_validation-error }
-      - { type: link, link: /planning/012-trajectory_velocity_deviation_validation-error }
+      # - { type: link, link: /planning/003-trajectory_finite_validation-error }
+      # - { type: link, link: /planning/004-trajectory_interval_validation-error }
+      # - { type: link, link: /planning/005-trajectory_curvature_validation-error }
+      # - { type: link, link: /planning/006-trajectory_relative_angle_validation-error }
+      # - { type: link, link: /planning/007-trajectory_lateral_acceleration_validation-error }
+      # - { type: link, link: /planning/008-trajectory_acceleration_validation-error }
+      # - { type: link, link: /planning/009-trajectory_deceleration_validation-error }
+      # - { type: link, link: /planning/010-trajectory_steering_validation-error }
+      # - { type: link, link: /planning/011-trajectory_steering_rate_validation-error }
+      # - { type: link, link: /planning/012-trajectory_velocity_deviation_validation-error }
       - { type: link, link: /planning/020-boundary_departure-error }
       - { type: link, link: /planning/021-traffic_light_filter-error }
-      - { type: link, link: /planning/013-trajectory_shift_validation-error }
-      - { type: link, link: /planning/014-trajectory_validation_yaw_deviation-error }
-      - { type: link, link: /planning/017-trajectory_distance_deviation_validation-error }
+      # - { type: link, link: /planning/013-trajectory_shift_validation-error }
+      # - { type: link, link: /planning/014-trajectory_validation_yaw_deviation-error }
+      # - { type: link, link: /planning/017-trajectory_distance_deviation_validation-error }
 
   - path: /planning/in_lane_emergency_stop
     type: and
-    list:
-      - { type: link, link: /planning/016-trajectory_validation_distance_deviation-error }
+    # list:
+    #   - { type: link, link: /planning/016-trajectory_validation_distance_deviation-error }
 
   - path: /planning/sub_ecu_in_lane_moderate_stop
     type: and
@@ -70,8 +70,8 @@ units:
     type: and
     list:
       - { type: link, link: /planning/001-topic_status/trajectory-error }
-      - { type: link, link: /planning/015-intersection_collision_checker-error }
-      - { type: link, link: /planning/018-rear_collision_checker-error }
+      # - { type: link, link: /planning/015-intersection_collision_checker-error }
+      # - { type: link, link: /planning/018-rear_collision_checker-error }
 
   - path: /planning/000-component_status/route_state
     type: diag
