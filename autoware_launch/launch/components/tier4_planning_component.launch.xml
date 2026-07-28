@@ -63,7 +63,7 @@
       <arg name="trajectory_concatenator_param_path" value="$(var neural_net_planner_config_path)/trajectory_selector/concatenator.param.yaml"/>
       <arg name="trajectory_validator_param_path" value="$(var neural_net_planner_config_path)/trajectory_selector/validator.param.yaml"/>
       <arg name="validator_diagnostic_param_path" value="$(var neural_net_planner_config_path)/trajectory_selector/validator_diagnostic.param.yaml"/>
-      <arg name="trajectory_ranker_param_path" value="$(var neural_net_planner_config_path)/simple_trajectory_ranker.param.yaml"/>
+      <arg name="trajectory_ranker_param_path" value="$(var neural_net_planner_config_path)/trajectory_selector/ranker.param.yaml"/>
     </include>
   </group>
 
