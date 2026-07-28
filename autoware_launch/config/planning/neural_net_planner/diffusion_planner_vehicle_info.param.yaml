@@ -6,9 +6,10 @@
     wheel_tread: 1.754 # front:1.754 rear:1.564 between left wheel center and right wheel center
     front_overhang: 0.95099 # between front wheel center and vehicle front
     rear_overhang: 1.52579 # between rear wheel center and vehicle rear
-    left_overhang: 0.26878 # between left wheel center and vehicle left
-    right_overhang: 0.26878 # between right wheel center and vehicle right
+    left_overhang: 0.32358 # between left wheel center and vehicle left
+    right_overhang: 0.34983 # between right wheel center and vehicle right
     vehicle_height: 3.080
     max_steer_angle: 0.640 # [rad] = 36.7 [deg]
 
-## https://github.com/tier4/j6_gen2_description/pull/41/changes For Diffusion Planner 20260503-220950_with_takanawa_16days_weak_smoothing__0060__0080
+## https://github.com/tier4/j6_gen2_description/pull/41/changes
+## Same with the latest after that #41, for Diffusion Planner release 20260724-174639_resume_from_fix_vehicle_params_0050__epoch0080
