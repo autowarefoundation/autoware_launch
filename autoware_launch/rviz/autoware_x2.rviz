@@ -3153,32 +3153,6 @@ Visualization Manager:
                 Reliability Policy: Reliable
                 Value: /planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/debug/linestring_marker
               Value: true
-            - Class: rviz_default_plugins/MarkerArray
-              Enabled: false
-              Name: ModifierObstacleStopMarker
-              Namespaces:
-                {}
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /planning/trajectory_generator/neural_network_based_planner/trajectory_modifier/obstacle_stop/debug/marker
-              Value: true
-            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
-              Enabled: true
-              Name: PlanningFactor(NeuralNetworkPlanner)
-              Namespaces:
-                {}
-              Show Safety Factors: false
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /planning/planning_factors/neural_network_planner
-              Value: true
-              show_safety_factors: false
             - Alpha: 0.9990000128746033
               Class: autoware_perception_rviz_plugin/PredictedObjects
               Color: 255; 255; 255
@@ -3240,62 +3214,160 @@ Visualization Manager:
               Vector:
                 Twist: false
                 Yaw Rate: false
-            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+            - Class: rviz_common/Group
+              Displays:
+                - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+                  Enabled: true
+                  Name: PlanningFactor(CollisionCheckFilter)
+                  Namespaces:
+                    {}
+                  Show Safety Factors: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/planning_factors/trajectory_selector
+                  Value: true
+                  show_safety_factors: true
+                - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+                  Enabled: true
+                  Name: PlanningFactor(ModifierTrafficLightStop)
+                  Namespaces:
+                    {}
+                  Show Safety Factors: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/planning_factors/modifier_traffic_light_stop
+                  Value: true
+                  show_safety_factors: true
+                - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+                  Enabled: true
+                  Name: PlanningFactor(ModifierObstacleStop)
+                  Namespaces:
+                    {}
+                  Show Safety Factors: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/planning_factors/modifier_obstacle_stop
+                  Value: true
+                  show_safety_factors: true
+                - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+                  Enabled: true
+                  Name: PlanningFactor(ModifierSurroundObstacleStop)
+                  Namespaces:
+                    {}
+                  Show Safety Factors: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/planning_factors/modifier_surround_obstacle_stop
+                  Value: true
+                  show_safety_factors: true
+                - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+                  Enabled: true
+                  Name: PlanningFactor(DiffusionPlanner)
+                  Namespaces:
+                    {}
+                  Show Safety Factors: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/planning_factors/diffusion_planner
+                  Value: true
+                  show_safety_factors: true
+                - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+                  Enabled: true
+                  Name: PlanningFactor(NeuralNetworkPlanner)
+                  Namespaces:
+                    {}
+                  Show Safety Factors: false
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/planning_factors/neural_network_planner
+                  Value: true
+                  show_safety_factors: false
+                - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+                  Enabled: true
+                  Name: PlanningFactor(TrajectoryValidator)
+                  Namespaces:
+                    {}
+                  Show Safety Factors: true
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/planning_factors/trajectory_validator
+                  Value: true
+                  show_safety_factors: true
               Enabled: true
-              Name: PlanningFactor(DiffusionPlanner)
-              Namespaces:
-                {}
-              Show Safety Factors: true
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /planning/planning_factors/diffusion_planner
-              Value: true
-              show_safety_factors: true
-            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
+              Name: PlanningFactors
+            - Class: rviz_common/Group
+              Displays:
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: false
+                  Name: ModifierObstacleStopMarker
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/trajectory_generator/trajectory_modifier/obstacle_stop/debug/marker
+                  Value: false
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: true
+                  Name: TrajectoryValidator(UncrossableBoundaryDepartureFilter)
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/trajectory_selector/trajectory_selector_node/debug/validator/markers/uncrossable_boundary_departure_filter
+                  Value: true
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: false
+                  Name: TrajectoryValidator(CrosswalkFilter)
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/trajectory_selector/trajectory_selector_node/debug/validator/markers/crosswalk_filter
+                  Value: false
+                - Class: rviz_default_plugins/MarkerArray
+                  Enabled: false
+                  Name: TrajectoryValidator(CollisionCheckFilter)
+                  Namespaces:
+                    {}
+                  Topic:
+                    Depth: 5
+                    Durability Policy: Volatile
+                    History Policy: Keep Last
+                    Reliability Policy: Reliable
+                    Value: /planning/trajectory_selector/trajectory_selector_node/debug/validator/markers/collision_check_filter
+                  Value: false
               Enabled: true
-              Name: PlanningFactor(ModifierObstacleStop)
-              Namespaces:
-                {}
-              Show Safety Factors: true
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /planning/planning_factors/modifier_obstacle_stop
-              Value: true
-              show_safety_factors: true
-            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
-              Enabled: true
-              Name: PlanningFactor(ModifierTrafficLightStop)
-              Namespaces:
-                {}
-              Show Safety Factors: true
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /planning/planning_factors/modifier_traffic_light_stop
-              Value: true
-              show_safety_factors: true
-            - Class: tier4_planning_factor_rviz_plugin/PlanningFactorRvizPlugin
-              Enabled: true
-              Name: PlanningFactor(CollisionCheckFilter)
-              Namespaces:
-                {}
-              Show Safety Factors: true
-              Topic:
-                Depth: 5
-                Durability Policy: Volatile
-                History Policy: Keep Last
-                Reliability Policy: Reliable
-                Value: /planning/planning_factors/trajectory_selector
-              Value: true
-              show_safety_factors: true
+              Name: DebugMarkers
           Enabled: true
           Name: NeuralNetworkBasedPlanner
         - Class: rviz_common/Group
@@ -3696,6 +3768,26 @@ Visualization Manager:
                     GoalPose: true
                     MissionDetailsDisplay: true
                     RouteArea: true
+                    Value: true
+                  NeuralNetworkBasedPlanner:
+                    PlanningFactors:
+                      PlanningFactor(CollisionCheckFilter): true
+                      PlanningFactor(DiffusionPlanner): true
+                      PlanningFactor(ModifierObstacleStop): true
+                      PlanningFactor(ModifierSurroundObstacleStop): true
+                      PlanningFactor(ModifierTrafficLightStop): true
+                      PlanningFactor(NeuralNetworkPlanner): true
+                      Value: true
+                    DebugMarkers:
+                      ModifierObstacleStopMarker: true
+                      TrajectoryValidator(CollisionCheckFilter): true
+                      TrajectoryValidator(CrosswalkFilter): true
+                      TrajectoryValidator(UncrossableBoundaryDepartureFilter): true
+                      Value: true
+                    DiffusionPlannerRoadBoarderMarker: true
+                    DiffusionPlannerRouteMarker: true
+                    ModifierObstacleStopMarker: false
+                    PredictedObjects: true
                     Value: true
                   ScenarioPlanning:
                     LaneDriving:
@@ -4964,30 +5056,6 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /planning/trajectory_selector/trajectory_selector_node/debug/validator/plugin_report_text
-      Value: true
-    - Class: rviz_default_plugins/MarkerArray
-      Enabled: false
-      Name: TrajectoryValidator(CollisionCheckFilter)
-      Namespaces:
-        {}
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /planning/trajectory_selector/trajectory_selector_node/debug/validator/markers/collision_check_filter
-      Value: true
-    - Class: rviz_default_plugins/MarkerArray
-      Enabled: true
-      Name: TrajectoryValidator(UncrossableBoundaryDepartureFilter)
-      Namespaces:
-        {}
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /planning/trajectory_selector/trajectory_selector_node/debug/validator/markers/uncrossable_boundary_departure_filter
       Value: true
   Enabled: true
   Global Options:
