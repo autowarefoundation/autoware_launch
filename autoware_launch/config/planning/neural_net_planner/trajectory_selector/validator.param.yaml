@@ -79,6 +79,9 @@
               danger_limit: -3.0
               fatal_limit: -6.0
               enable_abandon: true
+            object_drac_acceleration:
+              safe_limit: -0.5
+              low_caution_limit: -1.5
           object_prioritized_object_earlier:
             enable_assessment: true
             ego_drac_acceleration:
