@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/fe12efd70793bd1d5b4e06a20016dd2c9e1803d2/control/autoware_mpc_lateral_controller/param/lateral_controller_defaults.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/58433ba867863a8caf7b9c1499af7e9a9ba1b67a/control/autoware_mpc_lateral_controller/param/lateral_controller_defaults.param.yaml
 
 /**:
   ros__parameters:
@@ -17,6 +17,7 @@
     traj_resample_dist: 0.1         # path resampling interval [m]
     use_steer_prediction: false     # flag for using steer prediction (do not use steer measurement)
     use_delayed_initial_state: true # flag to use x0_delayed as initial state for predicted trajectory
+    # This default file is for MPC-specific parameters only
 
     # -- path smoothing --
     enable_path_smoothing: false   # flag for path smoothing

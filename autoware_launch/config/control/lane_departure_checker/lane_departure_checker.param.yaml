@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/d4cfa920a500ba8372bb74a9c7e308cd6d166de8/control/autoware_lane_departure_checker/config/lane_departure_checker.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/003fc59248023ea53372e077dc379247e4faa2f7/control/autoware_lane_departure_checker/config/lane_departure_checker.param.yaml
 
 /**:
   ros__parameters:

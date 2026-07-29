@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/b5f1243c2e320b4436327ed33cc0acbbc52d2d4e/planning/autoware_trajectory_processor/config/trajectory_modifier.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/b7dd0110556c8aecc1ba4fdfb8b6c3b7fcc60ca0/planning/autoware_trajectory_processor/config/trajectory_modifier.param.yaml
 
 /**:
   ros__parameters:
@@ -148,7 +148,11 @@
       treat_amber_light_as_red: false
       treat_unknown_light_as_red: false
       overshoot_tolerance: 0.0 # [m]
+      allow_if_cannot_stop_distance: 0.0 # [m]
       th_stable_duration_red: 0.2 # [s]
       th_stable_duration_amber: 0.2 # [s]
+      th_stable_duration_unknown: 0.0 # [s]
       th_amber_rejection_hysteresis: 0.5 # [s]
       crossing_time_limit: 2.75 # [s]
+      delay_response_time: 0.5 # [s]
+      ego_stopped_vel_th: 0.01 # [m/s]
