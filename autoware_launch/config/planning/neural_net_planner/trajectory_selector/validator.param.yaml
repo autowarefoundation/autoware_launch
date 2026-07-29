@@ -6,7 +6,7 @@
       - traffic_rule::TrafficLightFilter
 
     shadow_mode_filter_names:
-      # - safety::CollisionCheckFilter
+      - safety::CollisionCheckFilter
       # - safety::TrajectoryFeasibilityFilter
       - traffic_rule::CrosswalkFilter
 
