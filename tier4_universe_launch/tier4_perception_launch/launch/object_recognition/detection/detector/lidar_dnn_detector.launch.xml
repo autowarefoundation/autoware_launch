@@ -21,10 +21,6 @@
   <arg name="lidar_short_range_detection_model_type" description="options: `centerpoint_short_range`">
     <choice value="centerpoint_short_range"/>
   </arg>
-  <arg name="lidar_short_range_detection_model_name" description="options: `centerpoint_short_range`">
-    <choice value="centerpoint_short_range"/>
-    <choice value=""/>
-  </arg>
 
   <!-- External interfaces -->
   <arg name="node/pointcloud_container"/>
@@ -36,10 +32,6 @@
   <group if="$(var use_short_range_detection)">
     <!-- short_range CenterPoint -->
     <group if="$(eval &quot;'$(var lidar_short_range_detection_model_type)'=='centerpoint_short_range'&quot;)">
-      <let
-        name="lidar_short_range_detection_model_name"
-        value="$(eval &quot;'centerpoint_short_range' if ''=='$(var lidar_short_range_detection_model_name)' else '$(var lidar_short_range_detection_model_name)'&quot;)"
-      />
       <push-ros-namespace namespace="short_range_centerpoint"/>
       <group>
         <include file="$(find-pkg-share autoware_lidar_centerpoint)/launch/lidar_centerpoint.launch.xml">
