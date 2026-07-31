@@ -12,10 +12,16 @@
         forward: 300.0
 
       early_stop:
+        enable: false
         expected_ego_speed_parking: 2.8
         max_lat_accel_parking: 0.8
         max_decel_parking: 1.0
         max_jerk_parking: 1.0
+
+      # Used only when early_stop.enable is false
+      smooth_goal_connection:
+        search_radius_range: 7.5
+        pre_goal_offset: 1.0
 
       lane_change_failure_stop_margin: 0.0
 
