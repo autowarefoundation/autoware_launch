@@ -50,6 +50,7 @@ units:
     type: and
     list:
       - { type: link, link: /autoware/modes/autonomous }
+      - { type: link, link: /autoware/system/available }
 
   - path: /autoware/modes/pull_over
     type: and
