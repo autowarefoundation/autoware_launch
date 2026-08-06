@@ -124,7 +124,7 @@
   <arg name="traffic_light_recognition/classification/pedestrian/model_path" default="$(var data_path)/traffic_light_classifier/$(var traffic_light_ped_classifier_model)"/>
   <let name="occupancy_grid_map_method_full" value="$(var occupancy_grid_map_method)_occupancy_grid_map"/>
 
-  <include file="$(find-pkg-share tier4_perception_launch)/launch/perception.launch.xml">
+  <include file="$(find-pkg-share autoware_perception_launch)/launch/perception.launch.xml">
     <arg name="data_path" value="$(var data_path)"/>
     <!-- general options to switch launch function/module -->
     <arg name="mode" value="$(var perception_mode)"/>

@@ -169,7 +169,7 @@
 
   <!-- Filter -->
   <group>
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/filter/object_filter.launch.xml" if="$(var use_object_filter)">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/object_filter.launch.xml" if="$(var use_object_filter)">
       <arg name="objects_filter_method" value="$(var objects_filter_method)"/>
       <arg name="input/objects" value="$(var filter/input/objects)"/>
       <arg name="output/objects" value="$(var filter/output/objects)"/>

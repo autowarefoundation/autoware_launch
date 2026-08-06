@@ -236,7 +236,7 @@
     <!-- Object segmentation module -->
     <group>
       <push-ros-namespace namespace="obstacle_segmentation"/>
-      <include file="$(find-pkg-share tier4_perception_launch)/launch/obstacle_segmentation/ground_segmentation/ground_segmentation.launch.py">
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/obstacle_segmentation/ground_segmentation/ground_segmentation.launch.py">
         <arg name="base_frame" value="base_link"/>
         <arg name="use_intra_process" value="true"/>
         <arg name="use_multithread" value="true"/>
@@ -265,7 +265,7 @@
         value="/perception/obstacle_segmentation/single_frame/pointcloud"
         if="$(eval &quot;'$(var use_semantic_segmentation_ptv3)' == 'false' and '$(var use_obstacle_segmentation_time_series_filter)' == 'true'&quot;)"
       />
-      <include file="$(find-pkg-share tier4_perception_launch)/launch/occupancy_grid_map/probabilistic_occupancy_grid_map.launch.xml">
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/occupancy_grid_map/probabilistic_occupancy_grid_map.launch.xml">
         <arg name="input/obstacle_pointcloud" value="$(var unfiltered_obstacle_pointcloud)"/>
         <arg name="input/raw_pointcloud" value="$(var perception_pointcloud)"/>
         <arg name="output" value="/perception/occupancy_grid_map/map"/>
@@ -285,7 +285,7 @@
       <!-- Detection module -->
       <group>
         <push-ros-namespace namespace="detection"/>
-        <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detection.launch.xml">
+        <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detection.launch.xml">
           <arg name="mode" value="$(var mode)"/>
           <arg name="use_roi_detected_object_validator" value="$(var use_roi_detected_object_validator)"/>
           <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
@@ -370,7 +370,7 @@
       <!-- Tracking module -->
       <group>
         <push-ros-namespace namespace="tracking"/>
-        <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/tracking/tracking.launch.xml">
+        <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/tracking/tracking.launch.xml">
           <arg name="mode" value="$(var mode)"/>
           <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
           <arg name="object_recognition_tracking_radar_tracked_object_sorter_param_path" value="$(var object_recognition_tracking_radar_tracked_object_sorter_param_path)"/>
@@ -392,7 +392,7 @@
       <!-- Prediction module -->
       <group>
         <push-ros-namespace namespace="prediction"/>
-        <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/prediction/prediction.launch.xml">
+        <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/prediction/prediction.launch.xml">
           <arg name="use_vector_map" value="$(var use_vector_map)"/>
         </include>
       </group>
@@ -408,7 +408,7 @@
     <!-- Traffic light module -->
     <group if="$(var use_traffic_light_recognition)">
       <push-ros-namespace namespace="traffic_light_recognition"/>
-      <include file="$(find-pkg-share tier4_perception_launch)/launch/traffic_light_recognition/traffic_light.launch.xml">
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/traffic_light_recognition/traffic_light.launch.xml">
         <arg name="input_pointcloud_for_traffic_light_occlusion_predictor" value="$(var input_pointcloud_for_traffic_light_occlusion_predictor)"/>
         <arg name="fusion_only" value="$(var traffic_light_recognition/fusion_only)"/>
         <arg name="camera_namespaces" value="$(var traffic_light_recognition/camera_namespaces)"/>

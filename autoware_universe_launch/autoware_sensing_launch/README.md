@@ -1,8 +1,8 @@
-# tier4_sensing_launch
+# autoware_sensing_launch
 
 ## Structure
 
-![tier4_sensing_launch](./sensing_launch.drawio.svg)
+![autoware_sensing_launch](./sensing_launch.drawio.svg)
 
 ## Package Dependencies
 
@@ -13,7 +13,7 @@ Please see `<exec_depend>` in `package.xml`.
 You can include as follows in `*.launch.xml` to use `sensing.launch.xml`.
 
 ```xml
-  <include file="$(find-pkg-share tier4_sensing_launch)/launch/sensing.launch.xml">
+  <include file="$(find-pkg-share autoware_sensing_launch)/launch/sensing.launch.xml">
     <arg name="launch_driver" value="true"/>
     <arg name="sensor_model" value="$(var sensor_model)"/>
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
@@ -43,5 +43,5 @@ This package finds settings with variables.
 ex.)
 
 ```xml
-<include file="$(find-pkg-share tier4_sensing_launch)/launch/$(var sensor_model)/lidar.launch.xml">
+<include file="$(find-pkg-share autoware_sensing_launch)/launch/$(var sensor_model)/lidar.launch.xml">
 ```

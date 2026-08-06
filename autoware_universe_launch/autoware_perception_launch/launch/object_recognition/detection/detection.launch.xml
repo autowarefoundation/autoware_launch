@@ -195,7 +195,7 @@
   <!-- Detector -->
   <group if="$(eval &quot;'$(var switch/detector/camera_lidar)' == 'true' and '$(var use_semantic_segmentation_ptv3)' == 'false'&quot;)">
     <!-- Camera-Lidar detectors -->
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/camera_lidar_detector.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/camera_lidar_detector.launch.xml">
       <arg name="ns" value="$(var ns)"/>
       <arg name="number_of_cameras" value="$(var number_of_cameras)"/>
       <arg name="input/camera0/image" value="$(var input/camera0/image)"/>
@@ -254,7 +254,7 @@
 
   <!-- replace camera_lidar_detector with lidar_semantic_segmentation_detector -->
   <group if="$(var use_semantic_segmentation_ptv3)">
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/lidar_semantic_segmentation_detector.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_semantic_segmentation_detector.launch.xml">
       <arg name="ns" value="$(var ns)"/>
       <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
       <arg name="euclidean_cluster/input/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
@@ -266,7 +266,7 @@
   </group>
   <group if="$(var switch/detector/irregular_object)">
     <!-- Irregular object detector -->
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/camera_lidar_irregular_object_detector.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/camera_lidar_irregular_object_detector.launch.xml">
       <arg name="ns" value="$(var ns)"/>
       <arg name="pipeline_ns" value="$(var irregular_object_detector_ns)"/>
       <arg name="fusion_camera_ids" value="$(var irregular_object_detector_fusion_camera_ids)"/>
@@ -280,7 +280,7 @@
   </group>
   <group if="$(var switch/detector/lidar_dnn)">
     <!-- Lidar dnn-based detectors-->
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/lidar_dnn_detector.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_dnn_detector.launch.xml">
       <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
       <arg name="output/objects" value="$(var lidar_ml_detector/output/objects)"/>
       <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
@@ -294,7 +294,7 @@
   </group>
   <group if="$(var switch/detector/lidar_rule)">
     <!-- Lidar rule-based detectors-->
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/lidar_rule_detector.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_rule_detector.launch.xml">
       <arg name="ns" value="$(var ns)"/>
       <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
       <arg name="input/pointcloud_map/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
@@ -309,7 +309,7 @@
   <group if="$(var switch/detector/radar)">
     <!-- Radar detector/filter, in case of sensor fusion-->
     <push-ros-namespace namespace="radar"/>
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/filter/radar_filter.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/radar_filter.launch.xml">
       <arg name="input/radar" value="$(var input/radar)"/>
       <arg name="output/objects" value="$(var radar_pipeline/output/objects)"/>
       <arg name="radar_lanelet_filtering_range_param_path" value="$(var radar_lanelet_filtering_range_param_path)"/>
@@ -318,7 +318,7 @@
   </group>
   <group scoped="false" if="$(eval '&quot;$(var mode)&quot;==&quot;camera&quot;')">
     <!-- Camera-based bev detectors-->
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/camera_bev_detector.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/camera_bev_detector.launch.xml">
       <arg name="input/camera0/image" value="$(var input/camera0/image)"/>
       <arg name="input/camera0/info" value="$(var input/camera0/info)"/>
       <arg name="input/camera1/image" value="$(var input/camera1/image)"/>
@@ -341,7 +341,7 @@
   </group>
   <!-- DetectionByTracker -->
   <group if="$(var switch/detector/tracker_based)">
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/tracker_based_detector.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/tracker_based_detector.launch.xml">
       <arg name="input/clusters" value="$(var tracker_based_detector/input/clusters)"/>
       <arg name="input/tracked_objects" value="$(var input/tracked_objects)"/>
       <arg name="output/objects" value="$(var tracker_based_detector/output/objects)"/>
@@ -351,7 +351,7 @@
 
   <group if="$(var switch/detector/camera_vru_detector)">
     <!-- Camera VRU detectors-->
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/detector/camera_vru_detector.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/camera_vru_detector.launch.xml">
       <arg name="ns" value="$(var ns)"/>
       <arg name="rois_ids" value="$(var camera_vru_detector_rois_ids)"/>
       <arg name="input/camera0/rois" value="$(var input/camera0/rois)"/>
@@ -377,7 +377,7 @@
 
   <!-- Filter -->
   <group if="$(eval &quot;'$(var switch/filter/pointcloud)' == 'true' and '$(var use_semantic_segmentation_ptv3)' == 'false'&quot;)">
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/filter/pointcloud_map_filter.launch.py">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/pointcloud_map_filter.launch.py">
       <arg name="input_topic" value="$(var input/obstacle_segmentation/pointcloud)"/>
       <arg name="output_topic" value="$(var pointcloud_filter/output/pointcloud)"/>
       <arg name="use_intra_process" value="true"/>
@@ -387,7 +387,7 @@
     </include>
   </group>
   <group if="$(var switch/filter/lidar_object)">
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/filter/object_validator.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/object_validator.launch.xml">
       <arg name="input/obstacle_pointcloud" value="$(var object_validator/input/obstacle_pointcloud)"/>
       <arg name="input/objects" value="$(var lidar_ml_detector/output/objects)"/>
       <arg name="output/objects" value="$(var lidar_object_filter/output/objects)"/>
@@ -395,7 +395,7 @@
     </include>
   </group>
   <group if="$(var switch/filter/camera_lidar_object)">
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/filter/object_filter.launch.xml" if="$(var use_object_filter)">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/object_filter.launch.xml" if="$(var use_object_filter)">
       <arg name="objects_filter_method" value="lanelet_filter"/>
       <arg name="input/objects" value="$(var camera_lidar_rule_detector/output/objects)"/>
       <arg name="output/objects" value="$(var camera_lidar_object_filter/output/objects)"/>
@@ -407,7 +407,7 @@
     <!-- Camera-Lidar-Radar merger -->
     <let name="input/lidar_cluster/objects" value="$(var camera_lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
     <let name="input/lidar_cluster/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/camera_lidar_radar_merger.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/merger/camera_lidar_radar_merger.launch.xml">
       <arg name="number_of_cameras" value="$(var number_of_cameras)"/>
       <arg name="input/camera0/image" value="$(var input/camera0/image)"/>
       <arg name="input/camera0/info" value="$(var input/camera0/info)"/>
@@ -461,7 +461,7 @@
     <!-- Camera-Lidar merger -->
     <let name="input/lidar_cluster/objects" value="$(var camera_lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
     <let name="input/lidar_cluster/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/camera_lidar_merger.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/merger/camera_lidar_merger.launch.xml">
       <arg name="number_of_cameras" value="$(var number_of_cameras)"/>
       <arg name="input/camera0/image" value="$(var input/camera0/image)"/>
       <arg name="input/camera0/info" value="$(var input/camera0/info)"/>
@@ -512,7 +512,7 @@
     <let name="input/lidar_cluster/objects" value="$(var lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
     <let name="input/lidar_cluster/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
     <group>
-      <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/lidar_merger.launch.xml">
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/merger/lidar_merger.launch.xml">
         <arg name="input/lidar_ml/objects" value="$(var object_merger/input/ml_detected_objects)"/>
         <arg name="input/lidar_cluster/objects" value="$(var input/lidar_cluster/objects)"/>
         <arg name="output/objects" value="lidar/objects"/>
@@ -537,7 +537,7 @@
     <!-- Lidar object merger-->
     <let name="input/lidar_cluster/objects" value="$(var lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
     <let name="input/lidar_cluster/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
-    <include file="$(find-pkg-share tier4_perception_launch)/launch/object_recognition/detection/merger/lidar_merger.launch.xml">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/merger/lidar_merger.launch.xml">
       <arg name="input/lidar_ml/objects " value="$(var object_merger/input/ml_detected_objects)"/>
       <arg name="input/lidar_cluster/objects" value="$(var input/lidar_cluster/objects)"/>
       <arg name="input/detection_by_tracker/objects" value="$(var tracker_based_detector/output/objects)"/>

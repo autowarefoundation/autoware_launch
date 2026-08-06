@@ -229,7 +229,7 @@
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_perception_launch</span>
+                  <span>package: autoware_perception_launch</span>
                 </div>
               </div>
             </div>
@@ -806,7 +806,7 @@
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_perception_launch</span>
+                  <span>package: autoware_perception_launch</span>
                 </div>
               </div>
             </div>
@@ -1048,7 +1048,7 @@
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_sensing_launch</span>
+                  <span>package: autoware_sensing_launch</span>
                 </div>
               </div>
             </div>
@@ -1073,7 +1073,7 @@
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_sensing_launch</span>
+                  <span>package: autoware_sensing_launch</span>
                 </div>
               </div>
             </div>
