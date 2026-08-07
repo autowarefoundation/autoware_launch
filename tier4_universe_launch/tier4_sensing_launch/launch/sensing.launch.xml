@@ -1,8 +1,10 @@
 <launch>
   <arg name="launch_driver" default="true" description="do launch driver"/>
+  <arg name="launch_speed_scale_estimator" default="false" description="launch speed scale estimator"/>
   <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="vehicle_mirror_param_file" default="$(find-pkg-share autoware_vehicle_info_utils)/config/vehicle_mirror.param.yaml" description="path to the file of vehicle mirror position yaml"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="speed_scale_estimator_param_path" default="$(find-pkg-share autoware_speed_scale_estimator)/config/speed_scale_estimator.yaml" description="path to speed scale estimator parameter file"/>
 
   <let name="sensor_launch_pkg" value="$(find-pkg-share $(var sensor_model)_launch)"/>
 
@@ -15,5 +17,17 @@
       <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     </include>
+
+    <!-- speed scale estimator -->
+    <group if="$(var launch_speed_scale_estimator)">
+      <include file="$(find-pkg-share autoware_speed_scale_estimator)/launch/speed_scale_estimator.launch.xml">
+        <arg name="param_path" value="$(var speed_scale_estimator_param_path)"/>
+        <arg name="input_pose_name" value="/localization/pose_estimator/pose"/>
+        <arg name="input_velocity_report" value="/vehicle/status/velocity_status"/>
+        <arg name="input_imu" value="/sensing/imu/imu_data"/>
+        <arg name="output_scale_factor" value="/sensing/speed_scale_estimator/scale_factor"/>
+        <arg name="output_debug_info" value="/sensing/speed_scale_estimator/debug_info"/>
+      </include>
+    </group>
   </group>
 </launch>
