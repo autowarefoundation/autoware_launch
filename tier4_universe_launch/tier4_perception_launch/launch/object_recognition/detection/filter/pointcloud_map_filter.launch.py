@@ -21,6 +21,7 @@ from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import LoadComposableNodes
+from launch_ros.actions import Node
 from launch_ros.descriptions import ComposableNode
 import yaml
 
@@ -36,6 +37,14 @@ class PointcloudMapFilterPipeline:
             self.pointcloud_map_filter_param = yaml.safe_load(f)["/**"]["ros__parameters"]
         self.voxel_size = self.pointcloud_map_filter_param["down_sample_voxel_size"]
         self.use_pointcloud_map = LaunchConfiguration("use_pointcloud_map").perform(context)
+        # voxel_grid_downsample_filter derives from autoware::agnocast_wrapper::Node. Under
+        # ENABLE_AGNOCAST=1 its AgnocastOnly executor only starts in a process that called
+        # agnocast::init(), which the generated standalone main does and a component container
+        # does not, so it has to leave the container in that mode.
+        self.use_agnocast = os.environ.get("ENABLE_AGNOCAST", "0") == "1"
+        self.down_sample_topic = (
+            "/perception/obstacle_segmentation/pointcloud_map_filtered/downsampled/pointcloud"
+        )
 
     def create_pipeline(self):
         if self.use_pointcloud_map == "true":
@@ -68,32 +77,58 @@ class PointcloudMapFilterPipeline:
         )
         return components
 
+    def create_voxel_grid_standalone_node(self):
+        """Return the standalone voxel_grid_downsample_filter action, or None when not needed."""
+        if not (self.use_agnocast and self.use_pointcloud_map == "true"):
+            return None
+        heaphook = os.path.join(
+            "/opt/ros", os.environ.get("ROS_DISTRO", "humble"), "lib/libagnocast_heaphook.so"
+        )
+        ld_preload = ":".join(filter(None, [heaphook, os.environ.get("LD_PRELOAD", "")]))
+        return Node(
+            package="autoware_pointcloud_preprocessor",
+            executable="voxel_grid_downsample_filter_node",
+            name="voxel_grid_downsample_filter",
+            output="screen",
+            additional_env={"LD_PRELOAD": ld_preload},
+            remappings=[
+                ("input", LaunchConfiguration("input_topic")),
+                ("output", self.down_sample_topic),
+            ],
+            parameters=[
+                {
+                    "voxel_size_x": self.voxel_size,
+                    "voxel_size_y": self.voxel_size,
+                    "voxel_size_z": self.voxel_size,
+                }
+            ],
+        )
+
     def create_compare_map_pipeline(self):
         components = []
-        down_sample_topic = (
-            "/perception/obstacle_segmentation/pointcloud_map_filtered/downsampled/pointcloud"
-        )
-        components.append(
-            ComposableNode(
-                package="autoware_pointcloud_preprocessor",
-                plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent",
-                name="voxel_grid_downsample_filter",
-                remappings=[
-                    ("input", LaunchConfiguration("input_topic")),
-                    ("output", down_sample_topic),
-                ],
-                parameters=[
-                    {
-                        "voxel_size_x": self.voxel_size,
-                        "voxel_size_y": self.voxel_size,
-                        "voxel_size_z": self.voxel_size,
-                    }
-                ],
-                extra_arguments=[
-                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
-                ],
-            ),
-        )
+        down_sample_topic = self.down_sample_topic
+        if not self.use_agnocast:
+            components.append(
+                ComposableNode(
+                    package="autoware_pointcloud_preprocessor",
+                    plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent",
+                    name="voxel_grid_downsample_filter",
+                    remappings=[
+                        ("input", LaunchConfiguration("input_topic")),
+                        ("output", down_sample_topic),
+                    ],
+                    parameters=[
+                        {
+                            "voxel_size_x": self.voxel_size,
+                            "voxel_size_y": self.voxel_size,
+                            "voxel_size_z": self.voxel_size,
+                        }
+                    ],
+                    extra_arguments=[
+                        {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+                    ],
+                ),
+            )
         components.append(
             ComposableNode(
                 package="autoware_compare_map_segmentation",
@@ -128,7 +163,11 @@ def launch_setup(context, *args, **kwargs):
         composable_node_descriptions=components,
         target_container=LaunchConfiguration("pointcloud_container_name"),
     )
-    return [pointcloud_container_loader]
+    actions = [pointcloud_container_loader]
+    standalone_voxel_grid = pipeline.create_voxel_grid_standalone_node()
+    if standalone_voxel_grid is not None:
+        actions.append(standalone_voxel_grid)
+    return actions
 
 
 def generate_launch_description():
