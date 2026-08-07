@@ -25,6 +25,7 @@
   <exec_depend>autoware_pointcloud_preprocessor</exec_depend>
   <exec_depend>autoware_pose_covariance_modifier</exec_depend>
   <exec_depend>autoware_pose_estimator_arbiter</exec_depend>
+  <exec_depend>autoware_pose_initialization_requester</exec_depend>
   <exec_depend>autoware_pose_initializer</exec_depend>
   <exec_depend>autoware_pose_instability_detector</exec_depend>
   <exec_depend>autoware_stop_filter</exec_depend>
