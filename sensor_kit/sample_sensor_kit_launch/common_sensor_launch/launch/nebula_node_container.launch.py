@@ -94,6 +94,10 @@ def launch_setup(context, *args, **kwargs):
         param_file=LaunchConfiguration("ring_outlier_filter_node_param_path").perform(context),
         allow_substs=True,
     )
+    polar_voxel_noise_filter_node_param = ParameterFile(
+        param_file=LaunchConfiguration("polar_voxel_noise_filter_node_param_path").perform(context),
+        allow_substs=True,
+    )
 
     nodes = []
 
@@ -202,11 +206,23 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
-    # Ring Outlier Filter is the last component in the pipeline, so control the output frame here
+    use_polar_voxel_noise_filter = (
+        LaunchConfiguration("use_polar_voxel_noise_filter").perform(context).lower() == "true"
+    )
+
+    # Ring Outlier Filter is the last mandatory component in the pipeline,
+    # so control the output frame here (or pass-through to optional post-filters)
     if LaunchConfiguration("output_as_sensor_frame").perform(context).lower() == "true":
         ring_outlier_output_frame = {"output_frame": LaunchConfiguration("frame_id")}
     else:
         ring_outlier_output_frame = {"output_frame": ""}  # keep the output frame as the input frame
+
+    ring_outlier_output_topic = (
+        "pointcloud_after_ring_outlier_filter"
+        if use_polar_voxel_noise_filter
+        else "pointcloud_before_sync"
+    )
+
     nodes.append(
         ComposableNode(
             package="autoware_pointcloud_preprocessor",
@@ -214,12 +230,29 @@ def launch_setup(context, *args, **kwargs):
             name="ring_outlier_filter",
             remappings=[
                 ("input", "rectified/pointcloud_ex"),
-                ("output", "pointcloud_before_sync"),
+                ("output", ring_outlier_output_topic),
             ],
             parameters=[ring_outlier_filter_node_param, ring_outlier_output_frame],
             extra_arguments=[{"use_intra_process_comms": LaunchConfiguration("use_intra_process")}],
         )
     )
+
+    if use_polar_voxel_noise_filter:
+        nodes.append(
+            ComposableNode(
+                package="autoware_pointcloud_preprocessor",
+                plugin="autoware::pointcloud_preprocessor::PolarVoxelNoiseFilterComponent",
+                name="polar_voxel_noise_filter",
+                remappings=[
+                    ("input", "pointcloud_after_ring_outlier_filter"),
+                    ("output", "pointcloud_before_sync"),
+                ],
+                parameters=[polar_voxel_noise_filter_node_param, ring_outlier_output_frame],
+                extra_arguments=[
+                    {"use_intra_process_comms": LaunchConfiguration("use_intra_process")}
+                ],
+            )
+        )
 
     # set container to run all required components in the same process
     container = ComposableNodeContainer(
@@ -291,6 +324,22 @@ def generate_launch_description():
             ]
         ),
         description="path to parameter file of ring outlier filter node",
+    )
+    add_launch_arg(
+        "use_polar_voxel_noise_filter",
+        "False",
+        "enable polar voxel noise filter after ring outlier filter",
+    )
+    add_launch_arg(
+        "polar_voxel_noise_filter_node_param_path",
+        PathJoinSubstitution(
+            [
+                FindPackageShare("common_sensor_launch"),
+                "config",
+                "polar_voxel_noise_filter_node.param.yaml",
+            ]
+        ),
+        description="path to parameter file of polar voxel noise filter node",
     )
     add_launch_arg("udp_only", "False", "use UDP only")
 
