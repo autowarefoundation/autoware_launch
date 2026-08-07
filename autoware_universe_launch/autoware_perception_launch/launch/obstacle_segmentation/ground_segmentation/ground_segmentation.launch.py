@@ -21,6 +21,7 @@ from launch.actions import SetLaunchConfiguration
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
 from launch.launch_description_sources import AnyLaunchDescriptionSource
+from launch.substitutions import EnvironmentVariable
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import LoadComposableNodes
@@ -45,7 +46,7 @@ class GroundSegmentationPipeline:
         self.single_frame_obstacle_seg_output = (
             "/perception/obstacle_segmentation/single_frame/pointcloud"
         )
-        self.output_topic = "/perception/obstacle_segmentation/pointcloud"
+        self.output_topic = LaunchConfiguration("output/pointcloud").perform(context)
         self.use_single_frame_filter = LaunchConfiguration("use_single_frame_filter").perform(
             context
         )
@@ -603,8 +604,9 @@ def launch_setup(context, *args, **kwargs):
                 "output/pointcloud/filtered": "/perception/obstacle_segmentation/pointcloud",
                 "pointcloud_container_name": LaunchConfiguration("pointcloud_container_name"),
                 "use_pointcloud_container": LaunchConfiguration("ptv3_use_pointcloud_container"),
-                "model_path": LaunchConfiguration("ptv3_model_path"),
+                "data_path": LaunchConfiguration("data_path"),
                 "model_name": LaunchConfiguration("ptv3_model_name"),
+                "model_path": LaunchConfiguration("ptv3_model_path"),
             }.items(),
         )
         actions.append(ptv3_launch)
@@ -669,11 +671,13 @@ def generate_launch_description():
     add_launch_arg("use_intra_process", "True")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")
     add_launch_arg("input/pointcloud", "/sensing/lidar/concatenated/pointcloud")
+    add_launch_arg("output/pointcloud", "/perception/obstacle_segmentation/pointcloud")
     add_launch_arg("use_cuda_ground_segmentation", "False")
     add_launch_arg("use_semantic_segmentation_ptv3")
     add_launch_arg("ptv3_use_pointcloud_container", "True")
-    add_launch_arg("ptv3_model_path", "/opt/autoware/mlmodels/ptv3")
+    add_launch_arg("data_path", [EnvironmentVariable("HOME"), "/autoware_data/ml_models"])
     add_launch_arg("ptv3_model_name", "ptv3")
+    add_launch_arg("ptv3_model_path", [LaunchConfiguration("data_path"), "/ptv3"])
     add_launch_arg(
         "obstacle_segmentation_ground_segmentation_param_path",
         [

@@ -23,7 +23,7 @@
 
   <arg name="output/objects" default="/perception/object_recognition/detection/camera_vru/objects"/>
 
-  <arg name="bbox_object_locator_param_path" default="$(find-pkg-share autoware_image_object_locator)/config/bbox_object_locator.param.yaml"/>
+  <arg name="bbox_object_locator_param_path"/>
 
   <!-- internal interfaces -->
   <let name="roi_detector/output/objects0" value="roi_detector_objects0"/>

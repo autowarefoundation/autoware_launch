@@ -10,6 +10,7 @@
     <choice value="clustering"/>
   </arg>
   <arg name="lidar_detection_model_name" description="options: `bevfusion_lidar`, `centerpoint`, `centerpoint_tiny`, `centerpoint_sigma`, `pointpainting`, `transfusion` (non-exhaustive)"/>
+  <arg name="lidar_model_param_path" description="directory of lidar model param files"/>
 
   <!-- Lidar detector parameters -->
   <arg name="bevfusion_model_path" default="$(var data_path)/bevfusion"/>
@@ -53,7 +54,6 @@
   <group if="$(eval &quot;'$(var lidar_detection_model_type)'=='bevfusion'&quot;)">
     <let name="lidar_detection_model_name" value="$(eval &quot;'bevfusion_lidar' if ''=='$(var lidar_detection_model_name)' else '$(var lidar_detection_model_name)'&quot;)"/>
     <push-ros-namespace namespace="bevfusion"/>
-    <arg name="lidar_model_param_path" default="$(find-pkg-share autoware_bevfusion)/config"/>
 
     <group>
       <include file="$(find-pkg-share autoware_bevfusion)/launch/bevfusion.launch.xml">
@@ -61,7 +61,7 @@
         <arg name="output/objects" value="$(var output/objects)"/>
         <arg name="model_name" value="$(var lidar_detection_model_name)"/>
         <arg name="model_path" value="$(var bevfusion_model_path)"/>
-        <arg name="model_param_path" value="$(var lidar_model_param_path)/$(var lidar_detection_model_name).param.yaml"/>
+        <arg name="model_param_path" value="$(var bevfusion_model_path)/$(var lidar_detection_model_name).param.yaml"/>
         <arg name="ml_package_param_path" value="$(var bevfusion_model_path)/ml_package_$(var lidar_detection_model_name).param.yaml"/>
         <arg name="class_remapper_param_path" value="$(var bevfusion_model_path)/detection_class_remapper.param.yaml"/>
         <arg name="common_param_path" value="$(var lidar_model_param_path)/bevfusion_common.param.yaml"/>
@@ -76,7 +76,7 @@
   <group if="$(eval &quot;'$(var lidar_detection_model_type)'=='transfusion'&quot;)">
     <let name="lidar_detection_model_name" value="$(eval &quot;'transfusion' if ''=='$(var lidar_detection_model_name)' else '$(var lidar_detection_model_name)'&quot;)"/>
     <push-ros-namespace namespace="transfusion"/>
-    <arg name="lidar_model_param_path" default="$(find-pkg-share autoware_lidar_transfusion)/config"/>
+    <arg name="lidar_detection_model_param_path" default="$(var lidar_model_param_path)/$(var lidar_detection_model_name).param.yaml"/>
 
     <group>
       <include file="$(find-pkg-share autoware_lidar_transfusion)/launch/lidar_transfusion.launch.xml">
@@ -84,7 +84,7 @@
         <arg name="output/objects" value="$(var output/objects)"/>
         <arg name="model_name" value="$(var lidar_detection_model_name)"/>
         <arg name="model_path" value="$(var transfusion_model_path)"/>
-        <arg name="model_param_path" value="$(var lidar_model_param_path)/$(var lidar_detection_model_name).param.yaml"/>
+        <arg name="model_param_path" value="$(var lidar_detection_model_param_path)"/>
         <arg name="ml_package_param_path" value="$(var transfusion_model_path)/$(var lidar_detection_model_name)_ml_package.param.yaml"/>
         <arg name="class_remapper_param_path" value="$(var transfusion_model_path)/detection_class_remapper.param.yaml"/>
         <arg name="common_param_path" value="$(var lidar_model_param_path)/transfusion_common.param.yaml"/>

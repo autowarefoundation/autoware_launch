@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Parameters -->
-  <arg name="object_sorter_param_path" default="$(var object_recognition_detection_object_sorter_radar_param_path)"/>
-  <arg name="radar_lanelet_filtering_range_param_path" default="$(find-pkg-share autoware_detected_object_validation)/config/object_lanelet_filter.param.yaml"/>
+  <arg name="object_sorter_param_path"/>
+  <arg name="radar_lanelet_filtering_range_param_path"/>
 
   <!-- External interfaces -->
   <arg name="input/radar"/>

@@ -25,6 +25,8 @@
   <arg name="camera_2d_detector/model_path" default="$(var data_path)/tensorrt_yolox/yolox-sPlus-opt-pseudoV2-T4-960x960-T4-seg16cls.onnx"/>
   <arg name="camera_2d_detector/label_path" default="$(var data_path)/tensorrt_yolox/label.txt"/>
   <arg name="camera_2d_detector/color_map_path" default="$(var data_path)/tensorrt_yolox/semseg_color_map.csv"/>
+  <arg name="camera_2d_detector/roi_remap_path" default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/tensorrt_yolox/roi_label_remap.csv"/>
+  <arg name="camera_2d_detector/roi_to_semseg_remap_path" default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/tensorrt_yolox/roi_to_semseg_label_remap.csv"/>
 
   <!-- Common parameters -->
   <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud" description="The topic will be used in the detection module"/>
@@ -232,6 +234,8 @@
           <arg name="camera_2d_detector/model_path" value="$(var camera_2d_detector/model_path)"/>
           <arg name="camera_2d_detector/label_path" value="$(var camera_2d_detector/label_path)"/>
           <arg name="camera_2d_detector/color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+          <arg name="camera_2d_detector/roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+          <arg name="camera_2d_detector/roi_to_semseg_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
           <arg name="use_camera_vru_detector" value="$(var use_camera_vru_detector)"/>
           <arg name="camera_vru_detector_rois_ids" value="$(var camera_vru_detector_rois_ids)"/>
           <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>

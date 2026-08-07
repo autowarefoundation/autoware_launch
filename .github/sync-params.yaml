@@ -27,9 +27,6 @@ perception:
       - source: perception/autoware_detection_by_tracker/config/detection_by_tracker.param.yaml
         variants:
           - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml
-      - source: perception/autoware_image_projection_based_fusion/config/fusion_common.param.yaml
-        variants:
-          - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml
       - source: perception/autoware_image_projection_based_fusion/config/pointpainting_common.param.yaml
         variants:
           - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/detection/image_projection_based_fusion/pointpainting_common.param.yaml
@@ -165,11 +162,6 @@ perception:
       - source: perception/autoware_traffic_light_fine_detector/config/traffic_light_fine_detector.param.yaml
         variants:
           - path: autoware_universe_launch/autoware_perception_launch/config/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml
-      - source: perception/autoware_traffic_light_map_based_detector/config/traffic_light_map_based_detector.param.yaml
-        variants:
-          - path: autoware_universe_launch/autoware_perception_launch/config/traffic_light_recognition/traffic_light_map_based_detector/camera6_traffic_light_map_based_detector.param.yaml
-          - path: autoware_universe_launch/autoware_perception_launch/config/traffic_light_recognition/traffic_light_map_based_detector/camera7_traffic_light_map_based_detector.param.yaml
-          - path: autoware_universe_launch/autoware_perception_launch/config/traffic_light_recognition/traffic_light_map_based_detector/traffic_light_traffic_light_map_based_detector.param.yaml
       - source: perception/autoware_traffic_light_multi_camera_fusion/config/traffic_light_multi_camera_fusion.param.yaml
         variants:
           - path: autoware_universe_launch/autoware_perception_launch/config/traffic_light_recognition/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml

@@ -3,6 +3,9 @@
   <!-- Pipeline junctions -->
   <arg name="objects_validation_method" description="options: `obstacle_pointcloud` or `occupancy_grid`"/>
 
+  <!-- Parameters -->
+  <arg name="object_recognition_detection_obstacle_pointcloud_based_validator_param_path"/>
+
   <!-- external interfaces -->
   <arg name="input/obstacle_pointcloud" description="Only required when 'obstacle_pointcloud'"/>
   <arg name="input/objects"/>

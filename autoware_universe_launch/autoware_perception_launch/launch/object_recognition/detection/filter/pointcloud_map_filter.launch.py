@@ -139,6 +139,7 @@ def generate_launch_description():
 
     add_launch_arg("input_topic", "")
     add_launch_arg("output_topic", "")
+    add_launch_arg("object_recognition_detection_pointcloud_map_filter_param_path")
     add_launch_arg("use_multithread", "False")
     add_launch_arg("use_intra_process", "True")
     add_launch_arg("pointcloud_container_name", "pointcloud_container")

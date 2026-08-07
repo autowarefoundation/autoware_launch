@@ -55,6 +55,9 @@
 
   <arg name="sync_param_path"/>
   <arg name="voxel_grid_based_euclidean_param_path"/>
+  <arg name="lidar_model_param_path" description="directory of lidar model param files"/>
+  <arg name="pointpainting_fusion_common_param_path"/>
+  <arg name="roi_cluster_fusion_param_path"/>
 
   <arg name="node/pointcloud_container"/>
   <arg name="input/pointcloud"/>

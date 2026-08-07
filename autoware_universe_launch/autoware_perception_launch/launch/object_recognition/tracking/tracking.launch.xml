@@ -3,21 +3,7 @@
   <!-- Current namespace -->
   <let name="ns" value="/perception/object_recognition/tracking"/>
 
-  <!-- Multi object tracker parameters -->
-  <arg
-    name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
-    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
-  />
-  <arg
-    name="object_recognition_tracking_multi_object_tracker_input_channels_param_path"
-    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
-  />
-  <arg
-    name="object_recognition_tracking_multi_object_tracker_node_param_path"
-    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
-  />
-
-  <!-- Radar Tracking and Merger parameters -->
+  <!-- Parameter paths -->
   <arg
     name="object_recognition_tracking_radar_tracked_object_sorter_param_path"
     default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/tracking/radar_object_tracker/tracked_object_sorter.param.yaml"
@@ -37,6 +23,18 @@
     name="object_recognition_tracking_object_merger_node_param_path"
     default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml"
     description="node param file for radar and lidar object merger"
+  />
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
+  />
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_input_channels_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
+  />
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_node_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
   />
 
   <!-- Pipeline junctions -->
@@ -83,7 +81,7 @@
   <arg name="input/camera_vru/channel" default="camera_vru"/>
   <arg name="input/camera_vru/objects" default="/perception/object_recognition/detection/camera_vru/objects"/>
 
-  <arg name="output/objects" default="$(var ns)/objects"/>
+  <arg name="output/tracked_objects" default="$(var ns)/objects"/>
   <arg name="output/merged_objects" default="$(var ns)/merged_objects"/>
 
   <group unless="$(var use_multi_channel_tracker_merger)">
@@ -94,12 +92,12 @@
     <let name="radar_tracked_object_lanelet_filter/input/object" value="$(var radar_tracked_object_sorter/output/objects)"/>
     <let name="radar_tracked_object_lanelet_filter/output/object" value="$(var ns)/radar/tracked_objects"/>
 
-    <let name="multi_object_tracker/output/objects" value="$(var output/objects)" unless="$(var use_radar_tracking_fusion)"/>
+    <let name="multi_object_tracker/output/objects" value="$(var output/tracked_objects)" unless="$(var use_radar_tracking_fusion)"/>
     <let name="multi_object_tracker/output/objects" value="$(var ns)/near_objects" if="$(var use_radar_tracking_fusion)"/>
 
     <let name="tracker_merger/input/main_objects" value="$(var multi_object_tracker/output/objects)"/>
     <let name="tracker_merger/input/sub_objects" value="$(var radar_tracked_object_lanelet_filter/output/object)"/>
-    <let name="tracker_merger/output/objects" value="$(var output/objects)"/>
+    <let name="tracker_merger/output/objects" value="$(var output/tracked_objects)"/>
 
     <!-- Multi object tracking -->
     <include file="$(find-pkg-share autoware_multi_object_tracker)/launch/multi_object_tracker.launch.xml">
@@ -219,7 +217,7 @@
       <arg name="input/detection07/channel" value="$(var input/detection07/channel)"/>
       <arg name="input/detection08/objects" value="$(var input/detection08/objects)"/>
       <arg name="input/detection08/channel" value="$(var input/detection08/channel)"/>
-      <arg name="output/objects" value="$(var output/objects)"/>
+      <arg name="output/objects" value="$(var output/tracked_objects)"/>
       <arg name="output/merged_objects" value="$(var output/merged_objects)"/>
       <arg name="data_association_matrix_path" value="$(var object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path)"/>
       <arg name="input_channels_path" value="$(var object_recognition_tracking_multi_object_tracker_input_channels_param_path)"/>
