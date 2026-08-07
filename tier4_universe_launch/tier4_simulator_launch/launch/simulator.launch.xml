@@ -208,6 +208,7 @@
           <arg name="whole_image_detection/model_path" value="$(var data_path)/tensorrt_yolox/yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
           <arg name="whole_image_detection/label_path" value="$(var data_path)/tensorrt_yolox/car_ped_tl_detector_labels.txt"/>
           <arg name="whole_image_detection/yolox_roi_label_remap_path" value="$(var traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path)"/>
+          <arg name="whole_image_detection/ml_package_param_path" value="$(var data_path)/tensorrt_yolox/ml_package_yolox.param.yaml"/>
           <arg name="fine_detection/model_path" value="$(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx"/>
           <arg name="fine_detection/label_path" value="$(var data_path)/traffic_light_fine_detector/tlr_labels.txt"/>
           <arg name="classification/car/model_path" value="$(var data_path)/traffic_light_classifier/$(var traffic_light_car_classifier_model)"/>

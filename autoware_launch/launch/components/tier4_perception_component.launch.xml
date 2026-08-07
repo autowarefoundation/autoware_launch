@@ -335,6 +335,7 @@
       name="traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path"
       value="$(find-pkg-share autoware_launch)/config/perception/traffic_light_recognition/tensorrt_yolox/traffic_light_roi_label_remap.csv"
     />
+    <arg name="traffic_light_recognition/whole_image_detection/ml_package_param_path" value="$(var data_path)/tensorrt_yolox/ml_package_yolox.param.yaml"/>
     <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" value="$(var traffic_light_recognition/classification/pedestrian/classifier_type)"/>
     <arg name="traffic_light_recognition/classification/car/classifier_type" value="$(var traffic_light_recognition/classification/car/classifier_type)"/>
     <arg name="traffic_light_recognition/fine_detection/model_path" value="$(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx"/>
