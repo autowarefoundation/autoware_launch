@@ -69,11 +69,6 @@ units:
       - { type: link, link: /autoware/vehicle }
       - { type: link, link: /autoware/system }
 
-  - path: /autoware/debug/tools
-    type: and
-    list:
-      - { type: link, link: /autoware/system/service_log_checker }
-
   - path: /adapi/mrm_request/delegate
     type: diag
     node: /adapi/node/mrm_request
