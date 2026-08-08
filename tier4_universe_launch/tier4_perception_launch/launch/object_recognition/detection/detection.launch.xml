@@ -27,10 +27,6 @@
   <arg name="lidar_short_range_detection_model_type" description="options: `centerpoint_short_range`">
     <choice value="centerpoint_short_range"/>
   </arg>
-  <arg name="lidar_short_range_detection_model_name" description="options: `centerpoint_short_range`">
-    <choice value="centerpoint_short_range"/>
-    <choice value=""/>
-  </arg>
   <arg name="use_semantic_segmentation_ptv3" description="use semantic segmentation ptv3"/>
   <arg name="use_object_filter" description="use object filter"/>
   <arg name="objects_filter_method" description="options: `lanelet_filter` or `position_filter`"/>
@@ -98,6 +94,7 @@
   <arg name="voxel_grid_based_euclidean_param_path"/>
   <arg name="irregular_object_detector_param_path"/>
   <arg name="object_recognition_detection_object_sorter_radar_param_path"/>
+  <arg name="centerpoint_common_param_path"/>
 
   <!-- label_based_param -->
   <arg name="euclidean_clustering/shape_policy"/>
@@ -287,9 +284,9 @@
       <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
       <arg name="lidar_detection_model_name" value="$(var lidar_detection_model_name)"/>
       <arg name="lidar_short_range_detection_model_type" value="$(var lidar_short_range_detection_model_type)"/>
-      <arg name="lidar_short_range_detection_model_name" value="$(var lidar_short_range_detection_model_name)"/>
       <arg name="use_short_range_detection" value="$(var use_short_range_detection)"/>
       <arg name="output/short_range_objects" value="$(var lidar_ml_detector/output/short_range_objects)"/>
+      <arg name="centerpoint_common_param_path" value="$(var centerpoint_common_param_path)"/>
     </include>
   </group>
   <group if="$(var switch/detector/lidar_rule)">

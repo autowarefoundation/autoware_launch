@@ -58,15 +58,6 @@ perception:
       - source: perception/autoware_lidar_centerpoint/config/centerpoint_common.param.yaml
         variants:
           - path: autoware_launch/config/perception/object_recognition/detection/lidar_model/centerpoint_common.param.yaml
-      - source: perception/autoware_lidar_centerpoint/config/centerpoint_sigma.param.yaml
-        variants:
-          - path: autoware_launch/config/perception/object_recognition/detection/lidar_model/centerpoint_sigma.param.yaml
-      - source: perception/autoware_lidar_centerpoint/config/centerpoint_tiny.param.yaml
-        variants:
-          - path: autoware_launch/config/perception/object_recognition/detection/lidar_model/centerpoint_tiny.param.yaml
-      - source: perception/autoware_lidar_centerpoint/config/centerpoint.param.yaml
-        variants:
-          - path: autoware_launch/config/perception/object_recognition/detection/lidar_model/centerpoint.param.yaml
       - source: perception/autoware_image_projection_based_fusion/config/pointpainting.param.yaml
         variants:
           - path: autoware_launch/config/perception/object_recognition/detection/lidar_model/pointpainting.param.yaml

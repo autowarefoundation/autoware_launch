@@ -248,6 +248,10 @@
     />
     <arg name="object_recognition_detection_lidar_model_param_path" value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/lidar_model"/>
     <arg
+      name="object_recognition_detection_centerpoint_common_param_path"
+      value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/lidar_model/centerpoint_common.param.yaml"
+    />
+    <arg
       name="object_recognition_detection_object_sorter_radar_param_path"
       value="$(find-pkg-share autoware_launch)/config/perception/object_recognition/detection/radar_filter/detected_object_sorter.param.yaml"
     />
