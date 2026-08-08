@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_core/blob/33a6c91ef1a9523e5aff206e7bffa374c9949a99/map/autoware_map_loader/config/lanelet2_map_loader.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_core/blob/7e257106ed54ea04a84b0944e283ae33a96eb449/map/autoware_map_loader/config/lanelet2_map_loader.param.yaml
 
 /**:
   ros__parameters:
