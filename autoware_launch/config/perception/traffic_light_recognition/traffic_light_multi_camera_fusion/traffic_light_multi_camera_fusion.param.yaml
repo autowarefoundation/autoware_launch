@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/10e07838544a8f8d2991de224886edd6c27931eb/perception/autoware_traffic_light_multi_camera_fusion/config/traffic_light_multi_camera_fusion.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/5879c969f8f34ce09f68ae65100c4554ca231e99/perception/autoware_traffic_light_multi_camera_fusion/config/traffic_light_multi_camera_fusion.param.yaml
 
 /**:
   ros__parameters:
@@ -19,3 +19,5 @@
     signal_consistency_check:
       enable: false
       publish_partial_matched_signal: false
+    map_based_signal_filter:
+      enable: false
