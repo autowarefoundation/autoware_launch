@@ -190,7 +190,7 @@ def generate_launch_description():
         "distortion_correction_node_param_path",
         PathJoinSubstitution(
             [
-                FindPackageShare("common_sensor_launch"),
+                FindPackageShare("autoware_sensing_launch"),
                 "config",
                 "distortion_corrector_node.param.yaml",
             ]
@@ -201,7 +201,7 @@ def generate_launch_description():
         "ring_outlier_filter_node_param_path",
         PathJoinSubstitution(
             [
-                FindPackageShare("common_sensor_launch"),
+                FindPackageShare("autoware_sensing_launch"),
                 "config",
                 "ring_outlier_filter_node.param.yaml",
             ]
