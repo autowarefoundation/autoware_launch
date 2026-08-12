@@ -13,7 +13,6 @@ sensor_kit/carla_sensor_kit_launch/carla_sensor_kit_description/** noreply@examp
 sensor_kit/carla_sensor_kit_launch/carla_sensor_kit_launch/** noreply@example.com
 sensor_kit/sample_sensor_kit_launch/sample_sensor_kit_description/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 sensor_kit/sample_sensor_kit_launch/sample_sensor_kit_launch/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
-sensor_kit/single_lidar_sensor_kit_launch/single_lidar_common_launch/** ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 sensor_kit/single_lidar_sensor_kit_launch/single_lidar_sensor_kit_description/** beginning.fan@autocore.ai
 sensor_kit/single_lidar_sensor_kit_launch/single_lidar_sensor_kit_launch/** beginning.fan@autocore.ai
 tier4_universe_launch/tier4_autoware_api_launch/** isamu.takagi@tier4.jp ryohsuke.mitsudome@tier4.jp
