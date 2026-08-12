@@ -1,16 +1,16 @@
 # autoware_perception_launch
 
-Shared perception launch library. The product entry points live in the product layer (`autoware_launch/launch/components/component_perception.launch.xml` for the lidar pipeline and `component_traffic_light.launch.xml` for traffic light recognition); this package hosts the reusable perception units and the object-recognition orchestrator they build on:
+Shared perception launch library. The system component launchers live in the product layer (`autoware_launch/launch/components/component_perception.launch.xml` for the lidar pipeline and `component_traffic_light.launch.xml` for traffic light recognition); this package hosts the perception feature launchers they combine:
 
 ```bash
 launch/
-├── common/                        # shared preprocess units (pointcloud downsample)
+├── common/                        # shared preprocess feature launchers (pointcloud downsample)
 ├── object_recognition/
 │   ├── object_recognition_<mode>.launch.xml  # detection + tracking + prediction per sensor mode
 │   ├── detection/
 │   │   ├── detector/              # detectors
 │   │   ├── filter/                # filters
-│   │   └── merger/                # detection-side serial merger (used by the camera_lidar_radar_serial orchestrator)
+│   │   └── merger/                # detection-side serial merger (used by the camera_lidar_radar_serial launcher)
 │   └── prediction/
 ├── obstacle_segmentation/
 ├── occupancy_grid_map/
@@ -19,17 +19,18 @@ launch/
 
 ## Launch files
 
-- `object_recognition/object_recognition_<mode>.launch.xml` — one orchestrator per sensor mode (`camera`, `lidar`, `lidar_radar`, `camera_lidar_radar`, `camera_lidar_radar_serial`); hosts the detection composition inline together with the tracker and prediction, and pushes their module namespaces. Camera and radar input topics default to their absolute sensing paths (`/sensing/camera/cameraN/...`, `/sensing/radar/detected_objects`), so callers override only what differs. Most modes wire the multi-channel tracker to the detector outputs; `camera_lidar_radar_serial` instead merges the detectors in the detection stage and tracks the single merged `detected_objects` channel. `lidar_radar` is fixed to the PTv3 semantic-segmentation clustering pipeline; `camera` runs camera-only detectors (BEV and camera VRU).
-- `object_recognition/detection/{detector,filter}/` — single-purpose units wired together by the orchestrators. `merger/camera_lidar_radar_merger.launch.xml` chains the detection-side object mergers for the `camera_lidar_radar_serial` orchestrator.
-- `obstacle_segmentation/`, `occupancy_grid_map/`, `common/`, `traffic_light_recognition/` — units included directly by the product components.
+- `object_recognition/object_recognition_<mode>.launch.xml` — one feature launcher per sensor mode (`camera`, `lidar`, `lidar_radar`, `camera_lidar_radar`, `camera_lidar_radar_serial`); hosts the detection stage inline together with the tracker and prediction, and pushes their module namespaces. Camera and radar input topics default to their absolute sensing paths (`/sensing/camera/cameraN/...`, `/sensing/radar/detected_objects`), so callers override only what differs. Most modes wire the multi-channel tracker to the detector outputs; `camera_lidar_radar_serial` instead merges the detectors in the detection stage and tracks the single merged `detected_objects` channel. `lidar_radar` is fixed to the PTv3 semantic-segmentation clustering pipeline; `camera` runs camera-only detectors (BEV and camera VRU).
+- `object_recognition/detection/{detector,filter}/` — single-purpose launchers wired together by the object-recognition launchers. `merger/camera_lidar_radar_merger.launch.xml` chains the detection-side object mergers for the `camera_lidar_radar_serial` launcher.
+- `obstacle_segmentation/ground_segmentation_<backend>.launch.xml` — ground removal backends (`rule_based`, `rule_based_cuda`, `ml`); backend selection is file selection. `ground_segmentation_outlier_filter_{single_frame,time_series}.launch.xml` chain after the ground filter; `ground_segmentation_{additional_lidars,ransac}.launch.xml` fold extra lidars into the obstacle stream for kits that carry them.
+- `occupancy_grid_map/`, `common/`, `traffic_light_recognition/` — feature launchers included directly by the system components.
 
 ## Namespace and container addressing
 
-Callers own the namespaces: the product component pushes `perception` and `object_recognition`; `object_recognition_<mode>.launch.xml` pushes `detection`/`tracking`/`prediction`. The orchestrators address their internal topics through the fixed `/perception/object_recognition` namespace. Composable nodes load into the shared pointcloud container, whose name is exposed as `pointcloud_container_name` and aliased to the `node/pointcloud_container` argument of the detector units.
+Callers own the namespaces: the system component pushes `perception` and `object_recognition`; `object_recognition_<mode>.launch.xml` pushes `detection`/`tracking`/`prediction`. The object-recognition launchers address their internal topics through the fixed `/perception/object_recognition` namespace. Composable nodes load into the shared pointcloud container, whose name is exposed as `pointcloud_container_name` and aliased to the `node/pointcloud_container` argument of the detector launchers.
 
 ## Config
 
-Each unit resolves its parameter files from this package's `config/` tree by default and exposes them as `*_param_path` arguments; products with different parameters pass their own file paths.
+Each feature launcher resolves its parameter files from this package's `config/` tree by default and exposes them as `*_param_path` arguments; products with different parameters pass their own file paths.
 
 ## Package Dependencies
 

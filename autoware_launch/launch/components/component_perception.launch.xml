@@ -87,18 +87,63 @@
     <!-- Object segmentation module -->
     <group>
       <push-ros-namespace namespace="obstacle_segmentation"/>
-      <include file="$(find-pkg-share autoware_perception_launch)/launch/obstacle_segmentation/ground_segmentation/ground_segmentation.launch.py">
-        <arg name="base_frame" value="base_link"/>
-        <arg name="use_intra_process" value="true"/>
-        <arg name="use_multithread" value="true"/>
-        <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
-        <arg name="input/pointcloud" value="$(var perception_pointcloud)"/>
-        <arg name="use_single_frame_filter" value="$(var use_obstacle_segmentation_single_frame_filter)"/>
-        <arg name="use_time_series_filter" value="$(var use_obstacle_segmentation_time_series_filter)"/>
-        <arg name="use_cuda_ground_segmentation" value="$(var use_cuda_ground_segmentation)"/>
-        <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>
-        <arg name="ptv3_model_path" value="$(var ptv3_model_path)"/>
-      </include>
+      <let name="obstacle_segmentation_pointcloud" value="/perception/obstacle_segmentation/pointcloud"/>
+      <!-- The outlier filters chain after the ground filter; each enabled stage's output feeds the next -->
+      <let
+        name="use_obstacle_segmentation_outlier_filter"
+        value="$(eval &quot;'$(var use_obstacle_segmentation_single_frame_filter)' == 'true' or '$(var use_obstacle_segmentation_time_series_filter)' == 'true'&quot;)"
+      />
+      <let name="no_ground_pointcloud" value="$(var obstacle_segmentation_pointcloud)"/>
+      <let name="no_ground_pointcloud" value="/perception/obstacle_segmentation/single_frame/pointcloud" if="$(var use_obstacle_segmentation_outlier_filter)"/>
+      <let name="single_frame_filter_output" value="$(var obstacle_segmentation_pointcloud)"/>
+      <let name="single_frame_filter_output" value="/perception/obstacle_segmentation/single_frame/filtered/pointcloud" if="$(var use_obstacle_segmentation_time_series_filter)"/>
+      <let name="time_series_filter_input" value="$(var no_ground_pointcloud)"/>
+      <let name="time_series_filter_input" value="$(var single_frame_filter_output)" if="$(var use_obstacle_segmentation_single_frame_filter)"/>
+
+      <group if="$(var use_cuda_ground_segmentation)">
+        <include file="$(find-pkg-share autoware_perception_launch)/launch/obstacle_segmentation/ground_segmentation_rule_based_cuda.launch.xml">
+          <arg name="target_container" value="$(var pointcloud_container_name)"/>
+          <arg name="input/pointcloud" value="$(var perception_pointcloud)"/>
+          <arg name="output/pointcloud" value="$(var obstacle_segmentation_pointcloud)"/>
+        </include>
+      </group>
+      <group unless="$(var use_cuda_ground_segmentation)">
+        <group if="$(var use_semantic_segmentation_ptv3)">
+          <include file="$(find-pkg-share autoware_perception_launch)/launch/obstacle_segmentation/ground_segmentation_ml.launch.xml">
+            <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+            <arg name="input/pointcloud" value="$(var perception_pointcloud)"/>
+            <arg name="output/pointcloud" value="$(var obstacle_segmentation_pointcloud)"/>
+            <arg name="data_path" value="$(var data_path)"/>
+            <arg name="model_path" value="$(var ptv3_model_path)"/>
+          </include>
+        </group>
+        <group unless="$(var use_semantic_segmentation_ptv3)">
+          <include file="$(find-pkg-share autoware_perception_launch)/launch/obstacle_segmentation/ground_segmentation_rule_based.launch.xml">
+            <arg name="target_container" value="$(var pointcloud_container_name)"/>
+            <arg name="base_frame" value="base_link"/>
+            <arg name="use_intra_process" value="true"/>
+            <arg name="input/pointcloud" value="$(var perception_pointcloud)"/>
+            <arg name="output/pointcloud" value="$(var no_ground_pointcloud)"/>
+          </include>
+          <group if="$(var use_obstacle_segmentation_single_frame_filter)">
+            <include file="$(find-pkg-share autoware_perception_launch)/launch/obstacle_segmentation/ground_segmentation_outlier_filter_single_frame.launch.xml">
+              <arg name="target_container" value="$(var pointcloud_container_name)"/>
+              <arg name="base_frame" value="base_link"/>
+              <arg name="use_intra_process" value="true"/>
+              <arg name="input/pointcloud" value="$(var no_ground_pointcloud)"/>
+              <arg name="output/pointcloud" value="$(var single_frame_filter_output)"/>
+            </include>
+          </group>
+          <group if="$(var use_obstacle_segmentation_time_series_filter)">
+            <include file="$(find-pkg-share autoware_perception_launch)/launch/obstacle_segmentation/ground_segmentation_outlier_filter_time_series.launch.xml">
+              <arg name="target_container" value="$(var pointcloud_container_name)"/>
+              <arg name="use_intra_process" value="true"/>
+              <arg name="input/pointcloud" value="$(var time_series_filter_input)"/>
+              <arg name="output/pointcloud" value="$(var obstacle_segmentation_pointcloud)"/>
+            </include>
+          </group>
+        </group>
+      </group>
     </group>
 
     <!-- Occupancy grid map module -->

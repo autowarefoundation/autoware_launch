@@ -101,7 +101,7 @@ perception:
         variants:
           - path: autoware_universe_launch/autoware_perception_launch/config/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml
       #
-      # ground_segmentation.param.yaml omitted. The 'param file' is completely interpreted by launcher. Should refactor to use sync-params.
+      # crop_box_filter.param.yaml and scan_ground_filter.param.yaml omitted. Their values are owned here and diverge from the node package defaults.
       #
       - source: perception/autoware_occupancy_grid_map_outlier_filter/config/occupancy_grid_map_outlier_filter.param.yaml
         variants:

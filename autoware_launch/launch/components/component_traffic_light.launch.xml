@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <!-- cspell: ignore comlops -->
-  <!-- Traffic light recognition: one fixed per-topology page; the camera set is fixed inside each page -->
+  <!-- Traffic light recognition: one feature launcher per topology; the camera set is fixed inside each launcher -->
 
   <!-- Pipeline junctions -->
   <arg name="use_traffic_light_recognition" default="true" description="use traffic light recognition module, if false, traffic light recognition module will not be launched"/>

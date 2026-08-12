@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- Voxel downsample unit for the perception common pointcloud; CPU and CUDA variants load into the shared pointcloud container. -->
+  <!-- Voxel downsample feature launcher for the perception common pointcloud; CPU and CUDA variants load into the shared pointcloud container. -->
   <arg name="pointcloud_container_name"/>
   <arg name="cuda_pointcloud_preprocessing" default="false"/>
   <arg name="input/pointcloud"/>
