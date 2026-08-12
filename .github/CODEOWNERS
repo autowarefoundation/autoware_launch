@@ -3,6 +3,7 @@ autoware_launch/** mfc@leodrive.ai ryohsuke.mitsudome@tier4.jp yukihiro.saito@ti
 autoware_sample_designs/** max.schmeller@tier4.jp maxime.clement@tier4.jp taekjin.lee@tier4.jp
 autoware_universe_launch/autoware_perception_launch/** dai.nguyen@tier4.jp masato.saeki@tier4.jp taekjin.lee@tier4.jp yoshi.ri@tier4.jp yukihiro.saito@tier4.jp
 autoware_universe_launch/autoware_sensing_launch/** dai.nguyen@tier4.jp david.wong@tier4.jp max.schmeller@tier4.jp
+autoware_universe_launch/autoware_sensor_driver_launch/** dai.nguyen@tier4.jp david.wong@tier4.jp max.schmeller@tier4.jp
 sensor_kit/awsim_labs_sensor_kit_launch/awsim_labs_sensor_kit_description/** piotr.jaroszek@robotec.ai
 sensor_kit/awsim_labs_sensor_kit_launch/awsim_labs_sensor_kit_launch/** piotr.jaroszek@robotec.ai
 sensor_kit/awsim_labs_sensor_kit_launch/common_awsim_labs_sensor_launch/** piotr.jaroszek@robotec.ai
