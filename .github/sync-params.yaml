@@ -24,9 +24,6 @@ perception:
       - source: perception/autoware_detected_object_validation/config/occupancy_grid_based_validator.param.yaml
         variants:
           - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/detection/detected_object_validation/occupancy_grid_based_validator.param.yaml
-      - source: perception/autoware_detection_by_tracker/config/detection_by_tracker.param.yaml
-        variants:
-          - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml
       - source: perception/autoware_image_projection_based_fusion/config/pointpainting_common.param.yaml
         variants:
           - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/detection/image_projection_based_fusion/pointpainting_common.param.yaml
@@ -98,21 +95,6 @@ perception:
       - source: perception/autoware_multi_object_tracker/config/multi_object_tracker_node.param.yaml
         variants:
           - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml
-      - source: perception/autoware_detected_object_validation/config/tracked_object_lanelet_filter.param.yaml
-        variants:
-          - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/tracking/radar_object_tracker/tracked_object_lanelet_filter.param.yaml
-      - source: perception/autoware_object_sorter/config/tracked_object_sorter.param.yaml
-        variants:
-          - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/tracking/radar_object_tracker/tracked_object_sorter.param.yaml
-      - source: perception/autoware_tracking_object_merger/config/data_association_matrix.param.yaml
-        variants:
-          - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/tracking/tracking_object_merger/data_association_matrix.param.yaml
-      - source: perception/autoware_tracking_object_merger/config/decorative_tracker_merger_policy.param.yaml
-        variants:
-          - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger_policy.param.yaml
-      - source: perception/autoware_tracking_object_merger/config/decorative_tracker_merger.param.yaml
-        variants:
-          - path: autoware_universe_launch/autoware_perception_launch/config/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml
       # Perception/obstacle_segmentation
       - source: perception/autoware_elevation_map_loader/config/elevation_map_parameters.yaml
         # note: this is not a valid ROS2 param file format.

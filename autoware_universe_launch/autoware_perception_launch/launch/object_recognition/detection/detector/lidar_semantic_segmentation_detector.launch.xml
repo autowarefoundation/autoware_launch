@@ -6,8 +6,8 @@
   <arg name="voxel_grid_based_euclidean_param_path"/>
 
   <arg name="node/pointcloud_container"/>
-  <arg name="euclidean_cluster/input/pointcloud"/>
   <arg name="semantic_cluster/output/objects"/>
+  <arg name="use_low_height_cropbox" default="false"/>
   <arg name="euclidean_clustering/shape_policy"/>
   <arg name="euclidean_clustering/param_path"/>
 
