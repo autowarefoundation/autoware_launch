@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Lidar detection: DNN and rule-based detectors merged into the objects output; the multi-channel tracker merger consumes the per-detector outputs directly -->
+
+  <!-- Current namespace -->
+  <let name="ns" value="/perception/object_recognition/detection"/>
+
+  <!-- Pipeline junctions -->
+  <arg name="lidar_detection_model_type" default="centerpoint">
+    <choice value="bevfusion"/>
+    <choice value="centerpoint"/>
+    <choice value="pointpainting"/>
+    <choice value="transfusion"/>
+    <choice value="apollo"/>
+    <choice value="clustering"/>
+  </arg>
+  <arg name="lidar_detection_model_name" default="" description="options: `bevfusion_lidar`, `centerpoint`, `centerpoint_tiny`, `centerpoint_sigma`, `transfusion` (non-exhaustive)"/>
+  <arg name="use_short_range_detection" default="false" description="use short range detection for redundant VRU detection"/>
+  <arg name="lidar_short_range_detection_model_type" default="centerpoint_short_range" description="options: `centerpoint_short_range`">
+    <choice value="centerpoint_short_range"/>
+  </arg>
+  <arg name="use_semantic_segmentation_ptv3" default="false" description="use semantic segmentation ptv3"/>
+  <arg name="use_object_filter" default="true" description="use object filter"/>
+  <arg name="objects_filter_method" default="lanelet_filter" description="options: `lanelet_filter` or `position_filter`"/>
+  <arg name="use_pointcloud_map" default="true" description="use pointcloud map filter"/>
+  <arg name="use_detection_by_tracker" default="false"/>
+  <arg name="use_validator" default="false" description="use obstacle_pointcloud based validator"/>
+  <arg name="objects_validation_method" default="obstacle_pointcloud" description="options: `obstacle_pointcloud` or `occupancy_grid`"/>
+  <arg name="use_low_height_cropbox" default="false"/>
+  <arg name="use_multi_channel_tracker_merger" default="true"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
+  <arg name="bevfusion_model_path" default="$(var data_path)/bevfusion"/>
+
+  <!-- External interfaces -->
+  <arg name="node/pointcloud_container" default="pointcloud_container"/>
+  <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
+  <arg name="input/obstacle_segmentation/pointcloud" default="/perception/obstacle_segmentation/pointcloud"/>
+  <arg name="input/tracked_objects" default="/perception/object_recognition/tracking/objects"/>
+  <arg name="output/objects" default="objects"/>
+
+  <!-- Parameter paths -->
+  <arg name="lidar_model_param_path" default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/detection/lidar_model" description="directory of lidar model param files"/>
+  <arg name="centerpoint_common_param_path" default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/detection/lidar_model/centerpoint_common.param.yaml"/>
+  <arg
+    name="voxel_grid_based_euclidean_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml"
+  />
+  <arg name="detection_by_tracker_param_path" default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml"/>
+  <arg
+    name="object_recognition_detection_pointcloud_map_filter_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/detection/pointcloud_filter/pointcloud_map_filter.param.yaml"
+  />
+  <arg
+    name="object_recognition_detection_object_merger_data_association_matrix_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/detection/object_merger/data_association_matrix.param.yaml"
+  />
+  <arg
+    name="object_recognition_detection_object_merger_distance_threshold_list_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/detection/object_merger/overlapped_judge.param.yaml"
+  />
+  <arg
+    name="object_recognition_detection_obstacle_pointcloud_based_validator_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/detection/detected_object_validation/obstacle_pointcloud_based_validator.param.yaml"
+  />
+
+  <!-- label_based_param -->
+  <arg name="euclidean_clustering/shape_policy" default="0"/>
+  <arg name="euclidean_clustering/param_path" default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml"/>
+
+  <!-- internal interfaces -->
+  <let name="pointcloud_filter/output/pointcloud" value="$(var ns)/pointcloud_map_filtered/pointcloud"/>
+  <let name="lidar_ml_detector/output/objects" value="$(var ns)/$(var lidar_detection_model_type)/objects"/>
+  <let name="lidar_ml_detector/output/short_range_objects" value="$(var ns)/$(var lidar_short_range_detection_model_type)/objects"/>
+  <let name="lidar_rule_detector/output/cluster_objects" value="$(var ns)/clustering/objects_with_feature"/>
+  <let name="lidar_rule_detector/output/objects" value="$(var ns)/clustering/objects"/>
+  <let name="lidar_cluster/output/objects" value="$(var ns)/clustering/label_based_euclidean_cluster/objects"/>
+  <let name="tracker_based_detector/input/clusters" value="$(var ns)/clustering/objects_with_feature"/>
+  <let name="tracker_based_detector/output/objects" value="$(var ns)/detection_by_tracker/objects"/>
+  <let name="lidar_object_filter/output/objects" value="$(var ns)/$(var lidar_detection_model_type)/validation/objects"/>
+
+  <let name="object_validator/input/obstacle_pointcloud" value="$(var pointcloud_filter/output/pointcloud)" if="$(var use_pointcloud_map)"/>
+  <let name="object_validator/input/obstacle_pointcloud" value="$(var input/obstacle_segmentation/pointcloud)" unless="$(var use_pointcloud_map)"/>
+  <let name="object_merger/input/ml_detected_objects" value="$(var lidar_object_filter/output/objects)" if="$(var use_validator)"/>
+  <let name="object_merger/input/ml_detected_objects" value="$(var lidar_ml_detector/output/objects)" unless="$(var use_validator)"/>
+
+  <!-- Detector -->
+  <group if="$(var use_semantic_segmentation_ptv3)">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_semantic_segmentation_detector.launch.xml">
+      <arg name="ns" value="$(var ns)"/>
+      <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
+      <arg name="euclidean_cluster/input/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
+      <arg name="semantic_cluster/output/objects" value="$(var lidar_cluster/output/objects)"/>
+      <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
+      <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
+      <arg name="euclidean_clustering/param_path" value="$(var euclidean_clustering/param_path)"/>
+    </include>
+  </group>
+  <group>
+    <!-- Lidar dnn-based detectors-->
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_dnn_detector.launch.xml">
+      <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
+      <arg name="output/objects" value="$(var lidar_ml_detector/output/objects)"/>
+      <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
+      <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
+      <arg name="lidar_detection_model_name" value="$(var lidar_detection_model_name)"/>
+      <arg name="lidar_short_range_detection_model_type" value="$(var lidar_short_range_detection_model_type)"/>
+      <arg name="use_short_range_detection" value="$(var use_short_range_detection)"/>
+      <arg name="output/short_range_objects" value="$(var lidar_ml_detector/output/short_range_objects)"/>
+      <arg name="lidar_model_param_path" value="$(var lidar_model_param_path)"/>
+      <arg name="centerpoint_common_param_path" value="$(var centerpoint_common_param_path)"/>
+      <arg name="bevfusion_model_path" value="$(var bevfusion_model_path)"/>
+    </include>
+  </group>
+  <group>
+    <!-- Lidar rule-based detectors-->
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_rule_detector.launch.xml">
+      <arg name="ns" value="$(var ns)"/>
+      <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
+      <arg name="input/pointcloud_map/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
+      <arg name="input/obstacle_segmentation/pointcloud" value="$(var input/obstacle_segmentation/pointcloud)"/>
+      <arg name="output/cluster_objects" value="$(var lidar_rule_detector/output/cluster_objects)"/>
+      <arg name="output/objects" value="$(var lidar_rule_detector/output/objects)"/>
+      <arg name="use_low_height_cropbox" value="$(var use_low_height_cropbox)"/>
+      <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
+      <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>
+    </include>
+  </group>
+  <!-- DetectionByTracker -->
+  <group if="$(var use_detection_by_tracker)">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/tracker_based_detector.launch.xml">
+      <arg name="input/clusters" value="$(var tracker_based_detector/input/clusters)"/>
+      <arg name="input/tracked_objects" value="$(var input/tracked_objects)"/>
+      <arg name="output/objects" value="$(var tracker_based_detector/output/objects)"/>
+      <arg name="detection_by_tracker_param_path" value="$(var detection_by_tracker_param_path)"/>
+    </include>
+  </group>
+
+  <!-- Filter -->
+  <group unless="$(var use_semantic_segmentation_ptv3)">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/pointcloud_map_filter.launch.py">
+      <arg name="input_topic" value="$(var input/obstacle_segmentation/pointcloud)"/>
+      <arg name="output_topic" value="$(var pointcloud_filter/output/pointcloud)"/>
+      <arg name="use_intra_process" value="true"/>
+      <arg name="use_multithread" value="true"/>
+      <arg name="pointcloud_container_name" value="$(var node/pointcloud_container)"/>
+      <arg name="use_pointcloud_map" value="$(var use_pointcloud_map)"/>
+      <arg name="object_recognition_detection_pointcloud_map_filter_param_path" value="$(var object_recognition_detection_pointcloud_map_filter_param_path)"/>
+    </include>
+  </group>
+  <group if="$(var use_validator)">
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/object_validator.launch.xml">
+      <arg name="input/obstacle_pointcloud" value="$(var object_validator/input/obstacle_pointcloud)"/>
+      <arg name="input/objects" value="$(var lidar_ml_detector/output/objects)"/>
+      <arg name="output/objects" value="$(var lidar_object_filter/output/objects)"/>
+      <arg name="objects_validation_method" value="$(var objects_validation_method)"/>
+      <arg name="object_recognition_detection_obstacle_pointcloud_based_validator_param_path" value="$(var object_recognition_detection_obstacle_pointcloud_based_validator_param_path)"/>
+    </include>
+  </group>
+
+  <!-- Merger -->
+  <group unless="$(var use_multi_channel_tracker_merger)">
+    <!-- Lidar object merger-->
+    <let name="input/lidar_cluster/objects" value="$(var lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/lidar_cluster/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/merger/lidar_merger.launch.xml">
+      <arg name="input/lidar_ml/objects" value="$(var object_merger/input/ml_detected_objects)"/>
+      <arg name="input/lidar_cluster/objects" value="$(var input/lidar_cluster/objects)"/>
+      <arg name="input/detection_by_tracker/objects" value="$(var tracker_based_detector/output/objects)"/>
+      <arg name="output/objects" value="$(var output/objects)"/>
+      <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
+      <arg name="use_detection_by_tracker" value="$(var use_detection_by_tracker)"/>
+      <arg name="use_pointcloud_map" value="$(var use_pointcloud_map)"/>
+      <arg name="use_object_filter" value="$(var use_object_filter)"/>
+      <arg name="objects_filter_method" value="$(var objects_filter_method)"/>
+      <arg name="object_recognition_detection_object_merger_data_association_matrix_param_path" value="$(var object_recognition_detection_object_merger_data_association_matrix_param_path)"/>
+      <arg name="object_recognition_detection_object_merger_distance_threshold_list_path" value="$(var object_recognition_detection_object_merger_distance_threshold_list_path)"/>
+    </include>
+  </group>
+</launch>

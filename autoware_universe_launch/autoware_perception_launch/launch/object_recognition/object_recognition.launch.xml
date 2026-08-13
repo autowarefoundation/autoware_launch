@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Object recognition: detection, tracking, and prediction under the caller's namespace; the mode selects the detection composition -->
+  <arg name="mode" default="lidar">
+    <choice value="camera"/>
+    <choice value="camera_lidar_radar_fusion"/>
+    <choice value="camera_lidar_fusion"/>
+    <choice value="lidar_radar_fusion"/>
+    <choice value="lidar"/>
+  </arg>
+
+  <!-- ML model parameters -->
+  <arg name="lidar_detection_model" default="centerpoint" description="`model_type/model_name`; the model default parameter set is used when the name part is omitted"/>
+  <let name="lidar_detection_model_type" value="$(eval &quot;'$(var lidar_detection_model)'.split('/')[0]&quot;)"/>
+  <let name="lidar_detection_model_name" value="$(eval &quot;'$(var lidar_detection_model)'.split('/')[1] if '/' in '$(var lidar_detection_model)' else ''&quot;)"/>
+  <arg name="use_short_range_detection" default="false" description="use short range detection for redundant VRU detection"/>
+  <arg name="lidar_short_range_detection_model_type" default="centerpoint_short_range" description="options: `centerpoint_short_range`">
+    <choice value="centerpoint_short_range"/>
+  </arg>
+
+  <!-- Pipeline junctions -->
+  <arg name="use_multi_channel_tracker_merger" default="true" description="if true, the multi-channel tracker merger replaces the detection-side object mergers"/>
+  <arg name="use_radar_tracking_fusion" default="true" description="if true, radar objects are merged in the tracking module. Otherwise, radar objects are merged in the detection module."/>
+  <arg name="use_detection_by_tracker" default="false"/>
+  <arg name="use_validator" default="false" description="use obstacle_pointcloud based validator"/>
+  <arg name="use_semantic_segmentation_ptv3" default="false" description="use semantic segmentation ptv3"/>
+  <arg name="use_camera_vru_detector" default="false" description="enable pipeline for camera VRU object detection"/>
+  <arg name="use_vector_map" default="true" description="use vector map in prediction"/>
+  <arg name="tracker_publish_merged_objects" default="false"/>
+
+  <!-- External interfaces -->
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
+  <arg name="output/tracker_merged_objects" default="/perception/object_recognition/detection/objects"/>
+
+  <!-- Detection module -->
+  <group>
+    <push-ros-namespace namespace="detection"/>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detection_$(var mode).launch.xml">
+      <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
+      <arg name="lidar_detection_model_name" value="$(var lidar_detection_model_name)"/>
+      <arg name="use_short_range_detection" value="$(var use_short_range_detection)"/>
+      <arg name="lidar_short_range_detection_model_type" value="$(var lidar_short_range_detection_model_type)"/>
+      <arg name="use_multi_channel_tracker_merger" value="$(var use_multi_channel_tracker_merger)"/>
+      <arg name="use_detection_by_tracker" value="$(var use_detection_by_tracker)"/>
+      <arg name="use_validator" value="$(var use_validator)"/>
+      <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>
+      <arg name="use_camera_vru_detector" value="$(var use_camera_vru_detector)"/>
+      <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
+      <arg name="node/pointcloud_container" value="$(var pointcloud_container_name)"/>
+    </include>
+  </group>
+
+  <!-- Tracking module -->
+  <group>
+    <push-ros-namespace namespace="tracking"/>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/tracking/tracking.launch.xml">
+      <arg name="mode" value="$(var mode)"/>
+      <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
+      <arg name="use_multi_channel_tracker_merger" value="$(var use_multi_channel_tracker_merger)"/>
+      <arg name="use_radar_tracking_fusion" value="$(var use_radar_tracking_fusion)"/>
+      <arg name="use_detection_by_tracker" value="$(var use_detection_by_tracker)"/>
+      <arg name="use_validator" value="$(var use_validator)"/>
+      <arg name="use_short_range_detection" value="$(var use_short_range_detection)"/>
+      <arg name="use_camera_vru_detector" value="$(var use_camera_vru_detector)"/>
+      <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>
+      <arg name="output/merged_objects" value="$(var output/tracker_merged_objects)"/>
+      <arg name="publish_merged_objects" value="$(var tracker_publish_merged_objects)"/>
+    </include>
+  </group>
+
+  <!-- Prediction module -->
+  <group>
+    <push-ros-namespace namespace="prediction"/>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/prediction/prediction.launch.xml">
+      <arg name="use_vector_map" value="$(var use_vector_map)"/>
+    </include>
+  </group>
+</launch>
