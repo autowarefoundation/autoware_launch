@@ -28,6 +28,7 @@
   <!-- External interfaces -->
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
+  <arg name="input/semantic_segmentation/pointcloud" default="/perception/segmented/pointcloud"/>
   <arg name="input/radar" default="/sensing/radar/detected_objects"/>
   <arg name="output/tracker_merged_objects" default="/perception/object_recognition/detection/objects"/>
   <arg name="output/tracked_objects" default="/perception/object_recognition/tracking/objects"/>
@@ -59,7 +60,6 @@
   />
 
   <!-- label_based_param -->
-  <arg name="euclidean_clustering/shape_policy" default="0"/>
   <arg name="euclidean_clustering/param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml"/>
 
   <!-- Internal interfaces -->
@@ -80,12 +80,8 @@
     <group>
       <!-- Semantic segmentation clustering -->
       <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_semantic_segmentation_detector.launch.xml">
-        <arg name="ns" value="$(var detection_ns)"/>
-        <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
-        <arg name="semantic_cluster/output/objects" value="$(var lidar_cluster/output/objects)"/>
-        <arg name="use_low_height_cropbox" value="$(var use_low_height_cropbox)"/>
-        <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
-        <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
+        <arg name="input/pointcloud" value="$(var input/semantic_segmentation/pointcloud)"/>
+        <arg name="output/objects" value="$(var lidar_cluster/output/objects)"/>
         <arg name="euclidean_clustering/param_path" value="$(var euclidean_clustering/param_path)"/>
       </include>
     </group>

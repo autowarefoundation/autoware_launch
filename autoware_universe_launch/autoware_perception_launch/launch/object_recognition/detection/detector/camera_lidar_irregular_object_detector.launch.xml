@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Current namespace -->
-  <arg name="ns" description="current namespace"/>
   <arg name="pipeline_ns" description="pipeline namespace"/>
+  <arg name="node/pointcloud_container" description="container for the fusion nodes"/>
+  <arg name="output/objects" default="objects"/>
   <arg name="input/concatenation_info"/>
   <arg name="input/pointcloud"/>
   <arg name="irregular_object_crop_box_filter_node_param_path"/>
@@ -30,7 +31,7 @@
     <group>
       <include file="$(find-pkg-share autoware_detected_object_feature_remover)/launch/detected_object_feature_remover.launch.xml">
         <arg name="input" value="clusters"/>
-        <arg name="output" value="objects"/>
+        <arg name="output" value="$(var output/objects)"/>
         <arg name="run_convex_hull_conversion" value="true"/>
       </include>
     </group>

@@ -15,7 +15,6 @@
   <arg name="tracker_publish_merged_objects" default="false"/>
 
   <!-- External interfaces -->
-  <arg name="number_of_cameras" default="6"/>
   <arg name="input/camera0/image" default="/sensing/camera/camera0/image_rect_color"/>
   <arg name="input/camera0/info" default="/sensing/camera/camera0/camera_info"/>
   <arg name="input/camera0/rois" default="/perception/object_recognition/detection/rois0"/>
@@ -86,18 +85,12 @@
         <arg name="input/camera4/info" value="$(var input/camera4/info)"/>
         <arg name="input/camera5/image" value="$(var input/camera5/image)"/>
         <arg name="input/camera5/info" value="$(var input/camera5/info)"/>
-        <arg name="input/camera6/image" value="$(var input/camera6/image)"/>
-        <arg name="input/camera6/info" value="$(var input/camera6/info)"/>
-        <arg name="input/camera7/image" value="$(var input/camera7/image)"/>
-        <arg name="input/camera7/info" value="$(var input/camera7/info)"/>
-        <arg name="number_of_cameras" value="$(var number_of_cameras)"/>
         <arg name="output/objects" value="$(var camera_bev_detector/output/objects)"/>
       </include>
     </group>
     <group if="$(var use_camera_vru_detector)">
       <!-- Camera VRU detectors-->
       <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/camera_vru_detector.launch.xml">
-        <arg name="ns" value="$(var detection_ns)"/>
         <arg name="rois_ids" value="$(var camera_vru_detector_rois_ids)"/>
         <arg name="input/camera0/rois" value="$(var input/camera0/rois)"/>
         <arg name="input/camera0/info" value="$(var input/camera0/info)"/>

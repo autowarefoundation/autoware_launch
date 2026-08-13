@@ -3,6 +3,7 @@
 <launch>
   <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
   <arg name="camera_namespace" description="camera namespace, e.g. camera6"/>
+  <arg name="enable_image_decompressor" default="true" description="decompress the compressed camera image into the raw image topic"/>
   <arg name="input/vector_map" default="/map/vector_map"/>
   <arg name="input/route" default="/planning/mission_planning/route"/>
 
@@ -47,13 +48,7 @@
     </group>
 
     <node_container pkg="rclcpp_components" exec="component_container_mt" name="traffic_light_node_container" namespace="" output="both">
-      <composable_node pkg="autoware_image_transport_decompressor" plugin="autoware::image_preprocessor::ImageTransportDecompressor" name="traffic_light_image_decompressor">
-        <param name="encoding" value="rgb8"/>
-        <remap from="~/input/compressed_image" to="$(var camera/image)/compressed"/>
-        <remap from="~/output/raw_image" to="$(var camera/image)"/>
-        <extra_arg name="use_intra_process_comms" value="true"/>
-      </composable_node>
-      <composable_node pkg="autoware_traffic_light_classifier" plugin="autoware::traffic_light::TrafficLightClassifierNodelet" name="car_traffic_light_classifier" namespace="classification">
+      <composable_node pkg="autoware_traffic_light_classifier" plugin="autoware::traffic_light::TrafficLightClassifierNode" name="car_traffic_light_classifier" namespace="classification">
         <param from="$(var car_classifier_param_path)" allow_substs="true"/>
         <param from="$(var lamp_recognizer_ml_param_path)" allow_substs="true"/>
         <param name="build_only" value="false"/>
@@ -65,7 +60,7 @@
         <remap from="~/output/traffic_signals" to="car/traffic_signals"/>
         <extra_arg name="use_intra_process_comms" value="true"/>
       </composable_node>
-      <composable_node pkg="autoware_traffic_light_classifier" plugin="autoware::traffic_light::TrafficLightClassifierNodelet" name="pedestrian_traffic_light_classifier" namespace="classification">
+      <composable_node pkg="autoware_traffic_light_classifier" plugin="autoware::traffic_light::TrafficLightClassifierNode" name="pedestrian_traffic_light_classifier" namespace="classification">
         <param from="$(var pedestrian_classifier_param_path)" allow_substs="true"/>
         <param from="$(var lamp_recognizer_ml_param_path)" allow_substs="true"/>
         <param name="build_only" value="false"/>
@@ -90,5 +85,22 @@
         <extra_arg name="use_intra_process_comms" value="true"/>
       </composable_node>
     </node_container>
+
+    <!-- Image decompressor; supplies the raw image topic when the camera publishes compressed only -->
+    <group if="$(var enable_image_decompressor)">
+      <load_composable_node target="/perception/traffic_light_recognition/$(var camera_namespace)/traffic_light_node_container">
+        <composable_node
+          pkg="autoware_image_transport_decompressor"
+          plugin="autoware::image_preprocessor::ImageTransportDecompressor"
+          name="traffic_light_image_decompressor"
+          namespace="/perception/traffic_light_recognition/$(var camera_namespace)"
+        >
+          <param name="encoding" value="rgb8"/>
+          <remap from="~/input/compressed_image" to="$(var camera/image)/compressed"/>
+          <remap from="~/output/raw_image" to="$(var camera/image)"/>
+          <extra_arg name="use_intra_process_comms" value="true"/>
+        </composable_node>
+      </load_composable_node>
+    </group>
   </group>
 </launch>

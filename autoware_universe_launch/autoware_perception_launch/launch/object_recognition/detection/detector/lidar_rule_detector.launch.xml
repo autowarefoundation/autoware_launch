@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- Current namespace -->
   <arg name="ns" description="current namespace"/>
-
   <!-- External interfaces -->
   <arg name="node/pointcloud_container"/>
   <arg name="input/pointcloud_map/pointcloud"/>

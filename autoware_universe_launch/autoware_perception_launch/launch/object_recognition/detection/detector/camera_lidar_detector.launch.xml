@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- cspell: ignore semseg -->
-
-  <!-- Current namespace -->
   <arg name="ns" description="current namespace"/>
+  <!-- cspell: ignore semseg -->
 
   <!-- Lidar + Camera detector parameters -->
   <arg name="lidar_detection_model_type">
@@ -56,6 +54,7 @@
   <arg name="sync_param_path"/>
   <arg name="voxel_grid_based_euclidean_param_path"/>
   <arg name="lidar_model_param_path" description="directory of lidar model param files"/>
+  <arg name="pointpainting_model_path" default="$(var data_path)/image_projection_based_fusion"/>
   <arg name="pointpainting_fusion_common_param_path"/>
   <arg name="roi_cluster_fusion_param_path"/>
 
@@ -145,14 +144,13 @@
       <arg name="input/image7" value="$(var input/camera7/image)"/>
       <arg name="input/image8" value="$(var input/camera8/image)"/>
       <arg name="input/pointcloud" value="$(var pointpainting/input/pointcloud)"/>
-      <arg name="input/concatenation_info" value="$(var input/concatenation_info)"/>
       <arg name="output/objects" value="$(var pointpainting/output/objects)"/>
 
       <arg name="model_name" value="$(var lidar_detection_model_name)"/>
       <arg name="model_path" value="$(var pointpainting_model_path)"/>
       <arg name="model_param_path" value="$(var lidar_model_param_path)/$(var lidar_detection_model_name).param.yaml"/>
-      <arg name="ml_package_param_path" value="$(var model_path)/$(var lidar_detection_model_name)_ml_package.param.yaml"/>
-      <arg name="class_remapper_param_path" value="$(var model_path)/detection_class_remapper.param.yaml"/>
+      <arg name="ml_package_param_path" value="$(var pointpainting_model_path)/$(var lidar_detection_model_name)_ml_package.param.yaml"/>
+      <arg name="class_remapper_param_path" value="$(var pointpainting_model_path)/detection_class_remapper.param.yaml"/>
       <arg name="common_param_path" value="$(var pointpainting_fusion_common_param_path)"/>
       <arg name="use_pointcloud_container" value="true"/>
       <arg name="pointcloud_container_name" value="$(var node/pointcloud_container)"/>

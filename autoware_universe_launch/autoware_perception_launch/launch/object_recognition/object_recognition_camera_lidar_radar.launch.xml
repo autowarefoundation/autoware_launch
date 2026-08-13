@@ -20,6 +20,7 @@
   </arg>
   <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
   <arg name="bevfusion_model_path" default="$(var data_path)/bevfusion"/>
+  <arg name="pointpainting_model_path" default="$(var data_path)/image_projection_based_fusion"/>
   <arg name="camera_2d_detector/model_path" default="$(var data_path)/tensorrt_yolox/yolox-sPlus-opt-pseudoV2-T4-960x960-T4-seg16cls.onnx"/>
   <arg name="camera_2d_detector/label_path" default="$(var data_path)/tensorrt_yolox/label.txt"/>
   <arg name="camera_2d_detector/color_map_path" default="$(var data_path)/tensorrt_yolox/semseg_color_map.csv"/>
@@ -46,6 +47,7 @@
   <arg name="number_of_cameras" default="6"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
+  <arg name="input/semantic_segmentation/pointcloud" default="/perception/segmented/pointcloud"/>
   <arg name="input/obstacle_segmentation/pointcloud" default="/perception/obstacle_segmentation/pointcloud"/>
   <arg name="input/camera0/image" default="/sensing/camera/camera0/image_rect_color"/>
   <arg name="input/camera0/info" default="/sensing/camera/camera0/camera_info"/>
@@ -140,7 +142,6 @@
   />
 
   <!-- label_based_param -->
-  <arg name="euclidean_clustering/shape_policy" default="0"/>
   <arg name="euclidean_clustering/param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml"/>
 
   <!-- Internal interfaces -->
@@ -217,6 +218,7 @@
         <arg name="use_low_intensity_cluster_filter" value="$(var use_low_intensity_cluster_filter)"/>
         <arg name="use_image_segmentation_based_filter" value="$(var use_image_segmentation_based_filter)"/>
         <arg name="lidar_model_param_path" value="$(var lidar_model_param_path)"/>
+        <arg name="pointpainting_model_path" value="$(var pointpainting_model_path)"/>
         <arg name="pointpainting_fusion_common_param_path" value="$(var pointpainting_fusion_common_param_path)"/>
         <arg name="roi_cluster_fusion_param_path" value="$(var roi_cluster_fusion_param_path)"/>
         <arg name="segmentation_pointcloud_fusion_camera_ids" value="$(var segmentation_pointcloud_fusion_camera_ids)"/>
@@ -233,20 +235,16 @@
     <!-- replace camera_lidar_detector with lidar_semantic_segmentation_detector -->
     <group if="$(var use_semantic_segmentation_ptv3)">
       <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_semantic_segmentation_detector.launch.xml">
-        <arg name="ns" value="$(var detection_ns)"/>
-        <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
-        <arg name="semantic_cluster/output/objects" value="$(var lidar_cluster/output/objects)"/>
-        <arg name="use_low_height_cropbox" value="$(var use_low_height_cropbox)"/>
-        <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
-        <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
+        <arg name="input/pointcloud" value="$(var input/semantic_segmentation/pointcloud)"/>
+        <arg name="output/objects" value="$(var lidar_cluster/output/objects)"/>
         <arg name="euclidean_clustering/param_path" value="$(var euclidean_clustering/param_path)"/>
       </include>
     </group>
     <group if="$(var use_irregular_object_detector)">
       <!-- Irregular object detector -->
       <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/camera_lidar_irregular_object_detector.launch.xml">
-        <arg name="ns" value="$(var detection_ns)"/>
         <arg name="pipeline_ns" value="$(var irregular_object_detector_ns)"/>
+        <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
         <arg name="input/concatenation_info" value="$(var input/concatenation_info)"/>
         <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
         <arg name="output/objects" value="$(var irregular_object_pipeline/output/objects)"/>
@@ -286,7 +284,6 @@
     <group if="$(var use_camera_vru_detector)">
       <!-- Camera VRU detectors-->
       <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/camera_vru_detector.launch.xml">
-        <arg name="ns" value="$(var detection_ns)"/>
         <arg name="rois_ids" value="$(var camera_vru_detector_rois_ids)"/>
         <arg name="input/camera0/rois" value="$(var input/camera0/rois)"/>
         <arg name="input/camera0/info" value="$(var input/camera0/info)"/>

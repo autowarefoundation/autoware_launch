@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="ns" description="current namespace"/>
   <push-ros-namespace namespace="camera_vru"/>
 
   <!-- External interfaces -->
