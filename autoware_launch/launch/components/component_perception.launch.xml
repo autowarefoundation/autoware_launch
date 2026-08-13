@@ -29,7 +29,6 @@
   <!-- 0: ALL_POLYGON, 1: LABEL_DEPEND -->
   <arg name="euclidean_clustering/shape_policy" default="0" description="shape policy for euclidean clustering, options: 0 (ALL_POLYGON), 1 (LABEL_DEPEND)"/>
   <arg name="use_semantic_segmentation_ptv3" default="false" description="use semantic segmentation ptv3 for ground segmentation"/>
-  <arg name="use_empty_dynamic_object_publisher" default="false" description="if true, /perception/object_recognition/objects topic has an empty DynamicObjectArray"/>
 
   <arg name="use_low_height_cropbox" default="false" description="use low height crop filter in clustering"/>
   <arg name="use_vector_map" default="true" description="use vector map in prediction"/>
@@ -172,13 +171,10 @@
       </include>
     </group>
 
-    <!-- Object recognition module: the empty-objects publisher replaces it for simulation use -->
+    <!-- Object recognition module -->
     <group>
       <push-ros-namespace namespace="object_recognition"/>
-      <node pkg="autoware_dummy_perception_publisher" exec="empty_objects_publisher" name="empty_objects_publisher" output="screen" if="$(var use_empty_dynamic_object_publisher)">
-        <remap from="~/output/objects" to="/perception/object_recognition/objects"/>
-      </node>
-      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/object_recognition_lidar.launch.xml" unless="$(var use_empty_dynamic_object_publisher)">
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/object_recognition_lidar.launch.xml">
         <arg name="lidar_detection_model" value="$(var lidar_detection_model)"/>
         <arg name="use_validator" value="$(var use_object_validator)"/>
         <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>
