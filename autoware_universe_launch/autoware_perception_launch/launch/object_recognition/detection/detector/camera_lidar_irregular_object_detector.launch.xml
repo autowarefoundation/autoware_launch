@@ -5,22 +5,24 @@
   <arg name="pipeline_ns" description="pipeline namespace"/>
   <arg name="input/concatenation_info"/>
   <arg name="input/pointcloud"/>
-  <arg name="fusion_camera_ids" default="[0]" description="camera IDs used for fusion"/>
-  <arg name="image_topic_name" default="image_raw" description="topic name of camera image"/>
-  <arg name="irregular_object_detector_param_path"/>
+  <arg name="irregular_object_crop_box_filter_node_param_path"/>
+  <arg name="irregular_object_scan_ground_filter_node_param_path"/>
+  <arg name="irregular_object_roi_pointcloud_fusion_node_param_path"/>
+  <arg name="irregular_object_fusion_camera_param_path"/>
   <arg name="sync_param_path"/>
   <!-- small unknown object detector -->
   <group>
     <push-ros-namespace namespace="$(var pipeline_ns)"/>
     <group>
-      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/camera_lidar_irregular_object_detector.launch.py">
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/irregular_object_detector.launch.xml">
+        <arg name="target_container" value="$(var node/pointcloud_container)"/>
         <arg name="input/concatenation_info" value="$(var input/concatenation_info)"/>
         <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
-        <arg name="output_topic" value="clusters"/>
-        <arg name="pointcloud_container_name" value="$(var node/pointcloud_container)"/>
-        <arg name="fusion_camera_ids" value="$(var fusion_camera_ids)"/>
-        <arg name="image_topic_name" value="$(var image_topic_name)"/>
-        <arg name="irregular_object_detector_param_path" value="$(var irregular_object_detector_param_path)"/>
+        <arg name="output/clusters" value="clusters"/>
+        <arg name="crop_box_filter_node_param_path" value="$(var irregular_object_crop_box_filter_node_param_path)"/>
+        <arg name="scan_ground_filter_node_param_path" value="$(var irregular_object_scan_ground_filter_node_param_path)"/>
+        <arg name="roi_pointcloud_fusion_node_param_path" value="$(var irregular_object_roi_pointcloud_fusion_node_param_path)"/>
+        <arg name="fusion_camera_param_path" value="$(var irregular_object_fusion_camera_param_path)"/>
         <arg name="sync_param_path" value="$(var sync_param_path)"/>
       </include>
     </group>
