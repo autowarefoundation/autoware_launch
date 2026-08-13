@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <launch>
+  <arg
+    name="object_recognition_prediction_map_based_prediction_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/object_recognition/prediction/map_based_prediction.param.yaml"
+  />
   <arg name="use_vector_map" default="false" description="use vector map in prediction"/>
   <arg name="prediction_model_type" default="map_based" description="prediction model type">
     <choice value="map_based"/>

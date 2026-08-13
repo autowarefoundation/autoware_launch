@@ -675,6 +675,20 @@ def generate_launch_description():
     add_launch_arg("ptv3_model_path", "/opt/autoware/mlmodels/ptv3")
     add_launch_arg("ptv3_model_name", "ptv3")
     add_launch_arg(
+        "obstacle_segmentation_ground_segmentation_param_path",
+        [
+            FindPackageShare("autoware_perception_launch"),
+            "/config/obstacle_segmentation/ground_segmentation/ground_segmentation.param.yaml",
+        ],
+    )
+    add_launch_arg(
+        "obstacle_segmentation_ground_segmentation_elevation_map_param_path",
+        [
+            FindPackageShare("autoware_perception_launch"),
+            "/config/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml",
+        ],
+    )
+    add_launch_arg(
         "ogm_outlier_filter_param_path",
         [
             FindPackageShare("autoware_occupancy_grid_map_outlier_filter"),

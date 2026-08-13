@@ -44,7 +44,7 @@ Config format (``.github/sync-params.yaml``)
         files:
           - source: perception/autoware_image_object_locator/config/bbox_object_locator.param.yaml
             variants:
-              - path: autoware_launch/config/perception/.../near_range_camera_vru_detector.param.yaml
+              - path: autoware_universe_launch/autoware_perception_launch/config/.../near_range_camera_vru_detector.param.yaml
 
 Override markers
 ----------------

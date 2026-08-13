@@ -234,8 +234,8 @@ def generate_launch_description():
     add_launch_arg(
         "irregular_object_detector_param_path",
         [
-            FindPackageShare("autoware_launch"),
-            "/config/perception/object_recognition/detection/irregular_object_detection/irregular_object_detector.param.yaml",
+            FindPackageShare("autoware_perception_launch"),
+            "/config/object_recognition/detection/irregular_object_detection/irregular_object_detector.param.yaml",
         ],
     )
     add_launch_arg(

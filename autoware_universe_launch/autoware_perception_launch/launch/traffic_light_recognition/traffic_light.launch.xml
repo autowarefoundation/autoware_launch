@@ -8,21 +8,48 @@
   <arg name="high_accuracy_detection_type"/>
 
   <!-- parameters -->
-  <arg name="each_traffic_light_map_based_detector_param_path"/>
-  <arg name="traffic_light_fine_detector_param_path"/>
-  <arg name="yolox_traffic_light_detector_param_path"/>
-  <arg name="car_traffic_light_classifier_param_path"/>
-  <arg name="pedestrian_traffic_light_classifier_param_path"/>
-  <arg name="traffic_light_roi_visualizer_param_path"/>
-  <arg name="traffic_light_occlusion_predictor_param_path"/>
-  <arg name="traffic_light_multi_camera_fusion_param_path"/>
-  <arg name="traffic_light_arbiter_param_path"/>
-  <arg name="crosswalk_traffic_light_estimator_param_path"/>
+  <arg
+    name="each_traffic_light_map_based_detector_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/traffic_light_map_based_detector/TRAFFIC_LIGHT_RECOGNITION_CAMERA_NAMESPACE_traffic_light_map_based_detector.param.yaml"
+  />
+  <arg
+    name="traffic_light_fine_detector_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml"
+  />
+  <arg name="yolox_traffic_light_detector_param_path" default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/tensorrt_yolox/yolox_traffic_light_detector.param.yaml"/>
+  <arg
+    name="car_traffic_light_classifier_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml"
+  />
+  <arg
+    name="pedestrian_traffic_light_classifier_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml"
+  />
+  <arg
+    name="traffic_light_roi_visualizer_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/traffic_light_visualization/traffic_light_roi_visualizer.param.yaml"
+  />
+  <arg
+    name="traffic_light_occlusion_predictor_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml"
+  />
+  <arg
+    name="traffic_light_multi_camera_fusion_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml"
+  />
+  <arg name="traffic_light_arbiter_param_path" default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/traffic_light_arbiter/traffic_light_arbiter.param.yaml"/>
+  <arg
+    name="crosswalk_traffic_light_estimator_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml"
+  />
 
   <!-- ML parameters -->
   <arg name="whole_image_detection/model_path"/>
   <arg name="whole_image_detection/label_path"/>
-  <arg name="whole_image_detection/yolox_roi_label_remap_path"/>
+  <arg
+    name="whole_image_detection/yolox_roi_label_remap_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/tensorrt_yolox/traffic_light_roi_label_remap.csv"
+  />
   <arg name="fine_detection/model_path"/>
   <arg name="fine_detection/label_path"/>
   <arg name="classification/car/model_path"/>

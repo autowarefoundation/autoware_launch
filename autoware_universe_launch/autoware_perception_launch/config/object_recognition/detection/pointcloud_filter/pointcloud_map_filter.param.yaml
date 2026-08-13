@@ -1,0 +1,29 @@
+/**:
+  ros__parameters:
+
+    # voxel size for downsample filter
+    down_sample_voxel_size: 0.1
+
+    # distance threshold for compare compare
+    distance_threshold: 0.5
+
+    # ratio to reduce voxel_leaf_size and neighbor points distance threshold in z axis
+    downsize_ratio_z_axis: 0.6
+
+    # publish voxelized map pointcloud for debug
+    publish_debug_pcd: False
+
+    # use dynamic map loading
+    use_dynamic_map_loading: true
+
+    # time interval to check dynamic map loading
+    timer_interval_ms: 100
+
+    # distance threshold for dynamic map update
+    map_update_distance_threshold: 10.0
+
+    # radius map for dynamic map loading
+    map_loader_radius: 150.0
+
+    # Threshold of grid size to split map pointcloud
+    max_map_grid_size: 1000.0
