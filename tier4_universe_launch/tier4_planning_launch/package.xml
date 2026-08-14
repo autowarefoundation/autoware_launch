@@ -15,10 +15,8 @@
   <maintainer email="fumiya.watanabe@tier4.jp">Fumiya Watanabe</maintainer>
   <!-- avoidance module -->
   <maintainer email="takamasa.horibe@tier4.jp">Takamasa Horibe</maintainer>
-  <maintainer email="satoshi.ota@tier4.jp">Satoshi Ota</maintainer>
   <!-- turn signal decider -->
   <maintainer email="zulfaqar.azmi@tier4.jp">Zulfaqar Azmi</maintainer>
-  <maintainer email="satoshi.ota@tier4.jp">Satoshi Ota</maintainer>
   <maintainer email="mamoru.sobue@tier4.jp">Mamoru Sobue</maintainer>
   <!-- drivable area generation-->
   <maintainer email="takayuki.murooka@tier4.jp">Takayuki Murooka</maintainer>
@@ -27,7 +25,6 @@
   <!-- intersection module -->
   <maintainer email="mamoru.sobue@tier4.jp">Mamoru Sobue</maintainer>
   <!-- crosswalk module -->
-  <maintainer email="satoshi.ota@tier4.jp">Satoshi Ota</maintainer>
   <!-- detection area module -->
   <maintainer email="kyoichi.sugahara@tier4.jp">Kyoichi Sugahara</maintainer>
   <!-- occlusion spot module -->
@@ -35,7 +32,6 @@
   <!-- no stopping area module -->
   <maintainer email="kosuke.takeuchi@tier4.jp">Kosuke Takeuchi</maintainer>
   <!-- traffic light module -->
-  <maintainer email="satoshi.ota@tier4.jp">Satoshi Ota</maintainer>
   <!-- blind spot module -->
   <maintainer email="mamoru.sobue@tier4.jp">Mamoru Sobue</maintainer>
   <!-- stop line module -->
@@ -53,6 +49,8 @@
   <maintainer email="shumpei.wakabayashi@tier4.jp">Shumpei Wakabayashi</maintainer>
 
   <license>Apache License 2.0</license>
+
+  <author email="satoshi.ota@tier4.jp">Satoshi Ota</author>
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
   <buildtool_depend>autoware_cmake</buildtool_depend>
