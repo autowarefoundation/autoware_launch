@@ -1,5 +1,12 @@
 /**:
   ros__parameters:
+    # model files, relative to model_path
+    encoder_onnx_path: pts_voxel_encoder.onnx
+    encoder_engine_path: pts_voxel_encoder.engine
+    head_onnx_path: pts_backbone_neck_head.onnx
+    head_engine_path: pts_backbone_neck_head.engine
+    class_remapper_param_path: detection_class_remapper.param.yaml
+    trt_precision: fp16
     model_params:
       class_names: ["CAR", "TRUCK", "BUS", "BICYCLE", "PEDESTRIAN"]
       point_feature_size: 4
