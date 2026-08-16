@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/538cf8da7f3c7bfadcd1693a910e1d75077fb63d/perception/autoware_lidar_centerpoint/config/centerpoint_common.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/405b07fbd40eee94b9108a6a58f702a7e0094e6f/perception/autoware_lidar_centerpoint/config/centerpoint_common.param.yaml
 
 /**:
   ros__parameters:
