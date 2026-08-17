@@ -1,4 +1,5 @@
 <launch>
+  <!-- cspell: ignore atteuler -->
   <arg name="input/fix" default="septentrio/nav_sat_fix" description="NavSatFix from the receiver driver"/>
   <arg name="input/atteuler" default="septentrio/atteuler" description="AttEuler heading from the receiver driver"/>
   <arg name="input/orientation" default="septentrio/orientation" description="orientation from the receiver driver"/>
