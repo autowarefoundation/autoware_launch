@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+  Traffic light recognition, whole-image detection mode: per-camera yolox detection, then shared fusion.
+  Two cameras as the representative set; add or remove per-camera blocks to match the vehicle.
+-->
+<launch>
+  <arg name="input/vector_map" default="/map/vector_map"/>
+  <arg name="input/route" default="/planning/mission_planning/route"/>
+  <arg name="external/traffic_signals" default="/perception/traffic_light_recognition/external/traffic_signals" description="topic from V2X"/>
+  <arg name="output/traffic_signals" default="/perception/traffic_light_recognition/traffic_signals" description="final output topic as traffic light recognition"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
+  <arg name="whole_image_detector_model_path" default="$(var data_path)/tensorrt_yolox/yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
+  <arg name="whole_image_detector_label_path" default="$(var data_path)/tensorrt_yolox/car_ped_tl_detector_labels.txt"/>
+  <arg name="lamp_recognizer_ml_param_path" default="$(var data_path)/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>
+  <arg name="car_classifier_model_path" default="$(var data_path)/traffic_light_classifier/traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
+  <arg name="car_classifier_label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels.txt"/>
+  <arg name="pedestrian_classifier_model_path" default="$(var data_path)/traffic_light_classifier/ped_traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
+  <arg name="pedestrian_classifier_label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels_ped.txt"/>
+  <arg name="car_classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+  <arg name="pedestrian_classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+
+  <!-- map based detector parameters; the extra camera samples a shorter transform window than the base camera -->
+  <arg
+    name="base_map_based_detector_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/traffic_light_map_based_detector/base_traffic_light_map_based_detector.param.yaml"
+  />
+  <arg
+    name="extra_map_based_detector_param_path"
+    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/traffic_light_map_based_detector/extra_traffic_light_map_based_detector.param.yaml"
+  />
+
+  <!-- camera6 -->
+  <group>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/traffic_light_recognition/traffic_light_detector_whole_image.launch.xml">
+      <arg name="camera_namespace" value="camera6"/>
+      <arg name="input/vector_map" value="$(var input/vector_map)"/>
+      <arg name="input/route" value="$(var input/route)"/>
+      <arg name="data_path" value="$(var data_path)"/>
+      <arg name="map_based_detector_param_path" value="$(var base_map_based_detector_param_path)"/>
+      <arg name="whole_image_detector_model_path" value="$(var whole_image_detector_model_path)"/>
+      <arg name="whole_image_detector_label_path" value="$(var whole_image_detector_label_path)"/>
+      <arg name="lamp_recognizer_ml_param_path" value="$(var lamp_recognizer_ml_param_path)"/>
+      <arg name="car_classifier_model_path" value="$(var car_classifier_model_path)"/>
+      <arg name="car_classifier_label_path" value="$(var car_classifier_label_path)"/>
+      <arg name="pedestrian_classifier_model_path" value="$(var pedestrian_classifier_model_path)"/>
+      <arg name="pedestrian_classifier_label_path" value="$(var pedestrian_classifier_label_path)"/>
+      <arg name="car_classifier_type" value="$(var car_classifier_type)"/>
+      <arg name="pedestrian_classifier_type" value="$(var pedestrian_classifier_type)"/>
+    </include>
+  </group>
+
+  <!-- camera7 -->
+  <group>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/traffic_light_recognition/traffic_light_detector_whole_image.launch.xml">
+      <arg name="camera_namespace" value="camera7"/>
+      <arg name="input/vector_map" value="$(var input/vector_map)"/>
+      <arg name="input/route" value="$(var input/route)"/>
+      <arg name="data_path" value="$(var data_path)"/>
+      <arg name="map_based_detector_param_path" value="$(var extra_map_based_detector_param_path)"/>
+      <arg name="whole_image_detector_model_path" value="$(var whole_image_detector_model_path)"/>
+      <arg name="whole_image_detector_label_path" value="$(var whole_image_detector_label_path)"/>
+      <arg name="lamp_recognizer_ml_param_path" value="$(var lamp_recognizer_ml_param_path)"/>
+      <arg name="car_classifier_model_path" value="$(var car_classifier_model_path)"/>
+      <arg name="car_classifier_label_path" value="$(var car_classifier_label_path)"/>
+      <arg name="pedestrian_classifier_model_path" value="$(var pedestrian_classifier_model_path)"/>
+      <arg name="pedestrian_classifier_label_path" value="$(var pedestrian_classifier_label_path)"/>
+      <arg name="car_classifier_type" value="$(var car_classifier_type)"/>
+      <arg name="pedestrian_classifier_type" value="$(var pedestrian_classifier_type)"/>
+    </include>
+  </group>
+
+  <!-- fusion and post-process -->
+  <group>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/traffic_light_recognition/traffic_light_fusion.launch.xml">
+      <arg name="camera_namespaces" value="[camera6, camera7]"/>
+      <arg name="input/vector_map" value="$(var input/vector_map)"/>
+      <arg name="external/traffic_signals" value="$(var external/traffic_signals)"/>
+      <arg name="output/traffic_signals" value="$(var output/traffic_signals)"/>
+    </include>
+  </group>
+</launch>

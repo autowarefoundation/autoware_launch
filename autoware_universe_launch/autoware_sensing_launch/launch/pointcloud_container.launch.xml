@@ -1,0 +1,14 @@
+<launch>
+  <!-- Component container hosting one sensor unit's composable nodes; the only unit that creates a container -->
+  <arg name="container_namespace" description="absolute namespace hosting the container"/>
+  <arg name="container_name" default="pointcloud_container"/>
+  <arg name="use_multithread" default="false" description="use multithread"/>
+
+  <node_container
+    pkg="rclcpp_components"
+    exec="$(if $(var use_multithread) component_container_mt component_container)"
+    name="$(var container_name)"
+    namespace="$(var container_namespace)"
+    output="both"
+  />
+</launch>
