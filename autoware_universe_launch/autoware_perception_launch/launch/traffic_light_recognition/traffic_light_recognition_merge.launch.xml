@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+  Traffic light recognition, merge mode: detection and classification run on other ECUs; this side runs the
+  per-camera occlusion check and the shared fusion. Two cameras as the representative set; add or remove
+  per-camera blocks to match the vehicle.
+-->
+<launch>
+  <arg name="input/vector_map" default="/map/vector_map"/>
+  <arg name="input/pointcloud" default="/sensing/lidar/top/pointcloud_raw_ex" description="pointcloud for the occlusion predictors"/>
+  <arg name="external/traffic_signals" default="/perception/traffic_light_recognition/external/traffic_signals" description="topic from V2X"/>
+  <arg name="output/traffic_signals" default="/perception/traffic_light_recognition/traffic_signals" description="final output topic as traffic light recognition"/>
+
+  <!-- camera6 -->
+  <group>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/traffic_light_recognition/traffic_light_occlusion_predictor.launch.xml">
+      <arg name="camera_namespace" value="camera6"/>
+      <arg name="input/cloud" value="$(var input/pointcloud)"/>
+      <arg name="input/vector_map" value="$(var input/vector_map)"/>
+    </include>
+  </group>
+
+  <!-- camera7 -->
+  <group>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/traffic_light_recognition/traffic_light_occlusion_predictor.launch.xml">
+      <arg name="camera_namespace" value="camera7"/>
+      <arg name="input/cloud" value="$(var input/pointcloud)"/>
+      <arg name="input/vector_map" value="$(var input/vector_map)"/>
+    </include>
+  </group>
+
+  <!-- fusion and post-process -->
+  <group>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/traffic_light_recognition/traffic_light_fusion.launch.xml">
+      <arg name="camera_namespaces" value="[camera6, camera7]"/>
+      <arg name="input/vector_map" value="$(var input/vector_map)"/>
+      <arg name="external/traffic_signals" value="$(var external/traffic_signals)"/>
+      <arg name="output/traffic_signals" value="$(var output/traffic_signals)"/>
+    </include>
+  </group>
+</launch>

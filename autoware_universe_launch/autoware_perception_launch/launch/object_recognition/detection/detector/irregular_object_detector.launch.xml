@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
+  <!-- Irregular (small unknown) object detection: crop box -> ground removal -> ROI-pointcloud fusion clustering -->
+  <arg name="target_container" description="container to load the filters into"/>
+  <arg name="base_frame" default="base_link"/>
+  <arg name="use_intra_process" default="true"/>
+
+  <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
+  <arg name="input/concatenation_info" default="/sensing/lidar/concatenated/pointcloud_info"/>
+  <arg name="output/clusters"/>
+
+  <arg name="crop_box_filter_node_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/crop_box_filter.param.yaml"/>
+  <arg name="scan_ground_filter_node_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/scan_ground_filter.param.yaml"/>
+  <arg
+    name="roi_pointcloud_fusion_node_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/roi_pointcloud_fusion.param.yaml"
+  />
+  <arg
+    name="fusion_camera_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/fusion_cameras.param.yaml"
+    description="per-platform camera set: rois_number, per-camera sync arrays, and input topic params"
+  />
+  <arg name="sync_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml"/>
+
+  <load_composable_node target="$(var target_container)">
+    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter">
+      <remap from="input" to="$(var input/pointcloud)"/>
+      <remap from="input/concatenation_info" to="$(var input/concatenation_info)"/>
+      <remap from="output" to="cropped_range/pointcloud"/>
+      <param from="$(var crop_box_filter_node_param_path)"/>
+      <param name="input_frame" value="$(var base_frame)"/>
+      <param name="output_frame" value="$(var base_frame)"/>
+      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+    </composable_node>
+    <composable_node pkg="autoware_ground_segmentation" plugin="autoware::ground_segmentation::ScanGroundFilterComponent" name="ground_filter">
+      <remap from="input" to="cropped_range/pointcloud"/>
+      <remap from="output" to="obstacle_segmentation/pointcloud"/>
+      <param from="$(var scan_ground_filter_node_param_path)"/>
+      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+    </composable_node>
+  </load_composable_node>
+
+  <!-- Provides ld_preload_value for the fusion node process -->
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+
+  <!-- ROI-pointcloud fusion; the camera param file overrides the sync arrays with the platform's camera subset -->
+  <node pkg="autoware_image_projection_based_fusion" exec="roi_pointcloud_fusion_node" name="roi_pointcloud_fusion">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    <remap from="input" to="obstacle_segmentation/pointcloud"/>
+    <remap from="output" to="$(var output/clusters)"/>
+    <param from="$(var sync_param_path)" allow_substs="true"/>
+    <param from="$(var fusion_camera_param_path)"/>
+    <param from="$(var roi_pointcloud_fusion_node_param_path)"/>
+  </node>
+</launch>

@@ -64,13 +64,6 @@ parameters:
     param_values:
       - name: run_convex_hull_conversion
         value: true
-  - node: /perception/object_recognition/detection/roi_detected_object_fusion
-    param_files: []
-    param_values:
-      - name: rois_number
-        value: $(var number_of_cameras)
-      - name: rois_timestamp_offsets
-        value: [0.098, 0.147, 0.078, 0.062, 0.115, 0.132]
   - node: /perception/object_recognition/tracking/multi_object_tracker
     param_files: []
     param_values:

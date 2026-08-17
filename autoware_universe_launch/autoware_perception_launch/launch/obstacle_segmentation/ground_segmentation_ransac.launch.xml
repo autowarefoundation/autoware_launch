@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Short-height obstacle recovery by plane fitting: concatenate the given lidars -> detection-area crop -> vector map filter -> RANSAC ground filter, merged back into the obstacle stream -->
+  <arg name="target_container" description="container to load the filters into"/>
+  <arg name="base_frame" default="base_link"/>
+  <arg name="use_intra_process" default="true"/>
+
+  <arg name="input_topics" description="lidar pointcloud topics fed to plane fitting, e.g. [/sensing/lidar/front/pointcloud, /sensing/lidar/rear/pointcloud]"/>
+  <arg name="input/main/pointcloud" description="no-ground pointcloud of the primary lidars"/>
+  <arg name="output/pointcloud"/>
+  <arg name="output/pointcloud_info" default="$(var output/pointcloud)_info"/>
+
+  <arg name="detection_area_crop_box_filter_node_param_path" description="crop box spanning the short-height detection area"/>
+  <arg name="ransac_ground_filter_node_param_path" default="$(find-pkg-share autoware_ground_segmentation)/config/ransac_ground_filter.param.yaml"/>
+
+  <group>
+    <push-ros-namespace namespace="plane_fitting"/>
+    <load_composable_node target="$(var target_container)">
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent" name="concatenate_data">
+        <remap from="~/input/odom" to="/localization/kinematic_state"/>
+        <remap from="output" to="concatenated/pointcloud"/>
+        <remap from="output_info" to="concatenated/pointcloud_info"/>
+        <param name="input_topics" value="$(var input_topics)"/>
+        <param name="output_frame" value="$(var base_frame)"/>
+        <param name="timeout_sec" value="1.0"/>
+        <param name="input_twist_topic_type" value="odom"/>
+        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+      </composable_node>
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="short_height_obstacle_detection_area_filter">
+        <remap from="input" to="concatenated/pointcloud"/>
+        <remap from="output" to="detection_area/pointcloud"/>
+        <param from="$(var detection_area_crop_box_filter_node_param_path)" allow_substs="true"/>
+        <param name="input_frame" value="$(var base_frame)"/>
+        <param name="output_frame" value="$(var base_frame)"/>
+        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+      </composable_node>
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::Lanelet2MapFilterComponent" name="vector_map_filter">
+        <remap from="input/pointcloud" to="detection_area/pointcloud"/>
+        <remap from="input/vector_map" to="/map/vector_map"/>
+        <remap from="output" to="vector_map_filtered/pointcloud"/>
+        <param name="voxel_size_x" value="0.25"/>
+        <param name="voxel_size_y" value="0.25"/>
+        <!-- The transient_local vector map subscription forbids intra-process -->
+        <extra_arg name="use_intra_process_comms" value="false"/>
+      </composable_node>
+      <composable_node pkg="autoware_ground_segmentation" plugin="autoware::ground_segmentation::RANSACGroundFilterComponent" name="ransac_ground_filter">
+        <remap from="input" to="vector_map_filtered/pointcloud"/>
+        <remap from="output" to="pointcloud"/>
+        <param from="$(var ransac_ground_filter_node_param_path)" allow_substs="true"/>
+        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+      </composable_node>
+    </load_composable_node>
+  </group>
+
+  <load_composable_node target="$(var target_container)">
+    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent" name="concatenate_no_ground_data">
+      <remap from="~/input/odom" to="/localization/kinematic_state"/>
+      <remap from="output" to="$(var output/pointcloud)"/>
+      <remap from="output_info" to="$(var output/pointcloud_info)"/>
+      <param name="input_topics" value="[plane_fitting/pointcloud, $(var input/main/pointcloud)]"/>
+      <param name="output_frame" value="$(var base_frame)"/>
+      <param name="input_twist_topic_type" value="odom"/>
+      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+    </composable_node>
+  </load_composable_node>
+</launch>
