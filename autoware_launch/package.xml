@@ -28,7 +28,6 @@
   <exec_depend>tier4_localization_launch</exec_depend>
   <exec_depend>tier4_map_launch</exec_depend>
   <exec_depend>tier4_planning_launch</exec_depend>
-  <exec_depend>tier4_sensing_launch</exec_depend>
   <exec_depend>tier4_simulator_launch</exec_depend>
   <exec_depend>tier4_system_launch</exec_depend>
   <exec_depend>tier4_vehicle_launch</exec_depend>

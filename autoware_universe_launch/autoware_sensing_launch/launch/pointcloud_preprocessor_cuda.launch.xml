@@ -1,0 +1,29 @@
+<launch>
+  <!-- Per-lidar pointcloud preprocessing folded into one CUDA node: crop box stages -> distortion correction -> ring outlier filter -->
+  <arg name="target_container" description="absolute path of the container to load the preprocessor into"/>
+  <arg name="enable_ring_outlier_filter" default="true" description="close the chain with the ring outlier filter stage"/>
+
+  <arg name="input/pointcloud" default="pointcloud_raw_ex"/>
+  <arg name="input/twist" default="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
+  <arg name="input/imu" default="/sensing/imu/imu_data"/>
+  <arg name="output/pointcloud" default="pointcloud_before_sync"/>
+
+  <arg name="crop_box_param_path" description="file carrying the folded crop_box stage lists"/>
+  <arg name="distortion_corrector_node_param_path" default="$(find-pkg-share autoware_sensing_launch)/config/distortion_corrector_node.param.yaml"/>
+  <arg name="ring_outlier_filter_node_param_path" default="$(find-pkg-share autoware_sensing_launch)/config/ring_outlier_filter_node.param.yaml"/>
+
+  <load_composable_node target="$(var target_container)">
+    <composable_node pkg="autoware_cuda_pointcloud_preprocessor" plugin="autoware::cuda_pointcloud_preprocessor::CudaPointcloudPreprocessorNode" name="cuda_pointcloud_preprocessor_node">
+      <remap from="~/input/pointcloud" to="$(var input/pointcloud)"/>
+      <remap from="~/input/twist" to="$(var input/twist)"/>
+      <remap from="~/input/imu" to="$(var input/imu)"/>
+      <remap from="~/output/pointcloud" to="$(var output/pointcloud)"/>
+      <remap from="~/output/pointcloud/cuda" to="$(var output/pointcloud)/cuda"/>
+      <param from="$(var crop_box_param_path)"/>
+      <param from="$(var distortion_corrector_node_param_path)" allow_substs="true"/>
+      <param from="$(var ring_outlier_filter_node_param_path)" allow_substs="true"/>
+      <param name="enable_ring_outlier_filter" value="$(var enable_ring_outlier_filter)"/>
+      <!-- The whole node can not set use_intra_process due to type negotiation internal topics -->
+    </composable_node>
+  </load_composable_node>
+</launch>

@@ -1048,7 +1048,7 @@
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_sensing_launch</span>
+                  <span>package: &lt;sensor_model&gt;_launch</span>
                 </div>
               </div>
             </div>
@@ -1073,7 +1073,7 @@
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_sensing_launch</span>
+                  <span>package: &lt;sensor_model&gt;_launch</span>
                 </div>
               </div>
             </div>
