@@ -7,6 +7,7 @@
   />
   <arg name="pointcloud_container_name" description="name of pointcloud container"/>
   <arg name="launch_sensing_driver" default="true"/>
+  <arg name="launch_speed_scale_estimator" default="false" description="launch speed scale estimator"/>
   <arg name="sensor_model" default="sample_sensor_kit"/>
   <arg name="use_sim_time" default="false"/>
   <arg name="vehicle_model" default="sample_vehicle"/>
@@ -29,6 +30,7 @@
 
   <include file="$(find-pkg-share tier4_sensing_launch)/launch/sensing.launch.xml">
     <arg name="launch_driver" value="$(var launch_sensing_driver)"/>
+    <arg name="launch_speed_scale_estimator" value="$(var launch_speed_scale_estimator)"/>
     <arg name="sensor_model" value="$(var sensor_model)"/>
     <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     <arg name="vehicle_mirror_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/mirror.param.yaml"/>
