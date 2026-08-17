@@ -15,6 +15,8 @@
   <arg name="vehicle_mirror_param_file"/>
   <arg name="container_name" default="velodyne_node_container"/>
   <arg name="udp_only" default="false"/>
+  <arg name="use_polar_voxel_noise_filter" default="true"/>
+  <arg name="polar_voxel_noise_filter_node_param_path" default="$(find-pkg-share common_sensor_launch)/config/polar_voxel_noise_filter_node.param.yaml"/>
 
   <include file="$(find-pkg-share common_sensor_launch)/launch/nebula_node_container.launch.py">
     <arg name="launch_driver" value="$(var launch_driver)"/>
@@ -34,6 +36,8 @@
     <arg name="use_multithread" value="true"/>
     <arg name="container_name" value="$(var container_name)"/>
     <arg name="udp_only" value="$(var udp_only)"/>
+    <arg name="use_polar_voxel_noise_filter" value="$(var use_polar_voxel_noise_filter)"/>
+    <arg name="polar_voxel_noise_filter_node_param_path" value="$(var polar_voxel_noise_filter_node_param_path)"/>
   </include>
 
   <!-- Velodyne Monitor -->
