@@ -166,6 +166,10 @@ perception:
       - source: perception/autoware_traffic_light_fine_detector/config/traffic_light_fine_detector.param.yaml
         variants:
           - path: autoware_universe_launch/autoware_perception_launch/config/traffic_light_recognition/traffic_light_fine_detector/traffic_light_fine_detector.param.yaml
+      - source: perception/autoware_traffic_light_map_based_detector/config/traffic_light_map_based_detector.param.yaml
+        variants:
+          - path: autoware_universe_launch/autoware_perception_launch/config/traffic_light_recognition/traffic_light_map_based_detector/base_traffic_light_map_based_detector.param.yaml
+          - path: autoware_universe_launch/autoware_perception_launch/config/traffic_light_recognition/traffic_light_map_based_detector/extra_traffic_light_map_based_detector.param.yaml
       - source: perception/autoware_traffic_light_multi_camera_fusion/config/traffic_light_multi_camera_fusion.param.yaml
         variants:
           - path: autoware_universe_launch/autoware_perception_launch/config/traffic_light_recognition/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml
