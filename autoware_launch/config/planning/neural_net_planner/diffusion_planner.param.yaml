@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/49197b026c20c7fe7179b3b665fa8cd3a0b6f231/planning/autoware_diffusion_planner/config/diffusion_planner.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/38fdac624d1eaa981913857325bb4eea953c7e3c/planning/autoware_diffusion_planner/config/diffusion_planner.param.yaml
 
 /**:
   ros__parameters:
@@ -49,6 +49,9 @@
     delay_step: 0
     line_string_max_step_m: 5.0
     use_time_interpolation: false
+    object_motion_resampling:
+      enable: true                    # re-time neighbor histories onto a constant 0.1s grid anchored at the ego stamp
+      max_extrapolation_time: 0.5     # [s]  max extrapolation horizon (both forward from newest and backward from oldest observation)
     planning_factor:
       enable_stop: true
       enable_slowdown: false
