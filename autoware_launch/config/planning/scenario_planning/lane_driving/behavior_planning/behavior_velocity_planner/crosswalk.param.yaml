@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/f20ca2898c7e34cb922a53a89f884af5653ddfa1/planning/behavior_velocity_planner/autoware_behavior_velocity_crosswalk_module/config/crosswalk.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/e7071e4a18e578eb7f82b0af5ac6d05fbb17419f/planning/behavior_velocity_planner/autoware_behavior_velocity_crosswalk_module/config/crosswalk.param.yaml
 
 /**:
   ros__parameters:
@@ -67,7 +67,7 @@
           min_acc: -1.5 # min acceleration [m/ss]
           min_jerk: -1.5 # min jerk [m/sss]
 
-        stop_object_velocity_threshold: 0.25 # [m/s] velocity threshold for the module to judge whether the objects is stopped (0.28 m/s = 1.0 kmph)
+        stop_object_velocity_threshold: 0.25 # [m/s] velocity threshold for the module to judge whether the objects is stopped (0.25 m/s = 0.9 kmph)
         min_object_velocity: 1.39 # [m/s] minimum object velocity (compare the estimated velocity by perception module with this parameter and adopt the larger one to calculate TTV. 1.39 m/s = 5.0 kmph)
         ## param for yielding
         disable_yield_for_new_stopped_object: true # for the crosswalks with traffic signal
