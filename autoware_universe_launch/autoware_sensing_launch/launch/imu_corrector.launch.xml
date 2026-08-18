@@ -1,0 +1,27 @@
+<launch>
+  <arg name="input/imu_raw"/>
+  <arg name="output/imu_data" default="imu_data" description="corrected imu output"/>
+  <arg name="input/odometry" default="/localization/kinematic_state" description="odometry for the gyro bias estimator"/>
+  <arg name="input/pose_with_covariance" default="/localization/pose_estimator/pose_with_covariance" description="ndt pose for the gyro bias estimator"/>
+  <arg name="output/imu_scaled" default="/sensing/imu_output_scaled" description="scaled imu output"/>
+  <arg name="imu_corrector_param_path" default="$(find-pkg-share autoware_imu_corrector)/config/imu_corrector.param.yaml"/>
+  <arg name="gyro_scale_estimator_param_path" default="$(find-pkg-share autoware_imu_corrector)/config/gyro_scale_estimator.param.yaml"/>
+  <arg name="gyro_bias_estimator_param_path" default="$(find-pkg-share autoware_imu_corrector)/config/gyro_bias_estimator.param.yaml"/>
+
+  <include file="$(find-pkg-share autoware_imu_corrector)/launch/imu_corrector.launch.xml">
+    <arg name="input_topic" value="$(var input/imu_raw)"/>
+    <arg name="output_topic" value="$(var output/imu_data)"/>
+    <arg name="param_file" value="$(var imu_corrector_param_path)"/>
+    <arg name="param_scale_file" value="$(var gyro_scale_estimator_param_path)"/>
+  </include>
+
+  <include file="$(find-pkg-share autoware_imu_corrector)/launch/gyro_bias_estimator.launch.xml">
+    <arg name="input_imu_raw" value="$(var input/imu_raw)"/>
+    <arg name="input_odom" value="$(var input/odometry)"/>
+    <arg name="input_pose_ndt" value="$(var input/pose_with_covariance)"/>
+    <arg name="output_imu_scaled" value="$(var output/imu_scaled)"/>
+    <arg name="imu_corrector_param_file" value="$(var imu_corrector_param_path)"/>
+    <arg name="gyro_bias_estimator_param_file" value="$(var gyro_bias_estimator_param_path)"/>
+    <arg name="gyro_scale_estimator_param_file" value="$(var gyro_scale_estimator_param_path)"/>
+  </include>
+</launch>

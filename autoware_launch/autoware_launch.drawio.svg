@@ -225,17 +225,17 @@
           >
             <div style="box-sizing: border-box; font-size: 0px; text-align: center;">
               <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                perception.launch.xml
+                object_recognition_lidar.launch.xml
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_perception_launch</span>
+                  <span>package: autoware_perception_launch</span>
                 </div>
               </div>
             </div>
           </div>
         </foreignObject>
-        <text x="305" y="944" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">perception.launch.xml...</text>
+        <text x="305" y="944" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">object_recognition_lidar.launch.xml...</text>
       </switch>
     </g>
     <path d="M 160 220 L 170 220 Q 180 220 180 230 L 180 930 Q 180 940 186.82 940 L 193.63 940" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
@@ -802,17 +802,17 @@
           >
             <div style="box-sizing: border-box; font-size: 0px; text-align: center;">
               <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                perception.launch.xml
+                object_recognition_lidar.launch.xml
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_perception_launch</span>
+                  <span>package: autoware_perception_launch</span>
                 </div>
               </div>
             </div>
           </div>
         </foreignObject>
-        <text x="1996" y="954" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">perception.launch.xml...</text>
+        <text x="1996" y="954" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">object_recognition_lidar.launch.xml...</text>
       </switch>
     </g>
     <path d="M 1571 230 L 1581 230 Q 1591 230 1591 240 L 1591 940 Q 1591 950 1597.82 950 L 1604.63 950" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
@@ -1048,7 +1048,7 @@
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_sensing_launch</span>
+                  <span>package: &lt;sensor_model&gt;_launch</span>
                 </div>
               </div>
             </div>
@@ -1073,7 +1073,7 @@
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_sensing_launch</span>
+                  <span>package: &lt;sensor_model&gt;_launch</span>
                 </div>
               </div>
             </div>

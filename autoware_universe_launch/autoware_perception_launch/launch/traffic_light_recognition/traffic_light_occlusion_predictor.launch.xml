@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!-- Occlusion check for one traffic light camera: merges the car and pedestrian signals into the per-camera output, masking signals hidden from the camera. -->
+<launch>
+  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
+  <arg name="camera_namespace" description="camera namespace, e.g. camera6"/>
+  <arg name="input/cloud" default="/sensing/lidar/top/pointcloud_raw_ex"/>
+  <arg name="input/vector_map" default="/map/vector_map"/>
+  <arg
+    name="occlusion_predictor_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml"
+  />
+
+  <!-- per-camera topics fixed by the sensing and recognition namespace conventions -->
+  <let name="camera/camera_info" value="/sensing/camera/$(var camera_namespace)/camera_info"/>
+  <let name="camera/rois" value="/perception/traffic_light_recognition/$(var camera_namespace)/detection/rois"/>
+  <let name="camera/traffic_signals" value="/perception/traffic_light_recognition/$(var camera_namespace)/classification/traffic_signals"/>
+
+  <group>
+    <push-ros-namespace namespace="$(var camera_namespace)/classification"/>
+    <include file="$(find-pkg-share autoware_traffic_light_occlusion_predictor)/launch/traffic_light_occlusion_predictor.launch.xml">
+      <arg name="input/cloud" value="$(var input/cloud)"/>
+      <arg name="input/vector_map" value="$(var input/vector_map)"/>
+      <arg name="input/camera_info" value="$(var camera/camera_info)"/>
+      <arg name="input/rois" value="$(var camera/rois)"/>
+      <arg name="input/car/traffic_signals" value="car/traffic_signals"/>
+      <arg name="input/pedestrian/traffic_signals" value="pedestrian/traffic_signals"/>
+      <arg name="output/traffic_signals" value="$(var camera/traffic_signals)"/>
+      <arg name="param_path" value="$(var occlusion_predictor_param_path)"/>
+    </include>
+  </group>
+</launch>

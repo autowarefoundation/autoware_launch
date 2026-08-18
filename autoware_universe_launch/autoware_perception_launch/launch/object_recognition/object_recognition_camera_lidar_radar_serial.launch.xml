@@ -1,0 +1,452 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
+  <!-- cspell: ignore semseg -->
+  <!-- Camera-lidar-radar serial object recognition: detection, tracking, and prediction under the caller's namespace; detectors merge in the detection stage, the tracker consumes the single merged channel, and radar tracked objects join at the tracker merger -->
+
+  <!-- Current namespace -->
+  <let name="ns" value="/perception/object_recognition"/>
+  <let name="detection_ns" value="$(var ns)/detection"/>
+  <let name="tracking_ns" value="$(var ns)/tracking"/>
+
+  <!-- ML model parameters -->
+  <arg
+    name="lidar_detection_model"
+    default="centerpoint"
+    description="`model_type/model_name`; model_type options: `bevfusion`, `centerpoint`, `pointpainting`, `transfusion`, `apollo`, `clustering`; the model default parameter set is used when the name part is omitted"
+  />
+  <arg name="use_short_range_detection" default="false" description="use short range detection for redundant VRU detection"/>
+  <arg name="lidar_short_range_detection_model_type" default="centerpoint_short_range" description="options: `centerpoint_short_range`">
+    <choice value="centerpoint_short_range"/>
+  </arg>
+  <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
+  <arg name="bevfusion_model_path" default="$(var data_path)/bevfusion"/>
+  <arg name="pointpainting_model_path" default="$(var data_path)/image_projection_based_fusion"/>
+  <arg name="camera_2d_detector/model_path" default="$(var data_path)/tensorrt_yolox/yolox-sPlus-opt-pseudoV2-T4-960x960-T4-seg16cls.onnx"/>
+  <arg name="camera_2d_detector/label_path" default="$(var data_path)/tensorrt_yolox/label.txt"/>
+  <arg name="camera_2d_detector/color_map_path" default="$(var data_path)/tensorrt_yolox/semseg_color_map.csv"/>
+  <arg name="camera_2d_detector/roi_remap_path" default="$(find-pkg-share $(var perception_config_pkg))/config/traffic_light_recognition/tensorrt_yolox/roi_label_remap.csv"/>
+  <arg name="camera_2d_detector/roi_to_semseg_remap_path" default="$(find-pkg-share $(var perception_config_pkg))/config/traffic_light_recognition/tensorrt_yolox/roi_to_semseg_label_remap.csv"/>
+
+  <!-- Pipeline junctions -->
+  <arg name="use_object_filter" default="true" description="use object filter"/>
+  <arg name="objects_filter_method" default="lanelet_filter" description="options: `lanelet_filter` or `position_filter`"/>
+  <arg name="use_pointcloud_map" default="true" description="use pointcloud map filter"/>
+  <arg name="use_validator" default="false" description="use obstacle_pointcloud based validator"/>
+  <arg name="objects_validation_method" default="obstacle_pointcloud" description="options: `obstacle_pointcloud` or `occupancy_grid`"/>
+  <arg name="use_roi_detected_object_validator" default="true" description="use roi_detected_object_fusion to validate the ML lidar objects"/>
+  <arg name="use_detection_by_tracker" default="true" description="regenerate detections from rule-based clusters with tracker feedback"/>
+  <arg name="use_low_height_cropbox" default="false"/>
+  <arg name="use_low_intensity_cluster_filter" default="true"/>
+  <arg name="use_image_segmentation_based_filter" default="false"/>
+  <arg name="use_irregular_object_detector" default="true" description="enable pipeline for small unknown object detection"/>
+  <arg
+    name="ml_camera_lidar_merger_priority_mode"
+    default="0"
+    description="priority mode for the ml and camera_lidar merger, options: `0: Object0`, `1: Object1`, `2: ConfidenceBased`, `3: ClassBased`"
+  />
+  <arg name="use_vector_map" default="true" description="use vector map in prediction"/>
+
+  <!-- External interfaces -->
+  <arg name="number_of_cameras" default="6"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
+  <arg name="input/obstacle_segmentation/pointcloud" default="/perception/obstacle_segmentation/pointcloud"/>
+  <arg name="input/camera0/image" default="/sensing/camera/camera0/image_rect_color"/>
+  <arg name="input/camera0/info" default="/sensing/camera/camera0/camera_info"/>
+  <arg name="input/camera0/rois" default="/perception/object_recognition/detection/rois0"/>
+  <arg name="input/camera1/image" default="/sensing/camera/camera1/image_rect_color"/>
+  <arg name="input/camera1/info" default="/sensing/camera/camera1/camera_info"/>
+  <arg name="input/camera1/rois" default="/perception/object_recognition/detection/rois1"/>
+  <arg name="input/camera2/image" default="/sensing/camera/camera2/image_rect_color"/>
+  <arg name="input/camera2/info" default="/sensing/camera/camera2/camera_info"/>
+  <arg name="input/camera2/rois" default="/perception/object_recognition/detection/rois2"/>
+  <arg name="input/camera3/image" default="/sensing/camera/camera3/image_rect_color"/>
+  <arg name="input/camera3/info" default="/sensing/camera/camera3/camera_info"/>
+  <arg name="input/camera3/rois" default="/perception/object_recognition/detection/rois3"/>
+  <arg name="input/camera4/image" default="/sensing/camera/camera4/image_rect_color"/>
+  <arg name="input/camera4/info" default="/sensing/camera/camera4/camera_info"/>
+  <arg name="input/camera4/rois" default="/perception/object_recognition/detection/rois4"/>
+  <arg name="input/camera5/image" default="/sensing/camera/camera5/image_rect_color"/>
+  <arg name="input/camera5/info" default="/sensing/camera/camera5/camera_info"/>
+  <arg name="input/camera5/rois" default="/perception/object_recognition/detection/rois5"/>
+  <arg name="input/camera6/image" default="/sensing/camera/camera6/image_rect_color"/>
+  <arg name="input/camera6/info" default="/sensing/camera/camera6/camera_info"/>
+  <arg name="input/camera6/rois" default="/perception/object_recognition/detection/rois6"/>
+  <arg name="input/camera7/image" default="/sensing/camera/camera7/image_rect_color"/>
+  <arg name="input/camera7/info" default="/sensing/camera/camera7/camera_info"/>
+  <arg name="input/camera7/rois" default="/perception/object_recognition/detection/rois7"/>
+  <arg name="input/camera8/image" default="/sensing/camera/camera8/image_rect_color"/>
+  <arg name="input/camera8/info" default="/sensing/camera/camera8/camera_info"/>
+  <arg name="input/camera8/rois" default="/perception/object_recognition/detection/rois8"/>
+  <arg name="input/concatenation_info" default="/sensing/lidar/concatenated/pointcloud_info"/>
+  <arg name="input/radar/tracked_objects" default="/sensing/radar/tracked_objects"/>
+  <arg name="image_topic_name" default="image_rect_color"/>
+  <arg name="segmentation_pointcloud_fusion_camera_ids" default="[0,2,4]" description="list of camera ids used for segmentation_pointcloud_fusion node"/>
+  <arg name="output/tracked_objects" default="/perception/object_recognition/tracking/objects"/>
+  <arg name="output/predicted_objects" default="/perception/object_recognition/objects"/>
+
+  <!-- Parameter paths -->
+  <arg name="sync_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml"/>
+  <arg name="roi_cluster_fusion_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/image_projection_based_fusion/roi_cluster_fusion.param.yaml"/>
+  <arg
+    name="pointpainting_fusion_common_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/image_projection_based_fusion/pointpainting_common.param.yaml"
+  />
+  <arg
+    name="irregular_object_crop_box_filter_node_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/crop_box_filter.param.yaml"
+  />
+  <arg
+    name="irregular_object_scan_ground_filter_node_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/scan_ground_filter.param.yaml"
+  />
+  <arg
+    name="irregular_object_roi_pointcloud_fusion_node_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/roi_pointcloud_fusion.param.yaml"
+  />
+  <arg
+    name="irregular_object_fusion_camera_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/fusion_cameras.param.yaml"
+  />
+  <arg name="lidar_model_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/lidar_model" description="directory of lidar model param files"/>
+  <arg name="centerpoint_common_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/lidar_model/centerpoint_common.param.yaml"/>
+  <arg
+    name="voxel_grid_based_euclidean_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml"
+  />
+  <arg name="detection_by_tracker_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml"/>
+  <arg
+    name="object_recognition_detection_obstacle_pointcloud_based_validator_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/detected_object_validation/obstacle_pointcloud_based_validator.param.yaml"
+  />
+  <arg
+    name="object_recognition_detection_object_merger_data_association_matrix_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/object_merger/data_association_matrix.param.yaml"
+  />
+  <arg
+    name="object_recognition_detection_object_merger_distance_threshold_list_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/object_merger/overlapped_judge.param.yaml"
+  />
+  <arg
+    name="ml_camera_lidar_object_association_merger_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/object_merger/ml_camera_lidar_object_association_merger.param.yaml"
+  />
+  <arg
+    name="roi_detected_object_fusion_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml"
+  />
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
+  />
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_input_channels_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
+  />
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_node_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
+  />
+  <arg
+    name="object_recognition_tracking_radar_tracked_object_sorter_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/radar_object_tracker/tracked_object_sorter.param.yaml"
+    description="param file for radar distance and velocity filters"
+  />
+  <arg
+    name="object_recognition_tracking_radar_tracked_object_lanelet_filter_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/radar_object_tracker/tracked_object_lanelet_filter.param.yaml"
+    description="param file for radar lanelet filter"
+  />
+  <arg
+    name="object_recognition_tracking_object_merger_data_association_matrix_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/tracking_object_merger/data_association_matrix.param.yaml"
+    description="association param file for radar and lidar object merger"
+  />
+  <arg
+    name="object_recognition_tracking_object_merger_node_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml"
+    description="node param file for radar and lidar object merger"
+  />
+
+  <!-- label_based_param -->
+  <arg name="euclidean_clustering/shape_policy" default="0"/>
+
+  <!-- Internal interfaces -->
+  <let name="lidar_detection_model_type" value="$(eval &quot;'$(var lidar_detection_model)'.split('/')[0]&quot;)"/>
+  <let name="lidar_detection_model_name" value="$(eval &quot;'$(var lidar_detection_model)'.split('/')[1] if '/' in '$(var lidar_detection_model)' else ''&quot;)"/>
+  <let name="node/pointcloud_container" value="$(var pointcloud_container_name)"/>
+
+  <let name="pointcloud_filter/output/pointcloud" value="$(var detection_ns)/pointcloud_map_filtered/pointcloud"/>
+  <let name="lidar_ml_detector/output/objects" value="$(var detection_ns)/$(var lidar_detection_model_type)/objects"/>
+  <let name="lidar_ml_detector/output/short_range_objects" value="$(var detection_ns)/$(var lidar_short_range_detection_model_type)/objects"/>
+  <let name="lidar_object_filter/output/objects" value="$(var detection_ns)/$(var lidar_detection_model_type)/validation/objects"/>
+  <let name="camera_lidar_rule_detector/output/objects" value="$(var detection_ns)/clustering/camera_lidar_fusion/objects"/>
+
+  <let name="tracker_based_detector/input/clusters" value="$(var detection_ns)/clustering/objects_with_feature"/>
+  <let name="tracker_based_detector/output/objects" value="$(var detection_ns)/detection_by_tracker/objects"/>
+
+  <let name="irregular_object_detector_ns" value="irregular_object"/>
+  <let name="irregular_object_pipeline/output/objects" value="$(var detection_ns)/$(var irregular_object_detector_ns)/objects"/>
+
+  <let name="object_validator/input/obstacle_pointcloud" value="$(var pointcloud_filter/output/pointcloud)" if="$(var use_pointcloud_map)"/>
+  <let name="object_validator/input/obstacle_pointcloud" value="$(var input/obstacle_segmentation/pointcloud)" unless="$(var use_pointcloud_map)"/>
+
+  <let name="object_merger/input/ml_detected_objects" value="$(var lidar_object_filter/output/objects)" if="$(var use_validator)"/>
+  <let name="object_merger/input/ml_detected_objects" value="$(var lidar_ml_detector/output/objects)" unless="$(var use_validator)"/>
+  <let name="detection_merger/output/objects" value="$(var detection_ns)/objects"/>
+
+  <let name="multi_object_tracker/output/objects" value="$(var tracking_ns)/near_objects"/>
+  <let name="radar_tracked_object_sorter/input/objects" value="$(var input/radar/tracked_objects)"/>
+  <let name="radar_tracked_object_sorter/output/objects" value="$(var tracking_ns)/radar/sorted_tracked_objects"/>
+  <let name="radar_tracked_object_lanelet_filter/input/object" value="$(var radar_tracked_object_sorter/output/objects)"/>
+  <let name="radar_tracked_object_lanelet_filter/output/object" value="$(var tracking_ns)/radar/tracked_objects"/>
+  <let name="tracker_merger/input/main_objects" value="$(var multi_object_tracker/output/objects)"/>
+  <let name="tracker_merger/input/sub_objects" value="$(var radar_tracked_object_lanelet_filter/output/object)"/>
+  <let name="tracker_merger/output/objects" value="$(var output/tracked_objects)"/>
+
+  <!-- Detection module -->
+  <group>
+    <push-ros-namespace namespace="detection"/>
+
+    <!-- Detector -->
+    <group>
+      <!-- Camera-Lidar detectors -->
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/camera_lidar_detector.launch.xml">
+        <arg name="ns" value="$(var detection_ns)"/>
+        <arg name="number_of_cameras" value="$(var number_of_cameras)"/>
+        <arg name="input/camera0/image" value="$(var input/camera0/image)"/>
+        <arg name="input/camera0/info" value="$(var input/camera0/info)"/>
+        <arg name="input/camera0/rois" value="$(var input/camera0/rois)"/>
+        <arg name="input/camera1/image" value="$(var input/camera1/image)"/>
+        <arg name="input/camera1/info" value="$(var input/camera1/info)"/>
+        <arg name="input/camera1/rois" value="$(var input/camera1/rois)"/>
+        <arg name="input/camera2/image" value="$(var input/camera2/image)"/>
+        <arg name="input/camera2/info" value="$(var input/camera2/info)"/>
+        <arg name="input/camera2/rois" value="$(var input/camera2/rois)"/>
+        <arg name="input/camera3/image" value="$(var input/camera3/image)"/>
+        <arg name="input/camera3/info" value="$(var input/camera3/info)"/>
+        <arg name="input/camera3/rois" value="$(var input/camera3/rois)"/>
+        <arg name="input/camera4/image" value="$(var input/camera4/image)"/>
+        <arg name="input/camera4/info" value="$(var input/camera4/info)"/>
+        <arg name="input/camera4/rois" value="$(var input/camera4/rois)"/>
+        <arg name="input/camera5/image" value="$(var input/camera5/image)"/>
+        <arg name="input/camera5/info" value="$(var input/camera5/info)"/>
+        <arg name="input/camera5/rois" value="$(var input/camera5/rois)"/>
+        <arg name="input/camera6/image" value="$(var input/camera6/image)"/>
+        <arg name="input/camera6/info" value="$(var input/camera6/info)"/>
+        <arg name="input/camera6/rois" value="$(var input/camera6/rois)"/>
+        <arg name="input/camera7/image" value="$(var input/camera7/image)"/>
+        <arg name="input/camera7/info" value="$(var input/camera7/info)"/>
+        <arg name="input/camera7/rois" value="$(var input/camera7/rois)"/>
+        <arg name="input/camera8/image" value="$(var input/camera8/image)"/>
+        <arg name="input/camera8/info" value="$(var input/camera8/info)"/>
+        <arg name="input/camera8/rois" value="$(var input/camera8/rois)"/>
+        <arg name="input/concatenation_info" value="$(var input/concatenation_info)"/>
+        <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
+        <arg name="input/pointcloud_map/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
+        <arg name="input/obstacle_segmentation/pointcloud" value="$(var input/obstacle_segmentation/pointcloud)"/>
+        <arg name="output/ml_detector/objects" value="$(var lidar_ml_detector/output/objects)"/>
+        <arg name="output/rule_detector/objects" value="$(var camera_lidar_rule_detector/output/objects)"/>
+        <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
+        <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
+        <arg name="lidar_detection_model_name" value="$(var lidar_detection_model_name)"/>
+        <arg name="use_low_height_cropbox" value="$(var use_low_height_cropbox)"/>
+        <arg name="use_low_intensity_cluster_filter" value="$(var use_low_intensity_cluster_filter)"/>
+        <arg name="use_image_segmentation_based_filter" value="$(var use_image_segmentation_based_filter)"/>
+        <arg name="lidar_model_param_path" value="$(var lidar_model_param_path)"/>
+        <arg name="pointpainting_model_path" value="$(var pointpainting_model_path)"/>
+        <arg name="pointpainting_fusion_common_param_path" value="$(var pointpainting_fusion_common_param_path)"/>
+        <arg name="roi_cluster_fusion_param_path" value="$(var roi_cluster_fusion_param_path)"/>
+        <arg name="segmentation_pointcloud_fusion_camera_ids" value="$(var segmentation_pointcloud_fusion_camera_ids)"/>
+        <arg name="image_topic_name" value="$(var image_topic_name)"/>
+        <arg name="sync_param_path" value="$(var sync_param_path)"/>
+        <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
+        <arg name="camera_2d_detector/model_path" value="$(var camera_2d_detector/model_path)"/>
+        <arg name="camera_2d_detector/label_path" value="$(var camera_2d_detector/label_path)"/>
+        <arg name="camera_2d_detector/color_map_path" value="$(var camera_2d_detector/color_map_path)"/>
+        <arg name="camera_2d_detector/roi_remap_path" value="$(var camera_2d_detector/roi_remap_path)"/>
+        <arg name="camera_2d_detector/roi_to_semseg_remap_path" value="$(var camera_2d_detector/roi_to_semseg_remap_path)"/>
+      </include>
+    </group>
+    <group if="$(var use_irregular_object_detector)">
+      <!-- Irregular object detector -->
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/camera_lidar_irregular_object_detector.launch.xml">
+        <arg name="pipeline_ns" value="$(var irregular_object_detector_ns)"/>
+        <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
+        <arg name="input/concatenation_info" value="$(var input/concatenation_info)"/>
+        <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
+        <arg name="output/objects" value="$(var irregular_object_pipeline/output/objects)"/>
+        <arg name="irregular_object_crop_box_filter_node_param_path" value="$(var irregular_object_crop_box_filter_node_param_path)"/>
+        <arg name="irregular_object_scan_ground_filter_node_param_path" value="$(var irregular_object_scan_ground_filter_node_param_path)"/>
+        <arg name="irregular_object_roi_pointcloud_fusion_node_param_path" value="$(var irregular_object_roi_pointcloud_fusion_node_param_path)"/>
+        <arg name="irregular_object_fusion_camera_param_path" value="$(var irregular_object_fusion_camera_param_path)"/>
+        <arg name="sync_param_path" value="$(var sync_param_path)"/>
+      </include>
+    </group>
+    <group>
+      <!-- Lidar dnn-based detectors-->
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_dnn_detector.launch.xml">
+        <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
+        <arg name="output/objects" value="$(var lidar_ml_detector/output/objects)"/>
+        <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
+        <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
+        <arg name="lidar_detection_model_name" value="$(var lidar_detection_model_name)"/>
+        <arg name="lidar_short_range_detection_model_type" value="$(var lidar_short_range_detection_model_type)"/>
+        <arg name="use_short_range_detection" value="$(var use_short_range_detection)"/>
+        <arg name="output/short_range_objects" value="$(var lidar_ml_detector/output/short_range_objects)"/>
+        <arg name="lidar_model_param_path" value="$(var lidar_model_param_path)"/>
+        <arg name="centerpoint_common_param_path" value="$(var centerpoint_common_param_path)"/>
+        <arg name="bevfusion_model_path" value="$(var bevfusion_model_path)"/>
+      </include>
+    </group>
+    <group if="$(var use_detection_by_tracker)">
+      <!-- Rule-based clustering feeds the tracker-based detector; its own namespace keeps the pipeline disjoint from the camera fusion clustering -->
+      <group>
+        <push-ros-namespace namespace="detection_by_tracker"/>
+        <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_rule_detector.launch.xml">
+          <arg name="ns" value="$(var detection_ns)/detection_by_tracker"/>
+          <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
+          <arg name="input/pointcloud_map/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
+          <arg name="input/obstacle_segmentation/pointcloud" value="$(var input/obstacle_segmentation/pointcloud)"/>
+          <arg name="output/cluster_objects" value="$(var tracker_based_detector/input/clusters)"/>
+          <arg name="output/objects" value="$(var detection_ns)/detection_by_tracker/clustering/objects"/>
+          <arg name="voxel_grid_based_euclidean_param_path" value="$(var voxel_grid_based_euclidean_param_path)"/>
+          <arg name="use_semantic_segmentation_ptv3" value="false"/>
+        </include>
+      </group>
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/tracker_based_detector.launch.xml">
+        <arg name="input/clusters" value="$(var tracker_based_detector/input/clusters)"/>
+        <arg name="input/tracked_objects" value="$(var output/tracked_objects)"/>
+        <arg name="output/objects" value="$(var tracker_based_detector/output/objects)"/>
+        <arg name="detection_by_tracker_param_path" value="$(var detection_by_tracker_param_path)"/>
+      </include>
+    </group>
+
+    <!-- Filter -->
+    <group if="$(var use_pointcloud_map)">
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/pointcloud_map_filter.launch.xml">
+        <arg name="target_container" value="$(var node/pointcloud_container)"/>
+        <arg name="input/pointcloud" value="$(var input/obstacle_segmentation/pointcloud)"/>
+        <arg name="output/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
+        <arg name="use_intra_process" value="true"/>
+        <arg name="perception_config_pkg" value="$(var perception_config_pkg)"/>
+      </include>
+    </group>
+    <group unless="$(var use_pointcloud_map)">
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/pointcloud_downsample_filter.launch.xml">
+        <arg name="target_container" value="$(var node/pointcloud_container)"/>
+        <arg name="input/pointcloud" value="$(var input/obstacle_segmentation/pointcloud)"/>
+        <arg name="output/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
+        <arg name="use_intra_process" value="true"/>
+      </include>
+    </group>
+    <group if="$(var use_validator)">
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/object_validator.launch.xml">
+        <arg name="input/obstacle_pointcloud" value="$(var object_validator/input/obstacle_pointcloud)"/>
+        <arg name="input/objects" value="$(var lidar_ml_detector/output/objects)"/>
+        <arg name="output/objects" value="$(var lidar_object_filter/output/objects)"/>
+        <arg name="objects_validation_method" value="$(var objects_validation_method)"/>
+        <arg name="object_recognition_detection_obstacle_pointcloud_based_validator_param_path" value="$(var object_recognition_detection_obstacle_pointcloud_based_validator_param_path)"/>
+      </include>
+    </group>
+
+    <!-- Merger -->
+    <group>
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/merger/camera_lidar_merger.launch.xml">
+        <arg name="number_of_cameras" value="$(var number_of_cameras)"/>
+        <arg name="input/camera0/image" value="$(var input/camera0/image)"/>
+        <arg name="input/camera0/info" value="$(var input/camera0/info)"/>
+        <arg name="input/camera0/rois" value="$(var input/camera0/rois)"/>
+        <arg name="input/camera1/image" value="$(var input/camera1/image)"/>
+        <arg name="input/camera1/info" value="$(var input/camera1/info)"/>
+        <arg name="input/camera1/rois" value="$(var input/camera1/rois)"/>
+        <arg name="input/camera2/image" value="$(var input/camera2/image)"/>
+        <arg name="input/camera2/info" value="$(var input/camera2/info)"/>
+        <arg name="input/camera2/rois" value="$(var input/camera2/rois)"/>
+        <arg name="input/camera3/image" value="$(var input/camera3/image)"/>
+        <arg name="input/camera3/info" value="$(var input/camera3/info)"/>
+        <arg name="input/camera3/rois" value="$(var input/camera3/rois)"/>
+        <arg name="input/camera4/image" value="$(var input/camera4/image)"/>
+        <arg name="input/camera4/info" value="$(var input/camera4/info)"/>
+        <arg name="input/camera4/rois" value="$(var input/camera4/rois)"/>
+        <arg name="input/camera5/image" value="$(var input/camera5/image)"/>
+        <arg name="input/camera5/info" value="$(var input/camera5/info)"/>
+        <arg name="input/camera5/rois" value="$(var input/camera5/rois)"/>
+        <arg name="input/camera6/image" value="$(var input/camera6/image)"/>
+        <arg name="input/camera6/info" value="$(var input/camera6/info)"/>
+        <arg name="input/camera6/rois" value="$(var input/camera6/rois)"/>
+        <arg name="input/camera7/image" value="$(var input/camera7/image)"/>
+        <arg name="input/camera7/info" value="$(var input/camera7/info)"/>
+        <arg name="input/camera7/rois" value="$(var input/camera7/rois)"/>
+        <arg name="input/camera8/image" value="$(var input/camera8/image)"/>
+        <arg name="input/camera8/info" value="$(var input/camera8/info)"/>
+        <arg name="input/camera8/rois" value="$(var input/camera8/rois)"/>
+        <arg name="input/concatenation_info" value="$(var input/concatenation_info)"/>
+        <arg name="input/lidar_ml/objects" value="$(var object_merger/input/ml_detected_objects)"/>
+        <arg name="input/lidar_cluster/objects" value="$(var camera_lidar_rule_detector/output/objects)"/>
+        <arg name="input/irregular_object/objects" value="$(var irregular_object_pipeline/output/objects)"/>
+        <arg name="input/detection_by_tracker/objects" value="$(var tracker_based_detector/output/objects)"/>
+        <arg name="output/objects" value="$(var detection_merger/output/objects)"/>
+        <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
+        <arg name="use_detection_by_tracker" value="$(var use_detection_by_tracker)"/>
+        <arg name="use_irregular_object_detector" value="$(var use_irregular_object_detector)"/>
+        <arg name="use_roi_detected_object_validator" value="$(var use_roi_detected_object_validator)"/>
+        <arg name="use_object_filter" value="$(var use_object_filter)"/>
+        <arg name="objects_filter_method" value="$(var objects_filter_method)"/>
+        <arg name="euclidean_clustering/shape_policy" value="$(var euclidean_clustering/shape_policy)"/>
+        <arg name="alpha_merger_priority_mode" value="$(var ml_camera_lidar_merger_priority_mode)"/>
+        <arg name="sync_param_path" value="$(var sync_param_path)"/>
+        <arg name="object_recognition_detection_object_merger_data_association_matrix_param_path" value="$(var object_recognition_detection_object_merger_data_association_matrix_param_path)"/>
+        <arg name="object_recognition_detection_object_merger_distance_threshold_list_path" value="$(var object_recognition_detection_object_merger_distance_threshold_list_path)"/>
+        <arg name="ml_camera_lidar_object_association_merger_param_path" value="$(var ml_camera_lidar_object_association_merger_param_path)"/>
+        <arg name="roi_detected_object_fusion_param_path" value="$(var roi_detected_object_fusion_param_path)"/>
+      </include>
+    </group>
+  </group>
+
+  <!-- Tracking module -->
+  <group>
+    <push-ros-namespace namespace="tracking"/>
+    <include file="$(find-pkg-share autoware_multi_object_tracker)/launch/multi_object_tracker.launch.xml">
+      <arg name="input/detection01/objects" value="$(var detection_merger/output/objects)"/>
+      <arg name="input/detection01/channel" value="detected_objects"/>
+      <arg name="output/objects" value="$(var multi_object_tracker/output/objects)"/>
+      <arg name="data_association_matrix_path" value="$(var object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path)"/>
+      <arg name="input_channels_path" value="$(var object_recognition_tracking_multi_object_tracker_input_channels_param_path)"/>
+      <arg name="tracker_setting_path" value="$(var object_recognition_tracking_multi_object_tracker_node_param_path)"/>
+    </include>
+
+    <!-- Radar tracked objects join the tracker output through the decorative merger -->
+    <include file="$(find-pkg-share autoware_object_sorter)/launch/tracked_object_sorter.launch.xml">
+      <arg name="input/objects" value="$(var radar_tracked_object_sorter/input/objects)"/>
+      <arg name="output/objects" value="$(var radar_tracked_object_sorter/output/objects)"/>
+      <arg name="param_path" value="$(var object_recognition_tracking_radar_tracked_object_sorter_param_path)"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_detected_object_validation)/launch/tracked_object_lanelet_filter.launch.xml">
+      <arg name="input/object" value="$(var radar_tracked_object_lanelet_filter/input/object)"/>
+      <arg name="output/object" value="$(var radar_tracked_object_lanelet_filter/output/object)"/>
+      <arg name="filtering_range_param" value="$(var object_recognition_tracking_radar_tracked_object_lanelet_filter_param_path)"/>
+    </include>
+
+    <include file="$(find-pkg-share autoware_tracking_object_merger)/launch/decorative_tracker_merger.launch.xml">
+      <arg name="node_name" value="decorative_tracker_merger"/>
+      <arg name="input/main_object" value="$(var tracker_merger/input/main_objects)"/>
+      <arg name="input/sub_object" value="$(var tracker_merger/input/sub_objects)"/>
+      <arg name="output" value="$(var tracker_merger/output/objects)"/>
+      <arg name="data_association_matrix_path" value="$(var object_recognition_tracking_object_merger_data_association_matrix_param_path)"/>
+      <arg name="node_param_file_path" value="$(var object_recognition_tracking_object_merger_node_param_path)"/>
+    </include>
+  </group>
+
+  <!-- Prediction module -->
+  <group>
+    <push-ros-namespace namespace="prediction"/>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/prediction/prediction.launch.xml">
+      <arg name="use_vector_map" value="$(var use_vector_map)"/>
+      <arg name="input/objects" value="$(var output/tracked_objects)"/>
+      <arg name="output/objects" value="$(var output/predicted_objects)"/>
+    </include>
+  </group>
+</launch>

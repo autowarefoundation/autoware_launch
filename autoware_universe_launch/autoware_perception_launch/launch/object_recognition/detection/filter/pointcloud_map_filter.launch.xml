@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
+  <!-- Map-compare filter: voxel downsample -> drop points that match the pointcloud map -->
+  <arg name="target_container" description="container to load the filters into"/>
+  <arg name="use_intra_process" default="true"/>
+
+  <arg name="input/pointcloud"/>
+  <arg name="output/pointcloud"/>
+  <arg name="output/downsampled/pointcloud" default="/perception/obstacle_segmentation/pointcloud_map_filtered/downsampled/pointcloud"/>
+
+  <arg name="downsample_voxel_size" default="0.1"/>
+  <arg
+    name="voxel_based_compare_map_filter_node_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/pointcloud_filter/voxel_based_compare_map_filter.param.yaml"
+  />
+
+  <load_composable_node target="$(var target_container)">
+    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent" name="voxel_grid_downsample_filter">
+      <remap from="input" to="$(var input/pointcloud)"/>
+      <remap from="output" to="$(var output/downsampled/pointcloud)"/>
+      <param name="voxel_size_x" value="$(var downsample_voxel_size)"/>
+      <param name="voxel_size_y" value="$(var downsample_voxel_size)"/>
+      <param name="voxel_size_z" value="$(var downsample_voxel_size)"/>
+      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+    </composable_node>
+    <composable_node pkg="autoware_compare_map_segmentation" plugin="autoware::compare_map_segmentation::VoxelBasedCompareMapFilterComponent" name="voxel_based_compare_map_filter">
+      <remap from="input" to="$(var output/downsampled/pointcloud)"/>
+      <remap from="map" to="/map/pointcloud_map"/>
+      <remap from="output" to="$(var output/pointcloud)"/>
+      <remap from="map_loader_service" to="/map/get_differential_pointcloud_map"/>
+      <remap from="kinematic_state" to="/localization/kinematic_state"/>
+      <param from="$(var voxel_based_compare_map_filter_node_param_path)"/>
+      <param name="input_frame" value="map"/>
+      <extra_arg name="use_intra_process_comms" value="false"/>
+    </composable_node>
+  </load_composable_node>
+</launch>

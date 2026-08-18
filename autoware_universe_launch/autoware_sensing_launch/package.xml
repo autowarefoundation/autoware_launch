@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>autoware_sensing_launch</name>
+  <version>0.52.0</version>
+  <description>Sensor data pre-processing pipelines shared by sensor kits</description>
+
+  <maintainer email="david.wong@tier4.jp">David Wong</maintainer>
+  <maintainer email="max.schmeller@tier4.jp">Max Schmeller</maintainer>
+  <maintainer email="dai.nguyen@tier4.jp">Dai Nguyen</maintainer>
+
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+  <buildtool_depend>autoware_cmake</buildtool_depend>
+
+  <exec_depend>autoware_cuda_pointcloud_preprocessor</exec_depend>
+  <exec_depend>autoware_gnss_poser</exec_depend>
+  <exec_depend>autoware_imu_corrector</exec_depend>
+  <exec_depend>autoware_pointcloud_preprocessor</exec_depend>
+  <exec_depend>autoware_radar_tracks_msgs_converter</exec_depend>
+  <exec_depend>autoware_radar_tracks_noise_filter</exec_depend>
+  <exec_depend>autoware_sensing_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>rclcpp_components</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>septentrio_gnss_driver</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>autoware_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
