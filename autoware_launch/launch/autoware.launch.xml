@@ -45,7 +45,6 @@
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/$(var rviz_config_name)" description="rviz config path"/>
   <arg name="rviz_respawn" default="true"/>
   <!-- Perception -->
-  <arg name="perception_mode" default="lidar" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
   <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="enable to use high accuracy detection for traffic light recognition"/>
   <!-- Auto mode setting-->
   <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
@@ -89,7 +88,7 @@
 
   <!-- Sensing -->
   <group if="$(var launch_sensing)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_sensing_component.launch.xml">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/component_sensing.launch.xml">
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
     </include>
   </group>
@@ -101,10 +100,19 @@
 
   <!-- Perception -->
   <group if="$(var launch_perception)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_perception_component.launch.xml">
-      <arg name="data_path" value="$(var data_path)"/>
-      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
-    </include>
+    <!-- each component include is scoped so its launch configurations stay local to it -->
+    <group>
+      <include file="$(find-pkg-share autoware_launch)/launch/components/component_perception.launch.xml">
+        <arg name="data_path" value="$(var data_path)"/>
+        <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+    <group>
+      <include file="$(find-pkg-share autoware_launch)/launch/components/component_traffic_light.launch.xml">
+        <arg name="data_path" value="$(var data_path)"/>
+        <arg name="traffic_light_recognition/use_high_accuracy_detection" value="$(var traffic_light_recognition/use_high_accuracy_detection)"/>
+      </include>
+    </group>
   </group>
 
   <!-- Planning -->

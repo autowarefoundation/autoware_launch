@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
+  <!-- Folds one additional lidar into the obstacle stream: crop box -> ground filter, concatenated with the primary no-ground pointcloud -->
+  <arg name="target_container" description="container to load the filters into"/>
+  <arg name="lidar_name" description="name of the additional lidar"/>
+  <arg name="base_frame" default="base_link"/>
+  <arg name="use_intra_process" default="true"/>
+
+  <arg name="input/main/pointcloud" description="no-ground pointcloud of the primary lidars"/>
+  <arg name="input/lidar/pointcloud" default="/sensing/lidar/$(var lidar_name)/pointcloud"/>
+  <arg name="output/pointcloud"/>
+  <arg name="output/pointcloud_info" default="$(var output/pointcloud)_info"/>
+
+  <arg name="crop_box_margin_max_z" default="2.5" description="crop box ceiling margin above vehicle_height"/>
+  <arg name="crop_box_margin_min_z" default="-2.5" description="crop box floor margin below the ground"/>
+  <arg name="crop_box_filter_node_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/obstacle_segmentation/ground_segmentation/crop_box_filter.param.yaml"/>
+  <arg name="scan_ground_filter_node_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/obstacle_segmentation/ground_segmentation/scan_ground_filter.param.yaml"/>
+
+  <load_composable_node target="$(var target_container)">
+    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="$(var lidar_name)_crop_box_filter">
+      <remap from="input" to="$(var input/lidar/pointcloud)"/>
+      <remap from="output" to="$(var lidar_name)/range_cropped/pointcloud"/>
+      <param from="$(var crop_box_filter_node_param_path)" allow_substs="true"/>
+      <param name="input_frame" value="$(var base_frame)"/>
+      <param name="output_frame" value="$(var base_frame)"/>
+      <param name="max_z" value="$(eval '$(param vehicle_height) + $(var crop_box_margin_max_z)')"/>
+      <param name="min_z" value="$(eval '0.0 + $(var crop_box_margin_min_z)')"/>
+      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+    </composable_node>
+    <composable_node pkg="autoware_ground_segmentation" plugin="autoware::ground_segmentation::ScanGroundFilterComponent" name="$(var lidar_name)_ground_filter">
+      <remap from="input" to="$(var lidar_name)/range_cropped/pointcloud"/>
+      <remap from="output" to="$(var lidar_name)/pointcloud"/>
+      <param from="$(var scan_ground_filter_node_param_path)" allow_substs="true"/>
+      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+    </composable_node>
+    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent" name="concatenate_data">
+      <remap from="~/input/odom" to="/localization/kinematic_state"/>
+      <remap from="output" to="$(var output/pointcloud)"/>
+      <remap from="output_info" to="$(var output/pointcloud_info)"/>
+      <param name="input_topics" value="[$(var input/main/pointcloud), $(var lidar_name)/pointcloud]"/>
+      <param name="output_frame" value="$(var base_frame)"/>
+      <param name="input_twist_topic_type" value="odom"/>
+      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+    </composable_node>
+  </load_composable_node>
+</launch>

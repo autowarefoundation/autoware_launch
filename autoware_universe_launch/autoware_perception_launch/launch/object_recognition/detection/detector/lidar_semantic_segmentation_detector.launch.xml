@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Parameters -->
+  <arg name="euclidean_clustering/param_path"/>
+
+  <!-- External interfaces -->
+  <arg name="input/pointcloud"/>
+  <arg name="output/objects"/>
+
+  <!-- Clustering -->
+  <group>
+    <push-ros-namespace namespace="clustering"/>
+    <group>
+      <include file="$(find-pkg-share autoware_euclidean_cluster)/launch/label_based_euclidean_cluster.launch.xml">
+        <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
+        <arg name="output/objects" value="$(var output/objects)"/>
+        <arg name="param_path" value="$(var euclidean_clustering/param_path)"/>
+      </include>
+    </group>
+  </group>
+</launch>

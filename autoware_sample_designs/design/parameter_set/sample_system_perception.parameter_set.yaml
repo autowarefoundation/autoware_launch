@@ -4,23 +4,15 @@ name: sample_system_perception.parameter_set
 parameters:
   - node: /perception/object_recognition/detection/centerpoint/lidar_centerpoint
     param_files:
-      - model_param_path: $(var config_path)/perception/object_recognition/detection/centerpoint.param.yaml
       - common_param_path: $(find-pkg-share autoware_lidar_centerpoint)/config/centerpoint_common.param.yaml
-      - ml_package_param_path: $(var data_path)/lidar_centerpoint/centerpoint_ml_package.param.yaml
-      - class_remapper_param_path: $(var data_path)/lidar_centerpoint/detection_class_remapper.param.yaml
+      - ml_package_param_path: $(var data_path)/lidar_centerpoint/base/ml_package.param.yaml
     param_values:
       - name: build_only
         value: false
       - name: logger_name
         value: lidar_centerpoint
-      - name: encoder_onnx_path
-        value: $(var data_path)/lidar_centerpoint/pts_voxel_encoder_centerpoint.onnx
-      - name: encoder_engine_path
-        value: $(var data_path)/lidar_centerpoint/pts_voxel_encoder_centerpoint.engine
-      - name: head_onnx_path
-        value: $(var data_path)/lidar_centerpoint/pts_backbone_neck_head_centerpoint.onnx
-      - name: head_engine_path
-        value: $(var data_path)/lidar_centerpoint/pts_backbone_neck_head_centerpoint.engine
+      - name: model_path
+        value: $(var data_path)/lidar_centerpoint/base
   - node: /perception/object_recognition/detection/centerpoint/validation
     param_files: []
     param_values:
@@ -72,13 +64,6 @@ parameters:
     param_values:
       - name: run_convex_hull_conversion
         value: true
-  - node: /perception/object_recognition/detection/roi_detected_object_fusion
-    param_files: []
-    param_values:
-      - name: rois_number
-        value: $(var number_of_cameras)
-      - name: rois_timestamp_offsets
-        value: [0.098, 0.147, 0.078, 0.062, 0.115, 0.132]
   - node: /perception/object_recognition/tracking/multi_object_tracker
     param_files: []
     param_values:

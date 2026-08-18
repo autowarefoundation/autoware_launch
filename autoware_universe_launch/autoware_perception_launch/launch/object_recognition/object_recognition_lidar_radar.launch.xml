@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
+  <!-- Lidar-radar object recognition: detection, tracking, and prediction under the caller's namespace; PTv3 clustering, lidar DNN, and radar detectors publish per-detector outputs that fuse at the multi-channel tracker input -->
+
+  <!-- Current namespace -->
+  <let name="ns" value="/perception/object_recognition"/>
+  <let name="detection_ns" value="$(var ns)/detection"/>
+
+  <!-- ML model parameters -->
+  <arg
+    name="lidar_detection_model"
+    default="centerpoint"
+    description="`model_type/model_name`; model_type options: `bevfusion`, `centerpoint`, `pointpainting`, `transfusion`, `apollo`, `clustering`; the model default parameter set is used when the name part is omitted"
+  />
+  <arg name="use_short_range_detection" default="false" description="use short range detection for redundant VRU detection"/>
+  <arg name="lidar_short_range_detection_model_type" default="centerpoint_short_range" description="options: `centerpoint_short_range`">
+    <choice value="centerpoint_short_range"/>
+  </arg>
+  <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
+  <arg name="bevfusion_model_path" default="$(var data_path)/bevfusion"/>
+
+  <!-- Pipeline junctions -->
+  <arg name="use_low_height_cropbox" default="false"/>
+  <arg name="use_vector_map" default="true" description="use vector map in prediction"/>
+  <arg name="tracker_publish_merged_objects" default="false"/>
+
+  <!-- External interfaces -->
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
+  <arg name="input/semantic_segmentation/pointcloud" default="/perception/segmented/pointcloud"/>
+  <arg name="input/radar" default="/sensing/radar/detected_objects"/>
+  <arg name="output/tracker_merged_objects" default="/perception/object_recognition/detection/objects"/>
+  <arg name="output/tracked_objects" default="/perception/object_recognition/tracking/objects"/>
+  <arg name="output/predicted_objects" default="/perception/object_recognition/objects"/>
+
+  <!-- Parameter paths -->
+  <arg name="lidar_model_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/lidar_model" description="directory of lidar model param files"/>
+  <arg name="centerpoint_common_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/lidar_model/centerpoint_common.param.yaml"/>
+  <arg
+    name="voxel_grid_based_euclidean_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml"
+  />
+  <arg name="radar_lanelet_filtering_range_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/object_filter/radar_lanelet_filter.param.yaml"/>
+  <arg
+    name="object_recognition_detection_object_sorter_radar_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/radar_filter/detected_object_sorter.param.yaml"
+  />
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
+  />
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_input_channels_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
+  />
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_node_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
+  />
+
+  <!-- label_based_param -->
+  <arg name="euclidean_clustering/param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml"/>
+
+  <!-- Internal interfaces -->
+  <let name="lidar_detection_model_type" value="$(eval &quot;'$(var lidar_detection_model)'.split('/')[0]&quot;)"/>
+  <let name="lidar_detection_model_name" value="$(eval &quot;'$(var lidar_detection_model)'.split('/')[1] if '/' in '$(var lidar_detection_model)' else ''&quot;)"/>
+  <let name="node/pointcloud_container" value="$(var pointcloud_container_name)"/>
+
+  <let name="lidar_ml_detector/output/objects" value="$(var detection_ns)/$(var lidar_detection_model_type)/objects"/>
+  <let name="lidar_ml_detector/output/short_range_objects" value="$(var detection_ns)/$(var lidar_short_range_detection_model_type)/objects"/>
+  <let name="lidar_cluster/output/objects" value="$(var detection_ns)/clustering/label_based_euclidean_cluster/objects"/>
+  <let name="radar_pipeline/output/objects" value="$(var detection_ns)/radar/far_objects"/>
+
+  <!-- Detection module -->
+  <group>
+    <push-ros-namespace namespace="detection"/>
+
+    <!-- Detector -->
+    <group>
+      <!-- Semantic segmentation clustering -->
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_semantic_segmentation_detector.launch.xml">
+        <arg name="input/pointcloud" value="$(var input/semantic_segmentation/pointcloud)"/>
+        <arg name="output/objects" value="$(var lidar_cluster/output/objects)"/>
+        <arg name="euclidean_clustering/param_path" value="$(var euclidean_clustering/param_path)"/>
+      </include>
+    </group>
+    <group>
+      <!-- Lidar dnn-based detectors-->
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/detector/lidar_dnn_detector.launch.xml">
+        <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
+        <arg name="output/objects" value="$(var lidar_ml_detector/output/objects)"/>
+        <arg name="node/pointcloud_container" value="$(var node/pointcloud_container)"/>
+        <arg name="lidar_detection_model_type" value="$(var lidar_detection_model_type)"/>
+        <arg name="lidar_detection_model_name" value="$(var lidar_detection_model_name)"/>
+        <arg name="lidar_short_range_detection_model_type" value="$(var lidar_short_range_detection_model_type)"/>
+        <arg name="use_short_range_detection" value="$(var use_short_range_detection)"/>
+        <arg name="output/short_range_objects" value="$(var lidar_ml_detector/output/short_range_objects)"/>
+        <arg name="lidar_model_param_path" value="$(var lidar_model_param_path)"/>
+        <arg name="centerpoint_common_param_path" value="$(var centerpoint_common_param_path)"/>
+        <arg name="bevfusion_model_path" value="$(var bevfusion_model_path)"/>
+      </include>
+    </group>
+    <group>
+      <!-- Radar detector/filter -->
+      <push-ros-namespace namespace="radar"/>
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/radar_filter.launch.xml">
+        <arg name="input/radar" value="$(var input/radar)"/>
+        <arg name="output/objects" value="$(var radar_pipeline/output/objects)"/>
+        <arg name="radar_lanelet_filtering_range_param_path" value="$(var radar_lanelet_filtering_range_param_path)"/>
+        <arg name="object_sorter_param_path" value="$(var object_recognition_detection_object_sorter_radar_param_path)"/>
+      </include>
+    </group>
+  </group>
+
+  <!-- Tracking module -->
+  <group>
+    <push-ros-namespace namespace="tracking"/>
+
+    <let name="input/detection01/channel" value="lidar_$(var lidar_detection_model_type)"/>
+    <let name="input/detection01/objects" value="$(var lidar_ml_detector/output/objects)"/>
+
+    <let name="input/detection02/channel" value="lidar_$(var lidar_short_range_detection_model_type)" if="$(var use_short_range_detection)"/>
+    <let name="input/detection02/channel" value="none" unless="$(var use_short_range_detection)"/>
+    <let name="input/detection02/objects" value="$(var lidar_ml_detector/output/short_range_objects)"/>
+
+    <let name="input/detection03/channel" value="lidar_clustering"/>
+    <let name="input/detection03/objects" value="$(var lidar_cluster/output/objects)"/>
+
+    <let name="input/detection04/channel" value="radar"/>
+    <let name="input/detection04/objects" value="$(var radar_pipeline/output/objects)"/>
+
+    <include file="$(find-pkg-share autoware_multi_object_tracker)/launch/multi_object_tracker.launch.xml">
+      <arg name="input/detection01/objects" value="$(var input/detection01/objects)"/>
+      <arg name="input/detection01/channel" value="$(var input/detection01/channel)"/>
+      <arg name="input/detection02/objects" value="$(var input/detection02/objects)"/>
+      <arg name="input/detection02/channel" value="$(var input/detection02/channel)"/>
+      <arg name="input/detection03/objects" value="$(var input/detection03/objects)"/>
+      <arg name="input/detection03/channel" value="$(var input/detection03/channel)"/>
+      <arg name="input/detection04/objects" value="$(var input/detection04/objects)"/>
+      <arg name="input/detection04/channel" value="$(var input/detection04/channel)"/>
+      <arg name="output/objects" value="$(var output/tracked_objects)"/>
+      <arg name="output/merged_objects" value="$(var output/tracker_merged_objects)"/>
+      <arg name="publish_merged_objects" value="$(var tracker_publish_merged_objects)"/>
+      <arg name="data_association_matrix_path" value="$(var object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path)"/>
+      <arg name="input_channels_path" value="$(var object_recognition_tracking_multi_object_tracker_input_channels_param_path)"/>
+      <arg name="tracker_setting_path" value="$(var object_recognition_tracking_multi_object_tracker_node_param_path)"/>
+    </include>
+  </group>
+
+  <!-- Prediction module -->
+  <group>
+    <push-ros-namespace namespace="prediction"/>
+    <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/prediction/prediction.launch.xml">
+      <arg name="use_vector_map" value="$(var use_vector_map)"/>
+      <arg name="input/objects" value="$(var output/tracked_objects)"/>
+      <arg name="output/objects" value="$(var output/predicted_objects)"/>
+    </include>
+  </group>
+</launch>

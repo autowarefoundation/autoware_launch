@@ -18,6 +18,8 @@
   <exec_depend>autoware_diagnostic_graph_utils</exec_depend>
   <exec_depend>autoware_dummy_infrastructure</exec_depend>
   <exec_depend>autoware_global_parameter_loader</exec_depend>
+  <exec_depend>autoware_perception_launch</exec_depend>
+  <exec_depend>autoware_perception_online_evaluator</exec_depend>
   <exec_depend>python3-bson</exec_depend>
   <exec_depend>python3-tornado</exec_depend>
   <exec_depend>rviz2</exec_depend>
@@ -25,9 +27,7 @@
   <exec_depend>tier4_control_launch</exec_depend>
   <exec_depend>tier4_localization_launch</exec_depend>
   <exec_depend>tier4_map_launch</exec_depend>
-  <exec_depend>tier4_perception_launch</exec_depend>
   <exec_depend>tier4_planning_launch</exec_depend>
-  <exec_depend>tier4_sensing_launch</exec_depend>
   <exec_depend>tier4_simulator_launch</exec_depend>
   <exec_depend>tier4_system_launch</exec_depend>
   <exec_depend>tier4_vehicle_launch</exec_depend>

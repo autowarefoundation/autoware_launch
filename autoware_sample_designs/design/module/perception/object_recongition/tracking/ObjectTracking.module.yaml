@@ -11,7 +11,6 @@ subscribers:
   - name: lidar_ml_short_range_objects
   - name: lidar_rule_detector_objects
   - name: camera_lidar_irregular_objects
-  - name: tracker_based_detector_objects
   - name: radar_objects
 publishers:
   - name: objects
@@ -25,9 +24,7 @@ connections:
     - multi_object_tracker.subscriber.detection03/objects
   - - subscriber.camera_lidar_irregular_objects
     - multi_object_tracker.subscriber.detection04/objects
-  - - subscriber.tracker_based_detector_objects
-    - multi_object_tracker.subscriber.detection05/objects
   - - subscriber.radar_objects
-    - multi_object_tracker.subscriber.detection06/objects
+    - multi_object_tracker.subscriber.detection05/objects
   - - multi_object_tracker.publisher.objects
     - publisher.objects
