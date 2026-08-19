@@ -1,7 +1,7 @@
 /**:
   ros__parameters:
     safety:
-      enable: false
+      enable: true
       levels: ["safe", "low_caution", "high_caution", "danger", "fatal"]
       penalty: [0.0, 0.1, 0.4, 1.0, 1.0]
       scale: 20.0

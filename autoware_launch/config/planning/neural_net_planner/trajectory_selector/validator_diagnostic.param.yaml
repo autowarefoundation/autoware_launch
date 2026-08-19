@@ -3,5 +3,8 @@
     configured_actions:
       - uncrossable_boundary_departure_filter:moderate:trajectory_validator_uncrossable_boundary_departure_danger
       - trajectory_feasibility_filter:comfortable:trajectory_feasibility_filter_high_caution
+      - traffic_light_filter:comfortable:trajectory_validator_traffic_light_filter_high_caution
       - traffic_light_filter:moderate:trajectory_validator_traffic_light_filter_danger
+      - crosswalk_filter:comfortable:trajectory_validator_crosswalk_filter_high_caution
+      - crosswalk_filter:moderate:trajectory_validator_crosswalk_filter_danger
     no_candidates_diag_status_name: trajectory_validator_no_candidate_trajectory

@@ -91,12 +91,19 @@
       stop_for_amber_light: true
       treat_amber_light_as_red: false
       treat_unknown_light_as_red: true
-      overshoot_tolerance: 0.0 # [m]
+      enable_arrow_aware_amber_passing: true # [-] allow Green->Amber on turn lanes with mapped static arrow
+      overshoot_tolerance: 0.5 # [m]
+      allow_if_cannot_stop_distance: 1.0 # [m]
       min_lookahead_distance: 20.0 # [m] minimum forward length to scan for stop lines even at low ego speed
       th_stable_duration_red: 0.2 # [s]
       th_stable_duration_amber: 0.2 # [s]
-      th_amber_rejection_hysteresis: 0.5 # [s]
-      crossing_time_limit: 2.75 # [s]
+      th_stable_duration_unknown: 0.5 # [s]
+      amber_rejection:
+        hysteresis_duration: 0.5 # [s]
+        reject_if_stop_detected: true # reject if we detect a previous stop attempt from input trajectory
+        can_stop_decel: 2.8
+        can_stop_jerk: 5.0
+        crossing_time_limit: 2.75 # [s]
 
     # Surround Obstacle Stop Plugin Parameters
     surround_obstacle_stop:
