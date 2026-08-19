@@ -70,8 +70,8 @@
 
       objects:
         target_objects:
-          bbox: ["car", "truck", "bus", "trailer", "motorcycle", "bicycle", "pedestrian", "hazard", "unknown"]
-          polygon: ["car", "truck", "bus", "trailer", "pedestrian", "hazard", "unknown"]
+          bbox: ["car", "truck", "bus", "trailer", "motorcycle", "bicycle", "pedestrian", "hazard"]
+          polygon: ["car", "truck", "bus", "trailer", "pedestrian", "hazard"]
         stopped_velocity_th: 0.3 # [m/s]
         max_lateral_velocity_th: 1.0 # [m/s] max lateral velocity (w.r.t ego traj) to consider for obstacle stop
         safety_buffer: 0.1 # [m] safety buffer to expand object shape
@@ -132,8 +132,8 @@
       use_objects: true
       use_pointcloud: false
       target_objects:
-        bbox: ["car", "truck", "bus", "trailer", "motorcycle", "bicycle", "pedestrian", "hazard", "animal", "unknown"]
-        polygon: ["car", "truck", "bus", "trailer", "pedestrian", "hazard", "animal", "unknown"]
+        bbox: ["car", "truck", "bus", "trailer", "motorcycle", "bicycle", "pedestrian", "hazard", "animal"]
+        polygon: ["car", "truck", "bus", "trailer", "pedestrian", "hazard", "animal"]
       front_distance_th:
         car: 0.5
         truck: 0.5
