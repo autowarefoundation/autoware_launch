@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- cspell: ignore comlops -->
+  <!-- Traffic light recognition: one feature launcher per topology; the camera set is fixed inside each launcher -->
+
+  <!-- Pipeline junctions -->
+  <arg name="use_traffic_light_recognition" default="true" description="use traffic light recognition module, if false, traffic light recognition module will not be launched"/>
+  <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="select whether to use high accuracy detector for traffic light recognition"/>
+  <arg
+    name="traffic_light_recognition/high_accuracy_detection_type"
+    default="fine_detection"
+    description="select high accuracy detector type for traffic light recognition: fine_detection or whole_image_detection"
+  />
+  <arg name="traffic_light_recognition/classification/car/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LAMPClassifier"/>
+  <arg name="traffic_light_recognition/classification/pedestrian/classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
+
+  <!-- External interfaces -->
+  <arg name="input/pointcloud" default="/sensing/lidar/top/pointcloud_raw_ex" description="input pointcloud topic for traffic_light_occlusion_predictor"/>
+  <arg name="input/vector_map" default="/map/vector_map"/>
+  <arg name="input/route" default="/planning/mission_planning/route"/>
+  <arg name="external/traffic_signals" default="/perception/traffic_light_recognition/external/traffic_signals" description="topic from V2X"/>
+  <arg name="output/traffic_signals" default="/perception/traffic_light_recognition/traffic_signals" description="final output topic as traffic light recognition"/>
+
+  <!-- Parameter paths -->
+  <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
+  <arg name="traffic_light_recognition/classification/car/label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels.txt"/>
+  <arg name="traffic_light_recognition/classification/pedestrian/label_path" default="$(var data_path)/traffic_light_classifier/lamp_labels_ped.txt"/>
+  <arg name="traffic_light_recognition/classification/lamp_recognizer_ml_param_path" default="$(var data_path)/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>
+  <arg
+    name="traffic_light_car_classifier_model"
+    default="traffic_light_classifier_mobilenetv2_batch_6.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/car/classifier_type)' == '1'&quot;)"
+  />
+  <arg
+    name="traffic_light_car_classifier_model"
+    default="traffic_light_lamp_recognizer_comlops.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/car/classifier_type)' == '2'&quot;)"
+  />
+  <arg
+    name="traffic_light_ped_classifier_model"
+    default="ped_traffic_light_classifier_mobilenetv2_batch_6.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/pedestrian/classifier_type)' == '1'&quot;)"
+  />
+  <arg
+    name="traffic_light_ped_classifier_model"
+    default="traffic_light_lamp_recognizer_comlops.onnx"
+    if="$(eval &quot;'$(var traffic_light_recognition/classification/pedestrian/classifier_type)' == '2'&quot;)"
+  />
+  <arg name="traffic_light_recognition/classification/car/model_path" default="$(var data_path)/traffic_light_classifier/$(var traffic_light_car_classifier_model)"/>
+  <arg name="traffic_light_recognition/classification/pedestrian/model_path" default="$(var data_path)/traffic_light_classifier/$(var traffic_light_ped_classifier_model)"/>
+
+  <group if="$(var use_traffic_light_recognition)">
+    <push-ros-namespace namespace="perception"/>
+    <push-ros-namespace namespace="traffic_light_recognition"/>
+    <group if="$(var traffic_light_recognition/use_high_accuracy_detection)">
+      <group if="$(eval &quot;'$(var traffic_light_recognition/high_accuracy_detection_type)'=='fine_detection'&quot;)">
+        <include file="$(find-pkg-share autoware_perception_launch)/launch/traffic_light_recognition/traffic_light_recognition_fine.launch.xml">
+          <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
+          <arg name="input/vector_map" value="$(var input/vector_map)"/>
+          <arg name="input/route" value="$(var input/route)"/>
+          <arg name="external/traffic_signals" value="$(var external/traffic_signals)"/>
+          <arg name="output/traffic_signals" value="$(var output/traffic_signals)"/>
+          <arg name="data_path" value="$(var data_path)"/>
+          <arg name="fine_detector_model_path" value="$(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx"/>
+          <arg name="fine_detector_label_path" value="$(var data_path)/traffic_light_fine_detector/tlr_labels.txt"/>
+          <arg name="car_classifier_model_path" value="$(var traffic_light_recognition/classification/car/model_path)"/>
+          <arg name="car_classifier_label_path" value="$(var traffic_light_recognition/classification/car/label_path)"/>
+          <arg name="pedestrian_classifier_model_path" value="$(var traffic_light_recognition/classification/pedestrian/model_path)"/>
+          <arg name="pedestrian_classifier_label_path" value="$(var traffic_light_recognition/classification/pedestrian/label_path)"/>
+          <arg name="lamp_recognizer_ml_param_path" value="$(var traffic_light_recognition/classification/lamp_recognizer_ml_param_path)"/>
+          <arg name="car_classifier_type" value="$(var traffic_light_recognition/classification/car/classifier_type)"/>
+          <arg name="pedestrian_classifier_type" value="$(var traffic_light_recognition/classification/pedestrian/classifier_type)"/>
+        </include>
+      </group>
+      <group if="$(eval &quot;'$(var traffic_light_recognition/high_accuracy_detection_type)'=='whole_image_detection'&quot;)">
+        <include file="$(find-pkg-share autoware_perception_launch)/launch/traffic_light_recognition/traffic_light_recognition_whole_image.launch.xml">
+          <arg name="input/vector_map" value="$(var input/vector_map)"/>
+          <arg name="input/route" value="$(var input/route)"/>
+          <arg name="external/traffic_signals" value="$(var external/traffic_signals)"/>
+          <arg name="output/traffic_signals" value="$(var output/traffic_signals)"/>
+          <arg name="data_path" value="$(var data_path)"/>
+          <arg name="whole_image_detector_model_path" value="$(var data_path)/tensorrt_yolox/yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
+          <arg name="whole_image_detector_label_path" value="$(var data_path)/tensorrt_yolox/car_ped_tl_detector_labels.txt"/>
+          <arg name="car_classifier_model_path" value="$(var traffic_light_recognition/classification/car/model_path)"/>
+          <arg name="car_classifier_label_path" value="$(var traffic_light_recognition/classification/car/label_path)"/>
+          <arg name="pedestrian_classifier_model_path" value="$(var traffic_light_recognition/classification/pedestrian/model_path)"/>
+          <arg name="pedestrian_classifier_label_path" value="$(var traffic_light_recognition/classification/pedestrian/label_path)"/>
+          <arg name="lamp_recognizer_ml_param_path" value="$(var traffic_light_recognition/classification/lamp_recognizer_ml_param_path)"/>
+          <arg name="car_classifier_type" value="$(var traffic_light_recognition/classification/car/classifier_type)"/>
+          <arg name="pedestrian_classifier_type" value="$(var traffic_light_recognition/classification/pedestrian/classifier_type)"/>
+        </include>
+      </group>
+    </group>
+    <group unless="$(var traffic_light_recognition/use_high_accuracy_detection)">
+      <include file="$(find-pkg-share autoware_perception_launch)/launch/traffic_light_recognition/traffic_light_recognition_rough.launch.xml">
+        <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
+        <arg name="input/vector_map" value="$(var input/vector_map)"/>
+        <arg name="input/route" value="$(var input/route)"/>
+        <arg name="external/traffic_signals" value="$(var external/traffic_signals)"/>
+        <arg name="output/traffic_signals" value="$(var output/traffic_signals)"/>
+        <arg name="data_path" value="$(var data_path)"/>
+        <arg name="car_classifier_model_path" value="$(var traffic_light_recognition/classification/car/model_path)"/>
+        <arg name="car_classifier_label_path" value="$(var traffic_light_recognition/classification/car/label_path)"/>
+        <arg name="pedestrian_classifier_model_path" value="$(var traffic_light_recognition/classification/pedestrian/model_path)"/>
+        <arg name="pedestrian_classifier_label_path" value="$(var traffic_light_recognition/classification/pedestrian/label_path)"/>
+        <arg name="lamp_recognizer_ml_param_path" value="$(var traffic_light_recognition/classification/lamp_recognizer_ml_param_path)"/>
+        <arg name="car_classifier_type" value="$(var traffic_light_recognition/classification/car/classifier_type)"/>
+        <arg name="pedestrian_classifier_type" value="$(var traffic_light_recognition/classification/pedestrian/classifier_type)"/>
+      </include>
+    </group>
+  </group>
+</launch>

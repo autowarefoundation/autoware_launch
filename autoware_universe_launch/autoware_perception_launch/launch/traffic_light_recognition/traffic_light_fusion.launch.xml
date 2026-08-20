@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!-- Post-process shared by all traffic light cameras: multi camera fusion, V2X arbitration, pedestrian signal estimation and map visualization. -->
+<launch>
+  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
+  <arg name="camera_namespaces" default="[camera6, camera7]" description="camera namespaces the fusion node subscribes to (node parameter, no launch iteration)"/>
+  <arg name="input/vector_map" default="/map/vector_map"/>
+  <arg name="external/traffic_signals" default="/perception/traffic_light_recognition/external/traffic_signals" description="topic from V2X"/>
+  <arg name="internal/traffic_signals" default="/perception/traffic_light_recognition/internal/traffic_signals" description="topic from traffic_light_multi_camera_fusion"/>
+  <arg name="judged/traffic_signals" default="/perception/traffic_light_recognition/judged/traffic_signals" description="topic from traffic_light_arbiter"/>
+  <arg name="output/traffic_signals" default="/perception/traffic_light_recognition/traffic_signals" description="final output topic as traffic light recognition"/>
+  <arg
+    name="multi_camera_fusion_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/traffic_light_recognition/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml"
+  />
+  <arg name="arbiter_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/traffic_light_recognition/traffic_light_arbiter/traffic_light_arbiter.param.yaml"/>
+  <arg
+    name="crosswalk_estimator_param_path"
+    default="$(find-pkg-share $(var perception_config_pkg))/config/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml"
+  />
+
+  <!-- all camera fusion -->
+  <group>
+    <include file="$(find-pkg-share autoware_traffic_light_multi_camera_fusion)/launch/traffic_light_multi_camera_fusion.launch.xml">
+      <arg name="camera_namespaces" value="$(var camera_namespaces)"/>
+      <arg name="input/vector_map" value="$(var input/vector_map)"/>
+      <arg name="output/traffic_signals" value="$(var internal/traffic_signals)"/>
+      <arg name="param_path" value="$(var multi_camera_fusion_param_path)"/>
+    </include>
+  </group>
+
+  <!-- V2X fusion -->
+  <group>
+    <include file="$(find-pkg-share autoware_traffic_light_arbiter)/launch/traffic_light_arbiter.launch.xml">
+      <arg name="perception_traffic_signals" value="$(var internal/traffic_signals)"/>
+      <arg name="external_traffic_signals" value="$(var external/traffic_signals)"/>
+      <arg name="output_traffic_signals" value="$(var judged/traffic_signals)"/>
+      <arg name="param_path" value="$(var arbiter_param_path)"/>
+    </include>
+  </group>
+
+  <!-- pedestrian traffic light estimation on crosswalks -->
+  <group>
+    <include file="$(find-pkg-share autoware_crosswalk_traffic_light_estimator)/launch/crosswalk_traffic_light_estimator.launch.xml">
+      <arg name="input/vector_map" value="$(var input/vector_map)"/>
+      <arg name="input/traffic_signals" value="$(var judged/traffic_signals)"/>
+      <arg name="output/traffic_signals" value="$(var output/traffic_signals)"/>
+      <arg name="param_path" value="$(var crosswalk_estimator_param_path)"/>
+    </include>
+  </group>
+
+  <!-- traffic light status visualizer on rviz -->
+  <group>
+    <include file="$(find-pkg-share autoware_traffic_light_visualization)/launch/traffic_light_map_visualizer.launch.xml"/>
+  </group>
+</launch>

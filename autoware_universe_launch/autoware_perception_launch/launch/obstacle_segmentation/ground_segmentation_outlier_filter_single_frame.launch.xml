@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
+  <!-- Single-frame outlier removal: elevation map comparison prunes ground residue, then voxel filters drop sparse noise -->
+  <arg name="target_container" description="container to load the filters into"/>
+  <arg name="base_frame" default="base_link"/>
+  <arg name="use_intra_process" default="true"/>
+
+  <arg name="input/pointcloud"/>
+  <arg name="output/pointcloud"/>
+
+  <arg name="elevation_map_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"/>
+
+  <group>
+    <push-ros-namespace namespace="elevation_map"/>
+    <load_composable_node target="$(var target_container)">
+      <composable_node pkg="autoware_elevation_map_loader" plugin="autoware::elevation_map_loader::ElevationMapLoaderNode" name="elevation_map_loader">
+        <remap from="output/elevation_map" to="map"/>
+        <remap from="input/pointcloud_map" to="/map/pointcloud_map"/>
+        <remap from="input/vector_map" to="/map/vector_map"/>
+        <remap from="input/pointcloud_map_metadata" to="/map/pointcloud_map_metadata"/>
+        <remap from="service/get_selected_pointcloud_map" to="/map/get_selected_pointcloud_map"/>
+        <param name="use_lane_filter" value="false"/>
+        <param name="use_sequential_load" value="false"/>
+        <param name="sequential_map_load_num" value="1"/>
+        <param name="use_inpaint" value="true"/>
+        <param name="inpaint_radius" value="1.0"/>
+        <param name="lane_margin" value="2.0"/>
+        <param name="param_file_path" value="$(var elevation_map_param_path)"/>
+        <param name="elevation_map_directory" value="$(find-pkg-share autoware_elevation_map_loader)/data/elevation_maps"/>
+        <param name="use_elevation_map_cloud_publisher" value="false"/>
+        <extra_arg name="use_intra_process_comms" value="false"/>
+      </composable_node>
+      <composable_node pkg="autoware_compare_map_segmentation" plugin="autoware::compare_map_segmentation::CompareElevationMapFilterComponent" name="compare_elevation_map_filter">
+        <remap from="input" to="$(var input/pointcloud)"/>
+        <remap from="output" to="map_filtered/pointcloud"/>
+        <remap from="input/elevation_map" to="map"/>
+        <param name="map_frame" value="map"/>
+        <param name="map_layer_name" value="elevation"/>
+        <param name="height_diff_thresh" value="0.15"/>
+        <param name="input_frame" value="map"/>
+        <param name="output_frame" value="base_link"/>
+        <!-- The transient_local elevation map subscription forbids intra-process -->
+        <extra_arg name="use_intra_process_comms" value="false"/>
+      </composable_node>
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent" name="voxel_grid_filter">
+        <remap from="input" to="map_filtered/pointcloud"/>
+        <remap from="output" to="voxel_grid_filtered/pointcloud"/>
+        <param name="input_frame" value="$(var base_frame)"/>
+        <param name="output_frame" value="$(var base_frame)"/>
+        <param name="voxel_size_x" value="0.04"/>
+        <param name="voxel_size_y" value="0.04"/>
+        <param name="voxel_size_z" value="0.08"/>
+        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+      </composable_node>
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::VoxelGridOutlierFilterComponent" name="voxel_grid_outlier_filter">
+        <remap from="input" to="voxel_grid_filtered/pointcloud"/>
+        <remap from="output" to="$(var output/pointcloud)"/>
+        <param name="voxel_size_x" value="0.4"/>
+        <param name="voxel_size_y" value="0.4"/>
+        <param name="voxel_size_z" value="100.0"/>
+        <param name="voxel_points_threshold" value="5"/>
+        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+      </composable_node>
+    </load_composable_node>
+  </group>
+</launch>
