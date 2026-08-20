@@ -66,6 +66,13 @@
 
     reference_path_resolution: 0.5 #[m]
 
+    behavior_model:
+      object_deceleration:
+        base: -3.0 # [m/ss]
+        pedestrian: -0.5
+        bicycle: -1.0
+        motorcycle: -2.0
+
     # debug parameters
     publish_processing_time: true # {OVERRIDE}
     publish_processing_time_detail: true # {OVERRIDE}
