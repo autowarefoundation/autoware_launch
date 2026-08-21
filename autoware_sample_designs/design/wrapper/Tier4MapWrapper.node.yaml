@@ -46,8 +46,12 @@ param_values:
     default: $(var map_path)/pointcloud_map_metadata.yaml
   - name: lanelet2_map_path
     default: $(var map_path)/$(var lanelet2_map_file)
+  - name: lanelet2_map_metadata_path
+    default: $(var map_path)/lanelet2_map_metadata.yaml
   - name: map_projector_info_path
     default: $(var map_path)/map_projector_info.yaml
+  - name: enable_selected_map_loading
+    default: false
   - name: use_multithread
     default: true
 
