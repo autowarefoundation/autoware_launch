@@ -100,7 +100,6 @@
 
   <!-- Perception -->
   <group if="$(var launch_perception)">
-    <!-- each component include is scoped so its launch configurations stay local to it -->
     <group>
       <include file="$(find-pkg-share autoware_launch)/launch/components/component_perception.launch.xml">
         <arg name="data_path" value="$(var data_path)"/>
@@ -117,18 +116,15 @@
 
   <!-- Planning -->
   <group if="$(var launch_planning)">
-    <!-- the component include is scoped so its module preset stays local to it -->
-    <group>
-      <include file="$(find-pkg-share autoware_launch)/launch/components/component_planning.launch.xml">
-        <arg name="module_preset" value="$(var planning_module_preset)"/>
-        <arg name="planning_setting" value="$(var planning_setting)"/>
-        <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
-        <arg name="is_simulation" value="$(var is_simulation)"/>
-        <arg name="use_sim_time" value="$(var use_sim_time)"/>
-        <arg name="vehicle_model" value="$(var vehicle_model)"/>
-        <arg name="data_path" value="$(var data_path)"/>
-      </include>
-    </group>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/component_planning.launch.xml">
+      <arg name="module_preset" value="$(var planning_module_preset)"/>
+      <arg name="planning_setting" value="$(var planning_setting)"/>
+      <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
+      <arg name="is_simulation" value="$(var is_simulation)"/>
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="data_path" value="$(var data_path)"/>
+    </include>
   </group>
 
   <!-- Control -->
