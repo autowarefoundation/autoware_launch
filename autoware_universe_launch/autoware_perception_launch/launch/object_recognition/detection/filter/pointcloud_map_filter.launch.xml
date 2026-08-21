@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Map-compare filter: voxel downsample -> drop points that match the pointcloud map -->
+
+  <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
+  <let name="perception_config_dir" value="$(find-pkg-share $(var perception_config_pkg))/config"/>
+
   <arg name="target_container" description="container to load the filters into"/>
   <arg name="use_intra_process" default="true"/>
 
@@ -9,10 +13,7 @@
   <arg name="output/downsampled/pointcloud" default="/perception/obstacle_segmentation/pointcloud_map_filtered/downsampled/pointcloud"/>
 
   <arg name="downsample_voxel_size" default="0.1"/>
-  <arg
-    name="voxel_based_compare_map_filter_node_param_path"
-    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/pointcloud_filter/voxel_based_compare_map_filter.param.yaml"
-  />
+  <arg name="voxel_based_compare_map_filter_node_param_path" default="$(var perception_config_dir)/object_recognition/detection/pointcloud_filter/voxel_based_compare_map_filter.param.yaml"/>
 
   <load_composable_node target="$(var target_container)">
     <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent" name="voxel_grid_downsample_filter">

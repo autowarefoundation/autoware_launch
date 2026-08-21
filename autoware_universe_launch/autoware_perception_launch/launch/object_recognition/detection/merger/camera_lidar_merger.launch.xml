@@ -2,24 +2,21 @@
 <launch>
   <!-- Serial detection merger: ML lidar objects are optionally ROI-validated, joined with irregular and cluster objects, then detection-by-tracker objects, and filtered into a single detection topic -->
 
+  <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
+  <let name="perception_config_dir" value="$(find-pkg-share $(var perception_config_pkg))/config"/>
+
   <!-- Parameters -->
   <arg
     name="object_recognition_detection_object_merger_data_association_matrix_param_path"
-    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/object_merger/data_association_matrix.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/detection/object_merger/data_association_matrix.param.yaml"
   />
-  <arg
-    name="object_recognition_detection_object_merger_distance_threshold_list_path"
-    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/object_merger/overlapped_judge.param.yaml"
-  />
+  <arg name="object_recognition_detection_object_merger_distance_threshold_list_path" default="$(var perception_config_dir)/object_recognition/detection/object_merger/overlapped_judge.param.yaml"/>
   <arg
     name="ml_camera_lidar_object_association_merger_param_path"
-    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/object_merger/ml_camera_lidar_object_association_merger.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/detection/object_merger/ml_camera_lidar_object_association_merger.param.yaml"
   />
-  <arg
-    name="roi_detected_object_fusion_param_path"
-    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml"
-  />
-  <arg name="sync_param_path" default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml"/>
+  <arg name="roi_detected_object_fusion_param_path" default="$(var perception_config_dir)/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml"/>
+  <arg name="sync_param_path" default="$(var perception_config_dir)/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml"/>
 
   <!-- Pipeline junctions -->
   <arg name="lidar_detection_model_type"/>

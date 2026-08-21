@@ -4,6 +4,9 @@
   One camera as the representative set; add or remove per-camera blocks to match the vehicle.
 -->
 <launch>
+  <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
+  <let name="perception_config_dir" value="$(find-pkg-share $(var perception_config_pkg))/config"/>
+
   <arg name="input/vector_map" default="/map/vector_map"/>
   <arg name="input/route" default="/planning/mission_planning/route"/>
   <arg name="input/pointcloud" default="/sensing/lidar/top/pointcloud_raw_ex" description="pointcloud for the occlusion predictors"/>
@@ -19,10 +22,7 @@
   <arg name="pedestrian_classifier_type" default="1" description="0=HSVFilter, 1=CNN, 2=LampRecognizer"/>
 
   <!-- map based detector parameters -->
-  <arg
-    name="base_map_based_detector_param_path"
-    default="$(find-pkg-share autoware_perception_config)/config/traffic_light_recognition/traffic_light_map_based_detector/base_traffic_light_map_based_detector.param.yaml"
-  />
+  <arg name="base_map_based_detector_param_path" default="$(var perception_config_dir)/traffic_light_recognition/traffic_light_map_based_detector/base_traffic_light_map_based_detector.param.yaml"/>
 
   <!-- traffic_light -->
   <group>
