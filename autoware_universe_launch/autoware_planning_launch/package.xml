@@ -26,7 +26,6 @@
   <maintainer email="mamoru.sobue@tier4.jp">Mamoru Sobue</maintainer>
   <!-- crosswalk module -->
   <!-- detection area module -->
-  <maintainer email="kyoichi.sugahara@tier4.jp">Kyoichi Sugahara</maintainer>
   <!-- occlusion spot module -->
   <maintainer email="taiki.tanaka@tier4.jp">Taiki Tanaka</maintainer>
   <!-- no stopping area module -->
