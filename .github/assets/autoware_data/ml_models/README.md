@@ -24,8 +24,8 @@ Then copy only the files that a launch file names into this tree. Remove the `.c
 
 ## lidar_centerpoint
 
-Tag `v4.0` holds one folder per variant (`base`, `tiny`, `sigma`, `short_range`). Each folder holds a manifest with the fixed name `ml_package.param.yaml`.
+Tag `v4.1` holds one folder per variant (`base`, `tiny`, `sigma`, `short_range`). Each folder holds a manifest with the fixed name `ml_package.param.yaml`.
 
-The default arguments select `tiny`, so only `tiny/ml_package.param.yaml` is here. A resolve run with `use_short_range_detection:=true` also needs `short_range/ml_package.param.yaml`.
+The default arguments select `base`, so only `base/ml_package.param.yaml` is here. A resolve run with `use_short_range_detection:=true` also needs `short_range/ml_package.param.yaml`.
 
 `detection_class_remapper.param.yaml` is not here, because no launch file names it. The node gets the path of that file from the manifest, then opens the file at run time.
