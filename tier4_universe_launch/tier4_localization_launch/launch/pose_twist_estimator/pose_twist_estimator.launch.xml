@@ -137,9 +137,9 @@
       <arg name="sub_gnss_pose_cov" value="$(var sub_gnss_pose_cov)"/>
     </include>
 
-    <!-- automatic_pose_initializer -->
+    <!-- pose_initialization_requester -->
     <group if="$(var gnss_enabled)">
-      <include file="$(find-pkg-share autoware_automatic_pose_initializer)/launch/automatic_pose_initializer.launch.xml"/>
+      <include file="$(find-pkg-share autoware_pose_initialization_requester)/launch/pose_initialization_requester.launch.xml"/>
     </group>
 
     <!-- pointcloud_downsampling -->
