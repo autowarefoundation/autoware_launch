@@ -13,7 +13,7 @@ config/
 └── traffic_light_recognition/
 ```
 
-The feature launchers in `autoware_perception_launch` resolve this tree by package share path and expose each file as a `*_param_path` argument. A product that ships its own parameters overrides those arguments; it does not replace this package.
+The feature launchers in `autoware_perception_launch` resolve this tree through their `perception_config_pkg` argument, which defaults to this package, and expose each file as a `*_param_path` argument. A product that ships a few different parameters overrides those arguments; a product that ships the whole tree points `perception_config_pkg` at its own package, which must then carry the same `config/` layout.
 
 The `config/` tree is the interface downstream distributions adopt as-is; only `package.xml`, `CMakeLists.txt`, `README.md`, and changelogs stay package-local. Keep changes to the tree folder-merge compatible.
 

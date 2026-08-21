@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <!-- Whole-image detection chain for one traffic light camera: yolox detects over the full image, the selector matches detections to map based ROIs, classifiers label them. -->
 <launch>
+  <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
+  <let name="perception_config_dir" value="$(find-pkg-share $(var perception_config_pkg))/config"/>
+
   <arg name="camera_namespace" description="camera namespace, e.g. camera6"/>
   <arg name="enable_image_decompressor" default="true" description="decompress the compressed camera image into the raw image topic"/>
   <arg name="input/vector_map" default="/map/vector_map"/>
@@ -8,14 +11,11 @@
 
   <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
   <arg name="map_based_detector_param_path" default="$(find-pkg-share autoware_traffic_light_map_based_detector)/config/traffic_light_map_based_detector.param.yaml"/>
-  <arg name="whole_image_detector_param_path" default="$(find-pkg-share autoware_perception_config)/config/traffic_light_recognition/tensorrt_yolox/yolox_traffic_light_detector.param.yaml"/>
-  <arg name="car_classifier_param_path" default="$(find-pkg-share autoware_perception_config)/config/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml"/>
-  <arg
-    name="pedestrian_classifier_param_path"
-    default="$(find-pkg-share autoware_perception_config)/config/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml"
-  />
+  <arg name="whole_image_detector_param_path" default="$(var perception_config_dir)/traffic_light_recognition/tensorrt_yolox/yolox_traffic_light_detector.param.yaml"/>
+  <arg name="car_classifier_param_path" default="$(var perception_config_dir)/traffic_light_recognition/traffic_light_classifier/car_traffic_light_classifier.param.yaml"/>
+  <arg name="pedestrian_classifier_param_path" default="$(var perception_config_dir)/traffic_light_recognition/traffic_light_classifier/pedestrian_traffic_light_classifier.param.yaml"/>
   <arg name="lamp_recognizer_ml_param_path" default="$(var data_path)/traffic_light_classifier/lamp_recognizer_ml.param.yaml"/>
-  <arg name="roi_visualizer_param_path" default="$(find-pkg-share autoware_perception_config)/config/traffic_light_recognition/traffic_light_visualization/traffic_light_roi_visualizer.param.yaml"/>
+  <arg name="roi_visualizer_param_path" default="$(var perception_config_dir)/traffic_light_recognition/traffic_light_visualization/traffic_light_roi_visualizer.param.yaml"/>
   <arg name="whole_image_detector_model_path" default="$(var data_path)/tensorrt_yolox/yolox_s_car_ped_tl_detector_960_960_batch_1.onnx"/>
   <arg name="whole_image_detector_label_path" default="$(var data_path)/tensorrt_yolox/car_ped_tl_detector_labels.txt"/>
   <arg name="car_classifier_model_path" default="$(var data_path)/traffic_light_classifier/traffic_light_classifier_mobilenetv2_batch_6.onnx"/>
@@ -55,7 +55,7 @@
         <param name="build_only" value="false"/>
         <param name="model_path" value="$(var whole_image_detector_model_path)"/>
         <param name="label_path" value="$(var whole_image_detector_label_path)"/>
-        <param name="roi_remap_path" value="$(find-pkg-share autoware_perception_config)/config/traffic_light_recognition/tensorrt_yolox/traffic_light_roi_label_remap.csv"/>
+        <param name="roi_remap_path" value="$(var perception_config_dir)/traffic_light_recognition/tensorrt_yolox/traffic_light_roi_label_remap.csv"/>
         <param name="roi_to_semantic_segmentation_remap_path" value=""/>
         <param name="semantic_segmentation_color_map_path" value=""/>
         <remap from="~/in/image" to="$(var camera/image)"/>

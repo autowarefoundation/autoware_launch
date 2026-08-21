@@ -2,6 +2,9 @@
 <launch>
   <!-- Lidar-radar object recognition: detection, tracking, and prediction under the caller's namespace; PTv3 clustering, lidar DNN, and radar detectors publish per-detector outputs that fuse at the multi-channel tracker input -->
 
+  <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
+  <let name="perception_config_dir" value="$(find-pkg-share $(var perception_config_pkg))/config"/>
+
   <!-- Current namespace -->
   <let name="ns" value="/perception/object_recognition"/>
   <let name="detection_ns" value="$(var ns)/detection"/>
@@ -34,32 +37,26 @@
   <arg name="output/predicted_objects" default="/perception/object_recognition/objects"/>
 
   <!-- Parameter paths -->
-  <arg name="lidar_model_param_path" default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/lidar_model" description="directory of lidar model param files"/>
-  <arg name="centerpoint_common_param_path" default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/lidar_model/centerpoint_common.param.yaml"/>
-  <arg
-    name="voxel_grid_based_euclidean_param_path"
-    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml"
-  />
-  <arg name="radar_lanelet_filtering_range_param_path" default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/object_filter/radar_lanelet_filter.param.yaml"/>
-  <arg
-    name="object_recognition_detection_object_sorter_radar_param_path"
-    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/radar_filter/detected_object_sorter.param.yaml"
-  />
+  <arg name="lidar_model_param_path" default="$(var perception_config_dir)/object_recognition/detection/lidar_model" description="directory of lidar model param files"/>
+  <arg name="centerpoint_common_param_path" default="$(var perception_config_dir)/object_recognition/detection/lidar_model/centerpoint_common.param.yaml"/>
+  <arg name="voxel_grid_based_euclidean_param_path" default="$(var perception_config_dir)/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml"/>
+  <arg name="radar_lanelet_filtering_range_param_path" default="$(var perception_config_dir)/object_recognition/detection/object_filter/radar_lanelet_filter.param.yaml"/>
+  <arg name="object_recognition_detection_object_sorter_radar_param_path" default="$(var perception_config_dir)/object_recognition/detection/radar_filter/detected_object_sorter.param.yaml"/>
   <arg
     name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
-    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
   />
   <arg
     name="object_recognition_tracking_multi_object_tracker_input_channels_param_path"
-    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
   />
   <arg
     name="object_recognition_tracking_multi_object_tracker_node_param_path"
-    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
   />
 
   <!-- label_based_param -->
-  <arg name="euclidean_clustering/param_path" default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml"/>
+  <arg name="euclidean_clustering/param_path" default="$(var perception_config_dir)/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml"/>
 
   <!-- Internal interfaces -->
   <let name="lidar_detection_model_type" value="$(eval &quot;'$(var lidar_detection_model)'.split('/')[0]&quot;)"/>
