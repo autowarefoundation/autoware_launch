@@ -6,10 +6,7 @@
   <arg name="fault_injection_input_diagnostics" default="/diagnostics"/>
   <arg name="fault_injection_output_diagnostics" default="/diagnostics/fault_injection"/>
   <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
-  <arg name="obstacle_segmentation_ground_segmentation_elevation_map_param_path"/>
-  <arg name="laserscan_based_occupancy_grid_map_param_path"/>
-  <arg name="occupancy_grid_map_updater"/>
-  <arg name="occupancy_grid_map_updater_param_path"/>
+  <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
 
   <arg name="localization_error_monitor_param_path"/>
   <arg name="ekf_localizer_param_path"/>
@@ -19,6 +16,7 @@
 
   <arg name="launch_simulator_perception_modules" default="true"/>
   <arg name="use_pointcloud_container" default="true" description="use pointcloud container for simulator perception modules"/>
+  <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
 
   <arg name="launch_dummy_perception"/>
   <arg name="launch_dummy_vehicle"/>
@@ -60,109 +58,29 @@
       </include>
     </group>
 
-    <!-- Dummy Perception -->
-    <group if="$(var launch_dummy_perception)">
-      <include file="$(find-pkg-share autoware_dummy_perception_publisher)/launch/dummy_perception_publisher.launch.xml">
-        <arg name="real" value="$(var perception/enable_detection_failure)"/>
-        <arg name="use_object_recognition" value="$(var perception/enable_object_recognition)"/>
-        <arg name="use_base_link_z" value="$(var perception/use_base_link_z)"/>
-        <arg name="visible_range" value="$(var sensing/visible_range)"/>
-      </include>
-    </group>
-
-    <!-- Dummy Traffic Light Publisher (used when traffic light recognition is disabled, e.g. planning simulator) -->
-    <group if="$(var launch_dummy_traffic_light_publisher)">
-      <group unless="$(var perception/enable_traffic_light)">
-        <include file="$(find-pkg-share autoware_dummy_traffic_light_publisher)/launch/dummy_traffic_light_publisher.launch.xml">
-          <arg name="mode" value="$(var dummy_traffic_light_mode)"/>
-        </include>
-      </group>
-    </group>
-
-    <group unless="$(var scenario_simulation)">
-      <!-- Occupancy Grid -->
-      <push-ros-namespace namespace="occupancy_grid_map"/>
-      <include file="$(find-pkg-share autoware_perception_launch)/launch/occupancy_grid_map/probabilistic_occupancy_grid_map.launch.xml">
-        <arg name="input_obstacle_pointcloud" value="true"/>
-        <arg name="input_obstacle_and_raw_pointcloud" value="false"/>
-        <arg name="input/obstacle_pointcloud" value="/perception/obstacle_segmentation/pointcloud"/>
-        <arg name="output" value="/perception/occupancy_grid_map/map"/>
-        <arg name="occupancy_grid_map_method" value="laserscan_based_occupancy_grid_map"/>
-        <arg name="occupancy_grid_map_param_path" value="$(var laserscan_based_occupancy_grid_map_param_path)"/>
-        <arg name="occupancy_grid_map_updater" value="$(var occupancy_grid_map_updater)"/>
-        <arg name="occupancy_grid_map_updater_param_path" value="$(var occupancy_grid_map_updater_param_path)"/>
-        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
-      </include>
-    </group>
-
-    <!-- perception module -->
-    <group>
-      <push-ros-namespace namespace="perception"/>
-      <!-- object recognition -->
-      <group if="$(var perception/enable_object_recognition)">
-        <push-ros-namespace namespace="object_recognition"/>
-        <!-- tracking module -->
-        <group if="$(var perception/enable_object_tracking)">
-          <push-ros-namespace namespace="tracking"/>
-          <include file="$(find-pkg-share autoware_multi_object_tracker)/launch/multi_object_tracker.launch.xml">
-            <arg name="input/detection01/objects" value="/perception/object_recognition/detection/objects"/>
-            <arg name="input/detection01/channel" value="detected_objects"/>
-            <arg name="output/objects" value="objects"/>
-            <arg name="data_association_matrix_path" value="$(var object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path)"/>
-            <arg name="input_channels_path" value="$(var object_recognition_tracking_multi_object_tracker_input_channels_param_path)"/>
-            <arg name="tracker_setting_path" value="$(var object_recognition_tracking_multi_object_tracker_node_param_path)"/>
-          </include>
-        </group>
-        <!-- prediction module -->
-        <group if="$(var perception/enable_object_prediction)">
-          <push-ros-namespace namespace="prediction"/>
-          <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/prediction/prediction.launch.xml">
-            <arg name="use_vector_map" value="true"/>
-          </include>
-        </group>
-      </group>
-
-      <!-- perception evaluator -->
-      <group if="$(var use_perception_online_evaluator)">
-        <include file="$(find-pkg-share autoware_perception_online_evaluator)/launch/perception_online_evaluator.launch.xml"/>
-      </group>
-
-      <!-- perception analytics publisher-->
-      <group if="$(var use_perception_analytics_publisher)">
-        <include file="$(find-pkg-share autoware_perception_online_evaluator)/launch/perception_analytics_publisher.launch.xml"/>
-      </group>
-
-      <!-- publish empty objects instead of object recognition module -->
-      <group unless="$(var perception/enable_object_recognition)">
-        <push-ros-namespace namespace="object_recognition"/>
-        <node pkg="autoware_dummy_perception_publisher" exec="empty_objects_publisher" name="empty_objects_publisher" output="screen">
-          <remap from="~/output/objects" to="/perception/object_recognition/objects"/>
-        </node>
-      </group>
-
-      <group if="$(var perception/enable_elevation_map)">
-        <push-ros-namespace namespace="obstacle_segmentation/elevation_map"/>
-        <node pkg="autoware_elevation_map_loader" exec="elevation_map_loader" name="elevation_map_loader" output="screen">
-          <remap from="output/elevation_map" to="map"/>
-          <remap from="input/pointcloud_map" to="/map/pointcloud_map"/>
-          <remap from="input/vector_map" to="/map/vector_map"/>
-          <param name="use_lane_filter" value="false"/>
-          <param name="use_inpaint" value="true"/>
-          <param name="inpaint_radius" value="1.0"/>
-          <param name="param_file_path" value="$(var obstacle_segmentation_ground_segmentation_elevation_map_param_path)"/>
-          <param name="elevation_map_directory" value="$(find-pkg-share autoware_elevation_map_loader)/data/elevation_maps"/>
-          <param name="use_elevation_map_cloud_publisher" value="false"/>
-        </node>
-      </group>
-
-      <!-- traffic light module: detection is simulated, only the merge side runs -->
-      <group if="$(var perception/enable_traffic_light)">
-        <push-ros-namespace namespace="traffic_light_recognition"/>
-        <include file="$(find-pkg-share autoware_perception_launch)/launch/traffic_light_recognition/traffic_light_recognition_merge.launch.xml">
-          <arg name="external/traffic_signals" value="$(var external/traffic_signals)"/>
-        </include>
-      </group>
-    </group>
+    <!-- Simulated perception pipeline -->
+    <let name="launch_occupancy_grid_map" value="false" if="$(var scenario_simulation)"/>
+    <let name="launch_occupancy_grid_map" value="true" unless="$(var scenario_simulation)"/>
+    <include file="$(find-pkg-share tier4_simulator_launch)/launch/perception_simulation.launch.xml">
+      <arg name="perception_config_pkg" value="$(var perception_config_pkg)"/>
+      <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
+      <arg name="perception/enable_detection_failure" value="$(var perception/enable_detection_failure)"/>
+      <arg name="perception/enable_object_recognition" value="$(var perception/enable_object_recognition)"/>
+      <arg name="perception/enable_object_tracking" value="$(var perception/enable_object_tracking)"/>
+      <arg name="perception/enable_object_prediction" value="$(var perception/enable_object_prediction)"/>
+      <arg name="perception/enable_elevation_map" value="$(var perception/enable_elevation_map)"/>
+      <arg name="perception/enable_traffic_light" value="$(var perception/enable_traffic_light)"/>
+      <arg name="perception/use_base_link_z" value="$(var perception/use_base_link_z)"/>
+      <arg name="launch_dummy_traffic_light_publisher" value="$(var launch_dummy_traffic_light_publisher)"/>
+      <arg name="dummy_traffic_light_mode" value="$(var dummy_traffic_light_mode)"/>
+      <arg name="external/traffic_signals" value="$(var external/traffic_signals)"/>
+      <arg name="sensing/visible_range" value="$(var sensing/visible_range)"/>
+      <arg name="launch_occupancy_grid_map" value="$(var launch_occupancy_grid_map)"/>
+      <arg name="occupancy_grid_map_updater" value="$(var occupancy_grid_map_updater)"/>
+      <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+      <arg name="use_perception_online_evaluator" value="$(var use_perception_online_evaluator)"/>
+      <arg name="use_perception_analytics_publisher" value="$(var use_perception_analytics_publisher)"/>
+    </include>
   </group>
 
   <!-- localization -->
