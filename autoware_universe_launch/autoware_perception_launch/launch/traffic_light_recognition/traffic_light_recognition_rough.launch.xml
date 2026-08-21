@@ -21,7 +21,7 @@
   <!-- map based detector parameters -->
   <arg
     name="base_map_based_detector_param_path"
-    default="$(find-pkg-share autoware_perception_launch)/config/traffic_light_recognition/traffic_light_map_based_detector/base_traffic_light_map_based_detector.param.yaml"
+    default="$(find-pkg-share autoware_perception_config)/config/traffic_light_recognition/traffic_light_map_based_detector/base_traffic_light_map_based_detector.param.yaml"
   />
 
   <!-- traffic_light -->

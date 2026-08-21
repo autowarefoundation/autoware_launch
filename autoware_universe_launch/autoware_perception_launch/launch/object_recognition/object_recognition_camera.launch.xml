@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
   <!-- Camera object recognition: detection, tracking, and prediction under the caller's namespace; BEV camera detector plus optional camera VRU detector publish per-detector outputs that fuse at the multi-channel tracker input -->
 
   <!-- Current namespace -->
@@ -46,19 +45,19 @@
   <!-- Parameter paths -->
   <arg
     name="near_range_camera_vru_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/camera_vru_detection/near_range_camera_vru_detector.param.yaml"
+    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/camera_vru_detection/near_range_camera_vru_detector.param.yaml"
   />
   <arg
     name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
+    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
   />
   <arg
     name="object_recognition_tracking_multi_object_tracker_input_channels_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
+    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
   />
   <arg
     name="object_recognition_tracking_multi_object_tracker_node_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
+    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
   />
 
   <!-- Internal interfaces -->
