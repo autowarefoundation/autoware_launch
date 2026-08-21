@@ -21,7 +21,7 @@
                 <br/>
                 <br/>
                 <div>
-                  <span>package: tier4_planning_launch</span>
+                  <span>package: autoware_planning_launch</span>
                 </div>
               </div>
             </div>
@@ -43,7 +43,7 @@
                 mission_planning.launch.py
                 <br/>
                 <br/>
-                <div style="text-align: left">package: tier4_planning_launch</div>
+                <div style="text-align: left">package: autoware_planning_launch</div>
               </div>
             </div>
           </div>
@@ -153,7 +153,7 @@
                 scenario_planning.launch.xml
                 <br/>
                 <br/>
-                <div style="text-align: left">package: tier4_planning_launch</div>
+                <div style="text-align: left">package: autoware_planning_launch</div>
               </div>
             </div>
           </div>
@@ -266,7 +266,7 @@
                 lane_driving.launch.xml
                 <br/>
                 <br/>
-                <div style="text-align: left">package: tier4_planning_launch</div>
+                <div style="text-align: left">package: autoware_planning_launch</div>
               </div>
             </div>
           </div>
@@ -287,7 +287,7 @@
                 parking.launch.py
                 <br/>
                 <br/>
-                <div style="text-align: left">package: tier4_planning_launch</div>
+                <div style="text-align: left">package: autoware_planning_launch</div>
               </div>
             </div>
           </div>
