@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- Simulated perception pipeline: dummy perception replaces the sensor-driven detection stage, the downstream tracking, prediction, occupancy grid map and traffic light merge stages run as in the vehicle, and disabled stages are replaced by stub publishers -->
+  <!-- Simulated perception pipeline: dummy perception replaces the sensor-driven detection stage, the downstream tracking, prediction and occupancy grid map stages run as in the vehicle, traffic signals come from the dummy traffic light publisher, and disabled stages are replaced by stub publishers -->
 
   <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
   <let name="perception_config_dir" value="$(find-pkg-share $(var perception_config_pkg))/config"/>
@@ -11,10 +11,7 @@
   <arg name="perception/enable_object_recognition" default="false" description="enable object recognition"/>
   <arg name="perception/enable_object_tracking" default="true" description="enable object tracking"/>
   <arg name="perception/enable_object_prediction" default="true" description="enable object prediction"/>
-  <arg name="perception/enable_elevation_map" default="false" description="enable elevation map loader"/>
-  <arg name="perception/enable_traffic_light" default="true" description="enable traffic light"/>
   <arg name="perception/use_base_link_z" default="true" description="dummy perception uses base_link z axis coordinate if it is true"/>
-  <arg name="launch_dummy_traffic_light_publisher" default="true" description="launch dummy traffic light publisher when traffic light recognition is disabled"/>
   <arg name="dummy_traffic_light_mode" default="empty" description="fallback mode of dummy traffic light publisher when no passthrough input arrives: 'empty', 'standalone' or 'fixed'"/>
   <arg name="launch_occupancy_grid_map" default="true" description="launch laserscan based occupancy grid map"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
@@ -23,17 +20,12 @@
   <arg name="use_perception_online_evaluator" default="false" description="use perception online evaluator"/>
   <arg name="use_perception_analytics_publisher" default="true" description="use perception analytics publisher"/>
   <arg name="sensing/visible_range" default="300.0" description="visible range when using dummy perception"/>
-  <arg name="traffic_light_camera_namespaces" default="[camera6, camera7]" description="camera namespaces the traffic light fusion node subscribes to"/>
 
   <!-- External interfaces -->
   <arg name="input/vector_map" default="/map/vector_map"/>
   <arg name="input/obstacle_pointcloud" default="/perception/obstacle_segmentation/pointcloud"/>
   <arg name="input/raw_pointcloud" default="no_ground/oneshot/pointcloud" description="unused in the obstacle-pointcloud-only occupancy grid map mode"/>
-  <arg name="input/traffic_light/pointcloud" default="/sensing/lidar/top/pointcloud_raw_ex" description="pointcloud for the occlusion predictors"/>
-  <arg name="external/traffic_signals" default="/perception/traffic_light_recognition/external/traffic_signals" description="traffic signals topic from V2X"/>
-  <arg name="internal/traffic_signals" default="/perception/traffic_light_recognition/internal/traffic_signals" description="topic from traffic_light_multi_camera_fusion"/>
-  <arg name="judged/traffic_signals" default="/perception/traffic_light_recognition/judged/traffic_signals" description="topic from traffic_light_arbiter"/>
-  <arg name="output/traffic_signals" default="/perception/traffic_light_recognition/traffic_signals" description="final output topic as traffic light recognition"/>
+  <arg name="output/traffic_signals" default="/perception/traffic_light_recognition/traffic_signals" description="output topic of the dummy traffic light publisher, which fixes it to this name"/>
   <arg name="output/occupancy_grid_map" default="/perception/occupancy_grid_map/map"/>
   <arg name="output/detected_objects" default="/perception/object_recognition/detection/objects"/>
   <arg name="output/tracked_objects" default="/perception/object_recognition/tracking/objects"/>
@@ -42,7 +34,6 @@
   <!-- Parameter paths -->
   <arg name="laserscan_based_occupancy_grid_map_param_path" default="$(var perception_config_dir)/occupancy_grid_map/laserscan_based_occupancy_grid_map.param.yaml"/>
   <arg name="occupancy_grid_map_updater_param_path" default="$(var perception_config_dir)/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"/>
-  <arg name="obstacle_segmentation_ground_segmentation_elevation_map_param_path" default="$(var perception_config_dir)/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"/>
   <arg
     name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
     default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
@@ -56,19 +47,6 @@
     default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
   />
   <arg name="object_recognition_prediction_map_based_prediction_param_path" default="$(var perception_config_dir)/object_recognition/prediction/map_based_prediction.param.yaml"/>
-  <arg
-    name="traffic_light_occlusion_predictor_param_path"
-    default="$(var perception_config_dir)/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml"
-  />
-  <arg
-    name="traffic_light_multi_camera_fusion_param_path"
-    default="$(var perception_config_dir)/traffic_light_recognition/traffic_light_multi_camera_fusion/traffic_light_multi_camera_fusion.param.yaml"
-  />
-  <arg name="traffic_light_arbiter_param_path" default="$(var perception_config_dir)/traffic_light_recognition/traffic_light_arbiter/traffic_light_arbiter.param.yaml"/>
-  <arg
-    name="crosswalk_traffic_light_estimator_param_path"
-    default="$(var perception_config_dir)/traffic_light_recognition/crosswalk_traffic_light_estimator/crosswalk_traffic_light_estimator.param.yaml"
-  />
 
   <!-- Dummy perception -->
   <group if="$(var launch_dummy_perception)">
@@ -80,14 +58,10 @@
     </include>
   </group>
 
-  <!-- Dummy traffic light publisher, used when traffic light recognition is disabled -->
-  <group if="$(var launch_dummy_traffic_light_publisher)">
-    <group unless="$(var perception/enable_traffic_light)">
-      <include file="$(find-pkg-share autoware_dummy_traffic_light_publisher)/launch/dummy_traffic_light_publisher.launch.xml">
-        <arg name="mode" value="$(var dummy_traffic_light_mode)"/>
-      </include>
-    </group>
-  </group>
+  <!-- Traffic light stage: signals are relayed from the passthrough input, or generated by the configured fallback mode -->
+  <include file="$(find-pkg-share autoware_dummy_traffic_light_publisher)/launch/dummy_traffic_light_publisher.launch.xml">
+    <arg name="mode" value="$(var dummy_traffic_light_mode)"/>
+  </include>
 
   <!-- Occupancy grid map module -->
   <group if="$(var launch_occupancy_grid_map)">
@@ -153,90 +127,6 @@
       <node pkg="autoware_dummy_perception_publisher" exec="empty_objects_publisher" name="empty_objects_publisher" output="screen">
         <remap from="~/output/objects" to="$(var output/predicted_objects)"/>
       </node>
-    </group>
-
-    <!-- Elevation map -->
-    <group if="$(var perception/enable_elevation_map)">
-      <push-ros-namespace namespace="obstacle_segmentation/elevation_map"/>
-      <node pkg="autoware_elevation_map_loader" exec="elevation_map_loader" name="elevation_map_loader" output="screen">
-        <remap from="output/elevation_map" to="map"/>
-        <remap from="input/pointcloud_map" to="/map/pointcloud_map"/>
-        <remap from="input/vector_map" to="$(var input/vector_map)"/>
-        <param name="use_lane_filter" value="false"/>
-        <param name="use_inpaint" value="true"/>
-        <param name="inpaint_radius" value="1.0"/>
-        <param name="param_file_path" value="$(var obstacle_segmentation_ground_segmentation_elevation_map_param_path)"/>
-        <param name="elevation_map_directory" value="$(find-pkg-share autoware_elevation_map_loader)/data/elevation_maps"/>
-        <param name="use_elevation_map_cloud_publisher" value="false"/>
-      </node>
-    </group>
-
-    <!-- Traffic light module: detection and classification are simulated, only the merge side runs -->
-    <group if="$(var perception/enable_traffic_light)">
-      <push-ros-namespace namespace="traffic_light_recognition"/>
-
-      <!-- per-camera occlusion check; camera6 and camera7 as the representative set -->
-      <group>
-        <push-ros-namespace namespace="camera6/classification"/>
-        <include file="$(find-pkg-share autoware_traffic_light_occlusion_predictor)/launch/traffic_light_occlusion_predictor.launch.xml">
-          <arg name="input/cloud" value="$(var input/traffic_light/pointcloud)"/>
-          <arg name="input/vector_map" value="$(var input/vector_map)"/>
-          <arg name="input/camera_info" value="/sensing/camera/camera6/camera_info"/>
-          <arg name="input/rois" value="/perception/traffic_light_recognition/camera6/detection/rois"/>
-          <arg name="input/car/traffic_signals" value="car/traffic_signals"/>
-          <arg name="input/pedestrian/traffic_signals" value="pedestrian/traffic_signals"/>
-          <arg name="output/traffic_signals" value="/perception/traffic_light_recognition/camera6/classification/traffic_signals"/>
-          <arg name="param_path" value="$(var traffic_light_occlusion_predictor_param_path)"/>
-        </include>
-      </group>
-      <group>
-        <push-ros-namespace namespace="camera7/classification"/>
-        <include file="$(find-pkg-share autoware_traffic_light_occlusion_predictor)/launch/traffic_light_occlusion_predictor.launch.xml">
-          <arg name="input/cloud" value="$(var input/traffic_light/pointcloud)"/>
-          <arg name="input/vector_map" value="$(var input/vector_map)"/>
-          <arg name="input/camera_info" value="/sensing/camera/camera7/camera_info"/>
-          <arg name="input/rois" value="/perception/traffic_light_recognition/camera7/detection/rois"/>
-          <arg name="input/car/traffic_signals" value="car/traffic_signals"/>
-          <arg name="input/pedestrian/traffic_signals" value="pedestrian/traffic_signals"/>
-          <arg name="output/traffic_signals" value="/perception/traffic_light_recognition/camera7/classification/traffic_signals"/>
-          <arg name="param_path" value="$(var traffic_light_occlusion_predictor_param_path)"/>
-        </include>
-      </group>
-
-      <!-- all camera fusion -->
-      <group>
-        <include file="$(find-pkg-share autoware_traffic_light_multi_camera_fusion)/launch/traffic_light_multi_camera_fusion.launch.xml">
-          <arg name="camera_namespaces" value="$(var traffic_light_camera_namespaces)"/>
-          <arg name="input/vector_map" value="$(var input/vector_map)"/>
-          <arg name="output/traffic_signals" value="$(var internal/traffic_signals)"/>
-          <arg name="param_path" value="$(var traffic_light_multi_camera_fusion_param_path)"/>
-        </include>
-      </group>
-
-      <!-- V2X fusion -->
-      <group>
-        <include file="$(find-pkg-share autoware_traffic_light_arbiter)/launch/traffic_light_arbiter.launch.xml">
-          <arg name="perception_traffic_signals" value="$(var internal/traffic_signals)"/>
-          <arg name="external_traffic_signals" value="$(var external/traffic_signals)"/>
-          <arg name="output_traffic_signals" value="$(var judged/traffic_signals)"/>
-          <arg name="param_path" value="$(var traffic_light_arbiter_param_path)"/>
-        </include>
-      </group>
-
-      <!-- pedestrian traffic light estimation on crosswalks -->
-      <group>
-        <include file="$(find-pkg-share autoware_crosswalk_traffic_light_estimator)/launch/crosswalk_traffic_light_estimator.launch.xml">
-          <arg name="input/vector_map" value="$(var input/vector_map)"/>
-          <arg name="input/traffic_signals" value="$(var judged/traffic_signals)"/>
-          <arg name="output/traffic_signals" value="$(var output/traffic_signals)"/>
-          <arg name="param_path" value="$(var crosswalk_traffic_light_estimator_param_path)"/>
-        </include>
-      </group>
-
-      <!-- traffic light status visualizer on rviz -->
-      <group>
-        <include file="$(find-pkg-share autoware_traffic_light_visualization)/launch/traffic_light_map_visualizer.launch.xml"/>
-      </group>
     </group>
   </group>
 </launch>

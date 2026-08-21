@@ -33,10 +33,6 @@
   <arg name="perception/enable_object_recognition" default="false" description="enable object recognition"/>
   <arg name="perception/enable_object_tracking" default="true" description="enable object tracking"/>
   <arg name="perception/enable_object_prediction" default="true" description="enable object prediction"/>
-  <arg name="perception/enable_elevation_map" default="false" description="enable elevation map loader"/>
-  <arg name="perception/enable_traffic_light" default="true" description="enable traffic light"/>
-  <arg name="external/traffic_signals" default="/perception/traffic_light_recognition/external/traffic_signals" description="traffic signals topic from V2X"/>
-  <arg name="launch_dummy_traffic_light_publisher" default="true" description="launch dummy traffic light publisher when traffic light recognition is disabled"/>
   <arg name="dummy_traffic_light_mode" default="empty" description="fallback mode of dummy traffic light publisher when no passthrough input arrives: 'empty', 'standalone' or 'fixed'"/>
   <arg name="perception/use_base_link_z" default="true" description="dummy perception uses base_link z axis coordinate if it is true"/>
   <arg name="sensing/visible_range" default="300.0" description="visible range when using dummy perception"/>
@@ -68,12 +64,8 @@
       <arg name="perception/enable_object_recognition" value="$(var perception/enable_object_recognition)"/>
       <arg name="perception/enable_object_tracking" value="$(var perception/enable_object_tracking)"/>
       <arg name="perception/enable_object_prediction" value="$(var perception/enable_object_prediction)"/>
-      <arg name="perception/enable_elevation_map" value="$(var perception/enable_elevation_map)"/>
-      <arg name="perception/enable_traffic_light" value="$(var perception/enable_traffic_light)"/>
       <arg name="perception/use_base_link_z" value="$(var perception/use_base_link_z)"/>
-      <arg name="launch_dummy_traffic_light_publisher" value="$(var launch_dummy_traffic_light_publisher)"/>
       <arg name="dummy_traffic_light_mode" value="$(var dummy_traffic_light_mode)"/>
-      <arg name="external/traffic_signals" value="$(var external/traffic_signals)"/>
       <arg name="sensing/visible_range" value="$(var sensing/visible_range)"/>
       <arg name="launch_occupancy_grid_map" value="$(var launch_occupancy_grid_map)"/>
       <arg name="occupancy_grid_map_updater" value="$(var occupancy_grid_map_updater)"/>
