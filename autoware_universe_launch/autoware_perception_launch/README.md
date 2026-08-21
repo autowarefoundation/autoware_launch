@@ -30,9 +30,18 @@ Callers own the namespaces: the system component pushes `perception` and `object
 
 ## Config
 
-Each feature launcher resolves its parameter files from a `config/` tree and exposes them as `*_param_path` arguments; products with different parameters pass their own file paths. The tree is addressed through the `perception_config_pkg` argument (default: this package), so a product can relocate the whole tree by setting `perception_config_pkg` once at its entry point — the launch configuration propagates through every include. A product that overrides it must ship the same `config/` layout; launching a single page standalone without that override resolves defaults against this package.
+Parameter files are resolved from a `config/` tree addressed through the `perception_config_pkg` argument, which defaults to `autoware_perception_config`. A product can relocate the whole tree by setting `perception_config_pkg` once at its entry point — the launch configuration propagates through every include — but it must then ship the same `config/` layout. Products that differ in only a few files instead override the corresponding `*_param_path` arguments, which every feature launcher declares with a default:
 
-The `launch/` and `config/` trees are the interface downstream distributions adopt as-is; only `package.xml`, `CMakeLists.txt`, `README.md`, and changelogs stay package-local. Keep changes to these trees folder-merge compatible.
+```xml
+<include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/object_recognition_lidar.launch.xml">
+  <arg name="perception_config_pkg" value="my_perception_config"/>
+  <arg name="FOO_NODE_param_path" value="..."/>
+</include>
+```
+
+`component_perception.launch.xml`, `component_traffic_light.launch.xml` and `tier4_simulator_component.launch.xml` each declare `perception_config_pkg`, so a product switches the tree at the component it launches.
+
+The `launch/` tree is the interface downstream distributions adopt as-is; only `package.xml`, `CMakeLists.txt`, `README.md`, and changelogs stay package-local. Keep changes to this tree folder-merge compatible.
 
 ## Package Dependencies
 
