@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/b5f1243c2e320b4436327ed33cc0acbbc52d2d4e/planning/autoware_trajectory_processor/config/plugins/trajectory_mpt_optimizer.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/67b39584193cbdf2325997446f89b50d9e0d911c/planning/autoware_trajectory_processor/config/plugins/trajectory_mpt_optimizer.param.yaml
 
 /**:
   ros__parameters:
@@ -34,6 +34,9 @@
     # they represent clearance from the generated corridor bounds (simple perpendicular offsets),
     # NOT actual road boundaries or drivable area from maps.
     mpt:
+      use_acados: false
+      use_acados_circle_constraints: true
+
       option:
         steer_limit_constraint: false
         visualize_sampling_num: 1
