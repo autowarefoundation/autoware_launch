@@ -11,13 +11,17 @@
     error_rate: 0.0
     timeout: 0.0
 
+# The PCD map now reaches its consumers through the differential/partial services, so
+# /map/pointcloud_map is no longer advertised and cannot signal map-module health. The latched
+# metadata topic is published as soon as the PCD map is loaded, independently of the delivery
+# mechanism, so it is what proves the map module is alive.
 - module: map
   mode: [online, logging_simulation]
   type: launch
   args:
-    node_name_suffix: pointcloud_map
-    topic: /map/pointcloud_map
-    topic_type: sensor_msgs/msg/PointCloud2
+    node_name_suffix: pointcloud_map_metadata
+    topic: /map/pointcloud_map_metadata
+    topic_type: autoware_map_msgs/msg/PointCloudMapMetaData
     best_effort: false
     transient_local: true
     warn_rate: 0.0

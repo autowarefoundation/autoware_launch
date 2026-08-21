@@ -13,7 +13,7 @@
 
 /**:
   ros__parameters:
-    enable_whole_load: true
+    enable_whole_load: false # {OVERRIDE: whole-load is debug-only; cross-container delivery uses the differential service (see map.launch.xml service/get_differential_pcd_map remap). Map-module health is signalled by the latched /map/pointcloud_map_metadata topic, not by this raw map topic.}
     enable_downsampled_whole_load: false
     enable_partial_load: true
     enable_selected_load: false

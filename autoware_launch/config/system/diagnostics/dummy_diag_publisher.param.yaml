@@ -15,8 +15,8 @@
   ros__parameters:
     required_diags:
       # map
-      ## /autoware/map/topic_rate_check/pointcloud_map
-      "topic_state_monitor_pointcloud_map: map_topic_status": default
+      ## /autoware/map/topic_rate_check/pointcloud_map_metadata
+      "topic_state_monitor_pointcloud_map_metadata: map_topic_status": default
 
       # localization
       ## /autoware/localization/scan_matching_status
