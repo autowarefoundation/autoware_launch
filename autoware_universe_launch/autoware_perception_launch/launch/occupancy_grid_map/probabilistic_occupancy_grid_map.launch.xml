@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
   <!--default parameter follows node setting -->
   <arg name="input/obstacle_pointcloud" default="concatenated/pointcloud"/>
   <arg name="input/raw_pointcloud" default="no_ground/oneshot/pointcloud"/>
@@ -9,9 +8,9 @@
   <arg name="use_multithread" default="false"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
   <arg name="occupancy_grid_map_method" description="options: pointcloud_based_occupancy_grid_map, laserscan_based_occupancy_grid_map, multi_lidar_pointcloud_based_occupancy_grid_map"/>
-  <arg name="occupancy_grid_map_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/occupancy_grid_map/$(var occupancy_grid_map_method).param.yaml"/>
+  <arg name="occupancy_grid_map_param_path" default="$(find-pkg-share autoware_perception_config)/config/occupancy_grid_map/$(var occupancy_grid_map_method).param.yaml"/>
   <arg name="occupancy_grid_map_updater" description="options: binary_bayes_filter"/>
-  <arg name="occupancy_grid_map_updater_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"/>
+  <arg name="occupancy_grid_map_updater_param_path" default="$(find-pkg-share autoware_perception_config)/config/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"/>
   <arg name="input_obstacle_pointcloud" default="false" description="subscribe obstacle pointcloud"/>
   <arg name="input_obstacle_and_raw_pointcloud" default="true" description="subscribe both obstacle and raw pointcloud"/>
   <arg name="use_pointcloud_container" default="true"/>

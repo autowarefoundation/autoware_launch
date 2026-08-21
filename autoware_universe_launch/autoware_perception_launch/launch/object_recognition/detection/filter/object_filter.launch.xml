@@ -1,17 +1,16 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
   <!-- Pipeline junctions -->
   <arg name="objects_filter_method" default="lanelet_filter" description="options: `lanelet_filter` or `position_filter`"/>
 
   <!-- Parameters -->
   <arg
     name="object_recognition_detection_object_lanelet_filter_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/object_filter/object_lanelet_filter.param.yaml"
+    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/object_filter/object_lanelet_filter.param.yaml"
   />
   <arg
     name="object_recognition_detection_object_position_filter_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/object_filter/object_position_filter.param.yaml"
+    default="$(find-pkg-share autoware_perception_config)/config/object_recognition/detection/object_filter/object_position_filter.param.yaml"
   />
 
   <!-- external interfaces -->

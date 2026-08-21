@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
 <!-- Occlusion check for one traffic light camera: merges the car and pedestrian signals into the per-camera output, masking signals hidden from the camera. -->
 <launch>
-  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
   <arg name="camera_namespace" description="camera namespace, e.g. camera6"/>
   <arg name="input/cloud" default="/sensing/lidar/top/pointcloud_raw_ex"/>
   <arg name="input/vector_map" default="/map/vector_map"/>
   <arg
     name="occlusion_predictor_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml"
+    default="$(find-pkg-share autoware_perception_config)/config/traffic_light_recognition/traffic_light_occlusion_predictor/traffic_light_occlusion_predictor.param.yaml"
   />
 
   <!-- per-camera topics fixed by the sensing and recognition namespace conventions -->

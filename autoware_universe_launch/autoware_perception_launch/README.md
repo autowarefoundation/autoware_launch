@@ -30,9 +30,9 @@ Callers own the namespaces: the system component pushes `perception` and `object
 
 ## Config
 
-Each feature launcher resolves its parameter files from a `config/` tree and exposes them as `*_param_path` arguments; products with different parameters pass their own file paths. The tree is addressed through the `perception_config_pkg` argument (default: this package), so a product can relocate the whole tree by setting `perception_config_pkg` once at its entry point — the launch configuration propagates through every include. A product that overrides it must ship the same `config/` layout; launching a single page standalone without that override resolves defaults against this package.
+Each feature launcher resolves its parameter files from the `config/` tree of `autoware_perception_config` and exposes them as `*_param_path` arguments; products with different parameters pass their own file paths.
 
-The `launch/` and `config/` trees are the interface downstream distributions adopt as-is; only `package.xml`, `CMakeLists.txt`, `README.md`, and changelogs stay package-local. Keep changes to these trees folder-merge compatible.
+The `launch/` tree is the interface downstream distributions adopt as-is; only `package.xml`, `CMakeLists.txt`, `README.md`, and changelogs stay package-local. Keep changes to this tree folder-merge compatible.
 
 ## Package Dependencies
 

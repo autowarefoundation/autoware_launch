@@ -41,23 +41,23 @@
     <arg name="fault_injection_param_path" value="$(find-pkg-share autoware_launch)/config/simulator/fault_injection.param.yaml"/>
     <arg
       name="object_recognition_prediction_map_based_prediction_param_path"
-      value="$(find-pkg-share autoware_perception_launch)/config/object_recognition/prediction/map_based_prediction.param.yaml"
+      value="$(find-pkg-share autoware_perception_config)/config/object_recognition/prediction/map_based_prediction.param.yaml"
     />
     <arg
       name="obstacle_segmentation_ground_segmentation_elevation_map_param_path"
-      value="$(find-pkg-share autoware_perception_launch)/config/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"
+      value="$(find-pkg-share autoware_perception_config)/config/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"
     />
     <arg
       name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
-      value="$(find-pkg-share autoware_perception_launch)/config/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
+      value="$(find-pkg-share autoware_perception_config)/config/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
     />
     <arg
       name="object_recognition_tracking_multi_object_tracker_input_channels_param_path"
-      value="$(find-pkg-share autoware_perception_launch)/config/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
+      value="$(find-pkg-share autoware_perception_config)/config/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
     />
     <arg
       name="object_recognition_tracking_multi_object_tracker_node_param_path"
-      value="$(find-pkg-share autoware_perception_launch)/config/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
+      value="$(find-pkg-share autoware_perception_config)/config/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
     />
     <arg name="localization_error_monitor_param_path" value="$(find-pkg-share autoware_launch)/config/localization/localization_error_monitor.param.yaml"/>
     <arg name="ekf_localizer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/ekf_localizer.param.yaml"/>
@@ -65,9 +65,9 @@
     <arg name="pose_instability_detector_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_instability_detector.param.yaml"/>
     <arg name="pose_initializer_param_path" value="$(find-pkg-share autoware_launch)/config/localization/pose_initializer.param.yaml"/>
     <arg name="twist2accel_param_path" value="$(find-pkg-share autoware_launch)/config/localization/twist2accel.param.yaml"/>
-    <arg name="laserscan_based_occupancy_grid_map_param_path" value="$(find-pkg-share autoware_perception_launch)/config/occupancy_grid_map/laserscan_based_occupancy_grid_map.param.yaml"/>
+    <arg name="laserscan_based_occupancy_grid_map_param_path" value="$(find-pkg-share autoware_perception_config)/config/occupancy_grid_map/laserscan_based_occupancy_grid_map.param.yaml"/>
     <arg name="occupancy_grid_map_updater" value="$(var occupancy_grid_map_updater)"/>
-    <arg name="occupancy_grid_map_updater_param_path" value="$(find-pkg-share autoware_perception_launch)/config/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"/>
+    <arg name="occupancy_grid_map_updater_param_path" value="$(find-pkg-share autoware_perception_config)/config/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"/>
   </include>
   <group if="$(var scenario_simulation)">
     <include file="$(find-pkg-share autoware_dummy_infrastructure)/launch/dummy_infrastructure.launch.xml"/>
