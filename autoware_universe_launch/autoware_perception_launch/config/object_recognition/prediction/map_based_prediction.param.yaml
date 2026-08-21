@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/8dc7e0eb06d6c1d0f00d7c424b4b4f2dbca6496d/perception/autoware_map_based_prediction/config/map_based_prediction.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/fc3aebb2eb354ea96199465408383a0d95460d3a/perception/autoware_map_based_prediction/config/map_based_prediction.param.yaml
 
 /**:
   ros__parameters:

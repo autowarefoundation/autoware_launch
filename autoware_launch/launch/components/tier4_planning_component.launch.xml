@@ -132,8 +132,7 @@
 
     <!-- trajectory generator params -->
     <arg name="diffusion_planner_param_path" value="$(var neural_net_planner_config_path)/diffusion_planner.param.yaml"/>
-    <arg name="trajectory_modifier_param_path" value="$(var neural_net_planner_config_path)/trajectory_modifier.param.yaml"/>
-    <arg name="trajectory_optimizer_param_path" value="$(var neural_net_planner_config_path)/trajectory_optimizer.param.yaml"/>
+    <arg name="trajectory_processor_param_path" value="$(var neural_net_planner_config_path)/trajectory_processor.param.yaml"/>
     <arg name="jerk_filtered_smoother_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/JerkFiltered.param.yaml"/>
     <arg name="velocity_smoother_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/autoware_velocity_smoother/velocity_smoother.param.yaml"/>
     <arg name="common_smoother_param_path" value="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml"/>
