@@ -2,7 +2,7 @@
 autoware_launch/** mfc@leodrive.ai ryohsuke.mitsudome@tier4.jp yukihiro.saito@tier4.jp
 autoware_sample_designs/** max.schmeller@tier4.jp maxime.clement@tier4.jp taekjin.lee@tier4.jp
 autoware_universe_launch/autoware_perception_launch/** dai.nguyen@tier4.jp masato.saeki@tier4.jp taekjin.lee@tier4.jp yoshi.ri@tier4.jp yukihiro.saito@tier4.jp
-autoware_universe_launch/autoware_planning_config/** fumiya.watanabe@tier4.jp kosuke.takeuchi@tier4.jp kyoichi.sugahara@tier4.jp mamoru.sobue@tier4.jp satoshi.ota@tier4.jp shumpei.wakabayashi@tier4.jp takayuki.murooka@tier4.jp zulfaqar.azmi@tier4.jp
+autoware_universe_launch/autoware_planning_config/** fumiya.watanabe@tier4.jp kosuke.takeuchi@tier4.jp kyoichi.sugahara@tier4.jp mamoru.sobue@tier4.jp shumpei.wakabayashi@tier4.jp takayuki.murooka@tier4.jp zulfaqar.azmi@tier4.jp
 autoware_universe_launch/autoware_planning_launch/** fumiya.watanabe@tier4.jp kosuke.takeuchi@tier4.jp kyoichi.sugahara@tier4.jp makoto.kurihara@tier4.jp mamoru.sobue@tier4.jp shumpei.wakabayashi@tier4.jp taiki.tanaka@tier4.jp takamasa.horibe@tier4.jp takayuki.murooka@tier4.jp tomohito.ando@tier4.jp tomoya.kimura@tier4.jp zhe.shen@tier4.jp zulfaqar.azmi@tier4.jp
 autoware_universe_launch/autoware_sensing_launch/** dai.nguyen@tier4.jp david.wong@tier4.jp max.schmeller@tier4.jp
 autoware_universe_launch/autoware_sensor_driver_launch/** dai.nguyen@tier4.jp david.wong@tier4.jp max.schmeller@tier4.jp
