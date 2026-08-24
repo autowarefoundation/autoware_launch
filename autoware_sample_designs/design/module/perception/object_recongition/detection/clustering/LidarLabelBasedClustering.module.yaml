@@ -1,0 +1,18 @@
+autoware_system_design_format: 0.3.1
+
+name: LidarLabelBasedClustering.module
+
+instances:
+  - name: label_based_euclidean_cluster
+    entity: LabelBasedEuclideanCluster.node
+
+subscribers:
+  - name: segmented_pointcloud
+publishers:
+  - name: detected_objects
+
+connections:
+  - - subscriber.segmented_pointcloud
+    - label_based_euclidean_cluster.subscriber.pointcloud
+  - - label_based_euclidean_cluster.publisher.objects
+    - publisher.detected_objects

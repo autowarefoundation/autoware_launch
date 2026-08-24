@@ -3,56 +3,48 @@ autoware_system_design_format: 0.3.0
 name: ObjectRecognition.module
 
 instances:
-  - name: detection
-    entity: ObjectDetection.module
-  - name: tracking
-    entity: ObjectTracking.module
-  - name: prediction
-    entity: ObjectPredictionMapBased.module
+  # lidar ml (centerpoint)
+  - name: detection/centerpoint/lidar_centerpoint
+    entity: LidarCenterpoint.node
+  - name: tracking/multi_object_tracker
+    entity: MultiObjectTracker.node
+  - name: prediction/map_based_prediction
+    entity: MapBasedPrediction.node
 
 subscribers:
   # map
-  - name: pointcloud_map
   - name: vector_map
-  - name: service_pointcloud_map_diff
-  # localization
-  - name: kinematic_state
   # traffic lights
   - name: traffic_lights
   # lidar
   - name: pointcloud
-  - name: obstacle_pointcloud
-  - name: lidar_ml_objects
+  # obstacle segmentation
+  - name: clustering_objects
 publishers:
   - name: objects
+  - name: tracking/objects
 
 connections:
   # detection
-  - - subscriber.pointcloud_map
-    - detection.subscriber.pointcloud_map
-  - - subscriber.vector_map
-    - detection.subscriber.vector_map
-  - - client.service_pointcloud_map_diff
-    - detection.client.service_pointcloud_map_diff
-  - - subscriber.kinematic_state
-    - detection.subscriber.kinematic_state
   - - subscriber.pointcloud
-    - detection.subscriber.pointcloud
-  - - subscriber.obstacle_pointcloud
-    - detection.subscriber.obstacle_pointcloud
+    - detection/centerpoint/lidar_centerpoint.subscriber.pointcloud
 
   # tracking
-  - - detection.publisher.lidar_ml_objects
-    - tracking.subscriber.lidar_ml_objects
-  - - detection.publisher.lidar_clustering_objects
-    - tracking.subscriber.lidar_rule_detector_objects
+  - - detection/centerpoint/lidar_centerpoint.publisher.objects
+    - tracking/multi_object_tracker.subscriber.detection01/objects
+  - - subscriber.clustering_objects
+    - tracking/multi_object_tracker.subscriber.detection03/objects
 
   # prediction
-  - - tracking.publisher.objects
-    - prediction.subscriber.tracked_objects
+  - - tracking/multi_object_tracker.publisher.objects
+    - prediction/map_based_prediction.subscriber.objects
   - - subscriber.vector_map
-    - prediction.subscriber.vector_map
+    - prediction/map_based_prediction.subscriber.vector_map_topic
   - - subscriber.traffic_lights
-    - prediction.subscriber.traffic_lights
-  - - prediction.publisher.objects
+    - prediction/map_based_prediction.subscriber.traffic_signals_topic
+
+  # outputs
+  - - tracking/multi_object_tracker.publisher.objects
+    - publisher.tracking/objects
+  - - prediction/map_based_prediction.publisher.objects
     - publisher.objects

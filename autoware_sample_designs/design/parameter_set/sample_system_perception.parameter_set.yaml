@@ -13,57 +13,10 @@ parameters:
         value: lidar_centerpoint
       - name: model_path
         value: $(var data_path)/lidar_centerpoint/base
-  - node: /perception/object_recognition/detection/centerpoint/validation
-    param_files: []
-    param_values:
-      - name: using_2d_validator
-        value: true
-  - node: /perception/object_recognition/detection/pointcloud_map_filter/voxel_grid_downsample_filter
-    param_files: []
-    param_values:
-      - name: input_frame
-        value: base_link
-      - name: output_frame
-        value: base_link
-      - name: use_intra_process_comms
-        value: true
-  - node: /perception/object_recognition/detection/pointcloud_map_filter/voxel_based_compare_map_filter
-    param_files: []
-    param_values:
-      - name: input_frame
-        value: map
-      - name: output_frame
-        value: map
-      - name: use_intra_process_comms
-        value: false
-      - name: down_sample_voxel_size
-        value: 0.1
-      - name: downsize_ratio_z_axis
-        value: 0.6
-      - name: max_map_grid_size
-        value: 1000.0
-  - node: /perception/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster
-    param_files: []
+  - node: /perception/obstacle_segmentation/label_based_euclidean_cluster
+    param_files:
+      - param_path: $(find-pkg-share autoware_perception_config)/config/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml
     param_values: []
-  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/roi_cluster_fusion
-    param_files: []
-    param_values:
-      - name: rois_number
-        value: $(var number_of_cameras)
-      - name: rois_timestamp_offsets
-        value: [0.098, 0.147, 0.078, 0.062, 0.115, 0.132]
-      - name: remove_unknown
-        value: false
-      - name: pedestrian_size_validation.min_width
-        value: 0.1
-  - node: /perception/object_recognition/detection/clustering/camera_lidar_fusion/low_intensity_cluster_filter
-    param_files: []
-    param_values: []
-  - node: /perception/object_recognition/detection/clustering/detected_object_feature_remover
-    param_files: []
-    param_values:
-      - name: run_convex_hull_conversion
-        value: true
   - node: /perception/object_recognition/tracking/multi_object_tracker
     param_files: []
     param_values:
@@ -84,20 +37,19 @@ parameters:
       - name: publish_debug_markers
         value: true
 
-  - node: /perception/obstacle_segmentation/crop_box_filter
+  - node: /perception/obstacle_segmentation/ptv3
     param_files:
-      - crop_box_filter_param_file: $(var config_path)/perception/obstacle_segmentation/crop_box_filter.param.yaml
-    param_values: []
-
-  - node: /perception/obstacle_segmentation/common_ground_filter
-    param_files:
-      - ground_segmentation_param_file: $(var config_path)/perception/obstacle_segmentation/ground_segmentation.param.yaml
-      - vehicle_info_param_file: $(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml
+      - encoder_ml_package_param_path: $(var data_path)/ptv3/ml_package_ptv3_encoder.param.yaml
+      - seg3d_head_ml_package_param_path: $(var data_path)/ptv3/ml_package_ptv3_seg3d_head.param.yaml
+      - det3d_head_ml_package_param_path: $(var data_path)/ptv3/ml_package_ptv3_det3d_head.param.yaml
     param_values:
-      - name: max_z
-        value: 3.0
-      - name: min_z
-        value: -2.5
+      - name: build_only
+        value: false
+      - name: model_path
+        value: $(var data_path)/ptv3
+      - name: model_variant
+        value: ptv3
+
   - node: /perception/occupancy_grid_map/occupancy_grid_map_node
     param_files: []
     param_values:

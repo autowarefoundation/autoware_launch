@@ -105,9 +105,6 @@ node_groups:
     type: ros2_component_container_mt_ipc
     nodes:
       - /sensing/lidar/concatenate_and_time_sync
-      - /perception/obstacle_segmentation/*
-      - /perception/object_recognition/detection/pointcloud_map_filter/voxel_grid_downsample_filter
-      - /perception/object_recognition/detection/clustering/euclidean_cluster
       - /perception/occupancy_grid_map/occupancy_grid_map_node
   - name: lidar_top_container
     type: ros2_component_container_mt_ipc
@@ -177,12 +174,6 @@ connections:
     - perception.subscriber.concatenated_pointcloud
   - - map.publisher.vector_map
     - perception.subscriber.vector_map
-  - - map.publisher.pointcloud_map
-    - perception.subscriber.pointcloud_map
-  - - map.server.get_differential_pointcloud_map
-    - perception.client.service_pointcloud_map_diff
-  - - localization.publisher.kinematic_state
-    - perception.subscriber.kinematic_state
 
   - - map.publisher.vector_map
     - localization.subscriber.lanelet_map
