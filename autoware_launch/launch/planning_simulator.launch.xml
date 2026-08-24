@@ -90,28 +90,38 @@
 
   <!-- Simulator -->
   <group>
-    <let name="launch_dummy_perception" value="false" if="$(var scenario_simulation)"/>
-    <let name="launch_dummy_perception" value="true" unless="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="false" if="$(var scenario_simulation)"/>
     <let name="launch_dummy_vehicle" value="true" unless="$(var scenario_simulation)"/>
     <let name="launch_scenario_simulator_v2_adapter" value="$(var scenario_simulation)"/>
 
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_simulator_component.launch.xml">
-      <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
       <arg name="launch_dummy_vehicle" value="$(var launch_dummy_vehicle)"/>
+      <arg name="launch_fault_injection" value="$(var launch_fault_injection)"/>
       <arg name="localization_sim_mode" value="$(var localization_sim_mode)"/>
       <arg name="launch_dummy_doors" value="$(var launch_dummy_doors)"/>
       <arg name="launch_scenario_simulator_v2_adapter" value="$(var launch_scenario_simulator_v2_adapter)"/>
-      <arg name="perception/enable_detection_failure" value="$(var perception/enable_detection_failure)"/>
-      <arg name="perception/enable_object_recognition" value="$(var perception/enable_object_recognition)"/>
-      <arg name="dummy_traffic_light_mode" value="$(var dummy_traffic_light_mode)"/>
-      <arg name="perception/use_base_link_z" value="$(var perception/use_base_link_z)"/>
-      <arg name="sensing/visible_range" value="$(var sensing/visible_range)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
       <arg name="initial_engage_state" value="$(var initial_engage_state)"/>
       <arg name="vehicle_info_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <arg name="raw_vehicle_cmd_converter_param_path" value="$(find-pkg-share autoware_launch)/config/vehicle/raw_vehicle_cmd_converter/raw_vehicle_cmd_converter.param.yaml"/>
-      <arg name="data_path" value="$(var data_path)"/>
+    </include>
+  </group>
+
+  <!-- Simulated perception -->
+  <group>
+    <let name="launch_dummy_perception" value="false" if="$(var scenario_simulation)"/>
+    <let name="launch_dummy_perception" value="true" unless="$(var scenario_simulation)"/>
+    <let name="launch_occupancy_grid_map" value="false" if="$(var scenario_simulation)"/>
+    <let name="launch_occupancy_grid_map" value="true" unless="$(var scenario_simulation)"/>
+
+    <include file="$(find-pkg-share autoware_launch)/launch/planning_simulator/perception_simulation.launch.xml">
+      <arg name="launch_dummy_perception" value="$(var launch_dummy_perception)"/>
+      <arg name="perception/enable_detection_failure" value="$(var perception/enable_detection_failure)"/>
+      <arg name="perception/enable_object_recognition" value="$(var perception/enable_object_recognition)"/>
+      <arg name="perception/use_base_link_z" value="$(var perception/use_base_link_z)"/>
+      <arg name="dummy_traffic_light_mode" value="$(var dummy_traffic_light_mode)"/>
+      <arg name="sensing/visible_range" value="$(var sensing/visible_range)"/>
+      <arg name="launch_occupancy_grid_map" value="$(var launch_occupancy_grid_map)"/>
     </include>
   </group>
 </launch>
