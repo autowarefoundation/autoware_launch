@@ -9,10 +9,11 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/b7dd0110556c8aecc1ba4fdfb8b6c3b7fcc60ca0/planning/autoware_trajectory_processor/config/trajectory_modifier.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/67b39584193cbdf2325997446f89b50d9e0d911c/planning/autoware_trajectory_processor/config/trajectory_processor.param.yaml
 
 /**:
   ros__parameters:
+    # Complete plugin execution order: modifiers followed by optimizers.
     plugin_names:
       - "autoware::trajectory_processor::plugin::StopPointFixer"
       - "autoware::trajectory_processor::plugin::SurroundObstacleStop"
@@ -33,6 +34,7 @@
     use_traffic_light_stop: true
     use_velocity_modifier: true
     use_surround_obstacle_stop: false
+
     use_akima_spline_interpolation: true
     use_eb_smoother: false
     use_qp_smoother: true
