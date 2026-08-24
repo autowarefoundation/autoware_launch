@@ -6,13 +6,14 @@
       backend: "tensorrt" # "tensorrt" "ort_cpu" "ort_cuda" "ort_tensorrt"
       precision: "fp32"
       use_cuda_graph: false
-      args_path: /opt/autoware/mlmodels/diffusion_planner_for_x2/args.json
+      base_model_directory: /opt/autoware/mlmodels/diffusion_planner_for_x2
+      args_filename: args.json
       single_step_model:
-        onnx_model_path: /opt/autoware/mlmodels/diffusion_planner_for_x2/diffusion_planner.onnx
+        onnx_model_filename: diffusion_planner.onnx
       multi_step_model:
-        encoder_onnx_model_path: /opt/autoware/mlmodels/diffusion_planner_for_x2/diffusion_planner_encoder.onnx
-        decoder_onnx_model_path: /opt/autoware/mlmodels/diffusion_planner_for_x2/diffusion_planner_decoder.onnx
-        turn_indicator_onnx_model_path: /opt/autoware/mlmodels/diffusion_planner_for_x2/diffusion_planner_turn_indicator.onnx
+        encoder_onnx_model_filename: diffusion_planner_encoder.onnx
+        decoder_onnx_model_filename: diffusion_planner_decoder.onnx
+        turn_indicator_onnx_model_filename: diffusion_planner_turn_indicator.onnx
         dpm_solver_steps: 10
     planning_frequency_hz: 10.0
     ignore_neighbors: false
