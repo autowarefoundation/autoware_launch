@@ -9,10 +9,8 @@
   <arg name="input_objects_topic_name" default="/perception/object_recognition/objects"/>
   <arg name="input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
 
-  <!-- trajectory modifier -->
-  <arg name="trajectory_modifier_param_path"/>
-  <!-- trajectory optimizer -->
-  <arg name="trajectory_optimizer_param_path"/>
+  <!-- trajectory processor -->
+  <arg name="trajectory_processor_param_path"/>
   <arg name="jerk_filtered_smoother_param_path"/>
   <arg name="velocity_smoother_param_path"/>
   <arg name="common_smoother_param_path"/>
@@ -24,7 +22,7 @@
   <arg name="trajectory_velocity_optimizer_param_path"/>
   <arg name="trajectory_kinematic_feasibility_enforcer_param_path"/>
   <arg name="trajectory_mpt_optimizer_param_path"/>
-  <arg name="trajectory_optimizer_max_velocity_mps" default="11.11"/>
+  <arg name="trajectory_processor_max_velocity_mps" default="11.11"/>
 
   <!-- mission planner -->
   <arg name="mission_planner_param_path"/>
@@ -49,7 +47,7 @@
   <arg name="enable_diffusion_planner_dummy_gate" default="false"/>
   <let name="diffusion_candidate_trajectories_topic" value="/planning/generator/diffusion_planner/candidate_trajectories" unless="$(var disable_diffusion_planner_trajectory)"/>
   <let name="diffusion_candidate_trajectories_topic" value="/planning/generator/diffusion_planner/debug/candidate_trajectories" if="$(var disable_diffusion_planner_trajectory)"/>
-  <!-- when the dummy gate is enabled, the optimizer publishes to an intermediate topic and the gate forwards it to the selector input -->
+  <!-- when the dummy gate is enabled, the processor publishes to an intermediate topic and the gate forwards it to the selector input -->
   <let name="diffusion_optimizer_output_topic" value="/planning/generator/candidate_trajectories" unless="$(var enable_diffusion_planner_dummy_gate)"/>
   <let name="diffusion_optimizer_output_topic" value="/planning/generator/diffusion_planner/optimized_candidate_trajectories" if="$(var enable_diffusion_planner_dummy_gate)"/>
   <let name="minimum_rule_based_planner_output_topic" value="/planning/generator/minimum_rule_based/candidate_trajectories" unless="$(var minimum_rule_based_planner_shadow_mode)"/>
@@ -100,10 +98,9 @@
           </include>
         </group>
         <group>
-          <include file="$(find-pkg-share autoware_trajectory_modifier)/launch/trajectory_modifier.launch.xml">
-            <arg name="trajectory_modifier_param_path" value="$(var trajectory_modifier_param_path)"/>
-            <arg name="input_candidate_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
-            <arg name="output_candidate_trajectories" value="/planning/generator/diffusion_planner/modified_candidate_trajectories"/>
+          <include file="$(find-pkg-share autoware_trajectory_processor)/launch/trajectory_processor.launch.xml">
+            <arg name="trajectory_processor_param_path" value="$(var trajectory_processor_param_path)"/>
+            <arg name="input_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
             <arg name="input_odometry" value="/localization/kinematic_state"/>
             <arg name="input_acceleration" value="/localization/acceleration"/>
             <arg name="input_objects" value="$(var input_objects_topic_name)"/>
@@ -111,11 +108,7 @@
             <arg name="input_vector_map" value="/map/vector_map"/>
             <arg name="input_traffic_signals" value="/perception/traffic_light_recognition/traffic_signals"/>
             <arg name="input_route" value="/planning/mission_planning/route"/>
-          </include>
-          <include file="$(find-pkg-share autoware_trajectory_optimizer)/launch/trajectory_optimizer.launch.xml">
-            <arg name="trajectory_optimizer_param_path" value="$(var trajectory_optimizer_param_path)"/>
-            <arg name="input_trajectories" value="/planning/generator/diffusion_planner/modified_candidate_trajectories"/>
-            <arg name="output_traj" value="/planning/generator/trajectory_optimizer/debug/trajectory"/>
+            <arg name="output_trajectory" value="/planning/generator/trajectory_processor/debug/trajectory"/>
             <arg name="output_trajectories" value="$(var diffusion_optimizer_output_topic)"/>
             <arg name="jerk_filtered_smoother_param_path" value="$(var jerk_filtered_smoother_param_path)"/>
             <arg name="velocity_smoother_param_path" value="$(var velocity_smoother_param_path)"/>
@@ -128,7 +121,7 @@
             <arg name="trajectory_velocity_optimizer_param_path" value="$(var trajectory_velocity_optimizer_param_path)"/>
             <arg name="trajectory_kinematic_feasibility_enforcer_param_path" value="$(var trajectory_kinematic_feasibility_enforcer_param_path)"/>
             <arg name="trajectory_mpt_optimizer_param_path" value="$(var trajectory_mpt_optimizer_param_path)"/>
-            <arg name="max_velocity" value="$(var trajectory_optimizer_max_velocity_mps)"/>
+            <arg name="max_velocity" value="$(var trajectory_processor_max_velocity_mps)"/>
           </include>
 
           <!-- trajectory dummy gate (verification or debug only) -->
