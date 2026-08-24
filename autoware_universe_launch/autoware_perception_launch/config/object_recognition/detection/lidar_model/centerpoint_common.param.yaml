@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/405b07fbd40eee94b9108a6a58f702a7e0094e6f/perception/autoware_lidar_centerpoint/config/centerpoint_common.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/a4ede60d376fb9d71ad74010d75068dc774e76b9/perception/autoware_lidar_centerpoint/config/centerpoint_common.param.yaml
 
 /**:
   ros__parameters:
@@ -18,7 +18,6 @@
       circle_nms_dist_threshold: 0.5
       iou_nms_search_distance_2d: 10.0
       iou_nms_threshold: 0.1
-      yaw_norm_thresholds: [0.3, 0.3, 0.3, 0.3, 0.0]
     densification_params:
       world_frame_id: map
       num_past_frames: 1

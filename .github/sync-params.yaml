@@ -354,12 +354,9 @@ planning:
       - source: planning/autoware_diffusion_planner/config/diffusion_planner.param.yaml
         variants:
           - path: autoware_launch/config/planning/neural_net_planner/diffusion_planner.param.yaml
-      - source: planning/autoware_trajectory_processor/config/trajectory_modifier.param.yaml
+      - source: planning/autoware_trajectory_processor/config/trajectory_processor.param.yaml
         variants:
-          - path: autoware_launch/config/planning/neural_net_planner/trajectory_modifier.param.yaml
-      - source: planning/autoware_trajectory_processor/config/trajectory_optimizer.param.yaml
-        variants:
-          - path: autoware_launch/config/planning/neural_net_planner/trajectory_optimizer.param.yaml
+          - path: autoware_launch/config/planning/neural_net_planner/trajectory_processor.param.yaml
       # Planning/parking
       - source: planning/autoware_freespace_planner/config/freespace_planner.param.yaml
         variants:
