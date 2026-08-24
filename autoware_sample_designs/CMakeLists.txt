@@ -14,3 +14,5 @@ ament_auto_package(
 add_custom_target(${PROJECT_NAME})
 
 autoware_system_designer_build_deploy(${PROJECT_NAME} AutowareSample.system)
+autoware_system_designer_build_deploy(${PROJECT_NAME} AutowarePlanningSimulation.system)
+autoware_system_designer_build_deploy(${PROJECT_NAME} AutowareE2ESimulation.system)
