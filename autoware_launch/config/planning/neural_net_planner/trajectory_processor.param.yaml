@@ -2,6 +2,7 @@
   ros__parameters:
     # Complete plugin execution order: modifiers followed by optimizers.
     plugin_names:
+      - "autoware::mppi_optimizer::plugin::TrajectoryMppiOptimizer"
       - "autoware::trajectory_processor::plugin::StopPointFixer"
       - "autoware::trajectory_processor::plugin::SurroundObstacleStop"
       - "autoware::trajectory_processor::plugin::ObstacleStop"

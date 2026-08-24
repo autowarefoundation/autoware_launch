@@ -23,6 +23,8 @@
   <exec_depend>autoware_diagnostic_graph_utils</exec_depend>
   <exec_depend>autoware_diagnostic_status_auto_reset_manager</exec_depend>
   <exec_depend>autoware_diffusion_planner</exec_depend>
+  <exec_depend>autoware_mppi_optimizer</exec_depend>
+  <exec_depend>autoware_trajectory_processor</exec_depend>
   <exec_depend>autoware_dummy_diag_publisher</exec_depend>
   <exec_depend>autoware_dummy_infrastructure</exec_depend>
   <exec_depend>autoware_ekf_localizer</exec_depend>
