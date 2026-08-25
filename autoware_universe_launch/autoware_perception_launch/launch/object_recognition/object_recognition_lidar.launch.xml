@@ -165,9 +165,9 @@
     <let name="input/detection02/channel" value="none" unless="$(var use_short_range_detection)"/>
     <let name="input/detection02/objects" value="$(var lidar_ml_detector/output/short_range_objects)"/>
 
-    <let name="input/detection03/channel" value="lidar_clustering" if="$(var use_semantic_segmentation_ptv3)"/>
-    <let name="input/detection03/channel" value="none" unless="$(var use_semantic_segmentation_ptv3)"/>
-    <let name="input/detection03/objects" value="$(var lidar_cluster/output/objects)"/>
+    <let name="input/detection03/channel" value="lidar_clustering"/>
+    <let name="input/detection03/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/detection03/objects" value="$(var lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
 
     <include file="$(find-pkg-share autoware_multi_object_tracker)/launch/multi_object_tracker.launch.xml">
       <arg name="input/detection01/objects" value="$(var input/detection01/objects)"/>
