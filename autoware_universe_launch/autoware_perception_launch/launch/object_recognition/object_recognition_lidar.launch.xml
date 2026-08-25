@@ -27,6 +27,8 @@
   <arg name="use_pointcloud_map" default="true" description="use pointcloud map filter"/>
   <arg name="use_validator" default="false" description="use obstacle_pointcloud based validator"/>
   <arg name="objects_validation_method" default="obstacle_pointcloud" description="options: `obstacle_pointcloud` or `occupancy_grid`"/>
+  <arg name="use_object_filter" default="true" description="use object filter on the cluster objects"/>
+  <arg name="objects_filter_method" default="lanelet_filter" description="options: `lanelet_filter` or `position_filter`"/>
   <arg name="use_low_height_cropbox" default="false"/>
   <arg name="use_vector_map" default="true" description="use vector map in prediction"/>
   <arg name="tracker_publish_merged_objects" default="false"/>
@@ -73,7 +75,8 @@
   <let name="lidar_ml_detector/output/objects" value="$(var detection_ns)/$(var lidar_detection_model_type)/objects"/>
   <let name="lidar_ml_detector/output/short_range_objects" value="$(var detection_ns)/$(var lidar_short_range_detection_model_type)/objects"/>
   <let name="lidar_rule_detector/output/cluster_objects" value="$(var detection_ns)/clustering/objects_with_feature"/>
-  <let name="lidar_rule_detector/output/objects" value="$(var detection_ns)/clustering/objects"/>
+  <let name="lidar_rule_detector/output/objects" value="$(var detection_ns)/clustering/unfiltered/objects"/>
+  <let name="lidar_cluster_object_filter/output/objects" value="$(var detection_ns)/clustering/objects"/>
   <let name="lidar_cluster/output/objects" value="$(var detection_ns)/clustering/label_based_euclidean_cluster/objects"/>
   <let name="lidar_object_filter/output/objects" value="$(var detection_ns)/$(var lidar_detection_model_type)/validation/objects"/>
 
@@ -151,6 +154,15 @@
         <arg name="object_recognition_detection_obstacle_pointcloud_based_validator_param_path" value="$(var object_recognition_detection_obstacle_pointcloud_based_validator_param_path)"/>
       </include>
     </group>
+    <group unless="$(var use_semantic_segmentation_ptv3)">
+      <group if="$(var use_object_filter)">
+        <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/detection/filter/object_filter.launch.xml">
+          <arg name="objects_filter_method" value="$(var objects_filter_method)"/>
+          <arg name="input/objects" value="$(var lidar_rule_detector/output/objects)"/>
+          <arg name="output/objects" value="$(var lidar_cluster_object_filter/output/objects)"/>
+        </include>
+      </group>
+    </group>
   </group>
 
   <!-- Tracking module -->
@@ -167,7 +179,8 @@
 
     <let name="input/detection03/channel" value="lidar_clustering"/>
     <let name="input/detection03/objects" value="$(var lidar_cluster/output/objects)" if="$(var use_semantic_segmentation_ptv3)"/>
-    <let name="input/detection03/objects" value="$(var lidar_rule_detector/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/detection03/objects" value="$(var lidar_cluster_object_filter/output/objects)" unless="$(var use_semantic_segmentation_ptv3)"/>
+    <let name="input/detection03/objects" value="$(var lidar_rule_detector/output/objects)" unless="$(eval &quot;'$(var use_semantic_segmentation_ptv3)' == 'true' or '$(var use_object_filter)' == 'true'&quot;)"/>
 
     <include file="$(find-pkg-share autoware_multi_object_tracker)/launch/multi_object_tracker.launch.xml">
       <arg name="input/detection01/objects" value="$(var input/detection01/objects)"/>

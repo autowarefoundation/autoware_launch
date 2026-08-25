@@ -36,6 +36,7 @@
   <arg name="use_pointcloud_map" default="true" description="use pointcloud map in detection"/>
   <arg name="use_perception_online_evaluator" default="false" description="launch perception online evaluator"/>
   <arg name="use_perception_analytics_publisher" default="true" description="launch perception analytics publisher"/>
+  <arg name="use_object_filter" default="true" description="launch object filter to filter-out detected object"/>
   <arg name="use_object_validator" default="false" description="use obstacle_pointcloud based object validator"/>
   <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
   <arg name="use_obstacle_segmentation_time_series_filter" default="true" description="use time series filter at the ground segmentation"/>
@@ -44,6 +45,7 @@
 
   <arg name="occupancy_grid_map_method" default="pointcloud_based" description="options: pointcloud_based, laserscan_based, multi_lidar_pointcloud_based"/>
   <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
+  <arg name="detected_objects_filter_method" default="lanelet_filter" description="options: lanelet_filter, position_filter"/>
   <arg name="detected_objects_validation_method" default="obstacle_pointcloud" description="options: obstacle_pointcloud, occupancy_grid (must be used with laserscan_based_occupancy_grid_map)"/>
   <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
   <arg name="lidar_detection_model" default="centerpoint" description="If the model name is not declared, the default model in the detection composition will be used"/>
@@ -178,6 +180,8 @@
       <include file="$(find-pkg-share autoware_perception_launch)/launch/object_recognition/object_recognition_lidar.launch.xml">
         <arg name="lidar_detection_model" value="$(var lidar_detection_model)"/>
         <arg name="use_validator" value="$(var use_object_validator)"/>
+        <arg name="use_object_filter" value="$(var use_object_filter)"/>
+        <arg name="objects_filter_method" value="$(var detected_objects_filter_method)"/>
         <arg name="use_semantic_segmentation_ptv3" value="$(var use_semantic_segmentation_ptv3)"/>
         <arg name="use_vector_map" value="$(var use_vector_map)"/>
         <arg name="tracker_publish_merged_objects" value="$(var tracker_publish_merged_objects)"/>
