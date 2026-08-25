@@ -20,8 +20,6 @@
   <arg name="vehicle_model" default="sample_vehicle"/>
   <arg name="use_semantic_segmentation_ptv3" default="false" description="use semantic segmentation ptv3 for ground segmentation"/>
   <arg name="use_cuda_ground_segmentation" default="false" description="use cuda ground segmentation filter at the ground segmentation"/>
-  <arg name="use_obstacle_segmentation_single_frame_filter" default="false" description="use single frame filter at the ground segmentation"/>
-  <arg name="use_obstacle_segmentation_time_series_filter" default="true" description="use time series filter at the ground segmentation"/>
   <arg name="use_pointcloud_map" default="true" description="use pointcloud map in detection"/>
   <arg name="use_low_height_cropbox" default="false" description="use low height crop filter in clustering"/>
   <arg name="use_object_filter" default="true" description="launch object filter to filter-out detected object"/>
@@ -47,14 +45,10 @@
   <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud" description="input pointcloud topic of the perception pipeline"/>
 
   <!-- Internal interfaces -->
-  <!-- Ground removal backend; the ml and cuda backends publish the obstacle cloud directly, so the outlier filter chain belongs to the rule-based backend alone -->
+  <!-- Ground removal backend; the ml and cuda backends publish the obstacle cloud directly, the rule-based backend runs a time series outlier filter behind its ground filter -->
   <let name="ground_segmentation_backend" value="rule_based"/>
   <let name="ground_segmentation_backend" value="ml" if="$(var use_semantic_segmentation_ptv3)"/>
   <let name="ground_segmentation_backend" value="rule_based_cuda" if="$(var use_cuda_ground_segmentation)"/>
-  <let
-    name="use_obstacle_segmentation_outlier_filter"
-    value="$(eval &quot;'$(var ground_segmentation_backend)' == 'rule_based' and ('$(var use_obstacle_segmentation_single_frame_filter)' == 'true' or '$(var use_obstacle_segmentation_time_series_filter)' == 'true')&quot;)"
-  />
   <let name="occupancy_grid_map_method_full" value="$(var occupancy_grid_map_method)_occupancy_grid_map"/>
 
   <let name="downsampled_pointcloud" value="/perception/common/pointcloud"/>
@@ -62,17 +56,12 @@
   <let name="perception_pointcloud" value="$(var downsampled_pointcloud)" if="$(var downsample_perception_common_pointcloud)"/>
   <let name="obstacle_segmentation_pointcloud" value="/perception/obstacle_segmentation/pointcloud"/>
   <let name="obstacle_segmentation_single_frame_pointcloud" value="/perception/obstacle_segmentation/single_frame/pointcloud"/>
-  <let name="obstacle_segmentation_single_frame_filtered_pointcloud" value="/perception/obstacle_segmentation/single_frame/filtered/pointcloud"/>
   <let name="semantic_segmentation_pointcloud" value="/perception/segmented/pointcloud"/>
   <let name="occupancy_grid_map_output" value="/perception/occupancy_grid_map/map"/>
 
-  <!-- The outlier filters chain after the ground filter; each enabled stage's output feeds the next, and the occupancy grid map reads the chain input -->
+  <!-- The occupancy grid map reads the ground filter output before any outlier filter -->
   <let name="no_ground_pointcloud" value="$(var obstacle_segmentation_pointcloud)"/>
-  <let name="no_ground_pointcloud" value="$(var obstacle_segmentation_single_frame_pointcloud)" if="$(var use_obstacle_segmentation_outlier_filter)"/>
-  <let name="single_frame_filter_output" value="$(var obstacle_segmentation_pointcloud)"/>
-  <let name="single_frame_filter_output" value="$(var obstacle_segmentation_single_frame_filtered_pointcloud)" if="$(var use_obstacle_segmentation_time_series_filter)"/>
-  <let name="time_series_filter_input" value="$(var no_ground_pointcloud)"/>
-  <let name="time_series_filter_input" value="$(var single_frame_filter_output)" if="$(var use_obstacle_segmentation_single_frame_filter)"/>
+  <let name="no_ground_pointcloud" value="$(var obstacle_segmentation_single_frame_pointcloud)" if="$(eval &quot;'$(var ground_segmentation_backend)' == 'rule_based'&quot;)"/>
 
   <!-- Pointcloud container -->
   <group if="$(var launch_pointcloud_container)">
@@ -134,25 +123,10 @@
           <arg name="base_frame" value="base_link"/>
           <arg name="use_intra_process" value="true"/>
           <arg name="input/pointcloud" value="$(var perception_pointcloud)"/>
-          <arg name="output/pointcloud" value="$(var no_ground_pointcloud)"/>
+          <arg name="input/occupancy_grid_map" value="$(var occupancy_grid_map_output)"/>
+          <arg name="output/pointcloud" value="$(var obstacle_segmentation_pointcloud)"/>
+          <arg name="output/single_frame_pointcloud" value="$(var no_ground_pointcloud)"/>
         </include>
-        <group if="$(var use_obstacle_segmentation_single_frame_filter)">
-          <include file="$(find-pkg-share autoware_perception_launch)/launch/obstacle_segmentation/ground_segmentation_outlier_filter_single_frame.launch.xml">
-            <arg name="target_container" value="$(var pointcloud_container_name)"/>
-            <arg name="base_frame" value="base_link"/>
-            <arg name="use_intra_process" value="true"/>
-            <arg name="input/pointcloud" value="$(var no_ground_pointcloud)"/>
-            <arg name="output/pointcloud" value="$(var single_frame_filter_output)"/>
-          </include>
-        </group>
-        <group if="$(var use_obstacle_segmentation_time_series_filter)">
-          <include file="$(find-pkg-share autoware_perception_launch)/launch/obstacle_segmentation/ground_segmentation_outlier_filter_time_series.launch.xml">
-            <arg name="target_container" value="$(var pointcloud_container_name)"/>
-            <arg name="use_intra_process" value="true"/>
-            <arg name="input/pointcloud" value="$(var time_series_filter_input)"/>
-            <arg name="output/pointcloud" value="$(var obstacle_segmentation_pointcloud)"/>
-          </include>
-        </group>
       </group>
     </group>
 
