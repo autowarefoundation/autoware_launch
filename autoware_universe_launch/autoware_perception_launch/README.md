@@ -39,7 +39,7 @@ Parameter files are resolved from a `config/` tree addressed through the `percep
 </include>
 ```
 
-`component_perception.launch.xml`, `component_traffic_light.launch.xml` and `tier4_simulator_component.launch.xml` each declare `perception_config_pkg`, so a product switches the tree at the component it launches.
+`component_perception.launch.xml`, `component_traffic_light.launch.xml` and `planning_simulator/perception_simulation.launch.xml` each declare `perception_config_pkg`, so a product switches the tree at the component it launches.
 
 The `launch/` tree is the interface downstream distributions adopt as-is; only `package.xml`, `CMakeLists.txt`, `README.md`, and changelogs stay package-local. Keep changes to this tree folder-merge compatible.
 

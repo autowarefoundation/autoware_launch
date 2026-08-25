@@ -11,6 +11,7 @@
   <arg name="perception/enable_object_recognition" default="false" description="enable object recognition"/>
   <arg name="perception/enable_object_tracking" default="true" description="enable object tracking"/>
   <arg name="perception/enable_object_prediction" default="true" description="enable object prediction"/>
+  <arg name="perception/enable_elevation_map" default="false" description="enable elevation map loader"/>
   <arg name="perception/use_base_link_z" default="true" description="dummy perception uses base_link z axis coordinate if it is true"/>
   <arg name="dummy_traffic_light_mode" default="empty" description="fallback mode of dummy traffic light publisher when no passthrough input arrives: 'empty', 'standalone' or 'fixed'"/>
   <arg name="launch_occupancy_grid_map" default="true" description="launch laserscan based occupancy grid map"/>
@@ -47,6 +48,7 @@
     default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
   />
   <arg name="object_recognition_prediction_map_based_prediction_param_path" default="$(var perception_config_dir)/object_recognition/prediction/map_based_prediction.param.yaml"/>
+  <arg name="obstacle_segmentation_ground_segmentation_elevation_map_param_path" default="$(var perception_config_dir)/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"/>
 
   <!-- Dummy perception -->
   <group if="$(var launch_dummy_perception)">
@@ -126,6 +128,22 @@
       <push-ros-namespace namespace="object_recognition"/>
       <node pkg="autoware_dummy_perception_publisher" exec="empty_objects_publisher" name="empty_objects_publisher" output="screen">
         <remap from="~/output/objects" to="$(var output/predicted_objects)"/>
+      </node>
+    </group>
+
+    <!-- Elevation map -->
+    <group if="$(var perception/enable_elevation_map)">
+      <push-ros-namespace namespace="obstacle_segmentation/elevation_map"/>
+      <node pkg="autoware_elevation_map_loader" exec="elevation_map_loader_node" name="elevation_map_loader" output="screen">
+        <remap from="output/elevation_map" to="map"/>
+        <remap from="input/pointcloud_map" to="/map/pointcloud_map"/>
+        <remap from="input/vector_map" to="/map/vector_map"/>
+        <param name="use_lane_filter" value="false"/>
+        <param name="use_inpaint" value="true"/>
+        <param name="inpaint_radius" value="1.0"/>
+        <param name="param_file_path" value="$(var obstacle_segmentation_ground_segmentation_elevation_map_param_path)"/>
+        <param name="elevation_map_directory" value="$(find-pkg-share autoware_elevation_map_loader)/data/elevation_maps"/>
+        <param name="use_elevation_map_cloud_publisher" value="false"/>
       </node>
     </group>
   </group>
