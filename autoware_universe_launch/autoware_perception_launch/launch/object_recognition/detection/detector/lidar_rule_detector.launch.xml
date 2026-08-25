@@ -10,6 +10,7 @@
 
   <arg name="voxel_grid_based_euclidean_param_path"/>
   <arg name="use_semantic_segmentation_ptv3"/>
+  <arg name="use_low_height_cropbox" default="false"/>
 
   <!-- Internal interfaces -->
   <let name="euclidean_cluster/input/pointcloud" value="$(var input/pointcloud_map/pointcloud)"/>
