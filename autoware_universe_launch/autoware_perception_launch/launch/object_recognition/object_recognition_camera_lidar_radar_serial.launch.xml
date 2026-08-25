@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
   <!-- cspell: ignore semseg -->
   <!-- Camera-lidar-radar serial object recognition: detection, tracking, and prediction under the caller's namespace; detectors merge in the detection stage, the tracker consumes the single merged channel, and radar tracked objects join at the tracker merger -->
+
+  <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
+  <let name="perception_config_dir" value="$(find-pkg-share $(var perception_config_pkg))/config"/>
 
   <!-- Current namespace -->
   <let name="ns" value="/perception/object_recognition"/>
@@ -25,8 +27,8 @@
   <arg name="camera_2d_detector/model_path" default="$(var data_path)/tensorrt_yolox/yolox-sPlus-opt-pseudoV2-T4-960x960-T4-seg16cls.onnx"/>
   <arg name="camera_2d_detector/label_path" default="$(var data_path)/tensorrt_yolox/label.txt"/>
   <arg name="camera_2d_detector/color_map_path" default="$(var data_path)/tensorrt_yolox/semseg_color_map.csv"/>
-  <arg name="camera_2d_detector/roi_remap_path" default="$(find-pkg-share $(var perception_config_pkg))/config/traffic_light_recognition/tensorrt_yolox/roi_label_remap.csv"/>
-  <arg name="camera_2d_detector/roi_to_semseg_remap_path" default="$(find-pkg-share $(var perception_config_pkg))/config/traffic_light_recognition/tensorrt_yolox/roi_to_semseg_label_remap.csv"/>
+  <arg name="camera_2d_detector/roi_remap_path" default="$(var perception_config_dir)/traffic_light_recognition/tensorrt_yolox/roi_label_remap.csv"/>
+  <arg name="camera_2d_detector/roi_to_semseg_remap_path" default="$(var perception_config_dir)/traffic_light_recognition/tensorrt_yolox/roi_to_semseg_label_remap.csv"/>
 
   <!-- Pipeline junctions -->
   <arg name="use_object_filter" default="true" description="use object filter"/>
@@ -87,85 +89,61 @@
   <arg name="output/predicted_objects" default="/perception/object_recognition/objects"/>
 
   <!-- Parameter paths -->
-  <arg name="sync_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml"/>
-  <arg name="roi_cluster_fusion_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/image_projection_based_fusion/roi_cluster_fusion.param.yaml"/>
-  <arg
-    name="pointpainting_fusion_common_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/image_projection_based_fusion/pointpainting_common.param.yaml"
-  />
-  <arg
-    name="irregular_object_crop_box_filter_node_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/crop_box_filter.param.yaml"
-  />
-  <arg
-    name="irregular_object_scan_ground_filter_node_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/scan_ground_filter.param.yaml"
-  />
-  <arg
-    name="irregular_object_roi_pointcloud_fusion_node_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/roi_pointcloud_fusion.param.yaml"
-  />
-  <arg
-    name="irregular_object_fusion_camera_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/irregular_object_detection/fusion_cameras.param.yaml"
-  />
-  <arg name="lidar_model_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/lidar_model" description="directory of lidar model param files"/>
-  <arg name="centerpoint_common_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/lidar_model/centerpoint_common.param.yaml"/>
-  <arg
-    name="voxel_grid_based_euclidean_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml"
-  />
-  <arg name="detection_by_tracker_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml"/>
+  <arg name="sync_param_path" default="$(var perception_config_dir)/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml"/>
+  <arg name="roi_cluster_fusion_param_path" default="$(var perception_config_dir)/object_recognition/detection/image_projection_based_fusion/roi_cluster_fusion.param.yaml"/>
+  <arg name="pointpainting_fusion_common_param_path" default="$(var perception_config_dir)/object_recognition/detection/image_projection_based_fusion/pointpainting_common.param.yaml"/>
+  <arg name="irregular_object_crop_box_filter_node_param_path" default="$(var perception_config_dir)/object_recognition/detection/irregular_object_detection/crop_box_filter.param.yaml"/>
+  <arg name="irregular_object_scan_ground_filter_node_param_path" default="$(var perception_config_dir)/object_recognition/detection/irregular_object_detection/scan_ground_filter.param.yaml"/>
+  <arg name="irregular_object_roi_pointcloud_fusion_node_param_path" default="$(var perception_config_dir)/object_recognition/detection/irregular_object_detection/roi_pointcloud_fusion.param.yaml"/>
+  <arg name="irregular_object_fusion_camera_param_path" default="$(var perception_config_dir)/object_recognition/detection/irregular_object_detection/fusion_cameras.param.yaml"/>
+  <arg name="lidar_model_param_path" default="$(var perception_config_dir)/object_recognition/detection/lidar_model" description="directory of lidar model param files"/>
+  <arg name="centerpoint_common_param_path" default="$(var perception_config_dir)/object_recognition/detection/lidar_model/centerpoint_common.param.yaml"/>
+  <arg name="voxel_grid_based_euclidean_param_path" default="$(var perception_config_dir)/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml"/>
+  <arg name="detection_by_tracker_param_path" default="$(var perception_config_dir)/object_recognition/detection/detection_by_tracker/detection_by_tracker.param.yaml"/>
   <arg
     name="object_recognition_detection_obstacle_pointcloud_based_validator_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/detected_object_validation/obstacle_pointcloud_based_validator.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/detection/detected_object_validation/obstacle_pointcloud_based_validator.param.yaml"
   />
   <arg
     name="object_recognition_detection_object_merger_data_association_matrix_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/object_merger/data_association_matrix.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/detection/object_merger/data_association_matrix.param.yaml"
   />
-  <arg
-    name="object_recognition_detection_object_merger_distance_threshold_list_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/object_merger/overlapped_judge.param.yaml"
-  />
+  <arg name="object_recognition_detection_object_merger_distance_threshold_list_path" default="$(var perception_config_dir)/object_recognition/detection/object_merger/overlapped_judge.param.yaml"/>
   <arg
     name="ml_camera_lidar_object_association_merger_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/object_merger/ml_camera_lidar_object_association_merger.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/detection/object_merger/ml_camera_lidar_object_association_merger.param.yaml"
   />
-  <arg
-    name="roi_detected_object_fusion_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml"
-  />
+  <arg name="roi_detected_object_fusion_param_path" default="$(var perception_config_dir)/object_recognition/detection/image_projection_based_fusion/roi_detected_object_fusion.param.yaml"/>
   <arg
     name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
   />
   <arg
     name="object_recognition_tracking_multi_object_tracker_input_channels_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
   />
   <arg
     name="object_recognition_tracking_multi_object_tracker_node_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
   />
   <arg
     name="object_recognition_tracking_radar_tracked_object_sorter_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/radar_object_tracker/tracked_object_sorter.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/tracking/radar_object_tracker/tracked_object_sorter.param.yaml"
     description="param file for radar distance and velocity filters"
   />
   <arg
     name="object_recognition_tracking_radar_tracked_object_lanelet_filter_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/radar_object_tracker/tracked_object_lanelet_filter.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/tracking/radar_object_tracker/tracked_object_lanelet_filter.param.yaml"
     description="param file for radar lanelet filter"
   />
   <arg
     name="object_recognition_tracking_object_merger_data_association_matrix_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/tracking_object_merger/data_association_matrix.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/tracking/tracking_object_merger/data_association_matrix.param.yaml"
     description="association param file for radar and lidar object merger"
   />
   <arg
     name="object_recognition_tracking_object_merger_node_param_path"
-    default="$(find-pkg-share $(var perception_config_pkg))/config/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml"
+    default="$(var perception_config_dir)/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml"
     description="node param file for radar and lidar object merger"
   />
 
@@ -330,7 +308,6 @@
         <arg name="input/pointcloud" value="$(var input/obstacle_segmentation/pointcloud)"/>
         <arg name="output/pointcloud" value="$(var pointcloud_filter/output/pointcloud)"/>
         <arg name="use_intra_process" value="true"/>
-        <arg name="perception_config_pkg" value="$(var perception_config_pkg)"/>
       </include>
     </group>
     <group unless="$(var use_pointcloud_map)">

@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
   <!-- Single-frame outlier removal: elevation map comparison prunes ground residue, then voxel filters drop sparse noise -->
+
+  <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
+  <let name="perception_config_dir" value="$(find-pkg-share $(var perception_config_pkg))/config"/>
+
   <arg name="target_container" description="container to load the filters into"/>
   <arg name="base_frame" default="base_link"/>
   <arg name="use_intra_process" default="true"/>
@@ -9,7 +12,7 @@
   <arg name="input/pointcloud"/>
   <arg name="output/pointcloud"/>
 
-  <arg name="elevation_map_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"/>
+  <arg name="elevation_map_param_path" default="$(var perception_config_dir)/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"/>
 
   <group>
     <push-ros-namespace namespace="elevation_map"/>
