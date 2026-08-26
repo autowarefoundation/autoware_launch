@@ -13,10 +13,6 @@ parameters:
         value: lidar_centerpoint
       - name: model_path
         value: $(var data_path)/lidar_centerpoint/base
-  - node: /perception/object_recognition/detection/clustering/label_based_euclidean_cluster
-    param_files:
-      - param_path: $(find-pkg-share autoware_perception_config)/config/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml
-    param_values: []
   - node: /perception/object_recognition/tracking/multi_object_tracker
     param_files: []
     param_values:
@@ -52,6 +48,11 @@ parameters:
       # only the segmentation head feeds the pipeline
       - name: use_det3d_head
         value: false
+
+  - node: /perception/obstacle_segmentation/label_based_euclidean_cluster
+    param_files:
+      - param_path: $(find-pkg-share autoware_perception_config)/config/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml
+    param_values: []
 
   - node: /perception/occupancy_grid_map/occupancy_grid_map_node
     param_files: []
