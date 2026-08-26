@@ -13,7 +13,7 @@ parameters:
         value: lidar_centerpoint
       - name: model_path
         value: $(var data_path)/lidar_centerpoint/base
-  - node: /perception/obstacle_segmentation/label_based_euclidean_cluster
+  - node: /perception/object_recognition/detection/clustering/label_based_euclidean_cluster
     param_files:
       - param_path: $(find-pkg-share autoware_perception_config)/config/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml
     param_values: []

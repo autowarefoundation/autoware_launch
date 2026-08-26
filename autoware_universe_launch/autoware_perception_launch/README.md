@@ -15,6 +15,11 @@ launch/
 ├── obstacle_segmentation/
 ├── occupancy_grid_map/
 └── traffic_light_recognition/
+design/module/                     # Autoware System Designer modules; same subtree as launch/
+├── object_recognition/
+├── obstacle_segmentation/
+├── occupancy_grid_map/
+└── traffic_light_recognition/
 ```
 
 ## Launch files

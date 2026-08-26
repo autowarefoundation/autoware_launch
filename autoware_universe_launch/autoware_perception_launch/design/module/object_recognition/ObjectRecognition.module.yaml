@@ -6,6 +6,9 @@ instances:
   # lidar ml (centerpoint)
   - name: detection/centerpoint/lidar_centerpoint
     entity: LidarCenterpoint.node
+  # lidar clustering on the semantically segmented cloud
+  - name: detection/clustering
+    entity: LidarLabelBasedClustering.module
   - name: tracking/multi_object_tracker
     entity: MultiObjectTracker.node
   - name: prediction/map_based_prediction
@@ -19,7 +22,7 @@ subscribers:
   # lidar
   - name: pointcloud
   # obstacle segmentation
-  - name: clustering_objects
+  - name: segmented_pointcloud
 publishers:
   - name: objects
   - name: tracking/objects
@@ -28,11 +31,13 @@ connections:
   # detection
   - - subscriber.pointcloud
     - detection/centerpoint/lidar_centerpoint.subscriber.pointcloud
+  - - subscriber.segmented_pointcloud
+    - detection/clustering.subscriber.segmented_pointcloud
 
   # tracking
   - - detection/centerpoint/lidar_centerpoint.publisher.objects
     - tracking/multi_object_tracker.subscriber.detection01/objects
-  - - subscriber.clustering_objects
+  - - detection/clustering.publisher.detected_objects
     - tracking/multi_object_tracker.subscriber.detection03/objects
 
   # prediction
