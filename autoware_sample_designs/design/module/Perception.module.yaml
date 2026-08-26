@@ -39,8 +39,8 @@ connections:
   # object recognition
   - - subscriber.concatenated_pointcloud
     - object_recognition.subscriber.pointcloud
-  - - obstacle_segmentation.publisher.segmented_pointcloud
-    - object_recognition.subscriber.segmented_pointcloud
+  - - obstacle_segmentation.publisher.objects
+    - object_recognition.subscriber.clustering/objects
   - - subscriber.vector_map
     - object_recognition.subscriber.vector_map
   - - traffic_light_recognition.publisher.traffic_signals
