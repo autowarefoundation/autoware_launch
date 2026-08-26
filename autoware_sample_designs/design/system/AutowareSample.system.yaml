@@ -406,6 +406,12 @@ E2ESimulation:
       # control
       - - awsim.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
+      - - awsim.publisher.vehicle/status/steering_status
+        - control.subscriber.steering_status
+      - - awsim.publisher.vehicle/status/gear_status
+        - control.subscriber.gear_status
+      - - awsim.publisher.vehicle/status/control_mode
+        - control.subscriber.control_mode_report
       - - control.publisher.command/control_cmd
         - awsim.subscriber.control/command/control_cmd
       - - control.publisher.command/gear_cmd
