@@ -45,7 +45,7 @@
   <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud" description="input pointcloud topic of the perception pipeline"/>
 
   <!-- Internal interfaces -->
-  <!-- Ground removal backend; the ml and cuda backends publish the obstacle cloud directly, the rule-based backend runs a time series outlier filter behind its ground filter -->
+  <!-- Ground removal backend; every backend publishes the obstacle cloud directly -->
   <let name="ground_segmentation_backend" value="rule_based"/>
   <let name="ground_segmentation_backend" value="ml" if="$(var use_semantic_segmentation_ptv3)"/>
   <let name="ground_segmentation_backend" value="rule_based_cuda" if="$(var use_cuda_ground_segmentation)"/>
@@ -55,13 +55,10 @@
   <let name="perception_pointcloud" value="$(var input/pointcloud)" unless="$(var downsample_perception_common_pointcloud)"/>
   <let name="perception_pointcloud" value="$(var downsampled_pointcloud)" if="$(var downsample_perception_common_pointcloud)"/>
   <let name="obstacle_segmentation_pointcloud" value="/perception/obstacle_segmentation/pointcloud"/>
-  <let name="obstacle_segmentation_single_frame_pointcloud" value="/perception/obstacle_segmentation/single_frame/pointcloud"/>
   <let name="semantic_segmentation_pointcloud" value="/perception/segmented/pointcloud"/>
   <let name="occupancy_grid_map_output" value="/perception/occupancy_grid_map/map"/>
 
-  <!-- The occupancy grid map reads the ground filter output before any outlier filter -->
   <let name="no_ground_pointcloud" value="$(var obstacle_segmentation_pointcloud)"/>
-  <let name="no_ground_pointcloud" value="$(var obstacle_segmentation_single_frame_pointcloud)" if="$(eval &quot;'$(var ground_segmentation_backend)' == 'rule_based'&quot;)"/>
 
   <!-- Pointcloud container -->
   <group if="$(var launch_pointcloud_container)">
@@ -123,9 +120,7 @@
           <arg name="base_frame" value="base_link"/>
           <arg name="use_intra_process" value="true"/>
           <arg name="input/pointcloud" value="$(var perception_pointcloud)"/>
-          <arg name="input/occupancy_grid_map" value="$(var occupancy_grid_map_output)"/>
           <arg name="output/pointcloud" value="$(var obstacle_segmentation_pointcloud)"/>
-          <arg name="output/single_frame_pointcloud" value="$(var no_ground_pointcloud)"/>
         </include>
       </group>
     </group>

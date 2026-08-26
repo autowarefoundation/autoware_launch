@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- Rule-based ground removal: vehicle-height crop box -> scan ground filter -> time-series outlier filter, where the occupancy grid map votes down transient points -->
+  <!-- Rule-based ground removal: vehicle-height crop box -> scan ground filter -->
 
   <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
   <let name="perception_config_dir" value="$(find-pkg-share $(var perception_config_pkg))/config"/>
@@ -10,19 +10,12 @@
   <arg name="use_intra_process" default="true"/>
 
   <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
-  <arg name="input/occupancy_grid_map" default="/perception/occupancy_grid_map/map"/>
   <arg name="output/pointcloud" default="/perception/obstacle_segmentation/pointcloud"/>
-  <arg
-    name="output/single_frame_pointcloud"
-    default="/perception/obstacle_segmentation/single_frame/pointcloud"
-    description="ground filter output before the outlier filter; the occupancy grid map reads it"
-  />
 
   <arg name="crop_box_margin_max_z" default="2.5" description="crop box ceiling margin above vehicle_height"/>
   <arg name="crop_box_margin_min_z" default="-2.5" description="crop box floor margin below the ground"/>
   <arg name="crop_box_filter_node_param_path" default="$(var perception_config_dir)/obstacle_segmentation/ground_segmentation/crop_box_filter.param.yaml"/>
   <arg name="scan_ground_filter_node_param_path" default="$(var perception_config_dir)/obstacle_segmentation/ground_segmentation/scan_ground_filter.param.yaml"/>
-  <arg name="occupancy_grid_map_outlier_filter_node_param_path" default="$(find-pkg-share autoware_occupancy_grid_map_outlier_filter)/config/occupancy_grid_map_outlier_filter.param.yaml"/>
 
   <load_composable_node target="$(var target_container)">
     <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter">
@@ -38,21 +31,10 @@
     </composable_node>
     <composable_node pkg="autoware_ground_segmentation" plugin="autoware::ground_segmentation::ScanGroundFilterComponent" name="common_ground_filter">
       <remap from="input" to="range_cropped/pointcloud"/>
-      <remap from="output" to="$(var output/single_frame_pointcloud)"/>
+      <remap from="output" to="$(var output/pointcloud)"/>
       <param from="$(var scan_ground_filter_node_param_path)" allow_substs="true"/>
       <param name="input_frame" value="base_link"/>
       <param name="output_frame" value="base_link"/>
-      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-    </composable_node>
-    <composable_node
-      pkg="autoware_occupancy_grid_map_outlier_filter"
-      plugin="autoware::occupancy_grid_map_outlier_filter::OccupancyGridMapOutlierFilterComponent"
-      name="occupancy_grid_based_outlier_filter"
-    >
-      <remap from="~/input/occupancy_grid_map" to="$(var input/occupancy_grid_map)"/>
-      <remap from="~/input/pointcloud" to="$(var output/single_frame_pointcloud)"/>
-      <remap from="~/output/pointcloud" to="$(var output/pointcloud)"/>
-      <param from="$(var occupancy_grid_map_outlier_filter_node_param_path)"/>
       <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
     </composable_node>
   </load_composable_node>
