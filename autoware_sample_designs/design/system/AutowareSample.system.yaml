@@ -484,6 +484,9 @@ PlanningSimulation:
       - name: simulator
         entity: SimplePlanningSimulator.node
         compute_unit: main_ecu
+      - name: dummy_traffic_light_publisher
+        entity: DummyTrafficLightPublisher.node
+        compute_unit: main_ecu
       - name: vehicle
         entity: PlanningSimVehicle.module
         compute_unit: main_ecu
@@ -505,6 +508,10 @@ PlanningSimulation:
         - planning.subscriber.occupancy_grid_map
       - - map.publisher.vector_map
         - perception.subscriber.vector_map
+      - - dummy_traffic_light_publisher.publisher.traffic_signals
+        - perception.subscriber.traffic_lights
+      - - map.publisher.vector_map
+        - dummy_traffic_light_publisher.subscriber.vector_map
       - - localization.publisher.localization/initialization_state
         - api.subscriber.localization/initialization_state
       # SIMULATOR
@@ -552,7 +559,7 @@ PlanningSimulation:
         - planning.subscriber.odometry
       - - simulator.publisher.sensing/imu/imu_data
         - control.subscriber.imu
-      - - simulator.publisher.perception/traffic_light_recognition/traffic_signals
+      - - dummy_traffic_light_publisher.publisher.traffic_signals
         - planning.subscriber.traffic_signals
 
       - - simulator.publisher.localization/acceleration
@@ -579,7 +586,8 @@ PlanningSimulation:
         topic: /localization/acceleration
       - source: simulator.publisher.sensing/imu/imu_data
         topic: /sensing/imu/imu_data
-      - source: simulator.publisher.perception/traffic_light_recognition/traffic_signals
+      # dummy_traffic_light_publisher
+      - source: dummy_traffic_light_publisher.publisher.traffic_signals
         topic: /perception/traffic_light_recognition/traffic_signals
       - source: simulator.publisher.vehicle/status/velocity_status
         topic: /vehicle/status/velocity_status
