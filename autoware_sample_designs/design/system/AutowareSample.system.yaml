@@ -366,6 +366,20 @@ E2ESimulation:
         entity: SampleSensorKitAWSIM.module
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
+      - name: perception
+        entity: PerceptionE2ESimulation.module
+        compute_unit: main_ecu
+        parameter_set: e2e_simulation_perception.parameter_set
+    node_groups:
+      - name: pointcloud_container
+        type: ros2_component_container_mt_ipc
+        nodes:
+          - /sensing/lidar/concatenate_and_time_sync
+          - /perception/obstacle_segmentation/crop_box_filter
+          - /perception/obstacle_segmentation/common_ground_filter
+          - /perception/obstacle_segmentation/pointcloud_map_filter/voxel_grid_downsample_filter
+          - /perception/obstacle_segmentation/clustering/*
+          - /perception/occupancy_grid_map/occupancy_grid_map_node
     connections:
       # SENSING
       - - awsim.publisher.sensing/lidar/top/pointcloud_raw_ex
@@ -374,6 +388,13 @@ E2ESimulation:
         - sensing.subscriber.imu/tamagawa/imu_raw
       - - awsim.publisher.vehicle/status/velocity_status
         - sensing.subscriber.velocity_status
+      # PERCEPTION
+      - - map.publisher.pointcloud_map
+        - perception.subscriber.pointcloud_map
+      - - map.server.get_differential_pointcloud_map
+        - perception.client.service_pointcloud_map_diff
+      - - localization.publisher.kinematic_state
+        - perception.subscriber.kinematic_state
       # Traffic light
       - - awsim.publisher.sensing/camera/traffic_light/image_raw
         - perception.subscriber.traffic_camera/image

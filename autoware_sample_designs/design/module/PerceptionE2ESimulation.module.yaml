@@ -1,0 +1,98 @@
+autoware_system_design_format: 0.3.1
+
+name: PerceptionE2ESimulation.module
+
+instances:
+  - name: obstacle_segmentation
+    entity: LidarGroundSegmentationRuleBased.module
+  # drop the non-ground points that match the pointcloud map
+  - name: obstacle_segmentation/pointcloud_map_filter
+    entity: PointcloudMapFilter.module
+  # cluster on the map-filtered non-ground cloud
+  - name: obstacle_segmentation/clustering
+    entity: LidarClustering.module
+  - name: object_recognition
+    entity: ObjectRecognition.module
+  - name: occupancy_grid_map
+    entity: OccupancyGridMapPointcloudBased.module
+  - name: traffic_light_recognition
+    entity: TrafficLightRecognition.module
+
+subscribers:
+  # lidar
+  - name: concatenated_pointcloud
+  # map
+  - name: vector_map
+  - name: pointcloud_map
+  - name: service_pointcloud_map_diff
+  # localization
+  - name: kinematic_state
+  # traffic light
+  - name: route
+  - name: traffic_camera/image
+  - name: traffic_camera/camera_info
+  - name: external_traffic_signals
+
+publishers:
+  - name: object_recognition/objects
+  - name: object_recognition/tracking/objects
+  - name: obstacle_segmentation/pointcloud
+  - name: occupancy_grid_map/map
+  - name: traffic_light_recognition/traffic_signals
+
+connections:
+  # obstacle segmentation
+  - - subscriber.concatenated_pointcloud
+    - obstacle_segmentation.subscriber.concatenated_pointcloud
+  - - obstacle_segmentation.publisher.pointcloud
+    - obstacle_segmentation/pointcloud_map_filter.subscriber.pointcloud
+  - - subscriber.pointcloud_map
+    - obstacle_segmentation/pointcloud_map_filter.subscriber.pointcloud_map
+  - - client.service_pointcloud_map_diff
+    - obstacle_segmentation/pointcloud_map_filter.client.service_pointcloud_map_diff
+  - - subscriber.kinematic_state
+    - obstacle_segmentation/pointcloud_map_filter.subscriber.kinematic_state
+  - - obstacle_segmentation/pointcloud_map_filter.publisher.filtered_pointcloud
+    - obstacle_segmentation/clustering.subscriber.pointcloud
+
+  # object recognition
+  - - subscriber.concatenated_pointcloud
+    - object_recognition.subscriber.pointcloud
+  - - obstacle_segmentation/clustering.publisher.detected_objects
+    - object_recognition.subscriber.clustering/objects
+  - - subscriber.vector_map
+    - object_recognition.subscriber.vector_map
+  - - traffic_light_recognition.publisher.traffic_signals
+    - object_recognition.subscriber.traffic_lights
+
+  # occupancy grid map
+  - - subscriber.concatenated_pointcloud
+    - occupancy_grid_map.subscriber.raw_pointcloud
+  - - obstacle_segmentation.publisher.pointcloud
+    - occupancy_grid_map.subscriber.obstacle_pointcloud
+
+  # traffic light recognition
+  - - subscriber.vector_map
+    - traffic_light_recognition.subscriber.vector_map
+  - - subscriber.route
+    - traffic_light_recognition.subscriber.route
+  - - subscriber.traffic_camera/image
+    - traffic_light_recognition.subscriber.camera1/image
+  - - subscriber.traffic_camera/camera_info
+    - traffic_light_recognition.subscriber.camera1/camera_info
+  - - subscriber.concatenated_pointcloud
+    - traffic_light_recognition.subscriber.pointcloud
+  - - subscriber.external_traffic_signals
+    - traffic_light_recognition.subscriber.external_traffic_signals
+
+  # outputs
+  - - obstacle_segmentation.publisher.pointcloud
+    - publisher.obstacle_segmentation/pointcloud
+  - - object_recognition.publisher.objects
+    - publisher.object_recognition/objects
+  - - object_recognition.publisher.tracking/objects
+    - publisher.object_recognition/tracking/objects
+  - - occupancy_grid_map.publisher.map
+    - publisher.occupancy_grid_map/map
+  - - traffic_light_recognition.publisher.traffic_signals
+    - publisher.traffic_light_recognition/traffic_signals
