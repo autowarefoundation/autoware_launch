@@ -49,6 +49,9 @@ parameters:
         value: $(var data_path)/ptv3
       - name: model_variant
         value: ptv3
+      # only the segmentation head feeds the pipeline
+      - name: use_det3d_head
+        value: false
 
   - node: /perception/occupancy_grid_map/occupancy_grid_map_node
     param_files: []
