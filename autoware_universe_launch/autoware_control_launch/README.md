@@ -5,6 +5,9 @@ Shared control launch library. The system component launcher lives in the produc
 ```bash
 launch/
 └── control.launch.xml              # control entry: command gate, trajectory follower, control checkers and evaluator
+design/module/                      # Autoware System Designer modules
+├── Control.module.yaml             # control component: same node set as control.launch.xml
+└── TrajectoryFollower.module.yaml  # controller + lane departure checker
 ```
 
 ## Structure
