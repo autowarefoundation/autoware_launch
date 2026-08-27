@@ -236,19 +236,6 @@
   mode: [online, logging_simulation, planning_simulation]
   type: autonomous
   args:
-    node_name_suffix: diffusion_planner_trajectory_optimizer_debug_trajectory
-    topic: /planning/generator/trajectory_optimizer/debug/trajectory
-    topic_type: autoware_planning_msgs/msg/Trajectory
-    best_effort: false
-    transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
-    timeout: 1.0
-
-- module: planning
-  mode: [online, logging_simulation, planning_simulation]
-  type: autonomous
-  args:
     node_name_suffix: minimum_rule_based_planner_debug_trajectory
     topic: /planning/trajectory_generator/minimum_rule_based_planner/minimum_rule_based_planner_node/debug/trajectory
     topic_type: autoware_planning_msgs/msg/Trajectory
@@ -262,8 +249,8 @@
   mode: [online, logging_simulation, planning_simulation]
   type: autonomous
   args:
-    node_name_suffix: diffusion_planner_modified_candidate_trajectories
-    topic: /planning/generator/diffusion_planner/modified_candidate_trajectories
+    node_name_suffix: diffusion_planner_processed_candidate_trajectories
+    topic: /planning/generator/candidate_trajectories
     topic_type: autoware_internal_planning_msgs/msg/CandidateTrajectories
     best_effort: false
     transient_local: false

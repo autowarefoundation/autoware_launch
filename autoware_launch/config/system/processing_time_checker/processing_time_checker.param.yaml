@@ -58,8 +58,7 @@
 
       # E2E metrics
       - /planning/trajectory_generator/neural_network_based_planner/diffusion_planner_node/debug/processing_time_ms
-      - /planning/trajectory_generator/trajectory_modifier/debug/processing_time_ms
-      - /planning/trajectory_generator/trajectory_optimizer_node/debug/processing_time_ms
+      - /planning/trajectory_generator/trajectory_processor/debug/processing_time_ms
       - /planning/trajectory_generator/minimum_rule_based_planner/minimum_rule_based_planner_node/debug/processing_time_ms
       - /planning/trajectory_selector/trajectory_selector_node/debug/validator/collision_check_filter/processing_time_ms
       - /planning/trajectory_selector/trajectory_selector_node/debug/validator/trajectory_feasibility_filter/processing_time_ms

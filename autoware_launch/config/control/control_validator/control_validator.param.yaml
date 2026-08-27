@@ -14,6 +14,19 @@
       acc_error_scale: 0.2
       acc_lpf_gain: 0.97 # Time constant 1.11s
 
+    uncrossable_bound_departure_validator:
+      enable: true
+      boundary_types: ["road_border"]
+      lateral_margin_m: 0.01
+      longitudinal_margin_m: 1.0
+      max_deceleration_mps2: -4.0
+      max_jerk_mps3: -5.0
+      brake_delay_s: 1.0
+      time_to_departure_cutoff_s: 2.0
+      on_time_buffer_s: 0.20
+      off_time_buffer_s: 0.10
+      enable_developer_marker: false
+
     latency_validator:
       nominal_latency: 0.01
 
