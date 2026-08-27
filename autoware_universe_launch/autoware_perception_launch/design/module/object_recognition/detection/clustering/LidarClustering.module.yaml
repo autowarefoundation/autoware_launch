@@ -7,9 +7,13 @@ instances:
     entity: VoxelGridBasedEuclideanCluster.node
   - name: detected_object_feature_remover
     entity: DetectedObjectFeatureRemover.node
+  # keep only the clusters on the lanelet map
+  - name: object_lanelet_filter
+    entity: ObjectLaneletFilter.node
 
 subscribers:
   - name: pointcloud
+  - name: vector_map
 publishers:
   - name: detected_objects
 
@@ -20,4 +24,8 @@ connections:
   - - euclidean_cluster.publisher.output_clusters
     - detected_object_feature_remover.subscriber.input
   - - detected_object_feature_remover.publisher.output
+    - object_lanelet_filter.subscriber.object
+  - - subscriber.vector_map
+    - object_lanelet_filter.subscriber.vector_map
+  - - object_lanelet_filter.publisher.object
     - publisher.detected_objects

@@ -1,6 +1,6 @@
 autoware_system_design_format: 0.3.0
 
-name: sample_system_perception.parameter_set
+name: e2e_simulation_perception.parameter_set
 parameters:
   - node: /perception/object_recognition/detection/centerpoint/lidar_centerpoint
     param_files:
@@ -33,25 +33,60 @@ parameters:
       - name: publish_debug_markers
         value: true
 
-  - node: /perception/obstacle_segmentation/ptv3
-    param_files:
-      - encoder_ml_package_param_path: $(var data_path)/ptv3/ml_package_ptv3_encoder.param.yaml
-      - seg3d_head_ml_package_param_path: $(var data_path)/ptv3/ml_package_ptv3_seg3d_head.param.yaml
-      - det3d_head_ml_package_param_path: $(var data_path)/ptv3/ml_package_ptv3_det3d_head.param.yaml
+  - node: /perception/obstacle_segmentation/crop_box_filter
+    param_files: []
     param_values:
-      - name: build_only
-        value: false
-      - name: model_path
-        value: $(var data_path)/ptv3
-      - name: model_variant
-        value: ptv3
-      # only the segmentation head feeds the pipeline
-      - name: use_det3d_head
-        value: false
+      - name: min_x
+        value: -100.0
+      - name: max_x
+        value: 150.0
+      - name: min_y
+        value: -70.0
+      - name: max_y
+        value: 70.0
+      - name: min_z
+        value: -10.0
+      - name: max_z
+        value: 4.0
 
-  - node: /perception/obstacle_segmentation/label_based_euclidean_cluster
+  - node: /perception/obstacle_segmentation/common_ground_filter
     param_files:
-      - param_path: $(find-pkg-share autoware_perception_config)/config/object_recognition/detection/euclidean_cluster/label_based_euclidean_cluster.param.yaml
+      - vehicle_info_param_file: $(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml
+    param_values:
+      - name: max_z
+        value: 3.0
+      - name: min_z
+        value: -2.5
+
+  - node: /perception/obstacle_segmentation/pointcloud_map_filter/voxel_grid_downsample_filter
+    param_files: []
+    param_values:
+      - name: voxel_size_x
+        value: 0.1
+      - name: voxel_size_y
+        value: 0.1
+      - name: voxel_size_z
+        value: 0.1
+
+  - node: /perception/obstacle_segmentation/pointcloud_map_filter/voxel_based_compare_map_filter
+    param_files:
+      - voxel_based_compare_map_filter_param_file: $(find-pkg-share autoware_perception_config)/config/object_recognition/detection/pointcloud_filter/voxel_based_compare_map_filter.param.yaml
+    param_values: []
+
+  - node: /perception/obstacle_segmentation/clustering/euclidean_cluster
+    param_files:
+      - voxel_grid_based_euclidean_param_path: $(find-pkg-share autoware_perception_config)/config/object_recognition/detection/clustering/voxel_grid_based_euclidean_cluster.param.yaml
+    param_values: []
+
+  - node: /perception/obstacle_segmentation/clustering/detected_object_feature_remover
+    param_files: []
+    param_values:
+      - name: run_convex_hull_conversion
+        value: true
+
+  - node: /perception/obstacle_segmentation/clustering/object_lanelet_filter
+    param_files:
+      - filtering_range_param: $(find-pkg-share autoware_perception_config)/config/object_recognition/detection/object_filter/object_lanelet_filter.param.yaml
     param_values: []
 
   - node: /perception/occupancy_grid_map/occupancy_grid_map_node
@@ -64,23 +99,14 @@ parameters:
       - name: v_ratio
         value: 10.0
 
-  - node: /perception/traffic_light_recognition/camera1/map_based_detector
+  - node: /perception/traffic_light_recognition/traffic_light/map_based_detector
     param_files: []
     param_values:
       - name: min_timestamp_offset
         value: -0.3
       - name: timestamp_sample_len
         value: 0.02
-  - node: /perception/traffic_light_recognition/camera1/detection
-    param_files: []
-    param_values:
-      - name: model_path
-        value: $(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx
-      - name: label_path
-        value: $(var data_path)/traffic_light_fine_detector/tlr_labels.txt
-      - name: build_only
-        value: false
-  - node: /perception/traffic_light_recognition/camera1/classifier_car
+  - node: /perception/traffic_light_recognition/traffic_light/classifier_car
     param_files: []
     param_values:
       - name: model_path
@@ -89,7 +115,7 @@ parameters:
         value: $(var data_path)/traffic_light_classifier/lamp_labels.txt
       - name: build_only
         value: false
-  - node: /perception/traffic_light_recognition/camera1/classifier_pedestrian
+  - node: /perception/traffic_light_recognition/traffic_light/classifier_pedestrian
     param_files: []
     param_values:
       - name: model_path
@@ -98,7 +124,7 @@ parameters:
         value: $(var data_path)/traffic_light_classifier/lamp_labels_ped.txt
       - name: build_only
         value: false
-  - node: /perception/traffic_light_recognition/camera1/occlusion_predictor
+  - node: /perception/traffic_light_recognition/traffic_light/occlusion_predictor
     param_files: []
     param_values: []
   - node: /perception/traffic_light_recognition/camera2/map_based_detector
@@ -108,15 +134,6 @@ parameters:
         value: -0.04
       - name: timestamp_sample_len
         value: 0.02
-  - node: /perception/traffic_light_recognition/camera2/detection
-    param_files: []
-    param_values:
-      - name: model_path
-        value: $(var data_path)/traffic_light_fine_detector/tlr_car_ped_yolox_s_batch_6.onnx
-      - name: label_path
-        value: $(var data_path)/traffic_light_fine_detector/tlr_labels.txt
-      - name: build_only
-        value: false
   - node: /perception/traffic_light_recognition/camera2/classifier_car
     param_files: []
     param_values:
