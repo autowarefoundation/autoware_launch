@@ -1,66 +1,72 @@
 <launch>
-  <!-- controller -->
-  <arg name="trajectory_follower_mode" default="trajectory_follower_node"/>
-  <arg name="lateral_controller_mode"/>
-  <arg name="longitudinal_controller_mode"/>
-  <arg name="check_external_emergency_heartbeat"/>
+  <!-- Control pipeline: command gate, trajectory follower, optional control checkers and the evaluator, all under the control namespace -->
+  <arg name="control_config_pkg" default="autoware_control_config" description="package that ships the control config/ tree; overriding it requires the same config layout"/>
+  <arg name="module_preset" default="default" description="module preset that selects which control modules launch"/>
 
-  <!-- external cmd selector and converter -->
-  <arg name="launch_external_cmd_selector" default="true"/>
-  <arg name="launch_external_cmd_converter" default="true"/>
+  <!-- Module preset: declares the trajectory_follower_mode and launch_* junctions -->
+  <include file="$(find-pkg-share $(var control_config_pkg))/config/preset/$(var module_preset)_preset.yaml"/>
 
-  <!-- control-check modules, optional -->
-  <arg name="launch_lane_departure_checker" default="true"/>
-  <arg name="launch_control_validator" default="true"/>
-  <arg name="launch_autonomous_emergency_braking" default="true"/>
-  <arg name="launch_collision_detector" default="true"/>
-  <arg name="launch_obstacle_collision_checker" default="false"/>
-  <arg name="launch_predicted_path_checker" default="false"/>
-  <arg name="launch_control_evaluator" default="true"/>
-  <arg name="use_aeb_autoware_state_check"/>
-
-  <!-- common param path -->
-  <arg name="vehicle_param_file"/>
-  <arg name="nearest_search_param_path"/>
-
-  <!-- package param path -->
-  <arg name="trajectory_follower_node_param_path"/>
-  <arg name="lat_controller_param_path"/>
-  <arg name="lon_controller_param_path"/>
-  <arg name="vehicle_cmd_gate_param_path"/>
-  <arg name="lane_departure_checker_param_path"/>
-  <arg name="control_validator_param_path"/>
-  <arg name="operation_mode_transition_manager_param_path"/>
-  <arg name="shift_decider_param_path"/>
-  <arg name="obstacle_collision_checker_param_path"/>
-  <arg name="external_cmd_selector_param_path"/>
-  <arg name="aeb_param_path"/>
-  <arg name="predicted_path_checker_param_path"/>
-  <arg name="collision_detector_param_path"/>
-  <arg name="control_command_gate_param_path" default="$(find-pkg-share autoware_control_command_gate)/config/default.param.yaml"/>
-
-  <!-- component -->
-  <arg name="use_intra_process" default="false" description="use ROS 2 component container communication"/>
-  <arg name="use_multithread" default="true" description="use multithread"/>
-
-  <!-- switch executor-->
-  <!-- output container_package and container_executable variants-->
-  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml">
-    <arg name="use_multithread" value="$(var use_multithread)"/>
-  </include>
-
+  <!-- Pipeline junctions -->
+  <arg name="lateral_controller_mode" default="mpc" description="lateral controller; options: `mpc`, `pure_pursuit`"/>
+  <arg name="longitudinal_controller_mode" default="pid" description="longitudinal controller; options: `pid`"/>
+  <arg name="use_individual_control_param" default="false" description="read the lateral/longitudinal controller params from the vehicle_id subtree"/>
+  <arg name="use_aeb_autoware_state_check" default="true"/>
+  <arg name="check_external_emergency_heartbeat" default="false"/>
   <!-- temporary: control_command_gate migration -->
   <arg name="use_control_command_gate" default="false"/>
-  <let name="operation_mode_transition_manager_plugin" value="AutonomousModeTransitionFlagNode" if="$(var use_control_command_gate)"/>
-  <let name="operation_mode_transition_manager_plugin" value="OperationModeTransitionManager" unless="$(var use_control_command_gate)"/>
 
-  <!-- topic remap -->
-  <arg name="input_objects_topic_name"/>
-  <arg name="input_pointcloud_topic_name"/>
+  <!-- External interfaces -->
+  <arg name="input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
   <arg name="output_control_cmd" default="/control/command/control_cmd"/>
   <arg name="output_gear_cmd" default="/control/command/gear_cmd"/>
   <arg name="output_turn_indicators_cmd" default="/control/command/turn_indicators_cmd"/>
   <arg name="output_hazard_lights_cmd" default="/control/command/hazard_lights_cmd"/>
+
+  <!-- Vehicle -->
+  <arg name="vehicle_model" default="sample_vehicle"/>
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
+  <arg name="vehicle_param_file" default="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+
+  <!-- Config tree -->
+  <let name="control_config_dir" value="$(find-pkg-share $(var control_config_pkg))/config"/>
+  <let name="latlon_controller_config_dir" value="$(var control_config_dir)/trajectory_follower/$(var vehicle_id)" if="$(var use_individual_control_param)"/>
+  <let name="latlon_controller_config_dir" value="$(var control_config_dir)/trajectory_follower" unless="$(var use_individual_control_param)"/>
+
+  <!-- Parameter paths: common -->
+  <arg name="nearest_search_param_path" default="$(var control_config_dir)/common/nearest_search.param.yaml"/>
+
+  <!-- Parameter paths: trajectory follower -->
+  <arg name="trajectory_follower_node_param_path" default="$(var control_config_dir)/trajectory_follower/trajectory_follower_node.param.yaml"/>
+  <arg name="lat_controller_param_path" default="$(var latlon_controller_config_dir)/lateral/$(var lateral_controller_mode).param.yaml"/>
+  <arg name="lon_controller_param_path" default="$(var latlon_controller_config_dir)/longitudinal/$(var longitudinal_controller_mode).param.yaml"/>
+
+  <!-- Parameter paths: command gate and mode management -->
+  <arg name="vehicle_cmd_gate_param_path" default="$(var control_config_dir)/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
+  <arg name="control_command_gate_param_path" default="$(var control_config_dir)/control_command_gate/control_command_gate.param.yaml"/>
+  <arg name="operation_mode_transition_manager_param_path" default="$(var control_config_dir)/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
+  <arg name="shift_decider_param_path" default="$(var control_config_dir)/shift_decider/shift_decider.param.yaml"/>
+  <arg name="external_cmd_selector_param_path" default="$(var control_config_dir)/external_cmd_selector/external_cmd_selector.param.yaml"/>
+
+  <!-- Parameter paths: control checkers -->
+  <arg name="lane_departure_checker_param_path" default="$(var control_config_dir)/lane_departure_checker/lane_departure_checker.param.yaml"/>
+  <arg name="control_validator_param_path" default="$(var control_config_dir)/control_validator/control_validator.param.yaml"/>
+  <arg name="aeb_param_path" default="$(var control_config_dir)/autoware_autonomous_emergency_braking/autonomous_emergency_braking.param.yaml"/>
+  <arg name="collision_detector_param_path" default="$(var control_config_dir)/autoware_collision_detector/collision_detector.param.yaml"/>
+  <arg name="obstacle_collision_checker_param_path" default="$(var control_config_dir)/obstacle_collision_checker/obstacle_collision_checker.param.yaml"/>
+  <arg name="predicted_path_checker_param_path" default="$(var control_config_dir)/predicted_path_checker/predicted_path_checker.param.yaml"/>
+
+  <!-- Component container -->
+  <arg name="use_intra_process" default="false" description="use ROS 2 component container communication"/>
+  <arg name="use_multithread" default="true" description="use multithread"/>
+
+  <!-- Executor selection: outputs the container_package, container_executable and ld_preload_value variants -->
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml">
+    <arg name="use_multithread" value="$(var use_multithread)"/>
+  </include>
+
+  <let name="operation_mode_transition_manager_plugin" value="AutonomousModeTransitionFlagNode" if="$(var use_control_command_gate)"/>
+  <let name="operation_mode_transition_manager_plugin" value="OperationModeTransitionManager" unless="$(var use_control_command_gate)"/>
 
   <group>
     <push-ros-namespace namespace="control"/>

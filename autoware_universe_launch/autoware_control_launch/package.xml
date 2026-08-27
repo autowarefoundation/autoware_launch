@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>tier4_control_launch</name>
+  <name>autoware_control_launch</name>
   <version>0.52.0</version>
-  <description>The tier4_control_launch package</description>
+  <description>The autoware_control_launch package</description>
   <maintainer email="takamasa.horibe@tier4.jp">Takamasa Horibe</maintainer>
   <maintainer email="takayuki.murooka@tier4.jp">Takayuki Murooka</maintainer>
   <maintainer email="yuki.takagi@tier4.jp">Yuki Takagi</maintainer>
@@ -21,6 +21,7 @@
   <exec_depend>autoware_autonomous_emergency_braking</exec_depend>
   <exec_depend>autoware_collision_detector</exec_depend>
   <exec_depend>autoware_control_command_gate</exec_depend>
+  <exec_depend>autoware_control_config</exec_depend>
   <exec_depend>autoware_control_evaluator</exec_depend>
   <exec_depend>autoware_control_validator</exec_depend>
   <exec_depend>autoware_external_cmd_converter</exec_depend>

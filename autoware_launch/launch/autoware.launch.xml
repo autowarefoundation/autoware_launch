@@ -129,10 +129,12 @@
 
   <!-- Control -->
   <group if="$(var launch_control)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/component_control.launch.xml">
       <arg name="module_preset" value="$(var control_module_preset)"/>
+      <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="vehicle_id" value="$(var vehicle_id)"/>
     </include>
   </group>
 

@@ -3,7 +3,7 @@ autoware_system_design_format: 0.3.0
 name: Tier4ControlWrapper.node
 
 package:
-  name: tier4_control_launch
+  name: autoware_control_launch
   provider: autoware
 
 launch:
@@ -85,35 +85,35 @@ param_values:
   - name: vehicle_param_file
     default: $(find-pkg-share sample_vehicle_description)/config/vehicle_info.param.yaml
   - name: nearest_search_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/common/nearest_search.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/common/nearest_search.param.yaml
   - name: trajectory_follower_node_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/trajectory_follower/trajectory_follower_node.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/trajectory_follower/trajectory_follower_node.param.yaml
   - name: lat_controller_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/trajectory_follower/lateral/mpc.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/trajectory_follower/lateral/mpc.param.yaml
   - name: lon_controller_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/trajectory_follower/longitudinal/pid.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/trajectory_follower/longitudinal/pid.param.yaml
   - name: vehicle_cmd_gate_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml
   - name: lane_departure_checker_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/lane_departure_checker/lane_departure_checker.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/lane_departure_checker/lane_departure_checker.param.yaml
   - name: control_validator_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/control_validator/control_validator.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/control_validator/control_validator.param.yaml
   - name: operation_mode_transition_manager_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml
   - name: shift_decider_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/shift_decider/shift_decider.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/shift_decider/shift_decider.param.yaml
   - name: obstacle_collision_checker_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/obstacle_collision_checker/obstacle_collision_checker.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/obstacle_collision_checker/obstacle_collision_checker.param.yaml
   - name: external_cmd_selector_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/external_cmd_selector/external_cmd_selector.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/external_cmd_selector/external_cmd_selector.param.yaml
   - name: aeb_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/autoware_autonomous_emergency_braking/autonomous_emergency_braking.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/autoware_autonomous_emergency_braking/autonomous_emergency_braking.param.yaml
   - name: predicted_path_checker_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/predicted_path_checker/predicted_path_checker.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/predicted_path_checker/predicted_path_checker.param.yaml
   - name: collision_detector_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/autoware_collision_detector/collision_detector.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/autoware_collision_detector/collision_detector.param.yaml
   - name: control_command_gate_param_path
-    default: $(find-pkg-share autoware_launch)/config/control/control_command_gate/control_command_gate.param.yaml
+    default: $(find-pkg-share autoware_control_config)/config/control_command_gate/control_command_gate.param.yaml
 
 # processes
 processes:
