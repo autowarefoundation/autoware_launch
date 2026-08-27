@@ -48,11 +48,9 @@ publishers:
   - name: command/turn_indicators_cmd
   - name: command/hazard_lights_cmd
   - name: command/emergency_cmd
-  - name: engage
   - name: api/engage
   - name: external_emergency
   - name: is_autonomous_available
-  - name: gate_mode_cmd
   - name: current_gate_mode
   - name: is_paused
   - name: is_start_requested
@@ -113,10 +111,6 @@ connections:
     - vehicle_cmd_gate.subscriber.emergency_hazard_lights_cmd
   - - subscriber.emergency_gear_cmd
     - vehicle_cmd_gate.subscriber.emergency_gear_cmd
-  - - autoware_operation_mode_transition_manager.publisher.gate_mode_cmd
-    - vehicle_cmd_gate.subscriber.gate_mode
-  - - autoware_operation_mode_transition_manager.publisher.engage
-    - vehicle_cmd_gate.subscriber.engage
 
   # OperationModeTransitionManager
   - - subscriber.trajectory
@@ -177,9 +171,5 @@ connections:
     - publisher.current_gate_mode
   - - vehicle_cmd_gate.publisher.external_emergency
     - publisher.external_emergency
-  - - autoware_operation_mode_transition_manager.publisher.engage
-    - publisher.engage
-  - - autoware_operation_mode_transition_manager.publisher.gate_mode_cmd
-    - publisher.gate_mode_cmd
   - - autoware_operation_mode_transition_manager.publisher.operation_mode
     - publisher.is_autonomous_available

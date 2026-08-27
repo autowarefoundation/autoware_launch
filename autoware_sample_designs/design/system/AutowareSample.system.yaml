@@ -286,8 +286,6 @@ connections:
 remaps:
   - source: localization.publisher.initialpose3d
     topic: /initialpose3d
-  - source: control.publisher.engage
-    topic: /autoware/engage
   - source: control.publisher.is_autonomous_available
     topic: /system/operation_mode/state
   - source: control.publisher.external_emergency

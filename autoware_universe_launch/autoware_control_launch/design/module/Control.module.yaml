@@ -73,12 +73,10 @@ publishers:
   - name: command/hazard_lights_cmd
   - name: command/emergency_cmd
   - name: predicted_trajectory
-  - name: engage
   - name: api/engage
   - name: external_emergency
   - name: is_autonomous_available
   - name: control_evaluation
-  - name: gate_mode_cmd
   - name: current_gate_mode
   # official interfaces published under fixed node paths
   - name: external_cmd_selector/current_selector_mode
@@ -289,12 +287,8 @@ connections:
     - publisher.command/emergency_cmd
   - - command_gate.publisher.current_gate_mode
     - publisher.current_gate_mode
-  - - command_gate.publisher.gate_mode_cmd
-    - publisher.gate_mode_cmd
   - - command_gate.publisher.external_emergency
     - publisher.external_emergency
-  - - command_gate.publisher.engage
-    - publisher.engage
   - - command_gate.publisher.is_autonomous_available
     - publisher.is_autonomous_available
   - - trajectory_follower.publisher.predicted_trajectory
