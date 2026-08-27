@@ -9,7 +9,6 @@
   <!-- Pipeline junctions -->
   <arg name="lateral_controller_mode" default="mpc" description="lateral controller; options: `mpc`, `pure_pursuit`"/>
   <arg name="longitudinal_controller_mode" default="pid" description="longitudinal controller; options: `pid`"/>
-  <arg name="use_individual_control_param" default="false" description="read the lateral/longitudinal controller params from the vehicle_id subtree"/>
   <arg name="use_aeb_autoware_state_check" default="true"/>
   <arg name="check_external_emergency_heartbeat" default="false"/>
   <!-- temporary: control_command_gate migration -->
@@ -25,21 +24,18 @@
 
   <!-- Vehicle -->
   <arg name="vehicle_model" default="sample_vehicle"/>
-  <arg name="vehicle_id" default="$(env VEHICLE_ID default)" description="vehicle specific ID"/>
   <arg name="vehicle_param_file" default="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
 
   <!-- Config tree -->
   <let name="control_config_dir" value="$(find-pkg-share $(var control_config_pkg))/config"/>
-  <let name="latlon_controller_config_dir" value="$(var control_config_dir)/trajectory_follower/$(var vehicle_id)" if="$(var use_individual_control_param)"/>
-  <let name="latlon_controller_config_dir" value="$(var control_config_dir)/trajectory_follower" unless="$(var use_individual_control_param)"/>
 
   <!-- Parameter paths: common -->
   <arg name="nearest_search_param_path" default="$(var control_config_dir)/common/nearest_search.param.yaml"/>
 
   <!-- Parameter paths: trajectory follower -->
   <arg name="trajectory_follower_node_param_path" default="$(var control_config_dir)/trajectory_follower/trajectory_follower_node.param.yaml"/>
-  <arg name="lat_controller_param_path" default="$(var latlon_controller_config_dir)/lateral/$(var lateral_controller_mode).param.yaml"/>
-  <arg name="lon_controller_param_path" default="$(var latlon_controller_config_dir)/longitudinal/$(var longitudinal_controller_mode).param.yaml"/>
+  <arg name="lat_controller_param_path" default="$(var control_config_dir)/trajectory_follower/lateral/$(var lateral_controller_mode).param.yaml"/>
+  <arg name="lon_controller_param_path" default="$(var control_config_dir)/trajectory_follower/longitudinal/$(var longitudinal_controller_mode).param.yaml"/>
 
   <!-- Parameter paths: command gate and mode management -->
   <arg name="vehicle_cmd_gate_param_path" default="$(var control_config_dir)/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>

@@ -55,8 +55,6 @@ param_values:
     default: mpc
   - name: longitudinal_controller_mode
     default: pid
-  - name: use_individual_control_param
-    default: false
   - name: use_aeb_autoware_state_check
     default: true
   - name: vehicle_model

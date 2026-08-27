@@ -32,4 +32,4 @@ config/
 
 A product that sets `control_config_pkg` to its own package must ship the same `config/` layout, since the launch package addresses individual files by relative path. Products that differ in only a few files instead override the corresponding `*_param_path` arguments.
 
-Per-vehicle controller tuning is a subtree of `trajectory_follower/`: with `use_individual_control_param`, the lateral and longitudinal controller files are read from `trajectory_follower/<vehicle_id>/` instead.
+Per-vehicle controller tuning is a subtree of `trajectory_follower/<vehicle_id>/`; a caller selects it by pointing `lat_controller_param_path` and `lon_controller_param_path` there (`autoware_launch` does so under `use_individual_control_param`).
