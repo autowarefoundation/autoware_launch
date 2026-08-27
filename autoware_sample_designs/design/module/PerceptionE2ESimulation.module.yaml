@@ -16,7 +16,7 @@ instances:
   - name: occupancy_grid_map
     entity: OccupancyGridMapPointcloudBased.module
   - name: traffic_light_recognition
-    entity: TrafficLightRecognition.module
+    entity: TrafficLightRecognitionRough.module
 
 subscribers:
   # lidar
@@ -79,9 +79,9 @@ connections:
   - - subscriber.route
     - traffic_light_recognition.subscriber.route
   - - subscriber.traffic_camera/image
-    - traffic_light_recognition.subscriber.camera1/image
+    - traffic_light_recognition.subscriber.traffic_light/image
   - - subscriber.traffic_camera/camera_info
-    - traffic_light_recognition.subscriber.camera1/camera_info
+    - traffic_light_recognition.subscriber.traffic_light/camera_info
   - - subscriber.concatenated_pointcloud
     - traffic_light_recognition.subscriber.pointcloud
   - - subscriber.external_traffic_signals

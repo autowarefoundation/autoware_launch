@@ -380,6 +380,11 @@ E2ESimulation:
           - /perception/obstacle_segmentation/pointcloud_map_filter/voxel_grid_downsample_filter
           - /perception/obstacle_segmentation/clustering/*
           - /perception/occupancy_grid_map/occupancy_grid_map_node
+      - name: traffic_light_node_container
+        type: ros2_component_container_mt_ipc
+        nodes:
+          - /perception/traffic_light_recognition/traffic_light/classifier_pedestrian
+          - /perception/traffic_light_recognition/traffic_light/classifier_car
     connections:
       # SENSING
       - - awsim.publisher.sensing/lidar/top/pointcloud_raw_ex
