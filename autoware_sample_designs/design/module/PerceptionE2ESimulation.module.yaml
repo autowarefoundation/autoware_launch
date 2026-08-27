@@ -54,6 +54,8 @@ connections:
     - obstacle_segmentation/pointcloud_map_filter.subscriber.kinematic_state
   - - obstacle_segmentation/pointcloud_map_filter.publisher.filtered_pointcloud
     - obstacle_segmentation/clustering.subscriber.pointcloud
+  - - subscriber.vector_map
+    - obstacle_segmentation/clustering.subscriber.vector_map
 
   # object recognition
   - - subscriber.concatenated_pointcloud

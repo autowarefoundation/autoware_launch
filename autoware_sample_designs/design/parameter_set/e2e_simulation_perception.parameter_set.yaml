@@ -84,6 +84,11 @@ parameters:
       - name: run_convex_hull_conversion
         value: true
 
+  - node: /perception/obstacle_segmentation/clustering/object_lanelet_filter
+    param_files:
+      - filtering_range_param: $(find-pkg-share autoware_perception_config)/config/object_recognition/detection/object_filter/object_lanelet_filter.param.yaml
+    param_values: []
+
   - node: /perception/occupancy_grid_map/occupancy_grid_map_node
     param_files: []
     param_values:
