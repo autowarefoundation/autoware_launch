@@ -80,10 +80,18 @@ publishers:
   - name: control_evaluation
   - name: gate_mode_cmd
   - name: current_gate_mode
+  # official interfaces published under fixed node paths
+  - name: external_cmd_selector/current_selector_mode
+  - name: vehicle_cmd_gate/is_paused
+  - name: vehicle_cmd_gate/is_start_requested
+  - name: vehicle_cmd_gate/is_stopped
 
 servers:
   - name: engage_service
   - name: external_emergency_service
+  - name: external_cmd_selector/select_external_command
+  - name: vehicle_cmd_gate/set_pause
+  - name: vehicle_cmd_gate/set_stop
 
 connections:
   # TrajectoryFollower module
@@ -151,6 +159,10 @@ connections:
     - command_gate.subscriber.emergency_hazard_lights_cmd
   - - subscriber.emergency_gear_cmd
     - command_gate.subscriber.emergency_gear_cmd
+  - - external_command.publisher.current_selector_mode
+    - command_gate.subscriber.current_selector_mode
+  - - external_command.server.select_external_command
+    - command_gate.client.select_external_command
 
   # ExternalCommand module
   - - subscriber.external/local/pedals_cmd
@@ -249,6 +261,20 @@ connections:
     - server.engage_service
   - - command_gate.server.external_emergency_service
     - server.external_emergency_service
+  - - external_command.server.select_external_command
+    - server.external_cmd_selector/select_external_command
+  - - external_command.publisher.current_selector_mode
+    - publisher.external_cmd_selector/current_selector_mode
+  - - command_gate.server.set_pause
+    - server.vehicle_cmd_gate/set_pause
+  - - command_gate.server.set_stop
+    - server.vehicle_cmd_gate/set_stop
+  - - command_gate.publisher.is_paused
+    - publisher.vehicle_cmd_gate/is_paused
+  - - command_gate.publisher.is_start_requested
+    - publisher.vehicle_cmd_gate/is_start_requested
+  - - command_gate.publisher.is_stopped
+    - publisher.vehicle_cmd_gate/is_stopped
 
   # Publishers
   - - command_gate.publisher.command/control_cmd

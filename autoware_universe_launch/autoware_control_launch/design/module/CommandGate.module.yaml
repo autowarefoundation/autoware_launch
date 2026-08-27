@@ -40,6 +40,8 @@ subscribers:
   - name: emergency_hazard_lights_cmd
   - name: emergency_gear_cmd
 
+  - name: current_selector_mode
+
 publishers:
   - name: command/control_cmd
   - name: command/gear_cmd
@@ -52,10 +54,18 @@ publishers:
   - name: is_autonomous_available
   - name: gate_mode_cmd
   - name: current_gate_mode
+  - name: is_paused
+  - name: is_start_requested
+  - name: is_stopped
 
 servers:
   - name: engage_service
   - name: external_emergency_service
+  - name: set_pause
+  - name: set_stop
+
+clients:
+  - name: select_external_command
 
 connections:
   # ShiftDecider
@@ -123,6 +133,12 @@ connections:
     - autoware_operation_mode_transition_manager.subscriber.control_mode_report
   - - vehicle_cmd_gate.publisher.engage
     - autoware_operation_mode_transition_manager.subscriber.engage
+  - - vehicle_cmd_gate.publisher.gate_mode
+    - autoware_operation_mode_transition_manager.subscriber.current_gate_mode
+  - - subscriber.current_selector_mode
+    - autoware_operation_mode_transition_manager.subscriber.current_selector_mode
+  - - client.select_external_command
+    - autoware_operation_mode_transition_manager.client.select_external_command
 
   # StopModeOperator
   - - subscriber.route_state
@@ -135,6 +151,16 @@ connections:
     - server.engage_service
   - - vehicle_cmd_gate.server.external_emergency_service
     - server.external_emergency_service
+  - - vehicle_cmd_gate.server.set_pause
+    - server.set_pause
+  - - vehicle_cmd_gate.server.set_stop
+    - server.set_stop
+  - - vehicle_cmd_gate.publisher.is_paused
+    - publisher.is_paused
+  - - vehicle_cmd_gate.publisher.is_start_requested
+    - publisher.is_start_requested
+  - - vehicle_cmd_gate.publisher.is_stopped
+    - publisher.is_stopped
 
   # Publishers
   - - vehicle_cmd_gate.publisher.control_cmd

@@ -32,6 +32,10 @@ publishers:
   - name: hazard_lights_cmd
   - name: gear_cmd
   - name: heartbeat
+  - name: current_selector_mode
+
+servers:
+  - name: select_external_command
 
 connections:
   # ExternalCmdSelector
@@ -79,3 +83,7 @@ connections:
     - publisher.gear_cmd
   - - external_cmd_selector.publisher.heartbeat
     - publisher.heartbeat
+  - - external_cmd_selector.publisher.current_selector_mode
+    - publisher.current_selector_mode
+  - - external_cmd_selector.server.select_external_command
+    - server.select_external_command
