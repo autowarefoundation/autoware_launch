@@ -30,6 +30,10 @@
   <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
   <arg name="launch_fault_injection" default="$(var scenario_simulation)" description="launch fault injection"/>
   <arg name="fault_injection_output_diagnostics" default="/diagnostics/fault_injection"/>
+  <let name="launch_dummy_modules" value="false" if="$(var scenario_simulation)"/>
+  <let name="launch_dummy_modules" value="true" unless="$(var scenario_simulation)"/>
+  <arg name="launch_dummy_vehicle" default="$(var launch_dummy_modules)" description="launch the simple planning simulator as the vehicle"/>
+  <arg name="launch_dummy_perception" default="$(var launch_dummy_modules)" description="launch dummy perception publisher as the detection stage"/>
 
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
@@ -90,8 +94,6 @@
 
   <!-- Simulator -->
   <group>
-    <let name="launch_dummy_vehicle" value="false" if="$(var scenario_simulation)"/>
-    <let name="launch_dummy_vehicle" value="true" unless="$(var scenario_simulation)"/>
     <let name="launch_scenario_simulator_v2_adapter" value="$(var scenario_simulation)"/>
 
     <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_simulator_component.launch.xml">
@@ -109,8 +111,6 @@
 
   <!-- Simulated perception -->
   <group>
-    <let name="launch_dummy_perception" value="false" if="$(var scenario_simulation)"/>
-    <let name="launch_dummy_perception" value="true" unless="$(var scenario_simulation)"/>
     <let name="launch_occupancy_grid_map" value="false" if="$(var scenario_simulation)"/>
     <let name="launch_occupancy_grid_map" value="true" unless="$(var scenario_simulation)"/>
 
