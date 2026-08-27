@@ -2,9 +2,10 @@
   <!-- Control pipeline: command gate, trajectory follower, optional control checkers and the evaluator, all under the control namespace -->
   <arg name="control_config_pkg" default="autoware_control_config" description="package that ships the control config/ tree; overriding it requires the same config layout"/>
   <arg name="module_preset" default="default" description="module preset that selects which control modules launch"/>
+  <let name="control_config_dir" value="$(find-pkg-share $(var control_config_pkg))/config"/>
 
   <!-- Module preset: declares the trajectory_follower_mode and launch_* junctions -->
-  <include file="$(find-pkg-share $(var control_config_pkg))/config/preset/$(var module_preset)_preset.yaml"/>
+  <include file="$(var control_config_dir)/preset/$(var module_preset)_preset.yaml"/>
 
   <!-- Pipeline junctions -->
   <arg name="lateral_controller_mode" default="mpc" description="lateral controller; options: `mpc`, `pure_pursuit`"/>
@@ -25,9 +26,6 @@
   <!-- Vehicle -->
   <arg name="vehicle_model" default="sample_vehicle"/>
   <arg name="vehicle_param_file" default="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-
-  <!-- Config tree -->
-  <let name="control_config_dir" value="$(find-pkg-share $(var control_config_pkg))/config"/>
 
   <!-- Parameter paths: common -->
   <arg name="nearest_search_param_path" default="$(var control_config_dir)/common/nearest_search.param.yaml"/>

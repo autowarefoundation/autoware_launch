@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Control pipeline: the module preset and the controller algorithms are product-level choices; parameter files are resolved inside autoware_control_launch -->
+  <arg name="control_config_pkg" default="autoware_control_config" description="package that ships the control config/ tree; overriding it relocates every parameter file"/>
   <arg name="module_preset" default="default"/>
   <arg name="lateral_controller_mode" default="mpc"/>
   <arg name="longitudinal_controller_mode" default="pid"/>
@@ -12,8 +13,9 @@
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
 
   <!-- Controller parameter files; per-vehicle tuning lives under trajectory_follower/VEHICLE_ID -->
-  <let name="latlon_controller_config_dir" value="$(find-pkg-share autoware_control_config)/config/trajectory_follower/$(var vehicle_id)" if="$(var use_individual_control_param)"/>
-  <let name="latlon_controller_config_dir" value="$(find-pkg-share autoware_control_config)/config/trajectory_follower" unless="$(var use_individual_control_param)"/>
+  <let name="trajectory_follower_config_dir" value="$(find-pkg-share $(var control_config_pkg))/config/trajectory_follower"/>
+  <let name="latlon_controller_config_dir" value="$(var trajectory_follower_config_dir)/$(var vehicle_id)" if="$(var use_individual_control_param)"/>
+  <let name="latlon_controller_config_dir" value="$(var trajectory_follower_config_dir)" unless="$(var use_individual_control_param)"/>
   <let name="lat_controller_param_path" value="$(var latlon_controller_config_dir)/lateral/$(var lateral_controller_mode).param.yaml"/>
   <let name="lon_controller_param_path" value="$(var latlon_controller_config_dir)/longitudinal/$(var longitudinal_controller_mode).param.yaml"/>
 
@@ -30,6 +32,7 @@
   </group>
 
   <include file="$(find-pkg-share autoware_control_launch)/launch/control.launch.xml">
+    <arg name="control_config_pkg" value="$(var control_config_pkg)"/>
     <arg name="module_preset" value="$(var module_preset)"/>
     <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
     <arg name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
