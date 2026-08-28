@@ -14,6 +14,8 @@
   <exec_depend>autoware_adapi_adaptors</exec_depend>
   <exec_depend>autoware_agnocast_wrapper</exec_depend>
   <exec_depend>autoware_carla_interface</exec_depend>
+  <exec_depend>autoware_control_config</exec_depend>
+  <exec_depend>autoware_control_launch</exec_depend>
   <exec_depend>autoware_diagnostic_graph_aggregator</exec_depend>
   <exec_depend>autoware_diagnostic_graph_utils</exec_depend>
   <exec_depend>autoware_dummy_infrastructure</exec_depend>
@@ -32,7 +34,6 @@
   <exec_depend>python3-tornado</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <exec_depend>tier4_autoware_api_launch</exec_depend>
-  <exec_depend>tier4_control_launch</exec_depend>
   <exec_depend>tier4_localization_launch</exec_depend>
   <exec_depend>tier4_map_launch</exec_depend>
   <exec_depend>tier4_simulator_launch</exec_depend>
