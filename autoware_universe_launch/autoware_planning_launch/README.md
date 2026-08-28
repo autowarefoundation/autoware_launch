@@ -14,6 +14,13 @@ launch/
     └── lane_driving/
         ├── behavior_planning/
         └── motion_planning/
+design/module/                      # Autoware System Designer modules; same subtree as launch/
+├── Planning.module.yaml
+├── mission_planning/
+└── scenario_planning/
+    └── lane_driving/
+        ├── behavior_planning/
+        └── motion_planning/
 ```
 
 ## Structure
