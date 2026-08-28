@@ -70,8 +70,9 @@ components:
     entity: Tier4MapWrapper.node
     compute_unit: main_ecu
   - name: localization
-    entity: Tier4LocalizationWrapper.node
+    entity: Localization.module
     compute_unit: main_ecu
+    parameter_set: universe_localization.parameter_set
 
   # PERCEPTION
   - name: perception
@@ -105,6 +106,9 @@ node_groups:
     type: ros2_component_container_mt_ipc
     nodes:
       - /sensing/lidar/concatenate_and_time_sync
+      - /localization/util/crop_box_filter_measurement_range
+      - /localization/util/voxel_grid_downsample_filter
+      - /localization/util/random_downsample_filter
       - /perception/occupancy_grid_map/occupancy_grid_map_node
   - name: lidar_top_container
     type: ros2_component_container_mt_ipc
@@ -187,8 +191,10 @@ connections:
     - localization.subscriber.twist
   - - sensing.publisher.gnss/pose_with_covariance
     - localization.subscriber.gnss_pose_with_covariance
-  - - api.publisher.localization/initialization_state
-    - localization.subscriber.initialization_state
+  - - map.server.get_differential_pointcloud_map
+    - localization.client.get_differential_pointcloud_map
+  - - map.server.get_partial_pointcloud_map
+    - localization.client.get_partial_pointcloud_map
 
   - - planning.publisher.mission_planning/route
     - perception.subscriber.route
@@ -280,6 +286,8 @@ connections:
     - api.client.routing/clear_route
 
 remaps:
+  - source: localization.publisher.initialpose3d
+    topic: /initialpose3d
   - source: control.publisher.engage
     topic: /autoware/engage
   - source: control.publisher.is_autonomous_available
@@ -375,6 +383,9 @@ E2ESimulation:
         type: ros2_component_container_mt_ipc
         nodes:
           - /sensing/lidar/concatenate_and_time_sync
+          - /localization/util/crop_box_filter_measurement_range
+          - /localization/util/voxel_grid_downsample_filter
+          - /localization/util/random_downsample_filter
           - /perception/obstacle_segmentation/crop_box_filter
           - /perception/obstacle_segmentation/common_ground_filter
           - /perception/obstacle_segmentation/pointcloud_map_filter/voxel_grid_downsample_filter

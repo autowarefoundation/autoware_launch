@@ -1,0 +1,44 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+name: PoseEstimatorNdt.module
+
+instances:
+  - name: ndt_scan_matcher
+    entity: NdtScanMatcher.node
+
+# interfaces
+subscribers:
+  - name: pointcloud
+  - name: initial_pose_with_covariance
+  - name: regularization_pose_with_covariance
+
+publishers:
+  - name: pose
+  - name: pose_with_covariance
+
+servers:
+  - name: trigger_node
+  - name: ndt_align_srv
+
+clients:
+  - name: map_loader
+
+connections:
+  - - subscriber.pointcloud
+    - ndt_scan_matcher.subscriber.pointcloud
+  - - subscriber.initial_pose_with_covariance
+    - ndt_scan_matcher.subscriber.initial_pose_with_covariance
+  - - subscriber.regularization_pose_with_covariance
+    - ndt_scan_matcher.subscriber.regularization_pose_with_covariance
+
+  - - ndt_scan_matcher.publisher.pose
+    - publisher.pose
+  - - ndt_scan_matcher.publisher.pose_with_covariance
+    - publisher.pose_with_covariance
+  - - ndt_scan_matcher.server.trigger_node
+    - server.trigger_node
+  - - ndt_scan_matcher.server.ndt_align
+    - server.ndt_align_srv
+  - - ndt_scan_matcher.client.map_loader
+    - client.map_loader
