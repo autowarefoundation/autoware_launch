@@ -117,6 +117,8 @@ connections:
     - remaining_distance_time_calculator.subscriber.map
   - - scenario_planning.publisher.scenario
     - remaining_distance_time_calculator.subscriber.scenario
+  - - scenario_planning.publisher.current_max_velocity
+    - remaining_distance_time_calculator.subscriber.planning_velocity
 
   - - planning_validator.publisher.trajectory
     - publisher.trajectory
