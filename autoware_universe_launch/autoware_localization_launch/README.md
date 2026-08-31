@@ -22,7 +22,7 @@ design/module/                            # Autoware System Designer modules
 
 ## Launch files
 
-- `localization.launch.xml` — the entry point. It resolves every parameter file and pushes the `localization` namespace. `pose_source` and `twist_source` select which estimators launch: `pose_source` is a string of `ndt`, `yabloc`, `artag`, `lidar-marker` and `eagleye` joined by underscores (multiple sources bring up the pose estimator arbiter), and `twist_source` is `gyro_odom` or `eagleye`. The fusion filter (EKF, stop filter, twist2accel, pose instability detector), the pose initializer utilities and the localization error monitor always launch.
+- `localization.launch.xml` — the entry point. It resolves every parameter file and pushes the `localization` namespace. Each estimator has its own junction flag (`use_ndt_pose`, `use_yabloc_pose`, `use_artag_pose`, `use_lidar_marker_pose`, `use_eagleye_pose`, `use_eagleye_twist`, `use_gyro_odom_twist`); running several pose estimators additionally takes `multi_localizer_mode` with the matching `pose_sources` list, which bring up the pose estimator arbiter and its input relays. The product component (`component_localization.launch.xml`) flattens its `pose_source`/`twist_source` selection into these flags. The fusion filter (EKF, stop filter, twist2accel, pose instability detector), the pose initializer utilities and the localization error monitor always launch.
 
 ## Config
 

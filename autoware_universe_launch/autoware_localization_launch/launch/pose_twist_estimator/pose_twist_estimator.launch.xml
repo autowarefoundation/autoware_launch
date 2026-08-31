@@ -1,32 +1,23 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- Estimator junctions: one flag per estimator, flattened by the caller -->
+  <arg name="use_ndt_pose" default="true"/>
+  <arg name="use_yabloc_pose" default="false"/>
+  <arg name="use_artag_pose" default="false"/>
+  <arg name="use_lidar_marker_pose" default="false"/>
+  <arg name="use_eagleye_pose" default="false"/>
+  <arg name="use_eagleye_twist" default="false"/>
+  <arg name="use_gyro_odom_twist" default="true"/>
+  <arg name="multi_localizer_mode" default="false" description="multiple pose estimators run behind the pose estimator arbiter and its input relays"/>
+  <arg name="pose_sources" default="['ndt']" description="pose source list handed to the pose estimator arbiter"/>
   <arg name="use_autoware_pose_covariance_modifier" default="false"/>
-  <!-- only when running with a real vehicle, the pose_initializer judges the stop -->
-  <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)" value="true"/>
-  <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)" value="false"/>
 
+  <!-- pose_initializer junctions -->
+  <arg name="stop_check_enabled" default="true" description="the pose_initializer judges the stop; enabled only with a real vehicle"/>
   <!-- When gnss_enabled is false, automatic_pose_initializer will not run, only manual initial position estimation is available. -->
   <arg name="gnss_enabled" default="true" description="gnss availability for initial position estimation"/>
-
-  <!-- split string with underscores -->
-  <let name="available_args" value="[\'ndt\',\'yabloc\',\'eagleye\',\'artag\',\'lidar-marker\']"/>
-  <let name="split_function" value="list(set('$(var pose_source)'.split('_')).intersection($(var available_args)))"/>
-  <let name="pose_sources" value="$(eval $(var split_function))"/>
-  <let name="multi_localizer_mode" value="$(eval &quot;len($(var pose_sources))> 1&quot;)"/>
-
-  <!-- organizes flags for which nodes to activate -->
-  <let name="use_ndt_pose" value="$(eval &quot;'ndt' in $(var pose_sources)&quot;)"/>
-  <let name="use_yabloc_pose" value="$(eval &quot;'yabloc' in $(var pose_sources)&quot;)"/>
-  <let name="use_artag_pose" value="$(eval &quot;'artag' in $(var pose_sources)&quot;)"/>
-  <let name="use_lidar_marker_pose" value="$(eval &quot;'lidar-marker' in $(var pose_sources)&quot;)"/>
-  <let name="use_eagleye_pose" value="$(eval &quot;'eagleye' in $(var pose_sources)&quot;)"/>
-  <let name="use_eagleye_twist" value="$(eval &quot;'eagleye' == '$(var twist_source)'&quot;)"/>
-  <let name="use_gyro_odom_twist" value="$(eval &quot;'gyro_odom' == '$(var twist_source)'&quot;)"/>
-
-  <!-- set initial pose -->
-  <let name="user_defined_initial_pose/enable" value="$(eval &quot;len($(var initial_pose)) == 7&quot;)"/>
-  <let name="user_defined_initial_pose/pose" value="$(var initial_pose)" if="$(var user_defined_initial_pose/enable)"/>
-  <let name="user_defined_initial_pose/pose" value="[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]" unless="$(var user_defined_initial_pose/enable)"/>
+  <arg name="user_defined_initial_pose/enable" default="false"/>
+  <arg name="user_defined_initial_pose/pose" default="[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]" description="initial pose (x, y, z, quat_x, quat_y, quat_z, quat_w)"/>
 
   <!-- NDT Scan Matcher Launch (as pose estimator) -->
   <group if="$(var use_ndt_pose)">

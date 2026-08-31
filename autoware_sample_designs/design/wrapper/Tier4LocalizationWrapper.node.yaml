@@ -61,28 +61,28 @@ publishers:
 param_files: []
 
 param_values:
-  - name: pose_source
-    default: ndt
-  - name: ndt_enabled
+  - name: use_ndt_pose
+    default: true
+  - name: use_yabloc_pose
+    default: false
+  - name: use_artag_pose
+    default: false
+  - name: use_lidar_marker_pose
+    default: false
+  - name: use_eagleye_pose
+    default: false
+  - name: use_eagleye_twist
+    default: false
+  - name: use_gyro_odom_twist
     default: true
   - name: gnss_enabled
     default: true
-  - name: ekf_enabled
-    default: true
-  - name: yabloc_enabled
-    default: false
   - name: stop_check_enabled
     default: false
-  - name: twist_source
-    default: gyro_odom
   - name: input_pointcloud
     default: /sensing/lidar/concatenated/pointcloud
-  - name: system_run_mode
-    default: online
   - name: localization_pointcloud_container_name
     default: /pointcloud_container
-  - name: initial_pose
-    default: "[]"
   - name: user_defined_initial_pose/enable
     default: false
   - name: user_defined_initial_pose/pose
