@@ -287,6 +287,10 @@ connections:
 remaps:
   - source: localization.publisher.initialpose3d
     topic: /initialpose3d
+  - source: map.publisher.map_hash
+    topic: /api/autoware/get/map/info/hash
+  - source: map.server.get_vector_map_xml
+    topic: /api/autoware/get/map/lanelet/xml
   - source: control.publisher.is_autonomous_available
     topic: /system/operation_mode/state
   - source: control.publisher.external_emergency

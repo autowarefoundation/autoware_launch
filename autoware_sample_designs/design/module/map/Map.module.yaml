@@ -28,12 +28,14 @@ publishers:
   - name: vector_map_metadata
   - name: vector_map_marker
   - name: map_projector_info
+  - name: map_hash
 
 servers:
   - name: get_partial_pointcloud_map
   - name: get_differential_pointcloud_map
   - name: get_selected_pointcloud_map
   - name: get_selected_vector_map
+  - name: get_vector_map_xml
 
 connections:
   # projector info drives the lanelet2 map loading
@@ -59,6 +61,8 @@ connections:
     - publisher.vector_map_marker
   - - map_projection_loader.publisher.map_projector_info
     - publisher.map_projector_info
+  - - map_hash_generator.publisher.map_hash
+    - publisher.map_hash
   - - pointcloud_map_loader.server.get_partial_pcd_map
     - server.get_partial_pointcloud_map
   - - pointcloud_map_loader.server.get_differential_pcd_map
@@ -67,3 +71,5 @@ connections:
     - server.get_selected_pointcloud_map
   - - lanelet2_map_loader.server.get_selected_lanelet2_map
     - server.get_selected_vector_map
+  - - map_hash_generator.server.get_lanelet_xml
+    - server.get_vector_map_xml
