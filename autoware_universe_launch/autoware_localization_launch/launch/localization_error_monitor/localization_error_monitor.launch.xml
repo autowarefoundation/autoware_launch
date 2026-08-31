@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="localization_config_pkg" default="autoware_localization_config" description="package that ships the localization config/ tree; overriding it relocates every parameter file"/>
+  <let name="localization_config_dir" value="$(find-pkg-share $(var localization_config_pkg))/config"/>
+  <arg name="localization_error_monitor_param_path" default="$(var localization_config_dir)/localization_error_monitor.param.yaml"/>
   <group>
     <include file="$(find-pkg-share autoware_localization_error_monitor)/launch/localization_error_monitor.launch.xml">
       <arg name="input/odom" value="/localization/kinematic_state"/>

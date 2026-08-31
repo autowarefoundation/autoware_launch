@@ -1,39 +1,42 @@
 # autoware_localization_launch
 
-Shared localization launch library. The system component launcher lives in the product layer (`autoware_launch/launch/components/component_localization.launch.xml`); this package hosts the localization launcher it wraps:
-
-The launch tree mirrors the design module tree: `localization.launch.xml` composes the same instances as `Localization.module.yaml`, and each sub-launcher corresponds to one module.
+Shared localization launch library. This package ships one self-contained launcher per localization unit; the system component launcher in the product layer (`autoware_launch/launch/components/component_localization.launch.xml`) is the composition root that selects which units launch and wires the topics between them, the same way `Localization.module.yaml` composes its instances on the design side.
 
 ```bash
 launch/
-├── localization.launch.xml               # composition root: estimators, util, fusion filter, error monitor
-├── pose_twist_estimator/                 # ndt, yabloc, eagleye, artag, lidar-marker and gyro odometer launchers
+├── pose_twist_estimator/                 # one launcher per estimator
+│   ├── ndt_scan_matcher.launch.xml
+│   ├── gyro_odometer.launch.xml
+│   ├── yabloc.launch.xml
+│   ├── eagleye/eagleye_rt.launch.xml
+│   ├── ar_tag_based_localizer.launch.xml
+│   └── lidar_marker_localizer.launch.xml
 ├── pose_twist_fusion_filter/             # ekf localizer, stop filter, twist2accel, pose instability detector
 ├── localization_error_monitor/
 └── util/                                 # pose initializer and the ndt input pointcloud downsampling
 design/module/                            # Autoware System Designer modules
-├── Localization.module.yaml              # localization component: same node set as localization.launch.xml
+├── Localization.module.yaml              # composition of the instances a system runs
 ├── pose_twist_estimator/                 # ndt pose estimator and gyro odometer twist estimator
 ├── pose_twist_fusion_filter/
 └── util/                                 # LocalizationUtil: same node set as launch/util
 ```
 
-## Structure
-
-![autoware_localization_launch](./localization_launch.drawio.svg)
-
 ## Launch files
 
-- `localization.launch.xml` — the entry point. It resolves every parameter file and pushes the `localization` namespace. Each estimator has its own junction flag (`use_ndt_pose`, `use_yabloc_pose`, `use_artag_pose`, `use_lidar_marker_pose`, `use_eagleye_pose`, `use_eagleye_twist`, `use_gyro_odom_twist`); running several pose estimators additionally takes `multi_localizer_mode` with the matching `pose_sources` list, which bring up the pose estimator arbiter and its input relays. The product component (`component_localization.launch.xml`) flattens its `pose_source`/`twist_source` selection into these flags. The util module (pose initializer, and the downsampling chain feeding NDT — loaded into the shared pointcloud container), the fusion filter (EKF, stop filter, twist2accel, pose instability detector) and the localization error monitor always launch; cross-module wiring (the arbiter relay topics, eagleye standing in for the gnss pose) is resolved at the composition root.
+There is no single entry launcher: each unit is included on its own, so a system launches only the estimators it uses and never loads the parameters of the others. Each unit declares its own `*_param_path` arguments and resolves them from the config package; the caller selects units, pushes the namespaces (`pose_estimator`, `twist_estimator`, `util`, `pose_twist_fusion_filter`) and wires the boundary topics (the arbiter relay inputs, eagleye standing in for the gnss pose).
+
+- `pose_twist_estimator/*.launch.xml` — one launcher per pose/twist estimator. Running several pose estimators additionally takes the pose estimator arbiter (`autoware_pose_estimator_arbiter`), which relays the estimator inputs and arbitrates the outputs.
+- `util/util.launch.xml` — pose initializer, automatic pose initializer, and the downsampling chain feeding NDT, loaded into the shared pointcloud container.
+- `pose_twist_fusion_filter/pose_twist_fusion_filter.launch.xml` — EKF localizer, stop filter, twist2accel, pose instability detector.
+- `localization_error_monitor/localization_error_monitor.launch.xml`
 
 ## Config
 
-Parameter files are resolved from a `config/` tree addressed through the `localization_config_pkg` argument, which defaults to `autoware_localization_config`. A product can relocate the whole tree by setting `localization_config_pkg` once at its entry point — the launch configuration propagates through every include — but it must then ship the same `config/` layout. Products that differ in only a few files instead override the corresponding `*_param_path` arguments, which are all declared at the top of `localization.launch.xml`:
+Each unit resolves its parameter files from a `config/` tree addressed through the `localization_config_pkg` argument, which defaults to `autoware_localization_config`. A product can relocate the whole tree by setting `localization_config_pkg` once at its entry point — the launch configuration propagates through every include — but it must then ship the same `config/` layout. Products that differ in only a few files instead override the corresponding `*_param_path` arguments declared at the top of each unit launcher:
 
 ```xml
-<include file="$(find-pkg-share autoware_localization_launch)/launch/localization.launch.xml">
-  <arg name="localization_config_pkg" value="my_localization_config"/>
-  <arg name="FOO_NODE_param_path" value="..."/>
+<include file="$(find-pkg-share autoware_localization_launch)/launch/pose_twist_estimator/ndt_scan_matcher.launch.xml">
+  <arg name="ndt_scan_matcher/ndt_scan_matcher_param_path" value="..."/>
 </include>
 ```
 

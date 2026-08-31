@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="localization_config_pkg" default="autoware_localization_config" description="package that ships the localization config/ tree; overriding it relocates every parameter file"/>
+  <let name="localization_config_dir" value="$(find-pkg-share $(var localization_config_pkg))/config"/>
+  <arg name="ndt_scan_matcher/ndt_scan_matcher_param_path" default="$(var localization_config_dir)/ndt_scan_matcher/ndt_scan_matcher.param.yaml"/>
   <arg name="output_pose_with_covariance_topic" default="/localization/pose_estimator/pose_with_covariance"/>
   <group>
     <include file="$(find-pkg-share autoware_ndt_scan_matcher)/launch/ndt_scan_matcher.launch.xml">

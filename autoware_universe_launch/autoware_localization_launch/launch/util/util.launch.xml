@@ -1,6 +1,21 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Localization utilities: pose initialization and the ndt input pointcloud downsampling; counterpart of LocalizationUtil.module -->
+  <arg name="localization_config_pkg" default="autoware_localization_config" description="package that ships the localization config/ tree; overriding it relocates every parameter file"/>
+  <let name="localization_config_dir" value="$(find-pkg-share $(var localization_config_pkg))/config"/>
+  <arg name="pose_initializer_param_path" default="$(var localization_config_dir)/pose_initializer.param.yaml"/>
+  <arg
+    name="ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path"
+    default="$(var localization_config_dir)/ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml"
+  />
+  <arg
+    name="ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_downsample_filter_param_path"
+    default="$(var localization_config_dir)/ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_filter.param.yaml"
+  />
+  <arg
+    name="ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter_param_path"
+    default="$(var localization_config_dir)/ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter.param.yaml"
+  />
   <arg name="use_ndt_pose" default="true" description="ndt is available to the pose_initializer; also launches the ndt input downsampling"/>
   <arg name="use_yabloc_pose" default="false" description="yabloc is available to the pose_initializer"/>
   <arg name="gnss_enabled" default="true" description="gnss availability for initial position estimation"/>
