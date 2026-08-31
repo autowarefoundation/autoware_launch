@@ -67,8 +67,9 @@ components:
 
   # MAP/LOCALIZATION
   - name: map
-    entity: Tier4MapWrapper.node
+    entity: Map.module
     compute_unit: main_ecu
+    parameter_set: universe_map.parameter_set
   - name: localization
     entity: Localization.module
     compute_unit: main_ecu
