@@ -20,6 +20,16 @@
         large_cluster_voxel_count_threshold: 5
         large_cluster_max_points_per_voxel: 30
         max_voxels_per_cluster: 200
+        min_cluster_size_m: 0.0
+      motorcycle:
+        tolerance_m: 0.4
+        voxel_leaf_size_m: 0.15
+        min_points_per_voxel: 1
+        min_points_per_cluster: 5
+        large_cluster_voxel_count_threshold: 5
+        large_cluster_max_points_per_voxel: 50
+        max_voxels_per_cluster: 300
+        min_cluster_size_m: 0.0
       bicycle:
         tolerance_m: 0.4
         voxel_leaf_size_m: 0.15
@@ -28,6 +38,16 @@
         large_cluster_voxel_count_threshold: 5
         large_cluster_max_points_per_voxel: 50
         max_voxels_per_cluster: 300
+        min_cluster_size_m: 0.0
+      animal:
+        tolerance_m: 0.3
+        voxel_leaf_size_m: 0.1
+        min_points_per_voxel: 1
+        min_points_per_cluster: 3
+        large_cluster_voxel_count_threshold: 5
+        large_cluster_max_points_per_voxel: 30
+        max_voxels_per_cluster: 200
+        min_cluster_size_m: 0.0
       hazard:
         tolerance_m: 0.3
         voxel_leaf_size_m: 0.1
@@ -36,16 +56,19 @@
         large_cluster_voxel_count_threshold: 5
         large_cluster_max_points_per_voxel: 30
         max_voxels_per_cluster: 200
+        min_cluster_size_m: 0.0
 
     # Post-clustering merge for confusable label pairs. Omit this block to disable.
     confusable_label_groups:
-      truck_trailer:
-        labels: ["truck", "trailer"]
+      truck_trailer_car:
+        labels: ["truck", "trailer", "car"]
         cross_label_tolerance_m: 0.5
         max_merged_size_m: 25.0
 
     # Point filtering by semantic confidence
     min_probability: 0.3
+    # Minimum XY bounding-circle diameter for a clustered object (0 disables filtering).
+    min_cluster_size_m: 1.5
 
     # Semantic label selection and mapping
     # YAML declaration order is treated as the input class_id order.
