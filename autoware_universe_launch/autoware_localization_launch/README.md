@@ -25,7 +25,7 @@ design/module/                            # Autoware System Designer modules
 
 There is no single entry launcher: each unit is included on its own, so a system launches only the estimators it uses and never loads the parameters of the others. Each unit declares its own `*_param_path` arguments and resolves them from the config package; the caller selects units, pushes the namespaces (`pose_estimator`, `twist_estimator`, `util`, `pose_twist_fusion_filter`) and wires the boundary topics (the arbiter relay inputs, eagleye standing in for the gnss pose).
 
-- `pose_twist_estimator/*.launch.xml` — one launcher per pose/twist estimator. Running several pose estimators additionally takes the pose estimator arbiter (`autoware_pose_estimator_arbiter`), which relays the estimator inputs and arbitrates the outputs.
+- `pose_twist_estimator/*.launch.xml` — one launcher per pose/twist estimator. Running several pose estimators additionally takes the pose estimator arbiter, which relays the estimator inputs and arbitrates the outputs; the composition root launches it from `autoware_pose_estimator_arbiter`.
 - `util/util.launch.xml` — pose initializer, automatic pose initializer, and the downsampling chain feeding NDT, loaded into the shared pointcloud container.
 - `pose_twist_fusion_filter/pose_twist_fusion_filter.launch.xml` — EKF localizer, stop filter, twist2accel, pose instability detector.
 - `localization_error_monitor/localization_error_monitor.launch.xml`

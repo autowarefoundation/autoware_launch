@@ -19,10 +19,10 @@ config/
 
 ## Usage
 
-`autoware_localization_launch` resolves the tree through its `localization_config_pkg` argument, which defaults to this package:
+Every unit launcher of `autoware_localization_launch` resolves the tree through its `localization_config_pkg` argument, which defaults to this package. The composition root sets it once and the units inherit it:
 
 ```xml
-<include file="$(find-pkg-share autoware_localization_launch)/launch/localization.launch.xml">
+<include file="$(find-pkg-share autoware_launch)/launch/components/component_localization.launch.xml">
   <arg name="localization_config_pkg" value="my_localization_config"/>
 </include>
 ```

@@ -119,7 +119,7 @@ perception:
           - path: autoware_universe_launch/autoware_perception_config/config/object_recognition/tracking/tracking_object_merger/decorative_tracker_merger.param.yaml
       # Perception/obstacle_segmentation
       - source: perception/autoware_elevation_map_loader/config/elevation_map_parameters.yaml
-        # note: this is not a valid ROS2 param file format.
+        # note: this is not a valid ROS 2 param file format.
         variants:
           - path: autoware_universe_launch/autoware_perception_config/config/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml
       #
