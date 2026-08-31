@@ -6,11 +6,11 @@ name: Map.module
 
 instances:
   - name: pointcloud_map_loader
-    entity: PointcloudMapLoader.node
+    entity: PointCloudMapLoader.node
   - name: lanelet2_map_loader
     entity: Lanelet2MapLoader.node
   - name: lanelet2_map_visualization
-    entity: Lanelet2MapVisualizer.node
+    entity: Lanelet2MapVisualization.node
   - name: vector_map_tf_generator
     entity: VectorMapTfGenerator.node
   - name: map_hash_generator
