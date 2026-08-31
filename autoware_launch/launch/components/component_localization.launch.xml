@@ -30,8 +30,8 @@
   <let name="use_gyro_odom_twist" value="$(eval &quot;'gyro_odom' == '$(var twist_source)'&quot;)"/>
 
   <!-- only when running with a real vehicle, the pose_initializer judges the stop -->
+  <let name="stop_check_enabled" unless="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)" value="false"/>
   <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)" value="true"/>
-  <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)" value="false"/>
 
   <!-- set initial pose -->
   <let name="user_defined_initial_pose/enable" value="$(eval &quot;len($(var initial_pose)) == 7&quot;)"/>
