@@ -23,6 +23,8 @@
   <exec_depend>autoware_dummy_traffic_light_publisher</exec_depend>
   <exec_depend>autoware_elevation_map_loader</exec_depend>
   <exec_depend>autoware_global_parameter_loader</exec_depend>
+  <exec_depend>autoware_localization_config</exec_depend>
+  <exec_depend>autoware_localization_launch</exec_depend>
   <exec_depend>autoware_map_based_prediction</exec_depend>
   <exec_depend>autoware_multi_object_tracker</exec_depend>
   <exec_depend>autoware_perception_config</exec_depend>
@@ -34,7 +36,6 @@
   <exec_depend>python3-tornado</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <exec_depend>tier4_autoware_api_launch</exec_depend>
-  <exec_depend>tier4_localization_launch</exec_depend>
   <exec_depend>tier4_map_launch</exec_depend>
   <exec_depend>tier4_simulator_launch</exec_depend>
   <exec_depend>tier4_system_launch</exec_depend>

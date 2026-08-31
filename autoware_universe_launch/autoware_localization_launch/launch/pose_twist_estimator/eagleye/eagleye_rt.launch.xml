@@ -2,7 +2,7 @@
 <launch>
   <arg name="output_pose_with_cov_name" default="/localization/pose_estimator/pose_with_covariance"/>
   <arg name="output_twist_with_cov_name" default="/localization/twist_estimator/twist_with_covariance"/>
-  <arg name="directory_with_related_launches" default="$(find-pkg-share tier4_localization_launch)/launch/pose_twist_estimator/eagleye"/>
+  <arg name="directory_with_related_launches" default="$(find-pkg-share autoware_localization_launch)/launch/pose_twist_estimator/eagleye"/>
   <arg name="use_eagleye_pose" default="true"/>
   <arg name="use_eagleye_twist" default="true"/>
 

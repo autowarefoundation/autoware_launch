@@ -10,5 +10,5 @@ param-checks:
       package: autoware_pose_initializer
       file: schema/pose_initializer.schema.json
     params:
-      package: autoware_launch
-      file: config/localization/pose_initializer.param.yaml
+      package: autoware_localization_config
+      file: config/pose_initializer.param.yaml
