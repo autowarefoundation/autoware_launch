@@ -13,6 +13,8 @@
 
   <!-- Parameter files -->
   <arg name="localization_error_monitor_param_path"/>
+  <arg name="environment_adaptor_param_path" default="$(find-pkg-share autoware_environment_adaptor)/config/environment_adaptor.param.yaml"/>
+  <arg name="use_autoware_environment_adaptor" default="false"/>
   <arg name="ekf_localizer_param_path"/>
   <arg name="stop_filter_param_path"/>
   <arg name="pose_instability_detector_param_path"/>
@@ -31,6 +33,8 @@
     <!-- pose_twist_estimator module -->
     <include file="$(find-pkg-share tier4_localization_launch)/launch/pose_twist_estimator/pose_twist_estimator.launch.xml">
       <arg name="localization_pointcloud_container_name" value="$(var localization_pointcloud_container_name)"/>
+      <arg name="environment_adaptor_param_path" value="$(var environment_adaptor_param_path)"/>
+      <arg name="use_autoware_environment_adaptor" value="$(var use_autoware_environment_adaptor)"/>
     </include>
 
     <!-- pose_twist_fusion_filter module -->
