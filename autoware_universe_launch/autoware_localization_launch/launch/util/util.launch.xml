@@ -1,5 +1,16 @@
+<?xml version="1.0"?>
 <launch>
+  <!-- Localization utilities: pose initialization and the ndt input pointcloud downsampling; counterpart of LocalizationUtil.module -->
+  <arg name="use_ndt_pose" default="true" description="ndt is available to the pose_initializer; also launches the ndt input downsampling"/>
+  <arg name="use_yabloc_pose" default="false" description="yabloc is available to the pose_initializer"/>
+  <arg name="gnss_enabled" default="true" description="gnss availability for initial position estimation"/>
+  <arg name="stop_check_enabled" default="true" description="the pose_initializer judges the stop"/>
+  <arg name="user_defined_initial_pose/enable" default="false"/>
+  <arg name="user_defined_initial_pose/pose" default="[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]" description="initial pose (x, y, z, quat_x, quat_y, quat_z, quat_w)"/>
+  <arg name="sub_gnss_pose_cov" default="/sensing/gnss/pose_with_covariance" description="gnss pose source of the pose_initializer"/>
+
   <!-- topic -->
+  <arg name="input_pointcloud" default="/sensing/lidar/concatenated/pointcloud" description="input topic of the downsampling chain"/>
   <arg name="output/pointcloud" default="downsample/pointcloud" description="final output topic name"/>
 
   <!-- container -->
@@ -8,26 +19,47 @@
   <!-- whether use intra-process -->
   <arg name="use_intra_process" default="true" description="use ROS 2 component container communication"/>
 
-  <load_composable_node target="$(var localization_pointcloud_container_name)">
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter_measurement_range">
-      <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path)"/>
-      <remap from="input" to="$(var input_pointcloud)"/>
-      <remap from="output" to="measurement_range/pointcloud"/>
-      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-    </composable_node>
+  <!-- pose_initializer -->
+  <include file="$(find-pkg-share autoware_pose_initializer)/launch/pose_initializer.launch.xml">
+    <arg name="user_defined_initial_pose/enable" value="$(var user_defined_initial_pose/enable)"/>
+    <arg name="user_defined_initial_pose/pose" value="$(var user_defined_initial_pose/pose)"/>
+    <arg name="ndt_enabled" value="$(var use_ndt_pose)"/>
+    <arg name="yabloc_enabled" value="$(var use_yabloc_pose)"/>
+    <arg name="gnss_enabled" value="$(var gnss_enabled)"/>
+    <arg name="ekf_enabled" value="true"/>
+    <arg name="stop_check_enabled" value="$(var stop_check_enabled)"/>
+    <arg name="config_file" value="$(var pose_initializer_param_path)"/>
+    <arg name="sub_gnss_pose_cov" value="$(var sub_gnss_pose_cov)"/>
+  </include>
 
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent" name="voxel_grid_downsample_filter">
-      <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_downsample_filter_param_path)"/>
-      <remap from="input" to="measurement_range/pointcloud"/>
-      <remap from="output" to="voxel_grid_downsample/pointcloud"/>
-      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-    </composable_node>
+  <!-- automatic_pose_initializer -->
+  <group if="$(var gnss_enabled)">
+    <include file="$(find-pkg-share autoware_automatic_pose_initializer)/launch/automatic_pose_initializer.launch.xml"/>
+  </group>
 
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::RandomDownsampleFilterComponent" name="random_downsample_filter">
-      <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter_param_path)"/>
-      <remap from="input" to="voxel_grid_downsample/pointcloud"/>
-      <remap from="output" to="$(var output/pointcloud)"/>
-      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-    </composable_node>
-  </load_composable_node>
+  <!-- ndt input pointcloud downsampling -->
+  <group if="$(var use_ndt_pose)">
+    <load_composable_node target="$(var localization_pointcloud_container_name)">
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter_measurement_range">
+        <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path)"/>
+        <remap from="input" to="$(var input_pointcloud)"/>
+        <remap from="output" to="measurement_range/pointcloud"/>
+        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+      </composable_node>
+
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent" name="voxel_grid_downsample_filter">
+        <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_downsample_filter_param_path)"/>
+        <remap from="input" to="measurement_range/pointcloud"/>
+        <remap from="output" to="voxel_grid_downsample/pointcloud"/>
+        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+      </composable_node>
+
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::RandomDownsampleFilterComponent" name="random_downsample_filter">
+        <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter_param_path)"/>
+        <remap from="input" to="voxel_grid_downsample/pointcloud"/>
+        <remap from="output" to="$(var output/pointcloud)"/>
+        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+      </composable_node>
+    </load_composable_node>
+  </group>
 </launch>

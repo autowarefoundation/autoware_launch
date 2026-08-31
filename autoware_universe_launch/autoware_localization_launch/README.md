@@ -2,18 +2,20 @@
 
 Shared localization launch library. The system component launcher lives in the product layer (`autoware_launch/launch/components/component_localization.launch.xml`); this package hosts the localization launcher it wraps:
 
+The launch tree mirrors the design module tree: `localization.launch.xml` composes the same instances as `Localization.module.yaml`, and each sub-launcher corresponds to one module.
+
 ```bash
 launch/
-├── localization.launch.xml               # localization entry: pose/twist estimators, fusion filter, error monitor
+├── localization.launch.xml               # composition root: estimators, util, fusion filter, error monitor
 ├── pose_twist_estimator/                 # ndt, yabloc, eagleye, artag, lidar-marker and gyro odometer launchers
 ├── pose_twist_fusion_filter/             # ekf localizer, stop filter, twist2accel, pose instability detector
 ├── localization_error_monitor/
-└── util/                                 # pointcloud downsampling for ndt
+└── util/                                 # pose initializer and the ndt input pointcloud downsampling
 design/module/                            # Autoware System Designer modules
 ├── Localization.module.yaml              # localization component: same node set as localization.launch.xml
 ├── pose_twist_estimator/                 # ndt pose estimator and gyro odometer twist estimator
 ├── pose_twist_fusion_filter/
-└── util/
+└── util/                                 # LocalizationUtil: same node set as launch/util
 ```
 
 ## Structure
@@ -22,7 +24,7 @@ design/module/                            # Autoware System Designer modules
 
 ## Launch files
 
-- `localization.launch.xml` — the entry point. It resolves every parameter file and pushes the `localization` namespace. Each estimator has its own junction flag (`use_ndt_pose`, `use_yabloc_pose`, `use_artag_pose`, `use_lidar_marker_pose`, `use_eagleye_pose`, `use_eagleye_twist`, `use_gyro_odom_twist`); running several pose estimators additionally takes `multi_localizer_mode` with the matching `pose_sources` list, which bring up the pose estimator arbiter and its input relays. The product component (`component_localization.launch.xml`) flattens its `pose_source`/`twist_source` selection into these flags. The fusion filter (EKF, stop filter, twist2accel, pose instability detector), the pose initializer utilities and the localization error monitor always launch.
+- `localization.launch.xml` — the entry point. It resolves every parameter file and pushes the `localization` namespace. Each estimator has its own junction flag (`use_ndt_pose`, `use_yabloc_pose`, `use_artag_pose`, `use_lidar_marker_pose`, `use_eagleye_pose`, `use_eagleye_twist`, `use_gyro_odom_twist`); running several pose estimators additionally takes `multi_localizer_mode` with the matching `pose_sources` list, which bring up the pose estimator arbiter and its input relays. The product component (`component_localization.launch.xml`) flattens its `pose_source`/`twist_source` selection into these flags. The util module (pose initializer, and the downsampling chain feeding NDT — loaded into the shared pointcloud container), the fusion filter (EKF, stop filter, twist2accel, pose instability detector) and the localization error monitor always launch; cross-module wiring (the arbiter relay topics, eagleye standing in for the gnss pose) is resolved at the composition root.
 
 ## Config
 
