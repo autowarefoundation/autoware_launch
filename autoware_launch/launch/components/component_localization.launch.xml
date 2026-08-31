@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- Localization pipeline: the pose/twist sources are product-level choices; parameter files are resolved inside autoware_localization_launch -->
+  <!-- Localization pipeline: the pose/twist sources are product-level choices, flattened here into per-estimator junctions; parameter files are resolved inside autoware_localization_launch -->
   <arg name="localization_config_pkg" default="autoware_localization_config" description="package that ships the localization config/ tree; overriding it relocates every parameter file"/>
-  <arg name="pose_source" default="ndt" description="select pose_estimator: ndt, yabloc, eagleye"/>
+  <arg name="pose_source" default="ndt" description="A string consisting of ndt, yabloc, eagleye, artag and lidar-marker joined by underscores no matter the order. e.g. ndt_yabloc"/>
   <arg name="twist_source" default="gyro_odom" description="select twist_estimator. gyro_odom, eagleye"/>
   <arg name="system_run_mode" default="online" description="run mode in system"/>
+  <arg name="gnss_enabled" default="true" description="gnss availability for initial position estimation"/>
   <arg name="input_pointcloud" default="/sensing/lidar/concatenated/pointcloud" description="The topic will be used in the localization util module"/>
   <arg name="localization_pointcloud_container_name" default="/pointcloud_container" description="The target container to which pointcloud preprocessing nodes in localization be attached"/>
   <arg name="initial_pose" default="[]" description="initial pose (x, y, z, quat_x, quat_y, quat_z, quat_w)"/>
@@ -13,6 +14,28 @@
     default="false"
     description="if true, launch pointcloud container. Please note that it is not intended to launch pointcloud_container_name with the same name in other launch files."
   />
+
+  <!-- Flatten pose_source/twist_source into per-estimator junctions; the launcher takes only these -->
+  <let name="available_args" value="[\'ndt\',\'yabloc\',\'eagleye\',\'artag\',\'lidar-marker\']"/>
+  <let name="split_function" value="list(set('$(var pose_source)'.split('_')).intersection($(var available_args)))"/>
+  <let name="pose_sources" value="$(eval $(var split_function))"/>
+  <let name="multi_localizer_mode" value="$(eval &quot;len($(var pose_sources))> 1&quot;)"/>
+  <let name="use_ndt_pose" value="$(eval &quot;'ndt' in $(var pose_sources)&quot;)"/>
+  <let name="use_yabloc_pose" value="$(eval &quot;'yabloc' in $(var pose_sources)&quot;)"/>
+  <let name="use_artag_pose" value="$(eval &quot;'artag' in $(var pose_sources)&quot;)"/>
+  <let name="use_lidar_marker_pose" value="$(eval &quot;'lidar-marker' in $(var pose_sources)&quot;)"/>
+  <let name="use_eagleye_pose" value="$(eval &quot;'eagleye' in $(var pose_sources)&quot;)"/>
+  <let name="use_eagleye_twist" value="$(eval &quot;'eagleye' == '$(var twist_source)'&quot;)"/>
+  <let name="use_gyro_odom_twist" value="$(eval &quot;'gyro_odom' == '$(var twist_source)'&quot;)"/>
+
+  <!-- only when running with a real vehicle, the pose_initializer judges the stop -->
+  <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='online'&quot;)" value="true"/>
+  <let name="stop_check_enabled" if="$(eval &quot;'$(var system_run_mode)'=='logging_simulation'&quot;)" value="false"/>
+
+  <!-- set initial pose -->
+  <let name="user_defined_initial_pose/enable" value="$(eval &quot;len($(var initial_pose)) == 7&quot;)"/>
+  <let name="user_defined_initial_pose/pose" value="$(var initial_pose)" if="$(var user_defined_initial_pose/enable)"/>
+  <let name="user_defined_initial_pose/pose" value="[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]" unless="$(var user_defined_initial_pose/enable)"/>
 
   <!-- Pointcloud container -->
   <group if="$(var launch_pointcloud_container)">
@@ -36,12 +59,21 @@
   <group>
     <include file="$(find-pkg-share autoware_localization_launch)/launch/localization.launch.xml">
       <arg name="localization_config_pkg" value="$(var localization_config_pkg)"/>
-      <arg name="pose_source" value="$(var pose_source)"/>
-      <arg name="twist_source" value="$(var twist_source)"/>
-      <arg name="system_run_mode" value="$(var system_run_mode)"/>
+      <arg name="use_ndt_pose" value="$(var use_ndt_pose)"/>
+      <arg name="use_yabloc_pose" value="$(var use_yabloc_pose)"/>
+      <arg name="use_artag_pose" value="$(var use_artag_pose)"/>
+      <arg name="use_lidar_marker_pose" value="$(var use_lidar_marker_pose)"/>
+      <arg name="use_eagleye_pose" value="$(var use_eagleye_pose)"/>
+      <arg name="use_eagleye_twist" value="$(var use_eagleye_twist)"/>
+      <arg name="use_gyro_odom_twist" value="$(var use_gyro_odom_twist)"/>
+      <arg name="multi_localizer_mode" value="$(var multi_localizer_mode)"/>
+      <arg name="pose_sources" value="$(var pose_sources)"/>
+      <arg name="gnss_enabled" value="$(var gnss_enabled)"/>
+      <arg name="stop_check_enabled" value="$(var stop_check_enabled)"/>
+      <arg name="user_defined_initial_pose/enable" value="$(var user_defined_initial_pose/enable)"/>
+      <arg name="user_defined_initial_pose/pose" value="$(var user_defined_initial_pose/pose)"/>
       <arg name="input_pointcloud" value="$(var input_pointcloud)"/>
       <arg name="localization_pointcloud_container_name" value="$(var localization_pointcloud_container_name)"/>
-      <arg name="initial_pose" value="$(var initial_pose)"/>
     </include>
   </group>
 </launch>
