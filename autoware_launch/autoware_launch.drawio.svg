@@ -204,7 +204,7 @@
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_localization_launch</span>
+                  <span>package: autoware_localization_launch</span>
                 </div>
               </div>
             </div>
@@ -1137,7 +1137,7 @@
                 <br/>
                 <br/>
                 <div style="text-align: left">
-                  <span>package: tier4_localization_launch</span>
+                  <span>package: autoware_localization_launch</span>
                 </div>
               </div>
             </div>

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Localization pipeline: pose/twist estimators, fusion filter and error monitor, all under the localization namespace -->
+  <arg name="localization_config_pkg" default="autoware_localization_config" description="package that ships the localization config/ tree; overriding it requires the same config layout"/>
+  <let name="localization_config_dir" value="$(find-pkg-share $(var localization_config_pkg))/config"/>
+
+  <!-- Pipeline junctions -->
+  <arg name="pose_source" default="ndt" description="A string consisting of ndt, yabloc, artag, lidar-marker and eagleye joined by underscores no matter the order. e.g. ndt_yabloc"/>
+  <arg name="twist_source" default="gyro_odom" description="twist estimator; options: `gyro_odom`, `eagleye`"/>
+  <arg name="initial_pose" default="[]" description="initial pose (x, y, z, quat_x, quat_y, quat_z, quat_w)"/>
+  <arg name="system_run_mode" default="online" description="run mode in system"/>
+
+  <!-- External interfaces -->
+  <arg name="input_pointcloud" default="/sensing/lidar/concatenated/pointcloud" description="input topic of the localization util module"/>
+  <arg name="localization_pointcloud_container_name" default="/pointcloud_container" description="container to which the localization pointcloud preprocessing nodes attach"/>
+
+  <!-- Parameter paths: common -->
+  <arg name="localization_error_monitor_param_path" default="$(var localization_config_dir)/localization_error_monitor.param.yaml"/>
+  <arg name="ekf_localizer_param_path" default="$(var localization_config_dir)/ekf_localizer.param.yaml"/>
+  <arg name="stop_filter_param_path" default="$(var localization_config_dir)/stop_filter.param.yaml"/>
+  <arg name="pose_instability_detector_param_path" default="$(var localization_config_dir)/pose_instability_detector.param.yaml"/>
+  <arg name="pose_initializer_param_path" default="$(var localization_config_dir)/pose_initializer.param.yaml"/>
+  <arg name="twist2accel_param_path" default="$(var localization_config_dir)/twist2accel.param.yaml"/>
+
+  <!-- Parameter paths: ndt -->
+  <arg name="ndt_scan_matcher/ndt_scan_matcher_param_path" default="$(var localization_config_dir)/ndt_scan_matcher/ndt_scan_matcher.param.yaml"/>
+  <arg
+    name="ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path"
+    default="$(var localization_config_dir)/ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml"
+  />
+  <arg
+    name="ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_downsample_filter_param_path"
+    default="$(var localization_config_dir)/ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_filter.param.yaml"
+  />
+  <arg
+    name="ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter_param_path"
+    default="$(var localization_config_dir)/ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter.param.yaml"
+  />
+
+  <!-- Parameter paths: yabloc -->
+  <arg name="camera_pose_initializer_param_path" default="$(var localization_config_dir)/yabloc/camera_pose_initializer.param.yaml"/>
+  <arg name="camera_particle_corrector_param_path" default="$(var localization_config_dir)/yabloc/camera_particle_corrector.param.yaml"/>
+  <arg name="gnss_particle_corrector_param_path" default="$(var localization_config_dir)/yabloc/gnss_particle_corrector.param.yaml"/>
+  <arg name="predictor_param_path" default="$(var localization_config_dir)/yabloc/predictor.param.yaml"/>
+  <arg name="graph_segment_param_path" default="$(var localization_config_dir)/yabloc/graph_segment.param.yaml"/>
+  <arg name="segment_filter_param_path" default="$(var localization_config_dir)/yabloc/segment_filter.param.yaml"/>
+  <arg name="undistort_param_path" default="$(var localization_config_dir)/yabloc/undistort.param.yaml"/>
+  <arg name="ground_server_param_path" default="$(var localization_config_dir)/yabloc/ground_server.param.yaml"/>
+  <arg name="ll2_decomposer_param_path" default="$(var localization_config_dir)/yabloc/ll2_decomposer.param.yaml"/>
+
+  <!-- Parameter paths: eagleye -->
+  <arg name="eagleye_param_path" default="$(var localization_config_dir)/eagleye_config.param.yaml"/>
+
+  <!-- Parameter paths: lidar_marker_localizer -->
+  <arg name="lidar_marker_localizer/lidar_marker_localizer_param_path" default="$(var localization_config_dir)/lidar_marker_localizer/lidar_marker_localizer.param.yaml"/>
+  <arg
+    name="lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path"
+    default="$(var localization_config_dir)/lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml"
+  />
+  <arg name="lidar_marker_localizer/pointcloud_preprocessor/ring_filter_param_path" default="$(var localization_config_dir)/lidar_marker_localizer/pointcloud_preprocessor/ring_filter.param.yaml"/>
+
+  <!-- Parameter paths: ar_tag_based_localizer -->
+  <arg name="ar_tag_based_localizer_param_path" default="$(var localization_config_dir)/ar_tag_based_localizer.param.yaml"/>
+
+  <!-- localization module -->
+  <group>
+    <push-ros-namespace namespace="localization"/>
+    <!-- pose_twist_estimator module -->
+    <include file="$(find-pkg-share autoware_localization_launch)/launch/pose_twist_estimator/pose_twist_estimator.launch.xml">
+      <arg name="localization_pointcloud_container_name" value="$(var localization_pointcloud_container_name)"/>
+    </include>
+
+    <!-- pose_twist_fusion_filter module -->
+    <group>
+      <push-ros-namespace namespace="pose_twist_fusion_filter"/>
+      <include file="$(find-pkg-share autoware_localization_launch)/launch/pose_twist_fusion_filter/pose_twist_fusion_filter.launch.xml"/>
+    </group>
+
+    <!-- localization_error_monitor_module -->
+    <group>
+      <include file="$(find-pkg-share autoware_localization_launch)/launch/localization_error_monitor/localization_error_monitor.launch.xml"/>
+    </group>
+  </group>
+</launch>
