@@ -35,10 +35,18 @@ publishers:
     message_type: autoware_vehicle_msgs/msg/TurnIndicatorsReport
   - name: vehicle/status/velocity_status
     message_type: autoware_vehicle_msgs/msg/VelocityReport
+  - name: vehicle/status/battery_charge
+    message_type: tier4_vehicle_msgs/msg/BatteryStatus
+  - name: control/command/actuation_cmd
+    message_type: tier4_vehicle_msgs/msg/ActuationCommandStamped
 
 servers:
   - name: control/control_mode_request
     message_type: autoware_vehicle_msgs/srv/ControlModeCommand
+  - name: vehicle/doors/command
+    message_type: autoware_adapi_v1_msgs/srv/SetDoorCommand
+  - name: vehicle/doors/layout
+    message_type: autoware_adapi_v1_msgs/srv/GetDoorLayout
 
 # parameters
 param_files: []
