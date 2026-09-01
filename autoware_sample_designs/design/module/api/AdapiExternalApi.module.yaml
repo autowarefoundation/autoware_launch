@@ -1,0 +1,30 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+# External API adaptors: the RTC controller for the external cooperate API.
+name: AdapiExternalApi.module
+
+instances:
+  - name: external/rtc_controller/node
+    entity: AdapiRtcController.node
+
+# interfaces
+subscribers: []
+
+publishers:
+  - name: api/external/get/rtc_status
+  - name: api/external/get/rtc_auto_mode
+
+servers:
+  - name: api/external/set/rtc_commands
+  - name: api/external/set/rtc_auto_mode
+
+clients: []
+
+connections:
+  - - external/rtc_controller/node.publisher.^
+    - publisher.api/external/^
+  - - external/rtc_controller/node.server.set/rtc_commands
+    - server.api/external/set/rtc_commands
+  - - external/rtc_controller/node.server.set/rtc_auto_mode
+    - server.api/external/set/rtc_auto_mode

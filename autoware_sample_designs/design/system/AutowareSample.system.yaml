@@ -55,11 +55,16 @@ components:
     compute_unit: main_ecu
 
   # ADAPI
-  - name: api
-    entity: Adapi.module
-    path: /
+  - name: adapi
+    entity: AdapiNodes.module
     compute_unit: main_ecu
     parameter_set: universe_adapi.parameter_set
+  - name: default_adapi
+    entity: AdapiRvizHelpers.module
+    compute_unit: main_ecu
+  - name: autoware_api
+    entity: AdapiExternalApi.module
+    compute_unit: main_ecu
 
   # SENSING
   - name: sensing
@@ -185,9 +190,9 @@ connections:
     - sensing.subscriber.pose_ndt
 
   - - localization.publisher.initialization_state
-    - api.subscriber.localization/initialization_state
+    - adapi.subscriber.localization/initialization_state
   - - localization.publisher.kinematic_state
-    - api.subscriber.localization/kinematic_state
+    - adapi.subscriber.localization/kinematic_state
 
   - - sensing.publisher.lidar/concatenated/pointcloud
     - perception.subscriber.concatenated_pointcloud
@@ -236,7 +241,7 @@ connections:
     - planning.subscriber.control_cmd
   - - control.publisher.predicted_trajectory
     - planning.subscriber.predicted_trajectory
-  - - api.publisher.api/operation_mode/state
+  - - adapi.publisher.api/operation_mode/state
     - planning.subscriber.api_operation_mode_state
 
   - - planning.publisher.trajectory
@@ -248,7 +253,7 @@ connections:
   - - planning.publisher.route_state
     - control.subscriber.route_state
   - - planning.publisher.route
-    - api.subscriber.planning/route
+    - adapi.subscriber.planning/route
   - - planning.publisher.route
     - system.subscriber.planning/route
   - - planning.publisher.turn_indicators_cmd
@@ -258,11 +263,11 @@ connections:
   - - system.publisher.operation_mode/state
     - control.subscriber.operation_mode_state
 
-  - - api.publisher.api/operation_mode/state
+  - - adapi.publisher.api/operation_mode/state
     - control.subscriber.api_operation_mode_state
-  - - api.publisher.autoware/state
+  - - adapi.publisher.autoware/state
     - control.subscriber.autoware_state
-  - - api.publisher.external/^
+  - - adapi.publisher.external/^
     - control.subscriber.external/^
 
   - - localization.publisher.kinematic_state
@@ -297,7 +302,7 @@ connections:
     - control.subscriber.imu
 
   - - system.publisher.fail_safe/mrm_state
-    - api.subscriber.system/fail_safe/mrm_state
+    - adapi.subscriber.system/fail_safe/mrm_state
   - - system.publisher.fail_safe/mrm_state
     - control.subscriber.mrm_state
 
@@ -339,87 +344,97 @@ connections:
   - - vehicle.publisher.vehicle/status/gear_status
     - control.subscriber.gear_status
   - - vehicle.publisher.vehicle/status/gear_status
-    - api.subscriber.vehicle/status/gear_status
+    - adapi.subscriber.vehicle/status/gear_status
   - - vehicle.publisher.vehicle/status/hazard_lights_status
-    - api.subscriber.vehicle/status/hazard_lights_status
+    - adapi.subscriber.vehicle/status/hazard_lights_status
   - - vehicle.publisher.vehicle/status/steering_status
     - control.subscriber.steering_status
   - - vehicle.publisher.vehicle/status/steering_status
     - planning.subscriber.steering_status
   - - vehicle.publisher.vehicle/status/steering_status
-    - api.subscriber.vehicle/status/steering_status
+    - adapi.subscriber.vehicle/status/steering_status
   - - vehicle.publisher.vehicle/status/turn_indicators_status
-    - api.subscriber.vehicle/status/turn_indicators_status
+    - adapi.subscriber.vehicle/status/turn_indicators_status
   - - vehicle.publisher.vehicle/status/velocity_status
     - control.subscriber.velocity_status
   - - vehicle.publisher.vehicle/status/velocity_status
     - sensing.subscriber.velocity_status
 
   - - planning.server.clear_route
-    - api.client.routing/clear_route
+    - adapi.client.routing/clear_route
   - - planning.server.set_lanelet_route
-    - api.client.planning/set_lanelet_route
+    - adapi.client.planning/set_lanelet_route
   - - planning.server.set_waypoint_route
-    - api.client.planning/set_waypoint_route
+    - adapi.client.planning/set_waypoint_route
   - - planning.publisher.route_state
-    - api.subscriber.planning/route_state
+    - adapi.subscriber.planning/route_state
   - - planning.publisher.trajectory
-    - api.subscriber.planning/trajectory
+    - adapi.subscriber.planning/trajectory
 
   - - localization.publisher.acceleration
-    - api.subscriber.localization/acceleration
+    - adapi.subscriber.localization/acceleration
   - - localization.server.initialize
-    - api.client.localization/initialize
+    - adapi.client.localization/initialize
 
   - - map.publisher.map_projector_info
-    - api.subscriber.map/map_projector_info
+    - adapi.subscriber.map/map_projector_info
   - - map.publisher.pointcloud_map
-    - api.subscriber.map/pointcloud_map
+    - default_adapi.subscriber.pointcloud_map
   - - map.publisher.vector_map
-    - api.subscriber.map/vector_map
+    - default_adapi.subscriber.vector_map
   - - map.server.get_partial_pointcloud_map
-    - api.client.map/get_partial_pointcloud_map
+    - default_adapi.client.partial_map_load
+  - - adapi.publisher.api/routing/state
+    - default_adapi.subscriber.api/routing/state
+  - - adapi.server.api/localization/initialize
+    - default_adapi.client.api/localization/initialize
+  - - adapi.server.api/routing/clear_route
+    - default_adapi.client.api/routing/clear_route
+  - - adapi.server.api/routing/set_route_points
+    - default_adapi.client.api/routing/set_route_points
+  - - adapi.server.api/routing/change_route_points
+    - default_adapi.client.api/routing/change_route_points
 
   - - system.publisher.operation_mode/state
-    - api.subscriber.system/operation_mode/state
+    - adapi.subscriber.system/operation_mode/state
   - - system.publisher.operation_mode/availability
-    - api.subscriber.system/operation_mode/availability
+    - adapi.subscriber.system/operation_mode/availability
   - - system.server.operation_mode/change_operation_mode
-    - api.client.system/operation_mode/change_operation_mode
+    - adapi.client.system/operation_mode/change_operation_mode
   - - system.server.operation_mode/change_autoware_control
-    - api.client.system/operation_mode/change_autoware_control
+    - adapi.client.system/operation_mode/change_autoware_control
   - - system.publisher.diagnostics_graph/struct
-    - api.subscriber.system/diagnostics_graph/struct
+    - adapi.subscriber.system/diagnostics_graph/struct
   - - system.publisher.diagnostics_graph/status
-    - api.subscriber.system/diagnostics_graph/status
+    - adapi.subscriber.system/diagnostics_graph/status
   - - system.server.diagnostics_graph/reset
-    - api.client.system/diagnostics_graph/reset
+    - adapi.client.system/diagnostics_graph/reset
 
   - - control.publisher.command/control_cmd
-    - api.subscriber.control/command/control_cmd
+    - adapi.subscriber.control/command/control_cmd
   - - control.publisher.vehicle_cmd_gate/is_paused
-    - api.subscriber.control/vehicle_cmd_gate/is_paused
+    - adapi.subscriber.control/vehicle_cmd_gate/is_paused
   - - control.publisher.vehicle_cmd_gate/is_start_requested
-    - api.subscriber.control/vehicle_cmd_gate/is_start_requested
+    - adapi.subscriber.control/vehicle_cmd_gate/is_start_requested
   - - control.server.vehicle_cmd_gate/set_pause
-    - api.client.control/vehicle_cmd_gate/set_pause
+    - adapi.client.control/vehicle_cmd_gate/set_pause
 
   - - perception.publisher.object_recognition/objects
-    - api.subscriber.perception/object_recognition/objects
+    - adapi.subscriber.perception/object_recognition/objects
 
   - - system.publisher.component_state_monitor/^
-    - api.subscriber.system/component_state_monitor/^
+    - adapi.subscriber.system/component_state_monitor/^
   - - planning.publisher.planning_factors/^
-    - api.subscriber.planning/planning_factors/^
+    - adapi.subscriber.planning/planning_factors/^
 
   - - vehicle.publisher.vehicle/status/battery_charge
-    - api.subscriber.vehicle/status/battery_charge
+    - adapi.subscriber.vehicle/status/battery_charge
   - - vehicle.publisher.control/command/actuation_cmd
-    - api.subscriber.control/command/actuation_cmd
+    - adapi.subscriber.control/command/actuation_cmd
   - - vehicle.server.vehicle/doors/command
-    - api.client.vehicle/doors/command
+    - adapi.client.vehicle/doors/command
   - - vehicle.server.vehicle/doors/layout
-    - api.client.vehicle/doors/layout
+    - adapi.client.vehicle/doors/layout
 
 remaps:
   - source: localization.publisher.initialpose3d
@@ -428,6 +443,14 @@ remaps:
     topic: /api/autoware/get/map/info/hash
   - source: map.server.get_vector_map_xml
     topic: /api/autoware/get/map/lanelet/xml
+  - source: autoware_api.publisher.api/external/get/rtc_status
+    topic: /api/external/get/rtc_status
+  - source: autoware_api.publisher.api/external/get/rtc_auto_mode
+    topic: /api/external/get/rtc_auto_mode
+  - source: autoware_api.server.api/external/set/rtc_commands
+    topic: /api/external/set/rtc_commands
+  - source: autoware_api.server.api/external/set/rtc_auto_mode
+    topic: /api/external/set/rtc_auto_mode
   - source: control.publisher.is_autonomous_available
     topic: /system/operation_mode/state
   - source: control.publisher.external_emergency
@@ -438,31 +461,31 @@ remaps:
     topic: /api/autoware/set/engage
   - source: control.server.external_emergency_service
     topic: /api/autoware/set/emergency
-  - source: api.publisher.external/local/gear_cmd
+  - source: adapi.publisher.external/local/gear_cmd
     topic: /external/local/gear_cmd
-  - source: api.publisher.external/local/hazard_lights_cmd
+  - source: adapi.publisher.external/local/hazard_lights_cmd
     topic: /external/local/hazard_lights_cmd
-  - source: api.publisher.external/local/heartbeat
+  - source: adapi.publisher.external/local/heartbeat
     topic: /external/local/heartbeat
-  - source: api.publisher.external/local/pedals_cmd
+  - source: adapi.publisher.external/local/pedals_cmd
     topic: /external/local/pedals_cmd
-  - source: api.publisher.external/local/steering_cmd
+  - source: adapi.publisher.external/local/steering_cmd
     topic: /external/local/steering_cmd
-  - source: api.publisher.external/local/turn_indicators_cmd
+  - source: adapi.publisher.external/local/turn_indicators_cmd
     topic: /external/local/turn_indicators_cmd
-  - source: api.publisher.external/remote/gear_cmd
+  - source: adapi.publisher.external/remote/gear_cmd
     topic: /external/remote/gear_cmd
-  - source: api.publisher.external/remote/hazard_lights_cmd
+  - source: adapi.publisher.external/remote/hazard_lights_cmd
     topic: /external/remote/hazard_lights_cmd
-  - source: api.publisher.external/remote/heartbeat
+  - source: adapi.publisher.external/remote/heartbeat
     topic: /external/remote/heartbeat
-  - source: api.publisher.external/remote/pedals_cmd
+  - source: adapi.publisher.external/remote/pedals_cmd
     topic: /external/remote/pedals_cmd
-  - source: api.publisher.external/remote/steering_cmd
+  - source: adapi.publisher.external/remote/steering_cmd
     topic: /external/remote/steering_cmd
-  - source: api.publisher.external/remote/turn_indicators_cmd
+  - source: adapi.publisher.external/remote/turn_indicators_cmd
     topic: /external/remote/turn_indicators_cmd
-  - source: api.publisher.autoware/state
+  - source: adapi.publisher.autoware/state
     topic: /autoware/state
   - source: system.publisher.diagnostics_graph/struct
     topic: /diagnostics_graph/struct
@@ -687,7 +710,7 @@ PlanningSimulation:
       - - map.publisher.vector_map
         - dummy_traffic_light_publisher.subscriber.vector_map
       - - localization.publisher.localization/initialization_state
-        - api.subscriber.localization/initialization_state
+        - adapi.subscriber.localization/initialization_state
       # SIMULATOR
       - - map.publisher.vector_map
         - simulator.subscriber.map/vector_map
@@ -724,13 +747,13 @@ PlanningSimulation:
       - - control.publisher.command/hazard_lights_cmd
         - simulator.subscriber.control/command/hazard_lights_cmd
       - - simulator.publisher.^
-        - api.subscriber.^
+        - adapi.subscriber.^
       - - vehicle.publisher.doors/status
-        - api.subscriber.vehicle/doors/status
+        - adapi.subscriber.vehicle/doors/status
       - - vehicle.server.doors/command
-        - api.client.vehicle/doors/command
+        - adapi.client.vehicle/doors/command
       - - vehicle.server.doors/layout
-        - api.client.vehicle/doors/layout
+        - adapi.client.vehicle/doors/layout
       - - simulator.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
       - - simulator.publisher.vehicle/status/gear_status

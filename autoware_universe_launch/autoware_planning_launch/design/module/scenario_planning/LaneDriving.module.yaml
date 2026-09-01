@@ -31,11 +31,27 @@ subscribers:
 publishers:
   - name: trajectory
   - name: path_with_lane_id
+  - name: planning_factors/avoidance_by_lane_change
+  - name: planning_factors/behavior_path_planner
+  - name: planning_factors/bidirectional_traffic
   - name: planning_factors/blind_spot
   - name: planning_factors/crosswalk
   - name: planning_factors/detection_area
+  - name: planning_factors/dynamic_obstacle_stop
+  - name: planning_factors/goal_planner
   - name: planning_factors/intersection
+  - name: planning_factors/lane_change_left
+  - name: planning_factors/lane_change_right
   - name: planning_factors/no_stopping_area
+  - name: planning_factors/obstacle_cruise
+  - name: planning_factors/obstacle_slow_down
+  - name: planning_factors/obstacle_stop
+  - name: planning_factors/out_of_lane
+  - name: planning_factors/road_user_stop
+  - name: planning_factors/run_out
+  - name: planning_factors/side_shift
+  - name: planning_factors/start_planner
+  - name: planning_factors/static_obstacle_avoidance
   - name: planning_factors/stop_line
   - name: planning_factors/traffic_light
   - name: planning_factors/virtual_traffic_light
@@ -102,16 +118,34 @@ connections:
     - publisher.trajectory
   - - behavior_planning.publisher.path_with_lane_id
     - publisher.path_with_lane_id
+  - - behavior_planning.publisher.planning_factors/avoidance_by_lane_change
+    - publisher.planning_factors/avoidance_by_lane_change
+  - - behavior_planning.publisher.planning_factors/behavior_path_planner
+    - publisher.planning_factors/behavior_path_planner
+  - - behavior_planning.publisher.planning_factors/bidirectional_traffic
+    - publisher.planning_factors/bidirectional_traffic
   - - behavior_planning.publisher.planning_factors/blind_spot
     - publisher.planning_factors/blind_spot
   - - behavior_planning.publisher.planning_factors/crosswalk
     - publisher.planning_factors/crosswalk
   - - behavior_planning.publisher.planning_factors/detection_area
     - publisher.planning_factors/detection_area
+  - - behavior_planning.publisher.planning_factors/goal_planner
+    - publisher.planning_factors/goal_planner
   - - behavior_planning.publisher.planning_factors/intersection
     - publisher.planning_factors/intersection
+  - - behavior_planning.publisher.planning_factors/lane_change_left
+    - publisher.planning_factors/lane_change_left
+  - - behavior_planning.publisher.planning_factors/lane_change_right
+    - publisher.planning_factors/lane_change_right
   - - behavior_planning.publisher.planning_factors/no_stopping_area
     - publisher.planning_factors/no_stopping_area
+  - - behavior_planning.publisher.planning_factors/side_shift
+    - publisher.planning_factors/side_shift
+  - - behavior_planning.publisher.planning_factors/start_planner
+    - publisher.planning_factors/start_planner
+  - - behavior_planning.publisher.planning_factors/static_obstacle_avoidance
+    - publisher.planning_factors/static_obstacle_avoidance
   - - behavior_planning.publisher.planning_factors/stop_line
     - publisher.planning_factors/stop_line
   - - behavior_planning.publisher.planning_factors/traffic_light
@@ -120,6 +154,20 @@ connections:
     - publisher.planning_factors/virtual_traffic_light
   - - behavior_planning.publisher.planning_factors/walkway
     - publisher.planning_factors/walkway
+  - - motion_planning.publisher.planning_factors/dynamic_obstacle_stop
+    - publisher.planning_factors/dynamic_obstacle_stop
+  - - motion_planning.publisher.planning_factors/obstacle_cruise
+    - publisher.planning_factors/obstacle_cruise
+  - - motion_planning.publisher.planning_factors/obstacle_slow_down
+    - publisher.planning_factors/obstacle_slow_down
+  - - motion_planning.publisher.planning_factors/obstacle_stop
+    - publisher.planning_factors/obstacle_stop
+  - - motion_planning.publisher.planning_factors/out_of_lane
+    - publisher.planning_factors/out_of_lane
+  - - motion_planning.publisher.planning_factors/road_user_stop
+    - publisher.planning_factors/road_user_stop
+  - - motion_planning.publisher.planning_factors/run_out
+    - publisher.planning_factors/run_out
   - - behavior_planning.publisher.turn_indicators_cmd
     - publisher.turn_indicators_cmd
   - - behavior_planning.publisher.hazard_lights_cmd
