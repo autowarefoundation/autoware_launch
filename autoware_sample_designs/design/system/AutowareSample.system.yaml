@@ -177,6 +177,8 @@ connections:
     - perception.subscriber.concatenated_pointcloud
   - - map.publisher.vector_map
     - perception.subscriber.vector_map
+  - - map.publisher.map_projector_info
+    - sensing.subscriber.map_projector_info
 
   - - map.publisher.vector_map
     - localization.subscriber.lanelet_map
@@ -278,6 +280,8 @@ connections:
     - control.subscriber.emergency_turn_indicators_cmd
   - - system.publisher.emergency/hazard_lights_cmd
     - control.subscriber.emergency_hazard_lights_cmd
+  - - system.publisher.emergency/hazard_lights_cmd
+    - planning.subscriber.system_hazard_lights_cmd
   - - system.publisher.emergency/gear_cmd
     - control.subscriber.emergency_gear_cmd
 
@@ -425,6 +429,10 @@ E2ESimulation:
         - control.subscriber.velocity_status
       - - awsim.publisher.vehicle/status/steering_status
         - control.subscriber.steering_status
+      - - awsim.publisher.vehicle/status/steering_status
+        - planning.subscriber.steering_status
+      - - awsim.server.control/control_mode_request
+        - control.client.control_mode_request
       - - awsim.publisher.vehicle/status/gear_status
         - control.subscriber.gear_status
       - - awsim.publisher.vehicle/status/control_mode
@@ -469,9 +477,13 @@ E2ESimulation:
         topic: /vehicle/status/turn_indicators_status
       - source: awsim.publisher.vehicle/status/velocity_status
         topic: /vehicle/status/velocity_status
+      - source: awsim.server.control/control_mode_request
+        topic: /control/control_mode_request
 
   remove:
     connections:
+      - - map.publisher.map_projector_info
+        - sensing.subscriber.map_projector_info
       - - sensing.publisher.gnss
         - localization.subscriber.gnss_pose_with_covariance
       - - sensing.publisher.gnss/pose_with_covariance
@@ -550,6 +562,10 @@ PlanningSimulation:
         - vehicle.subscriber.steering
       - - simulator.publisher.vehicle/status/steering_status
         - control.subscriber.steering_status
+      - - simulator.publisher.vehicle/status/steering_status
+        - planning.subscriber.steering_status
+      - - simulator.server.control/control_mode_request
+        - control.client.control_mode_request
       - - simulator.publisher.vehicle/status/actuation_status
         - vehicle.subscriber.actuation_status
       - - system.publisher.operation_mode/state
@@ -620,7 +636,7 @@ PlanningSimulation:
         topic: /vehicle/status/control_mode
       - source: simulator.publisher.vehicle/status/actuation_status
         topic: /vehicle/status/actuation_status
-      - source: simulator.publisher.control/control_mode_request
+      - source: simulator.server.control/control_mode_request
         topic: /control/control_mode_request
-      - source: simulator.publisher.api/simulator/set/pose
+      - source: simulator.server.api/simulator/set/pose
         topic: /api/simulator/set/pose

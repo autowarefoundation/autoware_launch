@@ -25,6 +25,7 @@ subscribers:
   - name: route
   - name: odometry
   - name: acceleration
+  - name: steering_status
   - name: operation_mode_state
   - name: api_operation_mode_state
   - name: occupancy_grid_map
@@ -61,6 +62,8 @@ connections:
     - lane_driving.subscriber.odometry
   - - subscriber.acceleration
     - lane_driving.subscriber.accel
+  - - subscriber.steering_status
+    - lane_driving.subscriber.steering_status
   - - subscriber.pointcloud
     - lane_driving.subscriber.no_ground_pointcloud
   - - subscriber.operation_mode_state
@@ -109,6 +112,8 @@ connections:
     - velocity_smoother.subscriber.trajectory
   - - external_velocity_limit_selector.publisher.external_velocity_limit
     - velocity_smoother.subscriber.external_velocity_limit_mps
+  - - subscriber.odometry
+    - velocity_smoother.subscriber.current_odometry
   - - subscriber.acceleration
     - velocity_smoother.subscriber.acceleration
   - - subscriber.operation_mode_state
