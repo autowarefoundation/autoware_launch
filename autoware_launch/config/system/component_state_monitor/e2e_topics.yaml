@@ -224,7 +224,7 @@
   type: autonomous
   args:
     node_name_suffix: trajectory_selector_scored_trajectories
-    topic: /planning/trajectory_selector/scored_trajectories
+    topic: /planning/trajectory_selector/trajectory_selector_node/output/scored_trajectories
     topic_type: autoware_internal_planning_msgs/msg/ScoredCandidateTrajectories
     best_effort: false
     transient_local: false

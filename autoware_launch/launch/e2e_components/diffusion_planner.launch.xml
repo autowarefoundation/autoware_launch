@@ -170,19 +170,14 @@
         <arg name="trajectory_ranker_param_path" value="$(var trajectory_ranker_param_path)"/>
         <arg name="input_generative_trajectories" value="/planning/generator/candidate_trajectories"/>
         <arg name="input_backup_trajectories" value="/planning/generator/minimum_rule_based/candidate_trajectories"/>
-        <arg name="output_trajectories" value="/planning/trajectory_selector/scored_trajectories"/>
+        <arg name="output_trajectory" value="/planning/trajectory"/>
+        <arg name="output_turn_indicators" value="/planning/turn_indicators_cmd"/>
         <arg name="input_vector_map" value="/map/vector_map"/>
         <arg name="input_odometry" value="/localization/kinematic_state"/>
         <arg name="input_objects" value="$(var input_objects_topic_name)"/>
         <arg name="input_acceleration" value="/localization/acceleration"/>
         <arg name="input_traffic_signals" value="/perception/traffic_light_recognition/traffic_signals"/>
         <arg name="input_route" value="/planning/mission_planning/route"/>
-      </include>
-
-      <include file="$(find-pkg-share autoware_trajectory_adapter)/launch/trajectory_adapter.launch.xml">
-        <arg name="input_trajectories" value="/planning/trajectory_selector/scored_trajectories"/>
-        <arg name="output_trajectory" value="/planning/trajectory"/>
-        <arg name="output_turn_indicators" value="/planning/turn_indicators_cmd"/>
       </include>
     </group>
 
