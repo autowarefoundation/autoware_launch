@@ -29,6 +29,7 @@ publishers:
 
 servers:
   - name: clear_route
+  - name: set_preferred_lane
   - name: set_lanelet_route
   - name: set_waypoint_route
 
@@ -63,6 +64,14 @@ connections:
     - manual_lane_change_handler.subscriber.odometry
   - - subscriber.vector_map
     - manual_lane_change_handler.subscriber.vector_map
+  - - subscriber.reroute_availability
+    - manual_lane_change_handler.subscriber.reroute_availability
+  - - mission_planner.server.set_preferred_primitive
+    - manual_lane_change_handler.client.set_preferred_primitive
+  - - manual_lane_change_handler.server.set_preferred_lane
+    - server.set_preferred_lane
+  - - mission_planner.publisher.route_marker
+    - publisher.route_marker
 
   - - mission_planner.server.clear_route
     - route_selector.client.planner_clear_route

@@ -22,6 +22,7 @@ publishers:
   - name: trajectory
   - name: is_completed
   - name: grid_map
+  - name: occupancy_grid
 
 connections:
   - - subscriber.objects
@@ -34,6 +35,8 @@ connections:
     - costmap_generator.subscriber.scenario
   - - costmap_generator.publisher.occupancy_grid
     - freespace_planner.subscriber.occupancy_grid
+  - - costmap_generator.publisher.occupancy_grid
+    - publisher.occupancy_grid
   - - subscriber.route
     - freespace_planner.subscriber.route
   - - subscriber.scenario
