@@ -28,10 +28,10 @@ subscribers:
   - name: operation_mode_state
   - name: api_operation_mode_state
   - name: occupancy_grid_map
-  - name: costmap
   - name: traffic_signals
   - name: control_cmd
   - name: predicted_trajectory
+  - name: system_hazard_lights_cmd
 
 publishers:
   - name: trajectory
@@ -53,7 +53,7 @@ connections:
     - lane_driving.subscriber.objects
   - - subscriber.occupancy_grid_map
     - lane_driving.subscriber.occupancy_grid_map
-  - - subscriber.costmap
+  - - parking.publisher.occupancy_grid
     - lane_driving.subscriber.costmap
   - - subscriber.traffic_signals
     - lane_driving.subscriber.traffic_signals
@@ -115,6 +115,8 @@ connections:
     - velocity_smoother.subscriber.operation_mode_state
   - - lane_driving.publisher.hazard_lights_cmd
     - hazard_lights_selector.subscriber.lane_driving_hazard_lights_cmd
+  - - subscriber.system_hazard_lights_cmd
+    - hazard_lights_selector.subscriber.parking_hazard_lights_cmd
   - - velocity_smoother.publisher.trajectory
     - publisher.trajectory
   - - lane_driving.publisher.path_with_lane_id
