@@ -263,6 +263,24 @@ connections:
     - control.subscriber.vector_map
   - - perception.publisher.object_recognition/objects
     - control.subscriber.objects
+  - - planning.publisher.planning_factors/blind_spot
+    - control.subscriber.blind_spot
+  - - planning.publisher.planning_factors/crosswalk
+    - control.subscriber.crosswalk
+  - - planning.publisher.planning_factors/detection_area
+    - control.subscriber.detection_area
+  - - planning.publisher.planning_factors/intersection
+    - control.subscriber.intersection
+  - - planning.publisher.planning_factors/no_stopping_area
+    - control.subscriber.no_stopping_area
+  - - planning.publisher.planning_factors/stop_line
+    - control.subscriber.stop_line
+  - - planning.publisher.planning_factors/traffic_light
+    - control.subscriber.traffic_light
+  - - planning.publisher.planning_factors/virtual_traffic_light
+    - control.subscriber.virtual_traffic_light
+  - - planning.publisher.planning_factors/walkway
+    - control.subscriber.walkway
   - - perception.publisher.obstacle_segmentation/pointcloud
     - control.subscriber.pointcloud
   - - sensing.publisher.imu/imu_data

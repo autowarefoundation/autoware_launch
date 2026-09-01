@@ -26,6 +26,15 @@ subscribers:
 
 publishers:
   - name: path
+  - name: planning_factors/blind_spot
+  - name: planning_factors/crosswalk
+  - name: planning_factors/detection_area
+  - name: planning_factors/intersection
+  - name: planning_factors/no_stopping_area
+  - name: planning_factors/stop_line
+  - name: planning_factors/traffic_light
+  - name: planning_factors/virtual_traffic_light
+  - name: planning_factors/walkway
   - name: path_with_lane_id
   - name: turn_indicators_cmd
   - name: hazard_lights_cmd
@@ -73,6 +82,24 @@ connections:
     - behavior_velocity_planner.subscriber.path_with_lane_id
   - - behavior_velocity_planner.publisher.path
     - publisher.path
+  - - behavior_velocity_planner.publisher.planning_factors/blind_spot
+    - publisher.planning_factors/blind_spot
+  - - behavior_velocity_planner.publisher.planning_factors/crosswalk
+    - publisher.planning_factors/crosswalk
+  - - behavior_velocity_planner.publisher.planning_factors/detection_area
+    - publisher.planning_factors/detection_area
+  - - behavior_velocity_planner.publisher.planning_factors/intersection
+    - publisher.planning_factors/intersection
+  - - behavior_velocity_planner.publisher.planning_factors/no_stopping_area
+    - publisher.planning_factors/no_stopping_area
+  - - behavior_velocity_planner.publisher.planning_factors/stop_line
+    - publisher.planning_factors/stop_line
+  - - behavior_velocity_planner.publisher.planning_factors/traffic_light
+    - publisher.planning_factors/traffic_light
+  - - behavior_velocity_planner.publisher.planning_factors/virtual_traffic_light
+    - publisher.planning_factors/virtual_traffic_light
+  - - behavior_velocity_planner.publisher.planning_factors/walkway
+    - publisher.planning_factors/walkway
   - - behavior_path_planner.publisher.path_with_lane_id
     - publisher.path_with_lane_id
   - - behavior_path_planner.publisher.turn_indicators_cmd

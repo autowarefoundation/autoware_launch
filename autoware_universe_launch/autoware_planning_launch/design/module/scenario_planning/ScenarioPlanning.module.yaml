@@ -37,6 +37,15 @@ subscribers:
 publishers:
   - name: trajectory
   - name: path_with_lane_id
+  - name: planning_factors/blind_spot
+  - name: planning_factors/crosswalk
+  - name: planning_factors/detection_area
+  - name: planning_factors/intersection
+  - name: planning_factors/no_stopping_area
+  - name: planning_factors/stop_line
+  - name: planning_factors/traffic_light
+  - name: planning_factors/virtual_traffic_light
+  - name: planning_factors/walkway
   - name: hazard_lights_cmd
   - name: turn_indicators_cmd
   - name: scenario
@@ -126,6 +135,24 @@ connections:
     - publisher.trajectory
   - - lane_driving.publisher.path_with_lane_id
     - publisher.path_with_lane_id
+  - - lane_driving.publisher.planning_factors/blind_spot
+    - publisher.planning_factors/blind_spot
+  - - lane_driving.publisher.planning_factors/crosswalk
+    - publisher.planning_factors/crosswalk
+  - - lane_driving.publisher.planning_factors/detection_area
+    - publisher.planning_factors/detection_area
+  - - lane_driving.publisher.planning_factors/intersection
+    - publisher.planning_factors/intersection
+  - - lane_driving.publisher.planning_factors/no_stopping_area
+    - publisher.planning_factors/no_stopping_area
+  - - lane_driving.publisher.planning_factors/stop_line
+    - publisher.planning_factors/stop_line
+  - - lane_driving.publisher.planning_factors/traffic_light
+    - publisher.planning_factors/traffic_light
+  - - lane_driving.publisher.planning_factors/virtual_traffic_light
+    - publisher.planning_factors/virtual_traffic_light
+  - - lane_driving.publisher.planning_factors/walkway
+    - publisher.planning_factors/walkway
   - - velocity_smoother.publisher.current_velocity_limit_mps
     - publisher.current_max_velocity
   - - scenario_selector.publisher.scenario
