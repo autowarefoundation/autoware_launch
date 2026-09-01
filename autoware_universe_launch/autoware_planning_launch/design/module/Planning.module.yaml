@@ -20,6 +20,7 @@ subscribers:
   - name: vector_map
   - name: odometry
   - name: acceleration
+  - name: steering_status
   - name: operation_mode_state
   - name: api_operation_mode_state
   - name: objects
@@ -66,6 +67,8 @@ connections:
     - scenario_planning.subscriber.odometry
   - - subscriber.acceleration
     - scenario_planning.subscriber.acceleration
+  - - subscriber.steering_status
+    - scenario_planning.subscriber.steering_status
   - - subscriber.operation_mode_state
     - scenario_planning.subscriber.operation_mode_state
   - - subscriber.api_operation_mode_state
