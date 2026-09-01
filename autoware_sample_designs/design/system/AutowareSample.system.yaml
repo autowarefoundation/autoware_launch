@@ -56,8 +56,10 @@ components:
 
   # ADAPI
   - name: api
-    entity: SampleSensorKitADAPIWrapper.node
+    entity: Adapi.module
+    path: /
     compute_unit: main_ecu
+    parameter_set: universe_adapi.parameter_set
 
   # SENSING
   - name: sensing
@@ -155,6 +157,14 @@ node_groups:
     nodes:
       - /planning/mission_planning/mission_planner
       - /planning/mission_planning/route_selector
+  - name: adapi_container
+    type: ros2_component_container_mt
+    nodes:
+      - /adapi/*
+  - name: rtc_controller_container
+    type: ros2_component_container_mt
+    nodes:
+      - /autoware_api/*
   - name: behavior_planning_container
     type: ros2_component_container_mt
     nodes:
@@ -226,7 +236,7 @@ connections:
     - planning.subscriber.control_cmd
   - - control.publisher.predicted_trajectory
     - planning.subscriber.predicted_trajectory
-  - - api.publisher.operation_mode/state
+  - - api.publisher.api/operation_mode/state
     - planning.subscriber.api_operation_mode_state
 
   - - planning.publisher.trajectory
@@ -248,12 +258,12 @@ connections:
   - - system.publisher.operation_mode/state
     - control.subscriber.operation_mode_state
 
-  - - api.publisher.operation_mode/state
+  - - api.publisher.api/operation_mode/state
     - control.subscriber.api_operation_mode_state
   - - api.publisher.autoware/state
     - control.subscriber.autoware_state
-  - - api.publisher.*
-    - control.subscriber.*
+  - - api.publisher.external/^
+    - control.subscriber.external/^
 
   - - localization.publisher.kinematic_state
     - control.subscriber.odometry
@@ -347,6 +357,69 @@ connections:
 
   - - planning.server.clear_route
     - api.client.routing/clear_route
+  - - planning.server.set_lanelet_route
+    - api.client.planning/set_lanelet_route
+  - - planning.server.set_waypoint_route
+    - api.client.planning/set_waypoint_route
+  - - planning.publisher.route_state
+    - api.subscriber.planning/route_state
+  - - planning.publisher.trajectory
+    - api.subscriber.planning/trajectory
+
+  - - localization.publisher.acceleration
+    - api.subscriber.localization/acceleration
+  - - localization.server.initialize
+    - api.client.localization/initialize
+
+  - - map.publisher.map_projector_info
+    - api.subscriber.map/map_projector_info
+  - - map.publisher.pointcloud_map
+    - api.subscriber.map/pointcloud_map
+  - - map.publisher.vector_map
+    - api.subscriber.map/vector_map
+  - - map.server.get_partial_pointcloud_map
+    - api.client.map/get_partial_pointcloud_map
+
+  - - system.publisher.operation_mode/state
+    - api.subscriber.system/operation_mode/state
+  - - system.publisher.operation_mode/availability
+    - api.subscriber.system/operation_mode/availability
+  - - system.server.operation_mode/change_operation_mode
+    - api.client.system/operation_mode/change_operation_mode
+  - - system.server.operation_mode/change_autoware_control
+    - api.client.system/operation_mode/change_autoware_control
+  - - system.publisher.diagnostics_graph/struct
+    - api.subscriber.system/diagnostics_graph/struct
+  - - system.publisher.diagnostics_graph/status
+    - api.subscriber.system/diagnostics_graph/status
+  - - system.server.diagnostics_graph/reset
+    - api.client.system/diagnostics_graph/reset
+
+  - - control.publisher.command/control_cmd
+    - api.subscriber.control/command/control_cmd
+  - - control.publisher.vehicle_cmd_gate/is_paused
+    - api.subscriber.control/vehicle_cmd_gate/is_paused
+  - - control.publisher.vehicle_cmd_gate/is_start_requested
+    - api.subscriber.control/vehicle_cmd_gate/is_start_requested
+  - - control.server.vehicle_cmd_gate/set_pause
+    - api.client.control/vehicle_cmd_gate/set_pause
+
+  - - perception.publisher.object_recognition/objects
+    - api.subscriber.perception/object_recognition/objects
+
+  - - system.publisher.component_state_monitor/^
+    - api.subscriber.system/component_state_monitor/^
+  - - planning.publisher.planning_factors/^
+    - api.subscriber.planning/planning_factors/^
+
+  - - vehicle.publisher.vehicle/status/battery_charge
+    - api.subscriber.vehicle/status/battery_charge
+  - - vehicle.publisher.control/command/actuation_cmd
+    - api.subscriber.control/command/actuation_cmd
+  - - vehicle.server.vehicle/doors/command
+    - api.client.vehicle/doors/command
+  - - vehicle.server.vehicle/doors/layout
+    - api.client.vehicle/doors/layout
 
 remaps:
   - source: localization.publisher.initialpose3d
@@ -391,6 +464,12 @@ remaps:
     topic: /external/remote/turn_indicators_cmd
   - source: api.publisher.autoware/state
     topic: /autoware/state
+  - source: system.publisher.diagnostics_graph/struct
+    topic: /diagnostics_graph/struct
+  - source: system.publisher.diagnostics_graph/status
+    topic: /diagnostics_graph/status
+  - source: system.server.diagnostics_graph/reset
+    topic: /diagnostics_graph/reset
 
 # mode configurations
 LoggingSimulation:
@@ -648,6 +727,10 @@ PlanningSimulation:
         - api.subscriber.^
       - - vehicle.publisher.doors/status
         - api.subscriber.vehicle/doors/status
+      - - vehicle.server.doors/command
+        - api.client.vehicle/doors/command
+      - - vehicle.server.doors/layout
+        - api.client.vehicle/doors/layout
       - - simulator.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
       - - simulator.publisher.vehicle/status/gear_status

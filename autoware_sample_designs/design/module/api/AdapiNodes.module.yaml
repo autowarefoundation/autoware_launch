@@ -1,0 +1,351 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+# AD API default implementation: one composable node per API domain.
+name: AdapiNodes.module
+
+instances:
+  - name: interface
+    entity: AdapiInterface.node
+  - name: localization
+    entity: AdapiLocalization.node
+  - name: routing
+    entity: AdapiRouting.node
+  - name: autoware_state
+    entity: AdapiAutowareState.node
+  - name: diagnostics
+    entity: AdapiDiagnostics.node
+  - name: fail_safe
+    entity: AdapiFailSafe.node
+  - name: heartbeat
+    entity: AdapiHeartbeat.node
+  - name: manual/local
+    entity: AdapiManualControl.node
+  - name: manual/remote
+    entity: AdapiManualControl.node
+  - name: motion
+    entity: AdapiMotion.node
+  - name: mrm_request
+    entity: AdapiMrmRequest.node
+  - name: operation_mode
+    entity: AdapiOperationMode.node
+  - name: perception
+    entity: AdapiPerception.node
+  - name: planning
+    entity: AdapiPlanning.node
+  - name: vehicle_status
+    entity: AdapiVehicleStatus.node
+  - name: vehicle_command
+    entity: AdapiVehicleCommand.node
+  - name: vehicle_metrics
+    entity: AdapiVehicleMetrics.node
+  - name: vehicle_info
+    entity: AdapiVehicleInfo.node
+  - name: vehicle_door
+    entity: AdapiVehicleDoor.node
+
+# interfaces
+subscribers:
+  - name: localization/initialization_state
+  - name: localization/kinematic_state
+  - name: localization/acceleration
+  - name: map/map_projector_info
+  - name: planning/route
+  - name: planning/route_state
+  - name: planning/trajectory
+  - name: system/operation_mode/state
+  - name: system/operation_mode/availability
+  - name: system/fail_safe/mrm_state
+  - name: system/diagnostics_graph/struct
+  - name: system/diagnostics_graph/status
+  - name: control/command/control_cmd
+  - name: control/vehicle_cmd_gate/is_paused
+  - name: control/vehicle_cmd_gate/is_start_requested
+  - name: vehicle/status/gear_status
+  - name: vehicle/status/steering_status
+  - name: vehicle/status/turn_indicators_status
+  - name: vehicle/status/hazard_lights_status
+  - name: vehicle/doors/status
+  - name: perception/object_recognition/objects
+  - name: system/component_state_monitor/component/launch/sensing
+  - name: system/component_state_monitor/component/launch/perception
+  - name: system/component_state_monitor/component/launch/map
+  - name: system/component_state_monitor/component/launch/localization
+  - name: system/component_state_monitor/component/launch/planning
+  - name: system/component_state_monitor/component/launch/control
+  - name: system/component_state_monitor/component/launch/vehicle
+  - name: system/component_state_monitor/component/launch/system
+  - name: vehicle/status/battery_charge
+  - name: control/command/actuation_cmd
+  - name: planning/planning_factors/behavior_path_planner
+  - name: planning/planning_factors/blind_spot
+  - name: planning/planning_factors/crosswalk
+  - name: planning/planning_factors/detection_area
+  - name: planning/planning_factors/dynamic_obstacle_stop
+  - name: planning/planning_factors/intersection
+  - name: planning/planning_factors/merge_from_private
+  - name: planning/planning_factors/no_stopping_area
+  - name: planning/planning_factors/obstacle_cruise_planner
+  - name: planning/planning_factors/obstacle_stop_planner
+  - name: planning/planning_factors/obstacle_stop
+  - name: planning/planning_factors/obstacle_cruise
+  - name: planning/planning_factors/obstacle_slow_down
+  - name: planning/planning_factors/occlusion_spot
+  - name: planning/planning_factors/run_out
+  - name: planning/planning_factors/stop_line
+  - name: planning/planning_factors/surround_obstacle_checker
+  - name: planning/planning_factors/traffic_light
+  - name: planning/planning_factors/virtual_traffic_light
+  - name: planning/planning_factors/walkway
+  - name: planning/planning_factors/motion_velocity_planner
+  - name: planning/planning_factors/static_obstacle_avoidance
+  - name: planning/planning_factors/dynamic_obstacle_avoidance
+  - name: planning/planning_factors/avoidance_by_lane_change
+  - name: planning/planning_factors/lane_change_left
+  - name: planning/planning_factors/lane_change_right
+  - name: planning/planning_factors/start_planner
+  - name: planning/planning_factors/goal_planner
+  - name: planning/planning_factors/roundabout
+
+publishers:
+  # AD API topics
+  - name: api/localization/initialization_state
+  - name: api/routing/state
+  - name: api/routing/route
+  - name: api/operation_mode/state
+  - name: api/motion/state
+  - name: api/fail_safe/mrm_state
+  - name: api/fail_safe/mrm_request/list
+  - name: api/system/diagnostics/struct
+  - name: api/system/diagnostics/status
+  - name: api/system/heartbeat
+  - name: api/perception/objects
+  - name: api/planning/velocity_factors
+  - name: api/planning/steering_factors
+  - name: api/vehicle/kinematics
+  - name: api/vehicle/status
+  - name: api/vehicle/metrics
+  - name: api/vehicle/doors/status
+  - name: api/control/command/pedals
+  - name: api/control/command/acceleration
+  - name: api/control/command/velocity
+  - name: api/control/command/steering
+  # compatibility topics
+  - name: autoware/state
+  # manual command relay topics
+  - name: external/local/gear_cmd
+  - name: external/local/hazard_lights_cmd
+  - name: external/local/heartbeat
+  - name: external/local/pedals_cmd
+  - name: external/local/steering_cmd
+  - name: external/local/turn_indicators_cmd
+  - name: external/remote/gear_cmd
+  - name: external/remote/hazard_lights_cmd
+  - name: external/remote/heartbeat
+  - name: external/remote/pedals_cmd
+  - name: external/remote/steering_cmd
+  - name: external/remote/turn_indicators_cmd
+
+servers:
+  # AD API services
+  - name: api/interface/version
+  - name: api/localization/initialize
+  - name: api/routing/clear_route
+  - name: api/routing/set_route
+  - name: api/routing/set_route_points
+  - name: api/routing/change_route
+  - name: api/routing/change_route_points
+  - name: api/operation_mode/change_to_stop
+  - name: api/operation_mode/change_to_autonomous
+  - name: api/operation_mode/change_to_local
+  - name: api/operation_mode/change_to_remote
+  - name: api/operation_mode/enable_autoware_control
+  - name: api/operation_mode/disable_autoware_control
+  - name: api/motion/accept_start
+  - name: api/fail_safe/list_mrm_description
+  - name: api/fail_safe/mrm_request/send
+  - name: api/system/diagnostics/reset
+  - name: api/vehicle/dimensions
+  - name: api/vehicle/doors/command
+  - name: api/vehicle/doors/layout
+  # compatibility services
+  - name: autoware/shutdown
+
+clients:
+  - name: routing/clear_route
+  - name: planning/set_lanelet_route
+  - name: planning/set_waypoint_route
+  - name: system/operation_mode/change_operation_mode
+  - name: system/operation_mode/change_autoware_control
+  - name: system/diagnostics_graph/reset
+  - name: control/vehicle_cmd_gate/set_pause
+  - name: localization/initialize
+  - name: vehicle/doors/command
+  - name: vehicle/doors/layout
+
+connections:
+  # localization
+  - - subscriber.localization/initialization_state
+    - localization.subscriber.initialization_state
+  - - localization.client.initialize
+    - client.localization/initialize
+  - - localization.publisher.^
+    - publisher.api/localization/^
+
+  # interface
+  - - interface.server.^
+    - server.api/interface/^
+
+  # routing
+  - - subscriber.planning/route
+    - routing.subscriber.route
+  - - subscriber.planning/route_state
+    - routing.subscriber.route_state
+  - - subscriber.system/operation_mode/state
+    - routing.subscriber.operation_mode_state
+  - - subscriber.localization/kinematic_state
+    - routing.subscriber.kinematic_state
+  - - routing.client.clear_route
+    - client.routing/clear_route
+  - - routing.client.set_lanelet_route
+    - client.planning/set_lanelet_route
+  - - routing.client.set_waypoint_route
+    - client.planning/set_waypoint_route
+  - - routing.client.change_operation_mode
+    - client.system/operation_mode/change_operation_mode
+  - - routing.publisher.^
+    - publisher.api/routing/^
+
+  # operation mode
+  - - subscriber.system/operation_mode/state
+    - operation_mode.subscriber.operation_mode_state
+  - - subscriber.system/operation_mode/availability
+    - operation_mode.subscriber.availability
+  - - operation_mode.client.change_operation_mode
+    - client.system/operation_mode/change_operation_mode
+  - - operation_mode.client.change_autoware_control
+    - client.system/operation_mode/change_autoware_control
+  - - operation_mode.publisher.^
+    - publisher.api/operation_mode/^
+
+  # autoware state
+  - - localization.publisher.initialization_state
+    - autoware_state.subscriber.localization_state
+  - - routing.publisher.state
+    - autoware_state.subscriber.routing_state
+  - - operation_mode.publisher.state
+    - autoware_state.subscriber.operation_mode_state
+  - - subscriber.system/component_state_monitor/component/launch/^
+    - autoware_state.subscriber.launch_state_^
+  - - autoware_state.publisher.autoware_state
+    - publisher.autoware/state
+  - - autoware_state.server.^
+    - server.autoware/^
+
+  # diagnostics
+  - - subscriber.system/diagnostics_graph/struct
+    - diagnostics.subscriber.struct
+  - - subscriber.system/diagnostics_graph/status
+    - diagnostics.subscriber.status
+  - - fail_safe.publisher.mrm_state
+    - diagnostics.subscriber.mrm_state
+  - - diagnostics.client.reset
+    - client.system/diagnostics_graph/reset
+  - - diagnostics.publisher.^
+    - publisher.api/system/diagnostics/^
+
+  # fail safe
+  - - subscriber.system/fail_safe/mrm_state
+    - fail_safe.subscriber.mrm_state
+  - - fail_safe.publisher.^
+    - publisher.api/fail_safe/^
+  - - mrm_request.publisher.^
+    - publisher.api/fail_safe/^
+
+  # heartbeat
+  - - heartbeat.publisher.^
+    - publisher.api/system/^
+
+  # manual control
+  - - operation_mode.publisher.state
+    - manual/local.subscriber.operation_mode_state
+  - - operation_mode.publisher.state
+    - manual/remote.subscriber.operation_mode_state
+  - - manual/local.publisher.^
+    - publisher.external/local/^
+  - - manual/remote.publisher.^
+    - publisher.external/remote/^
+
+  # motion
+  - - subscriber.localization/kinematic_state
+    - motion.subscriber.kinematic_state
+  - - subscriber.control/vehicle_cmd_gate/is_paused
+    - motion.subscriber.is_paused
+  - - subscriber.control/vehicle_cmd_gate/is_start_requested
+    - motion.subscriber.is_start_requested
+  - - motion.client.set_pause
+    - client.control/vehicle_cmd_gate/set_pause
+  - - motion.publisher.^
+    - publisher.api/motion/^
+
+  # perception
+  - - subscriber.perception/object_recognition/objects
+    - perception.subscriber.objects
+  - - perception.publisher.^
+    - publisher.api/perception/^
+
+  # planning
+  - - subscriber.planning/trajectory
+    - planning.subscriber.trajectory
+  - - subscriber.localization/kinematic_state
+    - planning.subscriber.kinematic_state
+  - - subscriber.planning/planning_factors/^
+    - planning.subscriber.planning_factors/^
+  - - planning.publisher.^
+    - publisher.api/planning/^
+
+  # vehicle status
+  - - subscriber.localization/kinematic_state
+    - vehicle_status.subscriber.kinematic_state
+  - - subscriber.localization/acceleration
+    - vehicle_status.subscriber.acceleration
+  - - subscriber.map/map_projector_info
+    - vehicle_status.subscriber.map_projector_info
+  - - subscriber.vehicle/status/gear_status
+    - vehicle_status.subscriber.gear_status
+  - - subscriber.vehicle/status/steering_status
+    - vehicle_status.subscriber.steering_status
+  - - subscriber.vehicle/status/turn_indicators_status
+    - vehicle_status.subscriber.turn_indicators_status
+  - - subscriber.vehicle/status/hazard_lights_status
+    - vehicle_status.subscriber.hazard_lights_status
+  - - subscriber.vehicle/status/battery_charge
+    - vehicle_status.subscriber.battery_charge
+  - - subscriber.vehicle/status/battery_charge
+    - vehicle_metrics.subscriber.battery_charge
+  - - vehicle_status.publisher.^
+    - publisher.api/vehicle/^
+  - - vehicle_metrics.publisher.^
+    - publisher.api/vehicle/^
+  - - vehicle_info.server.^
+    - server.api/vehicle/^
+
+  # vehicle command
+  - - subscriber.control/command/control_cmd
+    - vehicle_command.subscriber.control_cmd
+  - - subscriber.control/command/actuation_cmd
+    - vehicle_command.subscriber.actuation_cmd
+  - - vehicle_command.publisher.^
+    - publisher.api/control/command/^
+
+  # vehicle door
+  - - subscriber.vehicle/doors/status
+    - vehicle_door.subscriber.door_status
+  - - subscriber.system/operation_mode/state
+    - vehicle_door.subscriber.operation_mode_state
+  - - vehicle_door.client.command
+    - client.vehicle/doors/command
+  - - vehicle_door.client.layout
+    - client.vehicle/doors/layout
+  - - vehicle_door.publisher.^
+    - publisher.api/vehicle/doors/^

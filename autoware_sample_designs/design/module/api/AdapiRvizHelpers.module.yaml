@@ -1,0 +1,44 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+# RViz helper adaptors that turn RViz poses and goals into AD API requests.
+name: AdapiRvizHelpers.module
+
+instances:
+  - name: autoware_initial_pose_adaptor
+    entity: AdapiInitialPoseAdaptor.node
+  - name: autoware_routing_adaptor
+    entity: AdapiRoutingAdaptor.node
+
+# interfaces
+subscribers:
+  - name: pointcloud_map
+  - name: vector_map
+  - name: api/routing/state
+
+publishers: []
+
+clients:
+  - name: partial_map_load
+  - name: api/localization/initialize
+  - name: api/routing/clear_route
+  - name: api/routing/set_route_points
+  - name: api/routing/change_route_points
+
+connections:
+  - - subscriber.pointcloud_map
+    - autoware_initial_pose_adaptor.subscriber.pointcloud_map
+  - - subscriber.vector_map
+    - autoware_initial_pose_adaptor.subscriber.vector_map
+  - - autoware_initial_pose_adaptor.client.partial_map_load
+    - client.partial_map_load
+  - - autoware_initial_pose_adaptor.client.initialize
+    - client.api/localization/initialize
+  - - subscriber.api/routing/state
+    - autoware_routing_adaptor.subscriber.state
+  - - autoware_routing_adaptor.client.clear_route
+    - client.api/routing/clear_route
+  - - autoware_routing_adaptor.client.set_route_points
+    - client.api/routing/set_route_points
+  - - autoware_routing_adaptor.client.change_route_points
+    - client.api/routing/change_route_points
