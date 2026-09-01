@@ -28,6 +28,7 @@ subscribers:
   - name: traffic_signals
   - name: control_cmd
   - name: predicted_trajectory
+  - name: system_hazard_lights_cmd
 
 publishers:
   - name: trajectory
@@ -41,6 +42,7 @@ publishers:
 
 servers:
   - name: clear_route
+  - name: set_preferred_lane
   - name: set_lanelet_route
   - name: set_waypoint_route
 
@@ -68,6 +70,8 @@ connections:
     - scenario_planning.subscriber.operation_mode_state
   - - subscriber.api_operation_mode_state
     - scenario_planning.subscriber.api_operation_mode_state
+  - - subscriber.system_hazard_lights_cmd
+    - scenario_planning.subscriber.system_hazard_lights_cmd
   - - subscriber.objects
     - scenario_planning.subscriber.objects
   - - subscriber.pointcloud
@@ -136,6 +140,8 @@ connections:
     - publisher.hazard_lights_cmd
   - - planning_validator.publisher.validation_status
     - publisher.validation_status
+  - - mission_planning.server.set_preferred_lane
+    - server.set_preferred_lane
   - - mission_planning.server.clear_route
     - server.clear_route
   - - mission_planning.server.set_lanelet_route
