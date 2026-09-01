@@ -75,6 +75,10 @@ connections:
     - lane_driving.subscriber.scenario
   - - external_velocity_limit_selector.publisher.external_velocity_limit
     - lane_driving.subscriber.external_velocity_limit_mps
+  - - lane_driving.publisher.velocity_limit
+    - external_velocity_limit_selector.subscriber.internal_limit
+  - - lane_driving.publisher.clear_velocity_limit
+    - external_velocity_limit_selector.subscriber.velocity_limit_clear_command
   - - subscriber.objects
     - parking.subscriber.objects
   - - subscriber.pointcloud
