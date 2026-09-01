@@ -20,6 +20,7 @@ subscribers:
   - name: odometry
   - name: acceleration
   - name: steering_status
+  - name: velocity_status
   - name: gear_status
   - name: operation_mode_state
   - name: control_mode_report
@@ -64,6 +65,7 @@ servers:
 
 clients:
   - name: select_external_command
+  - name: control_mode_request
 
 connections:
   # ShiftDecider
@@ -134,9 +136,16 @@ connections:
   - - client.select_external_command
     - autoware_operation_mode_transition_manager.client.select_external_command
 
+  - - autoware_operation_mode_transition_manager.client.control_mode_request
+    - client.control_mode_request
+
   # StopModeOperator
   - - subscriber.route_state
     - stop_mode_operator.subscriber.route_state
+  - - subscriber.steering_status
+    - stop_mode_operator.subscriber.steering
+  - - subscriber.velocity_status
+    - stop_mode_operator.subscriber.velocity
 
   # API ports
   - - vehicle_cmd_gate.publisher.engage

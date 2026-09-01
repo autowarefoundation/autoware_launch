@@ -84,6 +84,9 @@ publishers:
   - name: vehicle_cmd_gate/is_start_requested
   - name: vehicle_cmd_gate/is_stopped
 
+clients:
+  - name: control_mode_request
+
 servers:
   - name: engage_service
   - name: external_emergency_service
@@ -109,6 +112,8 @@ connections:
     - trajectory_follower.subscriber.route
   - - subscriber.api_operation_mode_state
     - trajectory_follower.subscriber.api_operation_mode_state
+  - - subscriber.api_operation_mode_state
+    - control_checker.subscriber.api_operation_mode_state
   - - subscriber.steering_offset_update
     - trajectory_follower.subscriber.steering_offset_update
 
@@ -123,6 +128,8 @@ connections:
     - command_gate.subscriber.acceleration
   - - subscriber.steering_status
     - command_gate.subscriber.steering_status
+  - - subscriber.velocity_status
+    - command_gate.subscriber.velocity_status
   - - subscriber.gear_status
     - command_gate.subscriber.gear_status
   - - subscriber.operation_mode_state
@@ -295,3 +302,5 @@ connections:
     - publisher.predicted_trajectory
   - - control_evaluator.publisher.metrics
     - publisher.control_evaluation
+  - - command_gate.client.control_mode_request
+    - client.control_mode_request
