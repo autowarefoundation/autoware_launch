@@ -116,7 +116,7 @@ connections:
   - - lane_driving.publisher.hazard_lights_cmd
     - hazard_lights_selector.subscriber.lane_driving_hazard_lights_cmd
   - - subscriber.system_hazard_lights_cmd
-    - hazard_lights_selector.subscriber.parking_hazard_lights_cmd
+    - hazard_lights_selector.subscriber.system_hazard_lights_cmd
   - - velocity_smoother.publisher.trajectory
     - publisher.trajectory
   - - lane_driving.publisher.path_with_lane_id
