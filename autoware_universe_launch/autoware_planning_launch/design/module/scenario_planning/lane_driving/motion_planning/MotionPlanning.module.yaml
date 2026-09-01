@@ -29,6 +29,7 @@ subscribers:
 publishers:
   - name: trajectory
   - name: velocity_limit
+  - name: clear_velocity_limit
 
 connections:
   - - subscriber.path
@@ -67,3 +68,5 @@ connections:
     - publisher.trajectory
   - - motion_velocity_planner.publisher.velocity_limit
     - publisher.velocity_limit
+  - - motion_velocity_planner.publisher.clear_velocity_limit
+    - publisher.clear_velocity_limit
