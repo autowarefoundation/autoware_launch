@@ -92,6 +92,12 @@ components:
     compute_unit: main_ecu
     parameter_set: universe_control.parameter_set
 
+  # VEHICLE
+  - name: vehicle
+    entity: SampleSystemVehicleWrapper.node
+    path: /
+    compute_unit: main_ecu
+
   # SYSTEM
   - name: system
     entity: Tier4SystemWrapper.node
@@ -285,6 +291,42 @@ connections:
   - - system.publisher.emergency/gear_cmd
     - control.subscriber.emergency_gear_cmd
 
+  - - control.publisher.command/control_cmd
+    - vehicle.subscriber.control/command/control_cmd
+  - - control.publisher.command/emergency_cmd
+    - vehicle.subscriber.control/command/emergency_cmd
+  - - control.publisher.command/gear_cmd
+    - vehicle.subscriber.control/command/gear_cmd
+  - - control.publisher.command/hazard_lights_cmd
+    - vehicle.subscriber.control/command/hazard_lights_cmd
+  - - control.publisher.command/turn_indicators_cmd
+    - vehicle.subscriber.control/command/turn_indicators_cmd
+  - - vehicle.server.control/control_mode_request
+    - control.client.control_mode_request
+
+  - - vehicle.publisher.vehicle/status/control_mode
+    - control.subscriber.control_mode_report
+  - - vehicle.publisher.vehicle/status/control_mode
+    - system.subscriber.control_mode
+  - - vehicle.publisher.vehicle/status/gear_status
+    - control.subscriber.gear_status
+  - - vehicle.publisher.vehicle/status/gear_status
+    - api.subscriber.vehicle/status/gear_status
+  - - vehicle.publisher.vehicle/status/hazard_lights_status
+    - api.subscriber.vehicle/status/hazard_lights_status
+  - - vehicle.publisher.vehicle/status/steering_status
+    - control.subscriber.steering_status
+  - - vehicle.publisher.vehicle/status/steering_status
+    - planning.subscriber.steering_status
+  - - vehicle.publisher.vehicle/status/steering_status
+    - api.subscriber.vehicle/status/steering_status
+  - - vehicle.publisher.vehicle/status/turn_indicators_status
+    - api.subscriber.vehicle/status/turn_indicators_status
+  - - vehicle.publisher.vehicle/status/velocity_status
+    - control.subscriber.velocity_status
+  - - vehicle.publisher.vehicle/status/velocity_status
+    - sensing.subscriber.velocity_status
+
   - - planning.server.clear_route
     - api.client.routing/clear_route
 
@@ -334,6 +376,9 @@ remaps:
 
 # mode configurations
 LoggingSimulation:
+  remove:
+    components:
+      - name: vehicle
   override:
     parameter_sets:
       - logging_simulation.parameter_set
@@ -481,6 +526,8 @@ E2ESimulation:
         topic: /control/control_mode_request
 
   remove:
+    components:
+      - name: vehicle
     connections:
       - - map.publisher.map_projector_info
         - sensing.subscriber.map_projector_info
@@ -495,6 +542,7 @@ PlanningSimulation:
       - name: sensing
       - name: perception
       - name: localization
+      - name: vehicle
     node_groups:
       - name: pointcloud_container
   override:
