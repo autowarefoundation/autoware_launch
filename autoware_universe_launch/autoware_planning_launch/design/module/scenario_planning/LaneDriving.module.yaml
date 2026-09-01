@@ -34,6 +34,7 @@ publishers:
   - name: hazard_lights_cmd
   - name: modified_goal
   - name: velocity_limit
+  - name: clear_velocity_limit
   - name: reroute_availability
 
 connections:
@@ -99,3 +100,5 @@ connections:
     - publisher.reroute_availability
   - - motion_planning.publisher.velocity_limit
     - publisher.velocity_limit
+  - - motion_planning.publisher.clear_velocity_limit
+    - publisher.clear_velocity_limit
