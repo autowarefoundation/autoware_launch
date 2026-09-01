@@ -23,6 +23,11 @@ publishers:
     qos:
       reliability: reliable
       durability: transient_local
+  - name: map_projector_info
+    message_type: autoware_map_msgs/msg/MapProjectorInfo
+    qos:
+      reliability: reliable
+      durability: transient_local
 
 servers:
   - name: get_differential_pointcloud_map
@@ -72,3 +77,4 @@ processes:
     outcomes:
       - to_output: vector_map
       - to_output: pointcloud_map
+      - to_output: map_projector_info

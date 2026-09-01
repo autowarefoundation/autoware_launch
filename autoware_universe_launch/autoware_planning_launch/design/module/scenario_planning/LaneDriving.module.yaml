@@ -21,6 +21,7 @@ subscribers:
   - name: traffic_signals
   - name: odometry
   - name: accel
+  - name: steering_status
   - name: external_velocity_limit_mps
   - name: operation_mode_state
   - name: api_operation_mode_state
@@ -70,6 +71,8 @@ connections:
     - motion_planning.subscriber.odometry
   - - subscriber.accel
     - motion_planning.subscriber.accel
+  - - subscriber.steering_status
+    - motion_planning.subscriber.steering_status
   - - subscriber.objects
     - motion_planning.subscriber.objects
   - - subscriber.no_ground_pointcloud
