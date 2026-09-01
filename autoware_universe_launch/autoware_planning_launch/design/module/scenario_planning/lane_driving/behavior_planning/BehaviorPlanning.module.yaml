@@ -26,11 +26,20 @@ subscribers:
 
 publishers:
   - name: path
+  - name: planning_factors/avoidance_by_lane_change
+  - name: planning_factors/behavior_path_planner
+  - name: planning_factors/bidirectional_traffic
   - name: planning_factors/blind_spot
   - name: planning_factors/crosswalk
   - name: planning_factors/detection_area
+  - name: planning_factors/goal_planner
   - name: planning_factors/intersection
+  - name: planning_factors/lane_change_left
+  - name: planning_factors/lane_change_right
   - name: planning_factors/no_stopping_area
+  - name: planning_factors/side_shift
+  - name: planning_factors/start_planner
+  - name: planning_factors/static_obstacle_avoidance
   - name: planning_factors/stop_line
   - name: planning_factors/traffic_light
   - name: planning_factors/virtual_traffic_light
@@ -100,6 +109,24 @@ connections:
     - publisher.planning_factors/virtual_traffic_light
   - - behavior_velocity_planner.publisher.planning_factors/walkway
     - publisher.planning_factors/walkway
+  - - behavior_path_planner.publisher.planning_factors/avoidance_by_lane_change
+    - publisher.planning_factors/avoidance_by_lane_change
+  - - behavior_path_planner.publisher.planning_factors/behavior_path_planner
+    - publisher.planning_factors/behavior_path_planner
+  - - behavior_path_planner.publisher.planning_factors/bidirectional_traffic
+    - publisher.planning_factors/bidirectional_traffic
+  - - behavior_path_planner.publisher.planning_factors/goal_planner
+    - publisher.planning_factors/goal_planner
+  - - behavior_path_planner.publisher.planning_factors/lane_change_left
+    - publisher.planning_factors/lane_change_left
+  - - behavior_path_planner.publisher.planning_factors/lane_change_right
+    - publisher.planning_factors/lane_change_right
+  - - behavior_path_planner.publisher.planning_factors/side_shift
+    - publisher.planning_factors/side_shift
+  - - behavior_path_planner.publisher.planning_factors/start_planner
+    - publisher.planning_factors/start_planner
+  - - behavior_path_planner.publisher.planning_factors/static_obstacle_avoidance
+    - publisher.planning_factors/static_obstacle_avoidance
   - - behavior_path_planner.publisher.path_with_lane_id
     - publisher.path_with_lane_id
   - - behavior_path_planner.publisher.turn_indicators_cmd

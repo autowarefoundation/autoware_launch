@@ -5,43 +5,43 @@ autoware_system_design_format: 0.3.1
 name: AdapiNodes.module
 
 instances:
-  - name: interface
+  - name: node/interface
     entity: AdapiInterface.node
-  - name: localization
+  - name: node/localization
     entity: AdapiLocalization.node
-  - name: routing
+  - name: node/routing
     entity: AdapiRouting.node
-  - name: autoware_state
+  - name: node/autoware_state
     entity: AdapiAutowareState.node
-  - name: diagnostics
+  - name: node/diagnostics
     entity: AdapiDiagnostics.node
-  - name: fail_safe
+  - name: node/fail_safe
     entity: AdapiFailSafe.node
-  - name: heartbeat
+  - name: node/heartbeat
     entity: AdapiHeartbeat.node
-  - name: manual/local
+  - name: node/manual/local
     entity: AdapiManualControl.node
-  - name: manual/remote
+  - name: node/manual/remote
     entity: AdapiManualControl.node
-  - name: motion
+  - name: node/motion
     entity: AdapiMotion.node
-  - name: mrm_request
+  - name: node/mrm_request
     entity: AdapiMrmRequest.node
-  - name: operation_mode
+  - name: node/operation_mode
     entity: AdapiOperationMode.node
-  - name: perception
+  - name: node/perception
     entity: AdapiPerception.node
-  - name: planning
+  - name: node/planning
     entity: AdapiPlanning.node
-  - name: vehicle_status
+  - name: node/vehicle_status
     entity: AdapiVehicleStatus.node
-  - name: vehicle_command
+  - name: node/vehicle_command
     entity: AdapiVehicleCommand.node
-  - name: vehicle_metrics
+  - name: node/vehicle_metrics
     entity: AdapiVehicleMetrics.node
-  - name: vehicle_info
+  - name: node/vehicle_info
     entity: AdapiVehicleInfo.node
-  - name: vehicle_door
+  - name: node/vehicle_door
     entity: AdapiVehicleDoor.node
 
 # interfaces
@@ -77,6 +77,9 @@ subscribers:
   - name: system/component_state_monitor/component/launch/system
   - name: vehicle/status/battery_charge
   - name: control/command/actuation_cmd
+  # Planning factor subscriptions mirror the fixed topic list in the default
+  # AD API planning node; entries without a launched planning module stay
+  # unconnected and silent.
   - name: planning/planning_factors/behavior_path_planner
   - name: planning/planning_factors/blind_spot
   - name: planning/planning_factors/crosswalk
@@ -184,168 +187,207 @@ clients:
   - name: vehicle/doors/layout
 
 connections:
+  # Sibling-node inputs; wired before the boundary export so the exported
+  # topic names win.
+  - - node/localization.publisher.initialization_state
+    - node/autoware_state.subscriber.localization_state
+  - - node/routing.publisher.state
+    - node/autoware_state.subscriber.routing_state
+  - - node/operation_mode.publisher.state
+    - node/autoware_state.subscriber.operation_mode_state
+  - - node/operation_mode.publisher.state
+    - node/manual/local.subscriber.operation_mode_state
+  - - node/operation_mode.publisher.state
+    - node/manual/remote.subscriber.operation_mode_state
+  - - node/fail_safe.publisher.mrm_state
+    - node/diagnostics.subscriber.mrm_state
+
   # localization
   - - subscriber.localization/initialization_state
-    - localization.subscriber.initialization_state
-  - - localization.client.initialize
+    - node/localization.subscriber.initialization_state
+  - - node/localization.client.initialize
     - client.localization/initialize
-  - - localization.publisher.^
+  - - node/localization.publisher.^
     - publisher.api/localization/^
+  - - node/localization.server.initialize
+    - server.api/localization/initialize
 
   # interface
-  - - interface.server.^
+  - - node/interface.server.^
     - server.api/interface/^
 
   # routing
   - - subscriber.planning/route
-    - routing.subscriber.route
+    - node/routing.subscriber.route
   - - subscriber.planning/route_state
-    - routing.subscriber.route_state
+    - node/routing.subscriber.route_state
   - - subscriber.system/operation_mode/state
-    - routing.subscriber.operation_mode_state
+    - node/routing.subscriber.operation_mode_state
   - - subscriber.localization/kinematic_state
-    - routing.subscriber.kinematic_state
-  - - routing.client.clear_route
+    - node/routing.subscriber.kinematic_state
+  - - node/routing.client.clear_route
     - client.routing/clear_route
-  - - routing.client.set_lanelet_route
+  - - node/routing.client.set_lanelet_route
     - client.planning/set_lanelet_route
-  - - routing.client.set_waypoint_route
+  - - node/routing.client.set_waypoint_route
     - client.planning/set_waypoint_route
-  - - routing.client.change_operation_mode
+  - - node/routing.client.change_operation_mode
     - client.system/operation_mode/change_operation_mode
-  - - routing.publisher.^
+  - - node/routing.publisher.^
     - publisher.api/routing/^
+  - - node/routing.server.clear_route
+    - server.api/routing/clear_route
+  - - node/routing.server.set_route
+    - server.api/routing/set_route
+  - - node/routing.server.set_route_points
+    - server.api/routing/set_route_points
+  - - node/routing.server.change_route
+    - server.api/routing/change_route
+  - - node/routing.server.change_route_points
+    - server.api/routing/change_route_points
 
   # operation mode
   - - subscriber.system/operation_mode/state
-    - operation_mode.subscriber.operation_mode_state
+    - node/operation_mode.subscriber.operation_mode_state
   - - subscriber.system/operation_mode/availability
-    - operation_mode.subscriber.availability
-  - - operation_mode.client.change_operation_mode
+    - node/operation_mode.subscriber.availability
+  - - node/operation_mode.client.change_operation_mode
     - client.system/operation_mode/change_operation_mode
-  - - operation_mode.client.change_autoware_control
+  - - node/operation_mode.client.change_autoware_control
     - client.system/operation_mode/change_autoware_control
-  - - operation_mode.publisher.^
+  - - node/operation_mode.publisher.^
     - publisher.api/operation_mode/^
+  - - node/operation_mode.server.change_to_stop
+    - server.api/operation_mode/change_to_stop
+  - - node/operation_mode.server.change_to_autonomous
+    - server.api/operation_mode/change_to_autonomous
+  - - node/operation_mode.server.change_to_local
+    - server.api/operation_mode/change_to_local
+  - - node/operation_mode.server.change_to_remote
+    - server.api/operation_mode/change_to_remote
+  - - node/operation_mode.server.enable_autoware_control
+    - server.api/operation_mode/enable_autoware_control
+  - - node/operation_mode.server.disable_autoware_control
+    - server.api/operation_mode/disable_autoware_control
 
   # autoware state
-  - - localization.publisher.initialization_state
-    - autoware_state.subscriber.localization_state
-  - - routing.publisher.state
-    - autoware_state.subscriber.routing_state
-  - - operation_mode.publisher.state
-    - autoware_state.subscriber.operation_mode_state
   - - subscriber.system/component_state_monitor/component/launch/^
-    - autoware_state.subscriber.launch_state_^
-  - - autoware_state.publisher.autoware_state
+    - node/autoware_state.subscriber.launch_state_^
+  - - node/autoware_state.publisher.autoware_state
     - publisher.autoware/state
-  - - autoware_state.server.^
+  - - node/autoware_state.server.^
     - server.autoware/^
 
   # diagnostics
   - - subscriber.system/diagnostics_graph/struct
-    - diagnostics.subscriber.struct
+    - node/diagnostics.subscriber.struct
   - - subscriber.system/diagnostics_graph/status
-    - diagnostics.subscriber.status
-  - - fail_safe.publisher.mrm_state
-    - diagnostics.subscriber.mrm_state
-  - - diagnostics.client.reset
+    - node/diagnostics.subscriber.status
+  - - node/diagnostics.client.reset
     - client.system/diagnostics_graph/reset
-  - - diagnostics.publisher.^
+  - - node/diagnostics.publisher.^
     - publisher.api/system/diagnostics/^
+  - - node/diagnostics.server.reset
+    - server.api/system/diagnostics/reset
 
   # fail safe
   - - subscriber.system/fail_safe/mrm_state
-    - fail_safe.subscriber.mrm_state
-  - - fail_safe.publisher.^
+    - node/fail_safe.subscriber.mrm_state
+  - - node/fail_safe.publisher.^
     - publisher.api/fail_safe/^
-  - - mrm_request.publisher.^
+  - - node/fail_safe.server.list_mrm_description
+    - server.api/fail_safe/list_mrm_description
+  - - node/mrm_request.publisher.^
     - publisher.api/fail_safe/^
+  - - node/mrm_request.server.mrm_request/send
+    - server.api/fail_safe/mrm_request/send
 
   # heartbeat
-  - - heartbeat.publisher.^
+  - - node/heartbeat.publisher.^
     - publisher.api/system/^
 
   # manual control
-  - - operation_mode.publisher.state
-    - manual/local.subscriber.operation_mode_state
-  - - operation_mode.publisher.state
-    - manual/remote.subscriber.operation_mode_state
-  - - manual/local.publisher.^
+  - - node/manual/local.publisher.^
     - publisher.external/local/^
-  - - manual/remote.publisher.^
+  - - node/manual/remote.publisher.^
     - publisher.external/remote/^
 
   # motion
   - - subscriber.localization/kinematic_state
-    - motion.subscriber.kinematic_state
+    - node/motion.subscriber.kinematic_state
   - - subscriber.control/vehicle_cmd_gate/is_paused
-    - motion.subscriber.is_paused
+    - node/motion.subscriber.is_paused
   - - subscriber.control/vehicle_cmd_gate/is_start_requested
-    - motion.subscriber.is_start_requested
-  - - motion.client.set_pause
+    - node/motion.subscriber.is_start_requested
+  - - node/motion.client.set_pause
     - client.control/vehicle_cmd_gate/set_pause
-  - - motion.publisher.^
+  - - node/motion.publisher.^
     - publisher.api/motion/^
+  - - node/motion.server.accept_start
+    - server.api/motion/accept_start
 
   # perception
   - - subscriber.perception/object_recognition/objects
-    - perception.subscriber.objects
-  - - perception.publisher.^
+    - node/perception.subscriber.objects
+  - - node/perception.publisher.^
     - publisher.api/perception/^
 
   # planning
   - - subscriber.planning/trajectory
-    - planning.subscriber.trajectory
+    - node/planning.subscriber.trajectory
   - - subscriber.localization/kinematic_state
-    - planning.subscriber.kinematic_state
+    - node/planning.subscriber.kinematic_state
   - - subscriber.planning/planning_factors/^
-    - planning.subscriber.planning_factors/^
-  - - planning.publisher.^
+    - node/planning.subscriber.planning_factors/^
+  - - node/planning.publisher.^
     - publisher.api/planning/^
 
   # vehicle status
   - - subscriber.localization/kinematic_state
-    - vehicle_status.subscriber.kinematic_state
+    - node/vehicle_status.subscriber.kinematic_state
   - - subscriber.localization/acceleration
-    - vehicle_status.subscriber.acceleration
+    - node/vehicle_status.subscriber.acceleration
   - - subscriber.map/map_projector_info
-    - vehicle_status.subscriber.map_projector_info
+    - node/vehicle_status.subscriber.map_projector_info
   - - subscriber.vehicle/status/gear_status
-    - vehicle_status.subscriber.gear_status
+    - node/vehicle_status.subscriber.gear_status
   - - subscriber.vehicle/status/steering_status
-    - vehicle_status.subscriber.steering_status
+    - node/vehicle_status.subscriber.steering_status
   - - subscriber.vehicle/status/turn_indicators_status
-    - vehicle_status.subscriber.turn_indicators_status
+    - node/vehicle_status.subscriber.turn_indicators_status
   - - subscriber.vehicle/status/hazard_lights_status
-    - vehicle_status.subscriber.hazard_lights_status
+    - node/vehicle_status.subscriber.hazard_lights_status
   - - subscriber.vehicle/status/battery_charge
-    - vehicle_status.subscriber.battery_charge
+    - node/vehicle_status.subscriber.battery_charge
   - - subscriber.vehicle/status/battery_charge
-    - vehicle_metrics.subscriber.battery_charge
-  - - vehicle_status.publisher.^
+    - node/vehicle_metrics.subscriber.battery_charge
+  - - node/vehicle_status.publisher.^
     - publisher.api/vehicle/^
-  - - vehicle_metrics.publisher.^
+  - - node/vehicle_metrics.publisher.^
     - publisher.api/vehicle/^
-  - - vehicle_info.server.^
+  - - node/vehicle_info.server.^
     - server.api/vehicle/^
 
   # vehicle command
   - - subscriber.control/command/control_cmd
-    - vehicle_command.subscriber.control_cmd
+    - node/vehicle_command.subscriber.control_cmd
   - - subscriber.control/command/actuation_cmd
-    - vehicle_command.subscriber.actuation_cmd
-  - - vehicle_command.publisher.^
+    - node/vehicle_command.subscriber.actuation_cmd
+  - - node/vehicle_command.publisher.^
     - publisher.api/control/command/^
 
   # vehicle door
   - - subscriber.vehicle/doors/status
-    - vehicle_door.subscriber.door_status
+    - node/vehicle_door.subscriber.door_status
   - - subscriber.system/operation_mode/state
-    - vehicle_door.subscriber.operation_mode_state
-  - - vehicle_door.client.command
+    - node/vehicle_door.subscriber.operation_mode_state
+  - - node/vehicle_door.client.command
     - client.vehicle/doors/command
-  - - vehicle_door.client.layout
+  - - node/vehicle_door.client.layout
     - client.vehicle/doors/layout
-  - - vehicle_door.publisher.^
+  - - node/vehicle_door.publisher.^
     - publisher.api/vehicle/doors/^
+  - - node/vehicle_door.server.command
+    - server.api/vehicle/doors/command
+  - - node/vehicle_door.server.layout
+    - server.api/vehicle/doors/layout
