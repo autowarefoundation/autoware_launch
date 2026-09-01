@@ -24,7 +24,6 @@ subscribers:
   # map
   - name: vector_map
   - name: pointcloud_map
-  - name: service_pointcloud_map_diff
   # localization
   - name: kinematic_state
   # traffic light
@@ -39,6 +38,9 @@ publishers:
   - name: obstacle_segmentation/pointcloud
   - name: occupancy_grid_map/map
   - name: traffic_light_recognition/traffic_signals
+
+clients:
+  - name: service_pointcloud_map_diff
 
 connections:
   # obstacle segmentation
