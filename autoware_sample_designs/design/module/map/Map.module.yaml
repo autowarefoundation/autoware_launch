@@ -12,7 +12,7 @@ instances:
   - name: lanelet2_map_visualization
     entity: Lanelet2MapVisualization.node
   - name: vector_map_tf_generator
-    entity: VectorMapTfGenerator.node
+    entity: VectorMapTFGenerator.node
   - name: map_hash_generator
     entity: MapHashGenerator.node
   - name: map_projection_loader
