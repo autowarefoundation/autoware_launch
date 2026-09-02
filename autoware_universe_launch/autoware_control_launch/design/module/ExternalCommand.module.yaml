@@ -1,0 +1,89 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+name: ExternalCommand.module
+
+instances:
+  - name: external_cmd_selector
+    entity: ExternalCmdSelector.node
+  - name: external_cmd_converter
+    entity: ExternalCmdConverter.node
+
+# interfaces
+subscribers:
+  - name: local/gear_cmd
+  - name: local/hazard_lights_cmd
+  - name: local/heartbeat
+  - name: local/pedals_cmd
+  - name: local/steering_cmd
+  - name: local/turn_indicators_cmd
+  - name: remote/gear_cmd
+  - name: remote/hazard_lights_cmd
+  - name: remote/heartbeat
+  - name: remote/pedals_cmd
+  - name: remote/steering_cmd
+  - name: remote/turn_indicators_cmd
+  - name: current_gate_mode
+  - name: odometry
+
+publishers:
+  - name: control_cmd
+  - name: turn_indicators_cmd
+  - name: hazard_lights_cmd
+  - name: gear_cmd
+  - name: heartbeat
+  - name: current_selector_mode
+
+servers:
+  - name: select_external_command
+
+connections:
+  # ExternalCmdSelector
+  - - subscriber.local/pedals_cmd
+    - external_cmd_selector.subscriber.local/pedals_cmd
+  - - subscriber.local/steering_cmd
+    - external_cmd_selector.subscriber.local/steering_cmd
+  - - subscriber.local/turn_indicators_cmd
+    - external_cmd_selector.subscriber.local/turn_indicators_cmd
+  - - subscriber.local/hazard_lights_cmd
+    - external_cmd_selector.subscriber.local/hazard_lights_cmd
+  - - subscriber.local/gear_cmd
+    - external_cmd_selector.subscriber.local/gear_cmd
+  - - subscriber.local/heartbeat
+    - external_cmd_selector.subscriber.local/heartbeat
+  - - subscriber.remote/pedals_cmd
+    - external_cmd_selector.subscriber.remote/pedals_cmd
+  - - subscriber.remote/steering_cmd
+    - external_cmd_selector.subscriber.remote/steering_cmd
+  - - subscriber.remote/turn_indicators_cmd
+    - external_cmd_selector.subscriber.remote/turn_indicators_cmd
+  - - subscriber.remote/hazard_lights_cmd
+    - external_cmd_selector.subscriber.remote/hazard_lights_cmd
+  - - subscriber.remote/gear_cmd
+    - external_cmd_selector.subscriber.remote/gear_cmd
+  - - subscriber.remote/heartbeat
+    - external_cmd_selector.subscriber.remote/heartbeat
+
+  # ExternalCmdConverter
+  - - external_cmd_selector.publisher.*
+    - external_cmd_converter.subscriber.*
+  - - subscriber.current_gate_mode
+    - external_cmd_converter.subscriber.current_gate_mode
+  - - subscriber.odometry
+    - external_cmd_converter.subscriber.odometry
+
+  # Publishers
+  - - external_cmd_converter.publisher.control_cmd
+    - publisher.control_cmd
+  - - external_cmd_selector.publisher.turn_indicators_cmd
+    - publisher.turn_indicators_cmd
+  - - external_cmd_selector.publisher.hazard_lights_cmd
+    - publisher.hazard_lights_cmd
+  - - external_cmd_selector.publisher.gear_cmd
+    - publisher.gear_cmd
+  - - external_cmd_selector.publisher.heartbeat
+    - publisher.heartbeat
+  - - external_cmd_selector.publisher.current_selector_mode
+    - publisher.current_selector_mode
+  - - external_cmd_selector.server.select_external_command
+    - server.select_external_command
