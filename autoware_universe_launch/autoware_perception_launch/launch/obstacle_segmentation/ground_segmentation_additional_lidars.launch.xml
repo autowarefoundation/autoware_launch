@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="perception_config_pkg" default="autoware_perception_launch" description="package that ships the perception config/ tree; overriding it requires the same config layout"/>
   <!-- Folds one additional lidar into the obstacle stream: crop box -> ground filter, concatenated with the primary no-ground pointcloud -->
+
+  <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
+  <let name="perception_config_dir" value="$(find-pkg-share $(var perception_config_pkg))/config"/>
+
   <arg name="target_container" description="container to load the filters into"/>
   <arg name="lidar_name" description="name of the additional lidar"/>
   <arg name="base_frame" default="base_link"/>
@@ -14,8 +17,8 @@
 
   <arg name="crop_box_margin_max_z" default="2.5" description="crop box ceiling margin above vehicle_height"/>
   <arg name="crop_box_margin_min_z" default="-2.5" description="crop box floor margin below the ground"/>
-  <arg name="crop_box_filter_node_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/obstacle_segmentation/ground_segmentation/crop_box_filter.param.yaml"/>
-  <arg name="scan_ground_filter_node_param_path" default="$(find-pkg-share $(var perception_config_pkg))/config/obstacle_segmentation/ground_segmentation/scan_ground_filter.param.yaml"/>
+  <arg name="crop_box_filter_node_param_path" default="$(var perception_config_dir)/obstacle_segmentation/ground_segmentation/crop_box_filter.param.yaml"/>
+  <arg name="scan_ground_filter_node_param_path" default="$(var perception_config_dir)/obstacle_segmentation/ground_segmentation/scan_ground_filter.param.yaml"/>
 
   <load_composable_node target="$(var target_container)">
     <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="$(var lidar_name)_crop_box_filter">
