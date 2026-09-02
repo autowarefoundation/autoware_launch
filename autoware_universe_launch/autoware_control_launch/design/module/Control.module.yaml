@@ -112,8 +112,6 @@ connections:
     - trajectory_follower.subscriber.route
   - - subscriber.api_operation_mode_state
     - trajectory_follower.subscriber.api_operation_mode_state
-  - - subscriber.api_operation_mode_state
-    - control_checker.subscriber.api_operation_mode_state
   - - subscriber.steering_offset_update
     - trajectory_follower.subscriber.steering_offset_update
 
