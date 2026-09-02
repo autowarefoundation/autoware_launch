@@ -3,6 +3,9 @@
   <!-- cspell: ignore comlops -->
   <!-- Traffic light recognition: one feature launcher per topology; the camera set is fixed inside each launcher -->
 
+  <!-- Config package -->
+  <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
+
   <!-- Pipeline junctions -->
   <arg name="use_traffic_light_recognition" default="true" description="use traffic light recognition module, if false, traffic light recognition module will not be launched"/>
   <arg name="traffic_light_recognition/use_high_accuracy_detection" default="true" description="select whether to use high accuracy detector for traffic light recognition"/>

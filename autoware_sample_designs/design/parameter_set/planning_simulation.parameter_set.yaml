@@ -32,7 +32,7 @@ parameters:
         value: false
       - name: v_ratio
         value: 10.0
-  - node: /planning
+  - node: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner
     param_values:
       - name: is_simulation
         value: true
