@@ -5,7 +5,10 @@
     use_steer_prediction: false     # flag for using steer prediction (do not use steer measurement)
     use_delayed_initial_state: true # flag to use x0_delayed as initial state for predicted trajectory
     # Use temporal trajectory steering for Uref when at least one input steering value is nonzero.
-    use_trajectory_steering_for_feedforward: true
+    use_trajectory_steering_for_feedforward: false
+    # Experimental: skip MPC QP and command MPPI u_steer[0] from ~/input/mppi_steer_cmd.
+    use_mppi_steer_passthrough: true
+    mppi_steer_passthrough_timeout_s: 0.15
 
     # -- path smoothing --
     enable_path_smoothing: false   # flag for path smoothing
