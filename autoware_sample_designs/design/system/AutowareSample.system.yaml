@@ -132,19 +132,17 @@ node_groups:
   - name: control_container
     type: ros2_component_container_mt
     nodes:
-      - /control/shift_decider
-      - /control/vehicle_cmd_gate
-      - /control/operation_mode_transition_manager
-      - /control/trajectory_follower
+      - /control/trajectory_follower/controller_node_exe
+      - /control/command_gate/shift_decider
+      - /control/command_gate/vehicle_cmd_gate
+      - /control/command_gate/autoware_operation_mode_transition_manager
   - name: control_check_container
     type: ros2_component_container_mt
     nodes:
-      - /control/lane_departure_checker
-      - /control/control_validator
-      - /control/autonomous_emergency_braking
-      - /control/collision_detector
-      # - /control/obstacle_collision_checker
-      # - /control/predicted_path_checker
+      - /control/trajectory_follower/lane_departure_checker_node
+      - /control/control_checker/control_validator
+      - /control/control_checker/autonomous_emergency_braking
+      - /control/control_checker/collision_detector
   - name: mission_planner_container
     type: ros2_component_container_mt
     nodes:
@@ -288,8 +286,6 @@ connections:
 remaps:
   - source: localization.publisher.initialpose3d
     topic: /initialpose3d
-  - source: control.publisher.engage
-    topic: /autoware/engage
   - source: control.publisher.is_autonomous_available
     topic: /system/operation_mode/state
   - source: control.publisher.external_emergency
