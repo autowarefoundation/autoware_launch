@@ -1,0 +1,75 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+# Map loading: pointcloud and Lanelet2 maps, projector info, viewer TF and the map hash API.
+name: Map.module
+
+instances:
+  - name: pointcloud_map_loader
+    entity: PointCloudMapLoader.node
+  - name: lanelet2_map_loader
+    entity: Lanelet2MapLoader.node
+  - name: lanelet2_map_visualization
+    entity: Lanelet2MapVisualization.node
+  - name: vector_map_tf_generator
+    entity: VectorMapTFGenerator.node
+  - name: map_hash_generator
+    entity: MapHashGenerator.node
+  - name: map_projection_loader
+    entity: MapProjectionLoader.node
+
+# interfaces
+subscribers: []
+
+publishers:
+  - name: pointcloud_map
+  - name: pointcloud_map_metadata
+  - name: vector_map
+  - name: vector_map_metadata
+  - name: vector_map_marker
+  - name: map_projector_info
+  - name: map_hash
+
+servers:
+  - name: get_partial_pointcloud_map
+  - name: get_differential_pointcloud_map
+  - name: get_selected_pointcloud_map
+  - name: get_selected_vector_map
+  - name: get_vector_map_xml
+
+connections:
+  # projector info drives the lanelet2 map loading
+  - - map_projection_loader.publisher.map_projector_info
+    - lanelet2_map_loader.subscriber.map_projector_info
+
+  # vector map distribution inside the module
+  - - lanelet2_map_loader.publisher.lanelet2_map
+    - lanelet2_map_visualization.subscriber.lanelet2_map
+  - - lanelet2_map_loader.publisher.lanelet2_map
+    - vector_map_tf_generator.subscriber.vector_map
+
+  # outputs
+  - - pointcloud_map_loader.publisher.pointcloud_map
+    - publisher.pointcloud_map
+  - - pointcloud_map_loader.publisher.pointcloud_map_metadata
+    - publisher.pointcloud_map_metadata
+  - - lanelet2_map_loader.publisher.lanelet2_map
+    - publisher.vector_map
+  - - lanelet2_map_loader.publisher.lanelet2_map_metadata
+    - publisher.vector_map_metadata
+  - - lanelet2_map_visualization.publisher.lanelet2_map_marker
+    - publisher.vector_map_marker
+  - - map_projection_loader.publisher.map_projector_info
+    - publisher.map_projector_info
+  - - map_hash_generator.publisher.map_hash
+    - publisher.map_hash
+  - - pointcloud_map_loader.server.get_partial_pcd_map
+    - server.get_partial_pointcloud_map
+  - - pointcloud_map_loader.server.get_differential_pcd_map
+    - server.get_differential_pointcloud_map
+  - - pointcloud_map_loader.server.get_selected_pcd_map
+    - server.get_selected_pointcloud_map
+  - - lanelet2_map_loader.server.get_selected_lanelet2_map
+    - server.get_selected_vector_map
+  - - map_hash_generator.server.get_lanelet_xml
+    - server.get_vector_map_xml

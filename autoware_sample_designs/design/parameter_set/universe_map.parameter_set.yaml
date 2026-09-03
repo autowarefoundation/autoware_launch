@@ -1,0 +1,37 @@
+autoware_system_design_format: 0.3.0
+
+name: universe_map.parameter_set
+parameters:
+  - node: /map/pointcloud_map_loader
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/map/pointcloud_map_loader.param.yaml
+    param_values:
+      - name: pcd_paths_or_directory
+        value: [$(var map_path)/$(var pointcloud_map_file)]
+      - name: pcd_metadata_path
+        value: $(var map_path)/pointcloud_map_metadata.yaml
+  - node: /map/lanelet2_map_loader
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/map/lanelet2_map_loader.param.yaml
+    param_values:
+      - name: lanelet2_map_path
+        value: $(var map_path)/$(var lanelet2_map_file)
+      - name: lanelet2_map_metadata_path
+        value: $(var map_path)/lanelet2_map_metadata.yaml
+  - node: /map/map_projection_loader
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/map/map_projection_loader.param.yaml
+    param_values:
+      - name: map_projector_info_path
+        value: $(var map_path)/map_projector_info.yaml
+      - name: lanelet2_map_path
+        value: $(var map_path)/$(var lanelet2_map_file)
+  - node: /map/vector_map_tf_generator
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/map/map_tf_generator.param.yaml
+  - node: /map/map_hash_generator
+    param_values:
+      - name: lanelet2_map_path
+        value: $(var map_path)/$(var lanelet2_map_file)
+      - name: pointcloud_map_path
+        value: $(var map_path)/$(var pointcloud_map_file)
