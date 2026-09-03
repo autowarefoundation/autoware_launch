@@ -1,9 +1,5 @@
 # autoware_launch
 
-## Structure
-
-![autoware_launch](./autoware_launch.drawio.svg)
-
 ## Package Dependencies
 
 Please see `<exec_depend>` in `package.xml`.
