@@ -107,8 +107,9 @@ components:
 
   # SYSTEM
   - name: system
-    entity: Tier4SystemWrapper.node
+    entity: System.module
     compute_unit: main_ecu
+    parameter_set: universe_system.parameter_set
 
   # # VISUALIZATION
   # - name: visualization
@@ -182,6 +183,14 @@ node_groups:
       - /planning/scenario_planning/lane_driving/motion_planning/path_optimizer
       - /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner
       # - /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker
+  - name: system_monitor_container
+    type: ros2_component_container_mt
+    nodes:
+      - /system/system_monitor/*
+  - name: component_state_monitor_container
+    type: ros2_component_container
+    nodes:
+      - /system/component_state_monitor/topic_state_monitor_*
 
 connections:
   - - localization.publisher.kinematic_state
@@ -235,7 +244,7 @@ connections:
     - planning.subscriber.pointcloud
   - - perception.publisher.traffic_light_recognition/traffic_signals
     - planning.subscriber.traffic_signals
-  - - system.publisher.operation_mode/state
+  - - control.publisher.operation_mode/state
     - planning.subscriber.operation_mode_state
   - - control.publisher.command/control_cmd
     - planning.subscriber.control_cmd
@@ -254,13 +263,11 @@ connections:
     - control.subscriber.route_state
   - - planning.publisher.route
     - adapi.subscriber.planning/route
-  - - planning.publisher.route
-    - system.subscriber.planning/route
   - - planning.publisher.turn_indicators_cmd
     - control.subscriber.planning_turn_indicators_cmd
   - - planning.publisher.hazard_lights_cmd
     - control.subscriber.hazard_lights_cmd
-  - - system.publisher.operation_mode/state
+  - - control.publisher.operation_mode/state
     - control.subscriber.operation_mode_state
 
   - - adapi.publisher.api/operation_mode/state
@@ -312,6 +319,8 @@ connections:
     - system.subscriber.control_cmd
   - - control.publisher.command/gear_cmd
     - system.subscriber.gear_cmd
+  - - adapi.publisher.api/operation_mode/state
+    - system.subscriber.api_operation_mode_state
 
   - - system.publisher.emergency/control_cmd
     - control.subscriber.emergency_control_cmd
@@ -395,13 +404,13 @@ connections:
   - - adapi.server.api/routing/change_route_points
     - default_adapi.client.api/routing/change_route_points
 
-  - - system.publisher.operation_mode/state
+  - - control.publisher.operation_mode/state
     - adapi.subscriber.system/operation_mode/state
   - - system.publisher.operation_mode/availability
     - adapi.subscriber.system/operation_mode/availability
-  - - system.server.operation_mode/change_operation_mode
+  - - control.server.operation_mode/change_operation_mode
     - adapi.client.system/operation_mode/change_operation_mode
-  - - system.server.operation_mode/change_autoware_control
+  - - control.server.operation_mode/change_autoware_control
     - adapi.client.system/operation_mode/change_autoware_control
   - - system.publisher.diagnostics_graph/struct
     - adapi.subscriber.system/diagnostics_graph/struct
@@ -451,8 +460,12 @@ remaps:
     topic: /api/external/set/rtc_commands
   - source: autoware_api.server.api/external/set/rtc_auto_mode
     topic: /api/external/set/rtc_auto_mode
-  - source: control.publisher.is_autonomous_available
+  - source: control.publisher.operation_mode/state
     topic: /system/operation_mode/state
+  - source: control.server.operation_mode/change_operation_mode
+    topic: /system/operation_mode/change_operation_mode
+  - source: control.server.operation_mode/change_autoware_control
+    topic: /system/operation_mode/change_autoware_control
   - source: control.publisher.external_emergency
     topic: /api/autoware/get/emergency
   - source: control.publisher.api/engage
@@ -493,12 +506,20 @@ remaps:
     topic: /diagnostics_graph/status
   - source: system.server.diagnostics_graph/reset
     topic: /diagnostics_graph/reset
+  - source: system.publisher.diagnostics_graph/unknowns
+    topic: /diagnostics_graph/unknowns
+  - source: system.publisher.velocity_limit
+    topic: /planning/scenario_planning/max_velocity_candidates
+  - source: system.publisher.velocity_limit/clear
+    topic: /planning/scenario_planning/clear_velocity_limit
 
 # mode configurations
 LoggingSimulation:
   remove:
     components:
       - name: vehicle
+    node_groups:
+      - name: system_monitor_container
   override:
     parameter_sets:
       - logging_simulation.parameter_set
@@ -507,6 +528,10 @@ LoggingSimulation:
         entity: SampleSensorKit_sim.module
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
+      - name: system
+        entity: System_sim.module
+        compute_unit: main_ecu
+        parameter_set: universe_system.parameter_set
       - name: rosbag_replay
         entity: SampleRosbagReplay.node
         compute_unit: dummy_ecu
@@ -548,6 +573,10 @@ E2ESimulation:
         entity: PerceptionE2ESimulation.module
         compute_unit: main_ecu
         parameter_set: e2e_simulation_perception.parameter_set
+      - name: system
+        entity: System_sim.module
+        compute_unit: main_ecu
+        parameter_set: universe_system.parameter_set
     node_groups:
       - name: pointcloud_container
         type: ros2_component_container_mt_ipc
@@ -648,6 +677,8 @@ E2ESimulation:
   remove:
     components:
       - name: vehicle
+    node_groups:
+      - name: system_monitor_container
     connections:
       - - map.publisher.map_projector_info
         - sensing.subscriber.map_projector_info
@@ -665,6 +696,7 @@ PlanningSimulation:
       - name: vehicle
     node_groups:
       - name: pointcloud_container
+      - name: system_monitor_container
   override:
     parameter_sets:
       - planning_simulation.parameter_set
@@ -684,6 +716,14 @@ PlanningSimulation:
       - name: dummy_traffic_light_publisher
         entity: DummyTrafficLightPublisher.node
         compute_unit: main_ecu
+      - name: dummy_diag_publisher
+        entity: DummyDiagPublisher.node
+        path: /dummy_diag_publisher
+        compute_unit: main_ecu
+      - name: system
+        entity: System_psim.module
+        compute_unit: main_ecu
+        parameter_set: universe_system.parameter_set
       - name: vehicle
         entity: PlanningSimVehicle.module
         compute_unit: main_ecu
@@ -736,7 +776,7 @@ PlanningSimulation:
         - control.client.control_mode_request
       - - simulator.publisher.vehicle/status/actuation_status
         - vehicle.subscriber.actuation_status
-      - - system.publisher.operation_mode/state
+      - - control.publisher.operation_mode/state
         - vehicle.subscriber.operation_mode_state
       - - vehicle.publisher.actuation_cmd
         - simulator.subscriber.control/command/actuation_cmd

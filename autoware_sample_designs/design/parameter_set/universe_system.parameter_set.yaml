@@ -1,0 +1,355 @@
+autoware_system_design_format: 0.3.0
+
+name: universe_system.parameter_set
+parameters:
+  - node: /system/system_monitor/cpu_monitor
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/cpu_monitor.param.yaml
+  - node: /system/system_monitor/mem_monitor
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/mem_monitor.param.yaml
+  - node: /system/system_monitor/net_monitor
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/net_monitor.param.yaml
+  - node: /system/system_monitor/ntp_monitor
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/ntp_monitor.param.yaml
+  - node: /system/system_monitor/process_monitor
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/process_monitor.param.yaml
+  - node: /system/system_monitor/hdd_monitor
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/hdd_monitor.param.yaml
+  - node: /system/system_monitor/gpu_monitor
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/gpu_monitor.param.yaml
+  - node: /system/system_monitor/voltage_monitor
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/voltage_monitor.param.yaml
+  - node: /system/duplicated_node_checker
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/duplicated_node_checker/duplicated_node_checker.param.yaml
+  - node: /system/processing_time_checker
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/processing_time_checker/processing_time_checker.param.yaml
+  - node: /system/pipeline_latency_monitor
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/pipeline_latency_monitor/pipeline_latency_monitor.param.yaml
+  - node: /system/mrm_comfortable_stop_operator
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/mrm_comfortable_stop_operator/mrm_comfortable_stop_operator.param.yaml
+  - node: /system/mrm_emergency_stop_operator
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/mrm_emergency_stop_operator/mrm_emergency_stop_operator.param.yaml
+  - node: /system/mrm_handler
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/mrm_handler/mrm_handler.param.yaml
+  - node: /system/converter
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/command_mode/converter.param.yaml
+  - node: /system/aggregator
+    param_values:
+      - name: graph_file
+        value: $(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml
+  - node: /system/logging_diag_graph
+    param_values:
+      - name: show_rate
+        value: 10.0
+      - name: enable_terminal_log
+        value: true
+  - node: /system/component_state_monitor/component
+    param_values:
+      - name: launch.map
+        value:
+          [
+            "topic_state_monitor_vector_map: map_topic_status",
+            "topic_state_monitor_pointcloud_map: map_topic_status",
+          ]
+      - name: autonomous.localization
+        value:
+          [
+            "topic_state_monitor_pose_twist_fusion_filter_pose: localization_topic_status",
+            "topic_state_monitor_transform_map_to_base_link: localization_topic_status",
+          ]
+      - name: launch.perception
+        value: ["topic_state_monitor_obstacle_segmentation_pointcloud: perception_topic_status"]
+      - name: autonomous.perception
+        value:
+          [
+            "topic_state_monitor_object_recognition_objects: perception_topic_status",
+            "topic_state_monitor_traffic_light_recognition_traffic_signals: perception_topic_status",
+          ]
+      - name: autonomous.planning
+        value:
+          [
+            "topic_state_monitor_mission_planning_route: planning_topic_status",
+            "topic_state_monitor_scenario_planning_trajectory: planning_topic_status",
+          ]
+      - name: autonomous.control
+        value:
+          [
+            "topic_state_monitor_trajectory_follower_control_cmd: control_topic_status",
+            "topic_state_monitor_control_command_control_cmd: control_topic_status",
+          ]
+      - name: autonomous.vehicle
+        value:
+          [
+            "topic_state_monitor_vehicle_status_velocity_status: vehicle_topic_status",
+            "topic_state_monitor_vehicle_status_steering_status: vehicle_topic_status",
+          ]
+      - name: launch.system
+        value: ["topic_state_monitor_system_emergency_control_cmd: system_topic_status"]
+  - node: /system/component_state_monitor/topic_state_monitor_vector_map
+    param_values:
+      - name: topic
+        value: /map/vector_map
+      - name: topic_type
+        value: autoware_map_msgs/msg/LaneletMapBin
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: true
+      - name: diag_name
+        value: map_topic_status
+      - name: warn_rate
+        value: 0.0
+      - name: error_rate
+        value: 0.0
+      - name: timeout
+        value: 0.0
+  - node: /system/component_state_monitor/topic_state_monitor_pointcloud_map
+    param_values:
+      - name: topic
+        value: /map/pointcloud_map
+      - name: topic_type
+        value: sensor_msgs/msg/PointCloud2
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: true
+      - name: diag_name
+        value: map_topic_status
+      - name: warn_rate
+        value: 0.0
+      - name: error_rate
+        value: 0.0
+      - name: timeout
+        value: 0.0
+  - node: /system/component_state_monitor/topic_state_monitor_pose_twist_fusion_filter_pose
+    param_values:
+      - name: topic
+        value: /localization/pose_twist_fusion_filter/pose
+      - name: topic_type
+        value: geometry_msgs/msg/PoseStamped
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: false
+      - name: diag_name
+        value: localization_topic_status
+      - name: warn_rate
+        value: 5.0
+      - name: error_rate
+        value: 1.0
+      - name: timeout
+        value: 1.0
+  - node: /system/component_state_monitor/topic_state_monitor_obstacle_segmentation_pointcloud
+    param_values:
+      - name: topic
+        value: /perception/obstacle_segmentation/pointcloud
+      - name: topic_type
+        value: sensor_msgs/msg/PointCloud2
+      - name: best_effort
+        value: true
+      - name: transient_local
+        value: false
+      - name: diag_name
+        value: perception_topic_status
+      - name: warn_rate
+        value: 5.0
+      - name: error_rate
+        value: 1.0
+      - name: timeout
+        value: 1.0
+  - node: /system/component_state_monitor/topic_state_monitor_object_recognition_objects
+    param_values:
+      - name: topic
+        value: /perception/object_recognition/objects
+      - name: topic_type
+        value: autoware_perception_msgs/msg/PredictedObjects
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: false
+      - name: diag_name
+        value: perception_topic_status
+      - name: warn_rate
+        value: 5.0
+      - name: error_rate
+        value: 1.0
+      - name: timeout
+        value: 1.0
+  - node: /system/component_state_monitor/topic_state_monitor_traffic_light_recognition_traffic_signals
+    param_values:
+      - name: topic
+        value: /perception/traffic_light_recognition/traffic_signals
+      - name: topic_type
+        value: autoware_perception_msgs/msg/TrafficLightGroupArray
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: false
+      - name: diag_name
+        value: perception_topic_status
+      - name: warn_rate
+        value: 5.0
+      - name: error_rate
+        value: 1.0
+      - name: timeout
+        value: 1.0
+  - node: /system/component_state_monitor/topic_state_monitor_mission_planning_route
+    param_values:
+      - name: topic
+        value: /planning/mission_planning/route
+      - name: topic_type
+        value: autoware_planning_msgs/msg/LaneletRoute
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: true
+      - name: diag_name
+        value: planning_topic_status
+      - name: warn_rate
+        value: 0.0
+      - name: error_rate
+        value: 0.0
+      - name: timeout
+        value: 0.0
+  - node: /system/component_state_monitor/topic_state_monitor_scenario_planning_trajectory
+    param_values:
+      - name: topic
+        value: /planning/trajectory
+      - name: topic_type
+        value: autoware_planning_msgs/msg/Trajectory
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: false
+      - name: diag_name
+        value: planning_topic_status
+      - name: warn_rate
+        value: 5.0
+      - name: error_rate
+        value: 1.0
+      - name: timeout
+        value: 1.0
+  - node: /system/component_state_monitor/topic_state_monitor_trajectory_follower_control_cmd
+    param_values:
+      - name: topic
+        value: /control/trajectory_follower/control_cmd
+      - name: topic_type
+        value: autoware_control_msgs/msg/Control
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: false
+      - name: diag_name
+        value: control_topic_status
+      - name: warn_rate
+        value: 5.0
+      - name: error_rate
+        value: 1.0
+      - name: timeout
+        value: 1.0
+  - node: /system/component_state_monitor/topic_state_monitor_control_command_control_cmd
+    param_values:
+      - name: topic
+        value: /control/command/control_cmd
+      - name: topic_type
+        value: autoware_control_msgs/msg/Control
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: false
+      - name: diag_name
+        value: control_topic_status
+      - name: warn_rate
+        value: 5.0
+      - name: error_rate
+        value: 1.0
+      - name: timeout
+        value: 1.0
+  - node: /system/component_state_monitor/topic_state_monitor_vehicle_status_velocity_status
+    param_values:
+      - name: topic
+        value: /vehicle/status/velocity_status
+      - name: topic_type
+        value: autoware_vehicle_msgs/msg/VelocityReport
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: false
+      - name: diag_name
+        value: vehicle_topic_status
+      - name: warn_rate
+        value: 5.0
+      - name: error_rate
+        value: 1.0
+      - name: timeout
+        value: 1.0
+  - node: /system/component_state_monitor/topic_state_monitor_vehicle_status_steering_status
+    param_values:
+      - name: topic
+        value: /vehicle/status/steering_status
+      - name: topic_type
+        value: autoware_vehicle_msgs/msg/SteeringReport
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: false
+      - name: diag_name
+        value: vehicle_topic_status
+      - name: warn_rate
+        value: 5.0
+      - name: error_rate
+        value: 1.0
+      - name: timeout
+        value: 1.0
+  - node: /system/component_state_monitor/topic_state_monitor_system_emergency_control_cmd
+    param_values:
+      - name: topic
+        value: /system/emergency/control_cmd
+      - name: topic_type
+        value: autoware_control_msgs/msg/Control
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: false
+      - name: diag_name
+        value: system_topic_status
+      - name: warn_rate
+        value: 5.0
+      - name: error_rate
+        value: 1.0
+      - name: timeout
+        value: 1.0
+  - node: /system/component_state_monitor/topic_state_monitor_transform_map_to_base_link
+    param_values:
+      - name: topic
+        value: /tf
+      - name: frame_id
+        value: map
+      - name: child_frame_id
+        value: base_link
+      - name: best_effort
+        value: false
+      - name: transient_local
+        value: false
+      - name: diag_name
+        value: localization_topic_status
+      - name: warn_rate
+        value: 5.0
+      - name: error_rate
+        value: 1.0
+      - name: timeout
+        value: 1.0
