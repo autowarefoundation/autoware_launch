@@ -10,6 +10,7 @@ instances:
 
 subscribers:
   - name: orientation
+  - name: map_projector_info
 publishers:
   - name: pose
   - name: pose_with_covariance
@@ -17,6 +18,8 @@ publishers:
 connections:
   - - subscriber.orientation
     - gnss_poser.subscriber.autoware_orientation
+  - - subscriber.map_projector_info
+    - gnss_poser.subscriber.map_projector_info
   - - ublox.publisher.nav_sat_fix
     - gnss_poser.subscriber.fix
   - - gnss_poser.publisher.gnss_pose

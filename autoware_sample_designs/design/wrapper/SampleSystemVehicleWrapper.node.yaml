@@ -1,26 +1,16 @@
 autoware_system_design_format: 0.3.0
 
-name: SampleAWSIM.node
+name: SampleSystemVehicleWrapper.node
 
 package:
-  name: awsim
-  provider: dummy
+  name: autoware_sample_designs
+  provider: autoware
 
 launch:
-  executable: AWSIM
-  node_output: screen
+  ros2_launch_file: sample_system_vehicle_wrapper.launch.xml
 
 # interfaces
 subscribers:
-  - name: awsim/awsim_rviz_plugins/npc_spawner/npc_name
-    message_type: std_msgs/msg/String
-  - name: awsim/awsim_rviz_plugins/npc_spawner/npc_velocity
-    message_type: std_msgs/msg/Float32
-  - name: awsim/awsim_rviz_plugins/npc_spawner/pose_with_covariance
-    message_type: geometry_msgs/msg/PoseWithCovarianceStamped
-  - name: awsim/awsim_rviz_plugins/pose_teleport/pose_with_covariance
-    message_type: geometry_msgs/msg/PoseWithCovarianceStamped
-  # CONTROL
   - name: control/command/control_cmd
     message_type: autoware_control_msgs/msg/Control
   - name: control/command/emergency_cmd
@@ -33,25 +23,6 @@ subscribers:
     message_type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
 
 publishers:
-  # GNSS
-  - name: sensing/gnss/pose
-    message_type: geometry_msgs/msg/PoseStamped
-  - name: sensing/gnss/pose_with_covariance
-    message_type: geometry_msgs/msg/PoseWithCovarianceStamped
-  # IMU
-  - name: sensing/imu/tamagawa/imu_raw
-    message_type: sensor_msgs/msg/Imu
-  # LIDAR
-  - name: sensing/lidar/top/pointcloud_raw
-    message_type: sensor_msgs/msg/PointCloud2
-  - name: sensing/lidar/top/pointcloud_raw_ex
-    message_type: sensor_msgs/msg/PointCloud2
-  # CAMERA
-  - name: sensing/camera/traffic_light/camera_info
-    message_type: sensor_msgs/msg/CameraInfo
-  - name: sensing/camera/traffic_light/image_raw
-    message_type: sensor_msgs/msg/Image
-  # VEHICLE
   - name: vehicle/status/control_mode
     message_type: autoware_vehicle_msgs/msg/ControlModeReport
   - name: vehicle/status/gear_status
@@ -70,9 +41,17 @@ servers:
     message_type: autoware_vehicle_msgs/srv/ControlModeCommand
 
 # parameters
-param_values: []
-
 param_files: []
+
+param_values:
+  - name: vehicle_model
+    default: sample_vehicle
+  - name: vehicle_id
+    default: $(env VEHICLE_ID default)
+  - name: initial_engage_state
+    default: false
+  - name: raw_vehicle_cmd_converter_param_path
+    default: $(find-pkg-share autoware_raw_vehicle_cmd_converter)/config/raw_vehicle_cmd_converter.param.yaml
 
 # processes
 processes: []

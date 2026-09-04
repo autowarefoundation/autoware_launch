@@ -92,6 +92,12 @@ components:
     compute_unit: main_ecu
     parameter_set: universe_control.parameter_set
 
+  # VEHICLE
+  - name: vehicle
+    entity: SampleSystemVehicleWrapper.node
+    path: /
+    compute_unit: main_ecu
+
   # SYSTEM
   - name: system
     entity: Tier4SystemWrapper.node
@@ -177,6 +183,8 @@ connections:
     - perception.subscriber.concatenated_pointcloud
   - - map.publisher.vector_map
     - perception.subscriber.vector_map
+  - - map.publisher.map_projector_info
+    - sensing.subscriber.map_projector_info
 
   - - map.publisher.vector_map
     - localization.subscriber.lanelet_map
@@ -255,6 +263,24 @@ connections:
     - control.subscriber.vector_map
   - - perception.publisher.object_recognition/objects
     - control.subscriber.objects
+  - - planning.publisher.planning_factors/blind_spot
+    - control.subscriber.blind_spot
+  - - planning.publisher.planning_factors/crosswalk
+    - control.subscriber.crosswalk
+  - - planning.publisher.planning_factors/detection_area
+    - control.subscriber.detection_area
+  - - planning.publisher.planning_factors/intersection
+    - control.subscriber.intersection
+  - - planning.publisher.planning_factors/no_stopping_area
+    - control.subscriber.no_stopping_area
+  - - planning.publisher.planning_factors/stop_line
+    - control.subscriber.stop_line
+  - - planning.publisher.planning_factors/traffic_light
+    - control.subscriber.traffic_light
+  - - planning.publisher.planning_factors/virtual_traffic_light
+    - control.subscriber.virtual_traffic_light
+  - - planning.publisher.planning_factors/walkway
+    - control.subscriber.walkway
   - - perception.publisher.obstacle_segmentation/pointcloud
     - control.subscriber.pointcloud
   - - sensing.publisher.imu/imu_data
@@ -278,8 +304,46 @@ connections:
     - control.subscriber.emergency_turn_indicators_cmd
   - - system.publisher.emergency/hazard_lights_cmd
     - control.subscriber.emergency_hazard_lights_cmd
+  - - system.publisher.emergency/hazard_lights_cmd
+    - planning.subscriber.system_hazard_lights_cmd
   - - system.publisher.emergency/gear_cmd
     - control.subscriber.emergency_gear_cmd
+
+  - - control.publisher.command/control_cmd
+    - vehicle.subscriber.control/command/control_cmd
+  - - control.publisher.command/emergency_cmd
+    - vehicle.subscriber.control/command/emergency_cmd
+  - - control.publisher.command/gear_cmd
+    - vehicle.subscriber.control/command/gear_cmd
+  - - control.publisher.command/hazard_lights_cmd
+    - vehicle.subscriber.control/command/hazard_lights_cmd
+  - - control.publisher.command/turn_indicators_cmd
+    - vehicle.subscriber.control/command/turn_indicators_cmd
+  - - vehicle.server.control/control_mode_request
+    - control.client.control_mode_request
+
+  - - vehicle.publisher.vehicle/status/control_mode
+    - control.subscriber.control_mode_report
+  - - vehicle.publisher.vehicle/status/control_mode
+    - system.subscriber.control_mode
+  - - vehicle.publisher.vehicle/status/gear_status
+    - control.subscriber.gear_status
+  - - vehicle.publisher.vehicle/status/gear_status
+    - api.subscriber.vehicle/status/gear_status
+  - - vehicle.publisher.vehicle/status/hazard_lights_status
+    - api.subscriber.vehicle/status/hazard_lights_status
+  - - vehicle.publisher.vehicle/status/steering_status
+    - control.subscriber.steering_status
+  - - vehicle.publisher.vehicle/status/steering_status
+    - planning.subscriber.steering_status
+  - - vehicle.publisher.vehicle/status/steering_status
+    - api.subscriber.vehicle/status/steering_status
+  - - vehicle.publisher.vehicle/status/turn_indicators_status
+    - api.subscriber.vehicle/status/turn_indicators_status
+  - - vehicle.publisher.vehicle/status/velocity_status
+    - control.subscriber.velocity_status
+  - - vehicle.publisher.vehicle/status/velocity_status
+    - sensing.subscriber.velocity_status
 
   - - planning.server.clear_route
     - api.client.routing/clear_route
@@ -330,6 +394,9 @@ remaps:
 
 # mode configurations
 LoggingSimulation:
+  remove:
+    components:
+      - name: vehicle
   override:
     parameter_sets:
       - logging_simulation.parameter_set
@@ -425,6 +492,10 @@ E2ESimulation:
         - control.subscriber.velocity_status
       - - awsim.publisher.vehicle/status/steering_status
         - control.subscriber.steering_status
+      - - awsim.publisher.vehicle/status/steering_status
+        - planning.subscriber.steering_status
+      - - awsim.server.control/control_mode_request
+        - control.client.control_mode_request
       - - awsim.publisher.vehicle/status/gear_status
         - control.subscriber.gear_status
       - - awsim.publisher.vehicle/status/control_mode
@@ -469,9 +540,15 @@ E2ESimulation:
         topic: /vehicle/status/turn_indicators_status
       - source: awsim.publisher.vehicle/status/velocity_status
         topic: /vehicle/status/velocity_status
+      - source: awsim.server.control/control_mode_request
+        topic: /control/control_mode_request
 
   remove:
+    components:
+      - name: vehicle
     connections:
+      - - map.publisher.map_projector_info
+        - sensing.subscriber.map_projector_info
       - - sensing.publisher.gnss
         - localization.subscriber.gnss_pose_with_covariance
       - - sensing.publisher.gnss/pose_with_covariance
@@ -483,6 +560,7 @@ PlanningSimulation:
       - name: sensing
       - name: perception
       - name: localization
+      - name: vehicle
     node_groups:
       - name: pointcloud_container
   override:
@@ -550,6 +628,10 @@ PlanningSimulation:
         - vehicle.subscriber.steering
       - - simulator.publisher.vehicle/status/steering_status
         - control.subscriber.steering_status
+      - - simulator.publisher.vehicle/status/steering_status
+        - planning.subscriber.steering_status
+      - - simulator.server.control/control_mode_request
+        - control.client.control_mode_request
       - - simulator.publisher.vehicle/status/actuation_status
         - vehicle.subscriber.actuation_status
       - - system.publisher.operation_mode/state
@@ -620,7 +702,7 @@ PlanningSimulation:
         topic: /vehicle/status/control_mode
       - source: simulator.publisher.vehicle/status/actuation_status
         topic: /vehicle/status/actuation_status
-      - source: simulator.publisher.control/control_mode_request
+      - source: simulator.server.control/control_mode_request
         topic: /control/control_mode_request
-      - source: simulator.publisher.api/simulator/set/pose
+      - source: simulator.server.api/simulator/set/pose
         topic: /api/simulator/set/pose

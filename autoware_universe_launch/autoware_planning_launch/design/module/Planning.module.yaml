@@ -20,6 +20,7 @@ subscribers:
   - name: vector_map
   - name: odometry
   - name: acceleration
+  - name: steering_status
   - name: operation_mode_state
   - name: api_operation_mode_state
   - name: objects
@@ -28,10 +29,20 @@ subscribers:
   - name: traffic_signals
   - name: control_cmd
   - name: predicted_trajectory
+  - name: system_hazard_lights_cmd
 
 publishers:
   - name: trajectory
   - name: path_with_lane_id
+  - name: planning_factors/blind_spot
+  - name: planning_factors/crosswalk
+  - name: planning_factors/detection_area
+  - name: planning_factors/intersection
+  - name: planning_factors/no_stopping_area
+  - name: planning_factors/stop_line
+  - name: planning_factors/traffic_light
+  - name: planning_factors/virtual_traffic_light
+  - name: planning_factors/walkway
   - name: route
   - name: mission_planning/route
   - name: route_state
@@ -41,6 +52,7 @@ publishers:
 
 servers:
   - name: clear_route
+  - name: set_preferred_lane
   - name: set_lanelet_route
   - name: set_waypoint_route
 
@@ -64,10 +76,14 @@ connections:
     - scenario_planning.subscriber.odometry
   - - subscriber.acceleration
     - scenario_planning.subscriber.acceleration
+  - - subscriber.steering_status
+    - scenario_planning.subscriber.steering_status
   - - subscriber.operation_mode_state
     - scenario_planning.subscriber.operation_mode_state
   - - subscriber.api_operation_mode_state
     - scenario_planning.subscriber.api_operation_mode_state
+  - - subscriber.system_hazard_lights_cmd
+    - scenario_planning.subscriber.system_hazard_lights_cmd
   - - subscriber.objects
     - scenario_planning.subscriber.objects
   - - subscriber.pointcloud
@@ -117,11 +133,31 @@ connections:
     - remaining_distance_time_calculator.subscriber.map
   - - scenario_planning.publisher.scenario
     - remaining_distance_time_calculator.subscriber.scenario
+  - - scenario_planning.publisher.current_max_velocity
+    - remaining_distance_time_calculator.subscriber.planning_velocity
 
   - - planning_validator.publisher.trajectory
     - publisher.trajectory
   - - scenario_planning.publisher.path_with_lane_id
     - publisher.path_with_lane_id
+  - - scenario_planning.publisher.planning_factors/blind_spot
+    - publisher.planning_factors/blind_spot
+  - - scenario_planning.publisher.planning_factors/crosswalk
+    - publisher.planning_factors/crosswalk
+  - - scenario_planning.publisher.planning_factors/detection_area
+    - publisher.planning_factors/detection_area
+  - - scenario_planning.publisher.planning_factors/intersection
+    - publisher.planning_factors/intersection
+  - - scenario_planning.publisher.planning_factors/no_stopping_area
+    - publisher.planning_factors/no_stopping_area
+  - - scenario_planning.publisher.planning_factors/stop_line
+    - publisher.planning_factors/stop_line
+  - - scenario_planning.publisher.planning_factors/traffic_light
+    - publisher.planning_factors/traffic_light
+  - - scenario_planning.publisher.planning_factors/virtual_traffic_light
+    - publisher.planning_factors/virtual_traffic_light
+  - - scenario_planning.publisher.planning_factors/walkway
+    - publisher.planning_factors/walkway
   - - mission_planning.publisher.mission_planning/route
     - publisher.mission_planning/route
   - - mission_planning.publisher.route
@@ -134,6 +170,8 @@ connections:
     - publisher.hazard_lights_cmd
   - - planning_validator.publisher.validation_status
     - publisher.validation_status
+  - - mission_planning.server.set_preferred_lane
+    - server.set_preferred_lane
   - - mission_planning.server.clear_route
     - server.clear_route
   - - mission_planning.server.set_lanelet_route
