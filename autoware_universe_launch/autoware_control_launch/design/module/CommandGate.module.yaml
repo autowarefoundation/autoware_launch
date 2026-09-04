@@ -51,7 +51,7 @@ publishers:
   - name: command/emergency_cmd
   - name: api/engage
   - name: external_emergency
-  - name: is_autonomous_available
+  - name: operation_mode/state
   - name: current_gate_mode
   - name: is_paused
   - name: is_start_requested
@@ -60,6 +60,8 @@ publishers:
 servers:
   - name: engage_service
   - name: external_emergency_service
+  - name: operation_mode/change_operation_mode
+  - name: operation_mode/change_autoware_control
   - name: set_pause
   - name: set_stop
 
@@ -181,4 +183,8 @@ connections:
   - - vehicle_cmd_gate.publisher.external_emergency
     - publisher.external_emergency
   - - autoware_operation_mode_transition_manager.publisher.operation_mode
-    - publisher.is_autonomous_available
+    - publisher.operation_mode/state
+  - - autoware_operation_mode_transition_manager.server.change_operation_mode
+    - server.operation_mode/change_operation_mode
+  - - autoware_operation_mode_transition_manager.server.change_autoware_control
+    - server.operation_mode/change_autoware_control

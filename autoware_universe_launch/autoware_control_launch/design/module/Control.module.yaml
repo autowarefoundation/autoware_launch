@@ -75,7 +75,7 @@ publishers:
   - name: predicted_trajectory
   - name: api/engage
   - name: external_emergency
-  - name: is_autonomous_available
+  - name: operation_mode/state
   - name: control_evaluation
   - name: current_gate_mode
   # official interfaces published under fixed node paths
@@ -90,6 +90,8 @@ clients:
 servers:
   - name: engage_service
   - name: external_emergency_service
+  - name: operation_mode/change_operation_mode
+  - name: operation_mode/change_autoware_control
   - name: external_cmd_selector/select_external_command
   - name: vehicle_cmd_gate/set_pause
   - name: vehicle_cmd_gate/set_stop
@@ -264,6 +266,10 @@ connections:
     - server.engage_service
   - - command_gate.server.external_emergency_service
     - server.external_emergency_service
+  - - command_gate.server.operation_mode/change_operation_mode
+    - server.operation_mode/change_operation_mode
+  - - command_gate.server.operation_mode/change_autoware_control
+    - server.operation_mode/change_autoware_control
   - - external_command.server.select_external_command
     - server.external_cmd_selector/select_external_command
   - - external_command.publisher.current_selector_mode
@@ -294,8 +300,8 @@ connections:
     - publisher.current_gate_mode
   - - command_gate.publisher.external_emergency
     - publisher.external_emergency
-  - - command_gate.publisher.is_autonomous_available
-    - publisher.is_autonomous_available
+  - - command_gate.publisher.operation_mode/state
+    - publisher.operation_mode/state
   - - trajectory_follower.publisher.predicted_trajectory
     - publisher.predicted_trajectory
   - - control_evaluator.publisher.metrics
