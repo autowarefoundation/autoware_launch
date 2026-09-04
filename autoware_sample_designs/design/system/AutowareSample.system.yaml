@@ -101,8 +101,7 @@ components:
 
   # VEHICLE
   - name: vehicle
-    entity: SampleSystemVehicleWrapper.node
-    path: /
+    entity: SampleVehicle.module
     compute_unit: main_ecu
 
   # SYSTEM
@@ -334,39 +333,45 @@ connections:
     - control.subscriber.emergency_gear_cmd
 
   - - control.publisher.command/control_cmd
-    - vehicle.subscriber.control/command/control_cmd
+    - vehicle.subscriber.control_cmd
   - - control.publisher.command/emergency_cmd
-    - vehicle.subscriber.control/command/emergency_cmd
+    - vehicle.subscriber.emergency_cmd
   - - control.publisher.command/gear_cmd
-    - vehicle.subscriber.control/command/gear_cmd
+    - vehicle.subscriber.gear_cmd
   - - control.publisher.command/hazard_lights_cmd
-    - vehicle.subscriber.control/command/hazard_lights_cmd
+    - vehicle.subscriber.hazard_lights_cmd
   - - control.publisher.command/turn_indicators_cmd
-    - vehicle.subscriber.control/command/turn_indicators_cmd
-  - - vehicle.server.control/control_mode_request
+    - vehicle.subscriber.turn_indicators_cmd
+  - - control.publisher.operation_mode/state
+    - vehicle.subscriber.operation_mode_state
+  - - localization.publisher.kinematic_state
+    - vehicle.subscriber.odometry
+  - - localization.publisher.acceleration
+    - vehicle.subscriber.accel
+  - - vehicle.server.control_mode_request
     - control.client.control_mode_request
 
-  - - vehicle.publisher.vehicle/status/control_mode
+  - - vehicle.publisher.status/control_mode
     - control.subscriber.control_mode_report
-  - - vehicle.publisher.vehicle/status/control_mode
+  - - vehicle.publisher.status/control_mode
     - system.subscriber.control_mode
-  - - vehicle.publisher.vehicle/status/gear_status
+  - - vehicle.publisher.status/gear_status
     - control.subscriber.gear_status
-  - - vehicle.publisher.vehicle/status/gear_status
+  - - vehicle.publisher.status/gear_status
     - adapi.subscriber.vehicle/status/gear_status
-  - - vehicle.publisher.vehicle/status/hazard_lights_status
+  - - vehicle.publisher.status/hazard_lights_status
     - adapi.subscriber.vehicle/status/hazard_lights_status
-  - - vehicle.publisher.vehicle/status/steering_status
+  - - vehicle.publisher.status/steering_status
     - control.subscriber.steering_status
-  - - vehicle.publisher.vehicle/status/steering_status
+  - - vehicle.publisher.status/steering_status
     - planning.subscriber.steering_status
-  - - vehicle.publisher.vehicle/status/steering_status
+  - - vehicle.publisher.status/steering_status
     - adapi.subscriber.vehicle/status/steering_status
-  - - vehicle.publisher.vehicle/status/turn_indicators_status
+  - - vehicle.publisher.status/turn_indicators_status
     - adapi.subscriber.vehicle/status/turn_indicators_status
-  - - vehicle.publisher.vehicle/status/velocity_status
+  - - vehicle.publisher.status/velocity_status
     - control.subscriber.velocity_status
-  - - vehicle.publisher.vehicle/status/velocity_status
+  - - vehicle.publisher.status/velocity_status
     - sensing.subscriber.velocity_status
 
   - - planning.server.clear_route
@@ -436,13 +441,15 @@ connections:
   - - planning.publisher.planning_factors/^
     - adapi.subscriber.planning/planning_factors/^
 
-  - - vehicle.publisher.vehicle/status/battery_charge
+  - - vehicle.publisher.status/battery_charge
     - adapi.subscriber.vehicle/status/battery_charge
-  - - vehicle.publisher.control/command/actuation_cmd
+  - - vehicle.publisher.actuation_cmd
     - adapi.subscriber.control/command/actuation_cmd
-  - - vehicle.server.vehicle/doors/command
+  - - vehicle.publisher.doors/status
+    - adapi.subscriber.vehicle/doors/status
+  - - vehicle.server.doors/command
     - adapi.client.vehicle/doors/command
-  - - vehicle.server.vehicle/doors/layout
+  - - vehicle.server.doors/layout
     - adapi.client.vehicle/doors/layout
 
 remaps:
@@ -514,6 +521,14 @@ remaps:
     topic: /planning/scenario_planning/clear_velocity_limit
 
 # mode configurations
+Runtime:
+  override:
+    remaps:
+      - source: vehicle.server.control_mode_request
+        topic: /control/control_mode_request
+      - source: vehicle.publisher.actuation_cmd
+        topic: /control/command/actuation_cmd
+
 LoggingSimulation:
   remove:
     components:
@@ -760,8 +775,6 @@ PlanningSimulation:
         - simulator.subscriber.planning/trajectory
       - - control.publisher.command/control_cmd
         - simulator.subscriber.control/command/control_cmd
-      - - control.publisher.command/control_cmd
-        - vehicle.subscriber.control_cmd
       - - simulator.publisher.localization/kinematic_state
         - vehicle.subscriber.odometry
       - - simulator.publisher.localization/acceleration
@@ -776,8 +789,6 @@ PlanningSimulation:
         - control.client.control_mode_request
       - - simulator.publisher.vehicle/status/actuation_status
         - vehicle.subscriber.actuation_status
-      - - control.publisher.operation_mode/state
-        - vehicle.subscriber.operation_mode_state
       - - vehicle.publisher.actuation_cmd
         - simulator.subscriber.control/command/actuation_cmd
       - - control.publisher.command/gear_cmd
@@ -788,12 +799,6 @@ PlanningSimulation:
         - simulator.subscriber.control/command/hazard_lights_cmd
       - - simulator.publisher.^
         - adapi.subscriber.^
-      - - vehicle.publisher.doors/status
-        - adapi.subscriber.vehicle/doors/status
-      - - vehicle.server.doors/command
-        - adapi.client.vehicle/doors/command
-      - - vehicle.server.doors/layout
-        - adapi.client.vehicle/doors/layout
       - - simulator.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
       - - simulator.publisher.vehicle/status/gear_status
