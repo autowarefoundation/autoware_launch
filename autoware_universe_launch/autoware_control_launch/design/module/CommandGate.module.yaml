@@ -133,6 +133,11 @@ connections:
     - autoware_operation_mode_transition_manager.subscriber.engage
   - - vehicle_cmd_gate.publisher.gate_mode
     - autoware_operation_mode_transition_manager.subscriber.current_gate_mode
+  # legacy engage/gate-mode commands looped back into the gate
+  - - autoware_operation_mode_transition_manager.publisher.engage
+    - vehicle_cmd_gate.subscriber.engage
+  - - autoware_operation_mode_transition_manager.publisher.gate_mode_cmd
+    - vehicle_cmd_gate.subscriber.gate_mode
   - - subscriber.current_selector_mode
     - autoware_operation_mode_transition_manager.subscriber.current_selector_mode
   - - client.select_external_command
