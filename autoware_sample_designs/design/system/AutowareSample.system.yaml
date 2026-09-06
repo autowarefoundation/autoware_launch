@@ -507,6 +507,91 @@ remaps:
     topic: /external/remote/turn_indicators_cmd
   - source: adapi.publisher.autoware/state
     topic: /autoware/state
+  # AD API public names
+  - source: adapi.publisher.api/localization/initialization_state
+    topic: /api/localization/initialization_state
+  - source: adapi.publisher.api/routing/state
+    topic: /api/routing/state
+  - source: adapi.publisher.api/routing/route
+    topic: /api/routing/route
+  - source: adapi.publisher.api/operation_mode/state
+    topic: /api/operation_mode/state
+  - source: adapi.publisher.api/motion/state
+    topic: /api/motion/state
+  - source: adapi.publisher.api/fail_safe/mrm_state
+    topic: /api/fail_safe/mrm_state
+  - source: adapi.publisher.api/fail_safe/mrm_request/list
+    topic: /api/fail_safe/mrm_request/list
+  - source: adapi.publisher.api/system/diagnostics/struct
+    topic: /api/system/diagnostics/struct
+  - source: adapi.publisher.api/system/diagnostics/status
+    topic: /api/system/diagnostics/status
+  - source: adapi.publisher.api/system/heartbeat
+    topic: /api/system/heartbeat
+  - source: adapi.publisher.api/perception/objects
+    topic: /api/perception/objects
+  - source: adapi.publisher.api/planning/velocity_factors
+    topic: /api/planning/velocity_factors
+  - source: adapi.publisher.api/planning/steering_factors
+    topic: /api/planning/steering_factors
+  - source: adapi.publisher.api/vehicle/kinematics
+    topic: /api/vehicle/kinematics
+  - source: adapi.publisher.api/vehicle/status
+    topic: /api/vehicle/status
+  - source: adapi.publisher.api/vehicle/metrics
+    topic: /api/vehicle/metrics
+  - source: adapi.publisher.api/vehicle/doors/status
+    topic: /api/vehicle/doors/status
+  - source: adapi.publisher.api/control/command/pedals
+    topic: /api/control/command/pedals
+  - source: adapi.publisher.api/control/command/acceleration
+    topic: /api/control/command/acceleration
+  - source: adapi.publisher.api/control/command/velocity
+    topic: /api/control/command/velocity
+  - source: adapi.publisher.api/control/command/steering
+    topic: /api/control/command/steering
+  - source: adapi.server.api/interface/version
+    topic: /api/interface/version
+  - source: adapi.server.api/localization/initialize
+    topic: /api/localization/initialize
+  - source: adapi.server.api/routing/clear_route
+    topic: /api/routing/clear_route
+  - source: adapi.server.api/routing/set_route
+    topic: /api/routing/set_route
+  - source: adapi.server.api/routing/set_route_points
+    topic: /api/routing/set_route_points
+  - source: adapi.server.api/routing/change_route
+    topic: /api/routing/change_route
+  - source: adapi.server.api/routing/change_route_points
+    topic: /api/routing/change_route_points
+  - source: adapi.server.api/operation_mode/change_to_stop
+    topic: /api/operation_mode/change_to_stop
+  - source: adapi.server.api/operation_mode/change_to_autonomous
+    topic: /api/operation_mode/change_to_autonomous
+  - source: adapi.server.api/operation_mode/change_to_local
+    topic: /api/operation_mode/change_to_local
+  - source: adapi.server.api/operation_mode/change_to_remote
+    topic: /api/operation_mode/change_to_remote
+  - source: adapi.server.api/operation_mode/enable_autoware_control
+    topic: /api/operation_mode/enable_autoware_control
+  - source: adapi.server.api/operation_mode/disable_autoware_control
+    topic: /api/operation_mode/disable_autoware_control
+  - source: adapi.server.api/motion/accept_start
+    topic: /api/motion/accept_start
+  - source: adapi.server.api/fail_safe/list_mrm_description
+    topic: /api/fail_safe/list_mrm_description
+  - source: adapi.server.api/fail_safe/mrm_request/send
+    topic: /api/fail_safe/mrm_request/send
+  - source: adapi.server.api/system/diagnostics/reset
+    topic: /api/system/diagnostics/reset
+  - source: adapi.server.api/vehicle/dimensions
+    topic: /api/vehicle/dimensions
+  - source: adapi.server.api/vehicle/doors/command
+    topic: /api/vehicle/doors/command
+  - source: adapi.server.api/vehicle/doors/layout
+    topic: /api/vehicle/doors/layout
+  - source: adapi.server.autoware/shutdown
+    topic: /autoware/shutdown
   - source: system.publisher.diagnostics_graph/struct
     topic: /diagnostics_graph/struct
   - source: system.publisher.diagnostics_graph/status
