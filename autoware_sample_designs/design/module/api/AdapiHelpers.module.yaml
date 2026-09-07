@@ -1,14 +1,16 @@
 autoware_system_design_format: 0.3.1
 
 # module information
-# RViz helper adaptors that turn RViz poses and goals into AD API requests.
-name: AdapiRvizHelpers.module
+# AD API adaptors: RViz helpers that turn poses and goals into API requests, and the external RTC cooperate API.
+name: AdapiHelpers.module
 
 instances:
   - name: helpers/autoware_initial_pose_adaptor
     entity: AdapiInitialPoseAdaptor.node
   - name: helpers/autoware_routing_adaptor
     entity: AdapiRoutingAdaptor.node
+  - name: external/rtc_controller/node
+    entity: AdapiRtcController.node
 
 # interfaces
 subscribers:
@@ -16,7 +18,13 @@ subscribers:
   - name: vector_map
   - name: api/routing/state
 
-publishers: []
+publishers:
+  - name: api/external/get/rtc_status
+  - name: api/external/get/rtc_auto_mode
+
+servers:
+  - name: api/external/set/rtc_commands
+  - name: api/external/set/rtc_auto_mode
 
 clients:
   - name: partial_map_load
@@ -26,6 +34,7 @@ clients:
   - name: api/routing/change_route_points
 
 connections:
+  # RViz helpers
   - - subscriber.pointcloud_map
     - helpers/autoware_initial_pose_adaptor.subscriber.pointcloud_map
   - - subscriber.vector_map
@@ -42,3 +51,10 @@ connections:
     - client.api/routing/set_route_points
   - - helpers/autoware_routing_adaptor.client.change_route_points
     - client.api/routing/change_route_points
+  # External RTC API
+  - - external/rtc_controller/node.publisher.^
+    - publisher.api/external/^
+  - - external/rtc_controller/node.server.set/rtc_commands
+    - server.api/external/set/rtc_commands
+  - - external/rtc_controller/node.server.set/rtc_auto_mode
+    - server.api/external/set/rtc_auto_mode
