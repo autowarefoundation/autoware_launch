@@ -59,11 +59,8 @@ components:
     entity: AdapiNodes.module
     compute_unit: main_ecu
     parameter_set: universe_adapi.parameter_set
-  - name: default_adapi
-    entity: AdapiRvizHelpers.module
-    compute_unit: main_ecu
-  - name: autoware_api
-    entity: AdapiExternalApi.module
+  - name: api
+    entity: AdapiHelpers.module
     compute_unit: main_ecu
 
   # SENSING
@@ -169,7 +166,7 @@ node_groups:
   - name: rtc_controller_container
     type: ros2_component_container_mt
     nodes:
-      - /autoware_api/*
+      - /api/external/*
   - name: behavior_planning_container
     type: ros2_component_container_mt
     nodes:
@@ -393,21 +390,21 @@ connections:
   - - map.publisher.map_projector_info
     - adapi.subscriber.map/map_projector_info
   - - map.publisher.pointcloud_map
-    - default_adapi.subscriber.pointcloud_map
+    - api.subscriber.pointcloud_map
   - - map.publisher.vector_map
-    - default_adapi.subscriber.vector_map
+    - api.subscriber.vector_map
   - - map.server.get_partial_pointcloud_map
-    - default_adapi.client.partial_map_load
+    - api.client.partial_map_load
   - - adapi.publisher.api/routing/state
-    - default_adapi.subscriber.api/routing/state
+    - api.subscriber.api/routing/state
   - - adapi.server.api/localization/initialize
-    - default_adapi.client.api/localization/initialize
+    - api.client.api/localization/initialize
   - - adapi.server.api/routing/clear_route
-    - default_adapi.client.api/routing/clear_route
+    - api.client.api/routing/clear_route
   - - adapi.server.api/routing/set_route_points
-    - default_adapi.client.api/routing/set_route_points
+    - api.client.api/routing/set_route_points
   - - adapi.server.api/routing/change_route_points
-    - default_adapi.client.api/routing/change_route_points
+    - api.client.api/routing/change_route_points
 
   - - control.publisher.operation_mode/state
     - adapi.subscriber.system/operation_mode/state
@@ -459,13 +456,13 @@ remaps:
     topic: /api/autoware/get/map/info/hash
   - source: map.server.get_vector_map_xml
     topic: /api/autoware/get/map/lanelet/xml
-  - source: autoware_api.publisher.api/external/get/rtc_status
+  - source: api.publisher.api/external/get/rtc_status
     topic: /api/external/get/rtc_status
-  - source: autoware_api.publisher.api/external/get/rtc_auto_mode
+  - source: api.publisher.api/external/get/rtc_auto_mode
     topic: /api/external/get/rtc_auto_mode
-  - source: autoware_api.server.api/external/set/rtc_commands
+  - source: api.server.api/external/set/rtc_commands
     topic: /api/external/set/rtc_commands
-  - source: autoware_api.server.api/external/set/rtc_auto_mode
+  - source: api.server.api/external/set/rtc_auto_mode
     topic: /api/external/set/rtc_auto_mode
   - source: control.publisher.operation_mode/state
     topic: /system/operation_mode/state
