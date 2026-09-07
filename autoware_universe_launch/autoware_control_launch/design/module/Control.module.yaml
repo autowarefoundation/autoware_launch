@@ -1,0 +1,306 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+name: Control.module
+
+instances:
+  - name: trajectory_follower
+    entity: TrajectoryFollower.module
+  - name: command_gate
+    entity: CommandGate.module
+  - name: external_command
+    entity: ExternalCommand.module
+  - name: control_checker
+    entity: ControlChecker.module
+  - name: control_evaluator
+    entity: ControlEvaluator.node
+
+# interfaces
+subscribers:
+  - name: trajectory
+  - name: route
+  - name: route_state
+  - name: vector_map
+  - name: odometry
+  - name: acceleration
+  - name: steering_status
+  - name: gear_status
+  - name: velocity_status
+  - name: imu
+  - name: operation_mode_state
+  - name: control_mode_report
+  - name: api_operation_mode_state
+  - name: autoware_state
+  - name: mrm_state
+  - name: objects
+  - name: pointcloud
+  - name: planning_turn_indicators_cmd
+  - name: hazard_lights_cmd
+  - name: path_with_lane_id
+  - name: blind_spot
+  - name: crosswalk
+  - name: detection_area
+  - name: intersection
+  - name: no_stopping_area
+  - name: stop_line
+  - name: traffic_light
+  - name: virtual_traffic_light
+  - name: walkway
+  - name: steering_offset_update
+
+  - name: external/local/gear_cmd
+  - name: external/local/hazard_lights_cmd
+  - name: external/local/heartbeat
+  - name: external/local/pedals_cmd
+  - name: external/local/steering_cmd
+  - name: external/local/turn_indicators_cmd
+  - name: external/remote/gear_cmd
+  - name: external/remote/hazard_lights_cmd
+  - name: external/remote/heartbeat
+  - name: external/remote/pedals_cmd
+  - name: external/remote/steering_cmd
+  - name: external/remote/turn_indicators_cmd
+
+  - name: emergency_control_cmd
+  - name: emergency_turn_indicators_cmd
+  - name: emergency_hazard_lights_cmd
+  - name: emergency_gear_cmd
+
+publishers:
+  - name: command/control_cmd
+  - name: command/gear_cmd
+  - name: command/turn_indicators_cmd
+  - name: command/hazard_lights_cmd
+  - name: command/emergency_cmd
+  - name: predicted_trajectory
+  - name: api/engage
+  - name: external_emergency
+  - name: is_autonomous_available
+  - name: control_evaluation
+  - name: current_gate_mode
+  # official interfaces published under fixed node paths
+  - name: external_cmd_selector/current_selector_mode
+  - name: vehicle_cmd_gate/is_paused
+  - name: vehicle_cmd_gate/is_start_requested
+  - name: vehicle_cmd_gate/is_stopped
+
+clients:
+  - name: control_mode_request
+
+servers:
+  - name: engage_service
+  - name: external_emergency_service
+  - name: external_cmd_selector/select_external_command
+  - name: vehicle_cmd_gate/set_pause
+  - name: vehicle_cmd_gate/set_stop
+
+connections:
+  # TrajectoryFollower module
+  - - subscriber.trajectory
+    - trajectory_follower.subscriber.trajectory
+  - - subscriber.odometry
+    - trajectory_follower.subscriber.odometry
+  - - subscriber.steering_status
+    - trajectory_follower.subscriber.steering_status
+  - - subscriber.acceleration
+    - trajectory_follower.subscriber.acceleration
+  - - subscriber.operation_mode_state
+    - trajectory_follower.subscriber.operation_mode_state
+  - - subscriber.vector_map
+    - trajectory_follower.subscriber.vector_map
+  - - subscriber.route
+    - trajectory_follower.subscriber.route
+  - - subscriber.api_operation_mode_state
+    - trajectory_follower.subscriber.api_operation_mode_state
+  - - subscriber.api_operation_mode_state
+    - control_checker.subscriber.api_operation_mode_state
+  - - subscriber.steering_offset_update
+    - trajectory_follower.subscriber.steering_offset_update
+
+  # CommandGate module
+  - - trajectory_follower.publisher.control_cmd
+    - command_gate.subscriber.control_cmd
+  - - subscriber.trajectory
+    - command_gate.subscriber.trajectory
+  - - subscriber.odometry
+    - command_gate.subscriber.odometry
+  - - subscriber.acceleration
+    - command_gate.subscriber.acceleration
+  - - subscriber.steering_status
+    - command_gate.subscriber.steering_status
+  - - subscriber.velocity_status
+    - command_gate.subscriber.velocity_status
+  - - subscriber.gear_status
+    - command_gate.subscriber.gear_status
+  - - subscriber.operation_mode_state
+    - command_gate.subscriber.operation_mode_state
+  - - subscriber.control_mode_report
+    - command_gate.subscriber.control_mode_report
+  - - subscriber.autoware_state
+    - command_gate.subscriber.autoware_state
+  - - subscriber.mrm_state
+    - command_gate.subscriber.mrm_state
+  - - subscriber.route_state
+    - command_gate.subscriber.route_state
+  - - subscriber.planning_turn_indicators_cmd
+    - command_gate.subscriber.planning_turn_indicators_cmd
+  - - subscriber.hazard_lights_cmd
+    - command_gate.subscriber.hazard_lights_cmd
+  - - external_command.publisher.control_cmd
+    - command_gate.subscriber.external/control_cmd
+  - - external_command.publisher.turn_indicators_cmd
+    - command_gate.subscriber.external/turn_indicators_cmd
+  - - external_command.publisher.hazard_lights_cmd
+    - command_gate.subscriber.external/hazard_lights_cmd
+  - - external_command.publisher.gear_cmd
+    - command_gate.subscriber.external/gear_cmd
+  - - external_command.publisher.heartbeat
+    - command_gate.subscriber.external/heartbeat
+  - - subscriber.emergency_control_cmd
+    - command_gate.subscriber.emergency_control_cmd
+  - - subscriber.emergency_turn_indicators_cmd
+    - command_gate.subscriber.emergency_turn_indicators_cmd
+  - - subscriber.emergency_hazard_lights_cmd
+    - command_gate.subscriber.emergency_hazard_lights_cmd
+  - - subscriber.emergency_gear_cmd
+    - command_gate.subscriber.emergency_gear_cmd
+  - - external_command.publisher.current_selector_mode
+    - command_gate.subscriber.current_selector_mode
+  - - external_command.server.select_external_command
+    - command_gate.client.select_external_command
+
+  # ExternalCommand module
+  - - subscriber.external/local/pedals_cmd
+    - external_command.subscriber.local/pedals_cmd
+  - - subscriber.external/local/steering_cmd
+    - external_command.subscriber.local/steering_cmd
+  - - subscriber.external/local/turn_indicators_cmd
+    - external_command.subscriber.local/turn_indicators_cmd
+  - - subscriber.external/local/hazard_lights_cmd
+    - external_command.subscriber.local/hazard_lights_cmd
+  - - subscriber.external/local/gear_cmd
+    - external_command.subscriber.local/gear_cmd
+  - - subscriber.external/local/heartbeat
+    - external_command.subscriber.local/heartbeat
+  - - subscriber.external/remote/pedals_cmd
+    - external_command.subscriber.remote/pedals_cmd
+  - - subscriber.external/remote/steering_cmd
+    - external_command.subscriber.remote/steering_cmd
+  - - subscriber.external/remote/turn_indicators_cmd
+    - external_command.subscriber.remote/turn_indicators_cmd
+  - - subscriber.external/remote/hazard_lights_cmd
+    - external_command.subscriber.remote/hazard_lights_cmd
+  - - subscriber.external/remote/gear_cmd
+    - external_command.subscriber.remote/gear_cmd
+  - - subscriber.external/remote/heartbeat
+    - external_command.subscriber.remote/heartbeat
+  - - command_gate.publisher.current_gate_mode
+    - external_command.subscriber.current_gate_mode
+  - - subscriber.odometry
+    - external_command.subscriber.odometry
+
+  # ControlChecker module
+  - - command_gate.publisher.command/control_cmd
+    - control_checker.subscriber.control_cmd
+  - - trajectory_follower.publisher.predicted_trajectory
+    - control_checker.subscriber.predicted_trajectory
+  - - subscriber.trajectory
+    - control_checker.subscriber.trajectory
+  - - subscriber.odometry
+    - control_checker.subscriber.odometry
+  - - subscriber.acceleration
+    - control_checker.subscriber.acceleration
+  - - subscriber.velocity_status
+    - control_checker.subscriber.velocity_status
+  - - subscriber.imu
+    - control_checker.subscriber.imu
+  - - subscriber.operation_mode_state
+    - control_checker.subscriber.operation_mode_state
+  - - subscriber.autoware_state
+    - control_checker.subscriber.autoware_state
+  - - subscriber.objects
+    - control_checker.subscriber.objects
+  - - subscriber.pointcloud
+    - control_checker.subscriber.pointcloud
+
+  # ControlEvaluator
+  - - subscriber.trajectory
+    - control_evaluator.subscriber.trajectory
+  - - subscriber.odometry
+    - control_evaluator.subscriber.odometry
+  - - subscriber.acceleration
+    - control_evaluator.subscriber.acceleration
+  - - subscriber.steering_status
+    - control_evaluator.subscriber.steering_status
+  - - subscriber.path_with_lane_id
+    - control_evaluator.subscriber.behavior_path
+  - - subscriber.vector_map
+    - control_evaluator.subscriber.vector_map
+  - - subscriber.route
+    - control_evaluator.subscriber.route
+  - - subscriber.objects
+    - control_evaluator.subscriber.objects
+  - - subscriber.blind_spot
+    - control_evaluator.subscriber.blind_spot
+  - - subscriber.crosswalk
+    - control_evaluator.subscriber.crosswalk
+  - - subscriber.detection_area
+    - control_evaluator.subscriber.detection_area
+  - - subscriber.intersection
+    - control_evaluator.subscriber.intersection
+  - - subscriber.no_stopping_area
+    - control_evaluator.subscriber.no_stopping_area
+  - - subscriber.stop_line
+    - control_evaluator.subscriber.stop_line
+  - - subscriber.traffic_light
+    - control_evaluator.subscriber.traffic_light
+  - - subscriber.virtual_traffic_light
+    - control_evaluator.subscriber.virtual_traffic_light
+  - - subscriber.walkway
+    - control_evaluator.subscriber.walkway
+
+  # API ports
+  - - command_gate.publisher.api/engage
+    - publisher.api/engage
+  - - command_gate.server.engage_service
+    - server.engage_service
+  - - command_gate.server.external_emergency_service
+    - server.external_emergency_service
+  - - external_command.server.select_external_command
+    - server.external_cmd_selector/select_external_command
+  - - external_command.publisher.current_selector_mode
+    - publisher.external_cmd_selector/current_selector_mode
+  - - command_gate.server.set_pause
+    - server.vehicle_cmd_gate/set_pause
+  - - command_gate.server.set_stop
+    - server.vehicle_cmd_gate/set_stop
+  - - command_gate.publisher.is_paused
+    - publisher.vehicle_cmd_gate/is_paused
+  - - command_gate.publisher.is_start_requested
+    - publisher.vehicle_cmd_gate/is_start_requested
+  - - command_gate.publisher.is_stopped
+    - publisher.vehicle_cmd_gate/is_stopped
+
+  # Publishers
+  - - command_gate.publisher.command/control_cmd
+    - publisher.command/control_cmd
+  - - command_gate.publisher.command/gear_cmd
+    - publisher.command/gear_cmd
+  - - command_gate.publisher.command/turn_indicators_cmd
+    - publisher.command/turn_indicators_cmd
+  - - command_gate.publisher.command/hazard_lights_cmd
+    - publisher.command/hazard_lights_cmd
+  - - command_gate.publisher.command/emergency_cmd
+    - publisher.command/emergency_cmd
+  - - command_gate.publisher.current_gate_mode
+    - publisher.current_gate_mode
+  - - command_gate.publisher.external_emergency
+    - publisher.external_emergency
+  - - command_gate.publisher.is_autonomous_available
+    - publisher.is_autonomous_available
+  - - trajectory_follower.publisher.predicted_trajectory
+    - publisher.predicted_trajectory
+  - - control_evaluator.publisher.metrics
+    - publisher.control_evaluation
+  - - command_gate.client.control_mode_request
+    - client.control_mode_request

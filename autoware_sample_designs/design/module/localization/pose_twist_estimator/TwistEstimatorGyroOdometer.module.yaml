@@ -1,0 +1,28 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+name: TwistEstimatorGyroOdometer.module
+
+instances:
+  - name: gyro_odometer
+    entity: GyroOdometer.node
+
+# interfaces
+subscribers:
+  - name: vehicle_twist_with_covariance
+  - name: imu
+
+publishers:
+  - name: twist_with_covariance
+  - name: twist_with_covariance_raw
+
+connections:
+  - - subscriber.vehicle_twist_with_covariance
+    - gyro_odometer.subscriber.vehicle_twist_with_covariance
+  - - subscriber.imu
+    - gyro_odometer.subscriber.imu
+
+  - - gyro_odometer.publisher.twist_with_covariance
+    - publisher.twist_with_covariance
+  - - gyro_odometer.publisher.twist_with_covariance_raw
+    - publisher.twist_with_covariance_raw

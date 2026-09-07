@@ -40,6 +40,7 @@
   <exec_depend>autoware_object_merger</exec_depend>
   <exec_depend>autoware_object_sorter</exec_depend>
   <exec_depend>autoware_occupancy_grid_map_outlier_filter</exec_depend>
+  <exec_depend>autoware_perception_config</exec_depend>
   <exec_depend>autoware_pointcloud_preprocessor</exec_depend>
   <exec_depend>autoware_probabilistic_occupancy_grid_map</exec_depend>
   <exec_depend>autoware_ptv3</exec_depend>

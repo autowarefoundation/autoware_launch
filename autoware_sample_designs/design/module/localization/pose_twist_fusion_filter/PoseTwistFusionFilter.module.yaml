@@ -1,0 +1,74 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+name: PoseTwistFusionFilter.module
+
+instances:
+  - name: ekf_localizer
+    entity: EkfLocalizer.node
+  - name: stop_filter
+    entity: StopFilter.node
+  - name: twist2accel
+    entity: Twist2Accel.node
+  - name: pose_instability_detector
+    entity: PoseInstabilityDetector.node
+
+# interfaces
+subscribers:
+  - name: pose_with_covariance
+  - name: twist_with_covariance
+  - name: initialpose
+
+publishers:
+  # ekf estimate
+  - name: kinematic_state
+  - name: pose
+  - name: pose_with_covariance
+  - name: biased_pose_with_covariance
+  # stop-filtered estimate
+  - name: filtered_kinematic_state
+  - name: acceleration
+
+servers:
+  - name: trigger_node
+
+connections:
+  # ekf_localizer
+  - - subscriber.pose_with_covariance
+    - ekf_localizer.subscriber.pose_with_covariance
+  - - subscriber.twist_with_covariance
+    - ekf_localizer.subscriber.twist_with_covariance
+  - - subscriber.initialpose
+    - ekf_localizer.subscriber.initialpose
+
+  # stop_filter
+  - - ekf_localizer.publisher.odom
+    - stop_filter.subscriber.odom
+
+  # twist2accel
+  - - stop_filter.publisher.odom
+    - twist2accel.subscriber.odom
+  - - subscriber.twist_with_covariance
+    - twist2accel.subscriber.twist
+
+  # pose_instability_detector
+  - - stop_filter.publisher.odom
+    - pose_instability_detector.subscriber.odometry
+  - - subscriber.twist_with_covariance
+    - pose_instability_detector.subscriber.twist
+
+  # outputs
+  - - ekf_localizer.publisher.odom
+    - publisher.kinematic_state
+  - - ekf_localizer.publisher.pose
+    - publisher.pose
+  - - ekf_localizer.publisher.pose_with_covariance
+    - publisher.pose_with_covariance
+  - - ekf_localizer.publisher.biased_pose_with_covariance
+    - publisher.biased_pose_with_covariance
+  - - stop_filter.publisher.odom
+    - publisher.filtered_kinematic_state
+  - - twist2accel.publisher.accel
+    - publisher.acceleration
+  - - ekf_localizer.server.trigger_node
+    - server.trigger_node

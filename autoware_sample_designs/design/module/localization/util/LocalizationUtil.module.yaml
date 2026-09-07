@@ -1,0 +1,82 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+name: LocalizationUtil.module
+
+instances:
+  - name: pose_initializer
+    entity: PoseInitializer.node
+  - name: automatic_pose_initializer
+    entity: AutomaticPoseInitializer.node
+  # ndt input pointcloud downsampling
+  - name: crop_box_filter_measurement_range
+    entity: CropBoxFilter.node
+  - name: voxel_grid_downsample_filter
+    entity: VoxelGridDownsampleFilter.node
+  - name: random_downsample_filter
+    entity: RandomDownsampleFilter.node
+
+# interfaces
+subscribers:
+  - name: pointcloud
+  - name: stop_check_twist
+  - name: gnss_pose_cov
+  - name: pointcloud_map
+  - name: vector_map
+
+publishers:
+  - name: measurement_range/pointcloud
+  - name: voxel_grid_downsample/pointcloud
+  - name: downsample/pointcloud
+  - name: pose_reset
+  - name: initialization_state
+
+servers:
+  - name: initialize
+
+clients:
+  - name: ndt_align
+  - name: ekf_trigger_node
+  - name: ndt_trigger_node
+  - name: partial_map_load
+
+connections:
+  # pose_initializer
+  - - subscriber.stop_check_twist
+    - pose_initializer.subscriber.stop_check_twist
+  - - subscriber.gnss_pose_cov
+    - pose_initializer.subscriber.gnss_pose_cov
+  - - subscriber.pointcloud_map
+    - pose_initializer.subscriber.pointcloud_map
+  - - subscriber.vector_map
+    - pose_initializer.subscriber.vector_map
+
+  # pointcloud downsampling chain
+  - - subscriber.pointcloud
+    - crop_box_filter_measurement_range.subscriber.input
+  - - crop_box_filter_measurement_range.publisher.output
+    - voxel_grid_downsample_filter.subscriber.input
+  - - voxel_grid_downsample_filter.publisher.output
+    - random_downsample_filter.subscriber.input
+
+  # outputs
+  - - crop_box_filter_measurement_range.publisher.output
+    - publisher.measurement_range/pointcloud
+  - - voxel_grid_downsample_filter.publisher.output
+    - publisher.voxel_grid_downsample/pointcloud
+  - - random_downsample_filter.publisher.output
+    - publisher.downsample/pointcloud
+  - - pose_initializer.publisher.pose_reset
+    - publisher.pose_reset
+  - - pose_initializer.publisher.pub_state
+    - publisher.initialization_state
+  - - pose_initializer.server.initialize
+    - server.initialize
+  - - pose_initializer.client.ndt_align
+    - client.ndt_align
+  - - pose_initializer.client.ekf_trigger_node
+    - client.ekf_trigger_node
+  - - pose_initializer.client.ndt_trigger_node
+    - client.ndt_trigger_node
+  - - pose_initializer.client.partial_map_load
+    - client.partial_map_load

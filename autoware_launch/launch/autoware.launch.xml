@@ -100,7 +100,6 @@
 
   <!-- Perception -->
   <group if="$(var launch_perception)">
-    <!-- each component include is scoped so its launch configurations stay local to it -->
     <group>
       <include file="$(find-pkg-share autoware_launch)/launch/components/component_perception.launch.xml">
         <arg name="data_path" value="$(var data_path)"/>
@@ -117,8 +116,9 @@
 
   <!-- Planning -->
   <group if="$(var launch_planning)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_planning_component.launch.xml">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/component_planning.launch.xml">
       <arg name="module_preset" value="$(var planning_module_preset)"/>
+      <arg name="planning_setting" value="$(var planning_setting)"/>
       <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
       <arg name="is_simulation" value="$(var is_simulation)"/>
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
@@ -129,10 +129,12 @@
 
   <!-- Control -->
   <group if="$(var launch_control)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
+    <include file="$(find-pkg-share autoware_launch)/launch/components/component_control.launch.xml">
       <arg name="module_preset" value="$(var control_module_preset)"/>
+      <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
       <arg name="use_sim_time" value="$(var use_sim_time)"/>
       <arg name="vehicle_model" value="$(var vehicle_model)"/>
+      <arg name="vehicle_id" value="$(var vehicle_id)"/>
     </include>
   </group>
 

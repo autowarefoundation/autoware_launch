@@ -1,0 +1,151 @@
+<launch>
+  <!-- Control pipeline: trajectory follower, command gate, external command, control checkers and the evaluator, all under the control namespace -->
+  <arg name="control_config_pkg" default="autoware_control_config" description="package that ships the control config/ tree; overriding it requires the same config layout"/>
+  <arg name="module_preset" default="default" description="module preset that selects which control modules launch"/>
+  <let name="control_config_dir" value="$(find-pkg-share $(var control_config_pkg))/config"/>
+
+  <!-- Module preset: declares the trajectory_follower_mode and launch_* junctions -->
+  <include file="$(var control_config_dir)/preset/$(var module_preset)_preset.yaml"/>
+
+  <!-- Pipeline junctions -->
+  <arg name="lateral_controller_mode" default="mpc" description="lateral controller; options: `mpc`, `pure_pursuit`"/>
+  <arg name="longitudinal_controller_mode" default="pid" description="longitudinal controller; options: `pid`"/>
+  <arg name="use_aeb_autoware_state_check" default="true"/>
+  <arg name="check_external_emergency_heartbeat" default="false"/>
+  <!-- temporary: control_command_gate migration -->
+  <arg name="use_control_command_gate" default="false"/>
+
+  <!-- External interfaces -->
+  <arg name="input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+  <arg name="output_control_cmd" default="/control/command/control_cmd"/>
+  <arg name="output_gear_cmd" default="/control/command/gear_cmd"/>
+  <arg name="output_turn_indicators_cmd" default="/control/command/turn_indicators_cmd"/>
+  <arg name="output_hazard_lights_cmd" default="/control/command/hazard_lights_cmd"/>
+
+  <!-- Vehicle -->
+  <arg name="vehicle_model" default="sample_vehicle"/>
+  <arg name="vehicle_param_file" default="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+
+  <!-- Parameter paths: common -->
+  <arg name="nearest_search_param_path" default="$(var control_config_dir)/common/nearest_search.param.yaml"/>
+
+  <!-- Parameter paths: trajectory follower -->
+  <arg name="trajectory_follower_node_param_path" default="$(var control_config_dir)/trajectory_follower/trajectory_follower_node.param.yaml"/>
+  <arg name="lat_controller_param_path" default="$(var control_config_dir)/trajectory_follower/lateral/$(var lateral_controller_mode).param.yaml"/>
+  <arg name="lon_controller_param_path" default="$(var control_config_dir)/trajectory_follower/longitudinal/$(var longitudinal_controller_mode).param.yaml"/>
+
+  <!-- Parameter paths: command gate and mode management -->
+  <arg name="vehicle_cmd_gate_param_path" default="$(var control_config_dir)/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
+  <arg name="control_command_gate_param_path" default="$(var control_config_dir)/control_command_gate/control_command_gate.param.yaml"/>
+  <arg name="operation_mode_transition_manager_param_path" default="$(var control_config_dir)/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
+  <arg name="shift_decider_param_path" default="$(var control_config_dir)/shift_decider/shift_decider.param.yaml"/>
+  <arg name="external_cmd_selector_param_path" default="$(var control_config_dir)/external_cmd_selector/external_cmd_selector.param.yaml"/>
+
+  <!-- Parameter paths: control checkers -->
+  <arg name="lane_departure_checker_param_path" default="$(var control_config_dir)/lane_departure_checker/lane_departure_checker.param.yaml"/>
+  <arg name="control_validator_param_path" default="$(var control_config_dir)/control_validator/control_validator.param.yaml"/>
+  <arg name="aeb_param_path" default="$(var control_config_dir)/autoware_autonomous_emergency_braking/autonomous_emergency_braking.param.yaml"/>
+  <arg name="collision_detector_param_path" default="$(var control_config_dir)/autoware_collision_detector/collision_detector.param.yaml"/>
+  <arg name="obstacle_collision_checker_param_path" default="$(var control_config_dir)/obstacle_collision_checker/obstacle_collision_checker.param.yaml"/>
+  <arg name="predicted_path_checker_param_path" default="$(var control_config_dir)/predicted_path_checker/predicted_path_checker.param.yaml"/>
+
+  <!-- Component container -->
+  <arg name="use_intra_process" default="false" description="use ROS 2 component container communication"/>
+  <arg name="use_multithread" default="true" description="use multithread"/>
+
+  <!-- Executor selection: outputs the container_package, container_executable and ld_preload_value variants -->
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml">
+    <arg name="use_multithread" value="$(var use_multithread)"/>
+  </include>
+
+  <group>
+    <push-ros-namespace namespace="control"/>
+
+    <!-- containers: the command path and the composable checkers each share one process -->
+    <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="control_container" namespace=""/>
+    <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="control_check_container" namespace=""/>
+
+    <!-- trajectory follower -->
+    <group>
+      <include file="$(find-pkg-share autoware_control_launch)/launch/trajectory_follower/trajectory_follower.launch.xml">
+        <arg name="trajectory_follower_mode" value="$(var trajectory_follower_mode)"/>
+        <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
+        <arg name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
+        <arg name="launch_lane_departure_checker" value="$(var launch_lane_departure_checker)"/>
+        <arg name="nearest_search_param_path" value="$(var nearest_search_param_path)"/>
+        <arg name="trajectory_follower_node_param_path" value="$(var trajectory_follower_node_param_path)"/>
+        <arg name="lat_controller_param_path" value="$(var lat_controller_param_path)"/>
+        <arg name="lon_controller_param_path" value="$(var lon_controller_param_path)"/>
+        <arg name="lane_departure_checker_param_path" value="$(var lane_departure_checker_param_path)"/>
+        <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
+        <arg name="target_container" value="/control/control_container"/>
+        <arg name="use_intra_process" value="$(var use_intra_process)"/>
+        <arg name="ld_preload_value" value="$(var ld_preload_value)"/>
+      </include>
+    </group>
+
+    <!-- command gate -->
+    <group>
+      <include file="$(find-pkg-share autoware_control_launch)/launch/command_gate/command_gate.launch.xml">
+        <arg name="use_control_command_gate" value="$(var use_control_command_gate)"/>
+        <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
+        <arg name="output/control_cmd" value="$(var output_control_cmd)"/>
+        <arg name="output/gear_cmd" value="$(var output_gear_cmd)"/>
+        <arg name="output/turn_indicators_cmd" value="$(var output_turn_indicators_cmd)"/>
+        <arg name="output/hazard_lights_cmd" value="$(var output_hazard_lights_cmd)"/>
+        <arg name="nearest_search_param_path" value="$(var nearest_search_param_path)"/>
+        <arg name="vehicle_cmd_gate_param_path" value="$(var vehicle_cmd_gate_param_path)"/>
+        <arg name="control_command_gate_param_path" value="$(var control_command_gate_param_path)"/>
+        <arg name="operation_mode_transition_manager_param_path" value="$(var operation_mode_transition_manager_param_path)"/>
+        <arg name="shift_decider_param_path" value="$(var shift_decider_param_path)"/>
+        <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
+        <arg name="target_container" value="/control/control_container"/>
+        <arg name="use_intra_process" value="$(var use_intra_process)"/>
+        <arg name="ld_preload_value" value="$(var ld_preload_value)"/>
+      </include>
+    </group>
+
+    <!-- external command -->
+    <group>
+      <include file="$(find-pkg-share autoware_control_launch)/launch/external_command/external_command.launch.xml">
+        <arg name="launch_external_cmd_selector" value="$(var launch_external_cmd_selector)"/>
+        <arg name="launch_external_cmd_converter" value="$(var launch_external_cmd_converter)"/>
+        <arg name="external_cmd_selector_param_path" value="$(var external_cmd_selector_param_path)"/>
+        <arg name="target_container" value="/control/control_container"/>
+        <arg name="use_intra_process" value="$(var use_intra_process)"/>
+      </include>
+    </group>
+
+    <!-- control checkers -->
+    <group>
+      <include file="$(find-pkg-share autoware_control_launch)/launch/control_checker/control_checker.launch.xml">
+        <arg name="launch_control_validator" value="$(var launch_control_validator)"/>
+        <arg name="launch_autonomous_emergency_braking" value="$(var launch_autonomous_emergency_braking)"/>
+        <arg name="launch_collision_detector" value="$(var launch_collision_detector)"/>
+        <arg name="launch_obstacle_collision_checker" value="$(var launch_obstacle_collision_checker)"/>
+        <arg name="launch_predicted_path_checker" value="$(var launch_predicted_path_checker)"/>
+        <arg name="use_aeb_autoware_state_check" value="$(var use_aeb_autoware_state_check)"/>
+        <arg name="input/objects" value="$(var input_objects_topic_name)"/>
+        <arg name="input/pointcloud" value="$(var input_pointcloud_topic_name)"/>
+        <arg name="input/control_cmd" value="$(var output_control_cmd)"/>
+        <arg name="control_validator_param_path" value="$(var control_validator_param_path)"/>
+        <arg name="aeb_param_path" value="$(var aeb_param_path)"/>
+        <arg name="collision_detector_param_path" value="$(var collision_detector_param_path)"/>
+        <arg name="obstacle_collision_checker_param_path" value="$(var obstacle_collision_checker_param_path)"/>
+        <arg name="predicted_path_checker_param_path" value="$(var predicted_path_checker_param_path)"/>
+        <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
+        <arg name="target_container" value="/control/control_check_container"/>
+        <arg name="use_intra_process" value="$(var use_intra_process)"/>
+        <arg name="ld_preload_value" value="$(var ld_preload_value)"/>
+      </include>
+    </group>
+
+    <!-- control evaluator -->
+    <group if="$(var launch_control_evaluator)">
+      <include file="$(find-pkg-share autoware_control_evaluator)/launch/control_evaluator.launch.xml">
+        <arg name="input/objects" value="$(var input_objects_topic_name)"/>
+      </include>
+    </group>
+  </group>
+</launch>

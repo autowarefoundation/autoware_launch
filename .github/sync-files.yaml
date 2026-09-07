@@ -20,6 +20,7 @@
     - source: .github/workflows/spell-check-differential.yaml
     - source: .github/workflows/sync-branches.yaml
     - source: .github/workflows/sync-files.yaml
+    - source: .github/workflows/lint-autoware-system-design-format.yaml
     - source: .markdown-link-check.json
     - source: .markdownlint.yaml
     - source: .pre-commit-config.yaml

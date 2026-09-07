@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Planning pipeline: the module preset and the trajectory source are product-level choices; parameter files are resolved inside autoware_planning_launch -->
+  <arg name="module_preset" default="default"/>
+  <arg name="planning_setting" default="rule_based" description="planning setting diffusion_planner / rule_based"/>
+  <arg name="enable_all_modules_auto_mode" default="false"/>
+  <arg name="is_simulation" default="false"/>
+  <arg name="use_sim_time" default="false"/>
+  <arg name="vehicle_model" default="sample_vehicle"/>
+  <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
+
+  <!-- External interfaces -->
+  <arg name="planning_input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="planning_input_tracked_objects_topic_name" default="/perception/object_recognition/tracking/objects"/>
+  <arg name="planning_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+
+  <!-- Global parameters -->
+  <group scoped="false">
+    <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+  <include file="$(find-pkg-share autoware_planning_launch)/launch/planning.launch.xml">
+    <arg name="module_preset" value="$(var module_preset)"/>
+    <arg name="planning_setting" value="$(var planning_setting)"/>
+    <arg name="enable_all_modules_auto_mode" value="$(var enable_all_modules_auto_mode)"/>
+    <arg name="is_simulation" value="$(var is_simulation)"/>
+    <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    <arg name="data_path" value="$(var data_path)"/>
+
+    <!-- Input topic parameters -->
+    <arg name="input_objects_topic_name" value="$(var planning_input_objects_topic_name)"/>
+    <arg name="input_tracked_objects_topic_name" value="$(var planning_input_tracked_objects_topic_name)"/>
+    <arg name="input_pointcloud_topic_name" value="$(var planning_input_pointcloud_topic_name)"/>
+  </include>
+</launch>

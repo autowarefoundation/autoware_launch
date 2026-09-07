@@ -9,18 +9,16 @@
   <arg name="output/objects"/>
 
   <arg name="voxel_grid_based_euclidean_param_path"/>
-  <arg name="use_semantic_segmentation_ptv3"/>
+  <arg name="use_low_height_cropbox" default="false"/>
 
   <!-- Internal interfaces -->
   <let name="euclidean_cluster/input/pointcloud" value="$(var input/pointcloud_map/pointcloud)"/>
-  <let name="euclidean_cluster/output/clusters" value="$(var ns)/clustering/clusters"/>
-  <let name="shape_estimation/input/objects" value="$(var ns)/clustering/clusters"/>
-  <let name="shape_estimation/output/objects" value="$(var output/cluster_objects)"/>
+  <let name="euclidean_cluster/output/clusters" value="$(var output/cluster_objects)"/>
   <let name="detected_object_feature_remover/input" value="$(var output/cluster_objects)"/>
   <let name="detected_object_feature_remover/output" value="$(var output/objects)"/>
 
   <!-- Clustering -->
-  <group unless="$(var use_semantic_segmentation_ptv3)">
+  <group>
     <push-ros-namespace namespace="clustering"/>
     <group>
       <include file="$(find-pkg-share autoware_euclidean_cluster)/launch/voxel_grid_based_euclidean_cluster.launch.xml">
@@ -33,18 +31,12 @@
       </include>
     </group>
 
-    <group>
-      <include file="$(find-pkg-share autoware_shape_estimation)/launch/shape_estimation.launch.xml">
-        <arg name="input/objects" value="$(var shape_estimation/input/objects)"/>
-        <arg name="output/objects" value="$(var shape_estimation/output/objects)"/>
-      </include>
-    </group>
-
-    <!-- convert DynamicObjectsWithFeatureArray to DynamicObjects -->
+    <!-- convex hull shape from cluster points, then DetectedObjectsWithFeature -> DetectedObjects -->
     <group>
       <include file="$(find-pkg-share autoware_detected_object_feature_remover)/launch/detected_object_feature_remover.launch.xml">
         <arg name="input" value="$(var detected_object_feature_remover/input)"/>
         <arg name="output" value="$(var detected_object_feature_remover/output)"/>
+        <arg name="run_convex_hull_conversion" value="true"/>
       </include>
     </group>
   </group>
