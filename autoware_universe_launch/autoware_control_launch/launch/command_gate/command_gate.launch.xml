@@ -1,8 +1,18 @@
 <launch>
   <!-- Command gate unit: arbitrates the controller, external and emergency commands into the vehicle command, with gear decision and operation mode transition -->
   <!-- temporary: control_command_gate migration -->
-  <arg name="use_control_command_gate" default="false" description="control_command_gate + stop_mode_operator in place of vehicle_cmd_gate"/>
   <arg name="check_external_emergency_heartbeat" default="false"/>
+  <arg name="mrm" default="handler"/>
+  <let name="launch_control_command_gate" value="false"/>
+  <let name="launch_control_command_gate" value="true" if="$(equals $(var mrm) command)"/>
+  <let name="launch_control_command_gate" value="true" if="$(equals $(var mrm) driving)"/>
+  <let name="launch_trajectory_gate" value="false"/>
+  <let name="launch_trajectory_gate" value="true" if="$(equals $(var mrm) driving)"/>
+  <let name="transition_manager_plugin" value="OperationModeTransitionManager"/>
+  <let name="transition_manager_plugin" value="AutonomousModeTransitionFlagNode" if="$(equals $(var mrm) command)"/>
+  <let name="transition_manager_plugin" value="AutonomousModeTransitionFlagNode" if="$(equals $(var mrm) driving)"/>
+  <let name="following_trajectory" value="/planning/trajectory"/>
+  <let name="following_trajectory" value="/control/trajectory" if="$(equals $(var mrm) driving)"/>
 
   <!-- External interfaces -->
   <arg name="input/control_cmd" default="/control/trajectory_follower/control_cmd"/>
@@ -25,11 +35,17 @@
   <arg name="use_intra_process" default="false"/>
   <arg name="ld_preload_value" default=""/>
 
-  <let name="operation_mode_transition_manager_plugin" value="AutonomousModeTransitionFlagNode" if="$(var use_control_command_gate)"/>
-  <let name="operation_mode_transition_manager_plugin" value="OperationModeTransitionManager" unless="$(var use_control_command_gate)"/>
+  <!-- trajectory gate -->
+  <group if="$(var launch_trajectory_gate)">
+    <include file="$(find-pkg-share autoware_trajectory_gate)/launch/trajectory_gate.launch.xml">
+      <arg name="config" value="$(var trajectory_gate_param_path)"/>
+      <arg name="output/trajectory" value="/control/trajectory"/>
+      <arg name="inputs/main/trajectory" value="/planning/trajectory"/>
+    </include>
+  </group>
 
   <!-- control command gate -->
-  <group if="$(var use_control_command_gate)">
+  <group if="$(var launch_control_command_gate)">
     <include file="$(find-pkg-share autoware_control_command_gate)/launch/control_command_gate.launch.xml">
       <arg name="config" value="$(var control_command_gate_param_path)"/>
       <arg name="inputs/main/control" value="$(var input/control_cmd)"/>
@@ -39,7 +55,9 @@
       <arg name="output/hazard_lights" value="$(var output/hazard_lights_cmd)"/>
     </include>
   </group>
-  <group if="$(var use_control_command_gate)">
+
+  <!-- stop mode operator -->
+  <group if="$(var launch_control_command_gate)">
     <include file="$(find-pkg-share autoware_stop_mode_operator)/launch/stop_mode_operator.launch.xml"/>
   </group>
 
@@ -54,7 +72,7 @@
   </node>
 
   <!-- vehicle cmd gate -->
-  <group unless="$(var use_control_command_gate)">
+  <group unless="$(var launch_control_command_gate)">
     <load_composable_node target="$(var target_container)">
       <composable_node pkg="autoware_vehicle_cmd_gate" plugin="autoware::vehicle_cmd_gate::VehicleCmdGate" name="vehicle_cmd_gate">
         <remap from="input/steering" to="/vehicle/status/steering_status"/>
@@ -103,7 +121,7 @@
   <load_composable_node target="$(var target_container)">
     <composable_node
       pkg="autoware_operation_mode_transition_manager"
-      plugin="autoware::operation_mode_transition_manager::$(var operation_mode_transition_manager_plugin)"
+      plugin="autoware::operation_mode_transition_manager::$(var transition_manager_plugin)"
       name="autoware_operation_mode_transition_manager"
     >
       <!-- input -->

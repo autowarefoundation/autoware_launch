@@ -25,7 +25,7 @@ design/module/                                            # Autoware System Desi
 
 - `control.launch.xml` — the entry point. It includes the module preset, resolves every parameter file, pushes the `control` namespace and creates the two containers (`control_container` for the command path, `control_check_container` for the composable checkers), then includes one launch file per unit and the control evaluator.
 - `trajectory_follower/trajectory_follower.launch.xml` — the controller (`trajectory_follower_mode`: `trajectory_follower_node`, `smart_mpc_trajectory_follower`, `none`) and the lane departure checker on its predicted trajectory. Boundary topics are `input/*` arguments, so the unit can also drive a standalone follower container.
-- `command_gate/command_gate.launch.xml` — the vehicle cmd gate, or the control command gate with the stop mode operator when `use_control_command_gate` is set, plus the shift decider and the operation mode transition manager. `input/control_cmd` and `output/*_cmd` are its boundary topics.
+- `command_gate/command_gate.launch.xml` — the vehicle cmd gate, or the control command gate with the stop mode operator when `mrm` is `command` or `driving`, plus the shift decider and the operation mode transition manager. `input/control_cmd` and `output/*_cmd` are its boundary topics.
 - `external_command/external_command.launch.xml` — the external command selector and converter.
 - `control_checker/control_checker.launch.xml` — the control validator, autonomous emergency braking, collision detector, obstacle collision checker and predicted path checker, each behind its `launch_*` flag.
 

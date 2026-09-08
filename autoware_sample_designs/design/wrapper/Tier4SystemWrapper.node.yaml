@@ -143,8 +143,8 @@ param_values:
     default: false
   - name: launch_rqt_runtime_monitor_err
     default: false
-  - name: use_control_command_gate
-    default: false
+  - name: mrm
+    default: handler
 
 # processes
 processes:
