@@ -357,6 +357,15 @@ planning:
       - source: planning/autoware_trajectory_processor/config/trajectory_processor.param.yaml
         variants:
           - path: autoware_universe_launch/autoware_planning_config/config/neural_net_planner/trajectory_processor.param.yaml
+      - source: planning/autoware_trajectory_validator/config/trajectory_validator.param.yaml
+        variants:
+          - path: autoware_universe_launch/autoware_planning_config/config/neural_net_planner/trajectory_selector/validator.param.yaml
+      - source: planning/autoware_trajectory_ranker/config/trajectory_ranker.param.yaml
+        variants:
+          - path: autoware_universe_launch/autoware_planning_config/config/neural_net_planner/trajectory_selector/ranker.param.yaml
+      - source: planning/autoware_trajectory_selector/config/trajectory_selector.param.yaml
+        variants:
+          - path: autoware_universe_launch/autoware_planning_config/config/neural_net_planner/trajectory_selector/selector.param.yaml
       # Planning/parking
       - source: planning/autoware_freespace_planner/config/freespace_planner.param.yaml
         variants:
