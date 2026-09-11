@@ -16,10 +16,7 @@
 
   <!-- Overridable so a simulator can supply monitor rates that match its own
        throughput; the default is the on-vehicle set. -->
-  <arg
-    name="component_state_monitor_topic_path"
-    default="$(find-pkg-share autoware_launch)/config/system/component_state_monitor/topics.yaml"
-  />
+  <arg name="component_state_monitor_topic_path" default="$(find-pkg-share autoware_launch)/config/system/component_state_monitor/topics.yaml"/>
 
   <set_parameter name="use_sim_time" value="$(var use_sim_time)"/>
 

@@ -48,11 +48,7 @@
        behavior_path_planner keeps preparing a pull over path it never commits to
        and the ego holds short of the goal until the scenario times out. -->
   <let name="launch_goal_planner_module" value="false" if="$(equals $(var simulator_type) 'carla')"/>
-  <let
-    name="component_state_monitor_topic_path"
-    value="$(find-pkg-share autoware_launch)/config/simulator/carla/component_state_monitor/topics.yaml"
-    if="$(equals $(var simulator_type) 'carla')"
-  />
+  <let name="component_state_monitor_topic_path" value="$(find-pkg-share autoware_launch)/config/simulator/carla/component_state_monitor/topics.yaml" if="$(equals $(var simulator_type) 'carla')"/>
 
   <!-- CARLA's localization covariance and control-loop latency are both far
        larger than on the vehicle, so the on-vehicle thresholds flip these
@@ -63,21 +59,13 @@
     value="$(find-pkg-share autoware_launch)/config/simulator/carla/localization/localization_error_monitor.param.yaml"
     if="$(equals $(var simulator_type) 'carla')"
   />
-  <let
-    name="ekf_localizer_param_path"
-    value="$(find-pkg-share autoware_launch)/config/simulator/carla/localization/ekf_localizer.param.yaml"
-    if="$(equals $(var simulator_type) 'carla')"
-  />
+  <let name="ekf_localizer_param_path" value="$(find-pkg-share autoware_launch)/config/simulator/carla/localization/ekf_localizer.param.yaml" if="$(equals $(var simulator_type) 'carla')"/>
   <let
     name="operation_mode_transition_manager_param_path"
     value="$(find-pkg-share autoware_launch)/config/simulator/carla/control/operation_mode_transition_manager.param.yaml"
     if="$(equals $(var simulator_type) 'carla')"
   />
-  <let
-    name="control_validator_param_path"
-    value="$(find-pkg-share autoware_launch)/config/simulator/carla/control/control_validator.param.yaml"
-    if="$(equals $(var simulator_type) 'carla')"
-  />
+  <let name="control_validator_param_path" value="$(find-pkg-share autoware_launch)/config/simulator/carla/control/control_validator.param.yaml" if="$(equals $(var simulator_type) 'carla')"/>
 
   <!-- Simulator interfaces -->
   <group scoped="false" if="$(var launch_simulator_interface)">
