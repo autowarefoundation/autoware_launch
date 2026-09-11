@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Pointcloud map unit: publishes the whole PCD map and serves the partial/differential/selected map queries -->
+  <arg name="map_config_pkg" default="autoware_map_config" description="package that ships the map config/ tree; overriding it relocates every parameter file"/>
+  <let name="map_config_dir" value="$(find-pkg-share $(var map_config_pkg))/config"/>
+  <arg name="pointcloud_map_loader_param_path" default="$(var map_config_dir)/pointcloud_map_loader.param.yaml"/>
+
+  <!-- Map files: substituted into the parameter file -->
+  <arg name="pointcloud_map_path" description="pointcloud map file or directory path"/>
+  <arg name="pointcloud_map_metadata_path" description="pointcloud map metadata file path"/>
+
+  <!-- Process placement -->
+  <arg name="ld_preload_value" default="" description="LD_PRELOAD of the selected executor; the agnocast wrapper resolves it"/>
+
+  <node pkg="autoware_map_loader" exec="autoware_pointcloud_map_loader" name="pointcloud_map_loader" output="both">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    <param from="$(var pointcloud_map_loader_param_path)" allow_substs="true"/>
+    <remap from="output/pointcloud_map" to="pointcloud_map"/>
+    <remap from="output/pointcloud_map_metadata" to="pointcloud_map_metadata"/>
+    <remap from="service/get_partial_pcd_map" to="/map/get_partial_pointcloud_map"/>
+    <remap from="service/get_differential_pcd_map" to="/map/get_differential_pointcloud_map"/>
+    <remap from="service/get_selected_pcd_map" to="/map/get_selected_pointcloud_map"/>
+  </node>
+</launch>
