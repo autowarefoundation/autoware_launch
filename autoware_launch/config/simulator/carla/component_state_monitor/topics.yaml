@@ -1,3 +1,10 @@
+# Component state monitor rates for CARLA.
+#
+# CARLA ticks the world at a few Hz of wall clock, so the topics land at
+# roughly 5-6 Hz -- right on the on-vehicle warn_rate, which makes these
+# monitors flip between OK and WARN continuously. The autonomous mode unit
+# follows them, autonomous stops being available, and the command mode decider
+# answers with an MRM (comfortable_stop) mid-drive.
 - module: map
   mode: [online]
   type: launch
@@ -33,8 +40,8 @@
     topic_type: geometry_msgs/msg/PoseStamped
     best_effort: false
     transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
+    warn_rate: 2.0
+    error_rate: 0.5
     timeout: 2.5
 
 - module: perception
@@ -46,8 +53,8 @@
     topic_type: sensor_msgs/msg/PointCloud2
     best_effort: true
     transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
+    warn_rate: 2.0
+    error_rate: 0.5
     timeout: 2.5
 
 - module: perception
@@ -59,8 +66,8 @@
     topic_type: autoware_perception_msgs/msg/PredictedObjects
     best_effort: false
     transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
+    warn_rate: 2.0
+    error_rate: 0.5
     timeout: 2.5
 
 - module: perception
@@ -72,8 +79,8 @@
     topic_type: autoware_perception_msgs/msg/TrafficLightGroupArray
     best_effort: false
     transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
+    warn_rate: 2.0
+    error_rate: 0.5
     timeout: 2.5
 
 - module: planning
@@ -98,8 +105,8 @@
     topic_type: autoware_planning_msgs/msg/Trajectory
     best_effort: false
     transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
+    warn_rate: 2.0
+    error_rate: 0.5
     timeout: 2.5
 
 - module: control
@@ -111,8 +118,8 @@
     topic_type: autoware_control_msgs/msg/Control
     best_effort: false
     transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
+    warn_rate: 2.0
+    error_rate: 0.5
     timeout: 2.5
 
 - module: control
@@ -124,8 +131,8 @@
     topic_type: autoware_control_msgs/msg/Control
     best_effort: false
     transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
+    warn_rate: 2.0
+    error_rate: 0.5
     timeout: 2.5
 
 - module: vehicle
@@ -137,8 +144,8 @@
     topic_type: autoware_vehicle_msgs/msg/VelocityReport
     best_effort: false
     transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
+    warn_rate: 2.0
+    error_rate: 0.5
     timeout: 2.5
 
 - module: vehicle
@@ -150,8 +157,8 @@
     topic_type: autoware_vehicle_msgs/msg/SteeringReport
     best_effort: false
     transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
+    warn_rate: 2.0
+    error_rate: 0.5
     timeout: 2.5
 
 - module: system
@@ -163,8 +170,8 @@
     topic_type: autoware_control_msgs/msg/Control
     best_effort: false
     transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
+    warn_rate: 2.0
+    error_rate: 0.5
     timeout: 2.5
 
 - module: localization
@@ -177,6 +184,6 @@
     child_frame_id: base_link
     best_effort: false
     transient_local: false
-    warn_rate: 5.0
-    error_rate: 1.0
+    warn_rate: 2.0
+    error_rate: 0.5
     timeout: 2.5

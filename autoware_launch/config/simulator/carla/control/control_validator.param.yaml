@@ -1,0 +1,46 @@
+# CARLA variant of autoware_control_config/config/control_validator/control_validator.param.yaml.
+/**:
+  ros__parameters:
+    # If the number of consecutive invalid predicted_path exceeds this threshold, the Diag will be set to ERROR.
+    # (For example, threshold = 1 means, even if the predicted_path is invalid, Diag will not be ERROR if
+    #  the next predicted_path is valid.)
+    diag_error_count_threshold: 0
+
+    display_on_terminal: false # show error msg on terminal
+
+    vel_lpf_gain: 0.9 # Time constant 0.33
+
+    acceleration_validator:
+      acc_error_offset: 0.8
+      acc_error_scale: 0.2
+      acc_lpf_gain: 0.97 # Time constant 1.11s
+
+    latency_validator:
+      # CARLA ticks the world at a few Hz of wall clock, so one control cycle is
+      # already ~0.2 s: the on-vehicle 0.01 s puts this validator into ERROR
+      # continuously, which drops autonomous availability and triggers an MRM.
+      nominal_latency: 0.5
+
+    lateral_jerk_validator:
+      lateral_jerk: 10.0
+
+    overrun_validator:
+      assumed_delay_time: 0.2
+      assumed_limit_acc: 5.0
+      overrun_stop_point_dist: 0.8
+      will_overrun_stop_point_dist: 1.0
+
+    trajectory_validator:
+      max_distance_deviation: 1.0
+
+    velocity_validator: # previously over_velocity
+      hold_velocity_error_until_stop: true
+      rolling_back_velocity: 0.5
+      over_velocity_offset: 2.0
+      over_velocity_ratio: 0.2
+      # Longer time constant to avoid reacting to instantaneous velocity changes
+      vel_lpf_gain: 0.985 # Time constant 2.0s at 30msec sampling period
+
+    yaw_validator:
+      yaw_deviation_error: 1.0
+      yaw_deviation_warn: 0.5

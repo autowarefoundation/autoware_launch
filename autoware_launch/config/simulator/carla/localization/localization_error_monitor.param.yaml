@@ -1,0 +1,15 @@
+# CARLA variant of config/localization/localization_error_monitor.param.yaml.
+#
+# The NDT/EKF covariance in CARLA is far larger than on the vehicle -- the error
+# ellipse measured on Town10HD_Opt reaches ~3 m (lateral included) while the ego
+# still tracks its lane -- so the on-vehicle thresholds put this monitor into
+# ERROR several times a minute. Every one of those flips takes the autonomous
+# mode out of "available", and the command mode decider answers with an MRM
+# (comfortable_stop), which interrupts the drive.
+/**:
+  ros__parameters:
+    scale: 3.0
+    error_ellipse_size: 5.0
+    warn_ellipse_size: 4.0
+    error_ellipse_size_lateral_direction: 4.0
+    warn_ellipse_size_lateral_direction: 3.0
