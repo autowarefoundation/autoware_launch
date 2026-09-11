@@ -1,6 +1,10 @@
 <launch>
   <!-- CARLA publishes an undistorted pointcloud without ring information; only the crop boxes apply -->
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <!-- The container lives at the root namespace, but these loads run inside
+       /sensing/lidar: a relative target resolves there and never appears, so the
+       load waits forever and the whole lidar preprocessing silently never runs. -->
+  <let name="target_container" value="/$(var pointcloud_container_name)"/>
   <arg name="crop_box_filter_self_param_path" default="$(find-pkg-share carla_sensor_kit_launch)/config/crop_box_filter_self.param.yaml"/>
   <arg name="crop_box_filter_mirror_param_path" default="$(find-pkg-share carla_sensor_kit_launch)/config/crop_box_filter_mirror.param.yaml"/>
 
@@ -8,7 +12,7 @@
     <push-ros-namespace namespace="lidar"/>
 
     <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_crop_boxes.launch.xml">
-      <arg name="target_container" value="$(var pointcloud_container_name)"/>
+      <arg name="target_container" value="$(var target_container)"/>
       <arg name="use_intra_process" value="true"/>
       <arg name="input/pointcloud" value="/sensing/lidar/top/pointcloud_before_sync"/>
       <arg name="intermediate/pointcloud" value="self_cropped/pointcloud"/>
@@ -17,7 +21,7 @@
       <arg name="crop_box_filter_secondary_param_path" value="$(var crop_box_filter_mirror_param_path)"/>
     </include>
 
-    <load_composable_node target="$(var pointcloud_container_name)">
+    <load_composable_node target="$(var target_container)">
       <composable_node pkg="topic_tools" plugin="topic_tools::RelayNode" name="pointcloud_relay">
         <param name="input_topic" value="mirror_cropped/pointcloud"/>
         <param name="output_topic" value="/sensing/lidar/concatenated/pointcloud"/>
