@@ -40,6 +40,45 @@
   <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
   <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/$(var rviz_config_name)" description="rviz config path"/>
 
+  <!-- CARLA ticks the world well below the on-vehicle topic rates, so its
+       component_state_monitor timeouts are longer. Without this the monitors flap
+       into ERROR, the autonomous mode unit follows, and an MRM (comfortable_stop)
+       interrupts the drive. -->
+  <!-- The CARLA scenarios stop at a goal in the lane. With the goal planner on,
+       behavior_path_planner keeps preparing a pull over path it never commits to
+       and the ego holds short of the goal until the scenario times out. -->
+  <let name="launch_goal_planner_module" value="false" if="$(equals $(var simulator_type) 'carla')"/>
+  <let
+    name="component_state_monitor_topic_path"
+    value="$(find-pkg-share autoware_launch)/config/simulator/carla/component_state_monitor/topics.yaml"
+    if="$(equals $(var simulator_type) 'carla')"
+  />
+
+  <!-- CARLA's localization covariance and control-loop latency are both far
+       larger than on the vehicle, so the on-vehicle thresholds flip these
+       monitors into ERROR repeatedly; autonomous availability follows them down
+       and the command mode decider answers with an MRM (comfortable_stop). -->
+  <let
+    name="localization_error_monitor_param_path"
+    value="$(find-pkg-share autoware_launch)/config/simulator/carla/localization/localization_error_monitor.param.yaml"
+    if="$(equals $(var simulator_type) 'carla')"
+  />
+  <let
+    name="ekf_localizer_param_path"
+    value="$(find-pkg-share autoware_launch)/config/simulator/carla/localization/ekf_localizer.param.yaml"
+    if="$(equals $(var simulator_type) 'carla')"
+  />
+  <let
+    name="operation_mode_transition_manager_param_path"
+    value="$(find-pkg-share autoware_launch)/config/simulator/carla/control/operation_mode_transition_manager.param.yaml"
+    if="$(equals $(var simulator_type) 'carla')"
+  />
+  <let
+    name="control_validator_param_path"
+    value="$(find-pkg-share autoware_launch)/config/simulator/carla/control/control_validator.param.yaml"
+    if="$(equals $(var simulator_type) 'carla')"
+  />
+
   <!-- Simulator interfaces -->
   <group scoped="false" if="$(var launch_simulator_interface)">
     <!-- AWSIM does not require a simulator interface since it publishes autoware_msgs directly -->

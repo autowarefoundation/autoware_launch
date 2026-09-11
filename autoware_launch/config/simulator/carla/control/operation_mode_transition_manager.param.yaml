@@ -1,0 +1,42 @@
+# CARLA variant of
+# autoware_control_config/config/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml.
+#
+# Only stable_check is loosened. CARLA's throttle response is slow enough that the
+# ego trails its commanded speed by more than the on-vehicle 2 m/s while it is
+# still tracking the trajectory; that drops mode_change_available, autonomous
+# stops being available, and the command mode decider answers with an MRM
+# (comfortable_stop) in the middle of the drive.
+/**:
+  ros__parameters:
+    input_timeout: 3.0
+    transition_timeout: 10.0
+    frequency_hz: 10.0
+
+    # set true if you want to engage the autonomous driving mode while the vehicle is driving. If set to false, it will deny Engage in any situation where the vehicle speed is not zero. Note that if you use this feature without adjusting the parameters, it may cause issues like sudden deceleration. Before using, please ensure the engage condition and the vehicle_cmd_gate transition filter are appropriately adjusted.
+    # AutonomousModeTransitionFlagNode publishes isModeChangeAvailable() as the
+    # driving-mode availability flag, and that check refuses while the vehicle is
+    # moving when this is false -- so autonomous goes unavailable the moment the ego
+    # starts driving and the command mode decider answers with an MRM
+    # (comfortable_stop), over and over. Engaging from a standstill is what the
+    # scenario does anyway; the bridge engages before the ego moves.
+    enable_engage_on_driving: true
+
+    check_engage_condition: false # set false if you do not want to care about the engage condition.
+
+    nearest_dist_deviation_threshold: 3.0 # [m] for finding nearest index
+    nearest_yaw_deviation_threshold: 1.57 # [rad] for finding nearest index
+    engage_acceptable_limits:
+      allow_autonomous_in_stopped: true  # if true, all engage check is skipped.
+      dist_threshold: 1.5
+      yaw_threshold: 0.524
+      speed_upper_threshold: 10.0
+      speed_lower_threshold: -10.0
+      acc_threshold: 1.5
+      lateral_acc_threshold: 1.0
+      lateral_acc_diff_threshold: 0.5
+    stable_check:
+      duration: 0.1
+      dist_threshold: 1.5
+      speed_upper_threshold: 2.0
+      speed_lower_threshold: -2.0
+      yaw_threshold: 0.262
