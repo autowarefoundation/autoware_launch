@@ -16,14 +16,20 @@ parameters:
     param_values:
       - name: input/detection01/channel
         value: detected_objects
-  - node: /system
+  - node: /system/component_state_monitor/component
     param_values:
-      - name: run_mode
-        value: planning_simulation
-      - name: launch_system_monitor
-        value: false
-      - name: launch_dummy_diag_publisher
-        value: true
+      - name: launch.map
+        value: ["topic_state_monitor_vector_map: map_topic_status"]
+      - name: autonomous.localization
+        value: ["topic_state_monitor_transform_map_to_base_link: localization_topic_status"]
+      - name: launch.perception
+        value: []
+      - name: autonomous.perception
+        value: ["topic_state_monitor_object_recognition_objects: perception_topic_status"]
+  - node: /dummy_diag_publisher
+    param_files:
+      - param_file: $(find-pkg-share autoware_launch)/config/system/diagnostics/dummy_diag_publisher.param.yaml
+      - extra_param_file: $(find-pkg-share sample_sensor_kit_launch)/config/dummy_diag_publisher/sensor_kit.param.yaml
   - node: /perception/occupancy_grid_map/occupancy_grid_map_node
     param_values:
       - name: input_obstacle_pointcloud

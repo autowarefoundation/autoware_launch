@@ -1,0 +1,148 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+# System monitoring and fail-safe: diagnostic graph, component state, MRM handling and host monitors.
+name: System.module
+
+instances:
+  - name: system_monitor
+    entity: SystemMonitor.module
+  - name: duplicated_node_checker
+    entity: DuplicatedNodeChecker.node
+  - name: processing_time_checker
+    entity: ProcessingTimeChecker.node
+  - name: pipeline_latency_monitor
+    entity: PipelineLatencyMonitor.node
+  - name: component_state_monitor
+    entity: ComponentStateMonitor.module
+  - name: aggregator
+    entity: DiagnosticGraphAggregator.node
+  - name: converter
+    entity: OperationModeAvailabilityConverter.node
+  - name: hazard_status_converter
+    entity: HazardStatusConverter.node
+  - name: logging_diag_graph
+    entity: DiagnosticGraphLogging.node
+  - name: mrm_handler
+    entity: MrmHandler.node
+  - name: mrm_comfortable_stop_operator
+    entity: MrmComfortableStopOperator.node
+  - name: mrm_emergency_stop_operator
+    entity: MrmEmergencyStopOperator.node
+
+# interfaces
+subscribers:
+  - name: control_cmd
+  - name: gear_cmd
+  - name: kinematic_state
+  - name: control_mode
+  - name: api_operation_mode_state
+
+publishers:
+  - name: component_state_monitor/component/launch/sensing
+  - name: component_state_monitor/component/launch/perception
+  - name: component_state_monitor/component/launch/map
+  - name: component_state_monitor/component/launch/localization
+  - name: component_state_monitor/component/launch/planning
+  - name: component_state_monitor/component/launch/control
+  - name: component_state_monitor/component/launch/vehicle
+  - name: component_state_monitor/component/launch/system
+  - name: component_state_monitor/component/autonomous/sensing
+  - name: component_state_monitor/component/autonomous/perception
+  - name: component_state_monitor/component/autonomous/map
+  - name: component_state_monitor/component/autonomous/localization
+  - name: component_state_monitor/component/autonomous/planning
+  - name: component_state_monitor/component/autonomous/control
+  - name: component_state_monitor/component/autonomous/vehicle
+  - name: component_state_monitor/component/autonomous/system
+  - name: diagnostics_graph/struct
+  - name: diagnostics_graph/status
+  - name: diagnostics_graph/unknowns
+  - name: command_mode/availability
+  - name: operation_mode/availability
+  - name: driving_mode/available
+  - name: driving_mode/continuable
+  - name: fail_safe/mrm_state
+  - name: emergency/hazard_status
+  - name: emergency/control_cmd
+  - name: emergency/gear_cmd
+  - name: emergency/turn_indicators_cmd
+  - name: emergency/hazard_lights_cmd
+  - name: velocity_limit
+  - name: velocity_limit/clear
+
+servers:
+  - name: diagnostics_graph/reset
+
+connections:
+  # diagnostic graph consumers, wired before the boundary export so the exported topic names win
+  - - aggregator.publisher.struct
+    - hazard_status_converter.subscriber.diag_graph_struct
+  - - aggregator.publisher.status
+    - hazard_status_converter.subscriber.diag_graph_status
+  - - aggregator.publisher.struct
+    - logging_diag_graph.subscriber.diag_graph_struct
+  - - aggregator.publisher.status
+    - logging_diag_graph.subscriber.diag_graph_status
+  - - aggregator.publisher.command_mode_availability
+    - converter.subscriber.command_mode_availability
+  - - converter.publisher.operation_mode_availability
+    - mrm_handler.subscriber.operation_mode_availability
+
+  # MRM handler inputs and operators
+  - - subscriber.kinematic_state
+    - mrm_handler.subscriber.odometry
+  - - subscriber.control_mode
+    - mrm_handler.subscriber.control_mode
+  - - subscriber.gear_cmd
+    - mrm_handler.subscriber.gear
+  - - subscriber.api_operation_mode_state
+    - mrm_handler.subscriber.operation_mode_state
+  - - subscriber.control_cmd
+    - mrm_emergency_stop_operator.subscriber.control_cmd
+  - - mrm_handler.client.comfortable_stop_operate
+    - mrm_comfortable_stop_operator.server.operate
+  - - mrm_handler.client.emergency_stop_operate
+    - mrm_emergency_stop_operator.server.operate
+  - - mrm_comfortable_stop_operator.publisher.status
+    - mrm_handler.subscriber.comfortable_stop_status
+  - - mrm_emergency_stop_operator.publisher.status
+    - mrm_handler.subscriber.emergency_stop_status
+  - - mrm_handler.publisher.emergency_holding
+    - hazard_status_converter.subscriber.emergency_holding
+
+  # outputs
+  - - component_state_monitor.publisher.^
+    - publisher.component_state_monitor/^
+  - - aggregator.publisher.struct
+    - publisher.diagnostics_graph/struct
+  - - aggregator.publisher.status
+    - publisher.diagnostics_graph/status
+  - - aggregator.publisher.unknowns
+    - publisher.diagnostics_graph/unknowns
+  - - aggregator.publisher.command_mode_availability
+    - publisher.command_mode/availability
+  - - aggregator.publisher.driving_mode_available
+    - publisher.driving_mode/available
+  - - aggregator.publisher.driving_mode_continuable
+    - publisher.driving_mode/continuable
+  - - aggregator.server.reset
+    - server.diagnostics_graph/reset
+  - - converter.publisher.operation_mode_availability
+    - publisher.operation_mode/availability
+  - - hazard_status_converter.publisher.hazard_status
+    - publisher.emergency/hazard_status
+  - - mrm_handler.publisher.mrm_state
+    - publisher.fail_safe/mrm_state
+  - - mrm_handler.publisher.gear
+    - publisher.emergency/gear_cmd
+  - - mrm_handler.publisher.turn_indicators
+    - publisher.emergency/turn_indicators_cmd
+  - - mrm_handler.publisher.hazard
+    - publisher.emergency/hazard_lights_cmd
+  - - mrm_emergency_stop_operator.publisher.control_cmd
+    - publisher.emergency/control_cmd
+  - - mrm_comfortable_stop_operator.publisher.velocity_limit
+    - publisher.velocity_limit
+  - - mrm_comfortable_stop_operator.publisher.velocity_limit_clear
+    - publisher.velocity_limit/clear

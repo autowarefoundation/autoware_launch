@@ -1,0 +1,10 @@
+autoware_system_design_format: 0.3.1
+
+# Simulation: no host resource monitors.
+name: System_sim.module
+
+base: System.module
+
+remove:
+  instances:
+    - name: system_monitor
