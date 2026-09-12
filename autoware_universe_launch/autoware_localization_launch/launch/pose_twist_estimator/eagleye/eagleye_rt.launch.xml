@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
+  <arg name="localization_config_pkg" default="autoware_localization_config" description="package that ships the localization config/ tree; overriding it relocates every parameter file"/>
+  <let name="localization_config_dir" value="$(find-pkg-share $(var localization_config_pkg))/config"/>
+  <arg name="eagleye_param_path" default="$(var localization_config_dir)/eagleye_config.param.yaml"/>
   <arg name="output_pose_with_cov_name" default="/localization/pose_estimator/pose_with_covariance"/>
   <arg name="output_twist_with_cov_name" default="/localization/twist_estimator/twist_with_covariance"/>
-  <arg name="directory_with_related_launches" default="$(find-pkg-share tier4_localization_launch)/launch/pose_twist_estimator/eagleye"/>
+  <arg name="directory_with_related_launches" default="$(find-pkg-share autoware_localization_launch)/launch/pose_twist_estimator/eagleye"/>
   <arg name="use_eagleye_pose" default="true"/>
   <arg name="use_eagleye_twist" default="true"/>
 

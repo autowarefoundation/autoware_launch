@@ -4,25 +4,25 @@ name: universe_localization.parameter_set
 parameters:
   - node: /localization/pose_estimator/ndt_scan_matcher
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/localization/ndt_scan_matcher/ndt_scan_matcher.param.yaml
+      - param_file: $(find-pkg-share autoware_localization_config)/config/ndt_scan_matcher/ndt_scan_matcher.param.yaml
   - node: /localization/pose_twist_fusion_filter/ekf_localizer
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/localization/ekf_localizer.param.yaml
+      - param_file: $(find-pkg-share autoware_localization_config)/config/ekf_localizer.param.yaml
   - node: /localization/pose_twist_fusion_filter/stop_filter
     param_files:
-      - param_path: $(find-pkg-share autoware_launch)/config/localization/stop_filter.param.yaml
+      - param_path: $(find-pkg-share autoware_localization_config)/config/stop_filter.param.yaml
   - node: /localization/pose_twist_fusion_filter/twist2accel
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/localization/twist2accel.param.yaml
+      - param_file: $(find-pkg-share autoware_localization_config)/config/twist2accel.param.yaml
   - node: /localization/pose_twist_fusion_filter/pose_instability_detector
     param_files:
-      - pose_instability_detector_param: $(find-pkg-share autoware_launch)/config/localization/pose_instability_detector.param.yaml
+      - pose_instability_detector_param: $(find-pkg-share autoware_localization_config)/config/pose_instability_detector.param.yaml
   - node: /localization/localization_error_monitor
     param_files:
-      - localization_error_monitor_param: $(find-pkg-share autoware_launch)/config/localization/localization_error_monitor.param.yaml
+      - localization_error_monitor_param: $(find-pkg-share autoware_localization_config)/config/localization_error_monitor.param.yaml
   - node: /localization/util/pose_initializer
     param_files:
-      - config_file: $(find-pkg-share autoware_launch)/config/localization/pose_initializer.param.yaml
+      - config_file: $(find-pkg-share autoware_localization_config)/config/pose_initializer.param.yaml
     param_values:
       - name: user_defined_initial_pose.enable
         value: false
@@ -44,10 +44,10 @@ parameters:
         value: pointcloud_map
   - node: /localization/util/crop_box_filter_measurement_range
     param_files:
-      - crop_box_filter_param_file: $(find-pkg-share autoware_launch)/config/localization/ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml
+      - crop_box_filter_param_file: $(find-pkg-share autoware_localization_config)/config/ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml
   - node: /localization/util/voxel_grid_downsample_filter
     param_files:
-      - voxel_grid_downsample_filter_param_file: $(find-pkg-share autoware_launch)/config/localization/ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_filter.param.yaml
+      - voxel_grid_downsample_filter_param_file: $(find-pkg-share autoware_localization_config)/config/ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_filter.param.yaml
   - node: /localization/util/random_downsample_filter
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/localization/ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter.param.yaml
+      - param_file: $(find-pkg-share autoware_localization_config)/config/ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter.param.yaml
