@@ -31,7 +31,7 @@ design/module/                      # Autoware System Designer modules; same sub
 
 - `planning.launch.xml` — the entry point. It includes the module preset, resolves every parameter file, and pushes the `planning` namespace. `planning_setting` selects the trajectory source: `rule_based` runs `scenario_planning/`, `diffusion_planner` runs `learning_based_planning/`. The planning validator and the planning evaluator run for both, wired to the source-specific trajectory topics.
 - `scenario_planning/` — the rule-based source: the scenario selector, the velocity smoother tail, and the `lane_driving` and `parking` scenarios. `lane_driving` chains behavior planning into motion planning.
-- `learning_based_planning/diffusion_planner.launch.xml` — the neural-network source: the diffusion planner followed by the trajectory processor and its optimizer plugins.
+- `learning_based_planning/diffusion_planner.launch.xml` — the neural-network source: the diffusion planner followed by the trajectory modifier and its optimizer plugins.
 
 ## Config
 
