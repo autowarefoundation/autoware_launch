@@ -277,19 +277,19 @@ map:
     files:
       - source: map/autoware_map_loader/config/lanelet2_map_loader.param.yaml
         variants:
-          - path: autoware_launch/config/map/lanelet2_map_loader.param.yaml
+          - path: autoware_universe_launch/autoware_map_config/config/lanelet2_map_loader.param.yaml
       - source: map/autoware_map_loader/config/pointcloud_map_loader.param.yaml
         variants:
-          - path: autoware_launch/config/map/pointcloud_map_loader.param.yaml
+          - path: autoware_universe_launch/autoware_map_config/config/pointcloud_map_loader.param.yaml
       - source: map/autoware_map_projection_loader/config/map_projection_loader.param.yaml
         variants:
-          - path: autoware_launch/config/map/map_projection_loader.param.yaml
+          - path: autoware_universe_launch/autoware_map_config/config/map_projection_loader.param.yaml
   - repository: autowarefoundation/autoware_universe
     ref: main
     files:
       - source: map/autoware_map_tf_generator/config/map_tf_generator.param.yaml
         variants:
-          - path: autoware_launch/config/map/map_tf_generator.param.yaml
+          - path: autoware_universe_launch/autoware_map_config/config/map_tf_generator.param.yaml
 
 planning:
   - repository: autowarefoundation/autoware_core
