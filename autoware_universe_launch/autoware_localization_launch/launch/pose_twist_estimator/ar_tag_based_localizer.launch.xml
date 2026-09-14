@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="localization_config_pkg" default="autoware_localization_config" description="package that ships the localization config/ tree; overriding it relocates every parameter file"/>
+  <let name="localization_config_dir" value="$(find-pkg-share $(var localization_config_pkg))/config"/>
+  <arg name="ar_tag_based_localizer_param_path" default="$(var localization_config_dir)/ar_tag_based_localizer.param.yaml"/>
   <group>
     <arg name="input_image"/>
 

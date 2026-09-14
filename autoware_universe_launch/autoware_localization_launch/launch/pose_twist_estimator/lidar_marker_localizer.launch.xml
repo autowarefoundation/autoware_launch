@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="localization_config_pkg" default="autoware_localization_config" description="package that ships the localization config/ tree; overriding it relocates every parameter file"/>
+  <let name="localization_config_dir" value="$(find-pkg-share $(var localization_config_pkg))/config"/>
   <arg name="group_namespace" default="lidar_marker_localizer"/>
 
   <!-- input pointcloud topic/container -->
@@ -9,9 +11,9 @@
   <!-- whether use intra-process -->
   <arg name="use_intra_process" default="true" description="use ROS 2 component container communication"/>
 
-  <arg name="crop_box_filter_measurement_range_param_path" default="$(var lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path)"/>
-  <arg name="ring_filter_param_path" default="$(var lidar_marker_localizer/pointcloud_preprocessor/ring_filter_param_path)"/>
-  <arg name="lidar_marker_localizer_param_path" default="$(var lidar_marker_localizer/lidar_marker_localizer_param_path)"/>
+  <arg name="crop_box_filter_measurement_range_param_path" default="$(var localization_config_dir)/lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range.param.yaml"/>
+  <arg name="ring_filter_param_path" default="$(var localization_config_dir)/lidar_marker_localizer/pointcloud_preprocessor/ring_filter.param.yaml"/>
+  <arg name="lidar_marker_localizer_param_path" default="$(var localization_config_dir)/lidar_marker_localizer/lidar_marker_localizer.param.yaml"/>
 
   <group>
     <push-ros-namespace namespace="$(var group_namespace)"/>

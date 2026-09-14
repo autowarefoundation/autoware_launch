@@ -51,6 +51,12 @@ connections:
   - - subscriber.vector_map
     - pose_initializer.subscriber.vector_map
 
+  # automatic_pose_initializer
+  - - pose_initializer.publisher.pub_state
+    - automatic_pose_initializer.subscriber.initialization_state
+  - - automatic_pose_initializer.client.initialize
+    - pose_initializer.server.initialize
+
   # pointcloud downsampling chain
   - - subscriber.pointcloud
     - crop_box_filter_measurement_range.subscriber.input
