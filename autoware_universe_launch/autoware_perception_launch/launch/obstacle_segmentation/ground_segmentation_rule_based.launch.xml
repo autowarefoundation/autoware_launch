@@ -32,7 +32,12 @@
       <param name="min_z" value="$(eval '0.0 + $(var crop_box_margin_min_z)')"/>
       <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
     </composable_node>
-    <composable_node pkg="autoware_ground_segmentation" plugin="autoware::ground_segmentation::ScanGroundFilterComponent" name="common_ground_filter" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+    <composable_node
+      pkg="autoware_ground_segmentation"
+      plugin="autoware::ground_segmentation::ScanGroundFilterComponent"
+      name="common_ground_filter"
+      unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"
+    >
       <remap from="input" to="range_cropped/pointcloud"/>
       <remap from="output" to="$(var output/pointcloud)"/>
       <param from="$(var scan_ground_filter_node_param_path)" allow_substs="true"/>

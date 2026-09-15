@@ -36,7 +36,12 @@
       <param name="output_frame" value="$(var base_frame)"/>
       <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
     </composable_node>
-    <composable_node pkg="autoware_ground_segmentation" plugin="autoware::ground_segmentation::ScanGroundFilterComponent" name="ground_filter" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+    <composable_node
+      pkg="autoware_ground_segmentation"
+      plugin="autoware::ground_segmentation::ScanGroundFilterComponent"
+      name="ground_filter"
+      unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"
+    >
       <remap from="input" to="cropped_range/pointcloud"/>
       <remap from="output" to="obstacle_segmentation/pointcloud"/>
       <param from="$(var scan_ground_filter_node_param_path)"/>
