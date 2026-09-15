@@ -24,7 +24,12 @@
   <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
 
   <load_composable_node target="$(var target_container)">
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="$(var lidar_name)_crop_box_filter" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+    <composable_node
+      pkg="autoware_pointcloud_preprocessor"
+      plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent"
+      name="$(var lidar_name)_crop_box_filter"
+      unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"
+    >
       <remap from="input" to="$(var input/lidar/pointcloud)"/>
       <remap from="output" to="$(var lidar_name)/range_cropped/pointcloud"/>
       <param from="$(var crop_box_filter_node_param_path)" allow_substs="true"/>

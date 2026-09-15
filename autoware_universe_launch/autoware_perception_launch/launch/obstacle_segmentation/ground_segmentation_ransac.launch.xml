@@ -15,8 +15,8 @@
 
   <group>
     <push-ros-namespace namespace="plane_fitting"/>
-  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
-  <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
+    <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+    <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
 
     <load_composable_node target="$(var target_container)">
       <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent" name="concatenate_data">
@@ -29,7 +29,12 @@
         <param name="input_twist_topic_type" value="odom"/>
         <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
       </composable_node>
-      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="short_height_obstacle_detection_area_filter" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+      <composable_node
+        pkg="autoware_pointcloud_preprocessor"
+        plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent"
+        name="short_height_obstacle_detection_area_filter"
+        unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"
+      >
         <remap from="input" to="concatenated/pointcloud"/>
         <remap from="output" to="detection_area/pointcloud"/>
         <param from="$(var detection_area_crop_box_filter_node_param_path)" allow_substs="true"/>
@@ -67,13 +72,13 @@
     </composable_node>
   </load_composable_node>
 
-    <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
-    <node pkg="autoware_pointcloud_preprocessor" exec="crop_box_filter_node" name="short_height_obstacle_detection_area_filter" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
-      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
-      <remap from="input" to="concatenated/pointcloud"/>
-      <remap from="output" to="detection_area/pointcloud"/>
-      <param from="$(var detection_area_crop_box_filter_node_param_path)" allow_substs="true"/>
-      <param name="input_frame" value="$(var base_frame)"/>
-      <param name="output_frame" value="$(var base_frame)"/>
-    </node>
+  <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
+  <node pkg="autoware_pointcloud_preprocessor" exec="crop_box_filter_node" name="short_height_obstacle_detection_area_filter" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    <remap from="input" to="concatenated/pointcloud"/>
+    <remap from="output" to="detection_area/pointcloud"/>
+    <param from="$(var detection_area_crop_box_filter_node_param_path)" allow_substs="true"/>
+    <param name="input_frame" value="$(var base_frame)"/>
+    <param name="output_frame" value="$(var base_frame)"/>
+  </node>
 </launch>
