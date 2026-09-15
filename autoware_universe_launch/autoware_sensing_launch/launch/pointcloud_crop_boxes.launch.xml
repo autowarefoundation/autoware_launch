@@ -13,8 +13,11 @@
   <arg name="crop_box_filter_self_param_path" description="crop box spanning the vehicle body"/>
   <arg name="crop_box_filter_secondary_param_path" description="crop box spanning the geometry cropped after the vehicle body"/>
 
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+  <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
+
   <load_composable_node target="$(var target_container)">
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter_self">
+    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter_self" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
       <remap from="input" to="$(var input/pointcloud)"/>
       <remap from="output" to="$(var intermediate/pointcloud)"/>
       <param from="$(var crop_box_filter_self_param_path)"/>
@@ -24,7 +27,7 @@
       <param name="processing_time_threshold_sec" value="0.01"/>
       <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
     </composable_node>
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter_$(var secondary_crop_box)">
+    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter_$(var secondary_crop_box)" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
       <remap from="input" to="$(var intermediate/pointcloud)"/>
       <remap from="output" to="$(var output/pointcloud)"/>
       <param from="$(var crop_box_filter_secondary_param_path)"/>
@@ -35,4 +38,26 @@
       <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
     </composable_node>
   </load_composable_node>
+
+  <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
+  <node pkg="autoware_pointcloud_preprocessor" exec="crop_box_filter_node" name="crop_box_filter_self" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    <remap from="input" to="$(var input/pointcloud)"/>
+    <remap from="output" to="$(var intermediate/pointcloud)"/>
+    <param from="$(var crop_box_filter_self_param_path)"/>
+    <param name="input_frame" value="$(var input_frame)"/>
+    <param name="output_frame" value="$(var output_frame)"/>
+    <param name="negative" value="true"/>
+    <param name="processing_time_threshold_sec" value="0.01"/>
+  </node>
+  <node pkg="autoware_pointcloud_preprocessor" exec="crop_box_filter_node" name="crop_box_filter_$(var secondary_crop_box)" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    <remap from="input" to="$(var intermediate/pointcloud)"/>
+    <remap from="output" to="$(var output/pointcloud)"/>
+    <param from="$(var crop_box_filter_secondary_param_path)"/>
+    <param name="input_frame" value="$(var input_frame)"/>
+    <param name="output_frame" value="$(var output_frame)"/>
+    <param name="negative" value="true"/>
+    <param name="processing_time_threshold_sec" value="0.01"/>
+  </node>
 </launch>

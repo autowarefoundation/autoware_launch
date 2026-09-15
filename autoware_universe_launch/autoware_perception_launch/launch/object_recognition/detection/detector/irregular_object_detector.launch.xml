@@ -23,8 +23,11 @@
   />
   <arg name="sync_param_path" default="$(var perception_config_dir)/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml"/>
 
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+  <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
+
   <load_composable_node target="$(var target_container)">
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter">
+    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
       <remap from="input" to="$(var input/pointcloud)"/>
       <remap from="input/concatenation_info" to="$(var input/concatenation_info)"/>
       <remap from="output" to="cropped_range/pointcloud"/>
@@ -40,6 +43,17 @@
       <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
     </composable_node>
   </load_composable_node>
+
+  <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
+  <node pkg="autoware_pointcloud_preprocessor" exec="crop_box_filter_node" name="crop_box_filter" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    <remap from="input" to="$(var input/pointcloud)"/>
+    <remap from="input/concatenation_info" to="$(var input/concatenation_info)"/>
+    <remap from="output" to="cropped_range/pointcloud"/>
+    <param from="$(var crop_box_filter_node_param_path)"/>
+    <param name="input_frame" value="$(var base_frame)"/>
+    <param name="output_frame" value="$(var base_frame)"/>
+  </node>
 
   <!-- Provides ld_preload_value for the fusion node process -->
   <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
