@@ -54,6 +54,9 @@
 
   <!-- ndt input pointcloud downsampling -->
   <group if="$(var use_ndt_pose)">
+    <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+    <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
+
     <load_composable_node target="$(var localization_pointcloud_container_name)">
       <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter_measurement_range">
         <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path)"/>
@@ -69,12 +72,25 @@
         <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
       </composable_node>
 
-      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::RandomDownsampleFilterComponent" name="random_downsample_filter">
+      <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
+      <composable_node
+        pkg="autoware_pointcloud_preprocessor"
+        plugin="autoware::pointcloud_preprocessor::RandomDownsampleFilterComponent"
+        name="random_downsample_filter"
+        unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"
+      >
         <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter_param_path)"/>
         <remap from="input" to="voxel_grid_downsample/pointcloud"/>
         <remap from="output" to="$(var output/pointcloud)"/>
         <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
       </composable_node>
     </load_composable_node>
+
+    <node pkg="autoware_pointcloud_preprocessor" exec="random_downsample_filter_node" name="random_downsample_filter" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter_param_path)"/>
+      <remap from="input" to="voxel_grid_downsample/pointcloud"/>
+      <remap from="output" to="$(var output/pointcloud)"/>
+    </node>
   </group>
 </launch>
