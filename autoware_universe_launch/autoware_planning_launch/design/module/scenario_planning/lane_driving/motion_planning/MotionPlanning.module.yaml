@@ -17,6 +17,7 @@ subscribers:
   - name: vector_map
   - name: odometry
   - name: accel
+  - name: steering_status
   - name: objects
   - name: no_ground_pointcloud
   - name: traffic_signals
@@ -28,7 +29,15 @@ subscribers:
 
 publishers:
   - name: trajectory
+  - name: planning_factors/dynamic_obstacle_stop
+  - name: planning_factors/obstacle_cruise
+  - name: planning_factors/obstacle_slow_down
+  - name: planning_factors/obstacle_stop
+  - name: planning_factors/out_of_lane
+  - name: planning_factors/road_user_stop
+  - name: planning_factors/run_out
   - name: velocity_limit
+  - name: clear_velocity_limit
 
 connections:
   - - subscriber.path
@@ -47,6 +56,8 @@ connections:
     - motion_velocity_planner.subscriber.vehicle_odometry
   - - subscriber.accel
     - motion_velocity_planner.subscriber.accel
+  - - subscriber.steering_status
+    - motion_velocity_planner.subscriber.steering_status
   - - subscriber.objects
     - motion_velocity_planner.subscriber.dynamic_objects
   - - subscriber.no_ground_pointcloud
@@ -65,5 +76,21 @@ connections:
     - motion_velocity_planner.subscriber.predicted_trajectory
   - - motion_velocity_planner.publisher.trajectory
     - publisher.trajectory
+  - - motion_velocity_planner.publisher.planning_factors/dynamic_obstacle_stop
+    - publisher.planning_factors/dynamic_obstacle_stop
+  - - motion_velocity_planner.publisher.planning_factors/obstacle_cruise
+    - publisher.planning_factors/obstacle_cruise
+  - - motion_velocity_planner.publisher.planning_factors/obstacle_slow_down
+    - publisher.planning_factors/obstacle_slow_down
+  - - motion_velocity_planner.publisher.planning_factors/obstacle_stop
+    - publisher.planning_factors/obstacle_stop
+  - - motion_velocity_planner.publisher.planning_factors/out_of_lane
+    - publisher.planning_factors/out_of_lane
+  - - motion_velocity_planner.publisher.planning_factors/road_user_stop
+    - publisher.planning_factors/road_user_stop
+  - - motion_velocity_planner.publisher.planning_factors/run_out
+    - publisher.planning_factors/run_out
   - - motion_velocity_planner.publisher.velocity_limit
     - publisher.velocity_limit
+  - - motion_velocity_planner.publisher.clear_velocity_limit
+    - publisher.clear_velocity_limit

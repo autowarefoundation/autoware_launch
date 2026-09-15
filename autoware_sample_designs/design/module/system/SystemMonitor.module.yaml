@@ -1,0 +1,30 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+# Host resource monitors reporting to /diagnostics.
+name: SystemMonitor.module
+
+instances:
+  - name: cpu_monitor
+    entity: CPUMonitor.node
+  - name: mem_monitor
+    entity: MemMonitor.node
+  - name: net_monitor
+    entity: NetMonitor.node
+  - name: ntp_monitor
+    entity: NTPMonitor.node
+  - name: process_monitor
+    entity: ProcessMonitor.node
+  - name: hdd_monitor
+    entity: HddMonitor.node
+  - name: gpu_monitor
+    entity: GPUMonitor.node
+  - name: voltage_monitor
+    entity: VoltageMonitor.node
+
+# interfaces
+subscribers: []
+
+publishers: []
+
+connections: []

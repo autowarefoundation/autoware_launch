@@ -17,6 +17,7 @@ subscribers:
   - name: odometry
   - name: twist
   - name: pose_ndt
+  - name: map_projector_info
 
 publishers:
   - name: imu/imu_data
@@ -39,6 +40,8 @@ connections:
   - - imu.publisher.imu_data
     - publisher.imu/imu_data
   # GNSS
+  - - subscriber.map_projector_info
+    - gnss.subscriber.map_projector_info
   - - gnss.publisher.pose
     - publisher.gnss/pose
   - - gnss.publisher.pose_with_covariance
