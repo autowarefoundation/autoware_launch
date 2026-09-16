@@ -31,6 +31,6 @@ param_files: []
 processes:
   - name: throttle_message
     trigger_conditions:
-      - periodic: $(var rate)
+      - periodic: ${parameter rate}
     outcomes:
-      - to_output_topic: output_topic
+      - to_output: output_topic

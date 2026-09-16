@@ -17,8 +17,7 @@ parameters:
     param_values:
       - name: use_sim_time
         value: true
-  - node: /system
-    param_files: []
+  - node: /system/aggregator
     param_values:
-      - name: launch_system_monitor
-        value: false
+      - name: graph_file
+        value: $(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-awsim.yaml

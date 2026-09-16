@@ -65,6 +65,10 @@ publishers:
   - name: vehicle/status/velocity_status
     message_type: autoware_vehicle_msgs/msg/VelocityReport
 
+servers:
+  - name: control/control_mode_request
+    message_type: autoware_vehicle_msgs/srv/ControlModeCommand
+
 # parameters
 param_values: []
 

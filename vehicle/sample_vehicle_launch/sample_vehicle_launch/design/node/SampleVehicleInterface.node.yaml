@@ -1,0 +1,84 @@
+autoware_system_design_format: 0.3.0
+
+name: SampleVehicleInterface.node
+
+package:
+  name: sample_vehicle_launch
+  provider: autoware
+
+launch:
+  ros2_launch_file: vehicle_interface.launch.xml
+
+# interfaces
+subscribers:
+  - name: control_cmd
+    message_type: autoware_control_msgs/msg/Control
+  - name: emergency_cmd
+    message_type: tier4_vehicle_msgs/msg/VehicleEmergencyStamped
+  - name: gear_cmd
+    message_type: autoware_vehicle_msgs/msg/GearCommand
+  - name: hazard_lights_cmd
+    message_type: autoware_vehicle_msgs/msg/HazardLightsCommand
+  - name: turn_indicators_cmd
+    message_type: autoware_vehicle_msgs/msg/TurnIndicatorsCommand
+  - name: actuation_cmd
+    message_type: tier4_vehicle_msgs/msg/ActuationCommandStamped
+
+publishers:
+  - name: status/control_mode
+    message_type: autoware_vehicle_msgs/msg/ControlModeReport
+  - name: status/gear_status
+    message_type: autoware_vehicle_msgs/msg/GearReport
+  - name: status/hazard_lights_status
+    message_type: autoware_vehicle_msgs/msg/HazardLightsReport
+  - name: status/steering_status
+    message_type: autoware_vehicle_msgs/msg/SteeringReport
+  - name: status/turn_indicators_status
+    message_type: autoware_vehicle_msgs/msg/TurnIndicatorsReport
+  - name: status/velocity_status
+    message_type: autoware_vehicle_msgs/msg/VelocityReport
+  - name: status/actuation_status
+    message_type: tier4_vehicle_msgs/msg/ActuationStatusStamped
+  - name: status/battery_charge
+    message_type: tier4_vehicle_msgs/msg/BatteryStatus
+  - name: doors/status
+    message_type: autoware_adapi_v1_msgs/msg/DoorStatusArray
+
+servers:
+  - name: control_mode_request
+    message_type: autoware_vehicle_msgs/srv/ControlModeCommand
+  - name: doors/command
+    message_type: autoware_adapi_v1_msgs/srv/SetDoorCommand
+  - name: doors/layout
+    message_type: autoware_adapi_v1_msgs/srv/GetDoorLayout
+
+# parameters
+param_files: []
+
+param_values:
+  - name: vehicle_id
+    default: $(env VEHICLE_ID default)
+
+# processes
+processes:
+  - name: report_status
+    trigger_conditions:
+      - periodic: 50 # Hz
+    outcomes:
+      - to_output: status/control_mode
+      - to_output: status/gear_status
+      - to_output: status/hazard_lights_status
+      - to_output: status/steering_status
+      - to_output: status/turn_indicators_status
+      - to_output: status/velocity_status
+      - to_output: status/actuation_status
+  - name: report_battery
+    trigger_conditions:
+      - periodic: 1 # Hz
+    outcomes:
+      - to_output: status/battery_charge
+  - name: report_doors
+    trigger_conditions:
+      - periodic: 5 # Hz
+    outcomes:
+      - to_output: doors/status
