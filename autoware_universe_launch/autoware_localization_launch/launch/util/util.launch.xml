@@ -65,7 +65,7 @@
         <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
       </composable_node>
 
-      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent" name="voxel_grid_downsample_filter">
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent" name="voxel_grid_downsample_filter" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
         <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_downsample_filter_param_path)"/>
         <remap from="input" to="measurement_range/pointcloud"/>
         <remap from="output" to="voxel_grid_downsample/pointcloud"/>
@@ -85,6 +85,14 @@
         <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
       </composable_node>
     </load_composable_node>
+
+    <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
+    <node pkg="autoware_pointcloud_preprocessor" exec="voxel_grid_downsample_filter_node" name="voxel_grid_downsample_filter" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_downsample_filter_param_path)"/>
+      <remap from="input" to="measurement_range/pointcloud"/>
+      <remap from="output" to="voxel_grid_downsample/pointcloud"/>
+    </node>
 
     <node pkg="autoware_pointcloud_preprocessor" exec="random_downsample_filter_node" name="random_downsample_filter" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
       <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
