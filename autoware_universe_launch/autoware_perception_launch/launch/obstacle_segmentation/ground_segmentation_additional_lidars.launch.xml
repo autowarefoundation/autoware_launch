@@ -20,6 +20,9 @@
   <arg name="crop_box_filter_node_param_path" default="$(var perception_config_dir)/obstacle_segmentation/ground_segmentation/crop_box_filter.param.yaml"/>
   <arg name="scan_ground_filter_node_param_path" default="$(var perception_config_dir)/obstacle_segmentation/ground_segmentation/scan_ground_filter.param.yaml"/>
 
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+  <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
+
   <load_composable_node target="$(var target_container)">
     <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="$(var lidar_name)_crop_box_filter">
       <remap from="input" to="$(var input/lidar/pointcloud)"/>
@@ -31,7 +34,12 @@
       <param name="min_z" value="$(eval '0.0 + $(var crop_box_margin_min_z)')"/>
       <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
     </composable_node>
-    <composable_node pkg="autoware_ground_segmentation" plugin="autoware::ground_segmentation::ScanGroundFilterComponent" name="$(var lidar_name)_ground_filter">
+    <composable_node
+      pkg="autoware_ground_segmentation"
+      plugin="autoware::ground_segmentation::ScanGroundFilterComponent"
+      name="$(var lidar_name)_ground_filter"
+      unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"
+    >
       <remap from="input" to="$(var lidar_name)/range_cropped/pointcloud"/>
       <remap from="output" to="$(var lidar_name)/pointcloud"/>
       <param from="$(var scan_ground_filter_node_param_path)" allow_substs="true"/>
@@ -47,4 +55,12 @@
       <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
     </composable_node>
   </load_composable_node>
+
+  <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
+  <node pkg="autoware_ground_segmentation" exec="scan_ground_filter_node" name="$(var lidar_name)_ground_filter" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    <remap from="input" to="$(var lidar_name)/range_cropped/pointcloud"/>
+    <remap from="output" to="$(var lidar_name)/pointcloud"/>
+    <param from="$(var scan_ground_filter_node_param_path)" allow_substs="true"/>
+  </node>
 </launch>
