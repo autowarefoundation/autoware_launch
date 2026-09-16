@@ -26,8 +26,8 @@ param_files: []
 
 # processes
 processes:
-  - name: throttle_message
+  - name: transform_message
     trigger_conditions:
-      - periodic: $(var rate)
+      - on_input: steering_status
     outcomes:
-      - to_output_topic: output_topic
+      - to_output: steering_status_scalar
