@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="localization_config_pkg" default="autoware_localization_config" description="package that ships the localization config/ tree; overriding it relocates every parameter file"/>
+  <let name="localization_config_dir" value="$(find-pkg-share $(var localization_config_pkg))/config"/>
+  <arg name="ar_tag_based_localizer_param_path" default="$(var localization_config_dir)/ar_tag_based_localizer.param.yaml"/>
+  <group>
+    <arg name="input_image"/>
+
+    <include file="$(find-pkg-share autoware_ar_tag_based_localizer)/launch/ar_tag_based_localizer.launch.xml">
+      <arg name="input_lanelet2_map" value="/map/vector_map"/>
+      <arg name="input_image" value="$(var input_image)"/>
+      <arg name="input_camera_info" value="/sensing/camera/traffic_light/camera_info"/>
+      <arg name="input_ekf_pose" value="/localization/pose_twist_fusion_filter/biased_pose_with_covariance"/>
+      <arg name="output_pose_with_covariance" value="/localization/pose_estimator/pose_with_covariance"/>
+      <arg name="param_file" value="$(var ar_tag_based_localizer_param_path)"/>
+    </include>
+  </group>
+</launch>
