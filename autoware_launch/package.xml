@@ -26,6 +26,8 @@
   <exec_depend>autoware_localization_config</exec_depend>
   <exec_depend>autoware_localization_launch</exec_depend>
   <exec_depend>autoware_map_based_prediction</exec_depend>
+  <exec_depend>autoware_map_config</exec_depend>
+  <exec_depend>autoware_map_launch</exec_depend>
   <exec_depend>autoware_multi_object_tracker</exec_depend>
   <exec_depend>autoware_perception_config</exec_depend>
   <exec_depend>autoware_perception_launch</exec_depend>
@@ -38,7 +40,6 @@
   <exec_depend>python3-tornado</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <exec_depend>tier4_autoware_api_launch</exec_depend>
-  <exec_depend>tier4_map_launch</exec_depend>
   <exec_depend>tier4_simulator_launch</exec_depend>
   <exec_depend>tier4_system_launch</exec_depend>
   <exec_depend>tier4_vehicle_launch</exec_depend>
