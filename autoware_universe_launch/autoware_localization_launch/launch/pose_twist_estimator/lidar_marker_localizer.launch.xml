@@ -21,8 +21,16 @@
     <!-- pointcloud preprocess -->
     <group>
       <push-ros-namespace namespace="pointcloud_preprocessor"/>
+      <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+      <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
+
       <load_composable_node target="$(var lidar_container_name)">
-        <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter_measurement_range">
+        <composable_node
+          pkg="autoware_pointcloud_preprocessor"
+          plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent"
+          name="crop_box_filter_measurement_range"
+          unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"
+        >
           <param from="$(var crop_box_filter_measurement_range_param_path)"/>
           <remap from="input" to="$(var input_pointcloud)"/>
           <remap from="output" to="measurement_range/pointcloud"/>
@@ -36,6 +44,14 @@
           <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
         </composable_node>
       </load_composable_node>
+
+      <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
+      <node pkg="autoware_pointcloud_preprocessor" exec="crop_box_filter_node" name="crop_box_filter_measurement_range" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+        <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+        <param from="$(var crop_box_filter_measurement_range_param_path)"/>
+        <remap from="input" to="$(var input_pointcloud)"/>
+        <remap from="output" to="measurement_range/pointcloud"/>
+      </node>
     </group>
 
     <!-- lidar_marker_localizer -->

@@ -58,7 +58,12 @@
     <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
 
     <load_composable_node target="$(var localization_pointcloud_container_name)">
-      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter_measurement_range">
+      <composable_node
+        pkg="autoware_pointcloud_preprocessor"
+        plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent"
+        name="crop_box_filter_measurement_range"
+        unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"
+      >
         <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path)"/>
         <remap from="input" to="$(var input_pointcloud)"/>
         <remap from="output" to="measurement_range/pointcloud"/>
@@ -85,6 +90,13 @@
         <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
       </composable_node>
     </load_composable_node>
+
+    <node pkg="autoware_pointcloud_preprocessor" exec="crop_box_filter_node" name="crop_box_filter_measurement_range" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path)"/>
+      <remap from="input" to="$(var input_pointcloud)"/>
+      <remap from="output" to="measurement_range/pointcloud"/>
+    </node>
 
     <node pkg="autoware_pointcloud_preprocessor" exec="random_downsample_filter_node" name="random_downsample_filter" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
       <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
