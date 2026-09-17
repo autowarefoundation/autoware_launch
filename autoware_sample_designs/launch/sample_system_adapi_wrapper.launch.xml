@@ -20,9 +20,18 @@
 
   <!-- RTC controller -->
   <group>
+    <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+    <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
+
     <push-ros-namespace namespace="autoware_api/external/rtc_controller"/>
-    <node_container pkg="rclcpp_components" exec="component_container_mt" name="container" namespace="" ros_args="--log-level autoware_api.external.rtc_controller.container:=warn">
+
+    <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
+    <node_container pkg="rclcpp_components" exec="component_container_mt" name="container" namespace="" ros_args="--log-level autoware_api.external.rtc_controller.container:=warn" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
       <composable_node pkg="autoware_iv_external_api_adaptor" plugin="external_api::RTCController" name="node"/>
     </node_container>
+
+    <node pkg="autoware_iv_external_api_adaptor" exec="rtc_controller_node" name="node" output="screen" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    </node>
   </group>
 </launch>
