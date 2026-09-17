@@ -71,14 +71,11 @@
         <remap from="output" to="voxel_grid_downsample/pointcloud"/>
         <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
       </composable_node>
+    </load_composable_node>
 
-      <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
-      <composable_node
-        pkg="autoware_pointcloud_preprocessor"
-        plugin="autoware::pointcloud_preprocessor::RandomDownsampleFilterComponent"
-        name="random_downsample_filter"
-        unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"
-      >
+    <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
+    <load_composable_node target="$(var localization_pointcloud_container_name)" unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::RandomDownsampleFilterComponent" name="random_downsample_filter">
         <param from="$(var ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter_param_path)"/>
         <remap from="input" to="voxel_grid_downsample/pointcloud"/>
         <remap from="output" to="$(var output/pointcloud)"/>
