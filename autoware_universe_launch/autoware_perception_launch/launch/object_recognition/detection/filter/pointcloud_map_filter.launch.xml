@@ -15,8 +15,16 @@
   <arg name="downsample_voxel_size" default="0.1"/>
   <arg name="voxel_based_compare_map_filter_node_param_path" default="$(var perception_config_dir)/object_recognition/detection/pointcloud_filter/voxel_based_compare_map_filter.param.yaml"/>
 
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+  <let name="use_agnocast" value="$(env ENABLE_AGNOCAST 0)"/>
+
   <load_composable_node target="$(var target_container)">
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent" name="voxel_grid_downsample_filter">
+    <composable_node
+      pkg="autoware_pointcloud_preprocessor"
+      plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent"
+      name="voxel_grid_downsample_filter"
+      unless="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)"
+    >
       <remap from="input" to="$(var input/pointcloud)"/>
       <remap from="output" to="$(var output/downsampled/pointcloud)"/>
       <param name="voxel_size_x" value="$(var downsample_voxel_size)"/>
@@ -35,4 +43,14 @@
       <extra_arg name="use_intra_process_comms" value="false"/>
     </composable_node>
   </load_composable_node>
+
+  <!-- With ENABLE_AGNOCAST=1 the node runs standalone, otherwise it is loaded into the container -->
+  <node pkg="autoware_pointcloud_preprocessor" exec="voxel_grid_downsample_filter_node" name="voxel_grid_downsample_filter" if="$(eval &quot;'$(var use_agnocast)' == '1'&quot;)">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    <remap from="input" to="$(var input/pointcloud)"/>
+    <remap from="output" to="$(var output/downsampled/pointcloud)"/>
+    <param name="voxel_size_x" value="$(var downsample_voxel_size)"/>
+    <param name="voxel_size_y" value="$(var downsample_voxel_size)"/>
+    <param name="voxel_size_z" value="$(var downsample_voxel_size)"/>
+  </node>
 </launch>
