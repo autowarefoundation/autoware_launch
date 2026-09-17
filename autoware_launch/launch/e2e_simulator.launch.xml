@@ -9,6 +9,16 @@
   <arg name="simulator_type" default="awsim" description="select the simulator type ('awsim' or 'carla')"/>
   <arg name="launch_simulator_interface" default="true" description="launch simulator interface (e.g. autoware_carla_interface when simulator_type is 'carla')"/>
 
+  <!-- CARLA interface options (forwarded to autoware_carla_interface; all default to the current behavior) -->
+  <arg name="carla_map" default="" description="explicit CARLA level name; overrides the name derived from map_path when non-empty"/>
+  <arg name="no_rendering_mode" default="False" description="disable CARLA rendering for headless/faster simulation"/>
+  <arg name="force_load_world" default="False" description="always reload the CARLA world with client.load_world()"/>
+  <arg name="map_origin_x" default="0.0" description="X offset from the CARLA world origin to the Autoware map frame origin"/>
+  <arg name="map_origin_y" default="0.0" description="Y offset from the CARLA world origin to the Autoware map frame origin"/>
+  <arg name="spawn_point_ground_snap" default="False" description="snap the ego spawn point and RViz initial pose onto CARLA map geometry"/>
+  <arg name="spawn_point_ground_offset_z" default="0.5" description="Z offset above the projected ground when ground-snapping the spawn point"/>
+  <arg name="initial_pose_ground_offset_z" default="1.0" description="Z offset above the projected ground when ground-snapping the RViz initial pose"/>
+
   <!-- launch module preset -->
   <arg name="planning_module_preset" default="default" description="planning module preset"/>
   <arg name="control_module_preset" default="default" description="control module preset"/>
@@ -45,7 +55,16 @@
     <!-- AWSIM does not require a simulator interface since it publishes autoware_msgs directly -->
     <!-- CARLA -->
     <group scoped="false" if="$(equals $(var simulator_type) 'carla')">
-      <include file="$(find-pkg-share autoware_carla_interface)/launch/autoware_carla_interface.launch.xml"/>
+      <include file="$(find-pkg-share autoware_carla_interface)/launch/autoware_carla_interface.launch.xml">
+        <arg name="carla_map" value="$(var carla_map)"/>
+        <arg name="no_rendering_mode" value="$(var no_rendering_mode)"/>
+        <arg name="force_load_world" value="$(var force_load_world)"/>
+        <arg name="map_origin_x" value="$(var map_origin_x)"/>
+        <arg name="map_origin_y" value="$(var map_origin_y)"/>
+        <arg name="spawn_point_ground_snap" value="$(var spawn_point_ground_snap)"/>
+        <arg name="spawn_point_ground_offset_z" value="$(var spawn_point_ground_offset_z)"/>
+        <arg name="initial_pose_ground_offset_z" value="$(var initial_pose_ground_offset_z)"/>
+      </include>
     </group>
   </group>
 
