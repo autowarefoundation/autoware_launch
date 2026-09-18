@@ -41,6 +41,12 @@ units:
       - { type: link, link: /autoware/system }
       - { type: link, link: /adapi/mrm_request/delegate }
 
+  - path: /autoware/modes/autonomous/available
+    type: and
+    list:
+      - { type: link, link: /autoware/modes/autonomous }
+      - { type: link, link: /autoware/system/available }
+
   - path: /autoware/modes/pull_over
     type: and
     list:
