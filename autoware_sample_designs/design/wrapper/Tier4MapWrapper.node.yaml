@@ -1,0 +1,70 @@
+autoware_system_design_format: 0.3.0
+
+name: Tier4MapWrapper.node
+
+package:
+  name: autoware_launch
+  provider: autoware
+
+launch:
+  ros2_launch_file: components/component_map.launch.xml
+
+# interfaces
+subscribers: []
+
+publishers:
+  - name: vector_map
+    message_type: autoware_map_msgs/msg/LaneletMapBin
+    qos:
+      reliability: reliable
+      durability: transient_local
+  - name: pointcloud_map
+    message_type: sensor_msgs/msg/PointCloud2
+    qos:
+      reliability: reliable
+      durability: transient_local
+  - name: map_projector_info
+    message_type: autoware_map_msgs/msg/MapProjectorInfo
+    qos:
+      reliability: reliable
+      durability: transient_local
+
+servers:
+  - name: get_differential_pointcloud_map
+    message_type: autoware_map_msgs/srv/GetDifferentialPointCloudMap
+  - name: get_partial_pointcloud_map
+    message_type: autoware_map_msgs/srv/GetPartialPointCloudMap
+
+# parameters
+param_files: []
+
+param_values:
+  - name: map_config_pkg
+    default: autoware_map_config
+  - name: map_path
+    default: $(env HOME)/autoware_data/maps/sample-map-rosbag
+  - name: pointcloud_map_file
+    default: pointcloud_map.pcd
+  - name: lanelet2_map_file
+    default: lanelet2_map.osm
+
+  - name: use_pointcloud_map
+    default: true
+  - name: use_lanelet2_map
+    default: true
+  - name: use_map_projection
+    default: true
+  - name: use_map_tf_generator
+    default: true
+  - name: use_map_hash_generator
+    default: true
+
+# processes
+processes:
+  - name: export
+    trigger_conditions:
+      - once:
+    outcomes:
+      - to_output: vector_map
+      - to_output: pointcloud_map
+      - to_output: map_projector_info

@@ -10,6 +10,8 @@
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
+  <exec_depend>autoware_raw_vehicle_cmd_converter</exec_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>

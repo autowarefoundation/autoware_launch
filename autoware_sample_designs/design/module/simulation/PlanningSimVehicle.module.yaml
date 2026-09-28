@@ -1,4 +1,4 @@
-autoware_system_design_format: 0.3.0
+autoware_system_design_format: 0.3.1
 
 name: PlanningSimVehicle.module
 
@@ -20,6 +20,10 @@ publishers:
   - name: actuation_cmd
   - name: doors/status
 
+servers:
+  - name: doors/command
+  - name: doors/layout
+
 connections:
   - - subscriber.*
     - raw_vehicle_cmd_converter.subscriber.*
@@ -27,3 +31,7 @@ connections:
     - publisher.actuation_cmd
   - - vehicle_door_simulator.publisher.doors/status
     - publisher.doors/status
+  - - vehicle_door_simulator.server.doors/command
+    - server.doors/command
+  - - vehicle_door_simulator.server.doors/layout
+    - server.doors/layout
