@@ -33,14 +33,12 @@
     <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
   </autoware_node>
 
-  <load_composable_node target="$(var target_container)">
-    <composable_node pkg="autoware_ground_segmentation" plugin="autoware::ground_segmentation::ScanGroundFilterComponent" name="ground_filter">
-      <remap from="input" to="cropped_range/pointcloud"/>
-      <remap from="output" to="obstacle_segmentation/pointcloud"/>
-      <param from="$(var scan_ground_filter_node_param_path)"/>
-      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-    </composable_node>
-  </load_composable_node>
+  <autoware_node pkg="autoware_ground_segmentation" exec="scan_ground_filter_node" name="ground_filter" target="$(var target_container)">
+    <remap from="input" to="cropped_range/pointcloud"/>
+    <remap from="output" to="obstacle_segmentation/pointcloud"/>
+    <param from="$(var scan_ground_filter_node_param_path)"/>
+    <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+  </autoware_node>
 
   <!-- Provides ld_preload_value for the fusion node process -->
   <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
