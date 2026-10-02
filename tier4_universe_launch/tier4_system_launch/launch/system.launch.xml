@@ -32,8 +32,6 @@
   <arg name="diag_status_topic" default="/diagnostics_graph/status"/>
   <arg name="diag_reset_srv" default="/diagnostics_graph/reset"/>
   <arg name="availability_converter_param_path" default="$(find-pkg-share autoware_diagnostic_graph_aggregator)/config/converter.param.yaml"/>
-  <arg name="command_mode_switcher_param_path" default="$(find-pkg-share autoware_command_mode_switcher)/config/default.param.yaml"/>
-  <arg name="command_mode_decider_param_path" default="$(find-pkg-share autoware_command_mode_decider)/config/default.param.yaml"/>
   <arg name="driving_mode_manager_param_path" default="$(find-pkg-share autoware_driving_mode_manager)/config/driving_mode_manager.param.yaml"/>
   <arg name="mrm_state_topic" default="/system/fail_safe/mrm_state"/>
   <arg name="change_operation_mode_srv" default="/system/operation_mode/change_operation_mode"/>
