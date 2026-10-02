@@ -1,0 +1,50 @@
+autoware_system_design_format: 0.3.0
+
+name: ObjectRecognition.module
+
+instances:
+  # lidar ml (centerpoint)
+  - name: detection/centerpoint/lidar_centerpoint
+    entity: LidarCenterpoint.node
+  - name: tracking/multi_object_tracker
+    entity: MultiObjectTracker.node
+  - name: prediction/map_based_prediction
+    entity: MapBasedPrediction.node
+
+subscribers:
+  # map
+  - name: vector_map
+  # traffic lights
+  - name: traffic_lights
+  # lidar
+  - name: pointcloud
+  # obstacle segmentation clusters
+  - name: clustering/objects
+publishers:
+  - name: objects
+  - name: tracking/objects
+
+connections:
+  # detection
+  - - subscriber.pointcloud
+    - detection/centerpoint/lidar_centerpoint.subscriber.pointcloud
+
+  # tracking
+  - - detection/centerpoint/lidar_centerpoint.publisher.objects
+    - tracking/multi_object_tracker.subscriber.detection01/objects
+  - - subscriber.clustering/objects
+    - tracking/multi_object_tracker.subscriber.detection03/objects
+
+  # prediction
+  - - tracking/multi_object_tracker.publisher.objects
+    - prediction/map_based_prediction.subscriber.objects
+  - - subscriber.vector_map
+    - prediction/map_based_prediction.subscriber.vector_map_topic
+  - - subscriber.traffic_lights
+    - prediction/map_based_prediction.subscriber.traffic_signals_topic
+
+  # outputs
+  - - tracking/multi_object_tracker.publisher.objects
+    - publisher.tracking/objects
+  - - prediction/map_based_prediction.publisher.objects
+    - publisher.objects

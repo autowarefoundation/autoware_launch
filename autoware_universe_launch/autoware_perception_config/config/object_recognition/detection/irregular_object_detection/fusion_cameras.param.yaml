@@ -1,0 +1,14 @@
+# Platform camera set for the irregular-object ROI-pointcloud fusion.
+# Overrides the per-camera arrays of fusion_common.param.yaml with the subset
+# of cameras used for fusion; array order defines the rois indices.
+/**:
+  ros__parameters:
+    rois_number: 1
+    rois_timestamp_offsets: [0.098]
+    matching_strategy:
+      rois_timestamp_noise_window: [0.01]
+    approximate_camera_projection: [true]
+    point_project_to_unrectified_image: [false]
+    input/rois0: /perception/object_recognition/detection/rois0
+    input/camera_info0: /sensing/camera/camera0/camera_info
+    input/image0: /sensing/camera/camera0/image_raw

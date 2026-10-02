@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Viewer TF unit: broadcasts the map -> viewer transform from the vector map extent -->
+  <arg name="map_config_pkg" default="autoware_map_config" description="package that ships the map config/ tree; overriding it relocates every parameter file"/>
+  <let name="map_config_dir" value="$(find-pkg-share $(var map_config_pkg))/config"/>
+  <arg name="map_tf_generator_param_path" default="$(var map_config_dir)/map_tf_generator.param.yaml"/>
+
+  <!-- Process placement -->
+  <arg name="ld_preload_value" default="" description="LD_PRELOAD of the selected executor; the agnocast wrapper resolves it"/>
+
+  <node pkg="autoware_map_tf_generator" exec="autoware_vector_map_tf_generator" name="vector_map_tf_generator" output="both">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    <param from="$(var map_tf_generator_param_path)"/>
+  </node>
+</launch>

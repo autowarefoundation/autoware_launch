@@ -1,0 +1,108 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+# NDT pose estimation with gyro odometry twist, fused by the EKF.
+name: Localization.module
+
+instances:
+  - name: pose_estimator
+    entity: PoseEstimatorNdt.module
+  - name: twist_estimator
+    entity: TwistEstimatorGyroOdometer.module
+  - name: pose_twist_fusion_filter
+    entity: PoseTwistFusionFilter.module
+  - name: util
+    entity: LocalizationUtil.module
+  - name: localization_error_monitor
+    entity: LocalizationErrorMonitor.node
+
+# interfaces
+subscribers:
+  - name: lanelet_map
+  - name: pointcloud_map
+  - name: pointcloud
+  - name: imu
+  - name: twist
+  - name: gnss_pose_with_covariance
+
+publishers:
+  - name: kinematic_state
+  - name: pose_with_covariance
+  - name: acceleration
+  - name: initialization_state
+  - name: initialpose3d
+  - name: pose_estimator/pose_with_covariance
+
+servers:
+  - name: initialize
+
+clients:
+  - name: get_differential_pointcloud_map
+  - name: get_partial_pointcloud_map
+
+connections:
+  # util
+  - - subscriber.pointcloud
+    - util.subscriber.pointcloud
+  - - subscriber.twist
+    - util.subscriber.stop_check_twist
+  - - subscriber.gnss_pose_with_covariance
+    - util.subscriber.gnss_pose_cov
+  - - subscriber.pointcloud_map
+    - util.subscriber.pointcloud_map
+  - - subscriber.lanelet_map
+    - util.subscriber.vector_map
+
+  # pose_estimator
+  - - util.publisher.downsample/pointcloud
+    - pose_estimator.subscriber.pointcloud
+  - - pose_twist_fusion_filter.publisher.biased_pose_with_covariance
+    - pose_estimator.subscriber.initial_pose_with_covariance
+  - - subscriber.gnss_pose_with_covariance
+    - pose_estimator.subscriber.regularization_pose_with_covariance
+
+  # twist_estimator
+  - - subscriber.twist
+    - twist_estimator.subscriber.vehicle_twist_with_covariance
+  - - subscriber.imu
+    - twist_estimator.subscriber.imu
+
+  # pose_twist_fusion_filter
+  - - pose_estimator.publisher.pose_with_covariance
+    - pose_twist_fusion_filter.subscriber.pose_with_covariance
+  - - twist_estimator.publisher.twist_with_covariance
+    - pose_twist_fusion_filter.subscriber.twist_with_covariance
+  - - util.publisher.pose_reset
+    - pose_twist_fusion_filter.subscriber.initialpose
+
+  # localization_error_monitor
+  - - pose_twist_fusion_filter.publisher.filtered_kinematic_state
+    - localization_error_monitor.subscriber.odom
+
+  # initialization services
+  - - util.client.ndt_align
+    - pose_estimator.server.ndt_align_srv
+  - - util.client.ndt_trigger_node
+    - pose_estimator.server.trigger_node
+  - - util.client.ekf_trigger_node
+    - pose_twist_fusion_filter.server.trigger_node
+
+  # outputs
+  - - pose_twist_fusion_filter.publisher.filtered_kinematic_state
+    - publisher.kinematic_state
+  - - pose_twist_fusion_filter.publisher.pose_with_covariance
+    - publisher.pose_with_covariance
+  - - pose_twist_fusion_filter.publisher.acceleration
+    - publisher.acceleration
+  - - util.publisher.initialization_state
+    - publisher.initialization_state
+  - - util.publisher.pose_reset
+    - publisher.initialpose3d
+  - - pose_estimator.publisher.pose_with_covariance
+    - publisher.pose_estimator/pose_with_covariance
+  - - util.server.initialize
+    - server.initialize
+  - - pose_estimator.client.map_loader
+    - client.get_differential_pointcloud_map
+  - - util.client.partial_map_load
+    - client.get_partial_pointcloud_map

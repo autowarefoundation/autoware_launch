@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Vector map unit: loads the Lanelet2 map and renders it as markers for the viewer -->
+  <arg name="map_config_pkg" default="autoware_map_config" description="package that ships the map config/ tree; overriding it relocates every parameter file"/>
+  <let name="map_config_dir" value="$(find-pkg-share $(var map_config_pkg))/config"/>
+  <arg name="lanelet2_map_loader_param_path" default="$(var map_config_dir)/lanelet2_map_loader.param.yaml"/>
+
+  <!-- Map files: substituted into the parameter file -->
+  <arg name="lanelet2_map_path" description="lanelet2 map file or directory path"/>
+  <arg name="lanelet2_map_metadata_path" description="lanelet2 map metadata file path"/>
+
+  <!-- Process placement -->
+  <arg name="ld_preload_value" default="" description="LD_PRELOAD of the selected executor; the agnocast wrapper resolves it"/>
+
+  <node pkg="autoware_map_loader" exec="autoware_lanelet2_map_loader" name="lanelet2_map_loader" output="both">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    <param from="$(var lanelet2_map_loader_param_path)" allow_substs="true"/>
+    <remap from="output/lanelet2_map" to="vector_map"/>
+    <remap from="output/lanelet2_map_metadata" to="/map/vector_map_metadata"/>
+    <remap from="service/get_selected_lanelet2_map" to="/map/get_selected_vector_map"/>
+  </node>
+
+  <node pkg="autoware_lanelet2_map_visualizer" exec="autoware_lanelet2_map_visualizer" name="lanelet2_map_visualization" output="both">
+    <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+    <remap from="input/lanelet2_map" to="vector_map"/>
+    <remap from="output/lanelet2_map_marker" to="vector_map_marker"/>
+  </node>
+</launch>

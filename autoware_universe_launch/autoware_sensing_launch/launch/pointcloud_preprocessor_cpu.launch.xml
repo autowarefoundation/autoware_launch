@@ -1,0 +1,54 @@
+<launch>
+  <!-- Per-lidar pointcloud preprocessing: self/secondary crop -> distortion correction -> ring outlier filter -->
+  <arg name="target_container" description="absolute path of the container to load the filters into"/>
+  <arg name="frame_id" default="lidar" description="sensor frame id"/>
+  <arg name="input_frame" default="base_link"/>
+  <arg name="output_frame" default="base_link"/>
+  <arg name="output_as_sensor_frame" default="true" description="output final pointcloud in sensor frame"/>
+  <arg name="secondary_crop_box" default="mirror" description="name of the geometry the second crop box spans"/>
+  <arg name="use_intra_process" default="false"/>
+
+  <arg name="input/pointcloud" default="pointcloud_raw_ex"/>
+  <arg name="input/twist" default="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
+  <arg name="input/imu" default="/sensing/imu/imu_data"/>
+  <arg name="output/pointcloud" default="pointcloud_before_sync"/>
+
+  <arg name="crop_box_filter_self_param_path" description="crop box spanning the vehicle body"/>
+  <arg name="crop_box_filter_secondary_param_path" description="crop box spanning the geometry cropped after the vehicle body"/>
+  <arg name="distortion_corrector_node_param_path" default="$(find-pkg-share autoware_sensing_launch)/config/distortion_corrector_node.param.yaml"/>
+  <arg name="ring_outlier_filter_node_param_path" default="$(find-pkg-share autoware_sensing_launch)/config/ring_outlier_filter_node.param.yaml"/>
+
+  <!-- Scoped: the crop box unit shares boundary argument names with this page -->
+  <group>
+    <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_crop_boxes.launch.xml">
+      <arg name="target_container" value="$(var target_container)"/>
+      <arg name="input_frame" value="$(var input_frame)"/>
+      <arg name="output_frame" value="$(var output_frame)"/>
+      <arg name="secondary_crop_box" value="$(var secondary_crop_box)"/>
+      <arg name="use_intra_process" value="$(var use_intra_process)"/>
+      <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
+      <arg name="output/pointcloud" value="$(var secondary_crop_box)_cropped/pointcloud_ex"/>
+      <arg name="crop_box_filter_self_param_path" value="$(var crop_box_filter_self_param_path)"/>
+      <arg name="crop_box_filter_secondary_param_path" value="$(var crop_box_filter_secondary_param_path)"/>
+    </include>
+  </group>
+
+  <load_composable_node target="$(var target_container)">
+    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::DistortionCorrectorComponent" name="distortion_corrector_node">
+      <remap from="~/input/twist" to="$(var input/twist)"/>
+      <remap from="~/input/imu" to="$(var input/imu)"/>
+      <remap from="~/input/pointcloud" to="$(var secondary_crop_box)_cropped/pointcloud_ex"/>
+      <remap from="~/output/pointcloud" to="rectified/pointcloud_ex"/>
+      <param from="$(var distortion_corrector_node_param_path)" allow_substs="true"/>
+      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+    </composable_node>
+    <!-- The last component in the pipeline controls the output frame -->
+    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::RingOutlierFilterComponent" name="ring_outlier_filter">
+      <remap from="input" to="rectified/pointcloud_ex"/>
+      <remap from="output" to="$(var output/pointcloud)"/>
+      <param from="$(var ring_outlier_filter_node_param_path)" allow_substs="true"/>
+      <param name="output_frame" value="$(if $(var output_as_sensor_frame) $(var frame_id))"/>
+      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+    </composable_node>
+  </load_composable_node>
+</launch>

@@ -7,8 +7,8 @@ instances:
     entity: DummyPerceptionPublisher.node
   - name: object_recognition/tracking/multi_object_tracker
     entity: MultiObjectTracker.node
-  - name: object_recognition/prediction
-    entity: ObjectPredictionMapBased.module
+  - name: object_recognition/prediction/map_based_prediction
+    entity: MapBasedPrediction.node
   - name: occupancy_grid_map
     entity: LaserscanBasedOccupancyGridMap.module
 
@@ -34,14 +34,14 @@ connections:
 
   # prediction
   - - object_recognition/tracking/multi_object_tracker.publisher.objects
-    - object_recognition/prediction.subscriber.tracked_objects
+    - object_recognition/prediction/map_based_prediction.subscriber.objects
   - - subscriber.vector_map
-    - object_recognition/prediction.subscriber.vector_map
+    - object_recognition/prediction/map_based_prediction.subscriber.vector_map_topic
   - - subscriber.traffic_lights
-    - object_recognition/prediction.subscriber.traffic_lights
-  - - object_recognition/prediction.publisher.objects
+    - object_recognition/prediction/map_based_prediction.subscriber.traffic_signals_topic
+  - - object_recognition/prediction/map_based_prediction.publisher.objects
     - publisher.object_recognition/objects
-  - - object_recognition/prediction.publisher.objects
+  - - object_recognition/prediction/map_based_prediction.publisher.objects
     - object_recognition_detection.subscriber.predicted_objects
 
   # occupancy grid map

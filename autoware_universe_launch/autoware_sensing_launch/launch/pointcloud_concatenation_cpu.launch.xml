@@ -1,0 +1,23 @@
+<launch>
+  <!-- Multi-lidar concatenation with time synchronization; input topics come from the param file -->
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="use_concat_filter" default="true"/>
+  <arg name="use_intra_process" default="false"/>
+  <arg name="concatenate_and_time_sync_node_param_path" description="path to the concatenate_and_time_sync node param file"/>
+
+  <arg name="input/twist" default="/sensing/vehicle_velocity_converter/twist_with_covariance"/>
+  <arg name="output/pointcloud" default="concatenated/pointcloud"/>
+  <arg name="output/pointcloud_info" default="concatenated/pointcloud_info"/>
+
+  <group if="$(var use_concat_filter)">
+    <load_composable_node target="$(var pointcloud_container_name)">
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::PointCloudConcatenateDataSynchronizerComponent" name="concatenate_data">
+        <remap from="~/input/twist" to="$(var input/twist)"/>
+        <remap from="output" to="$(var output/pointcloud)"/>
+        <remap from="output_info" to="$(var output/pointcloud_info)"/>
+        <param from="$(var concatenate_and_time_sync_node_param_path)" allow_substs="true"/>
+        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+      </composable_node>
+    </load_composable_node>
+  </group>
+</launch>

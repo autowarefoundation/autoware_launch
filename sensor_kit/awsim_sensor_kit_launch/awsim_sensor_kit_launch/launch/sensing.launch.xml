@@ -3,14 +3,11 @@
   <!-- <arg name="launch_driver" default="true" description="do launch driver"/> -->
   <arg name="vehicle_mirror_param_file" description="path to the file of vehicle mirror position yaml"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
-  <arg name="use_distortion_corrector" default="false" description="compensate the point cloud distortion caused by vehicle movement"/>
 
   <group>
-    <!-- LiDAR Driver -->
+    <!-- LiDAR preprocessing - AWSIM publishes the raw pointcloud, so no driver is launched -->
     <include file="$(find-pkg-share awsim_sensor_kit_launch)/launch/lidar.launch.xml">
-      <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
-      <arg name="use_distortion_corrector" value="$(var use_distortion_corrector)"/>
     </include>
 
     <!-- Camera Driver -->

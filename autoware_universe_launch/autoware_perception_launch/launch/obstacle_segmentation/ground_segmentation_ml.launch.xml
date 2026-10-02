@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- ML ground removal: PTv3 semantic segmentation labels the cloud and drops the ground points -->
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="use_pointcloud_container" default="true"/>
+
+  <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
+  <arg name="output/pointcloud" default="/perception/obstacle_segmentation/pointcloud"/>
+  <arg name="output/pointcloud/segmentation" default="/perception/segmented/pointcloud"/>
+  <arg name="output/pointcloud/visualization" default="/perception/segmented/pointcloud/visualization"/>
+
+  <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
+  <arg name="model_variant" default="ptv3"/>
+  <arg name="model_path" default="$(var data_path)/ptv3"/>
+
+  <include file="$(find-pkg-share autoware_ptv3)/launch/ptv3.launch.xml">
+    <arg name="input/pointcloud" value="$(var input/pointcloud)"/>
+    <arg name="output/pointcloud/segmentation" value="$(var output/pointcloud/segmentation)"/>
+    <arg name="output/pointcloud/visualization" value="$(var output/pointcloud/visualization)"/>
+    <arg name="output/pointcloud/filtered" value="$(var output/pointcloud)"/>
+    <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+    <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+    <arg name="data_path" value="$(var data_path)"/>
+    <arg name="model_variant" value="$(var model_variant)"/>
+    <arg name="model_path" value="$(var model_path)"/>
+  </include>
+</launch>

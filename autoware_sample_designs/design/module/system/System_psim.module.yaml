@@ -1,0 +1,15 @@
+autoware_system_design_format: 0.3.1
+
+# Planning simulation: no host resource monitors, reduced component state monitor.
+name: System_psim.module
+
+base: System.module
+
+remove:
+  instances:
+    - name: system_monitor
+
+override:
+  instances:
+    - name: component_state_monitor
+      entity: ComponentStateMonitor_psim.module

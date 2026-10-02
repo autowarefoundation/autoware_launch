@@ -1,44 +1,75 @@
 <launch>
+  <!-- AWSIM Labs publishes pointcloud_raw_ex directly; the kit runs preprocessing only -->
   <arg name="use_concat_filter" default="true"/>
-  <arg name="vehicle_mirror_param_file"/>
   <arg name="pointcloud_container_name" default="pointcloud_container"/>
-  <arg name="use_distortion_corrector" default="true"/>
+  <arg name="crop_box_filter_self_param_path" default="$(find-pkg-share awsim_labs_sensor_kit_launch)/config/crop_box_filter_self.param.yaml"/>
+  <arg name="crop_box_filter_mirror_param_path" default="$(find-pkg-share awsim_labs_sensor_kit_launch)/config/crop_box_filter_mirror.param.yaml"/>
 
   <group>
     <push-ros-namespace namespace="lidar"/>
 
     <group>
       <push-ros-namespace namespace="top"/>
-      <include file="$(find-pkg-share common_awsim_labs_sensor_launch)/launch/velodyne_lidar.launch.xml">
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="use_distortion_corrector" value="$(var use_distortion_corrector)"/>
+      <let name="target_container" value="/sensing/lidar/top/pointcloud_preprocessor/pointcloud_container"/>
+
+      <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_container.launch.xml">
+        <arg name="container_namespace" value="/sensing/lidar/top/pointcloud_preprocessor"/>
         <arg name="container_name" value="pointcloud_container"/>
+        <arg name="use_multithread" value="false"/>
+      </include>
+
+      <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_preprocessor_cpu.launch.xml">
+        <arg name="target_container" value="$(var target_container)"/>
+        <arg name="output_as_sensor_frame" value="false"/>
+        <arg name="use_intra_process" value="true"/>
+        <arg name="crop_box_filter_self_param_path" value="$(var crop_box_filter_self_param_path)"/>
+        <arg name="crop_box_filter_secondary_param_path" value="$(var crop_box_filter_mirror_param_path)"/>
       </include>
     </group>
 
     <group>
       <push-ros-namespace namespace="left"/>
-      <include file="$(find-pkg-share common_awsim_labs_sensor_launch)/launch/velodyne_lidar.launch.xml">
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="use_distortion_corrector" value="$(var use_distortion_corrector)"/>
+      <let name="target_container" value="/sensing/lidar/left/pointcloud_preprocessor/pointcloud_container"/>
+
+      <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_container.launch.xml">
+        <arg name="container_namespace" value="/sensing/lidar/left/pointcloud_preprocessor"/>
         <arg name="container_name" value="pointcloud_container"/>
+        <arg name="use_multithread" value="false"/>
+      </include>
+
+      <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_preprocessor_cpu.launch.xml">
+        <arg name="target_container" value="$(var target_container)"/>
+        <arg name="output_as_sensor_frame" value="false"/>
+        <arg name="use_intra_process" value="true"/>
+        <arg name="crop_box_filter_self_param_path" value="$(var crop_box_filter_self_param_path)"/>
+        <arg name="crop_box_filter_secondary_param_path" value="$(var crop_box_filter_mirror_param_path)"/>
       </include>
     </group>
 
     <group>
       <push-ros-namespace namespace="right"/>
-      <include file="$(find-pkg-share common_awsim_labs_sensor_launch)/launch/velodyne_lidar.launch.xml">
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="use_distortion_corrector" value="$(var use_distortion_corrector)"/>
+      <let name="target_container" value="/sensing/lidar/right/pointcloud_preprocessor/pointcloud_container"/>
+
+      <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_container.launch.xml">
+        <arg name="container_namespace" value="/sensing/lidar/right/pointcloud_preprocessor"/>
         <arg name="container_name" value="pointcloud_container"/>
+        <arg name="use_multithread" value="false"/>
+      </include>
+
+      <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_preprocessor_cpu.launch.xml">
+        <arg name="target_container" value="$(var target_container)"/>
+        <arg name="output_as_sensor_frame" value="false"/>
+        <arg name="use_intra_process" value="true"/>
+        <arg name="crop_box_filter_self_param_path" value="$(var crop_box_filter_self_param_path)"/>
+        <arg name="crop_box_filter_secondary_param_path" value="$(var crop_box_filter_mirror_param_path)"/>
       </include>
     </group>
 
-    <include file="$(find-pkg-share awsim_labs_sensor_kit_launch)/launch/pointcloud_preprocessor.launch.py">
-      <arg name="base_frame" value="base_link"/>
+    <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_concatenation_cpu.launch.xml">
+      <arg name="use_concat_filter" value="$(var use_concat_filter)"/>
       <arg name="use_intra_process" value="true"/>
-      <arg name="use_multithread" value="true"/>
       <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+      <arg name="concatenate_and_time_sync_node_param_path" value="$(find-pkg-share awsim_labs_sensor_kit_launch)/config/concatenate_and_time_sync_node.param.yaml"/>
     </include>
   </group>
 </launch>

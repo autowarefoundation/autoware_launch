@@ -7,11 +7,11 @@ parameters:
     param_values:
       - name: use_sim_time
         value: true
-  - node: /localization
+  - node: /localization/util/pose_initializer
     param_files: []
     param_values:
-      - name: system_run_mode
-        value: logging_simulation
+      - name: stop_check_enabled
+        value: false
   - node: /global_parameter_loader
     param_files: []
     param_values:

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Rule-based ground removal folded into one CUDA node: crop box and scan ground filter stages -->
+  <arg name="target_container" description="container to load the filter into"/>
+
+  <arg name="input/pointcloud" default="/sensing/lidar/concatenated/pointcloud"/>
+  <arg name="output/pointcloud" default="/perception/obstacle_segmentation/pointcloud"/>
+  <arg name="output/ground_pointcloud" default="/perception/obstacle_segmentation/ground_pointcloud"/>
+
+  <arg name="cuda_scan_ground_segmentation_filter_node_param_path" default="$(find-pkg-share autoware_ground_segmentation_cuda)/config/cuda_scan_ground_segmentation_filter.param.yaml"/>
+
+  <load_composable_node target="$(var target_container)">
+    <composable_node pkg="autoware_ground_segmentation_cuda" plugin="autoware::cuda_ground_segmentation::CudaScanGroundSegmentationFilterNode" name="cuda_scan_ground_segmentation_filter">
+      <remap from="~/input/pointcloud" to="$(var input/pointcloud)"/>
+      <remap from="~/input/pointcloud/cuda" to="$(var input/pointcloud)/cuda"/>
+      <remap from="~/output/pointcloud" to="$(var output/pointcloud)"/>
+      <remap from="~/output/pointcloud/cuda" to="$(var output/pointcloud)/cuda"/>
+      <remap from="~/output/ground_pointcloud" to="$(var output/ground_pointcloud)"/>
+      <remap from="~/output/ground_pointcloud/cuda" to="$(var output/ground_pointcloud)/cuda"/>
+      <param from="$(var cuda_scan_ground_segmentation_filter_node_param_path)" allow_substs="true"/>
+      <!-- The node can not set use_intra_process due to type negotiation internal topics -->
+    </composable_node>
+  </load_composable_node>
+</launch>

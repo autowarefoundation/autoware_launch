@@ -1,0 +1,139 @@
+autoware_system_design_format: 0.3.0
+
+# module information
+name: BehaviorPlanning.module
+
+instances:
+  - name: behavior_path_planner
+    entity: BehaviorPathPlanner.node
+  - name: behavior_velocity_planner
+    entity: BehaviorVelocityPlanner.node
+
+# interfaces
+subscribers:
+  - name: route
+  - name: vector_map
+  - name: objects
+  - name: occupancy_grid_map
+  - name: costmap
+  - name: traffic_signals
+  - name: odometry
+  - name: accel
+  - name: scenario
+  - name: no_ground_pointcloud
+  - name: external_velocity_limit_mps
+  - name: operation_mode_state
+
+publishers:
+  - name: path
+  - name: planning_factors/avoidance_by_lane_change
+  - name: planning_factors/behavior_path_planner
+  - name: planning_factors/bidirectional_traffic
+  - name: planning_factors/blind_spot
+  - name: planning_factors/crosswalk
+  - name: planning_factors/detection_area
+  - name: planning_factors/goal_planner
+  - name: planning_factors/intersection
+  - name: planning_factors/lane_change_left
+  - name: planning_factors/lane_change_right
+  - name: planning_factors/no_stopping_area
+  - name: planning_factors/side_shift
+  - name: planning_factors/start_planner
+  - name: planning_factors/static_obstacle_avoidance
+  - name: planning_factors/stop_line
+  - name: planning_factors/traffic_light
+  - name: planning_factors/virtual_traffic_light
+  - name: planning_factors/walkway
+  - name: path_with_lane_id
+  - name: turn_indicators_cmd
+  - name: hazard_lights_cmd
+  - name: modified_goal
+  - name: reroute_availability
+
+connections:
+  - - subscriber.route
+    - behavior_path_planner.subscriber.route
+  - - subscriber.vector_map
+    - behavior_path_planner.subscriber.vector_map
+  - - subscriber.objects
+    - behavior_path_planner.subscriber.objects
+  - - subscriber.occupancy_grid_map
+    - behavior_path_planner.subscriber.occupancy_grid_map
+  - - subscriber.costmap
+    - behavior_path_planner.subscriber.costmap
+  - - subscriber.traffic_signals
+    - behavior_path_planner.subscriber.traffic_signals
+  - - subscriber.odometry
+    - behavior_path_planner.subscriber.odometry
+  - - subscriber.accel
+    - behavior_path_planner.subscriber.accel
+  - - subscriber.scenario
+    - behavior_path_planner.subscriber.scenario
+  - - subscriber.external_velocity_limit_mps
+    - behavior_path_planner.subscriber.external_velocity_limit_mps
+  - - subscriber.operation_mode_state
+    - behavior_path_planner.subscriber.operation_mode_state
+  - - subscriber.vector_map
+    - behavior_velocity_planner.subscriber.vector_map
+  - - subscriber.odometry
+    - behavior_velocity_planner.subscriber.vehicle_odometry
+  - - subscriber.accel
+    - behavior_velocity_planner.subscriber.accel
+  - - subscriber.objects
+    - behavior_velocity_planner.subscriber.dynamic_objects
+  - - subscriber.no_ground_pointcloud
+    - behavior_velocity_planner.subscriber.no_ground_pointcloud
+  - - subscriber.traffic_signals
+    - behavior_velocity_planner.subscriber.traffic_signals
+  - - subscriber.occupancy_grid_map
+    - behavior_velocity_planner.subscriber.occupancy_grid
+  - - behavior_path_planner.publisher.path_with_lane_id
+    - behavior_velocity_planner.subscriber.path_with_lane_id
+  - - behavior_velocity_planner.publisher.path
+    - publisher.path
+  - - behavior_velocity_planner.publisher.planning_factors/blind_spot
+    - publisher.planning_factors/blind_spot
+  - - behavior_velocity_planner.publisher.planning_factors/crosswalk
+    - publisher.planning_factors/crosswalk
+  - - behavior_velocity_planner.publisher.planning_factors/detection_area
+    - publisher.planning_factors/detection_area
+  - - behavior_velocity_planner.publisher.planning_factors/intersection
+    - publisher.planning_factors/intersection
+  - - behavior_velocity_planner.publisher.planning_factors/no_stopping_area
+    - publisher.planning_factors/no_stopping_area
+  - - behavior_velocity_planner.publisher.planning_factors/stop_line
+    - publisher.planning_factors/stop_line
+  - - behavior_velocity_planner.publisher.planning_factors/traffic_light
+    - publisher.planning_factors/traffic_light
+  - - behavior_velocity_planner.publisher.planning_factors/virtual_traffic_light
+    - publisher.planning_factors/virtual_traffic_light
+  - - behavior_velocity_planner.publisher.planning_factors/walkway
+    - publisher.planning_factors/walkway
+  - - behavior_path_planner.publisher.planning_factors/avoidance_by_lane_change
+    - publisher.planning_factors/avoidance_by_lane_change
+  - - behavior_path_planner.publisher.planning_factors/behavior_path_planner
+    - publisher.planning_factors/behavior_path_planner
+  - - behavior_path_planner.publisher.planning_factors/bidirectional_traffic
+    - publisher.planning_factors/bidirectional_traffic
+  - - behavior_path_planner.publisher.planning_factors/goal_planner
+    - publisher.planning_factors/goal_planner
+  - - behavior_path_planner.publisher.planning_factors/lane_change_left
+    - publisher.planning_factors/lane_change_left
+  - - behavior_path_planner.publisher.planning_factors/lane_change_right
+    - publisher.planning_factors/lane_change_right
+  - - behavior_path_planner.publisher.planning_factors/side_shift
+    - publisher.planning_factors/side_shift
+  - - behavior_path_planner.publisher.planning_factors/start_planner
+    - publisher.planning_factors/start_planner
+  - - behavior_path_planner.publisher.planning_factors/static_obstacle_avoidance
+    - publisher.planning_factors/static_obstacle_avoidance
+  - - behavior_path_planner.publisher.path_with_lane_id
+    - publisher.path_with_lane_id
+  - - behavior_path_planner.publisher.turn_indicators_cmd
+    - publisher.turn_indicators_cmd
+  - - behavior_path_planner.publisher.hazard_lights_cmd
+    - publisher.hazard_lights_cmd
+  - - behavior_path_planner.publisher.modified_goal
+    - publisher.modified_goal
+  - - behavior_path_planner.publisher.reroute_availability
+    - publisher.reroute_availability

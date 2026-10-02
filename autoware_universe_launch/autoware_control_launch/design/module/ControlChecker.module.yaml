@@ -1,0 +1,65 @@
+autoware_system_design_format: 0.3.1
+
+# module information
+name: ControlChecker.module
+
+instances:
+  - name: control_validator
+    entity: ControlValidator.node
+  - name: autonomous_emergency_braking
+    entity: AutonomousEmergencyBraking.node
+  - name: collision_detector
+    entity: CollisionDetector.node
+
+# interfaces
+subscribers:
+  - name: control_cmd
+  - name: predicted_trajectory
+  - name: trajectory
+  - name: odometry
+  - name: acceleration
+  - name: velocity_status
+  - name: imu
+  - name: operation_mode_state
+  - name: autoware_state
+  - name: objects
+  - name: pointcloud
+
+publishers: []
+
+connections:
+  # ControlValidator
+  - - subscriber.control_cmd
+    - control_validator.subscriber.control_cmd
+  - - subscriber.operation_mode_state
+    - control_validator.subscriber.operation_mode_state
+  - - subscriber.trajectory
+    - control_validator.subscriber.trajectory
+  - - subscriber.predicted_trajectory
+    - control_validator.subscriber.predicted_trajectory
+  - - subscriber.odometry
+    - control_validator.subscriber.kinematics
+  - - subscriber.acceleration
+    - control_validator.subscriber.measured_acceleration
+
+  # AutonomousEmergencyBraking
+  - - subscriber.pointcloud
+    - autonomous_emergency_braking.subscriber.pointcloud
+  - - subscriber.objects
+    - autonomous_emergency_braking.subscriber.objects
+  - - subscriber.velocity_status
+    - autonomous_emergency_braking.subscriber.velocity
+  - - subscriber.imu
+    - autonomous_emergency_braking.subscriber.imu
+  - - subscriber.autoware_state
+    - autonomous_emergency_braking.subscriber.autoware/state
+  - - subscriber.predicted_trajectory
+    - autonomous_emergency_braking.subscriber.predicted_trajectory
+
+  # CollisionDetector
+  - - subscriber.odometry
+    - collision_detector.subscriber.odometry
+  - - subscriber.pointcloud
+    - collision_detector.subscriber.pointcloud
+  - - subscriber.objects
+    - collision_detector.subscriber.objects

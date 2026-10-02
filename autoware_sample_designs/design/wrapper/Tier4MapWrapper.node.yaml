@@ -3,11 +3,11 @@ autoware_system_design_format: 0.3.0
 name: Tier4MapWrapper.node
 
 package:
-  name: tier4_map_launch
+  name: autoware_launch
   provider: autoware
 
 launch:
-  ros2_launch_file: map.launch.xml
+  ros2_launch_file: components/component_map.launch.xml
 
 # interfaces
 subscribers: []
@@ -23,6 +23,11 @@ publishers:
     qos:
       reliability: reliable
       durability: transient_local
+  - name: map_projector_info
+    message_type: autoware_map_msgs/msg/MapProjectorInfo
+    qos:
+      reliability: reliable
+      durability: transient_local
 
 servers:
   - name: get_differential_pointcloud_map
@@ -34,31 +39,25 @@ servers:
 param_files: []
 
 param_values:
+  - name: map_config_pkg
+    default: autoware_map_config
   - name: map_path
-    default: $(find-pkg-share autoware_launch)/config/map
+    default: $(env HOME)/autoware_data/maps/sample-map-rosbag
   - name: pointcloud_map_file
     default: pointcloud_map.pcd
   - name: lanelet2_map_file
     default: lanelet2_map.osm
-  - name: pointcloud_map_path
-    default: $(var map_path)/$(var pointcloud_map_file)
-  - name: pointcloud_map_metadata_path
-    default: $(var map_path)/pointcloud_map_metadata.yaml
-  - name: lanelet2_map_path
-    default: $(var map_path)/$(var lanelet2_map_file)
-  - name: map_projector_info_path
-    default: $(var map_path)/map_projector_info.yaml
-  - name: use_multithread
-    default: true
 
-  - name: pointcloud_map_loader_param_path
-    default: $(find-pkg-share autoware_launch)/config/map/pointcloud_map_loader.param.yaml
-  - name: lanelet2_map_loader_param_path
-    default: $(find-pkg-share autoware_launch)/config/map/lanelet2_map_loader.param.yaml
-  - name: map_tf_generator_param_path
-    default: $(find-pkg-share autoware_launch)/config/map/map_tf_generator.param.yaml
-  - name: map_projection_loader_param_path
-    default: $(find-pkg-share autoware_launch)/config/map/map_projection_loader.param.yaml
+  - name: use_pointcloud_map
+    default: true
+  - name: use_lanelet2_map
+    default: true
+  - name: use_map_projection
+    default: true
+  - name: use_map_tf_generator
+    default: true
+  - name: use_map_hash_generator
+    default: true
 
 # processes
 processes:
@@ -68,3 +67,4 @@ processes:
     outcomes:
       - to_output: vector_map
       - to_output: pointcloud_map
+      - to_output: map_projector_info
