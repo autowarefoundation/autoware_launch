@@ -6,8 +6,8 @@ name: LocalizationUtil.module
 instances:
   - name: pose_initializer
     entity: PoseInitializer.node
-  - name: automatic_pose_initializer
-    entity: AutomaticPoseInitializer.node
+  - name: pose_initialization_requester
+    entity: PoseInitializationRequester.node
   # ndt input pointcloud downsampling
   - name: crop_box_filter_measurement_range
     entity: CropBoxFilter.node
@@ -51,7 +51,7 @@ connections:
   - - subscriber.vector_map
     - pose_initializer.subscriber.vector_map
 
-  # automatic_pose_initializer
+  # pose_initialization_requester
   - - pose_initializer.publisher.pub_state
     - pose_initialization_requester.subscriber.initialization_state
   - - pose_initialization_requester.client.initialize
