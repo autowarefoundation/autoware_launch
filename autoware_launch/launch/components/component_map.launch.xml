@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Map composition root: resolves the map files from the product layout and includes the unit launchers under the map namespace -->
+  <arg name="map_config_pkg" default="autoware_map_config" description="package that ships the map config/ tree; overriding it relocates every parameter file"/>
+
+  <!-- Map files -->
+  <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
+  <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
+  <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <let name="pointcloud_map_path" value="$(var map_path)/$(var pointcloud_map_file)"/>
+  <let name="pointcloud_map_metadata_path" value="$(var map_path)/pointcloud_map_metadata.yaml"/>
+  <let name="lanelet2_map_path" value="$(var map_path)/$(var lanelet2_map_file)"/>
+  <let name="lanelet2_map_metadata_path" value="$(var map_path)/lanelet2_map_metadata.yaml"/>
+  <let name="map_projector_info_path" value="$(var map_path)/map_projector_info.yaml"/>
+
+  <!-- Unit junctions: a system-designer-fixed system pins the executing nodes here -->
+  <arg name="use_pointcloud_map" default="true" description="load the pointcloud map"/>
+  <arg name="use_lanelet2_map" default="true" description="load the lanelet2 map and its marker visualization"/>
+  <arg name="use_map_projection" default="true" description="publish the map projector info"/>
+  <arg name="use_map_tf_generator" default="true" description="broadcast the map -&gt; viewer transform"/>
+  <arg name="use_map_hash_generator" default="true" description="publish the map hash and serve the lanelet2 XML"/>
+
+  <!-- Executor selection: outputs the ld_preload_value variant -->
+  <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
+
+  <!-- Map module: composes the same instances as Map.module -->
+  <group>
+    <push-ros-namespace namespace="map"/>
+
+    <!-- Pointcloud map -->
+    <group if="$(var use_pointcloud_map)">
+      <include file="$(find-pkg-share autoware_map_launch)/launch/map_loader/pointcloud_map_loader.launch.xml">
+        <arg name="pointcloud_map_path" value="$(var pointcloud_map_path)"/>
+        <arg name="pointcloud_map_metadata_path" value="$(var pointcloud_map_metadata_path)"/>
+        <arg name="ld_preload_value" value="$(var ld_preload_value)"/>
+      </include>
+    </group>
+
+    <!-- Vector map -->
+    <group if="$(var use_lanelet2_map)">
+      <include file="$(find-pkg-share autoware_map_launch)/launch/map_loader/lanelet2_map_loader.launch.xml">
+        <arg name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
+        <arg name="lanelet2_map_metadata_path" value="$(var lanelet2_map_metadata_path)"/>
+        <arg name="ld_preload_value" value="$(var ld_preload_value)"/>
+      </include>
+    </group>
+
+    <!-- Viewer TF -->
+    <group if="$(var use_map_tf_generator)">
+      <include file="$(find-pkg-share autoware_map_launch)/launch/map_tf_generator/vector_map_tf_generator.launch.xml">
+        <arg name="ld_preload_value" value="$(var ld_preload_value)"/>
+      </include>
+    </group>
+
+    <!-- Map hash -->
+    <group if="$(var use_map_hash_generator)">
+      <include file="$(find-pkg-share autoware_map_launch)/launch/map_hash_generator/map_hash_generator.launch.xml">
+        <arg name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
+        <arg name="pointcloud_map_path" value="$(var pointcloud_map_path)"/>
+      </include>
+    </group>
+
+    <!-- Map projection -->
+    <group if="$(var use_map_projection)">
+      <include file="$(find-pkg-share autoware_map_launch)/launch/map_projection_loader/map_projection_loader.launch.xml">
+        <arg name="map_projector_info_path" value="$(var map_projector_info_path)"/>
+        <arg name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
+      </include>
+    </group>
+  </group>
+</launch>

@@ -13,26 +13,25 @@
   <arg name="crop_box_filter_self_param_path" description="crop box spanning the vehicle body"/>
   <arg name="crop_box_filter_secondary_param_path" description="crop box spanning the geometry cropped after the vehicle body"/>
 
-  <load_composable_node target="$(var target_container)">
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter_self">
-      <remap from="input" to="$(var input/pointcloud)"/>
-      <remap from="output" to="$(var intermediate/pointcloud)"/>
-      <param from="$(var crop_box_filter_self_param_path)"/>
-      <param name="input_frame" value="$(var input_frame)"/>
-      <param name="output_frame" value="$(var output_frame)"/>
-      <param name="negative" value="true"/>
-      <param name="processing_time_threshold_sec" value="0.01"/>
-      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-    </composable_node>
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter_$(var secondary_crop_box)">
-      <remap from="input" to="$(var intermediate/pointcloud)"/>
-      <remap from="output" to="$(var output/pointcloud)"/>
-      <param from="$(var crop_box_filter_secondary_param_path)"/>
-      <param name="input_frame" value="$(var input_frame)"/>
-      <param name="output_frame" value="$(var output_frame)"/>
-      <param name="negative" value="true"/>
-      <param name="processing_time_threshold_sec" value="0.01"/>
-      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-    </composable_node>
-  </load_composable_node>
+  <autoware_node pkg="autoware_pointcloud_preprocessor" exec="crop_box_filter_node" name="crop_box_filter_self" target="$(var target_container)">
+    <remap from="input" to="$(var input/pointcloud)"/>
+    <remap from="output" to="$(var intermediate/pointcloud)"/>
+    <param from="$(var crop_box_filter_self_param_path)"/>
+    <param name="input_frame" value="$(var input_frame)"/>
+    <param name="output_frame" value="$(var output_frame)"/>
+    <param name="negative" value="true"/>
+    <param name="processing_time_threshold_sec" value="0.01"/>
+    <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+  </autoware_node>
+
+  <autoware_node pkg="autoware_pointcloud_preprocessor" exec="crop_box_filter_node" name="crop_box_filter_$(var secondary_crop_box)" target="$(var target_container)">
+    <remap from="input" to="$(var intermediate/pointcloud)"/>
+    <remap from="output" to="$(var output/pointcloud)"/>
+    <param from="$(var crop_box_filter_secondary_param_path)"/>
+    <param name="input_frame" value="$(var input_frame)"/>
+    <param name="output_frame" value="$(var output_frame)"/>
+    <param name="negative" value="true"/>
+    <param name="processing_time_threshold_sec" value="0.01"/>
+    <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+  </autoware_node>
 </launch>

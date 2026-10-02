@@ -119,7 +119,7 @@
 
   <!-- Parameter paths: neural network based planner -->
   <arg name="diffusion_planner_param_path" default="$(var neural_net_planner_config_dir)/diffusion_planner.param.yaml"/>
-  <arg name="trajectory_processor_param_path" default="$(var neural_net_planner_config_dir)/trajectory_processor.param.yaml"/>
+  <arg name="trajectory_modifier_param_path" default="$(var neural_net_planner_config_dir)/trajectory_modifier.param.yaml"/>
   <arg name="jerk_filtered_smoother_param_path" default="$(var planning_common_config_dir)/autoware_velocity_smoother/JerkFiltered.param.yaml"/>
   <arg name="common_smoother_param_path" default="$(var planning_common_config_dir)/common.param.yaml"/>
   <arg name="elastic_band_param_path" default="$(var motion_planning_config_dir)/path_smoother/elastic_band_smoother.param.yaml"/>
@@ -169,7 +169,7 @@
         <arg name="input_pointcloud_topic_name" value="$(var input_pointcloud_topic_name)"/>
         <arg name="data_path" value="$(var data_path)"/>
         <arg name="diffusion_planner_param_path" value="$(var diffusion_planner_param_path)"/>
-        <arg name="trajectory_processor_param_path" value="$(var trajectory_processor_param_path)"/>
+        <arg name="trajectory_modifier_param_path" value="$(var trajectory_modifier_param_path)"/>
         <arg name="jerk_filtered_smoother_param_path" value="$(var jerk_filtered_smoother_param_path)"/>
         <arg name="velocity_smoother_param_path" value="$(var velocity_smoother_param_path)"/>
         <arg name="common_smoother_param_path" value="$(var common_smoother_param_path)"/>

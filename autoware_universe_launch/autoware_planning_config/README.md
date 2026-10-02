@@ -6,7 +6,7 @@ Parameter set for `autoware_planning_launch`. This package ships only data: ever
 config/
 ├── preset/                        # module presets (which planning modules launch)
 ├── mission_planning/
-├── neural_net_planner/            # diffusion planner and its trajectory processor plugins
+├── neural_net_planner/            # diffusion planner and its trajectory modifier plugins
 └── scenario_planning/
     ├── common/                    # shared planning params, velocity smoother, planning validator
     ├── lane_driving/
