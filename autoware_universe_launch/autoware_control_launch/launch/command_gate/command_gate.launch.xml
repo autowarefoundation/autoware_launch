@@ -20,15 +20,6 @@
   <arg name="use_intra_process" default="false"/>
   <arg name="ld_preload_value" default=""/>
 
-  <!-- trajectory gate -->
-  <group>
-    <include file="$(find-pkg-share autoware_trajectory_gate)/launch/trajectory_gate.launch.xml">
-      <arg name="config" value="$(var trajectory_gate_param_path)"/>
-      <arg name="output/trajectory" value="/control/trajectory"/>
-      <arg name="inputs/main/trajectory" value="/planning/trajectory"/>
-    </include>
-  </group>
-
   <!-- control command gate -->
   <group>
     <include file="$(find-pkg-share autoware_control_command_gate)/launch/control_command_gate.launch.xml">

@@ -28,6 +28,9 @@
   <!-- Parameter paths: common -->
   <arg name="nearest_search_param_path" default="$(var control_config_dir)/common/nearest_search.param.yaml"/>
 
+  <!-- Parameter paths: trajectory gate -->
+  <arg name="trajectory_gate_param_path" default="$(find-pkg-share autoware_trajectory_gate)/config/trajectory_gate.param.yaml"/>
+
   <!-- Parameter paths: trajectory follower -->
   <arg name="trajectory_follower_node_param_path" default="$(var control_config_dir)/trajectory_follower/trajectory_follower_node.param.yaml"/>
   <arg name="lat_controller_param_path" default="$(var control_config_dir)/trajectory_follower/lateral/$(var lateral_controller_mode).param.yaml"/>
@@ -35,7 +38,6 @@
 
   <!-- Parameter paths: command gate and mode management -->
   <arg name="vehicle_cmd_gate_param_path" default="$(var control_config_dir)/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml"/>
-  <arg name="trajectory_gate_param_path" default="$(find-pkg-share autoware_trajectory_gate)/config/trajectory_gate.param.yaml"/>
   <arg name="control_command_gate_param_path" default="$(var control_config_dir)/control_command_gate/control_command_gate.param.yaml"/>
   <arg name="operation_mode_transition_manager_param_path" default="$(var control_config_dir)/operation_mode_transition_manager/operation_mode_transition_manager.param.yaml"/>
   <arg name="shift_decider_param_path" default="$(var control_config_dir)/shift_decider/shift_decider.param.yaml"/>
@@ -64,6 +66,15 @@
     <!-- containers: the command path and the composable checkers each share one process -->
     <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="control_container" namespace=""/>
     <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="control_check_container" namespace=""/>
+
+    <!-- trajectory gate -->
+    <group>
+      <include file="$(find-pkg-share autoware_trajectory_gate)/launch/trajectory_gate.launch.xml">
+        <arg name="config" value="$(var trajectory_gate_param_path)"/>
+        <arg name="inputs/main/trajectory" value="/planning/trajectory"/>
+        <arg name="output/trajectory" value="/control/trajectory"/>
+      </include>
+    </group>
 
     <!-- trajectory follower -->
     <group>
