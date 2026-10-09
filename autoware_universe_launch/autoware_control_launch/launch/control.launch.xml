@@ -12,8 +12,6 @@
   <arg name="longitudinal_controller_mode" default="pid" description="longitudinal controller; options: `pid`"/>
   <arg name="use_aeb_autoware_state_check" default="true"/>
   <arg name="check_external_emergency_heartbeat" default="false"/>
-  <!-- temporary: control_command_gate migration -->
-  <arg name="use_control_command_gate" default="false"/>
 
   <!-- External interfaces -->
   <arg name="input_objects_topic_name" default="/perception/object_recognition/objects"/>
@@ -29,6 +27,9 @@
 
   <!-- Parameter paths: common -->
   <arg name="nearest_search_param_path" default="$(var control_config_dir)/common/nearest_search.param.yaml"/>
+
+  <!-- Parameter paths: trajectory gate -->
+  <arg name="trajectory_gate_param_path" default="$(find-pkg-share autoware_trajectory_gate)/config/trajectory_gate.param.yaml"/>
 
   <!-- Parameter paths: trajectory follower -->
   <arg name="trajectory_follower_node_param_path" default="$(var control_config_dir)/trajectory_follower/trajectory_follower_node.param.yaml"/>
@@ -66,6 +67,15 @@
     <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="control_container" namespace=""/>
     <node_container pkg="$(var container_package)" exec="$(var container_executable)" name="control_check_container" namespace=""/>
 
+    <!-- trajectory gate -->
+    <group>
+      <include file="$(find-pkg-share autoware_trajectory_gate)/launch/trajectory_gate.launch.xml">
+        <arg name="config" value="$(var trajectory_gate_param_path)"/>
+        <arg name="inputs/main/trajectory" value="/planning/trajectory"/>
+        <arg name="output/trajectory" value="/control/trajectory"/>
+      </include>
+    </group>
+
     <!-- trajectory follower -->
     <group>
       <include file="$(find-pkg-share autoware_control_launch)/launch/trajectory_follower/trajectory_follower.launch.xml">
@@ -88,7 +98,6 @@
     <!-- command gate -->
     <group>
       <include file="$(find-pkg-share autoware_control_launch)/launch/command_gate/command_gate.launch.xml">
-        <arg name="use_control_command_gate" value="$(var use_control_command_gate)"/>
         <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
         <arg name="output/control_cmd" value="$(var output_control_cmd)"/>
         <arg name="output/gear_cmd" value="$(var output_gear_cmd)"/>
