@@ -25,8 +25,41 @@
       ## /autoware/localization/accuracy
       "localization_error_monitor: ellipse_error_status": default
 
-      ## /autoware/localization/sensor_fusion_status
-      "localization: ekf_localizer": default
+      ## /autoware/localization/ekf_localizer_activation
+      "localization: ekf_localizer: is_activated": default
+
+      ## /autoware/localization/ekf_localizer_set_initial_pose
+      "localization: ekf_localizer: is_set_initialpose": default
+
+      ## /autoware/localization/ekf_localizer_pose_no_update_count
+      "localization: ekf_localizer: pose_no_update_count": default
+
+      ## /autoware/localization/ekf_localizer_pose_queue_size
+      "localization: ekf_localizer: pose_queue_size": default
+
+      ## /autoware/localization/ekf_localizer_pose_delay_time
+      "localization: ekf_localizer: pose_delay_time": default
+
+      ## /autoware/localization/ekf_localizer_pose_mahalanobis_distance
+      "localization: ekf_localizer: pose_mahalanobis_distance": default
+
+      ## /autoware/localization/ekf_localizer_twist_no_update_count
+      "localization: ekf_localizer: twist_no_update_count": default
+
+      ## /autoware/localization/ekf_localizer_twist_queue_size
+      "localization: ekf_localizer: twist_queue_size": default
+
+      ## /autoware/localization/ekf_localizer_twist_delay_time
+      "localization: ekf_localizer: twist_delay_time": default
+
+      ## /autoware/localization/ekf_localizer_twist_mahalanobis_distance
+      "localization: ekf_localizer: twist_mahalanobis_distance": default
+
+      ## /autoware/localization/ekf_localizer_cov_ellipse_long_axis_size
+      "localization: ekf_localizer: cov_ellipse_long_axis_size": default
+
+      ## /autoware/localization/ekf_localizer_cov_ellipse_lateral_direction_size
+      "localization: ekf_localizer: cov_ellipse_lateral_direction_size": default
 
       ## /autoware/localization/topic_rate_check/pose_twist_fusion
       "topic_state_monitor_pose_twist_fusion_filter_pose: localization_topic_status": default
