@@ -55,8 +55,12 @@ components:
     compute_unit: main_ecu
 
   # ADAPI
+  - name: adapi
+    entity: AdapiNodes.module
+    compute_unit: main_ecu
+    parameter_set: universe_adapi.parameter_set
   - name: api
-    entity: SampleSensorKitADAPIWrapper.node
+    entity: AdapiHelpers.module
     compute_unit: main_ecu
 
   # SENSING
@@ -92,10 +96,16 @@ components:
     compute_unit: main_ecu
     parameter_set: universe_control.parameter_set
 
+  # VEHICLE
+  - name: vehicle
+    entity: SampleVehicle.module
+    compute_unit: main_ecu
+
   # SYSTEM
   - name: system
-    entity: Tier4SystemWrapper.node
+    entity: System.module
     compute_unit: main_ecu
+    parameter_set: universe_system.parameter_set
 
   # # VISUALIZATION
   # - name: visualization
@@ -149,6 +159,14 @@ node_groups:
     nodes:
       - /planning/mission_planning/mission_planner
       - /planning/mission_planning/route_selector
+  - name: adapi_container
+    type: ros2_component_container_mt
+    nodes:
+      - /adapi/*
+  - name: rtc_controller_container
+    type: ros2_component_container_mt
+    nodes:
+      - /api/external/*
   - name: behavior_planning_container
     type: ros2_component_container_mt
     nodes:
@@ -161,6 +179,14 @@ node_groups:
       - /planning/scenario_planning/lane_driving/motion_planning/path_optimizer
       - /planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner
       # - /planning/scenario_planning/lane_driving/motion_planning/surround_obstacle_checker
+  - name: system_monitor_container
+    type: ros2_component_container_mt
+    nodes:
+      - /system/system_monitor/*
+  - name: component_state_monitor_container
+    type: ros2_component_container
+    nodes:
+      - /system/component_state_monitor/topic_state_monitor_*
 
 connections:
   - - localization.publisher.kinematic_state
@@ -169,14 +195,16 @@ connections:
     - sensing.subscriber.pose_ndt
 
   - - localization.publisher.initialization_state
-    - api.subscriber.localization/initialization_state
+    - adapi.subscriber.localization/initialization_state
   - - localization.publisher.kinematic_state
-    - api.subscriber.localization/kinematic_state
+    - adapi.subscriber.localization/kinematic_state
 
   - - sensing.publisher.lidar/concatenated/pointcloud
     - perception.subscriber.concatenated_pointcloud
   - - map.publisher.vector_map
     - perception.subscriber.vector_map
+  - - map.publisher.map_projector_info
+    - sensing.subscriber.map_projector_info
 
   - - map.publisher.vector_map
     - localization.subscriber.lanelet_map
@@ -212,13 +240,13 @@ connections:
     - planning.subscriber.pointcloud
   - - perception.publisher.traffic_light_recognition/traffic_signals
     - planning.subscriber.traffic_signals
-  - - system.publisher.operation_mode/state
+  - - control.publisher.operation_mode/state
     - planning.subscriber.operation_mode_state
   - - control.publisher.command/control_cmd
     - planning.subscriber.control_cmd
   - - control.publisher.predicted_trajectory
     - planning.subscriber.predicted_trajectory
-  - - api.publisher.operation_mode/state
+  - - adapi.publisher.api/operation_mode/state
     - planning.subscriber.api_operation_mode_state
 
   - - planning.publisher.trajectory
@@ -230,22 +258,20 @@ connections:
   - - planning.publisher.route_state
     - control.subscriber.route_state
   - - planning.publisher.route
-    - api.subscriber.planning/route
-  - - planning.publisher.route
-    - system.subscriber.planning/route
+    - adapi.subscriber.planning/route
   - - planning.publisher.turn_indicators_cmd
     - control.subscriber.planning_turn_indicators_cmd
   - - planning.publisher.hazard_lights_cmd
     - control.subscriber.hazard_lights_cmd
-  - - system.publisher.operation_mode/state
+  - - control.publisher.operation_mode/state
     - control.subscriber.operation_mode_state
 
-  - - api.publisher.operation_mode/state
+  - - adapi.publisher.api/operation_mode/state
     - control.subscriber.api_operation_mode_state
-  - - api.publisher.autoware/state
+  - - adapi.publisher.autoware/state
     - control.subscriber.autoware_state
-  - - api.publisher.*
-    - control.subscriber.*
+  - - adapi.publisher.external/^
+    - control.subscriber.external/^
 
   - - localization.publisher.kinematic_state
     - control.subscriber.odometry
@@ -255,13 +281,31 @@ connections:
     - control.subscriber.vector_map
   - - perception.publisher.object_recognition/objects
     - control.subscriber.objects
+  - - planning.publisher.planning_factors/blind_spot
+    - control.subscriber.blind_spot
+  - - planning.publisher.planning_factors/crosswalk
+    - control.subscriber.crosswalk
+  - - planning.publisher.planning_factors/detection_area
+    - control.subscriber.detection_area
+  - - planning.publisher.planning_factors/intersection
+    - control.subscriber.intersection
+  - - planning.publisher.planning_factors/no_stopping_area
+    - control.subscriber.no_stopping_area
+  - - planning.publisher.planning_factors/stop_line
+    - control.subscriber.stop_line
+  - - planning.publisher.planning_factors/traffic_light
+    - control.subscriber.traffic_light
+  - - planning.publisher.planning_factors/virtual_traffic_light
+    - control.subscriber.virtual_traffic_light
+  - - planning.publisher.planning_factors/walkway
+    - control.subscriber.walkway
   - - perception.publisher.obstacle_segmentation/pointcloud
     - control.subscriber.pointcloud
   - - sensing.publisher.imu/imu_data
     - control.subscriber.imu
 
   - - system.publisher.fail_safe/mrm_state
-    - api.subscriber.system/fail_safe/mrm_state
+    - adapi.subscriber.system/fail_safe/mrm_state
   - - system.publisher.fail_safe/mrm_state
     - control.subscriber.mrm_state
 
@@ -271,6 +315,8 @@ connections:
     - system.subscriber.control_cmd
   - - control.publisher.command/gear_cmd
     - system.subscriber.gear_cmd
+  - - adapi.publisher.api/operation_mode/state
+    - system.subscriber.api_operation_mode_state
 
   - - system.publisher.emergency/control_cmd
     - control.subscriber.emergency_control_cmd
@@ -278,11 +324,130 @@ connections:
     - control.subscriber.emergency_turn_indicators_cmd
   - - system.publisher.emergency/hazard_lights_cmd
     - control.subscriber.emergency_hazard_lights_cmd
+  - - system.publisher.emergency/hazard_lights_cmd
+    - planning.subscriber.system_hazard_lights_cmd
   - - system.publisher.emergency/gear_cmd
     - control.subscriber.emergency_gear_cmd
 
+  - - control.publisher.command/control_cmd
+    - vehicle.subscriber.control_cmd
+  - - control.publisher.command/emergency_cmd
+    - vehicle.subscriber.emergency_cmd
+  - - control.publisher.command/gear_cmd
+    - vehicle.subscriber.gear_cmd
+  - - control.publisher.command/hazard_lights_cmd
+    - vehicle.subscriber.hazard_lights_cmd
+  - - control.publisher.command/turn_indicators_cmd
+    - vehicle.subscriber.turn_indicators_cmd
+  - - control.publisher.operation_mode/state
+    - vehicle.subscriber.operation_mode_state
+  - - localization.publisher.kinematic_state
+    - vehicle.subscriber.odometry
+  - - localization.publisher.acceleration
+    - vehicle.subscriber.accel
+  - - vehicle.server.control_mode_request
+    - control.client.control_mode_request
+
+  - - vehicle.publisher.status/control_mode
+    - control.subscriber.control_mode_report
+  - - vehicle.publisher.status/control_mode
+    - system.subscriber.control_mode
+  - - vehicle.publisher.status/gear_status
+    - control.subscriber.gear_status
+  - - vehicle.publisher.status/gear_status
+    - adapi.subscriber.vehicle/status/gear_status
+  - - vehicle.publisher.status/hazard_lights_status
+    - adapi.subscriber.vehicle/status/hazard_lights_status
+  - - vehicle.publisher.status/steering_status
+    - control.subscriber.steering_status
+  - - vehicle.publisher.status/steering_status
+    - planning.subscriber.steering_status
+  - - vehicle.publisher.status/steering_status
+    - adapi.subscriber.vehicle/status/steering_status
+  - - vehicle.publisher.status/turn_indicators_status
+    - adapi.subscriber.vehicle/status/turn_indicators_status
+  - - vehicle.publisher.status/velocity_status
+    - control.subscriber.velocity_status
+  - - vehicle.publisher.status/velocity_status
+    - sensing.subscriber.velocity_status
+
   - - planning.server.clear_route
-    - api.client.routing/clear_route
+    - adapi.client.routing/clear_route
+  - - planning.server.set_lanelet_route
+    - adapi.client.planning/set_lanelet_route
+  - - planning.server.set_waypoint_route
+    - adapi.client.planning/set_waypoint_route
+  - - planning.publisher.route_state
+    - adapi.subscriber.planning/route_state
+  - - planning.publisher.trajectory
+    - adapi.subscriber.planning/trajectory
+
+  - - localization.publisher.acceleration
+    - adapi.subscriber.localization/acceleration
+  - - localization.server.initialize
+    - adapi.client.localization/initialize
+
+  - - map.publisher.map_projector_info
+    - adapi.subscriber.map/map_projector_info
+  - - map.publisher.pointcloud_map
+    - api.subscriber.pointcloud_map
+  - - map.publisher.vector_map
+    - api.subscriber.vector_map
+  - - map.server.get_partial_pointcloud_map
+    - api.client.partial_map_load
+  - - adapi.publisher.api/routing/state
+    - api.subscriber.api/routing/state
+  - - adapi.server.api/localization/initialize
+    - api.client.api/localization/initialize
+  - - adapi.server.api/routing/clear_route
+    - api.client.api/routing/clear_route
+  - - adapi.server.api/routing/set_route_points
+    - api.client.api/routing/set_route_points
+  - - adapi.server.api/routing/change_route_points
+    - api.client.api/routing/change_route_points
+
+  - - control.publisher.operation_mode/state
+    - adapi.subscriber.system/operation_mode/state
+  - - system.publisher.operation_mode/availability
+    - adapi.subscriber.system/operation_mode/availability
+  - - control.server.operation_mode/change_operation_mode
+    - adapi.client.system/operation_mode/change_operation_mode
+  - - control.server.operation_mode/change_autoware_control
+    - adapi.client.system/operation_mode/change_autoware_control
+  - - system.publisher.diagnostics_graph/struct
+    - adapi.subscriber.system/diagnostics_graph/struct
+  - - system.publisher.diagnostics_graph/status
+    - adapi.subscriber.system/diagnostics_graph/status
+  - - system.server.diagnostics_graph/reset
+    - adapi.client.system/diagnostics_graph/reset
+
+  - - control.publisher.command/control_cmd
+    - adapi.subscriber.control/command/control_cmd
+  - - control.publisher.vehicle_cmd_gate/is_paused
+    - adapi.subscriber.control/vehicle_cmd_gate/is_paused
+  - - control.publisher.vehicle_cmd_gate/is_start_requested
+    - adapi.subscriber.control/vehicle_cmd_gate/is_start_requested
+  - - control.server.vehicle_cmd_gate/set_pause
+    - adapi.client.control/vehicle_cmd_gate/set_pause
+
+  - - perception.publisher.object_recognition/objects
+    - adapi.subscriber.perception/object_recognition/objects
+
+  - - system.publisher.component_state_monitor/^
+    - adapi.subscriber.system/component_state_monitor/^
+  - - planning.publisher.planning_factors/^
+    - adapi.subscriber.planning/planning_factors/^
+
+  - - vehicle.publisher.status/battery_charge
+    - adapi.subscriber.vehicle/status/battery_charge
+  - - vehicle.publisher.actuation_cmd
+    - adapi.subscriber.control/command/actuation_cmd
+  - - vehicle.publisher.doors/status
+    - adapi.subscriber.vehicle/doors/status
+  - - vehicle.server.doors/command
+    - adapi.client.vehicle/doors/command
+  - - vehicle.server.doors/layout
+    - adapi.client.vehicle/doors/layout
 
 remaps:
   - source: localization.publisher.initialpose3d
@@ -291,8 +456,20 @@ remaps:
     topic: /api/autoware/get/map/info/hash
   - source: map.server.get_vector_map_xml
     topic: /api/autoware/get/map/lanelet/xml
-  - source: control.publisher.is_autonomous_available
+  - source: api.publisher.api/external/get/rtc_status
+    topic: /api/external/get/rtc_status
+  - source: api.publisher.api/external/get/rtc_auto_mode
+    topic: /api/external/get/rtc_auto_mode
+  - source: api.server.api/external/set/rtc_commands
+    topic: /api/external/set/rtc_commands
+  - source: api.server.api/external/set/rtc_auto_mode
+    topic: /api/external/set/rtc_auto_mode
+  - source: control.publisher.operation_mode/state
     topic: /system/operation_mode/state
+  - source: control.server.operation_mode/change_operation_mode
+    topic: /system/operation_mode/change_operation_mode
+  - source: control.server.operation_mode/change_autoware_control
+    topic: /system/operation_mode/change_autoware_control
   - source: control.publisher.external_emergency
     topic: /api/autoware/get/emergency
   - source: control.publisher.api/engage
@@ -301,35 +478,145 @@ remaps:
     topic: /api/autoware/set/engage
   - source: control.server.external_emergency_service
     topic: /api/autoware/set/emergency
-  - source: api.publisher.external/local/gear_cmd
+  - source: adapi.publisher.external/local/gear_cmd
     topic: /external/local/gear_cmd
-  - source: api.publisher.external/local/hazard_lights_cmd
+  - source: adapi.publisher.external/local/hazard_lights_cmd
     topic: /external/local/hazard_lights_cmd
-  - source: api.publisher.external/local/heartbeat
+  - source: adapi.publisher.external/local/heartbeat
     topic: /external/local/heartbeat
-  - source: api.publisher.external/local/pedals_cmd
+  - source: adapi.publisher.external/local/pedals_cmd
     topic: /external/local/pedals_cmd
-  - source: api.publisher.external/local/steering_cmd
+  - source: adapi.publisher.external/local/steering_cmd
     topic: /external/local/steering_cmd
-  - source: api.publisher.external/local/turn_indicators_cmd
+  - source: adapi.publisher.external/local/turn_indicators_cmd
     topic: /external/local/turn_indicators_cmd
-  - source: api.publisher.external/remote/gear_cmd
+  - source: adapi.publisher.external/remote/gear_cmd
     topic: /external/remote/gear_cmd
-  - source: api.publisher.external/remote/hazard_lights_cmd
+  - source: adapi.publisher.external/remote/hazard_lights_cmd
     topic: /external/remote/hazard_lights_cmd
-  - source: api.publisher.external/remote/heartbeat
+  - source: adapi.publisher.external/remote/heartbeat
     topic: /external/remote/heartbeat
-  - source: api.publisher.external/remote/pedals_cmd
+  - source: adapi.publisher.external/remote/pedals_cmd
     topic: /external/remote/pedals_cmd
-  - source: api.publisher.external/remote/steering_cmd
+  - source: adapi.publisher.external/remote/steering_cmd
     topic: /external/remote/steering_cmd
-  - source: api.publisher.external/remote/turn_indicators_cmd
+  - source: adapi.publisher.external/remote/turn_indicators_cmd
     topic: /external/remote/turn_indicators_cmd
-  - source: api.publisher.autoware/state
+  - source: adapi.publisher.autoware/state
     topic: /autoware/state
+  # AD API public names
+  - source: adapi.publisher.api/localization/initialization_state
+    topic: /api/localization/initialization_state
+  - source: adapi.publisher.api/routing/state
+    topic: /api/routing/state
+  - source: adapi.publisher.api/routing/route
+    topic: /api/routing/route
+  - source: adapi.publisher.api/operation_mode/state
+    topic: /api/operation_mode/state
+  - source: adapi.publisher.api/motion/state
+    topic: /api/motion/state
+  - source: adapi.publisher.api/fail_safe/mrm_state
+    topic: /api/fail_safe/mrm_state
+  - source: adapi.publisher.api/fail_safe/mrm_request/list
+    topic: /api/fail_safe/mrm_request/list
+  - source: adapi.publisher.api/system/diagnostics/struct
+    topic: /api/system/diagnostics/struct
+  - source: adapi.publisher.api/system/diagnostics/status
+    topic: /api/system/diagnostics/status
+  - source: adapi.publisher.api/system/heartbeat
+    topic: /api/system/heartbeat
+  - source: adapi.publisher.api/perception/objects
+    topic: /api/perception/objects
+  - source: adapi.publisher.api/planning/velocity_factors
+    topic: /api/planning/velocity_factors
+  - source: adapi.publisher.api/planning/steering_factors
+    topic: /api/planning/steering_factors
+  - source: adapi.publisher.api/vehicle/kinematics
+    topic: /api/vehicle/kinematics
+  - source: adapi.publisher.api/vehicle/status
+    topic: /api/vehicle/status
+  - source: adapi.publisher.api/vehicle/metrics
+    topic: /api/vehicle/metrics
+  - source: adapi.publisher.api/vehicle/doors/status
+    topic: /api/vehicle/doors/status
+  - source: adapi.publisher.api/control/command/pedals
+    topic: /api/control/command/pedals
+  - source: adapi.publisher.api/control/command/acceleration
+    topic: /api/control/command/acceleration
+  - source: adapi.publisher.api/control/command/velocity
+    topic: /api/control/command/velocity
+  - source: adapi.publisher.api/control/command/steering
+    topic: /api/control/command/steering
+  - source: adapi.server.api/interface/version
+    topic: /api/interface/version
+  - source: adapi.server.api/localization/initialize
+    topic: /api/localization/initialize
+  - source: adapi.server.api/routing/clear_route
+    topic: /api/routing/clear_route
+  - source: adapi.server.api/routing/set_route
+    topic: /api/routing/set_route
+  - source: adapi.server.api/routing/set_route_points
+    topic: /api/routing/set_route_points
+  - source: adapi.server.api/routing/change_route
+    topic: /api/routing/change_route
+  - source: adapi.server.api/routing/change_route_points
+    topic: /api/routing/change_route_points
+  - source: adapi.server.api/operation_mode/change_to_stop
+    topic: /api/operation_mode/change_to_stop
+  - source: adapi.server.api/operation_mode/change_to_autonomous
+    topic: /api/operation_mode/change_to_autonomous
+  - source: adapi.server.api/operation_mode/change_to_local
+    topic: /api/operation_mode/change_to_local
+  - source: adapi.server.api/operation_mode/change_to_remote
+    topic: /api/operation_mode/change_to_remote
+  - source: adapi.server.api/operation_mode/enable_autoware_control
+    topic: /api/operation_mode/enable_autoware_control
+  - source: adapi.server.api/operation_mode/disable_autoware_control
+    topic: /api/operation_mode/disable_autoware_control
+  - source: adapi.server.api/motion/accept_start
+    topic: /api/motion/accept_start
+  - source: adapi.server.api/fail_safe/list_mrm_description
+    topic: /api/fail_safe/list_mrm_description
+  - source: adapi.server.api/fail_safe/mrm_request/send
+    topic: /api/fail_safe/mrm_request/send
+  - source: adapi.server.api/system/diagnostics/reset
+    topic: /api/system/diagnostics/reset
+  - source: adapi.server.api/vehicle/dimensions
+    topic: /api/vehicle/dimensions
+  - source: adapi.server.api/vehicle/doors/command
+    topic: /api/vehicle/doors/command
+  - source: adapi.server.api/vehicle/doors/layout
+    topic: /api/vehicle/doors/layout
+  - source: adapi.server.autoware/shutdown
+    topic: /autoware/shutdown
+  - source: system.publisher.diagnostics_graph/struct
+    topic: /diagnostics_graph/struct
+  - source: system.publisher.diagnostics_graph/status
+    topic: /diagnostics_graph/status
+  - source: system.server.diagnostics_graph/reset
+    topic: /diagnostics_graph/reset
+  - source: system.publisher.diagnostics_graph/unknowns
+    topic: /diagnostics_graph/unknowns
+  - source: system.publisher.velocity_limit
+    topic: /planning/scenario_planning/max_velocity_candidates
+  - source: system.publisher.velocity_limit/clear
+    topic: /planning/scenario_planning/clear_velocity_limit
 
 # mode configurations
+Runtime:
+  override:
+    remaps:
+      - source: vehicle.server.control_mode_request
+        topic: /control/control_mode_request
+      - source: vehicle.publisher.actuation_cmd
+        topic: /control/command/actuation_cmd
+
 LoggingSimulation:
+  remove:
+    components:
+      - name: vehicle
+    node_groups:
+      - name: system_monitor_container
   override:
     parameter_sets:
       - logging_simulation.parameter_set
@@ -338,6 +625,10 @@ LoggingSimulation:
         entity: SampleSensorKit_sim.module
         compute_unit: main_ecu
         parameter_set: sample_system_sensing.parameter_set
+      - name: system
+        entity: System_sim.module
+        compute_unit: main_ecu
+        parameter_set: universe_system.parameter_set
       - name: rosbag_replay
         entity: SampleRosbagReplay.node
         compute_unit: dummy_ecu
@@ -379,6 +670,10 @@ E2ESimulation:
         entity: PerceptionE2ESimulation.module
         compute_unit: main_ecu
         parameter_set: e2e_simulation_perception.parameter_set
+      - name: system
+        entity: System_sim.module
+        compute_unit: main_ecu
+        parameter_set: universe_system.parameter_set
     node_groups:
       - name: pointcloud_container
         type: ros2_component_container_mt_ipc
@@ -390,7 +685,8 @@ E2ESimulation:
           - /perception/obstacle_segmentation/crop_box_filter
           - /perception/obstacle_segmentation/common_ground_filter
           - /perception/obstacle_segmentation/pointcloud_map_filter/voxel_grid_downsample_filter
-          - /perception/obstacle_segmentation/clustering/*
+          - /perception/obstacle_segmentation/clustering/euclidean_cluster
+          - /perception/obstacle_segmentation/clustering/detected_object_feature_remover
           - /perception/occupancy_grid_map/occupancy_grid_map_node
       - name: traffic_light_node_container
         type: ros2_component_container_mt_ipc
@@ -425,6 +721,10 @@ E2ESimulation:
         - control.subscriber.velocity_status
       - - awsim.publisher.vehicle/status/steering_status
         - control.subscriber.steering_status
+      - - awsim.publisher.vehicle/status/steering_status
+        - planning.subscriber.steering_status
+      - - awsim.server.control/control_mode_request
+        - control.client.control_mode_request
       - - awsim.publisher.vehicle/status/gear_status
         - control.subscriber.gear_status
       - - awsim.publisher.vehicle/status/control_mode
@@ -469,9 +769,17 @@ E2ESimulation:
         topic: /vehicle/status/turn_indicators_status
       - source: awsim.publisher.vehicle/status/velocity_status
         topic: /vehicle/status/velocity_status
+      - source: awsim.server.control/control_mode_request
+        topic: /control/control_mode_request
 
   remove:
+    components:
+      - name: vehicle
+    node_groups:
+      - name: system_monitor_container
     connections:
+      - - map.publisher.map_projector_info
+        - sensing.subscriber.map_projector_info
       - - sensing.publisher.gnss
         - localization.subscriber.gnss_pose_with_covariance
       - - sensing.publisher.gnss/pose_with_covariance
@@ -483,8 +791,10 @@ PlanningSimulation:
       - name: sensing
       - name: perception
       - name: localization
+      - name: vehicle
     node_groups:
       - name: pointcloud_container
+      - name: system_monitor_container
   override:
     parameter_sets:
       - planning_simulation.parameter_set
@@ -504,6 +814,14 @@ PlanningSimulation:
       - name: dummy_traffic_light_publisher
         entity: DummyTrafficLightPublisher.node
         compute_unit: main_ecu
+      - name: dummy_diag_publisher
+        entity: DummyDiagPublisher.node
+        path: /dummy_diag_publisher
+        compute_unit: main_ecu
+      - name: system
+        entity: System_psim.module
+        compute_unit: main_ecu
+        parameter_set: universe_system.parameter_set
       - name: vehicle
         entity: PlanningSimVehicle.module
         compute_unit: main_ecu
@@ -530,7 +848,7 @@ PlanningSimulation:
       - - map.publisher.vector_map
         - dummy_traffic_light_publisher.subscriber.vector_map
       - - localization.publisher.localization/initialization_state
-        - api.subscriber.localization/initialization_state
+        - adapi.subscriber.localization/initialization_state
       # SIMULATOR
       - - map.publisher.vector_map
         - simulator.subscriber.map/vector_map
@@ -540,8 +858,6 @@ PlanningSimulation:
         - simulator.subscriber.planning/trajectory
       - - control.publisher.command/control_cmd
         - simulator.subscriber.control/command/control_cmd
-      - - control.publisher.command/control_cmd
-        - vehicle.subscriber.control_cmd
       - - simulator.publisher.localization/kinematic_state
         - vehicle.subscriber.odometry
       - - simulator.publisher.localization/acceleration
@@ -550,10 +866,12 @@ PlanningSimulation:
         - vehicle.subscriber.steering
       - - simulator.publisher.vehicle/status/steering_status
         - control.subscriber.steering_status
+      - - simulator.publisher.vehicle/status/steering_status
+        - planning.subscriber.steering_status
+      - - simulator.server.control/control_mode_request
+        - control.client.control_mode_request
       - - simulator.publisher.vehicle/status/actuation_status
         - vehicle.subscriber.actuation_status
-      - - system.publisher.operation_mode/state
-        - vehicle.subscriber.operation_mode_state
       - - vehicle.publisher.actuation_cmd
         - simulator.subscriber.control/command/actuation_cmd
       - - control.publisher.command/gear_cmd
@@ -563,9 +881,7 @@ PlanningSimulation:
       - - control.publisher.command/hazard_lights_cmd
         - simulator.subscriber.control/command/hazard_lights_cmd
       - - simulator.publisher.^
-        - api.subscriber.^
-      - - vehicle.publisher.doors/status
-        - api.subscriber.vehicle/doors/status
+        - adapi.subscriber.^
       - - simulator.publisher.vehicle/status/velocity_status
         - control.subscriber.velocity_status
       - - simulator.publisher.vehicle/status/gear_status
@@ -620,7 +936,7 @@ PlanningSimulation:
         topic: /vehicle/status/control_mode
       - source: simulator.publisher.vehicle/status/actuation_status
         topic: /vehicle/status/actuation_status
-      - source: simulator.publisher.control/control_mode_request
+      - source: simulator.server.control/control_mode_request
         topic: /control/control_mode_request
-      - source: simulator.publisher.api/simulator/set/pose
+      - source: simulator.server.api/simulator/set/pose
         topic: /api/simulator/set/pose

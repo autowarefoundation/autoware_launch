@@ -15,15 +15,16 @@
   <arg name="downsample_voxel_size" default="0.1"/>
   <arg name="voxel_based_compare_map_filter_node_param_path" default="$(var perception_config_dir)/object_recognition/detection/pointcloud_filter/voxel_based_compare_map_filter.param.yaml"/>
 
+  <autoware_node pkg="autoware_pointcloud_preprocessor" exec="voxel_grid_downsample_filter_node" name="voxel_grid_downsample_filter" target="$(var target_container)">
+    <remap from="input" to="$(var input/pointcloud)"/>
+    <remap from="output" to="$(var output/downsampled/pointcloud)"/>
+    <param name="voxel_size_x" value="$(var downsample_voxel_size)"/>
+    <param name="voxel_size_y" value="$(var downsample_voxel_size)"/>
+    <param name="voxel_size_z" value="$(var downsample_voxel_size)"/>
+    <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+  </autoware_node>
+
   <load_composable_node target="$(var target_container)">
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::VoxelGridDownsampleFilterComponent" name="voxel_grid_downsample_filter">
-      <remap from="input" to="$(var input/pointcloud)"/>
-      <remap from="output" to="$(var output/downsampled/pointcloud)"/>
-      <param name="voxel_size_x" value="$(var downsample_voxel_size)"/>
-      <param name="voxel_size_y" value="$(var downsample_voxel_size)"/>
-      <param name="voxel_size_z" value="$(var downsample_voxel_size)"/>
-      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-    </composable_node>
     <composable_node pkg="autoware_compare_map_segmentation" plugin="autoware::compare_map_segmentation::VoxelBasedCompareMapFilterComponent" name="voxel_based_compare_map_filter">
       <remap from="input" to="$(var output/downsampled/pointcloud)"/>
       <remap from="map" to="/map/pointcloud_map"/>
