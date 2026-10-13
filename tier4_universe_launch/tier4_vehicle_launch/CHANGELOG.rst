@@ -2,6 +2,9 @@
 Changelog for package tier4_vehicle_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.52.0 (2026-06-30)
 -------------------
 
