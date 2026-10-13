@@ -2,6 +2,220 @@
 Changelog for package autoware_perception_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.53.0 (2026-10-13)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(autoware_launch): run crop_box_filter standalone when agnocast is enabled (`#1990 <https://github.com/autowarefoundation/autoware_launch/issues/1990>`_)
+  * feat(autoware_launch): run crop_box_filter standalone when agnocast is enabled
+  autoware_universe`#13384 <https://github.com/autowarefoundation/autoware_launch/issues/13384>`_ moves CropBoxFilterComponent to
+  agnocast_wrapper::Node on an agnocast-only executor, which the component
+  containers do not set up. Start each of the eight crop_box_filter nodes as a
+  standalone process when ENABLE_AGNOCAST=1 and keep loading them into their
+  container otherwise. The node names, namespaces, remaps and parameters are
+  the same in both branches.
+  * refactor(autoware_launch): launch crop_box_filter through the autoware_node action
+  ---------
+* feat(autoware_perception_launch): run scan_ground_filter standalone when agnocast is enabled (`#1991 <https://github.com/autowarefoundation/autoware_launch/issues/1991>`_)
+  * feat(autoware_perception_launch): run scan_ground_filter standalone when agnocast is enabled
+  autoware_universe`#13385 <https://github.com/autowarefoundation/autoware_launch/issues/13385>`_ moves ScanGroundFilterComponent to
+  agnocast_wrapper::Node on an agnocast-only executor, which the component
+  containers do not set up. Start each of the three scan_ground_filter nodes
+  as a standalone process when ENABLE_AGNOCAST=1 and keep loading them into
+  their container otherwise. The node names, namespaces, remaps and
+  parameters are the same in both branches.
+  * refactor(autoware_perception_launch): launch scan_ground_filter through the autoware_node action
+  ---------
+* feat(autoware_launch): run voxel_grid_downsample_filter standalone when agnocast is enabled (`#1992 <https://github.com/autowarefoundation/autoware_launch/issues/1992>`_)
+  * feat(autoware_launch): run voxel_grid_downsample_filter standalone when agnocast is enabled
+  * style(pre-commit): autofix
+  * refactor(autoware_launch): launch voxel_grid_downsample_filter through the autoware_node action
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* feat(autoware_sample_designs): compose the AD API, system and vehicle components from design modules (`#1976 <https://github.com/autowarefoundation/autoware_launch/issues/1976>`_)
+  * fix(control, planning): connect the operation mode state and velocity limit inputs
+  Wires collision_detector's operation_mode_state and
+  remaining_distance_time_calculator's planning_velocity through the
+  module designs; their node designs now declare the fixed topic names
+  as remap targets.
+  * fix(planning): connect the internal velocity limit path to the selector
+  Forwards motion_velocity_planner's velocity_limit and clear_velocity_limit
+  up to ScenarioPlanning and feeds them into external_velocity_limit_selector,
+  whose internal inputs were unconnected.
+  * fix(control, planning): connect the remaining module inputs to their sources
+  Wires the operation mode transition manager's gate and selector inputs,
+  the stop mode operator's vehicle status, the manual lane change handler's
+  route availability and preferred primitive service, the parking costmap,
+  and the route marker. Exposes the vehicle control mode service, the
+  preferred lane service and the system hazard lights command as component
+  interfaces.
+  * fix(planning): follow the hazard lights selector input rename
+  * fix(planning): add steering_status subscriber to various planning modules
+  * feat(vehicle): add vehicle wrapper and launch file for vehicle interface
+  * style(pre-commit): autofix
+  * fix(planning): add planning factors publishers and connections for various modules
+  * refactor(autoware_sample_designs): compose the AD API from design modules
+  * Refactor ADAPI module structure and enhance planning factors
+  - Updated AdapiRvizHelpers.module.yaml to include helper prefixes for instances and connections.
+  - Modified AutowareSample.system.yaml to reorganize ADAPI components, introducing default_adapi for better structure.
+  - Expanded planning factors in Planning.module.yaml, LaneDriving.module.yaml, ScenarioPlanning.module.yaml, and associated modules to include additional factors for improved behavior and motion planning.
+  - Enhanced connections in behavior planning and motion planning modules to accommodate new planning factors.
+  - Ensured consistency across scenario planning modules by aligning publisher and subscriber connections for new planning factors.
+  * refactor: reorganize clients and servers in module configurations
+  * fix(control): drop the collision detector operation mode link bound globally by the node design
+  * implement system modules
+  * vehicle modules and nodes, need validations
+  * fix api topic remapped
+  * reorganize to adapi and api
+  * fix: update perception obstacle segmentation filters for clarity and functionality
+  * refactor: update trigger conditions and outcomes in topic tools configuration
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* refactor(sample_designs)!: restructure the perception pipeline around ptv3 segmentation and node-level object recognition (`#1957 <https://github.com/autowarefoundation/autoware_launch/issues/1957>`_)
+  * refactor(sample_designs)!: restructure the perception pipeline
+  ObjectRecognition.module instantiates the centerpoint detection, tracking
+  and prediction nodes. Obstacle segmentation is PTv3 segmentation with
+  label-based clustering; LidarGroundSegmentationRuleBased.module holds the
+  rule-based pipeline.
+  * migrate perception modules to perception_launch package
+  * refactor(perception)!: update sample_system_perception parameters and remove LidarCenterpoint module
+  * refactor(sample_designs): move label_based_euclidean_cluster into the ML obstacle segmentation module
+  * feat(perception): add Perception.module with instances, subscribers, publishers, and connections
+  * fix(sample_designs): keep the rule-based perception pipeline in the E2E simulation mode
+  PerceptionE2ESimulation.module runs rule-based ground segmentation,
+  pointcloud map filtering and clustering for the AWSIM sensor set, with its
+  parameters in e2e_simulation_perception.parameter_set.
+  * fix(sample_designs): connect the AWSIM steering, gear and control mode reports to control
+  * fix(sample_designs): set is_simulation on the behavior velocity planner node
+  * fix(sample_designs): publish planning simulation traffic signals from DummyTrafficLightPublisher
+  * fix(sample_designs): filter the E2E simulation clusters by the lanelet map before tracking
+  Mirrors the object_filter stage of object_recognition_lidar.launch.xml: the rule-based
+  clusters pass through ObjectLaneletFilter.node before the tracker's detection03 input.
+  * refactor(sample_designs): update traffic light recognition modules and parameters for improved detection
+  ---------
+* fix(autoware_perception_launch): connect rule-based clusters to the tracker and split the lidar pipeline by clustering backend (`#1960 <https://github.com/autowarefoundation/autoware_launch/issues/1960>`_)
+  * fix(autoware_perception_launch): connect rule-based clusters to the tracker
+  The rule-based clustering chain runs whenever PTv3 is off, but the tracker's
+  detection03 slot pointed at the PTv3 cluster topic with its channel set to
+  none, so the cluster objects were never consumed. detection03 now follows the
+  active clustering backend on the lidar_clustering channel.
+  * fix(autoware_perception_launch): declare use_low_height_cropbox in the rule detector
+  The euclidean cluster include reads use_low_height_cropbox, but the detector
+  launcher never declared it and relied on the caller's scope leaking in. The
+  argument is declared with its default and passed explicitly from the serial
+  launcher.
+  * fix(autoware_perception_launch): restore the object filter on the cluster path
+  use_object_filter and detected_objects_filter_method were dropped from
+  component_perception.launch.xml in the launcher refactor, so the rule-based
+  cluster objects reached the tracker unfiltered. The filter sits between the
+  rule detector and the tracker with lanelet_filter as the default. PTv3
+  clustering is label-based and stays unfiltered.
+  * refactor(autoware_perception_launch): split the lidar pipeline by clustering backend
+  object_recognition_lidar.launch.xml hosts the rule-based euclidean clustering
+  pipeline; object_recognition_lidar_ptv3.launch.xml hosts the PTv3
+  semantic-segmentation clustering pipeline without the pointcloud map filter and
+  object validator that only the rule-based path uses. The clustering backend is
+  file selection, so use_semantic_segmentation_ptv3 no longer branches inside the
+  object recognition launchers or the rule detector, and
+  component_perception.launch.xml selects the launcher.
+  * refactor(autoware_launch): move the perception component interfaces into the launcher head
+  Align component_perception.launch.xml with the sibling launcher style: topic
+  definitions move into a head Internal interfaces block, and the module groups
+  hold only their includes. The three ground removal backends collapse into one
+  ground_segmentation_backend let driving three sibling groups; the occupancy
+  grid map input shares the no_ground_pointcloud definition it duplicated, and
+  the ML backend's segmentation output is wired explicitly to the PTv3 launcher.
+  * refactor(autoware_perception_launch): fold the outlier filter into the rule-based ground segmentation launcher
+  The rule-based ground removal backend always runs the occupancy grid map
+  outlier filter behind the scan ground filter, so the filter is a composable
+  node of ground_segmentation_rule_based.launch.xml with the grid map input and
+  the pre-filter output exposed as launcher interfaces. The single-frame and
+  time-series outlier filter launchers and their selection arguments are
+  removed; component_perception.launch.xml points the occupancy grid map at the
+  pre-filter cloud on the rule-based backend.
+  * remove shape estimation
+  * remove occupancy grid outlier filter
+  ---------
+* refactor(perception)!: extract the perception parameter tree into autoware_perception_config and modularize the simulated perception pipeline (`#1955 <https://github.com/autowarefoundation/autoware_launch/issues/1955>`_)
+  * Refactor perception launch files to use autoware_perception_config package
+  - Removed the perception_config_pkg argument from multiple launch files.
+  - Updated parameter paths in various launch files to reference autoware_perception_config instead of perception_config_pkg.
+  - Ensured consistency across object recognition, obstacle segmentation, occupancy grid map, and traffic light recognition launch files.
+  - Added autoware_perception_config as a dependency in package.xml.
+  * Refactor perception launch files to use dynamic configuration paths
+  - Added a new argument `perception_config_pkg` to specify the perception configuration package.
+  - Introduced `perception_config_dir` variable to dynamically set the path for configuration files across multiple launch files.
+  - Updated parameter paths in various launch files to utilize the new dynamic configuration directory, enhancing maintainability and flexibility.
+  - Modified launch files related to object recognition, obstacle segmentation, occupancy grid mapping, and traffic light recognition to reflect these changes.
+  * chore(CODEOWNERS): remove obsolete perception config path
+  * refactor: update perception configuration for simulator launch files
+  * refactor: remove traffic light parameters from perception launch files
+  * refactor: integrate perception simulation and update tier4 simulator component
+  * chore(CODEOWNERS): restore auto-generated file
+  * refactor: add elevation map support to perception simulation and update README
+  * ci: distribute lint-autoware-system-design-format via sync-files
+  ---------
+* chore(sync-params): update perception params (`#1956 <https://github.com/autowarefoundation/autoware_launch/issues/1956>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* chore(sync-params): update perception params (`#1953 <https://github.com/autowarefoundation/autoware_launch/issues/1953>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* feat(map_based_prediction): add per-class object deceleration parameters (`#1952 <https://github.com/autowarefoundation/autoware_launch/issues/1952>`_)
+  Add the behavior_model.object_deceleration block introduced in
+  `autowarefoundation/autoware_universe#13203 <https://github.com/autowarefoundation/autoware_universe/issues/13203>`_. map_based_prediction declares
+  behavior_model.object_deceleration.base without a built-in default, so the node
+  fails to start without it once that change is in. The remaining classes fall
+  back to base, and only the ones that deviate are listed here.
+  No override marker is added: the values follow the upstream param file as-is.
+  Co-authored-by: Claude Opus 5 (1M context) <noreply@anthropic.com>
+* refactor(perception)!: modularize perception launchers into reusable feature units (`#1942 <https://github.com/autowarefoundation/autoware_launch/issues/1942>`_)
+  * refactor(launch)!: rename tier4_perception_launch to autoware_perception_launch
+  Move the package into autoware_universe_launch/ and update all
+  reference sites (components, simulator, CODEOWNERS, diagrams).
+  Pure rename; no launch topology or config changes.
+  Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+  * refactor(perception): move entry pages to autoware_launch and perception parameters into autoware_perception_launch
+  - per-mode perception entry pages live in autoware_launch/launch/components/perception
+  - the perception config tree moves from autoware_launch into autoware_perception_launch,
+  and the feature launchers default their own param paths
+  - the compare map filter params for the planning component stay in autoware_launch
+  * refactor(perception): restructure traffic light launch into designer-aligned units
+  Split traffic_light.launch.xml and its python launchers into per-scope
+  XML units (detector fine/rough/whole_image, recognition pages, fusion,
+  occlusion predictor) and rewire the perception pages and component to
+  them. The simulator runs only the merge side of traffic light
+  recognition and gains enable_object_tracking/prediction switches.
+  Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+  * refactor(launch)!: split traffic light recognition into its own component and move object-recognition orchestration into autoware_perception_launch
+  - detection.launch.xml splits into per-mode compositions
+  - the perception component is fixed to the lidar pipeline; entry pages move into
+  autoware_perception_launch as object_recognition.launch.xml
+  - tier4_perception_component becomes component_perception, with traffic light
+  recognition launched by its own component_traffic_light
+  - docs, dependencies, and the diagram follow the new layout
+  * refactor(perception)!: flatten the detection modalities into per-modality object recognition pages
+  - detection_by_tracker and the merger junctions are removed; modes reduce to
+  lidar, lidar_radar, camera, camera_lidar_radar, and camera_lidar_radar_serial
+  - each object recognition page composes its own detection, tracking, and
+  prediction stages
+  * refactor(perception)!: decompose ground segmentation into per-method pages
+  * refactor(perception): rework the serial pipeline and convert the remaining python launchers to XML
+  - the serial camera-lidar-radar pipeline uses radar tracking and
+  detection_by_tracker; perception_config_pkg selects the config-hosting package
+  - the irregular object detector and pointcloud map filter launches become XML
+  * refactor(launch)!: remove the empty dynamic object publisher option
+  * fix(perception): clean up unit interfaces and traffic light launch configurations
+  - scope each perception component include so launch configurations stay local
+  - rename the traffic light classifier plugin to TrafficLightClassifierNode and
+  gate the image decompressor behind enable_image_decompressor
+  - point the whole-image detector model paths at the tensorrt_yolox data directory
+  - drop stale model param path args from the lidar detector units
+  - make the semantic segmentation clustering interface explicit
+  - trim stale unit args and declare pointpainting_model_path in the detector pages
+  - register fusion_common.param.yaml for param sync and drop unused dependencies
+  * bring back traffic light camera configs as base and extra
+  ---------
+  Co-authored-by: Claude Fable 5 <noreply@anthropic.com>
+* Contributors: Koichi Imai, Satoshi OTA, Taekjin LEE, awf-autoware-bot[bot], github-actions
+
 0.52.0 (2026-06-30)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

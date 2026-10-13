@@ -2,6 +2,92 @@
 Changelog for package tier4_control_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.53.0 (2026-10-13)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(autoware_sample_designs): compose the AD API, system and vehicle components from design modules (`#1976 <https://github.com/autowarefoundation/autoware_launch/issues/1976>`_)
+  * fix(control, planning): connect the operation mode state and velocity limit inputs
+  Wires collision_detector's operation_mode_state and
+  remaining_distance_time_calculator's planning_velocity through the
+  module designs; their node designs now declare the fixed topic names
+  as remap targets.
+  * fix(planning): connect the internal velocity limit path to the selector
+  Forwards motion_velocity_planner's velocity_limit and clear_velocity_limit
+  up to ScenarioPlanning and feeds them into external_velocity_limit_selector,
+  whose internal inputs were unconnected.
+  * fix(control, planning): connect the remaining module inputs to their sources
+  Wires the operation mode transition manager's gate and selector inputs,
+  the stop mode operator's vehicle status, the manual lane change handler's
+  route availability and preferred primitive service, the parking costmap,
+  and the route marker. Exposes the vehicle control mode service, the
+  preferred lane service and the system hazard lights command as component
+  interfaces.
+  * fix(planning): follow the hazard lights selector input rename
+  * fix(planning): add steering_status subscriber to various planning modules
+  * feat(vehicle): add vehicle wrapper and launch file for vehicle interface
+  * style(pre-commit): autofix
+  * fix(planning): add planning factors publishers and connections for various modules
+  * refactor(autoware_sample_designs): compose the AD API from design modules
+  * Refactor ADAPI module structure and enhance planning factors
+  - Updated AdapiRvizHelpers.module.yaml to include helper prefixes for instances and connections.
+  - Modified AutowareSample.system.yaml to reorganize ADAPI components, introducing default_adapi for better structure.
+  - Expanded planning factors in Planning.module.yaml, LaneDriving.module.yaml, ScenarioPlanning.module.yaml, and associated modules to include additional factors for improved behavior and motion planning.
+  - Enhanced connections in behavior planning and motion planning modules to accommodate new planning factors.
+  - Ensured consistency across scenario planning modules by aligning publisher and subscriber connections for new planning factors.
+  * refactor: reorganize clients and servers in module configurations
+  * fix(control): drop the collision detector operation mode link bound globally by the node design
+  * implement system modules
+  * vehicle modules and nodes, need validations
+  * fix api topic remapped
+  * reorganize to adapi and api
+  * fix: update perception obstacle segmentation filters for clarity and functionality
+  * refactor: update trigger conditions and outcomes in topic tools configuration
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* refactor(control): split control.launch.xml into data-flow units with mirrored design modules (`#1965 <https://github.com/autowarefoundation/autoware_launch/issues/1965>`_)
+  * refactor(control): split control.launch.xml into trajectory_follower, command_gate, external_command and control_checker units
+  The entry page keeps the preset, the parameter paths, the control namespace
+  and the two containers; each unit owns one cluster of the data-flow graph
+  and exposes its boundary topics as input/output arguments plus
+  target_container for process placement. Node names, namespaces, topics and
+  parameters are unchanged (launch-resolution diff against the previous
+  launcher is empty for the default, dlr_control_validator, control_command_gate,
+  pure_pursuit, optional-checker, smart_mpc and follower=none variants).
+  * refactor(control): mirror the launch units as CommandGate, ExternalCommand and ControlChecker design modules
+  Control.module now instantiates the four unit modules and the evaluator;
+  node instance names are unchanged. The sample system node_groups address
+  the nested instance paths, fixing the stale operation_mode_transition_manager
+  and lane_departure_checker entries that matched nothing.
+  * refactor(control): expose the fixed-name control interfaces as Control.module ports
+  The selector mode topic and service, and the gate pause/stop interfaces,
+  are consumed by fixed names (/control/external_cmd_selector/*,
+  /control/vehicle_cmd_gate/*). Exposing them as module ports under those
+  names keeps the exported topics stable while the nodes sit in nested unit
+  modules; the operation mode transition manager's compatibility inputs are
+  connected instead of relying on coincident instance paths.
+  * style(pre-commit): autofix
+  * refactor(control): drop the global gate_mode_cmd and engage topics from the module ports
+  * fix(control): connect the module inputs left without a source
+  Wires the stop mode operator's vehicle status, the collision detector's
+  API operation mode, and exposes the vehicle control mode service as a
+  component client.
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* refactor(control)!: migrate tier4_control_launch to autoware_control_launch with a separate config package (`#1962 <https://github.com/autowarefoundation/autoware_launch/issues/1962>`_)
+  * refactor(control)!: migrate tier4_control_launch to autoware_control_launch with a separate config package
+  Move the control launch stack out of the product layer and split its
+  parameter tree into autoware_control_config. control.launch.xml resolves
+  every parameter file through control_config_pkg and includes the module
+  preset itself; the launch graph is unchanged.
+  * refactor(control): move the control design modules alongside the control launch package
+  Control.module moves to the sample design module root and
+  TrajectoryFollower.module into autoware_control_launch/design/module,
+  matching the perception layout.
+  * refactor(control): enhance control parameter handling and update README for clarity
+  * refactor(control): streamline control configuration handling and update related documentation
+  ---------
+* Contributors: Taekjin LEE, github-actions
+
 0.52.0 (2026-06-30)
 -------------------
 

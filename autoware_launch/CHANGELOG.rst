@@ -2,6 +2,372 @@
 Changelog for package autoware_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.53.0 (2026-10-13)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* refactor(map)!: migrate tier4_map_launch to autoware_map_launch with a separate config package (`#1980 <https://github.com/autowarefoundation/autoware_launch/issues/1980>`_)
+  Part of `#1939 <https://github.com/autowarefoundation/autoware_launch/issues/1939>`_ (map item). Splits the map launch stack into unit launchers under
+  autoware_universe_launch/autoware_map_launch and moves its parameter tree into the
+  data-only autoware_map_config, with component_map.launch.xml as the composition root.
+  The resolved launch graph is unchanged.
+  Co-authored-by: Claude Opus 5 <noreply@anthropic.com>
+* refactor(localization)!: migrate tier4_localization_launch to autoware_localization_launch with a separate config package (`#1971 <https://github.com/autowarefoundation/autoware_launch/issues/1971>`_)
+  * refactor(localization)!: migrate tier4_localization_launch to autoware_localization_launch with a separate config package
+  Move the localization launch stack out of the product layer and split its
+  parameter tree into autoware_localization_config. localization.launch.xml
+  resolves every parameter file through localization_config_pkg; the launch
+  graph is unchanged.
+  * refactor(localization): move the localization design modules alongside the localization launch package
+  The localization modules move into autoware_localization_launch/design/module,
+  matching the planning and control layout; the parameter set and the wrapper
+  resolve parameter files from autoware_localization_config.
+  * refactor(localization): flatten pose/twist source selection into per-estimator junctions
+  pose_source/twist_source string parsing moves into the product component;
+  localization.launch.xml and pose_twist_estimator.launch.xml take one flag
+  per estimator plus the arbiter's pose_sources list, so a fixed system can
+  pin the junctions directly. The launch graph is unchanged.
+  * refactor(localization): restore the module-shaped launch composition
+  localization.launch.xml composes the same instances as Localization.module:
+  the util module (pose initializer and the ndt input downsampling) becomes a
+  sibling group with launch/util/util.launch.xml as the LocalizationUtil
+  counterpart, and cross-module wiring (the arbiter relay input, eagleye
+  standing in for the gnss pose) is resolved at the composition root. The
+  launch graph is unchanged.
+  * refactor(localization)!: compose localization from self-contained unit launchers
+  The all-mode entry launchers (localization.launch.xml and
+  pose_twist_estimator.launch.xml) are removed: the launch package ships one
+  launcher per unit, each resolving only its own parameters from
+  localization_config_pkg, and component_localization.launch.xml is the
+  composition root that includes only the units the selected sources need —
+  the perception layout. The unreferenced Tier4LocalizationWrapper design is
+  dropped with its launch entry. The launch graph is unchanged.
+  * style(pre-commit): autofix
+  * fix(localization): connect the automatic pose initializer in LocalizationUtil
+  Wires the pose initializer state and initialize service to
+  automatic_pose_initializer, whose node design now declares the fixed
+  API names as remap targets.
+  * chore(localization): drop the exec_depends the composition root owns
+  autoware_pose_estimator_arbiter and autoware_pose_covariance_modifier are
+  included from component_localization.launch.xml, which autoware_launch
+  declares.
+  * docs(launch): drop the stale launch diagrams and retarget the config usage example
+  Both package structure diagrams draw the localization.launch.xml composition
+  this series removes, and the autoware_launch one also draws the simulator
+  wrappers as if the root launcher called the sub launchers. The config package
+  documents the composition root as the place localization_config_pkg is set.
+  * fix(localization): resolve stop_check_enabled for every system run mode
+  The stop check belongs to a real vehicle, so any run mode other than
+  online disables it; the value is defined unconditionally so a product
+  run mode outside the in-tree set still resolves.
+  * chore(localization): carry the changelog over unedited
+  The recorded entries reference upstream pull requests by their original
+  package name, matching the control, planning and perception migrations.
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* chore(sync-params): update system params (`#1946 <https://github.com/autowarefoundation/autoware_launch/issues/1946>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* feat(autoware_launch): make the dummy vehicle and dummy perception to… (`#1966 <https://github.com/autowarefoundation/autoware_launch/issues/1966>`_)
+  feat(autoware_launch): make the dummy vehicle and dummy perception toggles arguments
+  planning_simulator.launch.xml derived launch_dummy_vehicle and
+  launch_dummy_perception from scenario_simulation with group local <let>, so
+  neither could be overridden from the command line. Declare them as <arg> with
+  the same derived default instead.
+  This lets an external simulator replace one stage while the rest of the
+  simulated stack keeps running, which is what a co-simulation needs: with
+  launch_dummy_vehicle:=false the simple planning simulator stops publishing the
+  ego state so the external simulator can own it, while dummy perception and the
+  occupancy grid map stay up and planning keeps working.
+  The defaults are unchanged, so a launch without the new arguments behaves
+  exactly as before.
+* refactor(control)!: migrate tier4_control_launch to autoware_control_launch with a separate config package (`#1962 <https://github.com/autowarefoundation/autoware_launch/issues/1962>`_)
+  * refactor(control)!: migrate tier4_control_launch to autoware_control_launch with a separate config package
+  Move the control launch stack out of the product layer and split its
+  parameter tree into autoware_control_config. control.launch.xml resolves
+  every parameter file through control_config_pkg and includes the module
+  preset itself; the launch graph is unchanged.
+  * refactor(control): move the control design modules alongside the control launch package
+  Control.module moves to the sample design module root and
+  TrajectoryFollower.module into autoware_control_launch/design/module,
+  matching the perception layout.
+  * refactor(control): enhance control parameter handling and update README for clarity
+  * refactor(control): streamline control configuration handling and update related documentation
+  ---------
+* fix(autoware_perception_launch): connect rule-based clusters to the tracker and split the lidar pipeline by clustering backend (`#1960 <https://github.com/autowarefoundation/autoware_launch/issues/1960>`_)
+  * fix(autoware_perception_launch): connect rule-based clusters to the tracker
+  The rule-based clustering chain runs whenever PTv3 is off, but the tracker's
+  detection03 slot pointed at the PTv3 cluster topic with its channel set to
+  none, so the cluster objects were never consumed. detection03 now follows the
+  active clustering backend on the lidar_clustering channel.
+  * fix(autoware_perception_launch): declare use_low_height_cropbox in the rule detector
+  The euclidean cluster include reads use_low_height_cropbox, but the detector
+  launcher never declared it and relied on the caller's scope leaking in. The
+  argument is declared with its default and passed explicitly from the serial
+  launcher.
+  * fix(autoware_perception_launch): restore the object filter on the cluster path
+  use_object_filter and detected_objects_filter_method were dropped from
+  component_perception.launch.xml in the launcher refactor, so the rule-based
+  cluster objects reached the tracker unfiltered. The filter sits between the
+  rule detector and the tracker with lanelet_filter as the default. PTv3
+  clustering is label-based and stays unfiltered.
+  * refactor(autoware_perception_launch): split the lidar pipeline by clustering backend
+  object_recognition_lidar.launch.xml hosts the rule-based euclidean clustering
+  pipeline; object_recognition_lidar_ptv3.launch.xml hosts the PTv3
+  semantic-segmentation clustering pipeline without the pointcloud map filter and
+  object validator that only the rule-based path uses. The clustering backend is
+  file selection, so use_semantic_segmentation_ptv3 no longer branches inside the
+  object recognition launchers or the rule detector, and
+  component_perception.launch.xml selects the launcher.
+  * refactor(autoware_launch): move the perception component interfaces into the launcher head
+  Align component_perception.launch.xml with the sibling launcher style: topic
+  definitions move into a head Internal interfaces block, and the module groups
+  hold only their includes. The three ground removal backends collapse into one
+  ground_segmentation_backend let driving three sibling groups; the occupancy
+  grid map input shares the no_ground_pointcloud definition it duplicated, and
+  the ML backend's segmentation output is wired explicitly to the PTv3 launcher.
+  * refactor(autoware_perception_launch): fold the outlier filter into the rule-based ground segmentation launcher
+  The rule-based ground removal backend always runs the occupancy grid map
+  outlier filter behind the scan ground filter, so the filter is a composable
+  node of ground_segmentation_rule_based.launch.xml with the grid map input and
+  the pre-filter output exposed as launcher interfaces. The single-frame and
+  time-series outlier filter launchers and their selection arguments are
+  removed; component_perception.launch.xml points the occupancy grid map at the
+  pre-filter cloud on the rule-based backend.
+  * remove shape estimation
+  * remove occupancy grid outlier filter
+  ---------
+* refactor(planning)!: migrate tier4_planning_launch to autoware_planning_launch with a separate config package (`#1954 <https://github.com/autowarefoundation/autoware_launch/issues/1954>`_)
+  * Add autoware_planning_launch package and related files
+  - Created package.xml for autoware_planning_launch with dependencies and maintainers.
+  - Added planning_launch.drawio.svg for visual representation of the planning launch structure.
+  - Removed obsolete README.md and planning.launch.xml from tier4_planning_launch.
+  * feat(planning): make the diffusion planner tracked objects topic configurable
+  Expose the tracked objects topic as `input_tracked_objects_topic_name`
+  alongside the objects and pointcloud topics, plumbed from the planning
+  component down to the diffusion planner unit.
+  * refactor(planning): drop the redundant group around the planning component include
+  `<group>` is scoped by default, so the conditional group already bounds the
+  component's launch configurations. The extra group is only needed where sibling
+  component includes share a scope.
+  * Update .github/CODEOWNERS
+  Co-authored-by: Shumpei Wakabayashi <42209144+shmpwk@users.noreply.github.com>
+  * refactor: update CODEOWNERS and package maintainers for planning components
+  * chore: restore auto-generated CODEOWNERS
+  ---------
+  Co-authored-by: Shumpei Wakabayashi <42209144+shmpwk@users.noreply.github.com>
+* refactor(perception)!: extract the perception parameter tree into autoware_perception_config and modularize the simulated perception pipeline (`#1955 <https://github.com/autowarefoundation/autoware_launch/issues/1955>`_)
+  * Refactor perception launch files to use autoware_perception_config package
+  - Removed the perception_config_pkg argument from multiple launch files.
+  - Updated parameter paths in various launch files to reference autoware_perception_config instead of perception_config_pkg.
+  - Ensured consistency across object recognition, obstacle segmentation, occupancy grid map, and traffic light recognition launch files.
+  - Added autoware_perception_config as a dependency in package.xml.
+  * Refactor perception launch files to use dynamic configuration paths
+  - Added a new argument `perception_config_pkg` to specify the perception configuration package.
+  - Introduced `perception_config_dir` variable to dynamically set the path for configuration files across multiple launch files.
+  - Updated parameter paths in various launch files to utilize the new dynamic configuration directory, enhancing maintainability and flexibility.
+  - Modified launch files related to object recognition, obstacle segmentation, occupancy grid mapping, and traffic light recognition to reflect these changes.
+  * chore(CODEOWNERS): remove obsolete perception config path
+  * refactor: update perception configuration for simulator launch files
+  * refactor: remove traffic light parameters from perception launch files
+  * refactor: integrate perception simulation and update tier4 simulator component
+  * chore(CODEOWNERS): restore auto-generated file
+  * refactor: add elevation map support to perception simulation and update README
+  * ci: distribute lint-autoware-system-design-format via sync-files
+  ---------
+* feat(neural_net_planner): support for the new trajectory_processor (`#1951 <https://github.com/autowarefoundation/autoware_launch/issues/1951>`_)
+  * feat(neural_net_planner): support for the new trajectory_processor
+  * fix trajectory topic argument
+  * update param sync file
+  ---------
+* chore(sync-params): update map params (`#1906 <https://github.com/autowarefoundation/autoware_launch/issues/1906>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* chore(sync-params): update planning params (`#1944 <https://github.com/autowarefoundation/autoware_launch/issues/1944>`_)
+  Co-authored-by: SakodaShintaro <28504069+SakodaShintaro@users.noreply.github.com>
+  Co-authored-by: SakodaShintaro <rgbygscrsedppbwg@gmail.com>
+* refactor(sensing)!: separate sensor driver and pre-processing layers from sensor kit configuration (`#1938 <https://github.com/autowarefoundation/autoware_launch/issues/1938>`_)
+  * refactor(launch)!: rename tier4_sensing_launch to autoware_sensing_launch
+  tier4_sensing_launch held one 19-line pass-through page that pushed the
+  sensing namespace and included the sensor kit entry. The component page
+  now includes that entry directly and pushes the namespace itself, so the
+  layer is gone and the package is left as the home of the shared sensing
+  units added next.
+  - move the package to autoware_universe_launch/autoware_sensing_launch
+  - rename tier4_sensing_component.launch.xml to
+  components/component_sensing.launch.xml
+  - drop the pass-through page and its diagram
+  Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+  * feat(autoware_sensing_launch): add the shared sensing unit library
+  Declarative XML units for the sensor data pre/post-processing stages,
+  each addressed by an absolute container path so a caller can place it in
+  any container it owns.
+  - pointcloud_container, the only unit that creates a container
+  - pointcloud_crop_boxes, pointcloud_preprocessor\_{cpu,cuda},
+  pointcloud_concatenation\_{cpu,cuda}
+  - blockage_diagnostics, gnss_postprocessor, imu_corrector,
+  radar_tracks_postprocessor
+  - shared preprocessing, blockage and radar defaults under config/
+  - generate_crop_box_params.py, which turns vehicle info and mirror
+  geometry into the crop box files the kits commit and pass in;
+  septentrio_heading_converter.py is installed as a runtime node
+  The parameter files and the heading converter are ported from
+  tier4/aip_launcher (aip_common_sensor_launch), Apache-2.0 under the same
+  TIER IV copyright. Nothing includes these units yet.
+  Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+  * feat(autoware_sensor_driver_launch): add the sensor driver layer
+  The hardware interface layer, kept apart from the pre-processing units so
+  that a sensor make and model can be brought into the ROS graph on its
+  own.
+  - nebula\_{velodyne,robosense,hesai}: per-make driver chains, configured
+  by the model param file shipped in the nebula driver package
+  - velodyne\_{VLP16,VLS128}, robosense\_{Bpearl,Helios},
+  hesai\_{XT32,OT128}: per-model wrappers
+  - every file loads its node into target_container, an existing container
+  owned by the caller; this package never creates one
+  The velodyne and robosense wrappers carry the content of the sample kit's
+  common_sensor_launch, which the following commit removes. The hesai
+  wrappers are ported from tier4/aip_launcher (aip_common_sensor_launch)
+  onto the same chain pattern, with sync_angle and cut_angle in place of
+  scan_phase and nebula's own host_ip default.
+  Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+  * refactor(sensing)!: adopt the shared sensing units in the sample and awsim kits
+  - sample kit: create one container per lidar, then load the per-model
+  driver wrapper and the CPU preprocessing chain into it; concatenation
+  comes from the shared unit
+  - awsim kit: preprocessing only, since AWSIM publishes pointcloud_raw_ex
+  directly
+  - commit the crop box geometry each kit owns, generated from the vehicle
+  description by generate_crop_box_params.py, in place of the runtime
+  vehicle_info and mirror lookups
+  - remove common_sensor_launch, whose nebula_node_container.launch.py the
+  driver chains replace; its changelog continues as
+  autoware_sensor_driver_launch/CHANGELOG.rst
+  The awsim_labs fork read its preprocessing defaults out of
+  common_sensor_launch; it points at autoware_sensing_launch until its own
+  commit retires it.
+  The awsim kit no longer launches a nebula driver node or the velodyne
+  monitor.
+  Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+  * refactor(sensing)!: adopt the shared sensing units in the single_lidar kit
+  single_lidar_common_launch was a copy of common_sensor_launch that had
+  drifted apart from it, having lost the container namespace handling,
+  udp_only support and the pre-processing diagnostic thresholds. The kit
+  includes the shared driver wrapper and preprocessing unit instead, so it
+  gains all three, and the fork is removed.
+  Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+  * refactor(sensing)!: adopt the shared sensing units in the awsim_labs kit
+  AWSIM Labs publishes pointcloud_raw_ex directly, so the kit runs
+  preprocessing only: one container per lidar, the CPU preprocessing chain,
+  and the shared concatenation unit. common_awsim_labs_sensor_launch and
+  its velodyne_node_container.launch.py are removed.
+  The per-lidar container moves from
+  /sensing/lidar/<position>/pointcloud_container to
+  /sensing/lidar/<position>/pointcloud_preprocessor/pointcloud_container,
+  matching the other kits.
+  Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+  * refactor(sensing)!: adopt the shared sensing units in the carla kit
+  CARLA publishes an undistorted pointcloud without ring information, so
+  only the crop boxes apply: the kit includes pointcloud_crop_boxes and
+  keeps its relay. pointcloud_preprocessor.launch.py is removed and
+  mirror.param.yaml gives way to the committed crop box files.
+  Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+  * chore: add atteuler cspell exception
+  ---------
+  Co-authored-by: Claude Opus 5 (1M context) <noreply@anthropic.com>
+* refactor(perception)!: modularize perception launchers into reusable feature units (`#1942 <https://github.com/autowarefoundation/autoware_launch/issues/1942>`_)
+  * refactor(launch)!: rename tier4_perception_launch to autoware_perception_launch
+  Move the package into autoware_universe_launch/ and update all
+  reference sites (components, simulator, CODEOWNERS, diagrams).
+  Pure rename; no launch topology or config changes.
+  Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+  * refactor(perception): move entry pages to autoware_launch and perception parameters into autoware_perception_launch
+  - per-mode perception entry pages live in autoware_launch/launch/components/perception
+  - the perception config tree moves from autoware_launch into autoware_perception_launch,
+  and the feature launchers default their own param paths
+  - the compare map filter params for the planning component stay in autoware_launch
+  * refactor(perception): restructure traffic light launch into designer-aligned units
+  Split traffic_light.launch.xml and its python launchers into per-scope
+  XML units (detector fine/rough/whole_image, recognition pages, fusion,
+  occlusion predictor) and rewire the perception pages and component to
+  them. The simulator runs only the merge side of traffic light
+  recognition and gains enable_object_tracking/prediction switches.
+  Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+  * refactor(launch)!: split traffic light recognition into its own component and move object-recognition orchestration into autoware_perception_launch
+  - detection.launch.xml splits into per-mode compositions
+  - the perception component is fixed to the lidar pipeline; entry pages move into
+  autoware_perception_launch as object_recognition.launch.xml
+  - tier4_perception_component becomes component_perception, with traffic light
+  recognition launched by its own component_traffic_light
+  - docs, dependencies, and the diagram follow the new layout
+  * refactor(perception)!: flatten the detection modalities into per-modality object recognition pages
+  - detection_by_tracker and the merger junctions are removed; modes reduce to
+  lidar, lidar_radar, camera, camera_lidar_radar, and camera_lidar_radar_serial
+  - each object recognition page composes its own detection, tracking, and
+  prediction stages
+  * refactor(perception)!: decompose ground segmentation into per-method pages
+  * refactor(perception): rework the serial pipeline and convert the remaining python launchers to XML
+  - the serial camera-lidar-radar pipeline uses radar tracking and
+  detection_by_tracker; perception_config_pkg selects the config-hosting package
+  - the irregular object detector and pointcloud map filter launches become XML
+  * refactor(launch)!: remove the empty dynamic object publisher option
+  * fix(perception): clean up unit interfaces and traffic light launch configurations
+  - scope each perception component include so launch configurations stay local
+  - rename the traffic light classifier plugin to TrafficLightClassifierNode and
+  gate the image decompressor behind enable_image_decompressor
+  - point the whole-image detector model paths at the tensorrt_yolox data directory
+  - drop stale model param path args from the lidar detector units
+  - make the semantic segmentation clustering interface explicit
+  - trim stale unit args and declare pointpainting_model_path in the detector pages
+  - register fusion_common.param.yaml for param sync and drop unused dependencies
+  * bring back traffic light camera configs as base and extra
+  ---------
+  Co-authored-by: Claude Fable 5 <noreply@anthropic.com>
+* chore(sync-params): update perception params (`#1935 <https://github.com/autowarefoundation/autoware_launch/issues/1935>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* refactor(tier4_perception_launch)!: select centerpoint variant folder in the launcher (`#1930 <https://github.com/autowarefoundation/autoware_launch/issues/1930>`_)
+* fix(traffic_light_recognition): update label map (`#1936 <https://github.com/autowarefoundation/autoware_launch/issues/1936>`_)
+  * remove CAR, BUS, TRUCK from overlay target
+  * add comment
+  ---------
+* chore(sync-params): update planning params (`#1933 <https://github.com/autowarefoundation/autoware_launch/issues/1933>`_)
+  Co-authored-by: SakodaShintaro <28504069+SakodaShintaro@users.noreply.github.com>
+* chore(sync-params): update control params (`#1929 <https://github.com/autowarefoundation/autoware_launch/issues/1929>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* feat(lane_change): add overhang_tolerance param for stop point planning (`#1926 <https://github.com/autowarefoundation/autoware_launch/issues/1926>`_)
+* refactor(tier4_system_launch): remove retired service_log_checker references (`#1919 <https://github.com/autowarefoundation/autoware_launch/issues/1919>`_)
+  The service_log_checker node (autoware_component_interface_tools) is retired with
+  the move of autoware_component_interface_utils to autoware_core and the removal of
+  the /service_log ServiceLog topic (replaced by ROS 2 service introspection).
+  Remove its launch include and exec_depend from tier4_system_launch, and its
+  diagnostics-aggregator entries: /autoware/system/service_log_checker in system.yaml
+  and the sole-member /autoware/debug/tools analyzers in the main and CARLA configs.
+  Must land together with the autoware_universe removal of the package.
+  Co-authored-by: Takagi, Isamu <43976882+isamu-takagi@users.noreply.github.com>
+* chore(sync-params): update planning params (`#1923 <https://github.com/autowarefoundation/autoware_launch/issues/1923>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* chore(sync-params): update control params (`#1901 <https://github.com/autowarefoundation/autoware_launch/issues/1901>`_)
+  Co-authored-by: emmeyteja <25744992+emmeyteja@users.noreply.github.com>
+* chore(sync-params): update perception params (`#1907 <https://github.com/autowarefoundation/autoware_launch/issues/1907>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* chore(sync-params): update planning params (`#1900 <https://github.com/autowarefoundation/autoware_launch/issues/1900>`_)
+  Co-authored-by: paulsohn <11360980+paulsohn@users.noreply.github.com>
+* ci: register system param files for sync-params workflow (`#1882 <https://github.com/autowarefoundation/autoware_launch/issues/1882>`_)
+  * add system parameter files for sync-files
+  * apply system parameter files for sync-params
+  * add a comment to skip dummy_diag_publisher.param.yaml
+  * fix mistakenly inserted experimental result
+  * add mrm_handler.param.yaml
+  * apply mrm_handler.param.yaml
+  * reapply with updated style
+  ---------
+  Co-authored-by: Junya Sasaki <j2sasaki1990@gmail.com>
+* chore: update param path for trajectory optimizer and modifier to processor (`#1917 <https://github.com/autowarefoundation/autoware_launch/issues/1917>`_)
+  update param path for trajectory optimizer and modifier to processor
+* feat: support new object classification labels (`#1914 <https://github.com/autowarefoundation/autoware_launch/issues/1914>`_)
+  * feat(surround_obstacle_checker): update launch parameters for new object classification labels
+  * feat(collision_detector): update launch parameters for new object classification labels
+* feat(diffusion_planner): remove `ignore_unknown_neighbors` (`#1915 <https://github.com/autowarefoundation/autoware_launch/issues/1915>`_)
+  Removed `ignore_unknown_neighbors`
+* Contributors: Masaki Baba, Maxime CLEMENT, Mehmet Emin BAŞOĞLU, SakodaShintaro, Satoshi OTA, Shumpei Wakabayashi, Taekjin LEE, Taeseung Sohn, Yutaka Kondo, awf-autoware-bot[bot], github-actions, 張 智輝
+
 0.52.0 (2026-06-30)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

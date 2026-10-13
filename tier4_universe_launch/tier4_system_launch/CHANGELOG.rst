@@ -2,6 +2,20 @@
 Changelog for package tier4_system_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.53.0 (2026-10-13)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* refactor(tier4_system_launch): remove retired service_log_checker references (`#1919 <https://github.com/autowarefoundation/autoware_launch/issues/1919>`_)
+  The service_log_checker node (autoware_component_interface_tools) is retired with
+  the move of autoware_component_interface_utils to autoware_core and the removal of
+  the /service_log ServiceLog topic (replaced by ROS 2 service introspection).
+  Remove its launch include and exec_depend from tier4_system_launch, and its
+  diagnostics-aggregator entries: /autoware/system/service_log_checker in system.yaml
+  and the sole-member /autoware/debug/tools analyzers in the main and CARLA configs.
+  Must land together with the autoware_universe removal of the package.
+  Co-authored-by: Takagi, Isamu <43976882+isamu-takagi@users.noreply.github.com>
+* Contributors: Yutaka Kondo, github-actions
+
 0.52.0 (2026-06-30)
 -------------------
 
