@@ -2,8 +2,8 @@
 Changelog for package tier4_localization_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.53.0 (2026-10-13)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * fix(`localization_launch`): a bug, by renaming to `autoware_pose_initialization_requester` (`#1998 <https://github.com/autowarefoundation/autoware_launch/issues/1998>`_)
   * bug: rename to `autoware_pose_initialization_requester`

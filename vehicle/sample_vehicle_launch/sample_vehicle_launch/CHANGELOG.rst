@@ -2,8 +2,8 @@
 Changelog for package sample_vehicle_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.53.0 (2026-10-13)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(autoware_sample_designs): compose the AD API, system and vehicle components from design modules (`#1976 <https://github.com/autowarefoundation/autoware_launch/issues/1976>`_)
   * fix(control, planning): connect the operation mode state and velocity limit inputs

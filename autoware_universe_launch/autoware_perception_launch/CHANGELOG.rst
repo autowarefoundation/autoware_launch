@@ -2,8 +2,8 @@
 Changelog for package autoware_perception_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.53.0 (2026-10-13)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * feat(autoware_launch): run crop_box_filter standalone when agnocast is enabled (`#1990 <https://github.com/autowarefoundation/autoware_launch/issues/1990>`_)
   * feat(autoware_launch): run crop_box_filter standalone when agnocast is enabled

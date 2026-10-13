@@ -2,8 +2,8 @@
 Changelog for package autoware_planning_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.53.0 (2026-10-13)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * chore(autoware_trajectory_processor): rename to autoware_trajectory_modifier (`#1986 <https://github.com/autowarefoundation/autoware_launch/issues/1986>`_)
   rename processor -> modifier

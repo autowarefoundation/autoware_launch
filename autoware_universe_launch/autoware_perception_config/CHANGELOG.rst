@@ -2,8 +2,8 @@
 Changelog for package autoware_perception_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.53.0 (2026-10-13)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * fix(autoware_perception_config): add missing min_cluster_size_m to label_based_euclidean_cluster (`#1969 <https://github.com/autowarefoundation/autoware_launch/issues/1969>`_)
   * fix(autoware_perception_config): add missing min_cluster_size_m to label_based_euclidean_cluster

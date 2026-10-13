@@ -2,8 +2,8 @@
 Changelog for package tier4_simulator_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.53.0 (2026-10-13)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * refactor(localization)!: migrate tier4_localization_launch to autoware_localization_launch with a separate config package (`#1971 <https://github.com/autowarefoundation/autoware_launch/issues/1971>`_)
   * refactor(localization)!: migrate tier4_localization_launch to autoware_localization_launch with a separate config package

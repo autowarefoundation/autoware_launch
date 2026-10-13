@@ -2,8 +2,8 @@
 Changelog for package tier4_system_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.53.0 (2026-10-13)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * refactor(tier4_system_launch): remove retired service_log_checker references (`#1919 <https://github.com/autowarefoundation/autoware_launch/issues/1919>`_)
   The service_log_checker node (autoware_component_interface_tools) is retired with

@@ -2,8 +2,8 @@
 Changelog for package autoware_control_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.53.0 (2026-10-13)
+-------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
 * refactor(control)!: migrate tier4_control_launch to autoware_control_launch with a separate config package (`#1962 <https://github.com/autowarefoundation/autoware_launch/issues/1962>`_)
   * refactor(control)!: migrate tier4_control_launch to autoware_control_launch with a separate config package
