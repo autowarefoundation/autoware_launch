@@ -1,0 +1,379 @@
+autoware_system_design_format: 0.4.0
+
+# node information
+name: AdapiRtcController.node
+
+description: Aggregates the RTC cooperate and auto mode statuses of all planning modules for the external API and dispatches cooperate commands and auto mode requests to each module.
+
+package:
+  name: autoware_iv_external_api_adaptor
+  provider: autoware
+
+launch:
+  plugin: external_api::RTCController
+  node_output: screen
+
+# interfaces
+subscribers:
+  - name: cooperate_status/blind_spot
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the blind spot module.
+    remap_target: /planning/cooperate_status/blind_spot
+  - name: cooperate_status/crosswalk
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the crosswalk module.
+    remap_target: /planning/cooperate_status/crosswalk
+  - name: cooperate_status/detection_area
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the detection area module.
+    remap_target: /planning/cooperate_status/detection_area
+  - name: cooperate_status/intersection
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the intersection module.
+    remap_target: /planning/cooperate_status/intersection
+  - name: cooperate_status/intersection_occlusion
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the intersection occlusion module.
+    remap_target: /planning/cooperate_status/intersection_occlusion
+  - name: cooperate_status/no_stopping_area
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the no stopping area module.
+    remap_target: /planning/cooperate_status/no_stopping_area
+  - name: cooperate_status/occlusion_spot
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the occlusion spot module.
+    remap_target: /planning/cooperate_status/occlusion_spot
+  - name: cooperate_status/traffic_light
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the traffic light module.
+    remap_target: /planning/cooperate_status/traffic_light
+  - name: cooperate_status/virtual_traffic_light
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the virtual traffic light module.
+    remap_target: /planning/cooperate_status/virtual_traffic_light
+  - name: cooperate_status/lane_change_left
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the lane change left module.
+    remap_target: /planning/cooperate_status/lane_change_left
+  - name: cooperate_status/lane_change_right
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the lane change right module.
+    remap_target: /planning/cooperate_status/lane_change_right
+  - name: cooperate_status/external_request_lane_change_left
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the external request lane change left module.
+    remap_target: /planning/cooperate_status/external_request_lane_change_left
+  - name: cooperate_status/external_request_lane_change_right
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the external request lane change right module.
+    remap_target: /planning/cooperate_status/external_request_lane_change_right
+  - name: cooperate_status/static_obstacle_avoidance_left
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the static obstacle avoidance left module.
+    remap_target: /planning/cooperate_status/static_obstacle_avoidance_left
+  - name: cooperate_status/static_obstacle_avoidance_right
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the static obstacle avoidance right module.
+    remap_target: /planning/cooperate_status/static_obstacle_avoidance_right
+  - name: cooperate_status/avoidance_by_lane_change_left
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the avoidance by lane change left module.
+    remap_target: /planning/cooperate_status/avoidance_by_lane_change_left
+  - name: cooperate_status/avoidance_by_lane_change_right
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the avoidance by lane change right module.
+    remap_target: /planning/cooperate_status/avoidance_by_lane_change_right
+  - name: cooperate_status/goal_planner
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the goal planner module.
+    remap_target: /planning/cooperate_status/goal_planner
+  - name: cooperate_status/start_planner
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the start planner module.
+    remap_target: /planning/cooperate_status/start_planner
+  - name: cooperate_status/roundabout
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Cooperate statuses of the roundabout module.
+    remap_target: /planning/cooperate_status/roundabout
+  - name: auto_mode_status/blind_spot
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the blind spot module.
+    remap_target: /planning/auto_mode_status/blind_spot
+  - name: auto_mode_status/crosswalk
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the crosswalk module.
+    remap_target: /planning/auto_mode_status/crosswalk
+  - name: auto_mode_status/detection_area
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the detection area module.
+    remap_target: /planning/auto_mode_status/detection_area
+  - name: auto_mode_status/intersection
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the intersection module.
+    remap_target: /planning/auto_mode_status/intersection
+  - name: auto_mode_status/intersection_occlusion
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the intersection occlusion module.
+    remap_target: /planning/auto_mode_status/intersection_occlusion
+  - name: auto_mode_status/no_stopping_area
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the no stopping area module.
+    remap_target: /planning/auto_mode_status/no_stopping_area
+  - name: auto_mode_status/occlusion_spot
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the occlusion spot module.
+    remap_target: /planning/auto_mode_status/occlusion_spot
+  - name: auto_mode_status/traffic_light
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the traffic light module.
+    remap_target: /planning/auto_mode_status/traffic_light
+  - name: auto_mode_status/virtual_traffic_light
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the virtual traffic light module.
+    remap_target: /planning/auto_mode_status/virtual_traffic_light
+  - name: auto_mode_status/lane_change_left
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the lane change left module.
+    remap_target: /planning/auto_mode_status/lane_change_left
+  - name: auto_mode_status/lane_change_right
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the lane change right module.
+    remap_target: /planning/auto_mode_status/lane_change_right
+  - name: auto_mode_status/external_request_lane_change_left
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the external request lane change left module.
+    remap_target: /planning/auto_mode_status/external_request_lane_change_left
+  - name: auto_mode_status/external_request_lane_change_right
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the external request lane change right module.
+    remap_target: /planning/auto_mode_status/external_request_lane_change_right
+  - name: auto_mode_status/static_obstacle_avoidance_left
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the static obstacle avoidance left module.
+    remap_target: /planning/auto_mode_status/static_obstacle_avoidance_left
+  - name: auto_mode_status/static_obstacle_avoidance_right
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the static obstacle avoidance right module.
+    remap_target: /planning/auto_mode_status/static_obstacle_avoidance_right
+  - name: auto_mode_status/avoidance_by_lane_change_left
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the avoidance by lane change left module.
+    remap_target: /planning/auto_mode_status/avoidance_by_lane_change_left
+  - name: auto_mode_status/avoidance_by_lane_change_right
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the avoidance by lane change right module.
+    remap_target: /planning/auto_mode_status/avoidance_by_lane_change_right
+  - name: auto_mode_status/goal_planner
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the goal planner module.
+    remap_target: /planning/auto_mode_status/goal_planner
+  - name: auto_mode_status/start_planner
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the start planner module.
+    remap_target: /planning/auto_mode_status/start_planner
+  - name: auto_mode_status/roundabout
+    message_type: tier4_rtc_msgs/msg/AutoModeStatus
+    description: Auto mode status of the roundabout module.
+    remap_target: /planning/auto_mode_status/roundabout
+
+publishers:
+  - name: get/rtc_status
+    message_type: tier4_rtc_msgs/msg/CooperateStatusArray
+    description: Merged cooperate statuses of all modules for the external API.
+    remap_target: /api/external/get/rtc_status
+  - name: get/rtc_auto_mode
+    message_type: tier4_rtc_msgs/msg/AutoModeStatusArray
+    description: Merged auto mode statuses of all modules for the external API.
+    remap_target: /api/external/get/rtc_auto_mode
+
+servers:
+  - name: set/rtc_commands
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command request from the external API.
+    remap_target: /api/external/set/rtc_commands
+  - name: set/rtc_auto_mode
+    message_type: tier4_rtc_msgs/srv/AutoModeWithModule
+    description: Auto mode request from the external API.
+    remap_target: /api/external/set/rtc_auto_mode
+
+clients:
+  - name: cooperate_commands/blind_spot
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the blind spot module.
+    remap_target: /planning/cooperate_commands/blind_spot
+  - name: cooperate_commands/crosswalk
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the crosswalk module.
+    remap_target: /planning/cooperate_commands/crosswalk
+  - name: cooperate_commands/detection_area
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the detection area module.
+    remap_target: /planning/cooperate_commands/detection_area
+  - name: cooperate_commands/intersection
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the intersection module.
+    remap_target: /planning/cooperate_commands/intersection
+  - name: cooperate_commands/intersection_occlusion
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the intersection occlusion module.
+    remap_target: /planning/cooperate_commands/intersection_occlusion
+  - name: cooperate_commands/no_stopping_area
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the no stopping area module.
+    remap_target: /planning/cooperate_commands/no_stopping_area
+  - name: cooperate_commands/occlusion_spot
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the occlusion spot module.
+    remap_target: /planning/cooperate_commands/occlusion_spot
+  - name: cooperate_commands/traffic_light
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the traffic light module.
+    remap_target: /planning/cooperate_commands/traffic_light
+  - name: cooperate_commands/virtual_traffic_light
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the virtual traffic light module.
+    remap_target: /planning/cooperate_commands/virtual_traffic_light
+  - name: cooperate_commands/lane_change_left
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the lane change left module.
+    remap_target: /planning/cooperate_commands/lane_change_left
+  - name: cooperate_commands/lane_change_right
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the lane change right module.
+    remap_target: /planning/cooperate_commands/lane_change_right
+  - name: cooperate_commands/external_request_lane_change_left
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the external request lane change left module.
+    remap_target: /planning/cooperate_commands/external_request_lane_change_left
+  - name: cooperate_commands/external_request_lane_change_right
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the external request lane change right module.
+    remap_target: /planning/cooperate_commands/external_request_lane_change_right
+  - name: cooperate_commands/static_obstacle_avoidance_left
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the static obstacle avoidance left module.
+    remap_target: /planning/cooperate_commands/static_obstacle_avoidance_left
+  - name: cooperate_commands/static_obstacle_avoidance_right
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the static obstacle avoidance right module.
+    remap_target: /planning/cooperate_commands/static_obstacle_avoidance_right
+  - name: cooperate_commands/avoidance_by_lane_change_left
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the avoidance by lane change left module.
+    remap_target: /planning/cooperate_commands/avoidance_by_lane_change_left
+  - name: cooperate_commands/avoidance_by_lane_change_right
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the avoidance by lane change right module.
+    remap_target: /planning/cooperate_commands/avoidance_by_lane_change_right
+  - name: cooperate_commands/goal_planner
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the goal planner module.
+    remap_target: /planning/cooperate_commands/goal_planner
+  - name: cooperate_commands/start_planner
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the start planner module.
+    remap_target: /planning/cooperate_commands/start_planner
+  - name: cooperate_commands/roundabout
+    message_type: tier4_rtc_msgs/srv/CooperateCommands
+    description: Cooperate command of the roundabout module.
+    remap_target: /planning/cooperate_commands/roundabout
+  - name: enable_auto_mode/blind_spot
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the blind spot module.
+    remap_target: /planning/enable_auto_mode/blind_spot
+  - name: enable_auto_mode/crosswalk
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the crosswalk module.
+    remap_target: /planning/enable_auto_mode/crosswalk
+  - name: enable_auto_mode/detection_area
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the detection area module.
+    remap_target: /planning/enable_auto_mode/detection_area
+  - name: enable_auto_mode/intersection
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the intersection module.
+    remap_target: /planning/enable_auto_mode/intersection
+  - name: enable_auto_mode/intersection_occlusion
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the intersection occlusion module.
+    remap_target: /planning/enable_auto_mode/intersection_occlusion
+  - name: enable_auto_mode/no_stopping_area
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the no stopping area module.
+    remap_target: /planning/enable_auto_mode/no_stopping_area
+  - name: enable_auto_mode/occlusion_spot
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the occlusion spot module.
+    remap_target: /planning/enable_auto_mode/occlusion_spot
+  - name: enable_auto_mode/traffic_light
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the traffic light module.
+    remap_target: /planning/enable_auto_mode/traffic_light
+  - name: enable_auto_mode/virtual_traffic_light
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the virtual traffic light module.
+    remap_target: /planning/enable_auto_mode/virtual_traffic_light
+  - name: enable_auto_mode/lane_change_left
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the lane change left module.
+    remap_target: /planning/enable_auto_mode/lane_change_left
+  - name: enable_auto_mode/lane_change_right
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the lane change right module.
+    remap_target: /planning/enable_auto_mode/lane_change_right
+  - name: enable_auto_mode/external_request_lane_change_left
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the external request lane change left module.
+    remap_target: /planning/enable_auto_mode/external_request_lane_change_left
+  - name: enable_auto_mode/external_request_lane_change_right
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the external request lane change right module.
+    remap_target: /planning/enable_auto_mode/external_request_lane_change_right
+  - name: enable_auto_mode/static_obstacle_avoidance_left
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the static obstacle avoidance left module.
+    remap_target: /planning/enable_auto_mode/static_obstacle_avoidance_left
+  - name: enable_auto_mode/static_obstacle_avoidance_right
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the static obstacle avoidance right module.
+    remap_target: /planning/enable_auto_mode/static_obstacle_avoidance_right
+  - name: enable_auto_mode/avoidance_by_lane_change_left
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the avoidance by lane change left module.
+    remap_target: /planning/enable_auto_mode/avoidance_by_lane_change_left
+  - name: enable_auto_mode/avoidance_by_lane_change_right
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the avoidance by lane change right module.
+    remap_target: /planning/enable_auto_mode/avoidance_by_lane_change_right
+  - name: enable_auto_mode/goal_planner
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the goal planner module.
+    remap_target: /planning/enable_auto_mode/goal_planner
+  - name: enable_auto_mode/start_planner
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the start planner module.
+    remap_target: /planning/enable_auto_mode/start_planner
+  - name: enable_auto_mode/roundabout
+    message_type: tier4_rtc_msgs/srv/AutoMode
+    description: Auto mode switch of the roundabout module.
+    remap_target: /planning/enable_auto_mode/roundabout
+
+# parameters
+param_files: []
+
+param_values: []
+
+# processes
+processes:
+  - name: publish_rtc_status
+    description: Periodically merges and sorts the cooperate statuses of all modules and publishes them.
+    trigger_conditions:
+      - periodic: 10.0
+    outcomes:
+      - to_output: get/rtc_status
+  - name: publish_auto_mode
+    description: Periodically merges the auto mode statuses of all modules and publishes them.
+    trigger_conditions:
+      - periodic: 10.0
+    outcomes:
+      - to_output: get/rtc_auto_mode

@@ -74,11 +74,6 @@ units:
       - { type: link, link: /autoware/vehicle }
       - { type: link, link: /autoware/system }
 
-  - path: /autoware/debug/tools
-    type: and
-    list:
-      - { type: link, link: /autoware/system/service_log_checker }
-
   # Localization units with extended timeouts for CARLA
   # Note: Removed transform and pose_twist_fusion topic monitors as they fail to load
   - path: /autoware/localization

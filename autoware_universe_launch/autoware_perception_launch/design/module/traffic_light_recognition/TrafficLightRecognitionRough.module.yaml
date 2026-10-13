@@ -1,0 +1,62 @@
+autoware_system_design_format: 0.3.0
+
+# Single-camera rough-detection topology; the camera set is fixed inside the module.
+name: TrafficLightRecognitionRough.module
+
+instances:
+  - name: traffic_light
+    entity: TrafficLightRecognitionDetectorRough.module
+
+  - name: multi_camera_fusion
+    entity: TrafficLightMultiCameraFusion_1_input.node
+  - name: traffic_light_arbiter
+    entity: TrafficLightArbiter.node
+  - name: traffic_light_crosswalk_estimator
+    entity: CrosswalkTrafficLightEstimator.node
+
+subscribers:
+  - name: vector_map
+  - name: route
+  - name: traffic_light/image
+  - name: traffic_light/camera_info
+  - name: pointcloud
+  - name: external_traffic_signals
+publishers:
+  - name: traffic_signals
+
+connections:
+  - - subscriber.route
+    - traffic_light.subscriber.route
+  - - subscriber.vector_map
+    - traffic_light.subscriber.vector_map
+  - - subscriber.traffic_light/image
+    - traffic_light.subscriber.image
+  - - subscriber.traffic_light/camera_info
+    - traffic_light.subscriber.camera_info
+  - - subscriber.pointcloud
+    - traffic_light.subscriber.pointcloud
+
+  - - subscriber.vector_map
+    - multi_camera_fusion.subscriber.vector_map
+  - - subscriber.traffic_light/camera_info
+    - multi_camera_fusion.subscriber.camera1/camera_info
+  - - traffic_light.publisher.classification/traffic_signals
+    - multi_camera_fusion.subscriber.camera1/classification/traffic_signals
+  - - traffic_light.publisher.detection/rois
+    - multi_camera_fusion.subscriber.camera1/detection/rois
+
+  - - subscriber.vector_map
+    - traffic_light_arbiter.subscriber.vector_map
+  - - multi_camera_fusion.publisher.traffic_signals
+    - traffic_light_arbiter.subscriber.perception_traffic_signals
+  - - subscriber.external_traffic_signals
+    - traffic_light_arbiter.subscriber.external_traffic_signals
+
+  - - subscriber.vector_map
+    - traffic_light_crosswalk_estimator.subscriber.vector_map
+  - - subscriber.route
+    - traffic_light_crosswalk_estimator.subscriber.route
+  - - traffic_light_arbiter.publisher.traffic_signals
+    - traffic_light_crosswalk_estimator.subscriber.traffic_signals
+  - - traffic_light_crosswalk_estimator.publisher.traffic_signals
+    - publisher.traffic_signals

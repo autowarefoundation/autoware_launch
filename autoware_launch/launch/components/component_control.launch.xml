@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Control pipeline: the module preset and the controller algorithms are product-level choices; parameter files are resolved inside autoware_control_launch -->
+  <arg name="control_config_pkg" default="autoware_control_config" description="package that ships the control config/ tree; overriding it relocates every parameter file"/>
+  <arg name="module_preset" default="default"/>
+  <arg name="lateral_controller_mode" default="mpc"/>
+  <arg name="longitudinal_controller_mode" default="pid"/>
+  <arg name="use_individual_control_param" default="false" description="read the lateral/longitudinal controller params from the trajectory_follower/VEHICLE_ID subtree"/>
+  <arg name="use_aeb_autoware_state_check" default="true"/>
+  <arg name="check_external_emergency_heartbeat" default="false"/>
+  <arg name="use_sim_time" default="false"/>
+  <arg name="vehicle_model" default="sample_vehicle"/>
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
+
+  <!-- Controller parameter files; per-vehicle tuning lives under trajectory_follower/VEHICLE_ID -->
+  <let name="trajectory_follower_config_dir" value="$(find-pkg-share $(var control_config_pkg))/config/trajectory_follower"/>
+  <let name="latlon_controller_config_dir" value="$(var trajectory_follower_config_dir)/$(var vehicle_id)" if="$(var use_individual_control_param)"/>
+  <let name="latlon_controller_config_dir" value="$(var trajectory_follower_config_dir)" unless="$(var use_individual_control_param)"/>
+  <let name="lat_controller_param_path" value="$(var latlon_controller_config_dir)/lateral/$(var lateral_controller_mode).param.yaml"/>
+  <let name="lon_controller_param_path" value="$(var latlon_controller_config_dir)/longitudinal/$(var longitudinal_controller_mode).param.yaml"/>
+
+  <!-- External interfaces -->
+  <arg name="control_input_objects_topic_name" default="/perception/object_recognition/objects"/>
+  <arg name="control_input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
+
+  <!-- Global parameters -->
+  <group scoped="false">
+    <include file="$(find-pkg-share autoware_global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+  <include file="$(find-pkg-share autoware_control_launch)/launch/control.launch.xml">
+    <arg name="control_config_pkg" value="$(var control_config_pkg)"/>
+    <arg name="module_preset" value="$(var module_preset)"/>
+    <arg name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
+    <arg name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
+    <arg name="lat_controller_param_path" value="$(var lat_controller_param_path)"/>
+    <arg name="lon_controller_param_path" value="$(var lon_controller_param_path)"/>
+    <arg name="use_aeb_autoware_state_check" value="$(var use_aeb_autoware_state_check)"/>
+    <arg name="check_external_emergency_heartbeat" value="$(var check_external_emergency_heartbeat)"/>
+    <arg name="vehicle_model" value="$(var vehicle_model)"/>
+
+    <!-- Input topic parameters -->
+    <arg name="input_objects_topic_name" value="$(var control_input_objects_topic_name)"/>
+    <arg name="input_pointcloud_topic_name" value="$(var control_input_pointcloud_topic_name)"/>
+  </include>
+</launch>

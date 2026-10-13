@@ -1,0 +1,29 @@
+<launch>
+  <!-- CARLA publishes an undistorted pointcloud without ring information; only the crop boxes apply -->
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="crop_box_filter_self_param_path" default="$(find-pkg-share carla_sensor_kit_launch)/config/crop_box_filter_self.param.yaml"/>
+  <arg name="crop_box_filter_mirror_param_path" default="$(find-pkg-share carla_sensor_kit_launch)/config/crop_box_filter_mirror.param.yaml"/>
+
+  <group>
+    <push-ros-namespace namespace="lidar"/>
+
+    <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_crop_boxes.launch.xml">
+      <arg name="target_container" value="$(var pointcloud_container_name)"/>
+      <arg name="use_intra_process" value="true"/>
+      <arg name="input/pointcloud" value="/sensing/lidar/top/pointcloud_before_sync"/>
+      <arg name="intermediate/pointcloud" value="self_cropped/pointcloud"/>
+      <arg name="output/pointcloud" value="mirror_cropped/pointcloud"/>
+      <arg name="crop_box_filter_self_param_path" value="$(var crop_box_filter_self_param_path)"/>
+      <arg name="crop_box_filter_secondary_param_path" value="$(var crop_box_filter_mirror_param_path)"/>
+    </include>
+
+    <load_composable_node target="$(var pointcloud_container_name)">
+      <composable_node pkg="topic_tools" plugin="topic_tools::RelayNode" name="pointcloud_relay">
+        <param name="input_topic" value="mirror_cropped/pointcloud"/>
+        <param name="output_topic" value="/sensing/lidar/concatenated/pointcloud"/>
+        <param name="type" value="sensor_msgs/msg/PointCloud2"/>
+        <extra_arg name="use_intra_process_comms" value="true"/>
+      </composable_node>
+    </load_composable_node>
+  </group>
+</launch>
