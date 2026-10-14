@@ -46,6 +46,15 @@ units:
       - { type: link, link: /autoware/system }
       - { type: link, link: /adapi/mrm_request/delegate }
 
+  # The driving-mode availability flag autoware_diagnostic_graph_aggregator maps
+  # mode 1002 to (config/default.param.yaml), split out from the continuable flag
+  # in autowarefoundation/autoware_universe#13252. Without it the aggregator logs
+  # "Mode path not found: 1002" and autonomous is never reported available.
+  - path: /autoware/modes/autonomous/available
+    type: and
+    list:
+      - { type: link, link: /autoware/modes/autonomous }
+
   - path: /autoware/modes/pull_over
     type: and
     list:
