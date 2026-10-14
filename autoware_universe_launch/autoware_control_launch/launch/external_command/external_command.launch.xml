@@ -1,0 +1,28 @@
+<launch>
+  <!-- External command unit: selects the local/remote operator command and converts it into a control command for the gate -->
+  <arg name="launch_external_cmd_selector" default="true"/>
+  <arg name="launch_external_cmd_converter" default="true"/>
+
+  <!-- Parameter paths -->
+  <arg name="external_cmd_selector_param_path" default="$(find-pkg-share autoware_control_config)/config/external_cmd_selector/external_cmd_selector.param.yaml"/>
+
+  <!-- Process placement -->
+  <arg name="target_container" default="/control/control_container"/>
+  <arg name="use_intra_process" default="false"/>
+
+  <!-- external cmd selector -->
+  <group if="$(var launch_external_cmd_selector)">
+    <include file="$(find-pkg-share autoware_external_cmd_selector)/launch/external_cmd_selector.launch.py">
+      <arg name="use_intra_process" value="$(var use_intra_process)"/>
+      <arg name="target_container" value="$(var target_container)"/>
+      <arg name="external_cmd_selector_param_path" value="$(var external_cmd_selector_param_path)"/>
+    </include>
+  </group>
+  <!-- external cmd converter -->
+  <group if="$(var launch_external_cmd_converter)">
+    <include file="$(find-pkg-share autoware_external_cmd_converter)/launch/external_cmd_converter.launch.py">
+      <arg name="use_intra_process" value="$(var use_intra_process)"/>
+      <arg name="target_container" value="$(var target_container)"/>
+    </include>
+  </group>
+</launch>

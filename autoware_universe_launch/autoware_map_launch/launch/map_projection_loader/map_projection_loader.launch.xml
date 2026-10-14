@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Map projection unit: publishes the projector info the lanelet2 loader and the localization stack project against -->
+  <arg name="map_config_pkg" default="autoware_map_config" description="package that ships the map config/ tree; overriding it relocates every parameter file"/>
+  <let name="map_config_dir" value="$(find-pkg-share $(var map_config_pkg))/config"/>
+  <arg name="map_projection_loader_param_path" default="$(var map_config_dir)/map_projection_loader.param.yaml"/>
+
+  <!-- Map files -->
+  <arg name="map_projector_info_path" description="map projector info file path"/>
+  <arg name="lanelet2_map_path" description="lanelet2 map file or directory path; the projector info falls back to the map header"/>
+
+  <include file="$(find-pkg-share autoware_map_projection_loader)/launch/map_projection_loader.launch.xml">
+    <arg name="param_path" value="$(var map_projection_loader_param_path)"/>
+    <arg name="map_projector_info_path" value="$(var map_projector_info_path)"/>
+    <arg name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
+  </include>
+</launch>

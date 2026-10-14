@@ -1,0 +1,33 @@
+autoware_system_design_format: 0.3.1
+
+name: LidarGroundSegmentationMl.module
+
+# PTv3 semantic segmentation labels the cloud and drops the ground points;
+# label-based clustering turns the labelled cloud into detected objects
+instances:
+  - name: ptv3
+    entity: PTv3.node
+  - name: label_based_euclidean_cluster
+    entity: LabelBasedEuclideanCluster.node
+
+subscribers:
+  # lidar
+  - name: concatenated_pointcloud
+publishers:
+  - name: pointcloud
+  - name: segmented_pointcloud
+  - name: objects
+
+connections:
+  - - subscriber.concatenated_pointcloud
+    - ptv3.subscriber.pointcloud
+  - - ptv3.publisher.pointcloud_segmentation
+    - label_based_euclidean_cluster.subscriber.pointcloud
+
+  # outputs
+  - - ptv3.publisher.pointcloud_filtered
+    - publisher.pointcloud
+  - - ptv3.publisher.pointcloud_segmentation
+    - publisher.segmented_pointcloud
+  - - label_based_euclidean_cluster.publisher.objects
+    - publisher.objects

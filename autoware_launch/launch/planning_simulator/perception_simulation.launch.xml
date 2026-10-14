@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Simulated perception pipeline: dummy perception replaces the sensor-driven detection stage, the downstream tracking, prediction and occupancy grid map stages run as in the vehicle, traffic signals come from the dummy traffic light publisher, and disabled stages are replaced by stub publishers -->
+
+  <arg name="perception_config_pkg" default="autoware_perception_config" description="package that ships the perception config/ tree; overriding it relocates every parameter file"/>
+  <let name="perception_config_dir" value="$(find-pkg-share $(var perception_config_pkg))/config"/>
+
+  <!-- Pipeline junctions -->
+  <arg name="launch_dummy_perception" default="true" description="launch dummy perception publisher as the detection stage"/>
+  <arg name="perception/enable_detection_failure" default="true" description="enable to simulate detection failure when using dummy perception"/>
+  <arg name="perception/enable_object_recognition" default="false" description="enable object recognition"/>
+  <arg name="perception/enable_object_tracking" default="true" description="enable object tracking"/>
+  <arg name="perception/enable_object_prediction" default="true" description="enable object prediction"/>
+  <arg name="perception/enable_elevation_map" default="false" description="enable elevation map loader"/>
+  <arg name="perception/use_base_link_z" default="true" description="dummy perception uses base_link z axis coordinate if it is true"/>
+  <arg name="dummy_traffic_light_mode" default="empty" description="fallback mode of dummy traffic light publisher when no passthrough input arrives: 'empty', 'standalone' or 'fixed'"/>
+  <arg name="launch_occupancy_grid_map" default="true" description="launch laserscan based occupancy grid map"/>
+  <arg name="occupancy_grid_map_updater" default="binary_bayes_filter" description="options: binary_bayes_filter"/>
+  <arg name="use_pointcloud_container" default="true" description="use pointcloud container for the occupancy grid map"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="use_perception_online_evaluator" default="false" description="use perception online evaluator"/>
+  <arg name="use_perception_analytics_publisher" default="true" description="use perception analytics publisher"/>
+  <arg name="sensing/visible_range" default="300.0" description="visible range when using dummy perception"/>
+
+  <!-- External interfaces -->
+  <arg name="input/vector_map" default="/map/vector_map"/>
+  <arg name="input/obstacle_pointcloud" default="/perception/obstacle_segmentation/pointcloud"/>
+  <arg name="input/raw_pointcloud" default="no_ground/oneshot/pointcloud" description="unused in the obstacle-pointcloud-only occupancy grid map mode"/>
+  <arg name="output/traffic_signals" default="/perception/traffic_light_recognition/traffic_signals" description="output topic of the dummy traffic light publisher, which fixes it to this name"/>
+  <arg name="output/occupancy_grid_map" default="/perception/occupancy_grid_map/map"/>
+  <arg name="output/detected_objects" default="/perception/object_recognition/detection/objects"/>
+  <arg name="output/tracked_objects" default="/perception/object_recognition/tracking/objects"/>
+  <arg name="output/predicted_objects" default="/perception/object_recognition/objects"/>
+
+  <!-- Parameter paths -->
+  <arg name="laserscan_based_occupancy_grid_map_param_path" default="$(var perception_config_dir)/occupancy_grid_map/laserscan_based_occupancy_grid_map.param.yaml"/>
+  <arg name="occupancy_grid_map_updater_param_path" default="$(var perception_config_dir)/occupancy_grid_map/$(var occupancy_grid_map_updater)_updater.param.yaml"/>
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path"
+    default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/data_association_matrix.param.yaml"
+  />
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_input_channels_param_path"
+    default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/input_channels.param.yaml"
+  />
+  <arg
+    name="object_recognition_tracking_multi_object_tracker_node_param_path"
+    default="$(var perception_config_dir)/object_recognition/tracking/multi_object_tracker/multi_object_tracker_node.param.yaml"
+  />
+  <arg name="object_recognition_prediction_map_based_prediction_param_path" default="$(var perception_config_dir)/object_recognition/prediction/map_based_prediction.param.yaml"/>
+  <arg name="obstacle_segmentation_ground_segmentation_elevation_map_param_path" default="$(var perception_config_dir)/obstacle_segmentation/ground_segmentation/elevation_map_parameters.yaml"/>
+
+  <!-- Dummy perception -->
+  <group if="$(var launch_dummy_perception)">
+    <include file="$(find-pkg-share autoware_dummy_perception_publisher)/launch/dummy_perception_publisher.launch.xml">
+      <arg name="real" value="$(var perception/enable_detection_failure)"/>
+      <arg name="use_object_recognition" value="$(var perception/enable_object_recognition)"/>
+      <arg name="use_base_link_z" value="$(var perception/use_base_link_z)"/>
+      <arg name="visible_range" value="$(var sensing/visible_range)"/>
+    </include>
+  </group>
+
+  <!-- Traffic light stage: signals are relayed from the passthrough input, or generated by the configured fallback mode -->
+  <include file="$(find-pkg-share autoware_dummy_traffic_light_publisher)/launch/dummy_traffic_light_publisher.launch.xml">
+    <arg name="mode" value="$(var dummy_traffic_light_mode)"/>
+  </include>
+
+  <!-- Occupancy grid map module -->
+  <group if="$(var launch_occupancy_grid_map)">
+    <push-ros-namespace namespace="occupancy_grid_map"/>
+    <include file="$(find-pkg-share autoware_probabilistic_occupancy_grid_map)/launch/laserscan_based_occupancy_grid_map.launch.py">
+      <arg name="input_obstacle_pointcloud" value="true"/>
+      <arg name="input_obstacle_and_raw_pointcloud" value="false"/>
+      <arg name="input/obstacle_pointcloud" value="$(var input/obstacle_pointcloud)"/>
+      <arg name="input/raw_pointcloud" value="$(var input/raw_pointcloud)"/>
+      <arg name="output" value="$(var output/occupancy_grid_map)"/>
+      <arg name="param_file" value="$(var laserscan_based_occupancy_grid_map_param_path)"/>
+      <arg name="updater_type" value="$(var occupancy_grid_map_updater)"/>
+      <arg name="updater_param_file" value="$(var occupancy_grid_map_updater_param_path)"/>
+      <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+      <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+    </include>
+  </group>
+
+  <!-- Perception module -->
+  <group>
+    <push-ros-namespace namespace="perception"/>
+    <!-- Object recognition module: dummy perception provides the detections -->
+    <group if="$(var perception/enable_object_recognition)">
+      <push-ros-namespace namespace="object_recognition"/>
+      <!-- Tracking module -->
+      <group if="$(var perception/enable_object_tracking)">
+        <push-ros-namespace namespace="tracking"/>
+        <include file="$(find-pkg-share autoware_multi_object_tracker)/launch/multi_object_tracker.launch.xml">
+          <arg name="input/detection01/objects" value="$(var output/detected_objects)"/>
+          <arg name="input/detection01/channel" value="detected_objects"/>
+          <arg name="output/objects" value="$(var output/tracked_objects)"/>
+          <arg name="data_association_matrix_path" value="$(var object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path)"/>
+          <arg name="input_channels_path" value="$(var object_recognition_tracking_multi_object_tracker_input_channels_param_path)"/>
+          <arg name="tracker_setting_path" value="$(var object_recognition_tracking_multi_object_tracker_node_param_path)"/>
+        </include>
+      </group>
+      <!-- Prediction module -->
+      <group if="$(var perception/enable_object_prediction)">
+        <push-ros-namespace namespace="prediction"/>
+        <include file="$(find-pkg-share autoware_map_based_prediction)/launch/map_based_prediction.launch.xml">
+          <arg name="vector_map_topic" value="$(var input/vector_map)"/>
+          <arg name="traffic_signals_topic" value="$(var output/traffic_signals)"/>
+          <arg name="input_topic" value="$(var output/tracked_objects)"/>
+          <arg name="output_topic" value="$(var output/predicted_objects)"/>
+          <arg name="param_path" value="$(var object_recognition_prediction_map_based_prediction_param_path)"/>
+        </include>
+      </group>
+    </group>
+
+    <!-- Perception evaluator -->
+    <group if="$(var use_perception_online_evaluator)">
+      <include file="$(find-pkg-share autoware_perception_online_evaluator)/launch/perception_online_evaluator.launch.xml"/>
+    </group>
+
+    <!-- Perception analytics publisher -->
+    <group if="$(var use_perception_analytics_publisher)">
+      <include file="$(find-pkg-share autoware_perception_online_evaluator)/launch/perception_analytics_publisher.launch.xml"/>
+    </group>
+
+    <!-- Publish empty objects instead of object recognition module -->
+    <group unless="$(var perception/enable_object_recognition)">
+      <push-ros-namespace namespace="object_recognition"/>
+      <node pkg="autoware_dummy_perception_publisher" exec="empty_objects_publisher" name="empty_objects_publisher" output="screen">
+        <remap from="~/output/objects" to="$(var output/predicted_objects)"/>
+      </node>
+    </group>
+
+    <!-- Elevation map -->
+    <group if="$(var perception/enable_elevation_map)">
+      <push-ros-namespace namespace="obstacle_segmentation/elevation_map"/>
+      <node pkg="autoware_elevation_map_loader" exec="elevation_map_loader_node" name="elevation_map_loader" output="screen">
+        <remap from="output/elevation_map" to="map"/>
+        <remap from="input/pointcloud_map" to="/map/pointcloud_map"/>
+        <remap from="input/vector_map" to="/map/vector_map"/>
+        <param name="use_lane_filter" value="false"/>
+        <param name="use_inpaint" value="true"/>
+        <param name="inpaint_radius" value="1.0"/>
+        <param name="param_file_path" value="$(var obstacle_segmentation_ground_segmentation_elevation_map_param_path)"/>
+        <param name="elevation_map_directory" value="$(find-pkg-share autoware_elevation_map_loader)/data/elevation_maps"/>
+        <param name="use_elevation_map_cloud_publisher" value="false"/>
+      </node>
+    </group>
+  </group>
+</launch>
