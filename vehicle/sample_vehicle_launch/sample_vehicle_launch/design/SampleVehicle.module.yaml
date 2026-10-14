@@ -1,0 +1,90 @@
+autoware_system_design_format: 0.3.1
+
+name: SampleVehicle.module
+
+instances:
+  - name: vehicle_interface
+    entity: SampleVehicleInterface.node
+  - name: raw_vehicle_cmd_converter
+    entity: RawVehicleCmdConverter.node
+
+subscribers:
+  - name: control_cmd
+  - name: emergency_cmd
+  - name: gear_cmd
+  - name: hazard_lights_cmd
+  - name: turn_indicators_cmd
+  - name: odometry
+  - name: accel
+  - name: operation_mode_state
+
+publishers:
+  - name: status/control_mode
+  - name: status/gear_status
+  - name: status/hazard_lights_status
+  - name: status/steering_status
+  - name: status/turn_indicators_status
+  - name: status/velocity_status
+  - name: status/actuation_status
+  - name: status/battery_charge
+  - name: actuation_cmd
+  - name: doors/status
+
+servers:
+  - name: control_mode_request
+  - name: doors/command
+  - name: doors/layout
+
+connections:
+  # vehicle interface
+  - - subscriber.control_cmd
+    - vehicle_interface.subscriber.control_cmd
+  - - subscriber.emergency_cmd
+    - vehicle_interface.subscriber.emergency_cmd
+  - - subscriber.gear_cmd
+    - vehicle_interface.subscriber.gear_cmd
+  - - subscriber.hazard_lights_cmd
+    - vehicle_interface.subscriber.hazard_lights_cmd
+  - - subscriber.turn_indicators_cmd
+    - vehicle_interface.subscriber.turn_indicators_cmd
+  - - vehicle_interface.publisher.status/control_mode
+    - publisher.status/control_mode
+  - - vehicle_interface.publisher.status/gear_status
+    - publisher.status/gear_status
+  - - vehicle_interface.publisher.status/hazard_lights_status
+    - publisher.status/hazard_lights_status
+  - - vehicle_interface.publisher.status/steering_status
+    - publisher.status/steering_status
+  - - vehicle_interface.publisher.status/turn_indicators_status
+    - publisher.status/turn_indicators_status
+  - - vehicle_interface.publisher.status/velocity_status
+    - publisher.status/velocity_status
+  - - vehicle_interface.publisher.status/actuation_status
+    - publisher.status/actuation_status
+  - - vehicle_interface.publisher.status/battery_charge
+    - publisher.status/battery_charge
+  - - vehicle_interface.publisher.doors/status
+    - publisher.doors/status
+  - - vehicle_interface.server.control_mode_request
+    - server.control_mode_request
+  - - vehicle_interface.server.doors/command
+    - server.doors/command
+  - - vehicle_interface.server.doors/layout
+    - server.doors/layout
+  # raw vehicle command converter
+  - - subscriber.control_cmd
+    - raw_vehicle_cmd_converter.subscriber.control_cmd
+  - - subscriber.odometry
+    - raw_vehicle_cmd_converter.subscriber.odometry
+  - - subscriber.accel
+    - raw_vehicle_cmd_converter.subscriber.accel
+  - - subscriber.operation_mode_state
+    - raw_vehicle_cmd_converter.subscriber.operation_mode_state
+  - - vehicle_interface.publisher.status/steering_status
+    - raw_vehicle_cmd_converter.subscriber.steering
+  - - vehicle_interface.publisher.status/actuation_status
+    - raw_vehicle_cmd_converter.subscriber.actuation_status
+  - - raw_vehicle_cmd_converter.publisher.actuation_cmd
+    - vehicle_interface.subscriber.actuation_cmd
+  - - raw_vehicle_cmd_converter.publisher.actuation_cmd
+    - publisher.actuation_cmd

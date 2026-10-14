@@ -2,6 +2,131 @@
 Changelog for package tier4_simulator_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.53.0 (2026-10-13)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* refactor(localization)!: migrate tier4_localization_launch to autoware_localization_launch with a separate config package (`#1971 <https://github.com/autowarefoundation/autoware_launch/issues/1971>`_)
+  * refactor(localization)!: migrate tier4_localization_launch to autoware_localization_launch with a separate config package
+  Move the localization launch stack out of the product layer and split its
+  parameter tree into autoware_localization_config. localization.launch.xml
+  resolves every parameter file through localization_config_pkg; the launch
+  graph is unchanged.
+  * refactor(localization): move the localization design modules alongside the localization launch package
+  The localization modules move into autoware_localization_launch/design/module,
+  matching the planning and control layout; the parameter set and the wrapper
+  resolve parameter files from autoware_localization_config.
+  * refactor(localization): flatten pose/twist source selection into per-estimator junctions
+  pose_source/twist_source string parsing moves into the product component;
+  localization.launch.xml and pose_twist_estimator.launch.xml take one flag
+  per estimator plus the arbiter's pose_sources list, so a fixed system can
+  pin the junctions directly. The launch graph is unchanged.
+  * refactor(localization): restore the module-shaped launch composition
+  localization.launch.xml composes the same instances as Localization.module:
+  the util module (pose initializer and the ndt input downsampling) becomes a
+  sibling group with launch/util/util.launch.xml as the LocalizationUtil
+  counterpart, and cross-module wiring (the arbiter relay input, eagleye
+  standing in for the gnss pose) is resolved at the composition root. The
+  launch graph is unchanged.
+  * refactor(localization)!: compose localization from self-contained unit launchers
+  The all-mode entry launchers (localization.launch.xml and
+  pose_twist_estimator.launch.xml) are removed: the launch package ships one
+  launcher per unit, each resolving only its own parameters from
+  localization_config_pkg, and component_localization.launch.xml is the
+  composition root that includes only the units the selected sources need —
+  the perception layout. The unreferenced Tier4LocalizationWrapper design is
+  dropped with its launch entry. The launch graph is unchanged.
+  * style(pre-commit): autofix
+  * fix(localization): connect the automatic pose initializer in LocalizationUtil
+  Wires the pose initializer state and initialize service to
+  automatic_pose_initializer, whose node design now declares the fixed
+  API names as remap targets.
+  * chore(localization): drop the exec_depends the composition root owns
+  autoware_pose_estimator_arbiter and autoware_pose_covariance_modifier are
+  included from component_localization.launch.xml, which autoware_launch
+  declares.
+  * docs(launch): drop the stale launch diagrams and retarget the config usage example
+  Both package structure diagrams draw the localization.launch.xml composition
+  this series removes, and the autoware_launch one also draws the simulator
+  wrappers as if the root launcher called the sub launchers. The config package
+  documents the composition root as the place localization_config_pkg is set.
+  * fix(localization): resolve stop_check_enabled for every system run mode
+  The stop check belongs to a real vehicle, so any run mode other than
+  online disables it; the value is defined unconditionally so a product
+  run mode outside the in-tree set still resolves.
+  * chore(localization): carry the changelog over unedited
+  The recorded entries reference upstream pull requests by their original
+  package name, matching the control, planning and perception migrations.
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* refactor(perception)!: extract the perception parameter tree into autoware_perception_config and modularize the simulated perception pipeline (`#1955 <https://github.com/autowarefoundation/autoware_launch/issues/1955>`_)
+  * Refactor perception launch files to use autoware_perception_config package
+  - Removed the perception_config_pkg argument from multiple launch files.
+  - Updated parameter paths in various launch files to reference autoware_perception_config instead of perception_config_pkg.
+  - Ensured consistency across object recognition, obstacle segmentation, occupancy grid map, and traffic light recognition launch files.
+  - Added autoware_perception_config as a dependency in package.xml.
+  * Refactor perception launch files to use dynamic configuration paths
+  - Added a new argument `perception_config_pkg` to specify the perception configuration package.
+  - Introduced `perception_config_dir` variable to dynamically set the path for configuration files across multiple launch files.
+  - Updated parameter paths in various launch files to utilize the new dynamic configuration directory, enhancing maintainability and flexibility.
+  - Modified launch files related to object recognition, obstacle segmentation, occupancy grid mapping, and traffic light recognition to reflect these changes.
+  * chore(CODEOWNERS): remove obsolete perception config path
+  * refactor: update perception configuration for simulator launch files
+  * refactor: remove traffic light parameters from perception launch files
+  * refactor: integrate perception simulation and update tier4 simulator component
+  * chore(CODEOWNERS): restore auto-generated file
+  * refactor: add elevation map support to perception simulation and update README
+  * ci: distribute lint-autoware-system-design-format via sync-files
+  ---------
+* refactor(perception)!: modularize perception launchers into reusable feature units (`#1942 <https://github.com/autowarefoundation/autoware_launch/issues/1942>`_)
+  * refactor(launch)!: rename tier4_perception_launch to autoware_perception_launch
+  Move the package into autoware_universe_launch/ and update all
+  reference sites (components, simulator, CODEOWNERS, diagrams).
+  Pure rename; no launch topology or config changes.
+  Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+  * refactor(perception): move entry pages to autoware_launch and perception parameters into autoware_perception_launch
+  - per-mode perception entry pages live in autoware_launch/launch/components/perception
+  - the perception config tree moves from autoware_launch into autoware_perception_launch,
+  and the feature launchers default their own param paths
+  - the compare map filter params for the planning component stay in autoware_launch
+  * refactor(perception): restructure traffic light launch into designer-aligned units
+  Split traffic_light.launch.xml and its python launchers into per-scope
+  XML units (detector fine/rough/whole_image, recognition pages, fusion,
+  occlusion predictor) and rewire the perception pages and component to
+  them. The simulator runs only the merge side of traffic light
+  recognition and gains enable_object_tracking/prediction switches.
+  Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+  * refactor(launch)!: split traffic light recognition into its own component and move object-recognition orchestration into autoware_perception_launch
+  - detection.launch.xml splits into per-mode compositions
+  - the perception component is fixed to the lidar pipeline; entry pages move into
+  autoware_perception_launch as object_recognition.launch.xml
+  - tier4_perception_component becomes component_perception, with traffic light
+  recognition launched by its own component_traffic_light
+  - docs, dependencies, and the diagram follow the new layout
+  * refactor(perception)!: flatten the detection modalities into per-modality object recognition pages
+  - detection_by_tracker and the merger junctions are removed; modes reduce to
+  lidar, lidar_radar, camera, camera_lidar_radar, and camera_lidar_radar_serial
+  - each object recognition page composes its own detection, tracking, and
+  prediction stages
+  * refactor(perception)!: decompose ground segmentation into per-method pages
+  * refactor(perception): rework the serial pipeline and convert the remaining python launchers to XML
+  - the serial camera-lidar-radar pipeline uses radar tracking and
+  detection_by_tracker; perception_config_pkg selects the config-hosting package
+  - the irregular object detector and pointcloud map filter launches become XML
+  * refactor(launch)!: remove the empty dynamic object publisher option
+  * fix(perception): clean up unit interfaces and traffic light launch configurations
+  - scope each perception component include so launch configurations stay local
+  - rename the traffic light classifier plugin to TrafficLightClassifierNode and
+  gate the image decompressor behind enable_image_decompressor
+  - point the whole-image detector model paths at the tensorrt_yolox data directory
+  - drop stale model param path args from the lidar detector units
+  - make the semantic segmentation clustering interface explicit
+  - trim stale unit args and declare pointpainting_model_path in the detector pages
+  - register fusion_common.param.yaml for param sync and drop unused dependencies
+  * bring back traffic light camera configs as base and extra
+  ---------
+  Co-authored-by: Claude Fable 5 <noreply@anthropic.com>
+* Contributors: Taekjin LEE, github-actions
+
 0.52.0 (2026-06-30)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

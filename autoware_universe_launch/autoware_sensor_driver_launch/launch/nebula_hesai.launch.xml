@@ -1,0 +1,55 @@
+<launch>
+  <!-- Hesai driver loaded into a container owned by the caller -->
+  <arg name="sensor_model" description="Hesai sensor model name"/>
+  <arg name="launch_driver" default="true" description="do launch driver"/>
+  <arg name="setup_sensor" default="true" description="configure sensor"/>
+  <arg name="return_mode" default="Dual"/>
+  <arg name="sensor_ip" default="192.168.1.201" description="device ip address"/>
+  <arg name="host_ip" default="192.168.1.10" description="host ip address"/>
+  <arg name="data_port" default="2368" description="device data port number"/>
+  <arg name="gnss_port" default="10110" description="device gnss port number"/>
+  <arg name="packet_mtu_size" default="1500" description="packet mtu size"/>
+  <arg name="udp_socket_receive_buffer_size_bytes" default="5400000" description="udp socket receive buffer size"/>
+  <arg name="sync_angle" default="0" description="angle at which the sensor syncs to the timestamp"/>
+  <arg name="cut_angle" default="0.0" description="angle at which the scan is cut and published"/>
+  <arg name="min_range" default="0.3" description="minimum view range"/>
+  <arg name="max_range" default="300.0" description="maximum view range"/>
+  <arg name="cloud_min_angle" default="0" description="minimum view angle setting on device"/>
+  <arg name="cloud_max_angle" default="360" description="maximum view angle setting on device"/>
+  <arg name="rotation_speed" default="600" description="rotational frequency"/>
+  <arg name="dual_return_distance_threshold" default="0.1"/>
+  <arg name="udp_only" default="false" description="use UDP only"/>
+  <arg name="frame_id" default="lidar" description="frame id"/>
+  <arg name="use_intra_process" default="false" description="use ROS 2 component container communication"/>
+  <arg name="target_container" description="absolute path of the container to load the driver into"/>
+
+  <load_composable_node target="$(var target_container)">
+    <composable_node pkg="nebula_hesai" plugin="HesaiRosWrapper" name="hesai_ros_wrapper_node">
+      <!-- cSpell:ignore knzo25 -->
+      <!-- TODO(knzo25): fix the remapping once nebula gets updated -->
+      <remap from="pandar_points" to="pointcloud_raw_ex"/>
+      <!-- calibration_file comes from the nebula param file, resolved against sensor_model -->
+      <param from="$(find-pkg-share nebula_hesai)/config/$(var sensor_model).param.yaml" allow_substs="true"/>
+      <param name="launch_hw" value="$(var launch_driver)"/>
+      <param name="setup_sensor" value="$(var setup_sensor)"/>
+      <param name="sensor_ip" value="$(var sensor_ip)"/>
+      <param name="host_ip" value="$(var host_ip)"/>
+      <param name="data_port" value="$(var data_port)"/>
+      <param name="gnss_port" value="$(var gnss_port)"/>
+      <param name="packet_mtu_size" value="$(var packet_mtu_size)"/>
+      <param name="udp_socket_receive_buffer_size_bytes" value="$(var udp_socket_receive_buffer_size_bytes)"/>
+      <param name="return_mode" value="$(var return_mode)"/>
+      <param name="sync_angle" value="$(var sync_angle)"/>
+      <param name="cut_angle" value="$(var cut_angle)"/>
+      <param name="min_range" value="$(var min_range)"/>
+      <param name="max_range" value="$(var max_range)"/>
+      <param name="cloud_min_angle" value="$(var cloud_min_angle)"/>
+      <param name="cloud_max_angle" value="$(var cloud_max_angle)"/>
+      <param name="rotation_speed" value="$(var rotation_speed)"/>
+      <param name="dual_return_distance_threshold" value="$(var dual_return_distance_threshold)"/>
+      <param name="udp_only" value="$(var udp_only)"/>
+      <param name="frame_id" value="$(var frame_id)"/>
+      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+    </composable_node>
+  </load_composable_node>
+</launch>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Voxel downsample feature launcher for the perception common pointcloud; CPU and CUDA variants load into the shared pointcloud container. -->
+  <arg name="pointcloud_container_name"/>
+  <arg name="cuda_pointcloud_preprocessing" default="false"/>
+  <arg name="input/pointcloud"/>
+  <arg name="output/pointcloud"/>
+  <arg name="common_downsample_voxel_size_x" default="0.05"/>
+  <arg name="common_downsample_voxel_size_y" default="0.05"/>
+  <arg name="common_downsample_voxel_size_z" default="0.05"/>
+
+  <group unless="$(var cuda_pointcloud_preprocessing)">
+    <load_composable_node target="$(var pointcloud_container_name)">
+      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::PickupBasedVoxelGridDownsampleFilterComponent" name="pointcloud_downsample_node" namespace="">
+        <remap from="input" to="$(var input/pointcloud)"/>
+        <remap from="output" to="$(var output/pointcloud)"/>
+        <param name="voxel_size_x" value="$(var common_downsample_voxel_size_x)"/>
+        <param name="voxel_size_y" value="$(var common_downsample_voxel_size_y)"/>
+        <param name="voxel_size_z" value="$(var common_downsample_voxel_size_z)"/>
+        <extra_arg name="use_intra_process_comms" value="true"/>
+      </composable_node>
+    </load_composable_node>
+  </group>
+
+  <group if="$(var cuda_pointcloud_preprocessing)">
+    <load_composable_node target="$(var pointcloud_container_name)">
+      <composable_node pkg="autoware_cuda_pointcloud_preprocessor" plugin="autoware::cuda_pointcloud_preprocessor::CudaVoxelGridDownsampleFilterNode" name="pointcloud_downsample_node" namespace="">
+        <remap from="~/input/pointcloud" to="$(var input/pointcloud)"/>
+        <remap from="~/input/pointcloud/cuda" to="$(var input/pointcloud)/cuda"/>
+        <remap from="~/output/pointcloud" to="$(var output/pointcloud)"/>
+        <remap from="~/output/pointcloud/cuda" to="$(var output/pointcloud)/cuda"/>
+        <param name="voxel_size_x" value="$(var common_downsample_voxel_size_x)"/>
+        <param name="voxel_size_y" value="$(var common_downsample_voxel_size_y)"/>
+        <param name="voxel_size_z" value="$(var common_downsample_voxel_size_z)"/>
+      </composable_node>
+    </load_composable_node>
+  </group>
+</launch>
