@@ -6,7 +6,7 @@
   <arg name="launch_lane_departure_checker" default="true"/>
 
   <!-- External interfaces -->
-  <arg name="input/trajectory" default="/planning/trajectory"/>
+  <arg name="input/trajectory" default="/control/trajectory"/>
   <arg name="input/odometry" default="/localization/kinematic_state"/>
   <arg name="input/acceleration" default="/localization/acceleration"/>
   <arg name="input/steering" default="/vehicle/status/steering_status"/>

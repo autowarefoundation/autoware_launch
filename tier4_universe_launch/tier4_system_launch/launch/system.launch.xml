@@ -32,8 +32,7 @@
   <arg name="diag_status_topic" default="/diagnostics_graph/status"/>
   <arg name="diag_reset_srv" default="/diagnostics_graph/reset"/>
   <arg name="availability_converter_param_path" default="$(find-pkg-share autoware_diagnostic_graph_aggregator)/config/converter.param.yaml"/>
-  <arg name="command_mode_switcher_param_path" default="$(find-pkg-share autoware_command_mode_switcher)/config/default.param.yaml"/>
-  <arg name="command_mode_decider_param_path" default="$(find-pkg-share autoware_command_mode_decider)/config/default.param.yaml"/>
+  <arg name="driving_mode_manager_param_path" default="$(find-pkg-share autoware_driving_mode_manager)/config/driving_mode_manager.param.yaml"/>
   <arg name="mrm_state_topic" default="/system/fail_safe/mrm_state"/>
   <arg name="change_operation_mode_srv" default="/system/operation_mode/change_operation_mode"/>
   <arg name="change_autoware_control_srv" default="/system/operation_mode/change_autoware_control"/>
@@ -46,23 +45,12 @@
   <arg name="launch_rqt_robot_monitor" default="false"/>
   <arg name="launch_rqt_runtime_monitor_err" default="false"/>
 
-  <!-- temporary: control_command_gate migration -->
-  <arg name="use_control_command_gate" default="false"/>
-
   <group>
     <push-ros-namespace namespace="/system"/>
 
-    <group if="$(var use_control_command_gate)">
-      <include file="$(find-pkg-share autoware_command_mode_switcher)/launch/switcher.launch.xml">
-        <arg name="config" value="$(var command_mode_switcher_param_path)"/>
-      </include>
-    </group>
-    <group if="$(var use_control_command_gate)">
-      <include file="$(find-pkg-share autoware_command_mode_decider)/launch/decider.launch.xml">
-        <arg name="config" value="$(var command_mode_decider_param_path)"/>
-        <arg name="~/operation_mode/change_operation_mode" value="$(var change_operation_mode_srv)"/>
-        <arg name="~/operation_mode/change_autoware_control" value="$(var change_autoware_control_srv)"/>
-        <arg name="~/mrm/state" value="$(var mrm_state_topic)"/>
+    <group>
+      <include file="$(find-pkg-share autoware_driving_mode_manager)/launch/driving_mode_manager.launch.xml">
+        <arg name="config" value="$(var driving_mode_manager_param_path)"/>
       </include>
     </group>
 
@@ -111,7 +99,7 @@
     </group>
 
     <!-- MRM Operator -->
-    <group unless="$(var use_control_command_gate)">
+    <group>
       <include file="$(find-pkg-share autoware_mrm_comfortable_stop_operator)/launch/mrm_comfortable_stop_operator.launch.py">
         <arg name="config_file" value="$(var mrm_comfortable_stop_operator_param_path)"/>
       </include>
@@ -141,13 +129,6 @@
     <!-- Hazard Status Converter -->
     <group>
       <include file="$(find-pkg-share autoware_hazard_status_converter)/launch/hazard_status_converter.launch.xml"/>
-    </group>
-
-    <!-- MRM Handler -->
-    <group unless="$(var use_control_command_gate)">
-      <include file="$(find-pkg-share autoware_mrm_handler)/launch/mrm_handler.launch.xml">
-        <arg name="config_file" value="$(var mrm_handler_param_path)"/>
-      </include>
     </group>
   </group>
 
