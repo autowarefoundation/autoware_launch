@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   resolve-categories:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.build-matrix.outputs.matrix }}
     steps:
@@ -63,7 +63,7 @@ jobs:
 
   sync-params:
     needs: resolve-categories
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       max-parallel: 4
