@@ -1,0 +1,25 @@
+<launch>
+  <!-- cspell: ignore atteuler -->
+  <arg name="input/fix" default="septentrio/nav_sat_fix" description="NavSatFix from the receiver driver"/>
+  <arg name="input/atteuler" default="septentrio/atteuler" description="AttEuler heading from the receiver driver"/>
+  <arg name="input/orientation" default="septentrio/orientation" description="orientation from the receiver driver"/>
+  <arg name="output/pose" default="pose" description="MGRS pose"/>
+  <arg name="output/pose_with_covariance" default="pose_with_covariance" description="MGRS pose with covariance"/>
+  <arg name="output/fixed" default="fixed" description="fix state"/>
+
+  <!-- Septentrio Heading Converter -->
+  <node pkg="autoware_sensing_launch" name="septentrio_heading_converter" exec="septentrio_heading_converter.py">
+    <remap from="septentrio/atteuler" to="$(var input/atteuler)"/>
+    <remap from="septentrio/orientation" to="$(var input/orientation)"/>
+  </node>
+
+  <!-- NavSatFix to MGRS Pose -->
+  <include file="$(find-pkg-share autoware_gnss_poser)/launch/gnss_poser.launch.xml">
+    <arg name="input_topic_fix" value="$(var input/fix)"/>
+    <arg name="input_topic_orientation" value="$(var input/orientation)"/>
+
+    <arg name="output_topic_gnss_pose" value="$(var output/pose)"/>
+    <arg name="output_topic_gnss_pose_cov" value="$(var output/pose_with_covariance)"/>
+    <arg name="output_topic_gnss_fixed" value="$(var output/fixed)"/>
+  </include>
+</launch>

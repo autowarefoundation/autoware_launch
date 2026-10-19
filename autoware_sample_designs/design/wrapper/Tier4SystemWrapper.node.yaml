@@ -28,6 +28,46 @@ subscribers:
     message_type: autoware_planning_msgs/msg/LaneletRoute
 
 publishers:
+  - name: component_state_monitor/component/launch/sensing
+    message_type: tier4_system_msgs/msg/ModeChangeAvailable
+    qos:
+      reliability: reliable
+      durability: transient_local
+  - name: component_state_monitor/component/launch/perception
+    message_type: tier4_system_msgs/msg/ModeChangeAvailable
+    qos:
+      reliability: reliable
+      durability: transient_local
+  - name: component_state_monitor/component/launch/map
+    message_type: tier4_system_msgs/msg/ModeChangeAvailable
+    qos:
+      reliability: reliable
+      durability: transient_local
+  - name: component_state_monitor/component/launch/localization
+    message_type: tier4_system_msgs/msg/ModeChangeAvailable
+    qos:
+      reliability: reliable
+      durability: transient_local
+  - name: component_state_monitor/component/launch/planning
+    message_type: tier4_system_msgs/msg/ModeChangeAvailable
+    qos:
+      reliability: reliable
+      durability: transient_local
+  - name: component_state_monitor/component/launch/control
+    message_type: tier4_system_msgs/msg/ModeChangeAvailable
+    qos:
+      reliability: reliable
+      durability: transient_local
+  - name: component_state_monitor/component/launch/vehicle
+    message_type: tier4_system_msgs/msg/ModeChangeAvailable
+    qos:
+      reliability: reliable
+      durability: transient_local
+  - name: component_state_monitor/component/launch/system
+    message_type: tier4_system_msgs/msg/ModeChangeAvailable
+    qos:
+      reliability: reliable
+      durability: transient_local
   - name: diagnostics_graph/struct
     message_type: tier4_system_msgs/msg/DiagGraphStruct
     qos:

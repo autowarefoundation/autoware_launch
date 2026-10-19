@@ -1,0 +1,80 @@
+<launch>
+  <!-- Trajectory follower unit: the controller and the lane departure checker that watches its predicted trajectory -->
+  <arg name="trajectory_follower_mode" default="trajectory_follower_node" description="options: `trajectory_follower_node`, `smart_mpc_trajectory_follower`, `none`"/>
+  <arg name="lateral_controller_mode" default="mpc" description="lateral controller; options: `mpc`, `pure_pursuit`"/>
+  <arg name="longitudinal_controller_mode" default="pid" description="longitudinal controller; options: `pid`"/>
+  <arg name="launch_lane_departure_checker" default="true"/>
+
+  <!-- External interfaces -->
+  <arg name="input/trajectory" default="/planning/trajectory"/>
+  <arg name="input/odometry" default="/localization/kinematic_state"/>
+  <arg name="input/acceleration" default="/localization/acceleration"/>
+  <arg name="input/steering" default="/vehicle/status/steering_status"/>
+  <arg name="input/operation_mode" default="/system/operation_mode/state"/>
+  <arg name="input/steering_offset_update" default="/vehicle/calibration/steer_offset_estimator/steering_offset_update"/>
+  <arg name="input/lanelet_map_bin" default="/map/vector_map"/>
+  <arg name="input/route" default="/planning/mission_planning/route"/>
+  <arg name="input/predicted_trajectory" default="/control/trajectory_follower/lateral/predicted_trajectory" description="controller predicted trajectory as seen by the checker"/>
+
+  <!-- Parameter paths -->
+  <let name="config_dir" value="$(find-pkg-share autoware_control_config)/config"/>
+  <arg name="nearest_search_param_path" default="$(var config_dir)/common/nearest_search.param.yaml"/>
+  <arg name="trajectory_follower_node_param_path" default="$(var config_dir)/trajectory_follower/trajectory_follower_node.param.yaml"/>
+  <arg name="lat_controller_param_path" default="$(var config_dir)/trajectory_follower/lateral/$(var lateral_controller_mode).param.yaml"/>
+  <arg name="lon_controller_param_path" default="$(var config_dir)/trajectory_follower/longitudinal/$(var longitudinal_controller_mode).param.yaml"/>
+  <arg name="lane_departure_checker_param_path" default="$(var config_dir)/lane_departure_checker/lane_departure_checker.param.yaml"/>
+  <arg name="vehicle_param_file" default="$(find-pkg-share sample_vehicle_description)/config/vehicle_info.param.yaml"/>
+
+  <!-- Process placement -->
+  <arg name="target_container" default="/control/control_container" description="container that hosts the controller"/>
+  <arg name="use_intra_process" default="false"/>
+  <arg name="ld_preload_value" default=""/>
+
+  <!-- controller -->
+  <group if="$(eval &quot;'$(var trajectory_follower_mode)' == 'trajectory_follower_node'&quot;)">
+    <load_composable_node target="$(var target_container)">
+      <composable_node pkg="autoware_trajectory_follower_node" plugin="autoware::motion::control::trajectory_follower_node::Controller" name="controller_node_exe" namespace="trajectory_follower">
+        <remap from="~/input/reference_trajectory" to="$(var input/trajectory)"/>
+        <remap from="~/input/current_odometry" to="$(var input/odometry)"/>
+        <remap from="~/input/current_steering" to="$(var input/steering)"/>
+        <remap from="~/input/current_accel" to="$(var input/acceleration)"/>
+        <remap from="~/input/current_operation_mode" to="$(var input/operation_mode)"/>
+        <remap from="~/input/steering_offset_update" to="$(var input/steering_offset_update)"/>
+        <remap from="~/output/predicted_trajectory" to="lateral/predicted_trajectory"/>
+        <remap from="~/output/lateral_diagnostic" to="lateral/diagnostic"/>
+        <remap from="~/output/slope_angle" to="longitudinal/slope_angle"/>
+        <remap from="~/output/longitudinal_diagnostic" to="longitudinal/diagnostic"/>
+        <remap from="~/output/stop_reason" to="longitudinal/stop_reason"/>
+        <remap from="~/output/control_cmd" to="control_cmd"/>
+        <param name="lateral_controller_mode" value="$(var lateral_controller_mode)"/>
+        <param name="longitudinal_controller_mode" value="$(var longitudinal_controller_mode)"/>
+        <param from="$(var nearest_search_param_path)"/>
+        <param from="$(var trajectory_follower_node_param_path)"/>
+        <param from="$(var lon_controller_param_path)"/>
+        <param from="$(var lat_controller_param_path)"/>
+        <param from="$(var vehicle_param_file)"/>
+        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+      </composable_node>
+    </load_composable_node>
+  </group>
+
+  <!-- smart_mpc, under development -->
+  <group if="$(eval &quot;'$(var trajectory_follower_mode)' == 'smart_mpc_trajectory_follower'&quot;)">
+    <node pkg="autoware_smart_mpc_trajectory_follower" exec="pympc_trajectory_follower.py" name="controller_node_exe"/>
+  </group>
+
+  <!-- lane departure checker -->
+  <group if="$(var launch_lane_departure_checker)">
+    <node pkg="autoware_lane_departure_checker" exec="lane_departure_checker_node" name="lane_departure_checker_node" namespace="trajectory_follower" output="screen">
+      <env name="LD_PRELOAD" value="$(var ld_preload_value)"/>
+      <remap from="~/input/odometry" to="$(var input/odometry)"/>
+      <remap from="~/input/lanelet_map_bin" to="$(var input/lanelet_map_bin)"/>
+      <remap from="~/input/route" to="$(var input/route)"/>
+      <remap from="~/input/reference_trajectory" to="$(var input/trajectory)"/>
+      <remap from="~/input/predicted_trajectory" to="$(var input/predicted_trajectory)"/>
+      <param from="$(var nearest_search_param_path)"/>
+      <param from="$(var lane_departure_checker_param_path)"/>
+      <param from="$(var vehicle_param_file)"/>
+    </node>
+  </group>
+</launch>

@@ -1,0 +1,13 @@
+autoware_system_design_format: 0.3.1
+
+# Planning simulation: no pointcloud map, NDT pose, obstacle pointcloud or traffic signals.
+name: ComponentStateMonitor_psim.module
+
+base: ComponentStateMonitor.module
+
+remove:
+  instances:
+    - name: topic_state_monitor_pointcloud_map
+    - name: topic_state_monitor_pose_twist_fusion_filter_pose
+    - name: topic_state_monitor_obstacle_segmentation_pointcloud
+    - name: topic_state_monitor_traffic_light_recognition_traffic_signals

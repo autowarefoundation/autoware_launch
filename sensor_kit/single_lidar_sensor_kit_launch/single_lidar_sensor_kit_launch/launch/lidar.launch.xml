@@ -1,26 +1,40 @@
 <launch>
   <arg name="launch_driver" default="true"/>
   <arg name="host_ip" default="192.168.1.10"/>
-  <arg name="use_concat_filter" default="true"/>
   <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
-  <arg name="vehicle_mirror_param_file"/>
-  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="crop_box_filter_self_param_path" default="$(find-pkg-share single_lidar_sensor_kit_launch)/config/crop_box_filter_self.param.yaml"/>
+  <arg name="crop_box_filter_mirror_param_path" default="$(find-pkg-share single_lidar_sensor_kit_launch)/config/crop_box_filter_mirror.param.yaml"/>
 
   <group>
     <push-ros-namespace namespace="lidar"/>
 
     <group>
       <push-ros-namespace namespace="top"/>
-      <include file="$(find-pkg-share single_lidar_common_launch)/launch/velodyne_VLS128.launch.xml">
-        <arg name="max_range" value="250.0"/>
+      <let name="target_container" value="/sensing/lidar/top/pointcloud_preprocessor/pointcloud_container"/>
+
+      <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_container.launch.xml">
+        <arg name="container_namespace" value="/sensing/lidar/top/pointcloud_preprocessor"/>
+        <arg name="container_name" value="pointcloud_container"/>
+        <arg name="use_multithread" value="true"/>
+      </include>
+
+      <include file="$(find-pkg-share autoware_sensor_driver_launch)/launch/velodyne_VLS128.launch.xml">
+        <arg name="target_container" value="$(var target_container)"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
         <arg name="sensor_frame" value="velodyne_top"/>
+        <arg name="max_range" value="250.0"/>
         <arg name="sensor_ip" value="192.168.1.201"/>
         <arg name="host_ip" value="$(var host_ip)"/>
         <arg name="data_port" value="2368"/>
         <arg name="scan_phase" value="300.0"/>
-        <arg name="launch_driver" value="$(var launch_driver)"/>
-        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
-        <arg name="container_name" value="pointcloud_container"/>
+      </include>
+
+      <include file="$(find-pkg-share autoware_sensing_launch)/launch/pointcloud_preprocessor_cpu.launch.xml">
+        <arg name="target_container" value="$(var target_container)"/>
+        <arg name="frame_id" value="velodyne_top"/>
+        <arg name="use_intra_process" value="true"/>
+        <arg name="crop_box_filter_self_param_path" value="$(var crop_box_filter_self_param_path)"/>
+        <arg name="crop_box_filter_secondary_param_path" value="$(var crop_box_filter_mirror_param_path)"/>
       </include>
     </group>
   </group>
