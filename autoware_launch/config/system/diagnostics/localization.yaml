@@ -16,6 +16,7 @@ units:
     type: diag
     node: /adapi/node/localization
     name: state
+    timeout: 3.0
 
   - path: /autoware/localization/topic_rate_check/transform
     type: diag
