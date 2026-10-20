@@ -8,6 +8,7 @@ units:
       - { type: link, link: /autoware/control/emergency_braking }
       - { type: link, link: /autoware/control/performance_monitoring/lane_departure }
       - { type: link, link: /autoware/control/performance_monitoring/control_state }
+      - { type: link, link: /autoware/control/incoming_message_timeout }
 
   - path: /autoware/control/node_alive_monitoring/command_gate
     type: or
@@ -71,3 +72,8 @@ units:
     type: diag
     node: external_cmd_converter
     name: remote_control_topic_status
+
+  - path: /autoware/control/incoming_message_timeout
+    type: diag
+    node: controller_node_exe
+    name: incoming_message_timeout
