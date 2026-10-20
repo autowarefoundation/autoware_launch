@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   resolve-categories:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.build-matrix.outputs.matrix }}
     steps:
@@ -32,7 +32,7 @@ jobs:
 
   # the test for script itself is done here for every PR until we move the workflow to a separate repository.
   test-sync-params-script:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -52,7 +52,7 @@ jobs:
 
   check-params-per-category:
     needs: resolve-categories
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -78,7 +78,7 @@ jobs:
   check-params:
     needs: [check-params-per-category, test-sync-params-script]
     if: ${{ always() }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Evaluate per-category results
         run: |
