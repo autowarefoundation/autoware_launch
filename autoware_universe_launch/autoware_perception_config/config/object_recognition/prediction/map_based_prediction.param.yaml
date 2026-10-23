@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/fc3aebb2eb354ea96199465408383a0d95460d3a/perception/autoware_map_based_prediction/config/map_based_prediction.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/2cee5373ad006bda0031b5194ad19ef46cb0decb/perception/autoware_map_based_prediction/config/map_based_prediction.param.yaml
 
 /**:
   ros__parameters:
@@ -50,6 +50,10 @@
     no_crossing_intention_duration: 1.0 # [s] Minimum duration that lack of crossing intention must continuously persist to be judged as false
 
     # parameters for lc prediction
+    lane_change_path_suppression:
+      enable: true
+      keep_when_lane_ends: true
+      lane_end_rescue_time_horizon: 5.0
     lane_change_detection:
       method: "lat_diff_distance" # choose from "lat_diff_distance" or "time_to_change_lane"
       time_to_change_lane:
