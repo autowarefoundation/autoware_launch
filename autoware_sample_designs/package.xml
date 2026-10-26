@@ -16,6 +16,7 @@
   <depend>autoware_system_designer</depend>
 
   <exec_depend>autoware_adapi_adaptors</exec_depend>
+  <exec_depend>autoware_agnocast_wrapper</exec_depend>
   <exec_depend>autoware_default_adapi_universe</exec_depend>
   <exec_depend>autoware_global_parameter_loader</exec_depend>
   <exec_depend>autoware_launch</exec_depend>
