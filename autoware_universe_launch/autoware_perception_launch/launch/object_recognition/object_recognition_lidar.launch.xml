@@ -151,7 +151,9 @@
   <group>
     <push-ros-namespace namespace="tracking"/>
 
-    <let name="input/detection01/channel" value="lidar_$(var lidar_detection_model_type)"/>
+    <!-- With the clustering model, the ML channel would duplicate detection03's lidar_clustering channel -->
+    <let name="input/detection01/channel" value="lidar_$(var lidar_detection_model_type)" unless="$(eval &quot;'$(var lidar_detection_model_type)' == 'clustering'&quot;)"/>
+    <let name="input/detection01/channel" value="none" if="$(eval &quot;'$(var lidar_detection_model_type)' == 'clustering'&quot;)"/>
     <let name="input/detection01/objects" value="$(var lidar_object_filter/output/objects)" if="$(var use_validator)"/>
     <let name="input/detection01/objects" value="$(var lidar_ml_detector/output/objects)" unless="$(var use_validator)"/>
 
