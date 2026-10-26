@@ -59,6 +59,7 @@
   <exec_depend>autoware_agnocast_wrapper</exec_depend>
   <exec_depend>autoware_behavior_path_planner</exec_depend>
   <exec_depend>autoware_behavior_velocity_planner</exec_depend>
+  <exec_depend>autoware_candidate_bank</exec_depend>
   <exec_depend>autoware_costmap_generator</exec_depend>
   <exec_depend>autoware_diffusion_planner</exec_depend>
   <exec_depend>autoware_external_cmd_selector</exec_depend>

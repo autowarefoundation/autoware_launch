@@ -8,6 +8,7 @@
 
   <!-- Pipeline junctions -->
   <arg name="planning_setting" default="rule_based" description="trajectory source; options: `rule_based`, `diffusion_planner`"/>
+  <arg name="enable_candidate_bank" default="false" description="insert autoware_candidate_bank between the diffusion planner and the trajectory modifier"/>
   <arg name="enable_all_modules_auto_mode" default="false"/>
   <arg name="is_simulation" default="false"/>
   <arg name="launch_remaining_distance_time_calculator" default="false"/>
@@ -119,6 +120,7 @@
 
   <!-- Parameter paths: neural network based planner -->
   <arg name="diffusion_planner_param_path" default="$(var neural_net_planner_config_dir)/diffusion_planner.param.yaml"/>
+  <arg name="candidate_bank_param_path" default="$(var neural_net_planner_config_dir)/candidate_bank.param.yaml"/>
   <arg name="trajectory_modifier_param_path" default="$(var neural_net_planner_config_dir)/trajectory_modifier.param.yaml"/>
   <arg name="jerk_filtered_smoother_param_path" default="$(var planning_common_config_dir)/autoware_velocity_smoother/JerkFiltered.param.yaml"/>
   <arg name="common_smoother_param_path" default="$(var planning_common_config_dir)/common.param.yaml"/>
@@ -169,6 +171,9 @@
         <arg name="input_pointcloud_topic_name" value="$(var input_pointcloud_topic_name)"/>
         <arg name="data_path" value="$(var data_path)"/>
         <arg name="diffusion_planner_param_path" value="$(var diffusion_planner_param_path)"/>
+        <arg name="enable_candidate_bank" value="$(var enable_candidate_bank)"/>
+        <arg name="candidate_bank_param_path" value="$(var candidate_bank_param_path)"/>
+        <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
         <arg name="trajectory_modifier_param_path" value="$(var trajectory_modifier_param_path)"/>
         <arg name="jerk_filtered_smoother_param_path" value="$(var jerk_filtered_smoother_param_path)"/>
         <arg name="velocity_smoother_param_path" value="$(var velocity_smoother_param_path)"/>
