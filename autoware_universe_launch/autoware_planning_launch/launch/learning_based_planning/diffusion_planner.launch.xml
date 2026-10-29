@@ -9,8 +9,8 @@
   <arg name="input_tracked_objects_topic_name" default="/perception/object_recognition/tracking/objects"/>
   <arg name="input_pointcloud_topic_name" default="/perception/obstacle_segmentation/pointcloud"/>
 
-  <!-- trajectory processor -->
-  <arg name="trajectory_processor_param_path"/>
+  <!-- trajectory modifier -->
+  <arg name="trajectory_modifier_param_path"/>
   <arg name="jerk_filtered_smoother_param_path"/>
   <arg name="velocity_smoother_param_path"/>
   <arg name="common_smoother_param_path"/>
@@ -48,8 +48,8 @@
         <arg name="output_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
         <arg name="output_turn_indicators" value="/planning/turn_indicators_cmd"/>
       </include>
-      <include file="$(find-pkg-share autoware_trajectory_processor)/launch/trajectory_processor.launch.xml">
-        <arg name="trajectory_processor_param_path" value="$(var trajectory_processor_param_path)"/>
+      <include file="$(find-pkg-share autoware_trajectory_modifier)/launch/trajectory_modifier.launch.xml">
+        <arg name="trajectory_modifier_param_path" value="$(var trajectory_modifier_param_path)"/>
         <arg name="input_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
         <arg name="input_odometry" value="/localization/kinematic_state"/>
         <arg name="input_acceleration" value="/localization/acceleration"/>

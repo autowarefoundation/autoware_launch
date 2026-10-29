@@ -11,10 +11,11 @@ instances:
 subscribers:
   - name: pointcloud
   - name: pointcloud_map
-  - name: service_pointcloud_map_diff
   - name: kinematic_state
 publishers:
   - name: filtered_pointcloud
+clients:
+  - name: service_pointcloud_map_diff
 
 connections:
   - - subscriber.pointcloud

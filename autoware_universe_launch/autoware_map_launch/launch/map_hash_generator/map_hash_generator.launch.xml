@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Map hash unit: identifies the loaded map for the AD API and serves the raw lanelet2 XML -->
+  <arg name="lanelet2_map_path" description="lanelet2 map file or directory path"/>
+  <arg name="pointcloud_map_path" description="pointcloud map file or directory path"/>
+
+  <node pkg="autoware_map_loader" exec="map_hash_generator" name="map_hash_generator">
+    <param name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
+    <param name="pointcloud_map_path" value="$(var pointcloud_map_path)"/>
+  </node>
+</launch>

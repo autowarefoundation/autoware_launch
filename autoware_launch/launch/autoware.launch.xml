@@ -83,7 +83,11 @@
 
   <!-- Map -->
   <group if="$(var launch_map)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_map_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/component_map.launch.xml">
+      <arg name="map_path" value="$(var map_path)"/>
+      <arg name="lanelet2_map_file" value="$(var lanelet2_map_file)"/>
+      <arg name="pointcloud_map_file" value="$(var pointcloud_map_file)"/>
+    </include>
   </group>
 
   <!-- Sensing -->
@@ -95,7 +99,11 @@
 
   <!-- Localization -->
   <group if="$(var launch_localization)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_localization_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/component_localization.launch.xml">
+      <arg name="system_run_mode" value="$(var system_run_mode)"/>
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
   </group>
 
   <!-- Perception -->

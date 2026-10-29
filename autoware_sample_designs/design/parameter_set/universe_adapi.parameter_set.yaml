@@ -1,0 +1,8 @@
+autoware_system_design_format: 0.3.0
+
+name: universe_adapi.parameter_set
+parameters:
+  - node: /adapi/node/manual/remote
+    param_values:
+      - name: mode
+        value: remote

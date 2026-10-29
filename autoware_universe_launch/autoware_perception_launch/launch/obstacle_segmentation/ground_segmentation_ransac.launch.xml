@@ -26,14 +26,6 @@
         <param name="input_twist_topic_type" value="odom"/>
         <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
       </composable_node>
-      <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="short_height_obstacle_detection_area_filter">
-        <remap from="input" to="concatenated/pointcloud"/>
-        <remap from="output" to="detection_area/pointcloud"/>
-        <param from="$(var detection_area_crop_box_filter_node_param_path)" allow_substs="true"/>
-        <param name="input_frame" value="$(var base_frame)"/>
-        <param name="output_frame" value="$(var base_frame)"/>
-        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-      </composable_node>
       <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::Lanelet2MapFilterComponent" name="vector_map_filter">
         <remap from="input/pointcloud" to="detection_area/pointcloud"/>
         <remap from="input/vector_map" to="/map/vector_map"/>
@@ -50,6 +42,15 @@
         <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
       </composable_node>
     </load_composable_node>
+
+    <autoware_node pkg="autoware_pointcloud_preprocessor" exec="crop_box_filter_node" name="short_height_obstacle_detection_area_filter" target="$(var target_container)">
+      <remap from="input" to="concatenated/pointcloud"/>
+      <remap from="output" to="detection_area/pointcloud"/>
+      <param from="$(var detection_area_crop_box_filter_node_param_path)" allow_substs="true"/>
+      <param name="input_frame" value="$(var base_frame)"/>
+      <param name="output_frame" value="$(var base_frame)"/>
+      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+    </autoware_node>
   </group>
 
   <load_composable_node target="$(var target_container)">

@@ -23,23 +23,22 @@
   />
   <arg name="sync_param_path" default="$(var perception_config_dir)/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml"/>
 
-  <load_composable_node target="$(var target_container)">
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::CropBoxFilterComponent" name="crop_box_filter">
-      <remap from="input" to="$(var input/pointcloud)"/>
-      <remap from="input/concatenation_info" to="$(var input/concatenation_info)"/>
-      <remap from="output" to="cropped_range/pointcloud"/>
-      <param from="$(var crop_box_filter_node_param_path)"/>
-      <param name="input_frame" value="$(var base_frame)"/>
-      <param name="output_frame" value="$(var base_frame)"/>
-      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-    </composable_node>
-    <composable_node pkg="autoware_ground_segmentation" plugin="autoware::ground_segmentation::ScanGroundFilterComponent" name="ground_filter">
-      <remap from="input" to="cropped_range/pointcloud"/>
-      <remap from="output" to="obstacle_segmentation/pointcloud"/>
-      <param from="$(var scan_ground_filter_node_param_path)"/>
-      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-    </composable_node>
-  </load_composable_node>
+  <autoware_node pkg="autoware_pointcloud_preprocessor" exec="crop_box_filter_node" name="crop_box_filter" target="$(var target_container)">
+    <remap from="input" to="$(var input/pointcloud)"/>
+    <remap from="input/concatenation_info" to="$(var input/concatenation_info)"/>
+    <remap from="output" to="cropped_range/pointcloud"/>
+    <param from="$(var crop_box_filter_node_param_path)"/>
+    <param name="input_frame" value="$(var base_frame)"/>
+    <param name="output_frame" value="$(var base_frame)"/>
+    <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+  </autoware_node>
+
+  <autoware_node pkg="autoware_ground_segmentation" exec="scan_ground_filter_node" name="ground_filter" target="$(var target_container)">
+    <remap from="input" to="cropped_range/pointcloud"/>
+    <remap from="output" to="obstacle_segmentation/pointcloud"/>
+    <param from="$(var scan_ground_filter_node_param_path)"/>
+    <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+  </autoware_node>
 
   <!-- Provides ld_preload_value for the fusion node process -->
   <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>

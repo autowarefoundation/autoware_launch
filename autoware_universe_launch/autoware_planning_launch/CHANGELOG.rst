@@ -2,6 +2,78 @@
 Changelog for package tier4_planning_launch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.53.0 (2026-10-13)
+-------------------
+* Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base
+* feat(autoware_sample_designs): compose the AD API, system and vehicle components from design modules (`#1976 <https://github.com/autowarefoundation/autoware_launch/issues/1976>`_)
+  * fix(control, planning): connect the operation mode state and velocity limit inputs
+  Wires collision_detector's operation_mode_state and
+  remaining_distance_time_calculator's planning_velocity through the
+  module designs; their node designs now declare the fixed topic names
+  as remap targets.
+  * fix(planning): connect the internal velocity limit path to the selector
+  Forwards motion_velocity_planner's velocity_limit and clear_velocity_limit
+  up to ScenarioPlanning and feeds them into external_velocity_limit_selector,
+  whose internal inputs were unconnected.
+  * fix(control, planning): connect the remaining module inputs to their sources
+  Wires the operation mode transition manager's gate and selector inputs,
+  the stop mode operator's vehicle status, the manual lane change handler's
+  route availability and preferred primitive service, the parking costmap,
+  and the route marker. Exposes the vehicle control mode service, the
+  preferred lane service and the system hazard lights command as component
+  interfaces.
+  * fix(planning): follow the hazard lights selector input rename
+  * fix(planning): add steering_status subscriber to various planning modules
+  * feat(vehicle): add vehicle wrapper and launch file for vehicle interface
+  * style(pre-commit): autofix
+  * fix(planning): add planning factors publishers and connections for various modules
+  * refactor(autoware_sample_designs): compose the AD API from design modules
+  * Refactor ADAPI module structure and enhance planning factors
+  - Updated AdapiRvizHelpers.module.yaml to include helper prefixes for instances and connections.
+  - Modified AutowareSample.system.yaml to reorganize ADAPI components, introducing default_adapi for better structure.
+  - Expanded planning factors in Planning.module.yaml, LaneDriving.module.yaml, ScenarioPlanning.module.yaml, and associated modules to include additional factors for improved behavior and motion planning.
+  - Enhanced connections in behavior planning and motion planning modules to accommodate new planning factors.
+  - Ensured consistency across scenario planning modules by aligning publisher and subscriber connections for new planning factors.
+  * refactor: reorganize clients and servers in module configurations
+  * fix(control): drop the collision detector operation mode link bound globally by the node design
+  * implement system modules
+  * vehicle modules and nodes, need validations
+  * fix api topic remapped
+  * reorganize to adapi and api
+  * fix: update perception obstacle segmentation filters for clarity and functionality
+  * refactor: update trigger conditions and outcomes in topic tools configuration
+  ---------
+  Co-authored-by: pre-commit-ci[bot] <66853113+pre-commit-ci[bot]@users.noreply.github.com>
+* chore(autoware_trajectory_processor): rename to autoware_trajectory_modifier (`#1986 <https://github.com/autowarefoundation/autoware_launch/issues/1986>`_)
+  rename processor -> modifier
+* refactor(planning): migrate planning design modules to autoware_planning_launch (`#1967 <https://github.com/autowarefoundation/autoware_launch/issues/1967>`_)
+  * refactor(planning): migrate planning design modules to autoware_planning_launch
+  Planning.module and its sub-modules move from autoware_sample_designs into
+  autoware_planning_launch/design/module/, laid out on the same subtree as
+  launch/.
+  * chore(package): add Maxime CLEMENT as a maintainer in package.xml
+  ---------
+* refactor(planning)!: migrate tier4_planning_launch to autoware_planning_launch with a separate config package (`#1954 <https://github.com/autowarefoundation/autoware_launch/issues/1954>`_)
+  * Add autoware_planning_launch package and related files
+  - Created package.xml for autoware_planning_launch with dependencies and maintainers.
+  - Added planning_launch.drawio.svg for visual representation of the planning launch structure.
+  - Removed obsolete README.md and planning.launch.xml from tier4_planning_launch.
+  * feat(planning): make the diffusion planner tracked objects topic configurable
+  Expose the tracked objects topic as `input_tracked_objects_topic_name`
+  alongside the objects and pointcloud topics, plumbed from the planning
+  component down to the diffusion planner unit.
+  * refactor(planning): drop the redundant group around the planning component include
+  `<group>` is scoped by default, so the conditional group already bounds the
+  component's launch configurations. The extra group is only needed where sibling
+  component includes share a scope.
+  * Update .github/CODEOWNERS
+  Co-authored-by: Shumpei Wakabayashi <42209144+shmpwk@users.noreply.github.com>
+  * refactor: update CODEOWNERS and package maintainers for planning components
+  * chore: restore auto-generated CODEOWNERS
+  ---------
+  Co-authored-by: Shumpei Wakabayashi <42209144+shmpwk@users.noreply.github.com>
+* Contributors: Maxime CLEMENT, Taekjin LEE, github-actions
+
 0.52.0 (2026-06-30)
 -------------------
 * Merge remote-tracking branch 'origin/main' into tmp/bot/bump_version_base

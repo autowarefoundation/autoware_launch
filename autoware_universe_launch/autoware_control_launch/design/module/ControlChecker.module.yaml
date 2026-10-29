@@ -21,7 +21,6 @@ subscribers:
   - name: velocity_status
   - name: imu
   - name: operation_mode_state
-  - name: api_operation_mode_state
   - name: autoware_state
   - name: objects
   - name: pointcloud
@@ -64,5 +63,3 @@ connections:
     - collision_detector.subscriber.pointcloud
   - - subscriber.objects
     - collision_detector.subscriber.objects
-  - - subscriber.api_operation_mode_state
-    - collision_detector.subscriber.operation_mode_state

@@ -6,7 +6,7 @@ on:
 
 jobs:
   autoware-guideline-check:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     container: ros:humble-ros-core-jammy
     steps:
       - name: Check out repository

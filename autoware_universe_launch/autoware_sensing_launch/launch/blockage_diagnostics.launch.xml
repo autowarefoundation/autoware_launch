@@ -21,19 +21,17 @@
     description="path to parameter file of blockage diagnostics node"
   />
 
-  <load_composable_node target="$(var target_container)">
-    <composable_node pkg="autoware_pointcloud_preprocessor" plugin="autoware::pointcloud_preprocessor::BlockageDiagComponent" name="$(var node_name)">
-      <remap from="input" to="$(var input/pointcloud)"/>
-      <remap from="output" to="$(var output/pointcloud)"/>
-      <param from="$(var blockage_diagnostics_param_path)"/>
-      <!-- Values are yaml-typed at load time; angle_range items and the ranges must be float-formatted -->
-      <param name="angle_range" value="$(var angle_range)"/>
-      <param name="horizontal_ring_id" value="$(var horizontal_ring_id)"/>
-      <param name="vertical_bins" value="$(var vertical_bins)"/>
-      <param name="is_channel_order_top2down" value="$(var is_channel_order_top2down)"/>
-      <param name="max_distance_range" value="$(var max_range)"/>
-      <param name="horizontal_resolution" value="$(var horizontal_resolution)"/>
-      <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
-    </composable_node>
-  </load_composable_node>
+  <autoware_node pkg="autoware_pointcloud_preprocessor" exec="blockage_diag_node" name="$(var node_name)" target="$(var target_container)">
+    <remap from="input" to="$(var input/pointcloud)"/>
+    <remap from="output" to="$(var output/pointcloud)"/>
+    <param from="$(var blockage_diagnostics_param_path)"/>
+    <!-- Values are yaml-typed at load time; angle_range items and the ranges must be float-formatted -->
+    <param name="angle_range" value="$(var angle_range)"/>
+    <param name="horizontal_ring_id" value="$(var horizontal_ring_id)"/>
+    <param name="vertical_bins" value="$(var vertical_bins)"/>
+    <param name="is_channel_order_top2down" value="$(var is_channel_order_top2down)"/>
+    <param name="max_distance_range" value="$(var max_range)"/>
+    <param name="horizontal_resolution" value="$(var horizontal_resolution)"/>
+    <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+  </autoware_node>
 </launch>
