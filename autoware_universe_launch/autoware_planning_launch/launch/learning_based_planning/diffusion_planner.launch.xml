@@ -4,6 +4,16 @@
   <arg name="data_path"/>
   <arg name="diffusion_planner_param_path"/>
 
+  <!-- candidate bank -->
+  <arg name="enable_candidate_bank" default="false"/>
+  <arg name="candidate_bank_param_path"/>
+  <arg name="vehicle_param_file"/>
+  <!-- when the candidate bank is enabled, the diffusion planner publishes raw outputs and the bank republishes the selected ones on the original topics -->
+  <let name="diffusion_planner_output_trajectories_topic" value="/planning/generator/diffusion_planner/candidate_trajectories" unless="$(var enable_candidate_bank)"/>
+  <let name="diffusion_planner_output_trajectories_topic" value="candidate_bank/raw/trajectories" if="$(var enable_candidate_bank)"/>
+  <let name="diffusion_planner_output_trajectory_topic" value="diffusion_planner_node/output/trajectory" unless="$(var enable_candidate_bank)"/>
+  <let name="diffusion_planner_output_trajectory_topic" value="candidate_bank/raw/trajectory" if="$(var enable_candidate_bank)"/>
+
   <!-- input topic parameters -->
   <arg name="input_objects_topic_name" default="/perception/object_recognition/objects"/>
   <arg name="input_tracked_objects_topic_name" default="/perception/object_recognition/tracking/objects"/>
@@ -45,9 +55,26 @@
         <arg name="input_vector_map" value="/map/vector_map"/>
         <arg name="input_turn_indicators" value="/vehicle/status/turn_indicators_status"/>
         <arg name="debug/output_traffic_signal" value="/planning/scenario_planning/lane_driving/behavior_planning/debug/traffic_signal"/>
-        <arg name="output_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
+        <arg name="output_trajectory" value="$(var diffusion_planner_output_trajectory_topic)"/>
+        <arg name="output_trajectories" value="$(var diffusion_planner_output_trajectories_topic)"/>
         <arg name="output_turn_indicators" value="/planning/turn_indicators_cmd"/>
       </include>
+      <!-- candidate bank: re-evaluates the diffusion planner candidates against the latest state and selects one -->
+      <group if="$(var enable_candidate_bank)">
+        <include file="$(find-pkg-share autoware_candidate_bank)/launch/candidate_bank.launch.xml">
+          <arg name="candidate_bank_param_path" value="$(var candidate_bank_param_path)"/>
+          <arg name="vehicle_info_param_path" value="$(var vehicle_param_file)"/>
+          <arg name="input_trajectories" value="candidate_bank/raw/trajectories"/>
+          <arg name="input_predicted_objects" value="diffusion_planner_node/output/predicted_objects"/>
+          <arg name="input_odometry" value="/localization/kinematic_state"/>
+          <arg name="input_tracked_objects" value="$(var input_tracked_objects_topic_name)"/>
+          <arg name="input_route" value="/planning/mission_planning/route"/>
+          <arg name="input_vector_map" value="/map/vector_map"/>
+          <arg name="input_traffic_signals" value="/perception/traffic_light_recognition/traffic_signals"/>
+          <arg name="output_trajectory" value="diffusion_planner_node/output/trajectory"/>
+          <arg name="output_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
+        </include>
+      </group>
       <include file="$(find-pkg-share autoware_trajectory_modifier)/launch/trajectory_modifier.launch.xml">
         <arg name="trajectory_modifier_param_path" value="$(var trajectory_modifier_param_path)"/>
         <arg name="input_trajectories" value="/planning/generator/diffusion_planner/candidate_trajectories"/>
