@@ -9,7 +9,11 @@
   <arg name="output/pointcloud" default="pointcloud_before_sync"/>
 
   <arg name="crop_box_param_path" description="file carrying the folded crop_box stage lists"/>
-  <arg name="cuda_pointcloud_preprocessor_node_param_path" default="$(find-pkg-share autoware_sensing_launch)/config/cuda_pointcloud_preprocessor_node.param.yaml" description="parameters of the folded CUDA node itself (input capacity, twist/imu rates, output point type)"/>
+  <arg
+    name="cuda_pointcloud_preprocessor_node_param_path"
+    default="$(find-pkg-share autoware_sensing_launch)/config/cuda_pointcloud_preprocessor_node.param.yaml"
+    description="parameters of the folded CUDA node itself (input capacity, twist/imu rates, output point type)"
+  />
   <arg name="distortion_corrector_node_param_path" default="$(find-pkg-share autoware_sensing_launch)/config/distortion_corrector_node.param.yaml"/>
   <arg name="ring_outlier_filter_node_param_path" default="$(find-pkg-share autoware_sensing_launch)/config/ring_outlier_filter_node.param.yaml"/>
 
