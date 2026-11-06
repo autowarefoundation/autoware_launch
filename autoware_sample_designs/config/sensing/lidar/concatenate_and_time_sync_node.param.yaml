@@ -11,6 +11,7 @@
     synchronized_pointcloud_postfix: pointcloud
     input_twist_topic_type: twist
     output_frame: base_link
+    output_point_type: XYZIRC
     matching_strategy:
       type: advanced
       lidar_timestamp_offsets: [0.0, 0.015, 0.016]
