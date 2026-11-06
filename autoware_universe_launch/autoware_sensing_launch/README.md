@@ -13,7 +13,7 @@ Units that load composable nodes take the target container as an absolute path (
 - `pointcloud_container.launch.xml` — component container for one sensor unit, created at `container_namespace/container_name`; `use_multithread` selects `component_container_mt`.
 - `pointcloud_crop_boxes.launch.xml` — vehicle body crop box followed by a secondary crop box, loaded into an existing container. Used on its own where the remaining preprocessing stages do not apply.
 - `pointcloud_preprocessor_cpu.launch.xml` — per-lidar preprocessing chain: the crop box unit, then distortion correction and ring outlier filter, loaded into an existing container. The secondary crop box is named by `secondary_crop_box` (e.g. `mirror`, `wheels`).
-- `pointcloud_preprocessor_cuda.launch.xml` — the same chain folded into one CUDA node; crop box stages come as folded lists in `crop_box_param_path`.
+- `pointcloud_preprocessor_cuda.launch.xml` — the same chain folded into one CUDA node; crop box stages come as folded lists in `crop_box_param_path`, the node's own parameters from `cuda_pointcloud_preprocessor_node_param_path`.
 - `pointcloud_concatenation_cpu.launch.xml`, `pointcloud_concatenation_cuda.launch.xml` — multi-lidar concatenation with time synchronization; the kit passes its `concatenate_and_time_sync_node_param_path` (input topic list is kit-specific).
 - `blockage_diagnostics.launch.xml` — blockage diagnostics on the raw pointcloud; `angle_range` defaults to the configured device angles (float-formatted).
 - `gnss_postprocessor.launch.xml` — septentrio heading converter plus NavSatFix-to-MGRS pose (`autoware_gnss_poser`).
@@ -23,6 +23,7 @@ Units that load composable nodes take the target container as an absolute path (
 ## Config
 
 - `distortion_corrector_node.param.yaml`, `ring_outlier_filter_node.param.yaml` — shared preprocessing defaults; kits with different sensors or thresholds pass their own file via the `*_param_path` arguments (the outlier shape parameters such as `vertical_bins` only take effect when `publish_outlier_pointcloud` is enabled).
+- `cuda_pointcloud_preprocessor_node.param.yaml` — parameters of the folded CUDA preprocessor node that the CPU chain does not have: input point capacity, maximum twist/imu rates and the output point type.
 - `blockage_diagnostics.param.yaml` — blockage diagnostics defaults; runtime shape parameters (angle range, bins) are set per sensor via launch arguments.
 - `radar_tracks_msgs_converter.param.yaml`, `radar_tracks_noise_filter.param.yaml` — radar postprocessing defaults.
 
