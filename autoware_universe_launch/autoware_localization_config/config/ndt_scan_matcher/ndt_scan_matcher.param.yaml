@@ -9,7 +9,7 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_core/blob/36742b5a9da2b53701ee7374ff021b3db4f388f3/localization/autoware_ndt_scan_matcher/config/ndt_scan_matcher.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_core/blob/28dce945f2969a29946c53c6b05e136ab715770a/localization/autoware_ndt_scan_matcher/config/ndt_scan_matcher.param.yaml
 
 /**:
   ros__parameters:
