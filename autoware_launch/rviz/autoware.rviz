@@ -364,6 +364,7 @@ Visualization Manager:
             Value: /map/vector_map_marker
           Value: true
         - Class: autoware_minimap_overlay_rviz_plugin/MinimapDisplay
+          Enabled: true
           Name: Minimap
           Width: 320
           Height: 320
@@ -376,7 +377,6 @@ Visualization Manager:
           Zoom: 17
           View: 3D
           Map Style: Navigation Dark
-          Enabled: true
           Value: true
       Enabled: true
       Name: Map
