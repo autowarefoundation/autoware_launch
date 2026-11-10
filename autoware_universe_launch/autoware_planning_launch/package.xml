@@ -8,9 +8,7 @@
   <!-- lane change module -->
   <maintainer email="zulfaqar.azmi@tier4.jp">Zulfaqar Azmi</maintainer>
   <!-- goal planner module -->
-  <maintainer email="kosuke.takeuchi@tier4.jp">Kosuke Takeuchi</maintainer>
   <!-- start planner module -->
-  <maintainer email="kosuke.takeuchi@tier4.jp">Kosuke Takeuchi</maintainer>
   <!-- side shift module -->
   <maintainer email="fumiya.watanabe@tier4.jp">Fumiya Watanabe</maintainer>
   <!-- avoidance module -->
@@ -29,7 +27,6 @@
   <!-- occlusion spot module -->
   <maintainer email="taiki.tanaka@tier4.jp">Taiki Tanaka</maintainer>
   <!-- no stopping area module -->
-  <maintainer email="kosuke.takeuchi@tier4.jp">Kosuke Takeuchi</maintainer>
   <!-- traffic light module -->
   <!-- blind spot module -->
   <maintainer email="mamoru.sobue@tier4.jp">Mamoru Sobue</maintainer>
@@ -37,7 +34,6 @@
   <maintainer email="fumiya.watanabe@tier4.jp">Fumiya Watanabe</maintainer>
   <maintainer email="zhe.shen@tier4.jp">Zhe Shen</maintainer>
   <!-- virtual traffic light module -->
-  <maintainer email="kosuke.takeuchi@tier4.jp">Kosuke Takeuchi</maintainer>
   <!-- run out module -->
   <maintainer email="tomohito.ando@tier4.jp">Tomohito Ando</maintainer>
   <maintainer email="makoto.kurihara@tier4.jp">Makoto Kurihara</maintainer>
