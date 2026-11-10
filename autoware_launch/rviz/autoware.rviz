@@ -363,6 +363,21 @@ Visualization Manager:
             Reliability Policy: Reliable
             Value: /map/vector_map_marker
           Value: true
+        - Class: autoware_minimap_overlay_rviz_plugin/MinimapDisplay
+          Name: Minimap
+          Width: 320
+          Height: 320
+          Horizontal Anchor: Right
+          Vertical Anchor: Bottom
+          Horizontal Margin: 10
+          Vertical Margin: 10
+          Shape: Squircle
+          Alpha: 0.6
+          Zoom: 16
+          View: 3D
+          Map Style: Navigation Dark
+          Enabled: true
+          Value: true
       Enabled: true
       Name: Map
     - Class: rviz_common/Group
@@ -2755,6 +2770,7 @@ Visualization Manager:
                   Value: false
                 Map:
                   Lanelet2VectorMap: true
+                  Minimap: true
                   PointCloudMap: true
                   Value: false
                 Perception:
