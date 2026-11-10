@@ -455,12 +455,6 @@ system:
       - source: system/autoware_diagnostic_graph_aggregator/config/converter.param.yaml
         variants:
           - path: autoware_launch/config/system/command_mode/converter.param.yaml
-      - source: system/autoware_command_mode_decider/config/default.param.yaml
-        variants:
-          - path: autoware_launch/config/system/command_mode/decider.param.yaml
-      - source: system/autoware_command_mode_switcher/config/default.param.yaml
-        variants:
-          - path: autoware_launch/config/system/command_mode/switcher.param.yaml
       # Component State Monitor (skipped: no .param.yaml files to sync)
       # Diagnostics (skipped)
       # dummy_diag_publisher.param.yaml omitted (has key-value map and the schema is not fixed)

@@ -164,10 +164,6 @@ param_values:
     default: /diagnostics_graph/reset
   - name: availability_converter_param_path
     default: $(find-pkg-share autoware_launch)/config/system/command_mode/converter.param.yaml
-  - name: command_mode_switcher_param_path
-    default: $(find-pkg-share autoware_launch)/config/system/command_mode/switcher.param.yaml
-  - name: command_mode_decider_param_path
-    default: $(find-pkg-share autoware_launch)/config/system/command_mode/decider.param.yaml
   - name: mrm_state_topic
     default: /system/fail_safe/mrm_state
   - name: change_operation_mode_srv
