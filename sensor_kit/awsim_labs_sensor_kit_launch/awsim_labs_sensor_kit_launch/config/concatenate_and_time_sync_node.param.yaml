@@ -16,6 +16,7 @@
                     "/sensing/lidar/left/pointcloud_before_sync", # 0.05
                 ]
     output_frame: base_link
+    output_point_type: XYZIRC
     matching_strategy:
           type: advanced
           lidar_timestamp_offsets: [0.0, 0.0, 0.0]
