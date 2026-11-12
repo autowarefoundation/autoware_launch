@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>tier4_system_launch</name>
+  <name>autoware_system_launch</name>
   <version>0.53.0</version>
-  <description>The tier4_system_launch package</description>
+  <description>The autoware_system_launch package</description>
   <maintainer email="fumihito.ito@tier4.jp">Fumihito Ito</maintainer>
   <maintainer email="tetsuhiro.kawaguchi@tier4.jp">TetsuKawa</maintainer>
   <license>Apache License 2.0</license>

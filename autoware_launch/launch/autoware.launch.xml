@@ -78,7 +78,7 @@
 
   <!-- System -->
   <group if="$(var launch_system)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_system_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/component_system.launch.xml"/>
   </group>
 
   <!-- Map -->
