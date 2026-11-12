@@ -76,6 +76,7 @@
   <exec_depend>autoware_surround_obstacle_checker</exec_depend>
   <exec_depend>autoware_trajectory_modifier</exec_depend>
   <exec_depend>autoware_velocity_smoother</exec_depend>
+  <exec_depend>demo_nodes_cpp</exec_depend>
   <exec_depend>rclcpp_components</exec_depend>
   <exec_depend>topic_tools</exec_depend>
 
