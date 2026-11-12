@@ -1,4 +1,4 @@
-# tier4_autoware_api_launch
+# autoware_api_launch
 
 ## Description
 
@@ -13,7 +13,7 @@ Please see `<exec_depend>` in `package.xml`.
 You can include as follows in `*.launch.xml` to use `autoware_api.launch.xml`.
 
 ```xml
-  <include file="$(find-pkg-share tier4_autoware_api_launch)/launch/autoware_api.launch.xml"/>
+  <include file="$(find-pkg-share autoware_api_launch)/launch/autoware_api.launch.xml"/>
 ```
 
 ## Notes
