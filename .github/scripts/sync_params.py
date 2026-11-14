@@ -16,6 +16,10 @@ Each variant file is a copy of an upstream ``*.param.yaml`` with two default add
    ``# {OVERRIDE: reason}`` retain their local values across syncs.  All other
    fields are overwritten from the upstream source.
 
+A relative ``# yaml-language-server: $schema=...`` modeline in the source is rewritten
+to the raw URL of the schema at the pinned commit, because the relative path does not
+exist next to the variant file.
+
 An optional **Embedded original** footer may also be appended as a comment block
 (``# ###### ORIGINAL (DO NOT EDIT) ######``) when updated with `--footer`,
 so that upstream changes to overridden fields are visible in generated diffs.
@@ -78,6 +82,7 @@ import difflib
 import hashlib
 import io
 from pathlib import Path
+import posixpath
 import re
 import shutil
 import subprocess
@@ -93,6 +98,10 @@ from ruamel.yaml.comments import CommentedSeq
 OVERRIDE_MARKER = "{OVERRIDE}"
 _OVERRIDE_MARKER_PATTERN = re.compile(r"\{OVERRIDE(?:\s*:\s*([^{}]*?))?\}")
 ORIGINAL_PIVOT = "###### ORIGINAL (DO NOT EDIT) ######"
+# cSpell:ignore modeline
+_SCHEMA_MODELINE_PATTERN = re.compile(
+    r"^([ \t]*#[ \t]*yaml-language-server:[ \t]*\$schema=)(\S+)", re.MULTILINE
+)
 
 
 class SyncError(RuntimeError):
@@ -1031,6 +1040,38 @@ def source_blob_url(source_repo: str, source_sha: str, source_path: str) -> str:
     return f"https://github.com/{source_repo}/blob/{source_sha}/{source_path}"
 
 
+def rewrite_schema_modeline(text: str, source_repo: str, source_sha: str, source_path: str) -> str:
+    r"""Point a relative ``yaml-language-server`` schema modeline at the upstream schema.
+
+    A relative ``$schema`` path is relative to the upstream file, so it is replaced with
+    the raw URL of the schema at *source_sha*.  URLs, absolute paths and Windows paths
+    are kept.  A path that leaves the source repository is kept and reported.
+
+    Example:
+        text = "# yaml-language-server: $schema=../schema/a.schema.json\nfoo: 1\n"
+        source_repo = "org/repo"
+        source_sha = "abc"
+        source_path = "pkg/config/a.param.yaml"
+        returns "# yaml-language-server: $schema=https://raw.githubusercontent.com/org/repo/abc/pkg/schema/a.schema.json\nfoo: 1\n"
+    """
+
+    def _rewrite(match: re.Match[str]) -> str:
+        schema = match.group(2)
+        if ":" in schema or "\\" in schema or schema.startswith("/"):
+            return match.group(0)
+        schema_path = posixpath.normpath(posixpath.join(posixpath.dirname(source_path), schema))
+        if schema_path == ".." or schema_path.startswith("../"):
+            print(
+                f"[[sync-params]] Warning: the schema modeline of '{source_path}' points "
+                f"outside the source repository: {schema}"
+            )
+            return match.group(0)
+        raw_url = f"https://raw.githubusercontent.com/{source_repo}/{source_sha}/{schema_path}"
+        return match.group(1) + raw_url
+
+    return _SCHEMA_MODELINE_PATTERN.sub(_rewrite, text)
+
+
 def build_variant_header(source_url: str, category: str) -> str:
     """Build the workflow-managed comment header that is prepended to every variant file.
 
@@ -1343,7 +1384,8 @@ def sync_file_entry(
        - **Check mode**: content at the SHA pinned in the variant's header,
          so that upstream changes between the pin and HEAD are ignored.
     3. Apply active overrides on top of the effective source body.
-    4. Re-attach override markers and prepend the header.
+    4. Re-attach override markers, point a relative schema modeline at the upstream
+       schema (see :func:`rewrite_schema_modeline`) and prepend the header.
     5. Optionally append the embedded original comment block (when *footer* is True).
     6. Write the result (update mode) or compare and report drift (check mode).
 
@@ -1409,12 +1451,14 @@ def sync_file_entry(
             effective_source_yaml = _load_yaml_from_text(pinned_body, f"pinned {pinned_sha}")
             if effective_source_yaml is None:
                 effective_source_yaml = {}
+            effective_source_sha = pinned_sha
             effective_source_url = source_blob_url(
                 repository.repository, pinned_sha, file_entry.source
             )
         else:
             effective_source_body = source_body
             effective_source_yaml = source_yaml
+            effective_source_sha = source_sha
             effective_source_url = source_url
 
         effective_embedded_original = (
@@ -1433,9 +1477,13 @@ def sync_file_entry(
         overrides, override_comments = extract_override_values(variant_abs)
         override_comment_columns = parse_override_comment_columns_from_variant_text(variant_text)
         if not overrides:
-            variant_content = (
-                build_variant_header(effective_source_url, category) + effective_source_body
+            variant_body = rewrite_schema_modeline(
+                effective_source_body,
+                repository.repository,
+                effective_source_sha,
+                file_entry.source,
             )
+            variant_content = build_variant_header(effective_source_url, category) + variant_body
             variant_content += effective_embedded_original
             changed = write_or_check(variant_abs, variant_content, check)
             if changed:
@@ -1519,6 +1567,9 @@ def sync_file_entry(
         )
         variant_body = ensure_override_markers_in_text(
             variant_body, active_override_comments, active_override_comment_columns
+        )
+        variant_body = rewrite_schema_modeline(
+            variant_body, repository.repository, effective_source_sha, file_entry.source
         )
         variant_content = build_variant_header(effective_source_url, category) + variant_body
         variant_content += effective_embedded_original
