@@ -36,6 +36,7 @@ from sync_params import load_config
 from sync_params import parse_override_comment_columns_from_variant_text
 from sync_params import parse_override_comments_from_variant_text
 from sync_params import parse_override_paths_from_variant_text
+from sync_params import rewrite_schema_modeline
 from sync_params import set_value_at_path
 from sync_params import source_blob_url
 from sync_params import sync_file_entry
@@ -325,6 +326,52 @@ perception: []
     def test_source_blob_url_uses_sha(self) -> None:
         url = source_blob_url("org/repo", "deadbeef", "params/file.yaml")
         self.assertEqual(url, "https://github.com/org/repo/blob/deadbeef/params/file.yaml")
+
+    def test_rewrite_schema_modeline_uses_raw_url_at_sha(self) -> None:
+        text = "# yaml-language-server: $schema=../schema/a.schema.json\nfoo: 1\n"
+        result = rewrite_schema_modeline(text, "org/repo", "deadbeef", "pkg/config/a.param.yaml")
+        self.assertEqual(
+            result,
+            "# yaml-language-server: $schema="
+            "https://raw.githubusercontent.com/org/repo/deadbeef/pkg/schema/a.schema.json\n"
+            "foo: 1\n",
+        )
+
+    def test_rewrite_schema_modeline_keeps_urls_and_absolute_paths(self) -> None:
+        for schema in ("https://example.com/a.schema.json", "/opt/schema/a.schema.json"):
+            text = f"# yaml-language-server: $schema={schema}\nfoo: 1\n"
+            result = rewrite_schema_modeline(
+                text, "org/repo", "deadbeef", "pkg/config/a.param.yaml"
+            )
+            self.assertEqual(result, text)
+
+    def test_rewrite_schema_modeline_without_modeline_is_noop(self) -> None:
+        text = "foo: 1  # $schema=../schema/a.schema.json is not a modeline\n"
+        result = rewrite_schema_modeline(text, "org/repo", "deadbeef", "pkg/config/a.param.yaml")
+        self.assertEqual(result, text)
+
+    def test_rewrite_schema_modeline_does_not_match_across_lines(self) -> None:
+        text = "#\nyaml-language-server: $schema=../schema/a.schema.json\n"
+        result = rewrite_schema_modeline(text, "org/repo", "deadbeef", "pkg/config/a.param.yaml")
+        self.assertEqual(result, text)
+
+    def test_rewrite_schema_modeline_keeps_windows_paths(self) -> None:
+        for schema in (r"..\schema\a.schema.json", r"C:\schema\a.schema.json"):
+            text = f"# yaml-language-server: $schema={schema}\nfoo: 1\n"
+            result = rewrite_schema_modeline(
+                text, "org/repo", "deadbeef", "pkg/config/a.param.yaml"
+            )
+            self.assertEqual(result, text)
+
+    def test_rewrite_schema_modeline_keeps_and_reports_paths_outside_repository(self) -> None:
+        text = "# yaml-language-server: $schema=../../../a.schema.json\nfoo: 1\n"
+        with patch("builtins.print") as mock_print:
+            result = rewrite_schema_modeline(
+                text, "org/repo", "deadbeef", "pkg/config/a.param.yaml"
+            )
+        self.assertEqual(result, text)
+        mock_print.assert_called_once()
+        self.assertIn("outside the source repository", mock_print.call_args.args[0])
 
     def test_text_patching_preserves_comments_and_valid_yaml(self) -> None:
         source_text = """
@@ -1002,6 +1049,85 @@ class CheckModePinnedShaIntegrationTest(unittest.TestCase):
         if footer:
             result += build_embedded_original_section(source_body)
         return result
+
+    def test_update_rewrites_relative_schema_modeline(self) -> None:
+        """The relative modeline of the source points at the upstream schema in the variant."""
+        source = "# yaml-language-server: $schema=schema/params.schema.json\nfoo: 1\n"
+
+        changed, result = self._run(
+            pinned_source_body=source,
+            current_head_body=source,
+            variant_text="",
+            check=False,
+        )
+
+        self.assertEqual(changed, 1)
+        self.assertIn(
+            "# yaml-language-server: $schema="
+            "https://raw.githubusercontent.com/org/repo/newsha/schema/params.schema.json\n",
+            result,
+        )
+
+    def test_update_rewrites_schema_modeline_with_overrides(self) -> None:
+        """The modeline is rewritten on the override path too, and the override is kept."""
+        source = "# yaml-language-server: $schema=schema/params.schema.json\nfoo: 1\nbar: 2\n"
+        variant_text = self._make_up_to_date_variant(source).replace(
+            "foo: 1\n", "foo: 5 # {OVERRIDE}\n"
+        )
+
+        changed, result = self._run(
+            pinned_source_body=source,
+            current_head_body=source,
+            variant_text=variant_text,
+            check=False,
+        )
+
+        self.assertEqual(changed, 1)
+        self.assertIn(
+            "# yaml-language-server: $schema="
+            "https://raw.githubusercontent.com/org/repo/newsha/schema/params.schema.json\n",
+            result,
+        )
+        self.assertIn("foo: 5 # {OVERRIDE}\n", result)
+
+    def test_update_with_footer_keeps_original_modeline_in_footer(self) -> None:
+        """The body gets the rewritten modeline; the embedded original keeps the source line."""
+        source = "# yaml-language-server: $schema=schema/params.schema.json\nfoo: 1\n"
+
+        changed, result = self._run(
+            pinned_source_body=source,
+            current_head_body=source,
+            variant_text="",
+            check=False,
+            footer=True,
+        )
+
+        self.assertEqual(changed, 1)
+        self.assertIn(
+            "\n# yaml-language-server: $schema="
+            "https://raw.githubusercontent.com/org/repo/newsha/schema/params.schema.json\n",
+            result,
+        )
+        self.assertIn("# # yaml-language-server: $schema=schema/params.schema.json\n", result)
+
+    def test_check_passes_with_rewritten_schema_modeline(self) -> None:
+        """A variant synced with a rewritten modeline is not reported as drift."""
+        pinned_source = "# yaml-language-server: $schema=schema/params.schema.json\nfoo: 1\n"
+        variant_text = self._make_up_to_date_variant(
+            "# yaml-language-server: $schema="
+            "https://raw.githubusercontent.com/org/repo/pinnedsha/schema/params.schema.json\n"
+            "foo: 1\n"
+        )
+
+        changed, result = self._run(
+            pinned_source_body=pinned_source,
+            current_head_body=pinned_source,
+            variant_text=variant_text,
+            check=True,
+        )
+
+        self.assertEqual(changed, 0)
+        self.assertEqual(result, variant_text)
 
     def test_check_passes_when_variant_matches_pinned_sha(self) -> None:
         """No drift reported when variant matches the pinned SHA, even if HEAD differs."""
