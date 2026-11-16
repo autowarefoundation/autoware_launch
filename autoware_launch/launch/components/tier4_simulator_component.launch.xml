@@ -9,6 +9,9 @@
   <arg name="initial_engage_state"/>
   <arg name="vehicle_info_param_file"/>
   <arg name="raw_vehicle_cmd_converter_param_path"/>
+  <arg name="use_sim_time" default="false"/>
+
+  <set_parameter name="use_sim_time" value="$(var use_sim_time)"/>
 
   <include file="$(find-pkg-share tier4_simulator_launch)/launch/simulator.launch.xml">
     <arg name="launch_dummy_vehicle" value="$(var launch_dummy_vehicle)"/>
