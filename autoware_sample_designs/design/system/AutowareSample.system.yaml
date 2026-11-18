@@ -635,6 +635,10 @@ LoggingSimulation:
     connections:
       - - rosbag_replay.publisher.sensing/^
         - sensing.subscriber.^
+      - - rosbag_replay.publisher.vehicle/status/velocity_status
+        - sensing.subscriber.velocity_status
+      - - rosbag_replay.publisher.vehicle/status/velocity_status
+        - control.subscriber.velocity_status
     remaps:
       - source: rosbag_replay.publisher.sensing/gnss/ublox/fix_velocity
         topic: /sensing/gnss/ublox/fix_velocity
@@ -650,6 +654,8 @@ LoggingSimulation:
         topic: /sensing/lidar/right/velodyne_packets
       - source: rosbag_replay.publisher.sensing/lidar/top/velodyne_packets
         topic: /sensing/lidar/top/velodyne_packets
+      - source: rosbag_replay.publisher.vehicle/status/velocity_status
+        topic: /vehicle/status/velocity_status
 
 E2ESimulation:
   override:
