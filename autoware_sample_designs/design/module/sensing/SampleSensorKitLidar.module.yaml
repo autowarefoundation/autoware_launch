@@ -14,7 +14,6 @@ instances:
 
 subscribers:
   - name: twist
-  - name: odometry
   - name: imu
 publishers:
   - name: concatenated/pointcloud
@@ -35,8 +34,6 @@ connections:
   - - left.publisher.pointcloud
     - concatenate_and_time_sync.subscriber.input3
 
-  - - subscriber.odometry
-    - concatenate_and_time_sync.subscriber.odometry
   - - concatenate_and_time_sync.publisher.output
     - publisher.concatenated/pointcloud
   - - concatenate_and_time_sync.publisher.output_info

@@ -49,8 +49,6 @@ connections:
   # LIDAR
   - - vehicle_velocity_converter.publisher.twist_with_covariance
     - lidar.subscriber.twist
-  - - subscriber.odometry
-    - lidar.subscriber.odometry
   - - imu.publisher.imu_data
     - lidar.subscriber.imu
   - - lidar.publisher.concatenated/pointcloud
