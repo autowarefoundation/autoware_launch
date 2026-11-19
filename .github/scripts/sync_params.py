@@ -1383,9 +1383,9 @@ def sync_file_entry(
        - **Update mode**: current HEAD content of the source file.
        - **Check mode**: content at the SHA pinned in the variant's header,
          so that upstream changes between the pin and HEAD are ignored.
-    3. Apply active overrides on top of the effective source body.
-    4. Re-attach override markers, point a relative schema modeline at the upstream
-       schema (see :func:`rewrite_schema_modeline`) and prepend the header.
+    3. Point a relative schema modeline of the effective source body at the upstream
+       schema (see :func:`rewrite_schema_modeline`).  The footer keeps the raw body.
+    4. Apply active overrides, re-attach override markers and prepend the header.
     5. Optionally append the embedded original comment block (when *footer* is True).
     6. Write the result (update mode) or compare and report drift (check mode).
 
@@ -1461,6 +1461,12 @@ def sync_file_entry(
             effective_source_sha = source_sha
             effective_source_url = source_url
 
+        # The variant body starts from the source body with its modeline rewritten.  Keep
+        # effective_source_body raw: the footer embeds the upstream text.
+        variant_source_body = rewrite_schema_modeline(
+            effective_source_body, repository.repository, effective_source_sha, file_entry.source
+        )
+
         effective_embedded_original = (
             build_embedded_original_section(effective_source_body) if footer else ""
         )
@@ -1477,13 +1483,9 @@ def sync_file_entry(
         overrides, override_comments = extract_override_values(variant_abs)
         override_comment_columns = parse_override_comment_columns_from_variant_text(variant_text)
         if not overrides:
-            variant_body = rewrite_schema_modeline(
-                effective_source_body,
-                repository.repository,
-                effective_source_sha,
-                file_entry.source,
+            variant_content = (
+                build_variant_header(effective_source_url, category) + variant_source_body
             )
-            variant_content = build_variant_header(effective_source_url, category) + variant_body
             variant_content += effective_embedded_original
             changed = write_or_check(variant_abs, variant_content, check)
             if changed:
@@ -1563,13 +1565,10 @@ def sync_file_entry(
         }
 
         variant_body = apply_overrides_to_source_text(
-            effective_source_body, active_overrides, override_flow_blocks
+            variant_source_body, active_overrides, override_flow_blocks
         )
         variant_body = ensure_override_markers_in_text(
             variant_body, active_override_comments, active_override_comment_columns
-        )
-        variant_body = rewrite_schema_modeline(
-            variant_body, repository.repository, effective_source_sha, file_entry.source
         )
         variant_content = build_variant_header(effective_source_url, category) + variant_body
         variant_content += effective_embedded_original
