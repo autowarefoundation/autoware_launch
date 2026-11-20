@@ -13,6 +13,7 @@
 
   <exec_depend>autoware_adapi_adaptors</exec_depend>
   <exec_depend>autoware_agnocast_wrapper</exec_depend>
+  <exec_depend>autoware_api_launch</exec_depend>
   <exec_depend>autoware_carla_interface</exec_depend>
   <exec_depend>autoware_control_config</exec_depend>
   <exec_depend>autoware_control_launch</exec_depend>
