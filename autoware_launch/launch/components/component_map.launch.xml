@@ -20,6 +20,10 @@
   <arg name="use_map_tf_generator" default="true" description="broadcast the map -&gt; viewer transform"/>
   <arg name="use_map_hash_generator" default="true" description="publish the map hash and serve the lanelet2 XML"/>
 
+  <!-- Global parameters -->
+  <arg name="use_sim_time" default="false" description="use the simulation clock"/>
+  <set_parameter name="use_sim_time" value="$(var use_sim_time)"/>
+
   <!-- Executor selection: outputs the ld_preload_value variant -->
   <include file="$(find-pkg-share autoware_agnocast_wrapper)/launch/agnocast_env.launch.xml"/>
 
