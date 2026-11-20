@@ -27,10 +27,3 @@
 
       ## /autoware/localization/sensor_fusion_status
       "localization: ekf_localizer": default
-
-      ## /autoware/localization/topic_rate_check/pose_twist_fusion
-      "topic_state_monitor_pose_twist_fusion_filter_pose: localization_topic_status": default
-
-      # perception
-      ## /autoware/perception/topic_rate_check/pointcloud
-      "topic_state_monitor_obstacle_segmentation_pointcloud: perception_topic_status": default
