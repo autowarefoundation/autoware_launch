@@ -44,6 +44,22 @@
   <exec_depend>tier4_system_launch</exec_depend>
   <exec_depend>tier4_vehicle_launch</exec_depend>
 
+  <exec_depend>autoware_minimap_overlay_rviz_plugin</exec_depend>
+  <exec_depend>autoware_mission_details_overlay_rviz_plugin</exec_depend>
+  <exec_depend>autoware_overlay_rviz_plugin</exec_depend>
+  <exec_depend>autoware_string_stamped_rviz_plugin</exec_depend>
+  <exec_depend>autoware_polar_grid</exec_depend>
+  <exec_depend>autoware_perception_rviz_plugin</exec_depenqd>
+  <exec_depend>autoware_planning_rviz_plugin</exec_depend>
+  <exec_depend>autoware_localization_rviz_plugin</exec_depend>
+  <exec_depend>tier4_vehicle_rviz_plugin</exec_depend>
+  <exec_depend>tier4_control_mode_rviz_plugin</exec_depend>
+  <exec_depend>tier4_datetime_rviz_plugin</exec_depend>
+  <exec_depend>tier4_dummy_object_rviz_plugin</exec_depend>
+  <exec_depend>tier4_state_rviz_plugin</exec_depend>
+  <exec_depend>tier4_adapi_rviz_plugin</exec_depend>
+  <exec_depend>tier4_planning_factor_rviz_plugin</exec_depend>
+
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>autoware_lint_common</test_depend>
 
