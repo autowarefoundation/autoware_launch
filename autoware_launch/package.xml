@@ -25,40 +25,40 @@
   <exec_depend>autoware_global_parameter_loader</exec_depend>
   <exec_depend>autoware_localization_config</exec_depend>
   <exec_depend>autoware_localization_launch</exec_depend>
+  <exec_depend>autoware_localization_rviz_plugin</exec_depend>
   <exec_depend>autoware_map_based_prediction</exec_depend>
   <exec_depend>autoware_map_config</exec_depend>
   <exec_depend>autoware_map_launch</exec_depend>
+  <exec_depend>autoware_minimap_overlay_rviz_plugin</exec_depend>
+  <exec_depend>autoware_mission_details_overlay_rviz_plugin</exec_depend>
   <exec_depend>autoware_multi_object_tracker</exec_depend>
+  <exec_depend>autoware_overlay_rviz_plugin</exec_depend>
   <exec_depend>autoware_perception_config</exec_depend>
   <exec_depend>autoware_perception_launch</exec_depend>
   <exec_depend>autoware_perception_online_evaluator</exec_depend>
+  <exec_depend>autoware_perception_rviz_plugin</exec_depenqd>
   <exec_depend>autoware_planning_launch</exec_depend>
+  <exec_depend>autoware_planning_rviz_plugin</exec_depend>
+  <exec_depend>autoware_polar_grid</exec_depend>
   <exec_depend>autoware_pose_covariance_modifier</exec_depend>
   <exec_depend>autoware_pose_estimator_arbiter</exec_depend>
   <exec_depend>autoware_probabilistic_occupancy_grid_map</exec_depend>
+  <exec_depend>autoware_string_stamped_rviz_plugin</exec_depend>
   <exec_depend>python3-bson</exec_depend>
   <exec_depend>python3-tornado</exec_depend>
   <exec_depend>rviz2</exec_depend>
+  <exec_depend>tier4_adapi_rviz_plugin</exec_depend>
   <exec_depend>tier4_autoware_api_launch</exec_depend>
-  <exec_depend>tier4_simulator_launch</exec_depend>
-  <exec_depend>tier4_system_launch</exec_depend>
-  <exec_depend>tier4_vehicle_launch</exec_depend>
-
-  <exec_depend>autoware_minimap_overlay_rviz_plugin</exec_depend>
-  <exec_depend>autoware_mission_details_overlay_rviz_plugin</exec_depend>
-  <exec_depend>autoware_overlay_rviz_plugin</exec_depend>
-  <exec_depend>autoware_string_stamped_rviz_plugin</exec_depend>
-  <exec_depend>autoware_polar_grid</exec_depend>
-  <exec_depend>autoware_perception_rviz_plugin</exec_depenqd>
-  <exec_depend>autoware_planning_rviz_plugin</exec_depend>
-  <exec_depend>autoware_localization_rviz_plugin</exec_depend>
-  <exec_depend>tier4_vehicle_rviz_plugin</exec_depend>
   <exec_depend>tier4_control_mode_rviz_plugin</exec_depend>
   <exec_depend>tier4_datetime_rviz_plugin</exec_depend>
   <exec_depend>tier4_dummy_object_rviz_plugin</exec_depend>
-  <exec_depend>tier4_state_rviz_plugin</exec_depend>
-  <exec_depend>tier4_adapi_rviz_plugin</exec_depend>
   <exec_depend>tier4_planning_factor_rviz_plugin</exec_depend>
+  <exec_depend>tier4_simulator_launch</exec_depend>
+  <exec_depend>tier4_state_rviz_plugin</exec_depend>
+  <exec_depend>tier4_system_launch</exec_depend>
+  <exec_depend>tier4_vehicle_launch</exec_depend>
+  <exec_depend>tier4_vehicle_rviz_plugin</exec_depend>
+
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>autoware_lint_common</test_depend>
