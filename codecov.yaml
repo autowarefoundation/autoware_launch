@@ -1,0 +1,24 @@
+# This file is automatically synced from:
+# https://github.com/autowarefoundation/sync-file-templates
+# To make changes, update the source repository and follow the guidelines in its README.
+
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+        informational: true
+    patch:
+      default:
+        target: auto
+        informational: true
+
+comment:
+  show_carryforward_flags: true
+
+flag_management:
+  default_rules:
+    carryforward: false
+  individual_flags:
+    - name: full-suite
+      carryforward: true
