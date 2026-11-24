@@ -66,13 +66,16 @@ jobs:
           build-depends-repos: ${{ matrix.build-depends-repos }}
 
       - name: Upload coverage to CodeCov
-        if: ${{ steps.test.outputs.coverage-report-files != '' }}
+        if: ${{ steps.test.outputs.coverage-report-files != '' && matrix.rosdistro == 'jazzy' }}
         uses: codecov/codecov-action@v7
         with:
           files: ${{ steps.test.outputs.coverage-report-files }}
           fail_ci_if_error: false
           verbose: true
-          flags: total
+          flags: ${{ github.event_name == 'schedule' && 'daily' || 'full-suite' }}
+          token: ${{ secrets.CODECOV_TOKEN }}
+          disable_search: true
+          plugins: noop
 
       - name: Show disk space after the tasks
         run: df -h
