@@ -57,7 +57,6 @@
   <exec_depend>tier4_planning_factor_rviz_plugin</exec_depend>
   <exec_depend>tier4_simulator_launch</exec_depend>
   <exec_depend>tier4_state_rviz_plugin</exec_depend>
-  <exec_depend>tier4_system_launch</exec_depend>
   <exec_depend>tier4_traffic_light_rviz_plugin</exec_depend>
   <exec_depend>tier4_vehicle_launch</exec_depend>
   <exec_depend>tier4_vehicle_rviz_plugin</exec_depend>
