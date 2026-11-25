@@ -17,6 +17,7 @@ The launch/system.launch.xml has the following arguments:
 | use_sim_time                           | bool | no       | Use simulation time.                                        |
 | config_directory                       | path | no       | The configuration directory, which will be described later. |
 | planning_setting                       | enum | no       | Planning component: rule_based or diffusion_planner.        |
+| simulator_type                         | enum | no       | Simulator: none, awsim or carla. Selects diagnostic graph.  |
 | run_mode                               | enum | no       | Run mode: online, logging_simulation, planning_simulation.  |
 | sensor_model                           | str  | yes      | Sensor model.                                               |
 | launch_system_monitor                  | bool | no       | Launch system_monitor.                                      |
@@ -46,6 +47,8 @@ For details regarding each parameter file, please refer to the documentation for
 | ---------------------------------------------------------------------- | -------------------------------------- |
 | command_mode/converter.param.yaml                                      | autoware_diagnostic_graph_aggregator   |
 | component_state_monitor/topics.yaml                                    | autoware_component_state_monitor       |
+| diagnostics/autoware-awsim.yaml                                        | autoware_diagnostic_graph_aggregator   |
+| diagnostics/autoware-carla.yaml                                        | autoware_diagnostic_graph_aggregator   |
 | diagnostics/autoware-main-e2e.yaml                                     | autoware_diagnostic_graph_aggregator   |
 | diagnostics/autoware-main.yaml                                         | autoware_diagnostic_graph_aggregator   |
 | diagnostics/dummy_diag_publisher.param.yaml                            | autoware_dummy_diag_publisher          |

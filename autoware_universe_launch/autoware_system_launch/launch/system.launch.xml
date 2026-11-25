@@ -8,6 +8,11 @@
     <choice value="rule_based" description="Rule-Based Planner"/>
     <choice value="diffusion_planner" description="Diffusion Planner"/>
   </arg>
+  <arg name="simulator_type" default="none">
+    <choice value="none" description="Not a simulator (or a simulator without a dedicated diagnostic graph)"/>
+    <choice value="awsim" description="AWSIM"/>
+    <choice value="carla" description="CARLA"/>
+  </arg>
   <arg name="run_mode" default="online" description="options: online, logging_simulation, planning_simulation"/>
   <arg name="sensor_model" description="sensor model name"/>
   <let name="sensor_launch_pkg" value="$(find-pkg-share $(var sensor_model)_launch)"/>
@@ -55,6 +60,9 @@
   <let name="diagnostic_graph_aggregator_param_path" value="$(find-pkg-share autoware_diagnostic_graph_aggregator)/config/default.param.yaml"/>
   <let name="diagnostic_graph_aggregator_graph_path" value="$(var config_directory)/diagnostics/autoware-main.yaml" if="$(equals $(var planning_setting) rule_based)"/>
   <let name="diagnostic_graph_aggregator_graph_path" value="$(var config_directory)/diagnostics/autoware-main-e2e.yaml" if="$(equals $(var planning_setting) diffusion_planner)"/>
+  <!-- simulator specific graphs take precedence over planning_setting -->
+  <let name="diagnostic_graph_aggregator_graph_path" value="$(var config_directory)/diagnostics/autoware-awsim.yaml" if="$(equals $(var simulator_type) awsim)"/>
+  <let name="diagnostic_graph_aggregator_graph_path" value="$(var config_directory)/diagnostics/autoware-carla.yaml" if="$(equals $(var simulator_type) carla)"/>
   <let name="availability_converter_param_path" value="$(var config_directory)/command_mode/converter.param.yaml"/>
 
   <group>
