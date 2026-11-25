@@ -69,7 +69,6 @@ autoware_sample_designs/
 │   │   └── AutowareSample.system.yaml   # Top-level system definition
 │   └── parameter_set/     # Parameter overrides per node, per mode
 ├── config/                # Shared parameter YAML files (owned by this package)
-├── launch/                # Hand-written wrapper launch files for legacy integration
 ├── urdf/                  # Vehicle URDF
 ├── workspace.yaml         # Provider resolution rules for the system designer
 └── CMakeLists.txt
