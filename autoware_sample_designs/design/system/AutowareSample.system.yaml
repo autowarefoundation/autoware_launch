@@ -14,9 +14,6 @@ variables:
     value: lanelet2_map.osm
   - name: pointcloud_map_file
     value: pointcloud_map.pcd
-  # vehicle-specific variables
-  - name: config_dir
-    value: $(find-pkg-share sample_sensor_kit_description)/config
   # environment variables
   - name: map_path
     value: $(env HOME)/autoware_data/maps/sample-map-rosbag

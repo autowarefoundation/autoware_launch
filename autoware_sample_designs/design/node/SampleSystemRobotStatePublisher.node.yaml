@@ -30,13 +30,11 @@ publishers:
     global: /tf_static
 
 # parameters
-param_files: []
-param_values:
-  - name: robot_description
-    type: str
-    default: $(command 'xacro $(find-pkg-share autoware_sample_designs)/urdf/vehicle.xacro config_dir:=$(var config_dir)' 'warn')
+param_files:
+  - name: robot_description_param_file
+    default: $(find-pkg-share autoware_sample_designs)/config/sample_vehicle/robot_description.param.yaml
+param_values: []
 
-# processes
 processes:
   - name: run
     trigger_conditions: []

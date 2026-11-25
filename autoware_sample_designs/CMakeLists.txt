@@ -13,4 +13,10 @@ ament_auto_package(
 
 add_custom_target(${PROJECT_NAME})
 
+# Robot description of the sample vehicle with the sample sensor kit calibration.
+autoware_system_designer_generate_robot_description(
+  XACRO urdf/vehicle.xacro
+  CONFIG_DIRS config/sample_vehicle
+)
+
 autoware_system_designer_build_deploy(${PROJECT_NAME} AutowareSample.system)
