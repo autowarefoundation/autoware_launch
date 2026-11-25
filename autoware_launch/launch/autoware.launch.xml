@@ -78,7 +78,10 @@
 
   <!-- System -->
   <group if="$(var launch_system)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/component_system.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/component_system.launch.xml">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="planning_setting" value="$(var planning_setting)"/>
+    </include>
   </group>
 
   <!-- Map -->
