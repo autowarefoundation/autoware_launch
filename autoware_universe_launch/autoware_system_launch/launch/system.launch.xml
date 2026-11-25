@@ -18,8 +18,8 @@
   <arg name="launch_fault_injection" default="false"/>
   <arg name="launch_rqt_reconfigure" default="false"/>
   <arg name="launch_rqt_runtime_monitor" default="false"/>
-  <arg name="launch_rqt_robot_monitor" default="false"/>
   <arg name="launch_rqt_runtime_monitor_err" default="false"/>
+  <arg name="launch_rqt_robot_monitor" default="false"/>
 
   <!-- parameters -->
   <arg name="diagnostic_graph_aggregator_graph_vars" default=""/>
@@ -31,9 +31,9 @@
   <arg name="diag_struct_topic" default="/diagnostics_graph/struct"/>
   <arg name="diag_status_topic" default="/diagnostics_graph/status"/>
   <arg name="diag_reset_srv" default="/diagnostics_graph/reset"/>
-  <let name="mrm_state_topic" value="/system/fail_safe/mrm_state"/>
-  <let name="change_operation_mode_srv" value="/system/operation_mode/change_operation_mode"/>
-  <let name="change_autoware_control_srv" value="/system/operation_mode/change_autoware_control"/>
+  <arg name="mrm_state_topic" default="/system/fail_safe/mrm_state"/>
+  <arg name="change_operation_mode_srv" default="/system/operation_mode/change_operation_mode"/>
+  <arg name="change_autoware_control_srv" default="/system/operation_mode/change_autoware_control"/>
 
   <!-- let -->
   <let name="component_state_monitor_topic_path" value="$(var config_directory)/component_state_monitor/topics.yaml"/>
