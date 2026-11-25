@@ -29,13 +29,13 @@ The launch/system.launch.xml has the following arguments:
 | diagnostic_graph_aggregator_graph_vars | str  | no       | Parameter for diagnostic_graph_aggregator.                  |
 | availability_converter_param_path      | path | no       | Parameter for diagnostic_graph_aggregator.                  |
 | driving_mode_manager_param_path        | path | no       | Parameter for driving_mode_manager.                         |
-| fault_injection_output_diagnostics     | type | no       | Remapping for fault_injection.                              |
-| diag_struct_topic                      | type | no       | Remapping for diagnostic_graph_aggregator.                  |
-| diag_status_topic                      | type | no       | Remapping for diagnostic_graph_aggregator.                  |
-| diag_reset_srv                         | type | no       | Remapping for diagnostic_graph_aggregator.                  |
-| mrm_state_topic                        | type | no       | Remapping for diagnostic_graph_aggregator.                  |
-| change_operation_mode_srv              | type | no       | Remapping for diagnostic_graph_aggregator.                  |
-| change_autoware_control_srv            | type | no       | Remapping for diagnostic_graph_aggregator.                  |
+| fault_injection_output_diagnostics     | str  | no       | Remapping for fault_injection.                              |
+| diag_struct_topic                      | str  | no       | Remapping for diagnostic_graph_aggregator.                  |
+| diag_status_topic                      | str  | no       | Remapping for diagnostic_graph_aggregator.                  |
+| diag_reset_srv                         | str  | no       | Remapping for diagnostic_graph_aggregator.                  |
+| mrm_state_topic                        | str  | no       | Remapping for diagnostic_graph_aggregator.                  |
+| change_operation_mode_srv              | str  | no       | Remapping for diagnostic_graph_aggregator.                  |
+| change_autoware_control_srv            | str  | no       | Remapping for diagnostic_graph_aggregator.                  |
 
 ## Config Directory
 
