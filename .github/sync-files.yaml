@@ -31,5 +31,6 @@
     - source: .prettierrc.yaml
     - source: .yamllint.yaml
     - source: setup.cfg
+    - source: codecov.yaml
     - source: .github/workflows/build-and-test.yaml
     - source: .github/workflows/build-and-test-differential.yaml

@@ -14,18 +14,11 @@ variables:
     value: lanelet2_map.osm
   - name: pointcloud_map_file
     value: pointcloud_map.pcd
-  # vehicle-specific variables
-  - name: config_dir
-    value: $(find-pkg-share sample_sensor_kit_description)/config
   # environment variables
   - name: map_path
     value: $(env HOME)/autoware_data/maps/sample-map-rosbag
   - name: check_external_emergency_heartbeat
     value: false
-
-variable_files:
-  - name: vehicle_info
-    value: $(find-pkg-share sample_vehicle_description)/config/vehicle_info.param.yaml
 
 modes:
   - name: Runtime
@@ -635,6 +628,10 @@ LoggingSimulation:
     connections:
       - - rosbag_replay.publisher.sensing/^
         - sensing.subscriber.^
+      - - rosbag_replay.publisher.vehicle/status/velocity_status
+        - sensing.subscriber.velocity_status
+      - - rosbag_replay.publisher.vehicle/status/velocity_status
+        - control.subscriber.velocity_status
     remaps:
       - source: rosbag_replay.publisher.sensing/gnss/ublox/fix_velocity
         topic: /sensing/gnss/ublox/fix_velocity
@@ -650,6 +647,8 @@ LoggingSimulation:
         topic: /sensing/lidar/right/velodyne_packets
       - source: rosbag_replay.publisher.sensing/lidar/top/velodyne_packets
         topic: /sensing/lidar/top/velodyne_packets
+      - source: rosbag_replay.publisher.vehicle/status/velocity_status
+        topic: /vehicle/status/velocity_status
 
 E2ESimulation:
   override:

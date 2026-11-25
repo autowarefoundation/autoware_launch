@@ -29,7 +29,7 @@ parameters:
   - node: /dummy_diag_publisher
     param_files:
       - param_file: $(find-pkg-share autoware_launch)/config/system/diagnostics/dummy_diag_publisher.param.yaml
-      - extra_param_file: $(find-pkg-share sample_sensor_kit_launch)/config/dummy_diag_publisher/sensor_kit.param.yaml
+      - extra_param_file: $(find-pkg-share autoware_sample_designs)/config/system/dummy_diag_publisher/sensor_kit.param.yaml
   - node: /perception/occupancy_grid_map/occupancy_grid_map_node
     param_values:
       - name: input_obstacle_pointcloud
