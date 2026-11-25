@@ -4,53 +4,53 @@ name: universe_system.parameter_set
 parameters:
   - node: /system/system_monitor/cpu_monitor
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/cpu_monitor.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/system_monitor/cpu_monitor.param.yaml
   - node: /system/system_monitor/mem_monitor
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/mem_monitor.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/system_monitor/mem_monitor.param.yaml
   - node: /system/system_monitor/net_monitor
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/net_monitor.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/system_monitor/net_monitor.param.yaml
   - node: /system/system_monitor/ntp_monitor
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/ntp_monitor.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/system_monitor/ntp_monitor.param.yaml
   - node: /system/system_monitor/process_monitor
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/process_monitor.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/system_monitor/process_monitor.param.yaml
   - node: /system/system_monitor/hdd_monitor
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/hdd_monitor.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/system_monitor/hdd_monitor.param.yaml
   - node: /system/system_monitor/gpu_monitor
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/gpu_monitor.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/system_monitor/gpu_monitor.param.yaml
   - node: /system/system_monitor/voltage_monitor
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/system_monitor/voltage_monitor.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/system_monitor/voltage_monitor.param.yaml
   - node: /system/duplicated_node_checker
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/duplicated_node_checker/duplicated_node_checker.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/duplicated_node_checker/duplicated_node_checker.param.yaml
   - node: /system/processing_time_checker
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/processing_time_checker/processing_time_checker.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/processing_time_checker/processing_time_checker.param.yaml
   - node: /system/pipeline_latency_monitor
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/pipeline_latency_monitor/pipeline_latency_monitor.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/pipeline_latency_monitor/pipeline_latency_monitor.param.yaml
   - node: /system/mrm_comfortable_stop_operator
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/mrm_comfortable_stop_operator/mrm_comfortable_stop_operator.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/mrm_comfortable_stop_operator/mrm_comfortable_stop_operator.param.yaml
   - node: /system/mrm_emergency_stop_operator
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/mrm_emergency_stop_operator/mrm_emergency_stop_operator.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/mrm_emergency_stop_operator/mrm_emergency_stop_operator.param.yaml
   - node: /system/mrm_handler
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/mrm_handler/mrm_handler.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/mrm_handler/mrm_handler.param.yaml
   - node: /system/converter
     param_files:
-      - param_file: $(find-pkg-share autoware_launch)/config/system/command_mode/converter.param.yaml
+      - param_file: $(find-pkg-share autoware_system_launch)/config/command_mode/converter.param.yaml
   - node: /system/aggregator
     param_values:
       - name: graph_file
-        value: $(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml
+        value: $(find-pkg-share autoware_system_launch)/config/diagnostics/autoware-main.yaml
   - node: /system/logging_diag_graph
     param_values:
       - name: show_rate
