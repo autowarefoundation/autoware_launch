@@ -28,7 +28,6 @@
 
   <!-- parameters -->
   <arg name="diagnostic_graph_aggregator_graph_vars" default=""/>
-  <arg name="availability_converter_param_path" default="$(find-pkg-share autoware_diagnostic_graph_aggregator)/config/converter.param.yaml"/>
   <arg name="driving_mode_manager_param_path" default="$(find-pkg-share autoware_driving_mode_manager)/config/driving_mode_manager.param.yaml"/>
 
   <!-- remappings -->

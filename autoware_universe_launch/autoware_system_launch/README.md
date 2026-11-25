@@ -28,7 +28,6 @@ The launch/system.launch.xml has the following arguments:
 | launch_rqt_runtime_monitor_err         | bool | no       | Launch rqt robot monitor to see /diagnostics_err.           |
 | launch_rqt_robot_monitor               | bool | no       | Launch rqt robot monitor to see /diagnostics_agg.           |
 | diagnostic_graph_aggregator_graph_vars | str  | no       | Parameter for diagnostic_graph_aggregator.                  |
-| availability_converter_param_path      | path | no       | Parameter for diagnostic_graph_aggregator.                  |
 | driving_mode_manager_param_path        | path | no       | Parameter for driving_mode_manager.                         |
 | fault_injection_output_diagnostics     | str  | no       | Remapping for fault_injection.                              |
 | diag_struct_topic                      | str  | no       | Remapping for diagnostic_graph_aggregator.                  |
