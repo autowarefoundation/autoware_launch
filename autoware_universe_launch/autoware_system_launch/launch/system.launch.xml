@@ -5,8 +5,8 @@
 
   <arg name="config_directory" default="$(find-pkg-share autoware_system_launch)/config" description="config directory path"/>
   <arg name="planning_setting" default="rule_based">
-    <choice value="diffusion_planner" description="Diffusion Planner"/>
     <choice value="rule_based" description="Rule-Based Planner"/>
+    <choice value="diffusion_planner" description="Diffusion Planner"/>
   </arg>
   <arg name="run_mode" default="online" description="options: online, logging_simulation, planning_simulation"/>
   <arg name="sensor_model" description="sensor model name"/>
@@ -53,8 +53,8 @@
   <let name="system_monitor_voltage_monitor_param_path" value="$(var config_directory)/system_monitor/voltage_monitor.param.yaml"/>
   <let name="mrm_handler_param_path" value="$(var config_directory)/mrm_handler/mrm_handler.param.yaml"/>
   <let name="diagnostic_graph_aggregator_param_path" value="$(find-pkg-share autoware_diagnostic_graph_aggregator)/config/default.param.yaml"/>
-  <let name="diagnostic_graph_aggregator_graph_path" value="$(var config_directory)/tier4_diagnostics/autoware-main.yaml" if="$(equals $(var planning_setting) rule_based)"/>
-  <let name="diagnostic_graph_aggregator_graph_path" value="$(var config_directory)/tier4_diagnostics/autoware-main-e2e.yaml" if="$(equals $(var planning_setting) diffusion_planner)"/>
+  <let name="diagnostic_graph_aggregator_graph_path" value="$(var config_directory)/diagnostics/autoware-main.yaml" if="$(equals $(var planning_setting) rule_based)"/>
+  <let name="diagnostic_graph_aggregator_graph_path" value="$(var config_directory)/diagnostics/autoware-main-e2e.yaml" if="$(equals $(var planning_setting) diffusion_planner)"/>
   <let name="availability_converter_param_path" value="$(var config_directory)/command_mode/converter.param.yaml"/>
 
   <group>
