@@ -2,50 +2,6 @@ autoware_system_design_format: 0.3.0
 
 name: sample_system_sensing.parameter_set
 
-local_variables:
-  - name: vehicle_length
-    value: $(eval $(var vehicle_info.front_overhang) + $(var vehicle_info.wheel_base) + $(var vehicle_info.rear_overhang))
-  - name: vehicle_width
-    value: $(eval $(var vehicle_info.wheel_tread) + $(var vehicle_info.left_overhang) + $(var vehicle_info.right_overhang))
-  - name: min_longitudinal_offset
-    value: $(eval -$(var vehicle_info.rear_overhang))
-  - name: max_longitudinal_offset
-    value: $(eval $(var vehicle_info.front_overhang) + $(var vehicle_info.wheel_base))
-  - name: min_lateral_offset
-    value: $(eval -($(var vehicle_info.wheel_tread) / 2.0 + $(var vehicle_info.right_overhang)))
-  - name: max_lateral_offset
-    value: $(eval $(var vehicle_info.wheel_tread) / 2.0 + $(var vehicle_info.left_overhang))
-  - name: min_height_offset
-    value: 0.0
-  - name: max_height_offset
-    value: $(var vehicle_info.vehicle_height)
-  - name: max_steer_angle
-    value: $(var vehicle_info.max_steer_angle)
-  - name: max_tire_cut_angle
-    value: 0.838
-  - name: wheel_half_width
-    value: $(eval $(var vehicle_info.wheel_width) / 2.0)
-  - name: d_center_to_corner
-    value: $(eval sqrt(pow($(var wheel_half_width), 2) + pow($(var vehicle_info.wheel_radius), 2)))
-  - name: angle_corner
-    value: $(eval atan2($(var wheel_half_width), $(var vehicle_info.wheel_radius)))
-  - name: wheel_max_lon_offset_from_center
-    value: $(eval $(var d_center_to_corner) if $(var angle_corner) < $(var max_tire_cut_angle) else $(var d_center_to_corner) * cos($(var max_tire_cut_angle) - $(var angle_corner)))
-  - name: wheel_max_lat_offset_from_center
-    value: $(eval $(var d_center_to_corner) * sin($(var max_tire_cut_angle) + $(var angle_corner)))
-  - name: wheels_min_longitudinal_offset
-    value: $(eval $(var vehicle_info.wheel_base) - $(var wheel_max_lon_offset_from_center))
-  - name: wheels_max_longitudinal_offset
-    value: $(eval $(var vehicle_info.wheel_base) + $(var wheel_max_lon_offset_from_center))
-  - name: wheels_min_lateral_offset
-    value: $(eval -($(var vehicle_info.wheel_tread) / 2.0 + $(var wheel_max_lat_offset_from_center)))
-  - name: wheels_max_lateral_offset
-    value: $(eval $(var vehicle_info.wheel_tread) / 2.0 + $(var wheel_max_lat_offset_from_center))
-  - name: wheels_min_height_offset
-    value: 0.0
-  - name: wheels_max_height_offset
-    value: $(eval $(var vehicle_info.wheel_radius) * 2.2)
-
 parameters:
   - node: /sensing/vehicle_velocity_converter
     param_files: []
@@ -82,7 +38,8 @@ parameters:
       - name: use_sim_time
         value: false
   - node: /sensing/lidar/top/crop_box_filter_self
-    param_files: []
+    param_files:
+      - crop_box_filter_param_file: $(find-pkg-share autoware_sample_designs)/config/sample_vehicle/crop_box_self.param.yaml
     param_values:
       - name: input_frame
         value: base_link
@@ -90,24 +47,11 @@ parameters:
         value: base_link
       - name: use_sim_time
         value: false
-      - name: negative
-        value: true
       - name: processing_time_threshold_sec
         value: 0.01
-      - name: min_x
-        value: $(var min_longitudinal_offset)
-      - name: max_x
-        value: $(var max_longitudinal_offset)
-      - name: min_y
-        value: $(var min_lateral_offset)
-      - name: max_y
-        value: $(var max_lateral_offset)
-      - name: min_z
-        value: $(var min_height_offset)
-      - name: max_z
-        value: $(var max_height_offset)
   - node: /sensing/lidar/top/crop_box_filter_wheels
-    param_files: []
+    param_files:
+      - crop_box_filter_param_file: $(find-pkg-share autoware_sample_designs)/config/sample_vehicle/crop_box_wheels.param.yaml
     param_values:
       - name: input_frame
         value: base_link
@@ -115,22 +59,8 @@ parameters:
         value: base_link
       - name: use_sim_time
         value: false
-      - name: negative
-        value: true
       - name: processing_time_threshold_sec
         value: 0.01
-      - name: min_x
-        value: $(var wheels_min_longitudinal_offset)
-      - name: max_x
-        value: $(var wheels_max_longitudinal_offset)
-      - name: min_y
-        value: $(var wheels_min_lateral_offset)
-      - name: max_y
-        value: $(var wheels_max_lateral_offset)
-      - name: min_z
-        value: $(var wheels_min_height_offset)
-      - name: max_z
-        value: $(var wheels_max_height_offset)
   - node: /sensing/lidar/top/distortion_corrector_node
     param_files:
       - param_file: $(find-pkg-share autoware_sample_designs)/config/sensing/lidar/distortion_corrector_node.param.yaml
@@ -176,7 +106,8 @@ parameters:
       - name: calibration_file
         value: $(find-pkg-share nebula_velodyne_decoders)/calibration/VLP16.yaml
   - node: /sensing/lidar/left/crop_box_filter_self
-    param_files: []
+    param_files:
+      - crop_box_filter_param_file: $(find-pkg-share autoware_sample_designs)/config/sample_vehicle/crop_box_self.param.yaml
     param_values:
       - name: input_frame
         value: base_link
@@ -184,24 +115,11 @@ parameters:
         value: base_link
       - name: use_sim_time
         value: false
-      - name: negative
-        value: true
       - name: processing_time_threshold_sec
         value: 0.01
-      - name: min_x
-        value: $(var min_longitudinal_offset)
-      - name: max_x
-        value: $(var max_longitudinal_offset)
-      - name: min_y
-        value: $(var min_lateral_offset)
-      - name: max_y
-        value: $(var max_lateral_offset)
-      - name: min_z
-        value: $(var min_height_offset)
-      - name: max_z
-        value: $(var max_height_offset)
   - node: /sensing/lidar/left/crop_box_filter_wheels
-    param_files: []
+    param_files:
+      - crop_box_filter_param_file: $(find-pkg-share autoware_sample_designs)/config/sample_vehicle/crop_box_wheels.param.yaml
     param_values:
       - name: input_frame
         value: base_link
@@ -209,22 +127,8 @@ parameters:
         value: base_link
       - name: use_sim_time
         value: false
-      - name: negative
-        value: true
       - name: processing_time_threshold_sec
         value: 0.01
-      - name: min_x
-        value: $(var wheels_min_longitudinal_offset)
-      - name: max_x
-        value: $(var wheels_max_longitudinal_offset)
-      - name: min_y
-        value: $(var wheels_min_lateral_offset)
-      - name: max_y
-        value: $(var wheels_max_lateral_offset)
-      - name: min_z
-        value: $(var wheels_min_height_offset)
-      - name: max_z
-        value: $(var wheels_max_height_offset)
   - node: /sensing/lidar/left/distortion_corrector_node
     param_files:
       - param_file: $(find-pkg-share autoware_sample_designs)/config/sensing/lidar/distortion_corrector_node.param.yaml
@@ -270,7 +174,8 @@ parameters:
       - name: calibration_file
         value: $(find-pkg-share nebula_velodyne_decoders)/calibration/VLP16.yaml
   - node: /sensing/lidar/right/crop_box_filter_self
-    param_files: []
+    param_files:
+      - crop_box_filter_param_file: $(find-pkg-share autoware_sample_designs)/config/sample_vehicle/crop_box_self.param.yaml
     param_values:
       - name: input_frame
         value: base_link
@@ -278,24 +183,11 @@ parameters:
         value: base_link
       - name: use_sim_time
         value: false
-      - name: negative
-        value: true
       - name: processing_time_threshold_sec
         value: 0.01
-      - name: min_x
-        value: $(var min_longitudinal_offset)
-      - name: max_x
-        value: $(var max_longitudinal_offset)
-      - name: min_y
-        value: $(var min_lateral_offset)
-      - name: max_y
-        value: $(var max_lateral_offset)
-      - name: min_z
-        value: $(var min_height_offset)
-      - name: max_z
-        value: $(var max_height_offset)
   - node: /sensing/lidar/right/crop_box_filter_wheels
-    param_files: []
+    param_files:
+      - crop_box_filter_param_file: $(find-pkg-share autoware_sample_designs)/config/sample_vehicle/crop_box_wheels.param.yaml
     param_values:
       - name: input_frame
         value: base_link
@@ -303,22 +195,8 @@ parameters:
         value: base_link
       - name: use_sim_time
         value: false
-      - name: negative
-        value: true
       - name: processing_time_threshold_sec
         value: 0.01
-      - name: min_x
-        value: $(var wheels_min_longitudinal_offset)
-      - name: max_x
-        value: $(var wheels_max_longitudinal_offset)
-      - name: min_y
-        value: $(var wheels_min_lateral_offset)
-      - name: max_y
-        value: $(var wheels_max_lateral_offset)
-      - name: min_z
-        value: $(var wheels_min_height_offset)
-      - name: max_z
-        value: $(var wheels_max_height_offset)
   - node: /sensing/lidar/right/distortion_corrector_node
     param_files:
       - param_file: $(find-pkg-share autoware_sample_designs)/config/sensing/lidar/distortion_corrector_node.param.yaml

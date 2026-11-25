@@ -51,7 +51,7 @@ parameters:
 
   - node: /perception/obstacle_segmentation/common_ground_filter
     param_files:
-      - vehicle_info_param_file: $(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml
+      - vehicle_info_param_file: $(find-pkg-share autoware_sample_designs)/config/sample_vehicle/vehicle_info.param.yaml
     param_values:
       - name: max_z
         value: 3.0

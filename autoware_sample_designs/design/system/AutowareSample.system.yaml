@@ -20,10 +20,6 @@ variables:
   - name: check_external_emergency_heartbeat
     value: false
 
-variable_files:
-  - name: vehicle_info
-    value: $(find-pkg-share sample_vehicle_description)/config/vehicle_info.param.yaml
-
 modes:
   - name: Runtime
     description: on-vehicle runtime mode
