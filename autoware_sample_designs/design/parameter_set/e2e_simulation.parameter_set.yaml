@@ -20,4 +20,4 @@ parameters:
   - node: /system/aggregator
     param_values:
       - name: graph_file
-        value: $(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-awsim.yaml
+        value: $(find-pkg-share autoware_system_launch)/config/diagnostics/autoware-awsim.yaml

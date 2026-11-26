@@ -38,7 +38,7 @@
   <arg name="system_run_mode" default="online" description="run mode in system"/>
   <arg name="launch_system_monitor" default="true" description="launch system monitor"/>
   <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
-  <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/diagnostics/autoware-main.yaml" description="diagnostic graph config"/>
+  <arg name="simulator_type" default="none" description="simulator type for diagnostic graph (none, awsim, carla)"/>
   <!-- Tools -->
   <arg name="rviz" default="true" description="launch rviz"/>
   <arg name="rviz_config_name" default="autoware.rviz" description="rviz config name"/>
@@ -78,7 +78,11 @@
 
   <!-- System -->
   <group if="$(var launch_system)">
-    <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_system_component.launch.xml"/>
+    <include file="$(find-pkg-share autoware_launch)/launch/components/component_system.launch.xml">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="planning_setting" value="$(var planning_setting)"/>
+      <arg name="simulator_type" value="$(var simulator_type)"/>
+    </include>
   </group>
 
   <!-- Map -->

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="use_sim_time"/>
+  <arg name="planning_setting"/>
+  <arg name="simulator_type"/>
+  <arg name="system_config_directory" default="$(find-pkg-share autoware_system_launch)/config" description="config directory path"/>
+
+  <include file="$(find-pkg-share autoware_system_launch)/launch/system.launch.xml">
+    <arg name="run_mode" value="$(var system_run_mode)"/>
+    <arg name="launch_system_monitor" value="$(var launch_system_monitor)"/>
+    <arg name="launch_dummy_diag_publisher" value="$(var launch_dummy_diag_publisher)"/>
+    <arg name="sensor_model" value="$(var sensor_model)"/>
+    <arg name="planning_setting" value="$(var planning_setting)"/>
+    <arg name="simulator_type" value="$(var simulator_type)"/>
+    <arg name="config_directory" value="$(var system_config_directory)"/>
+  </include>
+
+  <!-- For logging of diagnostics_graph error -->
+  <include file="$(find-pkg-share autoware_diagnostic_graph_utils)/launch/logging.launch.xml">
+    <arg name="root_path" value="/autoware/modes/autonomous"/>
+    <arg name="max_depth" value="3"/>
+    <arg name="show_rate" value="10.0"/>
+    <arg name="enable_terminal_log" value="true"/>
+  </include>
+</launch>
