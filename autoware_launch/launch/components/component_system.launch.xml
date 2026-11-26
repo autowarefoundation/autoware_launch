@@ -3,6 +3,7 @@
   <arg name="use_sim_time"/>
   <arg name="planning_setting"/>
   <arg name="simulator_type"/>
+  <arg name="system_config_directory" default="$(find-pkg-share autoware_system_launch)/config" description="config directory path"/>
 
   <include file="$(find-pkg-share autoware_system_launch)/launch/system.launch.xml">
     <arg name="run_mode" value="$(var system_run_mode)"/>
@@ -11,6 +12,7 @@
     <arg name="sensor_model" value="$(var sensor_model)"/>
     <arg name="planning_setting" value="$(var planning_setting)"/>
     <arg name="simulator_type" value="$(var simulator_type)"/>
+    <arg name="config_directory" value="$(var system_config_directory)"/>
   </include>
 
   <!-- For logging of diagnostics_graph error -->
