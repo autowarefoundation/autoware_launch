@@ -9,8 +9,9 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_core/blob/61d07167a44d0fe1c8d7dccb509f78574c06b432/localization/autoware_twist2accel/config/twist2accel.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_core/blob/12f358ab205b65b449a6e631d5bcf062a84c5a1c/localization/autoware_twist2accel/config/twist2accel.param.yaml
 
+# yaml-language-server: $schema=https://raw.githubusercontent.com/autowarefoundation/autoware_core/12f358ab205b65b449a6e631d5bcf062a84c5a1c/localization/autoware_twist2accel/schema/twist2accel.schema.json
 /**:
   ros__parameters:
     use_odom: true
