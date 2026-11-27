@@ -27,3 +27,6 @@ autoware_system_designer_generate_robot_description(
 )
 
 autoware_system_designer_build_deploy(${PROJECT_NAME} AutowareSample.system)
+
+# Perception behind a generated entry launch file: launch/perception.launch.xml.
+autoware_system_designer_build_deploy(${PROJECT_NAME} perception.subsystem)

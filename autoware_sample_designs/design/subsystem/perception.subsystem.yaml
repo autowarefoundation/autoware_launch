@@ -1,0 +1,73 @@
+name: perception
+
+instance:
+  name: perception
+  entity: Perception.module
+  path: /perception
+  parameter_set: [sample_system_perception.parameter_set]
+
+arguments:
+  - name: use_sim_time
+    default: false
+  - name: vehicle_model
+    default: sample_vehicle
+  - name: data_path
+    default: $(env HOME)/autoware_data/ml_models
+    description: directory of the ML models
+  - name: pointcloud_container_name
+    default: pointcloud_container
+    description: container started by the caller
+
+subscribers:
+  # lidar
+  - name: concatenated_pointcloud
+    topic: /sensing/lidar/concatenated/pointcloud
+  # map
+  - name: vector_map
+    topic: /map/vector_map
+  # traffic light
+  - name: route
+    topic: /planning/mission_planning/route
+  - name: traffic_camera/image
+    topic: /sensing/camera/traffic_light/image_raw
+  - name: traffic_camera/camera_info
+    topic: /sensing/camera/traffic_light/camera_info
+  - name: external_traffic_signals
+    topic: /perception/traffic_light_recognition/external/traffic_signals
+
+publishers:
+  - name: object_recognition/objects
+    topic: /perception/object_recognition/objects
+  - name: object_recognition/tracking/objects
+    topic: /perception/object_recognition/tracking/objects
+  - name: obstacle_segmentation/pointcloud
+    topic: /perception/obstacle_segmentation/pointcloud
+  - name: segmented/pointcloud
+    topic: /perception/segmented/pointcloud
+  - name: occupancy_grid_map/map
+    topic: /perception/occupancy_grid_map/map
+  - name: traffic_light_recognition/traffic_signals
+    topic: /perception/traffic_light_recognition/traffic_signals
+
+system_launches:
+  - package: autoware_global_parameter_loader
+    file: launch/global_params.launch.py
+    scoped: false
+    arguments:
+      - name: use_sim_time
+        value: $(var use_sim_time)
+      - name: vehicle_model
+        value: $(var vehicle_model)
+
+node_groups:
+  - name: $(var pointcloud_container_name)
+    type: ros2_component_container_mt_ipc
+    external: true
+    nodes:
+      - /perception/occupancy_grid_map/occupancy_grid_map_node
+  - name: traffic_light_node_container
+    type: ros2_component_container_mt_ipc
+    nodes:
+      - /perception/traffic_light_recognition/camera1/detection
+      - /perception/traffic_light_recognition/camera1/classifier_pedestrian
+      - /perception/traffic_light_recognition/camera1/classifier_car
