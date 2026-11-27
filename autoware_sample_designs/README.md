@@ -67,7 +67,9 @@ autoware_sample_designs/
 │   ├── module/            # Reusable subsystem modules (sensing, perception, …)
 │   ├── system/
 │   │   └── AutowareSample.system.yaml   # Top-level system definition
-│   └── parameter_set/     # Parameter overrides per node, per mode
+│   ├── parameter_set/     # Parameter overrides per node, per mode
+│   └── subsystem/
+│       └── perception.subsystem.yaml    # Perception module behind a generated entry launch file
 ├── config/                # Shared parameter YAML files (owned by this package)
 ├── urdf/                  # Vehicle URDF
 ├── workspace.yaml         # Provider resolution rules for the system designer
@@ -75,6 +77,16 @@ autoware_sample_designs/
 ```
 
 The `AutowareSample.system.yaml` defines four operating modes — `Runtime`, `LoggingSimulation`, `PlanningSimulation`, and `E2ESimulation` — each with mode-specific component overrides and connections.
+
+## Perception Subsystem
+
+`perception.subsystem.yaml` launches the `Perception.module` instance at `/perception` behind a generated entry launch file, `launch/perception.launch.xml`, with fixed topics and launch arguments. Its interface topics match the `Runtime` mode of `AutowareSample.system.yaml`; each topic is a launch argument (`input/<port>` or `output/<port>`) that the caller can override.
+
+```sh
+ros2 launch autoware_sample_designs perception.launch.xml data_path:=$HOME/autoware_data/ml_models
+```
+
+The occupancy grid map node loads into the container named by `pointcloud_container_name`, which the caller starts.
 
 ## Relationship with `autoware_launch`
 
