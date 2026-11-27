@@ -9,8 +9,9 @@
 # 'reason' can be any single-line text without braces.
 # To keep local changes, annotate fields with '# {OVERRIDE}' or '# {OVERRIDE: reason}'.
 #
-# Source: https://github.com/autowarefoundation/autoware_universe/blob/1b379706ce2971ae65c88b278a28acc584117f47/perception/autoware_traffic_light_visualization/config/traffic_light_roi_visualizer.param.yaml
+# Source: https://github.com/autowarefoundation/autoware_universe/blob/2ee1a853cb2ff00d0167b3707535d272493160bc/perception/autoware_traffic_light_visualization/config/traffic_light_roi_visualizer.param.yaml
 
 /**:
   ros__parameters:
+    use_high_accuracy_detection: true
     use_image_transport: true
